@@ -388,7 +388,7 @@ QStandardItemModel* ContentFiltersManager::createModel(QObject *parent, const QS
 				languageNames.append(QLocale::languageToString(languages.at(j)));
 			}
 
-			title = QStringLiteral("%1 [%2]").arg(title).arg(languageNames.join(QLatin1String(", ")));
+			title = QStringLiteral("%1 [%2]").arg(title, languageNames.join(QLatin1String(", ")));
 		}
 
 		QList<QStandardItem*> profileItems({new QStandardItem(title), new QStandardItem(QString::number(profile->getUpdateInterval())), new QStandardItem(Utils::formatDateTime(profile->getLastUpdate()))});

@@ -185,7 +185,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 		item->setData(name, IdentifierRole);
 		item->setData(true, HasOptionsRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
-		item->setToolTip(QStringLiteral("%1 (%2)").arg(item->text()).arg(name));
+		item->setToolTip(QStringLiteral("%1 (%2)").arg(item->text(), name));
 
 		if (!actions.at(i).defaultState.icon.isNull())
 		{
@@ -839,7 +839,7 @@ QMap<int, QVariant> ToolBarDialog::createEntryData(const QString &identifier, co
 		entryData[Qt::DisplayRole] = options[QLatin1String("text")].toString();
 	}
 
-	entryData[Qt::ToolTipRole] = QStringLiteral("%1 (%2)").arg(entryData.value(Qt::DisplayRole).toString()).arg(identifier);
+	entryData[Qt::ToolTipRole] = QStringLiteral("%1 (%2)").arg(entryData.value(Qt::DisplayRole).toString(), identifier);
 
 	return entryData;
 }

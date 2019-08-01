@@ -54,7 +54,7 @@ QByteArray ListingNetworkReply::createListing(const QString &title, const QVecto
 
 	for (int i = 0; i < navigation.count(); ++i)
 	{
-		navigationHtml.append(QStringLiteral("<a href=\"%1\">%2</a>").arg(navigation[i].url.toString()).arg(navigation[i].name) + ((i < (navigation.count() - 1)) ? QLatin1String("&shy;") : QString()));
+		navigationHtml.append(QStringLiteral("<a href=\"%1\">%2</a>").arg(navigation[i].url.toString(), navigation[i].name) + ((i < (navigation.count() - 1)) ? QLatin1String("&shy;") : QString()));
 	}
 
 	QHash<QString, QIcon> icons;
@@ -152,7 +152,7 @@ QByteArray ListingNetworkReply::createListing(const QString &title, const QVecto
 
 		iterator.value().pixmap(iconSize, iconSize).save(&buffer, "PNG");
 
-		styleHtml.append(QStringLiteral("tr td:first-child.icon_%1\n{\n\tbackground-image:url(\"data:image/png;base64,%2\");\n}\n").arg(Utils::createIdentifier(iterator.key())).arg(QString(byteArray.toBase64())));
+		styleHtml.append(QStringLiteral("tr td:first-child.icon_%1\n{\n\tbackground-image:url(\"data:image/png;base64,%2\");\n}\n").arg(Utils::createIdentifier(iterator.key()), QString(byteArray.toBase64())));
 	}
 
 	QHash<QString, QString> variables;

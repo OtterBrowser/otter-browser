@@ -135,7 +135,7 @@ void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, con
 				const int requestsFinishedAmount((key == WebWidget::RequestsFinishedInformation) ? value.toInt() : (webWidget ? webWidget->getPageInformation(WebWidget::RequestsFinishedInformation).toInt() : -1));
 				const int requestsStartedAmount((key == WebWidget::RequestsStartedInformation) ? value.toInt() : (webWidget ? webWidget->getPageInformation(WebWidget::RequestsStartedInformation).toInt() : -1));
 
-				m_label->setText(tr("Elements: %1/%2").arg((requestsFinishedAmount < 0) ? QLatin1String("?") : QString::number(requestsFinishedAmount)).arg((requestsStartedAmount < 0) ? QLatin1String("?") : QString::number(requestsStartedAmount)));
+				m_label->setText(tr("Elements: %1/%2").arg((requestsFinishedAmount < 0) ? QLatin1String("?") : QString::number(requestsFinishedAmount), ((requestsStartedAmount < 0) ? QLatin1String("?") : QString::number(requestsStartedAmount))));
 			}
 
 			break;

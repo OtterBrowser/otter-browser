@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -302,7 +302,7 @@ void CertificateDialog::updateValue()
 
 				for (int i = 0; i < attributes.count(); ++i)
 				{
-					m_ui->valueTextEditWidget->appendPlainText(QStringLiteral("%1 = %2").arg(QString(attributes.at(i))).arg(certificate.issuerInfo(attributes.at(i)).join(QLatin1String(", "))));
+					m_ui->valueTextEditWidget->appendPlainText(QStringLiteral("%1 = %2").arg(QString(attributes.at(i)), certificate.issuerInfo(attributes.at(i)).join(QLatin1String(", "))));
 				}
 			}
 
@@ -321,7 +321,7 @@ void CertificateDialog::updateValue()
 
 				for (int i = 0; i < attributes.count(); ++i)
 				{
-					m_ui->valueTextEditWidget->appendPlainText(QStringLiteral("%1 = %2").arg(QString(attributes.at(i))).arg(certificate.subjectInfo(attributes.at(i)).join(QLatin1String(", "))));
+					m_ui->valueTextEditWidget->appendPlainText(QStringLiteral("%1 = %2").arg(QString(attributes.at(i)), certificate.subjectInfo(attributes.at(i)).join(QLatin1String(", "))));
 				}
 			}
 
@@ -333,7 +333,7 @@ void CertificateDialog::updateValue()
 
 				if (match.hasMatch())
 				{
-					m_ui->valueTextEditWidget->setPlainText(tr("Modulus:\n%1\n\nExponent: %2").arg(formatHex(match.captured(1).trimmed().mid(3))).arg(match.captured(2).trimmed()));
+					m_ui->valueTextEditWidget->setPlainText(tr("Modulus:\n%1\n\nExponent: %2").arg(formatHex(match.captured(1).trimmed().mid(3)), match.captured(2).trimmed()));
 				}
 			}
 
@@ -369,7 +369,7 @@ void CertificateDialog::updateValue()
 
 						for (iterator = map.constBegin(); iterator != map.constEnd(); ++iterator)
 						{
-							m_ui->valueTextEditWidget->appendPlainText(QStringLiteral("%1 = %2").arg(iterator.key()).arg(iterator.value().toString()));
+							m_ui->valueTextEditWidget->appendPlainText(QStringLiteral("%1 = %2").arg(iterator.key(), iterator.value().toString()));
 						}
 					}
 					else

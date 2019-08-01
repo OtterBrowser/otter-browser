@@ -113,7 +113,7 @@ bool PlatformIntegration::installUpdate() const
 		}
 	}
 
-	Console::addMessage(QCoreApplication::translate("main", "Failed to install update\nUpdater: %1\nScript: %2").arg(updaterPath).arg(scriptPath), Console::OtherCategory, Console::ErrorLevel);
+	Console::addMessage(QCoreApplication::translate("main", "Failed to install update\nUpdater: %1\nScript: %2").arg(updaterPath, scriptPath), Console::OtherCategory, Console::ErrorLevel);
 
 	QMessageBox::critical(nullptr, tr("Error"), tr("Failed to install update."), QMessageBox::Close);
 

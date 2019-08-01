@@ -449,7 +449,7 @@ void ContentBlockingDialog::handleProfileModified(const QString &name)
 						languageNames.append(QLocale::languageToString(languages.at(k)));
 					}
 
-					title = QStringLiteral("%1 [%2]").arg(title).arg(languageNames.join(QLatin1String(", ")));
+					title = QStringLiteral("%1 [%2]").arg(title, languageNames.join(QLatin1String(", ")));
 				}
 
 				m_ui->profilesViewWidget->setData(entryIndex, title, Qt::DisplayRole);

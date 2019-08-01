@@ -77,7 +77,7 @@ void QtWebEnginePage::validatePopup(const QUrl &url)
 
 		if (result.isBlocked)
 		{
-			Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(ContentFiltersManager::getProfile(result.profile)->getTitle()).arg(result.rule), Console::NetworkCategory, Console::LogLevel, url.url(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
+			Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(ContentFiltersManager::getProfile(result.profile)->getTitle(), result.rule), Console::NetworkCategory, Console::LogLevel, url.url(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
 
 			return;
 		}
@@ -178,7 +178,7 @@ void QtWebEnginePage::handleLoadFinished()
 
 				if (file.open(QIODevice::ReadOnly))
 				{
-					runJavaScript(QString(file.readAll()).arg(createJavaScriptList(cosmeticFilters.exceptions)).arg(createJavaScriptList(cosmeticFilters.rules)));
+					runJavaScript(QString(file.readAll()).arg(createJavaScriptList(cosmeticFilters.exceptions), createJavaScriptList(cosmeticFilters.rules)));
 
 					file.close();
 				}

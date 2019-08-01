@@ -352,7 +352,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 				}
 				else
 				{
-					message = tr("Your profile directory (%1) is running low on free disk space (%2 remaining).\nThis may lead to malfunctions or even data loss.").arg(QDir::toNativeSeparators(profilePath)).arg(Utils::formatUnit(storageInformation.bytesAvailable()));
+					message = tr("Your profile directory (%1) is running low on free disk space (%2 remaining).\nThis may lead to malfunctions or even data loss.").arg(QDir::toNativeSeparators(profilePath), Utils::formatUnit(storageInformation.bytesAvailable()));
 				}
 
 				QMessageBox messageBox;
@@ -761,7 +761,7 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 				{
 					const QString sslVersion(webBackend->getSslVersion());
 
-					about.append(QLatin1String("<br><br>") + tr("Web backend: %1 %2.").arg(webBackend->getTitle()).arg(webBackend->getEngineVersion()) + QLatin1String("<br><br>"));
+					about.append(QLatin1String("<br><br>") + tr("Web backend: %1 %2.").arg(webBackend->getTitle(), webBackend->getEngineVersion()) + QLatin1String("<br><br>"));
 
 					if (sslVersion.isEmpty())
 					{
@@ -1175,7 +1175,7 @@ void Application::handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInf
 	else
 	{
 		Notification::Message message;
-		message.message = tr("New update %1 from %2 channel is available!").arg(availableUpdates.at(latestVersionIndex).version).arg(availableUpdates.at(latestVersionIndex).channel);
+		message.message = tr("New update %1 from %2 channel is available!").arg(availableUpdates.at(latestVersionIndex).version, availableUpdates.at(latestVersionIndex).channel);
 		message.icon = windowIcon();
 		message.event = NotificationsManager::UpdateAvailableEvent;
 
@@ -1385,7 +1385,7 @@ QString Application::createReport(ReportOptions options)
 	stream << QLatin1String("\n\t");
 	stream.setFieldWidth(20);
 	stream << QLatin1String("Web Backend");
-	stream << (webBackend ? QStringLiteral("%1 %2").arg(webBackend->getTitle()).arg(webBackend->getEngineVersion()) : QLatin1String("none"));
+	stream << (webBackend ? QStringLiteral("%1 %2").arg(webBackend->getTitle(), webBackend->getEngineVersion()) : QLatin1String("none"));
 	stream.setFieldWidth(0);
 	stream << QLatin1String("\n\n");
 
@@ -1543,7 +1543,7 @@ ActionsManager::ActionDefinition::State Application::getActionState(int identifi
 					}
 					else
 					{
-						state.text = translate("actions", "Set %1 for %2").arg(name).arg(host);
+						state.text = translate("actions", "Set %1 for %2").arg(name, host);
 					}
 				}
 				else if (mode == QLatin1String("reset"))
@@ -1554,7 +1554,7 @@ ActionsManager::ActionDefinition::State Application::getActionState(int identifi
 					}
 					else
 					{
-						state.text = translate("actions", "Reset %1 for %2").arg(name).arg(host);
+						state.text = translate("actions", "Reset %1 for %2").arg(name, host);
 					}
 				}
 				else if (mode == QLatin1String("toggle"))
@@ -1567,7 +1567,7 @@ ActionsManager::ActionDefinition::State Application::getActionState(int identifi
 						}
 						else
 						{
-							state.text = translate("actions", "Toggle %1 for %2").arg(name).arg(host);
+							state.text = translate("actions", "Toggle %1 for %2").arg(name, host);
 						}
 					}
 					else

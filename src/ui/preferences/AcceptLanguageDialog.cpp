@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 			}
 			else
 			{
-				entries.append({QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName()).arg(locale.bcp47Name()), locale.bcp47Name()});
+				entries.append({QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName(), locale.bcp47Name()), locale.bcp47Name()});
 			}
 		}
 	}
@@ -76,7 +76,7 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 	});
 
 	entries.prepend({tr("Any other"), QLatin1String("*")});
-	entries.prepend({tr("System language (%1 - %2)").arg(QLocale::system().nativeLanguageName()).arg(QLocale::system().nativeCountryName()), QLatin1String("system")});
+	entries.prepend({tr("System language (%1 - %2)").arg(QLocale::system().nativeLanguageName(), QLocale::system().nativeCountryName()), QLatin1String("system")});
 	entries.squeeze();
 
 	for (int i = 0; i < entries.count(); ++i)
@@ -143,7 +143,7 @@ void AcceptLanguageDialog::addLanguage(const QString &language)
 	}
 	else if (language == QLatin1String("system"))
 	{
-		text = tr("System language (%1 - %2)").arg(QLocale::system().nativeLanguageName()).arg(QLocale::system().nativeCountryName());
+		text = tr("System language (%1 - %2)").arg(QLocale::system().nativeLanguageName(), QLocale::system().nativeCountryName());
 	}
 	else
 	{

@@ -83,7 +83,7 @@ void ActionsContentsWidget::populateActions()
 		items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
 		items[0]->setData(definitions.at(i).identifier, IdentifierRole);
 		items[0]->setData(actionName, ActionRole);
-		items[0]->setToolTip(QStringLiteral("%1 (%2)").arg(items[0]->text()).arg(actionName));
+		items[0]->setToolTip(QStringLiteral("%1 (%2)").arg(items[0]->text(), actionName));
 		items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
 		items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
 		items[2]->setFlags(items[2]->flags() | Qt::ItemNeverHasChildren);

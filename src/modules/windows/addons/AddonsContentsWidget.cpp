@@ -232,7 +232,7 @@ void AddonsContentsWidget::addAddon(Addon *addon)
 		return;
 	}
 
-	QStandardItem *item(new QStandardItem(getAddonIcon(addon), (addon->getVersion().isEmpty() ? addon->getTitle() : QStringLiteral("%1 %2").arg(addon->getTitle()).arg(addon->getVersion()))));
+	QStandardItem *item(new QStandardItem(getAddonIcon(addon), (addon->getVersion().isEmpty() ? addon->getTitle() : QStringLiteral("%1 %2").arg(addon->getTitle(), addon->getVersion()))));
 	item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 	item->setCheckable(true);
 	item->setCheckState(addon->isEnabled() ? Qt::Checked : Qt::Unchecked);
@@ -271,7 +271,7 @@ void AddonsContentsWidget::updateAddon(const QString &name)
 			if (script)
 			{
 				m_ui->addonsViewWidget->setData(index, getAddonIcon(script), Qt::DecorationRole);
-				m_ui->addonsViewWidget->setData(index, (script->getVersion().isEmpty() ? script->getTitle() : QStringLiteral("%1 %2").arg(script->getTitle()).arg(script->getVersion())), Qt::DisplayRole);
+				m_ui->addonsViewWidget->setData(index, (script->getVersion().isEmpty() ? script->getTitle() : QStringLiteral("%1 %2").arg(script->getTitle(), script->getVersion())), Qt::DisplayRole);
 			}
 
 			break;
@@ -316,7 +316,7 @@ void AddonsContentsWidget::reloadAddon()
 					script->reload();
 
 					m_ui->addonsViewWidget->setData(indexes.at(i), getAddonIcon(script), Qt::DecorationRole);
-					m_ui->addonsViewWidget->setData(indexes.at(i), (script->getVersion().isEmpty() ? script->getTitle() : QStringLiteral("%1 %2").arg(script->getTitle()).arg(script->getVersion())), Qt::DisplayRole);
+					m_ui->addonsViewWidget->setData(indexes.at(i), (script->getVersion().isEmpty() ? script->getTitle() : QStringLiteral("%1 %2").arg(script->getTitle(), script->getVersion())), Qt::DisplayRole);
 				}
 			}
 		}

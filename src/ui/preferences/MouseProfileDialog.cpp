@@ -45,7 +45,7 @@ void GestureActionDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
 		const QString name(widget->getActionIdentifier());
 
 		model->setData(index, definition.getText(true), Qt::DisplayRole);
-		model->setData(index, QStringLiteral("%1 (%2)").arg(definition.getText(true)).arg(name), Qt::ToolTipRole);
+		model->setData(index, QStringLiteral("%1 (%2)").arg(definition.getText(true), name), Qt::ToolTipRole);
 		model->setData(index, widget->getActionIdentifier(), MouseProfileDialog::IdentifierRole);
 		model->setData(index, name, MouseProfileDialog::NameRole);
 
@@ -115,7 +115,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 				items[0]->setData(name, NameRole);
 				items[0]->setData(gestures.at(j).parameters, ParametersRole);
 				items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsEditable);
-				items[0]->setToolTip(QStringLiteral("%1 (%2)").arg(action.getText(true)).arg(name));
+				items[0]->setToolTip(QStringLiteral("%1 (%2)").arg(action.getText(true), name));
 				items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 				items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 				items[2]->setToolTip(parameters);

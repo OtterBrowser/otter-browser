@@ -634,7 +634,7 @@ SaveInformation getSavePath(const QString &fileName, const QString &directory, Q
 
 		if (!suffix.isEmpty())
 		{
-			filters.append(QCoreApplication::translate("utils", "%1 files (*.%2)").arg(suffix.toUpper()).arg(suffix));
+			filters.append(QCoreApplication::translate("utils", "%1 files (*.%2)").arg(suffix.toUpper(), suffix));
 		}
 	}
 

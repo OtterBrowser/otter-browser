@@ -1392,7 +1392,7 @@ void AddressWidget::setUrl(const QUrl &url, bool force)
 
 		if (host != url.host())
 		{
-			toolTip = QStringLiteral("(%1) %2").arg(host).arg(text);
+			toolTip = QStringLiteral("(%1) %2").arg(host, text);
 		}
 
 		setToolTip(toolTip);

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -112,7 +112,7 @@ void ActionComboBoxWidget::addDefinition(const ActionsManager::ActionDefinition 
 	item->setData(QColor(Qt::transparent), Qt::DecorationRole);
 	item->setData(definition.identifier, IdentifierRole);
 	item->setData(name, NameRole);
-	item->setToolTip(QStringLiteral("%1 (%2)").arg(item->text()).arg(name));
+	item->setToolTip(QStringLiteral("%1 (%2)").arg(item->text(), name));
 	item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 	if (!definition.defaultState.icon.isNull())

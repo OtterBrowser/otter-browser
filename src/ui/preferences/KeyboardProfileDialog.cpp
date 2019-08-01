@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -86,7 +86,7 @@ void KeyboardActionDelegate::setModelData(QWidget *editor, QAbstractItemModel *m
 		const QString name(ActionsManager::getActionName(widget->getActionIdentifier()));
 
 		model->setData(index, definition.getText(true), Qt::DisplayRole);
-		model->setData(index, QStringLiteral("%1 (%2)").arg(definition.getText(true)).arg(name), Qt::ToolTipRole);
+		model->setData(index, QStringLiteral("%1 (%2)").arg(definition.getText(true), name), Qt::ToolTipRole);
 		model->setData(index, widget->getActionIdentifier(), KeyboardProfileDialog::IdentifierRole);
 		model->setData(index, name, KeyboardProfileDialog::NameRole);
 
@@ -207,7 +207,7 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 			items[1]->setData(name, NameRole);
 			items[1]->setData(definitions.at(i).parameters, ParametersRole);
 			items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
-			items[1]->setToolTip(QStringLiteral("%1 (%2)").arg(action.getText(true)).arg(name));
+			items[1]->setToolTip(QStringLiteral("%1 (%2)").arg(action.getText(true), name));
 			items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 			items[2]->setToolTip(parameters);
 			items[3]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
