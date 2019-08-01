@@ -365,8 +365,6 @@ QString SettingsManager::createDisplayValue(int identifier, const QVariant &valu
 
 				return (color.isValid() ? color.name((color.alpha() < 255) ? QColor::HexArgb : QColor::HexRgb).toUpper() : tr("Invalid"));
 			}
-
-			break;
 		case EnumerationType:
 			{
 				const QString key(value.toString());
