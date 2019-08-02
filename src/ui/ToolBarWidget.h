@@ -45,7 +45,7 @@ class ToolBarWidget : public QToolBar
 public:
 	explicit ToolBarWidget(int identifier, Window *window, QWidget *parent);
 
-	static QMenu* createCustomizationMenu(int identifier, QVector<QAction*> actions = {}, QWidget *parent = nullptr);
+	static QMenu* createCustomizationMenu(int identifier, const QVector<QAction*> &actions = {}, QWidget *parent = nullptr);
 	void setDefinition(const ToolBarsManager::ToolBarDefinition &definition);
 	void setState(const Session::MainWindow::ToolBarState &state);
 	MainWindow* getMainWindow() const;

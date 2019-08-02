@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-OpenAddressDialog::OpenAddressDialog(ActionExecutor::Object executor, QWidget *parent) : Dialog(parent),
+OpenAddressDialog::OpenAddressDialog(const ActionExecutor::Object &executor, QWidget *parent) : Dialog(parent),
 	m_addressWidget(nullptr),
 	m_executor(executor),
 	m_ui(new Ui::OpenAddressDialog)

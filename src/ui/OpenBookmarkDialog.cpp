@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-OpenBookmarkDialog::OpenBookmarkDialog(ActionExecutor::Object executor, QWidget *parent) : Dialog(parent),
+OpenBookmarkDialog::OpenBookmarkDialog(const ActionExecutor::Object &executor, QWidget *parent) : Dialog(parent),
 	m_completer(nullptr),
 	m_executor(executor),
 	m_ui(new Ui::OpenBookmarkDialog)

@@ -393,7 +393,7 @@ QStringList SessionsManager::getClosedWindows()
 
 	for (int i = 0; i < m_closedWindows.count(); ++i)
 	{
-		const Session::MainWindow window(m_closedWindows.at(i));
+		const Session::MainWindow &window(m_closedWindows.at(i));
 		const QString title(window.windows.value(window.index, Session::Window()).getTitle());
 
 		closedWindows.append(title.isEmpty() ? tr("(Untitled)") : title);
@@ -816,7 +816,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 			for (iterator = sessionEntry.splitters.begin(); iterator != sessionEntry.splitters.end(); ++iterator)
 			{
 				QJsonArray sizesArray;
-				const QVector<int> sizes(iterator.value());
+				const QVector<int> &sizes(iterator.value());
 
 				for (int j = 0; j < sizes.count(); ++j)
 				{

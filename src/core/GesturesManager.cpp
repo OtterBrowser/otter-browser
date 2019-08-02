@@ -217,7 +217,7 @@ MouseProfile::Gesture::Step MouseProfile::Gesture::Step::fromString(const QStrin
 {
 	Step step;
 	const QStringList parts(string.split(QLatin1Char('+')));
-	const QString event(parts.first());
+	const QString &event(parts.first());
 
 	if (event.startsWith(QLatin1String("press")))
 	{
@@ -954,7 +954,7 @@ int GesturesManager::calculateGesturesDifference(const QVector<MouseProfile::Ges
 	return difference;
 }
 
-bool GesturesManager::startGesture(QObject *object, QEvent *event, QVector<GesturesContext> contexts, const QVariantMap &parameters)
+bool GesturesManager::startGesture(QObject *object, QEvent *event, const QVector<GesturesContext> &contexts, const QVariantMap &parameters)
 {
 	QInputEvent *inputEvent(static_cast<QInputEvent*>(event));
 

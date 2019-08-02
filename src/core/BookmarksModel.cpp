@@ -970,7 +970,7 @@ void BookmarksModel::handleFeedModified(Feed *feed)
 
 		for (int j = 0; j < entries.count(); ++j)
 		{
-			const Feed::Entry entry(entries.at(j));
+			const Feed::Entry &entry(entries.at(j));
 
 			if (entry.url.isValid())
 			{

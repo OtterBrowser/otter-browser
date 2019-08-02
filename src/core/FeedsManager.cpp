@@ -565,7 +565,7 @@ void FeedsManager::timerEvent(QTimerEvent *event)
 
 			for (int j = 0; j < entries.count(); ++j)
 			{
-				const Feed::Entry entry(entries.at(j));
+				const Feed::Entry &entry(entries.at(j));
 				QJsonObject entryObject({{QLatin1String("identifier"), entry.identifier}, {QLatin1String("title"), entry.title}});
 
 				if (!entry.summary.isEmpty())

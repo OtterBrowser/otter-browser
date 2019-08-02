@@ -36,7 +36,7 @@ Action::Action(int identifier, const QVariantMap &parameters, QObject *parent) :
 	initialize();
 }
 
-Action::Action(int identifier, const QVariantMap &parameters, ActionExecutor::Object executor, QObject *parent) : QAction(parent),
+Action::Action(int identifier, const QVariantMap &parameters, const ActionExecutor::Object &executor, QObject *parent) : QAction(parent),
 	m_parameters(parameters),
 	m_flags(NoFlags),
 	m_identifier(identifier)
@@ -45,7 +45,7 @@ Action::Action(int identifier, const QVariantMap &parameters, ActionExecutor::Ob
 	setExecutor(executor);
 }
 
-Action::Action(int identifier, const QVariantMap &parameters, const QVariantMap &options, ActionExecutor::Object executor, QObject *parent) : QAction(parent),
+Action::Action(int identifier, const QVariantMap &parameters, const QVariantMap &options, const ActionExecutor::Object &executor, QObject *parent) : QAction(parent),
 	m_parameters(parameters),
 	m_flags(NoFlags),
 	m_identifier(identifier)

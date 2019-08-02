@@ -59,7 +59,7 @@ public:
 	void restoreSession(const Session::MainWindow &session);
 	void restoreClosedWindow(int index = 0);
 	void moveWindow(Window *window, MainWindow *mainWindow = nullptr, const QVariantMap &parameters = {});
-	void setActiveEditorExecutor(ActionExecutor::Object executor);
+	void setActiveEditorExecutor(const ActionExecutor::Object &executor);
 	void setSplitterSizes(const QString &identifier, const QVector<int> &sizes);
 	static MainWindow* findMainWindow(QObject *parent);
 	AddressWidget* findAddressField() const;

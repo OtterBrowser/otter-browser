@@ -903,7 +903,7 @@ Window* ToolBarWidget::getWindow() const
 	return m_window;
 }
 
-QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QVector<QAction*> actions, QWidget *parent)
+QMenu* ToolBarWidget::createCustomizationMenu(int identifier, const QVector<QAction*> &actions, QWidget *parent)
 {
 	const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(identifier));
 	QMenu *menu(new QMenu(parent));

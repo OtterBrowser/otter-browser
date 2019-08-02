@@ -62,7 +62,7 @@ QByteArray ListingNetworkReply::createListing(const QString &title, const QVecto
 
 	for (int i = 0; i < entries.count(); ++i)
 	{
-		const ListingEntry entry(entries.at(i));
+		const ListingEntry &entry(entries.at(i));
 
 		if (!icons.contains(entry.mimeType.name()))
 		{

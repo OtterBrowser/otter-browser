@@ -59,11 +59,11 @@ public:
 
 	explicit Menu(int role = UnknownMenu, QWidget *parent = nullptr);
 
-	void load(const QString &path, const QStringList &includeSections = {}, ActionExecutor::Object executor = ActionExecutor::Object());
+	void load(const QString &path, const QStringList &includeSections = {}, const ActionExecutor::Object &executor = ActionExecutor::Object());
 	void load(const QJsonObject &definition, const QStringList &includeSections = {}, ActionExecutor::Object executor = ActionExecutor::Object());
 	void load(int option);
 	void setTitle(const QString &title);
-	void setExecutor(ActionExecutor::Object executor);
+	void setExecutor(const ActionExecutor::Object &executor);
 	void setActionParameters(const QVariantMap &parameters);
 	void setMenuOptions(const QVariantMap &options);
 	int getRole() const;
@@ -75,7 +75,7 @@ protected:
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
-	void appendAction(const QJsonValue &definition, const QStringList &sections, ActionExecutor::Object executor);
+	void appendAction(const QJsonValue &definition, const QStringList &sections, const ActionExecutor::Object &executor);
 	ActionExecutor::Object getExecutor() const;
 	bool canInclude(const QJsonObject &definition, const QStringList &sections);
 	bool hasIncludeMatch(const QJsonObject &definition, const QString &key, const QStringList &sections);

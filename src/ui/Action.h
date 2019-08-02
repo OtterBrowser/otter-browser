@@ -42,8 +42,8 @@ public:
 	Q_DECLARE_FLAGS(ActionFlags, ActionFlag)
 
 	explicit Action(int identifier, const QVariantMap &parameters, QObject *parent);
-	explicit Action(int identifier, const QVariantMap &parameters, ActionExecutor::Object executor, QObject *parent);
-	explicit Action(int identifier, const QVariantMap &parameters, const QVariantMap &options, ActionExecutor::Object executor, QObject *parent);
+	explicit Action(int identifier, const QVariantMap &parameters, const ActionExecutor::Object &executor, QObject *parent);
+	explicit Action(int identifier, const QVariantMap &parameters, const QVariantMap &options, const ActionExecutor::Object &executor, QObject *parent);
 
 	void setExecutor(ActionExecutor::Object executor);
 	ActionsManager::ActionDefinition getDefinition() const;

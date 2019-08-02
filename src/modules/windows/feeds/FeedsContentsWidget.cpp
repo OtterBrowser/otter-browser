@@ -642,7 +642,7 @@ void FeedsContentsWidget::updateFeedModel()
 
 	for (int i = 0; i < entries.count(); ++i)
 	{
-		const Feed::Entry entry(entries.at(i));
+		const Feed::Entry &entry(entries.at(i));
 
 		if (!m_categories.isEmpty())
 		{

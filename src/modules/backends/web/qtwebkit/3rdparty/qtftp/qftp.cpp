@@ -575,7 +575,7 @@ static void _q_parseDosDir(const QStringList &tokens, const QString &userName, Q
 
     Q_UNUSED(userName);
 
-    QString name = tokens.at(3);
+    const QString& name = tokens.at(3);
     info->setName(name);
     info->setSymLink(name.toLower().endsWith(QLatin1String(".lnk")));
 

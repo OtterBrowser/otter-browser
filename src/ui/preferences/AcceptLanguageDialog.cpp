@@ -52,7 +52,7 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 
 	for (int i = 0; i < locales.count(); ++i)
 	{
-		const QLocale locale(locales.at(i));
+		const QLocale &locale(locales.at(i));
 
 		if (locale != QLocale::c())
 		{

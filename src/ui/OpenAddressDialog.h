@@ -40,7 +40,7 @@ class OpenAddressDialog final : public Dialog
 	Q_OBJECT
 
 public:
-	explicit OpenAddressDialog(ActionExecutor::Object executor, QWidget *parent = nullptr);
+	explicit OpenAddressDialog(const ActionExecutor::Object &executor, QWidget *parent = nullptr);
 	~OpenAddressDialog();
 
 	void setText(const QString &text);

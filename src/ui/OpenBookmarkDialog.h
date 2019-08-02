@@ -38,7 +38,7 @@ class OpenBookmarkDialog final : public Dialog
 	Q_OBJECT
 
 public:
-	explicit OpenBookmarkDialog(ActionExecutor::Object executor, QWidget *parent = nullptr);
+	explicit OpenBookmarkDialog(const ActionExecutor::Object &executor, QWidget *parent = nullptr);
 	~OpenBookmarkDialog();
 
 protected:

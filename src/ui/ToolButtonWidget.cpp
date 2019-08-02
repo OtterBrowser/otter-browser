@@ -132,7 +132,7 @@ void ToolButtonWidget::addMenu(Menu *menu, const QVector<ToolBarsManager::ToolBa
 
 	for (int i = 0; i < entries.count(); ++i)
 	{
-		const ToolBarsManager::ToolBarDefinition::Entry entry(entries.at(i));
+		const ToolBarsManager::ToolBarDefinition::Entry &entry(entries.at(i));
 
 		if (entry.entries.isEmpty())
 		{

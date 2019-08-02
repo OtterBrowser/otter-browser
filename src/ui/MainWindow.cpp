@@ -1542,7 +1542,7 @@ void MainWindow::moveWindow(Window *window, MainWindow *mainWindow, const QVaria
 	emit windowRemoved(window->getIdentifier());
 }
 
-void MainWindow::setActiveEditorExecutor(ActionExecutor::Object executor)
+void MainWindow::setActiveEditorExecutor(const ActionExecutor::Object &executor)
 {
 	const QMetaMethod actionsStateChangedMethod(metaObject()->method(metaObject()->indexOfMethod("actionsStateChanged()")));
 	const QMetaMethod arbitraryActionsStateChangedMethod(metaObject()->method(metaObject()->indexOfMethod("arbitraryActionsStateChanged(QVector<int>)")));
@@ -1929,7 +1929,7 @@ void MainWindow::updateShortcuts()
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		const KeyboardProfile::Action definition(definitions.at(i));
+		const KeyboardProfile::Action &definition(definitions.at(i));
 
 		for (int j = 0; j < definition.shortcuts.count(); ++j)
 		{

@@ -361,7 +361,7 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 	QMenu::contextMenuEvent(event);
 }
 
-void Menu::load(const QString &path, const QStringList &includeSections, ActionExecutor::Object executor)
+void Menu::load(const QString &path, const QStringList &includeSections, const ActionExecutor::Object &executor)
 {
 	QFile file(SessionsManager::getReadableDataPath(path));
 
@@ -486,7 +486,7 @@ void Menu::load(int option)
 	connect(this, &Menu::triggered, this, &Menu::selectOption);
 }
 
-void Menu::appendAction(const QJsonValue &definition, const QStringList &sections, ActionExecutor::Object executor)
+void Menu::appendAction(const QJsonValue &definition, const QStringList &sections, const ActionExecutor::Object &executor)
 {
 	if (definition.isObject())
 	{
@@ -1525,7 +1525,7 @@ void Menu::setTitle(const QString &title)
 	QMenu::setTitle(QCoreApplication::translate("actions", m_title.toUtf8().constData()));
 }
 
-void Menu::setExecutor(ActionExecutor::Object executor)
+void Menu::setExecutor(const ActionExecutor::Object &executor)
 {
 	m_executor = executor;
 }
