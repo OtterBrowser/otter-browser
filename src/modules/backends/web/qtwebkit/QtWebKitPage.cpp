@@ -163,6 +163,7 @@ bool QtWebKitFrame::isDisplayingErrorPage() const
 QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent) : QWebPage(parent),
 	m_widget(parent),
 	m_networkManager(networkManager),
+	m_mainFrame(nullptr),
 	m_isIgnoringJavaScriptPopups(false),
 	m_isPopup(false),
 	m_isViewingMedia(false)
@@ -244,7 +245,7 @@ void QtWebKitPage::validatePopup(const QUrl &url)
 
 		if (result.isBlocked)
 		{
-			Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(ContentFiltersManager::getProfile(result.profile)->getTitle()).arg(result.rule), Console::NetworkCategory, Console::LogLevel, url.url(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
+			Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(ContentFiltersManager::getProfile(result.profile)->getTitle(), result.rule), Console::NetworkCategory, Console::LogLevel, url.url(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
 
 			return;
 		}
@@ -352,7 +353,7 @@ void QtWebKitPage::handleConsoleMessage(MessageSource category, MessageLevel lev
 
 void QtWebKitPage::updateStyleSheets(const QUrl &url)
 {
-	QString styleSheet((QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(getOption(SettingsManager::Content_TextColorOption).toString()).arg(getOption(SettingsManager::Content_LinkColorOption).toString()).arg(getOption(SettingsManager::Content_VisitedLinkColorOption).toString()).toUtf8());
+	QString styleSheet((QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(getOption(SettingsManager::Content_TextColorOption).toString(), getOption(SettingsManager::Content_LinkColorOption).toString(), getOption(SettingsManager::Content_VisitedLinkColorOption).toString()).toUtf8());
 	const QWebElement mediaElement(mainFrame()->findFirstElement(QLatin1String("img, audio source, video source")));
 	const bool isViewingMedia(!mediaElement.isNull() && QUrl(mediaElement.attribute(QLatin1String("src"))) == (url.isEmpty() ? mainFrame()->url() : url));
 
@@ -850,7 +851,7 @@ bool QtWebKitPage::extension(Extension extension, const ExtensionOption *option,
 					{
 						const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(blockeckedRequests.at(i).metaData.value(NetworkManager::ContentBlockingProfileMetaData).toInt()));
 
-						information.description.append(tr("Request blocked by rule from profile %1:<br>\n%2").arg(profile ? profile->getTitle() : tr("(Unknown)")).arg(QStringLiteral("<span style=\"font-family:monospace;\">%1</span>").arg(blockeckedRequests.at(i).metaData.value(NetworkManager::ContentBlockingRuleMetaData).toString())));
+						information.description.append(tr("Request blocked by rule from profile %1:<br>\n%2").arg(profile ? profile->getTitle() : tr("(Unknown)"), QStringLiteral("<span style=\"font-family:monospace;\">%1</span>").arg(blockeckedRequests.at(i).metaData.value(NetworkManager::ContentBlockingRuleMetaData).toString())));
 					}
 
 					break;

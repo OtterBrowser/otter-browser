@@ -79,6 +79,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *
 	m_page(nullptr),
 	m_inspector(nullptr),
 	m_networkManager(networkManager),
+	m_formRequestOperation(QNetworkAccessManager::GetOperation),
 	m_loadingState(FinishedLoadingState),
 	m_amountOfDeferredPlugins(0),
 	m_transfersTimer(0),
