@@ -162,7 +162,7 @@ void FreeDesktopOrgPlatformIntegration::runApplication(const QString &command, c
 
 	const std::vector<std::string> rawArguments(LibMimeApps::DesktopEntry::parseExec(command.toStdString(), fileNames, LibMimeApps::DesktopEntry::ParseOptions::NecessarilyUseUrl));
 
-	if (rawArguments.size() < 1)
+	if (rawArguments.empty())
 	{
 		return;
 	}
