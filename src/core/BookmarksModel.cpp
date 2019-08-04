@@ -1058,7 +1058,7 @@ BookmarksModel::Bookmark* BookmarksModel::addBookmark(BookmarkType type, const Q
 
 		if (identifier == 0 || m_identifiers.contains(identifier))
 		{
-			identifier = (m_identifiers.isEmpty() ? 1 : (m_identifiers.keys().last() + 1));
+			identifier = (m_identifiers.isEmpty() ? 1 : (m_identifiers.lastKey() + 1));
 		}
 
 		m_identifiers[identifier] = bookmark;

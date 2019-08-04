@@ -247,7 +247,7 @@ WebBackend* AddonsManager::getWebBackend(const QString &name)
 			return m_webBackends[defaultName];
 		}
 
-		return m_webBackends.value(m_webBackends.keys().first(), nullptr);
+		return m_webBackends.value(m_webBackends.firstKey(), nullptr);
 	}
 
 	return nullptr;

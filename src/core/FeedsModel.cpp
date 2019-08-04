@@ -633,7 +633,7 @@ void FeedsModel::emptyTrash()
 
 void FeedsModel::createIdentifier(FeedsModel::Entry *entry)
 {
-	const quint64 identifier(m_identifiers.isEmpty() ? 1 : (m_identifiers.keys().last() + 1));
+	const quint64 identifier(m_identifiers.isEmpty() ? 1 : (m_identifiers.lastKey() + 1));
 
 	m_identifiers[identifier] = entry;
 
