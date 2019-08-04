@@ -622,11 +622,11 @@ QString Transfer::getSuggestedFileName()
 
 		if (contenDispositionHeader.contains(QLatin1String("filename*=")))
 		{
-			fileName = QRegularExpression(QLatin1String("[\\s;]filename\\*=[\"]?[a-zA-Z0-9\\-_]+\\'[a-zA-Z0-9\\-]?\\'([^\"]+)[\"]?[\\s;]?")).match(contenDispositionHeader).captured(1);
+			fileName = QRegularExpression(QLatin1String(R"([\s;]filename\*=["]?[a-zA-Z0-9\-_]+\'[a-zA-Z0-9\-]?\'([^"]+)["]?[\s;]?)")).match(contenDispositionHeader).captured(1);
 		}
 		else
 		{
-			fileName = QRegularExpression(QLatin1String("[\\s;]filename=[\"]?([^\"]+)[\"]?[\\s;]?")).match(contenDispositionHeader).captured(1);
+			fileName = QRegularExpression(QLatin1String(R"([\s;]filename=["]?([^"]+)["]?[\s;]?)")).match(contenDispositionHeader).captured(1);
 		}
 
 		if (fileName.contains(QLatin1String("; ")))

@@ -117,7 +117,7 @@ InputInterpreter::InterpreterResult InputInterpreter::interpret(const QString &t
 
 	const QUrl url(QUrl::fromUserInput(text));
 
-	if (!QHostAddress(text).isNull() || (url.isValid() && (url.isLocalFile() || QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch())))
+	if (!QHostAddress(text).isNull() || (url.isValid() && (url.isLocalFile() || QRegularExpression(QLatin1String(R"(^(\w+\:\S+)|([\w\-]+\.[a-zA-Z]{2,}(/\S*)?$))")).match(text).hasMatch())))
 	{
 		result.url = url;
 		result.type = InterpreterResult::UrlType;

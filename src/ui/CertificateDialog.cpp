@@ -328,7 +328,7 @@ void CertificateDialog::updateValue()
 			break;
 		case PublicKeyValueField:
 			{
-				const QRegularExpression expression(QLatin1String("Public-Key:[.\\s\\S]+Modulus:([.\\s\\S]+)Exponent:(.+)"), QRegularExpression::MultilineOption);
+				const QRegularExpression expression(QLatin1String(R"(Public-Key:[.\s\S]+Modulus:([.\s\S]+)Exponent:(.+))"), QRegularExpression::MultilineOption);
 				const QRegularExpressionMatch match(expression.match(certificate.toText()));
 
 				if (match.hasMatch())

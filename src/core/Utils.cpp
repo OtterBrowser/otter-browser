@@ -726,7 +726,7 @@ int calculateTextWidth(const QString &text, const QFontMetrics &fontMetrics)
 
 bool isUrl(const QString &text)
 {
-	return QRegularExpression(QLatin1String("^[^\\s]+\\.[^\\s]{2,}$")).match(text).hasMatch();
+	return QRegularExpression(QLatin1String(R"(^[^\s]+\.[^\s]{2,}$)")).match(text).hasMatch();
 }
 
 bool isUrlEmpty(const QUrl &url)

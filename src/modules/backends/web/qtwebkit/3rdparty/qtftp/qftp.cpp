@@ -1059,7 +1059,7 @@ bool QFtpPI::processReply()
         // both examples where the parenthesis are used, and where
         // they are missing. We need to scan for the address and host
         // info.
-        QRegExp addrPortPattern(QLatin1String("(\\d+),(\\d+),(\\d+),(\\d+),(\\d+),(\\d+)"));
+        QRegExp addrPortPattern(QLatin1String(R"((\d+),(\d+),(\d+),(\d+),(\d+),(\d+))"));
         if (addrPortPattern.indexIn(replyText) == -1) {
 #if defined(QFTPPI_DEBUG)
             qDebug("QFtp: bad 227 response -- address and port information missing");
