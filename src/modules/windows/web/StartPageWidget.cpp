@@ -214,7 +214,7 @@ QSize TileDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 
 	const qreal zoom(SettingsManager::getOption(SettingsManager::StartPage_ZoomLevelOption).toInt() / static_cast<qreal>(100));
 
-	return QSize(qRound((SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt() + 6) * zoom), qRound((SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt() + 6) * zoom));
+	return {qRound((SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt() + 6) * zoom), qRound((SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt() + 6) * zoom)};
 }
 
 StartPageContentsWidget::StartPageContentsWidget(QWidget *parent) : QWidget(parent),

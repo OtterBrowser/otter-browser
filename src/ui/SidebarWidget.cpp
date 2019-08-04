@@ -520,7 +520,7 @@ QSize SidebarWidget::sizeHint() const
 		return m_ui->buttonsLayout->sizeHint();
 	}
 
-	return QSize((m_ui->buttonsLayout->sizeHint().width() + ((m_ui->containerWidget->maximumWidth() < QWIDGETSIZE_MAX) ? m_ui->containerWidget->maximumWidth() : 250)), m_ui->buttonsLayout->sizeHint().height());
+	return {(m_ui->buttonsLayout->sizeHint().width() + ((m_ui->containerWidget->maximumWidth() < QWIDGETSIZE_MAX) ? m_ui->containerWidget->maximumWidth() : 250)), m_ui->buttonsLayout->sizeHint().height()};
 }
 
 }

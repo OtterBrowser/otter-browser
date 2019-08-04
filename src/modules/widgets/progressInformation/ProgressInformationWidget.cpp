@@ -235,7 +235,7 @@ QSize ProgressInformationWidget::sizeHint() const
 		return QSize(250, size.height());
 	}
 
-	return QSize(150, size.height());
+	return {150, size.height()};
 }
 
 }

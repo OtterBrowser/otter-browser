@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ QSize PrivateWindowIndicatorWidget::minimumSizeHint() const
 {
 	if (m_isHidden)
 	{
-		return QSize(0, 0);
+		return {0, 0};
 	}
 
 	return ToolButtonWidget::minimumSizeHint();
@@ -74,7 +74,7 @@ QSize PrivateWindowIndicatorWidget::sizeHint() const
 {
 	if (m_isHidden)
 	{
-		return QSize(0, 0);
+		return {0, 0};
 	}
 
 	return ToolButtonWidget::sizeHint();
