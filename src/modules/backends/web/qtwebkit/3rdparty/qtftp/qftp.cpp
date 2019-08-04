@@ -2304,7 +2304,9 @@ void QFtp::_q_piError(int errorCode, const QString &text)
     if (c->command == QFtp::Get && d->pi.currentCommand().startsWith(QLatin1String("SIZE "))) {
         d->pi.dtp.setBytesTotal(0);
         return;
-    } else if (c->command==QFtp::Put && d->pi.currentCommand().startsWith(QLatin1String("ALLO "))) {
+    }
+
+    if (c->command==QFtp::Put && d->pi.currentCommand().startsWith(QLatin1String("ALLO "))) {
         return;
     }
 
