@@ -118,7 +118,7 @@ TasksManager* TasksManager::getInstance()
 	return m_instance;
 }
 
-quint64 TasksManager::registerTask(int interval, bool isRepeating, const std::function<void()> &function, QObject *object)
+quint64 TasksManager::registerTask(uint interval, bool isRepeating, const std::function<void()> &function, QObject *object)
 {
 	const quint64 identifier(m_tasks.isEmpty() ? 1 : (m_tasks.lastKey() + 1));
 	Task definition;

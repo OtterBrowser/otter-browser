@@ -50,7 +50,7 @@ public:
 	static void updateTask(quint64 identifier, int interval, bool isRepeating);
 	static void removeTask(quint64 identifier);
 	static TasksManager* getInstance();
-	static quint64 registerTask(int interval, bool isRepeating, const std::function<void()> &function, QObject *object = nullptr);
+	static quint64 registerTask(uint interval, bool isRepeating, const std::function<void()> &function, QObject *object = nullptr);
 
 protected:
 	explicit TasksManager(QObject *parent = nullptr);
