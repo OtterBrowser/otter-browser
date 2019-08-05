@@ -199,13 +199,13 @@ void QtWebEngineWebBackend::handleOptionChanged(int identifier)
 void QtWebEngineWebBackend::showNotification(std::unique_ptr<QWebEngineNotification> nativeNotification)
 {
 	Notification::Message message;
-	message.title = nativeNotification.get()->title();
-	message.message = nativeNotification.get()->message();
-	message.image = nativeNotification.get()->icon();
+	message.title = nativeNotification->title();
+	message.message = nativeNotification->message();
+	message.image = nativeNotification->icon();
 	message.event = NotificationsManager::WebPageNotificationEvent;
 
 	const Notification *notification(NotificationsManager::createNotification(message));
-	const QUrl origin(nativeNotification.get()->origin());
+	const QUrl origin(nativeNotification->origin());
 
 	if (origin.isValid())
 	{
