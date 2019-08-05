@@ -32,10 +32,7 @@ NetworkProxyFactory::NetworkProxyFactory(QObject *parent) : QObject(parent), QNe
 
 NetworkProxyFactory::~NetworkProxyFactory()
 {
-	if (m_automaticProxy)
-	{
-		delete m_automaticProxy;
-	}
+	delete m_automaticProxy;
 }
 
 void NetworkProxyFactory::setProxy(const QString &identifier)
