@@ -62,6 +62,7 @@ struct ErrorPageInformation final
 		ConnectionRefusedError,
 		FileNotFoundError,
 		FraudAttemptError,
+		RedirectionLoopError,
 		ServerNotFoundError,
 		UnsupportedAddressTypeError
 	};
