@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ public:
 
 protected:
 	void timerEvent(QTimerEvent *event) override;
-	void updateTimer(const quint64 remainingTime, const bool updateCounter = false);
+	void updateTimer(quint64 remainingTime, bool updateCounter = false);
 
 private:
 	quint64 m_interval;
