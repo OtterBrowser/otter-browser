@@ -42,7 +42,7 @@ PrivateWindowIndicatorWidget::PrivateWindowIndicatorWidget(const ToolBarsManager
 
 void PrivateWindowIndicatorWidget::changeEvent(QEvent *event)
 {
-	QWidget::changeEvent(event);
+	QToolButton::changeEvent(event);
 
 	if (event->type() == QEvent::LanguageChange)
 	{
