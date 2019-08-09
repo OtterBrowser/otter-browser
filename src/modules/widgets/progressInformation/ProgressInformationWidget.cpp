@@ -232,7 +232,7 @@ QSize ProgressInformationWidget::sizeHint() const
 
 	if (m_type == MessageType)
 	{
-		return QSize(250, size.height());
+		return {250, size.height()};
 	}
 
 	return {150, size.height()};
