@@ -254,8 +254,8 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 		}
 		else if (searchUrl.enctype == QLatin1String("multipart/form-data"))
 		{
-			request->setRawHeader(QStringLiteral("Content-Type").toLatin1(), QStringLiteral("multipart/form-data; boundary=AaB03x").toLatin1());
-			request->setRawHeader(QStringLiteral("Content-Length").toLatin1(), QString::number(body->length()).toUtf8());
+			request->setRawHeader(QByteArrayLiteral("Content-Type"), QByteArrayLiteral("multipart/form-data; boundary=AaB03x"));
+			request->setRawHeader(QByteArrayLiteral("Content-Length"), QString::number(body->length()).toUtf8());
 		}
 	}
 

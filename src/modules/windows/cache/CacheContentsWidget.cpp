@@ -257,7 +257,7 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &entry)
 
 	for (int i = 0; i < headers.count(); ++i)
 	{
-		if (headers.at(i).first == QStringLiteral("Content-Type").toLatin1())
+		if (headers.at(i).first == QByteArrayLiteral("Content-Type"))
 		{
 			type = QString(headers.at(i).second);
 
@@ -391,7 +391,7 @@ void CacheContentsWidget::updateActions()
 
 		for (int i = 0; i < headers.count(); ++i)
 		{
-			if (headers.at(i).first == QStringLiteral("Content-Type").toLatin1())
+			if (headers.at(i).first == QByteArrayLiteral("Content-Type"))
 			{
 				type = QString(headers.at(i).second);
 

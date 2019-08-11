@@ -87,7 +87,7 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 	updateMessage();
 	adjustSize();
 
-	m_animation = new QPropertyAnimation(this, QStringLiteral("windowOpacity").toLatin1());
+	m_animation = new QPropertyAnimation(this, QByteArrayLiteral("windowOpacity"));
 	m_animation->setDuration(500);
 	m_animation->setStartValue(0.0);
 	m_animation->setEndValue(1.0);

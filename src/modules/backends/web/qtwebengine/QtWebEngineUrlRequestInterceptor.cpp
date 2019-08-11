@@ -128,12 +128,12 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 
 	if (m_doNotTrackPolicy != NetworkManagerFactory::SkipTrackPolicy)
 	{
-		request.setHttpHeader(QStringLiteral("DNT").toLatin1(), ((m_doNotTrackPolicy == NetworkManagerFactory::DoNotAllowToTrackPolicy) ? QStringLiteral("1") : QStringLiteral("0")).toLatin1());
+		request.setHttpHeader(QByteArrayLiteral("DNT"), ((m_doNotTrackPolicy == NetworkManagerFactory::DoNotAllowToTrackPolicy) ? QByteArrayLiteral("1") : QByteArrayLiteral("0")));
 	}
 
 	if (!m_canSendReferrer)
 	{
-		request.setHttpHeader(QStringLiteral("Referer").toLatin1(), QByteArray());
+		request.setHttpHeader(QByteArrayLiteral("Referer"), QByteArray());
 	}
 
 	emit pageInformationChanged(WebWidget::RequestsStartedInformation, m_startedRequestsAmount);
@@ -350,12 +350,12 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 
 	if (doNotTrackPolicy != NetworkManagerFactory::SkipTrackPolicy)
 	{
-		request.setHttpHeader(QStringLiteral("DNT").toLatin1(), ((doNotTrackPolicy == NetworkManagerFactory::DoNotAllowToTrackPolicy) ? QStringLiteral("1") : QStringLiteral("0")).toLatin1());
+		request.setHttpHeader(QByteArrayLiteral("DNT"), ((doNotTrackPolicy == NetworkManagerFactory::DoNotAllowToTrackPolicy) ? QByteArrayLiteral("1") : QByteArrayLiteral("0")));
 	}
 
 	if (!SettingsManager::getOption(SettingsManager::Network_EnableReferrerOption).toBool())
 	{
-		request.setHttpHeader(QStringLiteral("Referer").toLatin1(), QByteArray());
+		request.setHttpHeader(QByteArrayLiteral("Referer"), QByteArray());
 	}
 }
 #endif

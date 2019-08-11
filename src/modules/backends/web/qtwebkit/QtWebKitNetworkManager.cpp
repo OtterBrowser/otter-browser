@@ -168,7 +168,7 @@ void QtWebKitNetworkManager::handleDownloadProgress(qint64 bytesReceived, qint64
 
 	if (reply && reply == m_baseReply)
 	{
-		if (bytesTotal == 0 || m_baseReply->hasRawHeader(QStringLiteral("Location").toLatin1()))
+		if (bytesTotal == 0 || m_baseReply->hasRawHeader(QByteArrayLiteral("Location")))
 		{
 			m_baseReply = nullptr;
 		}
@@ -695,7 +695,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 	if (!m_canSendReferrer)
 	{
-		mutableRequest.setRawHeader(QStringLiteral("Referer").toLatin1(), QByteArray());
+		mutableRequest.setRawHeader(QByteArrayLiteral("Referer"), QByteArray());
 	}
 
 	if (operation == PostOperation && mutableRequest.header(QNetworkRequest::ContentTypeHeader).isNull())
@@ -709,10 +709,10 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 	}
 	else if (m_doNotTrackPolicy != NetworkManagerFactory::SkipTrackPolicy)
 	{
-		mutableRequest.setRawHeader(QStringLiteral("DNT").toLatin1(), ((m_doNotTrackPolicy == NetworkManagerFactory::DoNotAllowToTrackPolicy) ? QStringLiteral("1") : QStringLiteral("0")).toLatin1());
+		mutableRequest.setRawHeader(QByteArrayLiteral("DNT"), ((m_doNotTrackPolicy == NetworkManagerFactory::DoNotAllowToTrackPolicy) ? QByteArrayLiteral("1") : QByteArrayLiteral("0")));
 	}
 
-	mutableRequest.setRawHeader(QStringLiteral("Accept-Language").toLatin1(), (m_acceptLanguage.isEmpty() ? NetworkManagerFactory::getAcceptLanguage().toLatin1() : m_acceptLanguage.toLatin1()));
+	mutableRequest.setRawHeader(QByteArrayLiteral("Accept-Language"), (m_acceptLanguage.isEmpty() ? NetworkManagerFactory::getAcceptLanguage().toLatin1() : m_acceptLanguage.toLatin1()));
 	mutableRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
 #if QT_VERSION >= 0x050900
 	mutableRequest.setAttribute(QNetworkRequest::HTTP2AllowedAttribute, false);

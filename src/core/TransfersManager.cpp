@@ -616,9 +616,9 @@ QString Transfer::getSuggestedFileName()
 
 	QString fileName;
 
-	if (m_reply->hasRawHeader(QStringLiteral("Content-Disposition").toLatin1()))
+	if (m_reply->hasRawHeader(QByteArrayLiteral("Content-Disposition")))
 	{
-		const QString contenDispositionHeader(m_reply->rawHeader(QStringLiteral("Content-Disposition").toLatin1()));
+		const QString contenDispositionHeader(m_reply->rawHeader(QByteArrayLiteral("Content-Disposition")));
 
 		if (contenDispositionHeader.contains(QLatin1String("filename*=")))
 		{
@@ -799,7 +799,7 @@ bool Transfer::resume()
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
-	request.setRawHeader(QStringLiteral("Range").toLatin1(), QStringLiteral("bytes=%1-").arg(file->size()).toLatin1());
+	request.setRawHeader(QByteArrayLiteral("Range"), QStringLiteral("bytes=%1-").arg(file->size()).toLatin1());
 	request.setUrl(m_source);
 
 	m_reply = NetworkManagerFactory::getNetworkManager(m_options.testFlag(IsPrivateOption))->get(request);

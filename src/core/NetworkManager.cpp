@@ -152,7 +152,7 @@ QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation op
 
 	if (!NetworkManagerFactory::canSendReferrer())
 	{
-		mutableRequest.setRawHeader(QStringLiteral("Referer").toLatin1(), QByteArray());
+		mutableRequest.setRawHeader(QByteArrayLiteral("Referer"), QByteArray());
 	}
 
 	if (operation == PostOperation && mutableRequest.header(QNetworkRequest::ContentTypeHeader).isNull())
@@ -169,7 +169,7 @@ QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation op
 		mutableRequest.setRawHeader(QByteArrayLiteral("DNT"), QByteArray::number((NetworkManagerFactory::getDoNotTrackPolicy() == NetworkManagerFactory::DoNotAllowToTrackPolicy) ? 1 : 0));
 	}
 
-	mutableRequest.setRawHeader(QStringLiteral("Accept-Language").toLatin1(), NetworkManagerFactory::getAcceptLanguage().toLatin1());
+	mutableRequest.setRawHeader(QByteArrayLiteral("Accept-Language"), NetworkManagerFactory::getAcceptLanguage().toLatin1());
 
 	return QNetworkAccessManager::createRequest(operation, mutableRequest, outgoingData);
 }
