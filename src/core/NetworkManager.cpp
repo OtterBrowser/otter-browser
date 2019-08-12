@@ -152,7 +152,7 @@ QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation op
 
 	if (!NetworkManagerFactory::canSendReferrer())
 	{
-		mutableRequest.setRawHeader(QByteArrayLiteral("Referer"), QByteArray());
+		mutableRequest.setRawHeader(QByteArrayLiteral("Referer"), {});
 	}
 
 	if (operation == PostOperation && mutableRequest.header(QNetworkRequest::ContentTypeHeader).isNull())

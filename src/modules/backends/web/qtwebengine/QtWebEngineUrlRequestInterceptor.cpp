@@ -133,7 +133,7 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 
 	if (!m_canSendReferrer)
 	{
-		request.setHttpHeader(QByteArrayLiteral("Referer"), QByteArray());
+		request.setHttpHeader(QByteArrayLiteral("Referer"), {});
 	}
 
 	emit pageInformationChanged(WebWidget::RequestsStartedInformation, m_startedRequestsAmount);
@@ -355,7 +355,7 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 
 	if (!SettingsManager::getOption(SettingsManager::Network_EnableReferrerOption).toBool())
 	{
-		request.setHttpHeader(QByteArrayLiteral("Referer"), QByteArray());
+		request.setHttpHeader(QByteArrayLiteral("Referer"), {});
 	}
 }
 #endif

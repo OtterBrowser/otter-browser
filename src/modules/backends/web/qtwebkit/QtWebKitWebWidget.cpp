@@ -364,7 +364,7 @@ void QtWebKitWebWidget::openRequest(const QNetworkRequest &request, QNetworkAcce
 		m_page->mainFrame()->load(m_formRequest, m_formRequestOperation, m_formRequestBody);
 
 		m_formRequest = QNetworkRequest();
-		m_formRequestBody = QByteArray();
+		m_formRequestBody.clear();
 	});
 }
 
