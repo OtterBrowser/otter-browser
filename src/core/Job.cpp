@@ -90,7 +90,7 @@ void FetchJob::start()
 
 		if (bytesTotal > 0)
 		{
-			setProgress(Utils::calculatePercent(bytesReceived, bytesTotal));
+			setProgress(qRound(Utils::calculatePercent(bytesReceived, bytesTotal)));
 		}
 	});
 	connect(m_reply, &QNetworkReply::finished, this, [&]()
