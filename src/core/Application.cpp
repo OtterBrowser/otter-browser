@@ -141,7 +141,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("readonly"), translate("main", "Tells application to avoid writing data to disk")));
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("report"), translate("main", "Prints out diagnostic report and exits application")));
 
-	QStringList arguments(this->arguments());
+	QStringList arguments(Application::arguments());
 	QString argumentsPath(QDir::current().filePath(QLatin1String("arguments.txt")));
 
 	if (!QFile::exists(argumentsPath))

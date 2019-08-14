@@ -270,7 +270,7 @@ void FreeDesktopOrgPlatformIntegration::updateTransfersProgress()
 
 	if (TransfersManager::hasRunningTransfers())
 	{
-		const QVector<Transfer*> transfers(TransfersManager::getInstance()->getTransfers());
+		const QVector<Transfer*> transfers(TransfersManager::getTransfers());
 
 		for (int i = 0; i < transfers.count(); ++i)
 		{

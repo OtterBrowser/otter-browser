@@ -106,7 +106,7 @@ void TransfersWidget::changeEvent(QEvent *event)
 
 void TransfersWidget::populateMenu()
 {
-	const QVector<Transfer*> transfers(TransfersManager::getInstance()->getTransfers());
+	const QVector<Transfer*> transfers(TransfersManager::getTransfers());
 
 	for (int i = 0; i < transfers.count(); ++i)
 	{
@@ -127,7 +127,7 @@ void TransfersWidget::populateMenu()
 
 void TransfersWidget::updateState()
 {
-	const QVector<Transfer*> transfers(TransfersManager::getInstance()->getTransfers());
+	const QVector<Transfer*> transfers(TransfersManager::getTransfers());
 	qint64 bytesTotal(0);
 	qint64 bytesReceived(0);
 	qint64 transferAmount(0);

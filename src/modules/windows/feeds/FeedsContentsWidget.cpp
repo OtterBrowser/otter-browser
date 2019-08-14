@@ -127,7 +127,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	{
 		const QModelIndex index(m_ui->entriesViewWidget->currentIndex());
 
-		Application::getInstance()->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), index.sibling(index.row(), 0).data(UrlRole).toString()}}, this);
+		Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), index.sibling(index.row(), 0).data(UrlRole).toString()}}, this);
 	});
 }
 

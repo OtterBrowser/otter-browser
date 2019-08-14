@@ -217,5 +217,5 @@ int main(int argc, char *argv[])
 		Application::createWindow(parameters);
 	}
 
-	return application.exec();
+	return Application::exec();
 }

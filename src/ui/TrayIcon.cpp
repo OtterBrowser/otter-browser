@@ -70,7 +70,7 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 		}
 	}
 
-	m_trayIcon->setIcon(parent->windowIcon());
+	m_trayIcon->setIcon(Application::windowIcon());
 	m_trayIcon->setContextMenu(menu);
 	m_trayIcon->setToolTip(tr("Otter Browser"));
 	m_trayIcon->show();
@@ -100,7 +100,7 @@ void TrayIcon::hide()
 {
 	m_trayIcon->hide();
 
-	Application::getInstance()->processEvents();
+	Application::processEvents();
 }
 
 void TrayIcon::toggleWindowsVisibility()
