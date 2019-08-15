@@ -307,7 +307,7 @@ void FreeDesktopOrgPlatformIntegration::setTransfersProgress(qint64 bytesTotal, 
 
 Style* FreeDesktopOrgPlatformIntegration::createStyle(const QString &name) const
 {
-	if (name.isEmpty() || name.toLower().startsWith(QLatin1String("gtk")))
+	if (name.isEmpty() || name.startsWith(QLatin1String("gtk"), Qt::CaseInsensitive))
 	{
 		return new FreeDesktopOrgPlatformStyle(name);
 	}

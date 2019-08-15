@@ -273,7 +273,7 @@ void WindowsPlatformIntegration::startLinkDrag(const QUrl &url, const QString &t
 
 Style* WindowsPlatformIntegration::createStyle(const QString &name) const
 {
-	if (name.isEmpty() || name.toLower().startsWith(QLatin1String("windows")))
+	if (name.isEmpty() || name.startsWith(QLatin1String("windows"), Qt::CaseInsensitive))
 	{
 		return new WindowsPlatformStyle(name);
 	}
