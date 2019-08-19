@@ -40,9 +40,7 @@
 namespace Otter
 {
 
-MouseProfile::Gesture::Step::Step()
-{
-}
+MouseProfile::Gesture::Step::Step() = default;
 
 MouseProfile::Gesture::Step::Step(QEvent::Type typeValue, MouseGestures::MouseAction directionValue, Qt::KeyboardModifiers modifiersValue) : type(typeValue),
 	modifiers(modifiersValue),

@@ -485,9 +485,7 @@ public:
 	}
 };
 
-Migration::Migration()
-{
-}
+Migration::Migration() = default;
 
 Migration::~Migration()
 {

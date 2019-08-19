@@ -86,9 +86,7 @@ public:
 		{
 		}
 
-		CompletionEntry()
-		{
-		}
+		CompletionEntry() = default;
 	};
 
 	explicit AddressCompletionModel(QObject *parent = nullptr);

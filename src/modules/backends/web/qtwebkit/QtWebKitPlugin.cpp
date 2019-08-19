@@ -28,9 +28,7 @@
 namespace Otter
 {
 
-QtWebKitPlugin::QtWebKitPlugin()
-{
-}
+QtWebKitPlugin::QtWebKitPlugin() = default;
 
 QObject* QtWebKitPlugin::createExtension(Extension extension) const
 {

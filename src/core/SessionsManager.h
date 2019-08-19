@@ -153,9 +153,7 @@ public:
 			ToolBarVisibility normalVisibility = UnspecifiedVisibilityToolBar;
 			ToolBarVisibility fullScreenVisibility = UnspecifiedVisibilityToolBar;
 
-			explicit ToolBarState()
-			{
-			}
+			explicit ToolBarState() = default;
 
 			explicit ToolBarState(int identifierValue, const ToolBarsManager::ToolBarDefinition &definition) : identifier(identifierValue)
 			{

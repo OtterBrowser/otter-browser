@@ -59,9 +59,7 @@ struct ProxyDefinition final
 		{
 		}
 
-		ProxyServer()
-		{
-		}
+		ProxyServer() = default;
 	};
 
 	QString identifier;

@@ -88,9 +88,7 @@ public:
 		{
 		}
 
-		AddonInformation()
-		{
-		}
+		AddonInformation() = default;
 
 		QString getTitle() const
 		{
@@ -122,9 +120,7 @@ public:
 		{
 		}
 
-		SpecialPageInformation()
-		{
-		}
+		SpecialPageInformation() = default;
 	};
 
 	static void createInstance();
