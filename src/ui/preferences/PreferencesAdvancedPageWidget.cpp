@@ -1727,6 +1727,7 @@ void PreferencesAdvancedPageWidget::save()
 	if (m_ui->ciphersViewWidget->isModified())
 	{
 		QStringList ciphers;
+		ciphers.reserve(m_ui->ciphersViewWidget->getRowCount());
 
 		for (int i = 0; i < m_ui->ciphersViewWidget->getRowCount(); ++i)
 		{
@@ -1756,6 +1757,7 @@ void PreferencesAdvancedPageWidget::save()
 	}
 
 	QStringList keyboardProfiles;
+	keyboardProfiles.reserve(m_ui->keyboardViewWidget->getRowCount());
 
 	for (int i = 0; i < m_ui->keyboardViewWidget->getRowCount(); ++i)
 	{
@@ -1791,6 +1793,7 @@ void PreferencesAdvancedPageWidget::save()
 	}
 
 	QStringList mouseProfiles;
+	mouseProfiles.reserve(m_ui->mouseViewWidget->getRowCount());
 
 	for (int i = 0; i < m_ui->mouseViewWidget->getRowCount(); ++i)
 	{
@@ -1843,6 +1846,7 @@ void PreferencesAdvancedPageWidget::updatePageSwitcher()
 QString PreferencesAdvancedPageWidget::createProfileIdentifier(QStandardItemModel *model, const QString &base) const
 {
 	QStringList identifiers;
+	identifiers.reserve(model->rowCount());
 
 	for (int i = 0; i < model->rowCount(); ++i)
 	{

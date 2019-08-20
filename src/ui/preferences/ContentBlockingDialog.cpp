@@ -443,6 +443,7 @@ void ContentBlockingDialog::handleProfileModified(const QString &name)
 				{
 					const QVector<QLocale::Language> languages(profile->getLanguages());
 					QStringList languageNames;
+					languageNames.reserve(languages.count());
 
 					for (int k = 0; k < languages.count(); ++k)
 					{

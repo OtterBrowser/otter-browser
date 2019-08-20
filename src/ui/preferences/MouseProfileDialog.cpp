@@ -270,6 +270,7 @@ void MouseProfileDialog::updateStepsActions()
 	if (isGesture && item)
 	{
 		QStringList steps;
+		steps.reserve(m_ui->stepsViewWidget->getRowCount());
 
 		for (int i = 0; i < m_ui->stepsViewWidget->getRowCount(); ++i)
 		{
