@@ -487,9 +487,7 @@ public:
 
 Migration::Migration() = default;
 
-Migration::~Migration()
-{
-}
+Migration::~Migration() = default;
 
 void Migration::createBackup() const
 {

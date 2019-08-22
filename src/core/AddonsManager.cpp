@@ -43,9 +43,7 @@ Addon::Addon() : m_isEnabled(true)
 {
 }
 
-Addon::~Addon()
-{
-}
+Addon::~Addon() = default;
 
 void Addon::setEnabled(bool isEnabled)
 {

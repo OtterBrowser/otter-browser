@@ -30,9 +30,7 @@ ActionExecutor::Object::Object(QObject *object, ActionExecutor *executor) : m_ob
 {
 }
 
-ActionExecutor::Object::Object(const Object &other) : m_object(other.m_object), m_executor(other.m_executor)
-{
-}
+ActionExecutor::Object::Object(const Object &other) = default;
 
 void ActionExecutor::Object::connectSignals(const QObject *receiver, const QMetaMethod *actionsStateChangedMethod, const QMetaMethod *arbitraryActionsStateChangedMethod, const QMetaMethod *categorizedActionsStateChangedMethod)
 {
@@ -130,9 +128,7 @@ bool ActionExecutor::Object::isValid() const
 
 ActionExecutor::ActionExecutor() = default;
 
-ActionExecutor::~ActionExecutor()
-{
-}
+ActionExecutor::~ActionExecutor() = default;
 
 bool ActionExecutor::isAboutToClose() const
 {
