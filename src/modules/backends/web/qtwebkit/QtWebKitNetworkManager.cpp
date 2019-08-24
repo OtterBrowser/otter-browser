@@ -126,7 +126,7 @@ void QtWebKitNetworkManager::resetStatistics()
 
 	const QList<WebWidget::PageInformation> keys(m_pageInformation.keys());
 
-	m_sslInformation = WebWidget::SslInformation();
+	m_sslInformation = {};
 	m_loadingSpeedTimer = 0;
 	m_blockedElements.clear();
 	m_contentBlockingProfiles.clear();
