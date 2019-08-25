@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ GenericAnimation::GenericAnimation(const QString &path, QObject *parent) : Anima
 		{
 			m_format = GifFormat;
 
-			connect(m_gifMovie, &QMovie::frameChanged, [&]()
+			connect(m_gifMovie, &QMovie::frameChanged, m_gifMovie, [&]()
 			{
 				emit frameChanged();
 			});
