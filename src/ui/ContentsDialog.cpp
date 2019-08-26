@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -152,7 +152,7 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 			{
 				connect(this, &ContentsDialog::accepted, dialog, &QDialog::accept);
 				connect(this, &ContentsDialog::rejected, dialog, &QDialog::reject);
-				connect(dialog, &QDialog::finished, [&](int result)
+				connect(dialog, &QDialog::finished, dialog, [&](int result)
 				{
 					m_isAccepted = (result == QDialog::Accepted);
 
