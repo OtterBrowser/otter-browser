@@ -36,7 +36,7 @@ class AdblockContentFiltersProfile final : public ContentFiltersProfile
 	Q_OBJECT
 
 public:
-	explicit AdblockContentFiltersProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime &lastUpdate, const QStringList &languages, int updateInterval, const ProfileCategory &category, const ProfileFlags &flags, QObject *parent = nullptr);
+	explicit AdblockContentFiltersProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime &lastUpdate, const QStringList &languages, int updateInterval, ProfileCategory category, ProfileFlags flags, QObject *parent = nullptr);
 
 	void clear() override;
 	void setCategory(ProfileCategory category) override;
