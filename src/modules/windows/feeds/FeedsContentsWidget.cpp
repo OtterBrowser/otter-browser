@@ -573,7 +573,7 @@ void FeedsContentsWidget::updateFeedModel()
 
 	m_ui->categoriesButton->setMenu(menu);
 
-	connect(menu, &QMenu::triggered, [=](QAction *action)
+	connect(menu, &QMenu::triggered, menu, [=](QAction *action)
 	{
 		if (action->data().isNull() && action->isChecked())
 		{
