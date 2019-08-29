@@ -34,8 +34,8 @@
 
 #include <limits>
 
-#define UNKNOWN_GESTURE -1
-#define NATIVE_GESTURE -2
+#define UNKNOWN_GESTURE (-1)
+#define NATIVE_GESTURE (-2)
 
 namespace Otter
 {
