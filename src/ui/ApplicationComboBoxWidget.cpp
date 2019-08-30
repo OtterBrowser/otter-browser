@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ void ApplicationComboBoxWidget::handleIndexChanged(int index)
 
 		setCurrentIndex(m_previousIndex);
 
-		const QString path(QFileDialog::getOpenFileName(this, tr("Select Application"), QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation).first()));
+		const QString path(QFileDialog::getOpenFileName(this, tr("Select Application"), QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation).value(0)));
 
 		if (!path.isEmpty())
 		{
