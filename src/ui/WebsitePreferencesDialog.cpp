@@ -246,7 +246,7 @@ void WebsitePreferencesDialog::cookieProperties()
 		return;
 	}
 
-	CookiePropertiesDialog dialog(cookies.first(), this);
+	CookiePropertiesDialog dialog(cookies.value(0), this);
 
 	if (dialog.exec() == QDialog::Accepted && dialog.isModified())
 	{

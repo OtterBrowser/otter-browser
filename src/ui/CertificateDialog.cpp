@@ -50,7 +50,7 @@ CertificateDialog::CertificateDialog(QVector<QSslCertificate> certificates, QWid
 		return;
 	}
 
-	setWindowTitle(tr("View Certificate for %1").arg(certificates.first().subjectInfo(QSslCertificate::CommonName).join(QLatin1String(", "))));
+	setWindowTitle(tr("View Certificate for %1").arg(certificates.value(0).subjectInfo(QSslCertificate::CommonName).join(QLatin1String(", "))));
 
 	QStandardItemModel *chainModel(new QStandardItemModel(this));
 	QStandardItem *certificateItem(nullptr);
@@ -265,7 +265,7 @@ void CertificateDialog::updateCertificate()
 
 		if (!indexes.isEmpty())
 		{
-			m_ui->detailsItemView->setCurrentIndex(indexes.first());
+			m_ui->detailsItemView->setCurrentIndex(indexes.value(0));
 		}
 	}
 }

@@ -590,7 +590,7 @@ QStringList getOpenPaths(const QStringList &fileNames, QStringList filters, bool
 
 	if (!paths.isEmpty())
 	{
-		SettingsManager::setOption(SettingsManager::Paths_OpenFileOption, QFileInfo(paths.first()).dir().canonicalPath());
+		SettingsManager::setOption(SettingsManager::Paths_OpenFileOption, QFileInfo(paths.value(0)).dir().canonicalPath());
 	}
 
 	return paths;

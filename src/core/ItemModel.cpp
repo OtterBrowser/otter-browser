@@ -172,7 +172,7 @@ QMimeData* ItemModel::mimeData(const QModelIndexList &indexes) const
 
 	if (indexes.count() == 1)
 	{
-		mimeData->setProperty("x-item-index", indexes.first());
+		mimeData->setProperty("x-item-index", indexes.value(0));
 	}
 
 	return mimeData;

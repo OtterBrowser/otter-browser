@@ -218,7 +218,7 @@ SessionInformation StartupDialog::getSession() const
 
 		if (!originalSession.windows.isEmpty())
 		{
-			const Session::MainWindow originalMainWindow(originalSession.windows.first());
+			const Session::MainWindow originalMainWindow(originalSession.windows.value(0));
 
 			mainWindow.toolBars = originalMainWindow.toolBars;
 			mainWindow.hasToolBarsState = originalMainWindow.hasToolBarsState;

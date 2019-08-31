@@ -385,7 +385,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 					if (passwords.count() == 1)
 					{
-						password = passwords.first();
+						password = passwords.value(0);
 					}
 					else
 					{

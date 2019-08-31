@@ -451,7 +451,7 @@ void WebWidget::showContextMenu(const QPoint &position)
 		includeSections.append(QLatin1String("edit"));
 	}
 
-	if (includeSections.isEmpty() || (includeSections.count() == 1 && includeSections.first() == QLatin1String("form")))
+	if (includeSections.isEmpty() || (includeSections.count() == 1 && includeSections.value(0) == QLatin1String("form")))
 	{
 		includeSections.append(QLatin1String("standard"));
 

@@ -1277,7 +1277,7 @@ QVector<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QStri
 
 	for (urlsIterator = m_urls.constBegin(); urlsIterator != m_urls.constEnd(); ++urlsIterator)
 	{
-		if (urlsIterator.value().isEmpty() || matchedBookmarks.contains(urlsIterator.value().first()))
+		if (urlsIterator.value().isEmpty() || matchedBookmarks.contains(urlsIterator.value().value(0)))
 		{
 			continue;
 		}
@@ -1287,7 +1287,7 @@ QVector<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QStri
 		if (!result.isEmpty())
 		{
 			BookmarkMatch match;
-			match.bookmark = urlsIterator.value().first();
+			match.bookmark = urlsIterator.value().value(0);
 			match.match = result;
 
 			matchesMap.insert(match.bookmark->getTimeVisited(), match);

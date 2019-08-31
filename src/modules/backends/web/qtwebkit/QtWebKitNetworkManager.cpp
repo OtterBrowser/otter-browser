@@ -250,7 +250,7 @@ void QtWebKitNetworkManager::handleRequestFinished(QNetworkReply *reply)
 
 		if (!mimeTypeHeader.isNull())
 		{
-			const QMimeType mimeType(QMimeDatabase().mimeTypeForName(mimeTypeHeader.toString().split(QLatin1Char(';')).first().trimmed()));
+			const QMimeType mimeType(QMimeDatabase().mimeTypeForName(mimeTypeHeader.toString().split(QLatin1Char(';')).value(0).trimmed()));
 
 			if (mimeType.isValid())
 			{

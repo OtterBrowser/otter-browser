@@ -170,9 +170,9 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 			continue;
 		}
 
-		if (!groupItem || groupItem->text() != option.first())
+		if (!groupItem || groupItem->text() != option.value(0))
 		{
-			groupItem = new QStandardItem(ThemesManager::createIcon(QLatin1String("inode-directory")), option.first());
+			groupItem = new QStandardItem(ThemesManager::createIcon(QLatin1String("inode-directory")), option.value(0));
 
 			m_model->appendRow(groupItem);
 		}

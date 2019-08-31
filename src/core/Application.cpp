@@ -165,7 +165,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 				}
 				else
 				{
-					temporaryArguments.prepend(arguments.first());
+					temporaryArguments.prepend(arguments.value(0));
 				}
 
 				if (arguments.count() > 1)
@@ -604,7 +604,7 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 								if (value == definition.choices.last().value)
 								{
-									SettingsManager::setOption(option, definition.choices.first().value, host);
+									SettingsManager::setOption(option, definition.choices.value(0).value, host);
 								}
 								else
 								{
@@ -1110,7 +1110,7 @@ void Application::handlePositionalArguments(QCommandLineParser *parser, bool for
 	}
 	else
 	{
-		mainWindow = (m_windows.isEmpty() ? createWindow() : m_windows.first());
+		mainWindow = (m_windows.isEmpty() ? createWindow() : m_windows.value(0));
 
 		if (mainWindow->isSessionRestored())
 		{

@@ -1092,7 +1092,7 @@ bool QFtpPI::processReply()
 
     } else if (replyCodeInt == 230) {
         if (currentCmd.startsWith(QLatin1String("USER ")) && pendingCommands.count()>0 &&
-            pendingCommands.first().startsWith(QLatin1String("PASS "))) {
+            pendingCommands.value(0).startsWith(QLatin1String("PASS "))) {
             // no need to send the PASS -- we are already logged in
             pendingCommands.pop_front();
         }
@@ -1171,7 +1171,7 @@ bool QFtpPI::startNextCmd()
         emit finished(replyText);
         return false;
     }
-    currentCmd = pendingCommands.first();
+    currentCmd = pendingCommands.value(0);
 
     // PORT and PASV are edited in-place, depending on whether we
     // should try the extended transfer connection commands EPRT and
@@ -2071,7 +2071,7 @@ int QFtp::currentId() const
 {
     if (d->pending.isEmpty())
         return 0;
-    return d->pending.first()->id;
+    return d->pending.value(0)->id;
 }
 
 /*!
@@ -2084,7 +2084,7 @@ QFtp::Command QFtp::currentCommand() const
 {
     if (d->pending.isEmpty())
         return None;
-    return d->pending.first()->command;
+    return d->pending.value(0)->command;
 }
 
 /*!
@@ -2101,7 +2101,7 @@ QIODevice* QFtp::currentDevice() const
 {
     if (d->pending.isEmpty())
         return nullptr;
-    QFtpCommand *c = d->pending.first();
+    QFtpCommand *c = d->pending.value(0);
     if (c->is_ba)
         return nullptr;
     return c->data.dev;
@@ -2188,7 +2188,7 @@ void QFtp::_q_startNextCommand()
 {
     if (d->pending.isEmpty())
         return;
-    QFtpCommand *c = d->pending.first();
+    QFtpCommand *c = d->pending.value(0);
 
     d->error = QFtp::NoError;
     d->errorString = QT_TRANSLATE_NOOP(QFtp, QLatin1String("Unknown error"));
@@ -2200,7 +2200,7 @@ void QFtp::_q_startNextCommand()
     // Proxy support, replace the Login argument in place, then fall
     // through.
     if (c->command == QFtp::Login && !d->proxyHost.isEmpty()) {
-        QString loginString = c->rawCmds.first().trimmed();
+        QString loginString = c->rawCmds.value(0).trimmed();
         loginString += QLatin1Char('@') + d->host;
         if (d->port && d->port != 21)
             loginString += QLatin1Char(':') + QString::number(d->port);
@@ -2260,7 +2260,7 @@ void QFtp::_q_piFinished(const QString&)
 {
     if (d->pending.isEmpty())
         return;
-    QFtpCommand *c = d->pending.first();
+    QFtpCommand *c = d->pending.value(0);
 
     if (c->command == QFtp::Close) {
         // The order of in which the slots are called is arbitrary, so
@@ -2298,7 +2298,7 @@ void QFtp::_q_piError(int errorCode, const QString &text)
         return;
     }
 
-    QFtpCommand *c = d->pending.first();
+    QFtpCommand *c = d->pending.value(0);
 
     // non-fatal errors
     if (c->command == QFtp::Get && d->pi.currentCommand().startsWith(QLatin1String("SIZE "))) {

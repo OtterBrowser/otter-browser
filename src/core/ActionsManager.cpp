@@ -678,7 +678,7 @@ QKeySequence ActionsManager::getActionShortcut(int identifier, const QVariantMap
 {
 	if (parameters.isEmpty() && m_shortcuts.contains(identifier))
 	{
-		return m_shortcuts[identifier].first();
+		return m_shortcuts[identifier].value(0);
 	}
 
 	if (!parameters.isEmpty() && m_extraShortcuts.contains(identifier))
@@ -689,7 +689,7 @@ QKeySequence ActionsManager::getActionShortcut(int identifier, const QVariantMap
 		{
 			if (definitions.at(i).first == parameters)
 			{
-				return definitions.at(i).second.first();
+				return definitions.at(i).second.value(0);
 			}
 		}
 	}

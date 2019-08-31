@@ -148,7 +148,7 @@ BookmarksModel::Bookmark* BookmarksManager::getBookmark(const QUrl &url)
 
 	const QVector<BookmarksModel::Bookmark*> bookmarks(m_model->getBookmarks(url));
 
-	return (bookmarks.isEmpty() ? nullptr : bookmarks.first());
+	return (bookmarks.isEmpty() ? nullptr : bookmarks.value(0));
 }
 
 BookmarksModel::Bookmark* BookmarksManager::getBookmark(quint64 identifier)

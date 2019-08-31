@@ -409,7 +409,7 @@ void CookiesContentsWidget::updateActions()
 
 	if (indexes.count() == 1)
 	{
-		const QNetworkCookie cookie(getCookie(indexes.first().data(Qt::UserRole)));
+		const QNetworkCookie cookie(getCookie(indexes.value(0).data(Qt::UserRole)));
 
 		if (!cookie.name().isEmpty())
 		{
@@ -464,7 +464,7 @@ QNetworkCookie CookiesContentsWidget::getCookie(const QVariant &data) const
 {
 	const QList<QNetworkCookie> cookies(QNetworkCookie::parseCookies(data.toByteArray()));
 
-	return (cookies.isEmpty() ? QNetworkCookie() : cookies.first());
+	return (cookies.isEmpty() ? QNetworkCookie() : cookies.value(0));
 }
 
 ActionsManager::ActionDefinition::State CookiesContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const

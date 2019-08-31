@@ -598,7 +598,7 @@ void FeedsContentsWidget::updateFeedModel()
 				}
 			}
 
-			menu->actions().first()->setChecked(hasAllCategories);
+			menu->actions().value(0)->setChecked(hasAllCategories);
 
 			if (!hasAllCategories)
 			{

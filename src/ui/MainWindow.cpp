@@ -775,7 +775,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 
 				if (windows.count() > 1)
 				{
-					setActiveWindowByIdentifier((identifier == ActionsManager::ActivatePreviouslyUsedTabAction) ? windows.at(windows.count() - 2) : windows.first());
+					setActiveWindowByIdentifier((identifier == ActionsManager::ActivatePreviouslyUsedTabAction) ? windows.at(windows.count() - 2) : windows.value(0));
 				}
 			}
 

@@ -596,7 +596,7 @@ void PreferencesAdvancedPageWidget::addDownloadsMimeType()
 
 		if (!indexes.isEmpty())
 		{
-			m_ui->downloadsItemView->setCurrentIndex(indexes.first());
+			m_ui->downloadsItemView->setCurrentIndex(indexes.value(0));
 		}
 		else if (QRegularExpression(QLatin1String(R"(^[a-zA-Z\-]+/[a-zA-Z0-9\.\+\-_]+$)")).match(mimeType).hasMatch())
 		{

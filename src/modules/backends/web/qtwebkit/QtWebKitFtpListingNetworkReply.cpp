@@ -102,7 +102,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 			break;
 		case QFtp::List:
-			if (m_directories.isEmpty() && ((m_files.count() == 1 && m_symlinks.isEmpty() && request().url().path().endsWith(m_files.first().name())) || (m_symlinks.count() == 1 && m_files.isEmpty() && request().url().path().endsWith(m_symlinks.first().name()))))
+			if (m_directories.isEmpty() && ((m_files.count() == 1 && m_symlinks.isEmpty() && request().url().path().endsWith(m_files.value(0).name())) || (m_symlinks.count() == 1 && m_files.isEmpty() && request().url().path().endsWith(m_symlinks.value(0).name()))))
 			{
 				m_ftp->get(Utils::normalizeUrl(request().url()).path());
 			}

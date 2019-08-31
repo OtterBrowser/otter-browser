@@ -569,7 +569,7 @@ bool SessionsManager::restoreSession(const SessionInformation &session, MainWind
 	{
 		if (mainWindow && i == 0)
 		{
-			mainWindow->restoreSession(session.windows.first());
+			mainWindow->restoreSession(session.windows.value(0));
 		}
 		else
 		{

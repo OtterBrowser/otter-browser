@@ -888,7 +888,7 @@ void Menu::populateCharacterEncodingMenu()
 		return;
 	}
 
-	actions().first()->setChecked(true);
+	actions().value(0)->setChecked(true);
 
 	const MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 	const QString encoding(mainWindow ? mainWindow->getOption(SettingsManager::Content_DefaultCharacterEncodingOption).toString().toLower() : QString());

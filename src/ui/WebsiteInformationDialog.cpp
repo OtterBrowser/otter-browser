@@ -223,7 +223,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	}
 	else
 	{
-		const QSslCertificate certificate(m_sslInformation.certificates.first());
+		const QSslCertificate certificate(m_sslInformation.certificates.value(0));
 
 		m_ui->certificateIssuedToLabelWidget->setText(certificate.subjectInfo(QSslCertificate::CommonName).join(QLatin1String(", ")));
 		m_ui->certificateIssuedByLabelWidget->setText(certificate.issuerInfo(QSslCertificate::CommonName).join(QLatin1String(", ")));

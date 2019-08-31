@@ -620,7 +620,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 
 					if (feeds.count() == 1 && m_window)
 					{
-						m_window->setUrl(FeedsManager::createFeedReaderUrl(feeds.first().url));
+						m_window->setUrl(FeedsManager::createFeedReaderUrl(feeds.value(0).url));
 					}
 					else if (feeds.count() > 1)
 					{

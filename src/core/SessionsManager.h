@@ -87,7 +87,7 @@ public:
 
 			bool isEmpty() const
 			{
-				return (entries.isEmpty() || (entries.count() == 1 && Utils::isUrlEmpty(QUrl(entries.first().url))));
+				return (entries.isEmpty() || (entries.count() == 1 && Utils::isUrlEmpty(QUrl(entries.value(0).url))));
 			}
 		};
 

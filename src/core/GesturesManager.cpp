@@ -215,7 +215,7 @@ MouseProfile::Gesture::Step MouseProfile::Gesture::Step::fromString(const QStrin
 {
 	Step step;
 	const QStringList parts(string.split(QLatin1Char('+')));
-	const QString &event(parts.first());
+	const QString &event(parts.value(0));
 
 	if (event.startsWith(QLatin1String("press")))
 	{

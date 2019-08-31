@@ -367,7 +367,7 @@ void ToolBarDialog::editEntry()
 	{
 		const QStringList choices(SettingsManager::getOptions());
 		OptionWidget *textWidget(new OptionWidget({}, SettingsManager::StringType, &dialog));
-		textWidget->setDefaultValue(options.value(QLatin1String("optionName"), choices.first()).toString().section(QLatin1Char('/'), -1));
+		textWidget->setDefaultValue(options.value(QLatin1String("optionName"), choices.value(0)).toString().section(QLatin1Char('/'), -1));
 		textWidget->setValue(options.value(QLatin1String("text"), textWidget->getDefaultValue()));
 		textWidget->setObjectName(QLatin1String("text"));
 

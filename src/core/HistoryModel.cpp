@@ -252,7 +252,7 @@ QVector<HistoryModel::HistoryEntryMatch> HistoryModel::findEntries(const QString
 
 	for (urlsIterator = m_urls.constBegin(); urlsIterator != m_urls.constEnd(); ++urlsIterator)
 	{
-		if (urlsIterator.value().isEmpty() || matchedEntries.contains(urlsIterator.value().first()))
+		if (urlsIterator.value().isEmpty() || matchedEntries.contains(urlsIterator.value().value(0)))
 		{
 			continue;
 		}
@@ -262,7 +262,7 @@ QVector<HistoryModel::HistoryEntryMatch> HistoryModel::findEntries(const QString
 		if (!result.isEmpty())
 		{
 			HistoryEntryMatch match;
-			match.entry = urlsIterator.value().first();
+			match.entry = urlsIterator.value().value(0);
 			match.match = result;
 
 			if (markAsTypedIn)

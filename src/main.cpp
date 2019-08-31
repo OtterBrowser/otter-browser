@@ -166,7 +166,7 @@ int main(int argc, char *argv[])
 
 		if (sessionData.isValid())
 		{
-			window.geometry = sessionData.windows.first().geometry;
+			window.geometry = sessionData.windows.value(0).geometry;
 		}
 
 		if (startupBehavior != QLatin1String("startEmpty"))

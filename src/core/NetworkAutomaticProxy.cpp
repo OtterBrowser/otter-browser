@@ -49,7 +49,7 @@ QString PacUtils::dnsResolve(const QString &host) const
 
 	if (hostInformation.error() == QHostInfo::NoError && !hostInformation.addresses().isEmpty())
 	{
-		return hostInformation.addresses().first().toString();
+		return hostInformation.addresses().value(0).toString();
 	}
 
 	return {};
