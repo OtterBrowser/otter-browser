@@ -195,9 +195,10 @@ QVariant ItemModel::getItemData(QStandardItem *item, int role)
 
 QVariantList ItemModel::getAllData(int role, int column, const QModelIndex &parent) const
 {
-	QVariantList data;
 	const int rowAmount(rowCount(parent));
 	const bool useAllColumns(column < 0);
+	QVariantList data;
+	data.reserve(rowAmount);
 
 	for (int i = 0; i < rowAmount; ++i)
 	{
