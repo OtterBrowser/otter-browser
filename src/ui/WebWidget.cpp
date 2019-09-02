@@ -346,7 +346,7 @@ void WebWidget::handleWindowCloseRequest()
 	dialog->setCheckBox(tr("Do not show this message again"), false);
 
 	connect(this, &WebWidget::aboutToReload, dialog, &ContentsDialog::close);
-	connect(dialog, &ContentsDialog::finished, [&](int result, bool isChecked)
+	connect(dialog, &ContentsDialog::finished, dialog, [&](int result, bool isChecked)
 	{
 		const bool isAccepted(result == QDialog::Accepted);
 
