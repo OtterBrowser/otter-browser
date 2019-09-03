@@ -57,6 +57,8 @@ AdblockContentFiltersProfile::AdblockContentFiltersProfile(const QString &name, 
 	}
 	else
 	{
+		m_languages.reserve(languages.count());
+
 		for (int i = 0; i < languages.count(); ++i)
 		{
 			m_languages.append(QLocale(languages.at(i)).language());
