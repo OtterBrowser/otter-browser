@@ -626,6 +626,8 @@ bool Migrator::run()
 
 	if (canProceed || createBackupCheckBox->isChecked())
 	{
+		processedMigrations.reserve(possibleMigrations.count());
+
 		for (int i = 0; i < possibleMigrations.count(); ++i)
 		{
 			processedMigrations.append(possibleMigrations.at(i)->getName());
