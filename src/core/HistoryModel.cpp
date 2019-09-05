@@ -280,6 +280,8 @@ QVector<HistoryModel::HistoryEntryMatch> HistoryModel::findEntries(const QString
 
 	matchesMap.clear();
 
+	allMatches.reserve(currentMatches.count());
+
 	for (int i = (currentMatches.count() - 1); i >= 0; --i)
 	{
 		allMatches.append(currentMatches.at(i));
