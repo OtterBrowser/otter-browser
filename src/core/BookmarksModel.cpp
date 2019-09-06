@@ -1268,6 +1268,8 @@ QVector<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QStri
 
 	matchesMap.clear();
 
+	allMatches.reserve(currentMatches.count());
+
 	for (int i = (currentMatches.count() - 1); i >= 0; --i)
 	{
 		allMatches.append(currentMatches.at(i));
