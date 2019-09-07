@@ -230,6 +230,7 @@ void TransfersContentsWidget::handleTransferAdded(Transfer *transfer)
 	items[0]->setData(qVariantFromValue(static_cast<void*>(transfer)), InstanceRole);
 	items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
 	items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
+	items.reserve(m_model->columnCount());
 
 	for (int i = 2; i < m_model->columnCount(); ++i)
 	{
