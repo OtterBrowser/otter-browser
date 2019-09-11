@@ -57,7 +57,7 @@ QtWebEngineWebBackend::QtWebEngineWebBackend(QObject *parent) : WebBackend(paren
 
 	m_engineVersion = QRegularExpression(QLatin1String("Chrome/([\\d\\.]+)")).match(userAgent).captured(1);
 
-	m_userAgentComponents = {{QLatin1String("platform"), QRegularExpression(QLatin1String("(\\([^\\)]+\\))")).match(userAgent).captured(1)}, {QLatin1String("engineVersion"), QLatin1String("AppleWebKit/537.36 (KHTML, like Gecko) Chrome/") + m_engineVersion}, {QLatin1String("applicationVersion"), QCoreApplication::applicationName() + QLatin1Char('/') + QCoreApplication::applicationVersion()}};
+	m_userAgentComponents = {{QLatin1String("platform"), QRegularExpression(QLatin1String(R"((\([^\)]+\)))")).match(userAgent).captured(1)}, {QLatin1String("engineVersion"), QLatin1String("AppleWebKit/537.36 (KHTML, like Gecko) Chrome/") + m_engineVersion}, {QLatin1String("applicationVersion"), QCoreApplication::applicationName() + QLatin1Char('/') + QCoreApplication::applicationVersion()}};
 }
 
 void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadItem *item)

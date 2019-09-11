@@ -1184,7 +1184,7 @@ void QtWebEngineWebWidget::updateWatchedData(ChangeWatcher watcher)
 	switch (watcher)
 	{
 		case FeedsWatcher:
-			m_page->runJavaScript(m_page->createScriptSource(QLatin1String("getLinks"), {QLatin1String("a[type=\\'application/atom+xml\\'], a[type=\\'application/rss+xml\\'], link[type=\\'application/atom+xml\\'], link[type=\\'application/rss+xml\\']")}), [&](const QVariant &result)
+			m_page->runJavaScript(m_page->createScriptSource(QLatin1String("getLinks"), {QLatin1String(R"(a[type=\'application/atom+xml\'], a[type=\'application/rss+xml\'], link[type=\'application/atom+xml\'], link[type=\'application/rss+xml\'])")}), [&](const QVariant &result)
 			{
 				m_feeds = processLinks(result.toList());
 
@@ -1485,7 +1485,7 @@ QString QtWebEngineWebWidget::getTitle() const
 
 QString QtWebEngineWebWidget::getDescription() const
 {
-	return m_page->runScriptSource(QLatin1String("var element = document.querySelector('[name=\\'description\\']'); var description = (element ? element.content : ''); if (description == '') { element = document.querySelector('[name=\\'og:description\\']'); description = (element ? element.property : ''); } description;")).toString();
+	return m_page->runScriptSource(QLatin1String(R"(var element = document.querySelector('[name=\'description\']'); var description = (element ? element.content : ''); if (description == '') { element = document.querySelector('[name=\'og:description\']'); description = (element ? element.property : ''); } description;)")).toString();
 }
 
 QString QtWebEngineWebWidget::getActiveStyleSheet() const
