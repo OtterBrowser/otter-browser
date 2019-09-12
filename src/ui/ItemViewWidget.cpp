@@ -658,6 +658,7 @@ void ItemViewWidget::saveState()
 	settings.beginGroup(name);
 
 	QStringList columns;
+	columns.reserve(getColumnCount());
 
 	for (int i = 0; i < getColumnCount(); ++i)
 	{
