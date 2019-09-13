@@ -529,6 +529,8 @@ void ActionsManager::loadProfiles()
 					}
 				}
 
+				shortcuts.reserve(shortcuts.count() + definition.shortcuts.count());
+
 				for (int k = 0; k < definition.shortcuts.count(); ++k)
 				{
 					const QKeySequence shortcut(definition.shortcuts.at(k));
