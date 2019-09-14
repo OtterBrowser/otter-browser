@@ -65,7 +65,7 @@ namespace Otter
 
 quint64 MainWindow::m_identifierCounter(0);
 
-MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow &session, QWidget *parent) : QMainWindow(parent), ActionExecutor(),
+MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow &session, QWidget *parent) : QMainWindow(parent),
 	m_tabSwitcher(nullptr),
 	m_workspace(new WorkspaceWidget(this)),
 	m_tabBar(new TabBarWidget(this)),

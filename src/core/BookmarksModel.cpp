@@ -35,7 +35,7 @@
 namespace Otter
 {
 
-BookmarksModel::Bookmark::Bookmark() : QStandardItem()
+BookmarksModel::Bookmark::Bookmark()
 {
 }
 

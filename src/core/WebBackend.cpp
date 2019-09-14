@@ -28,7 +28,7 @@ WebPageThumbnailJob::WebPageThumbnailJob(const QUrl &url, const QSize &size, QOb
 	Q_UNUSED(size)
 }
 
-WebBackend::WebBackend(QObject *parent) : QObject(parent), Addon()
+WebBackend::WebBackend(QObject *parent) : QObject(parent)
 {
 }
 

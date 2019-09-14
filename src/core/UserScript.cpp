@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,7 @@
 namespace Otter
 {
 
-UserScript::UserScript(const QString &path, const QUrl &url, QObject *parent) : QObject(parent), Addon(),
+UserScript::UserScript(const QString &path, const QUrl &url, QObject *parent) : QObject(parent),
 	m_iconFetchJob(nullptr),
 	m_path(path),
 	m_downloadUrl(url),

@@ -99,7 +99,7 @@ bool Application::m_isFirstRun(false);
 bool Application::m_isHidden(false);
 bool Application::m_isUpdating(false);
 
-Application::Application(int &argc, char **argv) : QApplication(argc, argv), ActionExecutor(),
+Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	m_updateCheckTimer(nullptr)
 {
 	setApplicationName(QLatin1String("Otter"));

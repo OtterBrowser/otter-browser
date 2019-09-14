@@ -50,7 +50,7 @@ namespace Otter
 
 QString WebWidget::m_fastForwardScript;
 
-WebWidget::WebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent) : QWidget(parent), ActionExecutor(),
+WebWidget::WebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent) : QWidget(parent),
 	m_parent(parent),
 	m_backend(backend),
 	m_windowIdentifier(0),

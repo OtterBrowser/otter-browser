@@ -32,7 +32,7 @@
 namespace Otter
 {
 
-HistoryModel::Entry::Entry() : QStandardItem()
+HistoryModel::Entry::Entry()
 {
 }
 

@@ -46,7 +46,7 @@ namespace Otter
 class KeyboardAndMouseProfilesIniToJsonMigration final : public Migration
 {
 public:
-	KeyboardAndMouseProfilesIniToJsonMigration() : Migration()
+	KeyboardAndMouseProfilesIniToJsonMigration()
 	{
 	}
 
@@ -203,7 +203,7 @@ public:
 class OptionsRenameMigration final : public Migration
 {
 public:
-	OptionsRenameMigration() : Migration()
+	OptionsRenameMigration()
 	{
 	}
 
@@ -337,7 +337,7 @@ public:
 class SearchEnginesStorageMigration final : public Migration
 {
 public:
-	SearchEnginesStorageMigration() : Migration()
+	SearchEnginesStorageMigration()
 	{
 	}
 
@@ -370,7 +370,7 @@ public:
 class SessionsIniToJsonMigration final : public Migration
 {
 public:
-	SessionsIniToJsonMigration() : Migration()
+	SessionsIniToJsonMigration()
 	{
 	}
 

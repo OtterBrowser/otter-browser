@@ -35,7 +35,7 @@
 namespace Otter
 {
 
-FeedsModel::Entry::Entry(Feed *feed) : QStandardItem(),
+FeedsModel::Entry::Entry(Feed *feed) :
 	m_feed(feed)
 {
 }

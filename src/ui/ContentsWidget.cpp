@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-ContentsWidget::ContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : QWidget(parent), ActionExecutor(),
+ContentsWidget::ContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : QWidget(parent),
 	m_window(window),
 	m_layer(nullptr),
 	m_layerTimer(0),

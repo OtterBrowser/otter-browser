@@ -24,7 +24,7 @@
 namespace Otter
 {
 
-ItemModel::Item::Item(ItemModel::ItemType type) : QStandardItem()
+ItemModel::Item::Item(ItemModel::ItemType type)
 {
 	setup(type);
 }

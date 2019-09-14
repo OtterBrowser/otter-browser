@@ -43,7 +43,7 @@ namespace Otter
 
 int ColorScheme::m_colorRoleEnumerator(-1);
 
-ColorScheme::ColorScheme(const QString &name, QObject *parent) : QObject(parent), Addon(),
+ColorScheme::ColorScheme(const QString &name, QObject *parent) : QObject(parent),
 	m_name(name)
 {
 	if (m_colorRoleEnumerator < 0)

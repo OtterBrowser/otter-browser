@@ -27,7 +27,7 @@
 namespace Otter
 {
 
-SessionItem::SessionItem() : QStandardItem()
+SessionItem::SessionItem()
 {
 }
 

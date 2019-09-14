@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-FeedParser::FeedParser() : QObject()
+FeedParser::FeedParser()
 {
 }
 

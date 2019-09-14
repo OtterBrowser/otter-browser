@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -175,7 +175,7 @@ bool PopupViewWidget::event(QEvent *event)
 	return ItemViewWidget::event(event);
 }
 
-LineEditWidget::LineEditWidget(const QString &text, QWidget *parent) : QLineEdit(text, parent), ActionExecutor(),
+LineEditWidget::LineEditWidget(const QString &text, QWidget *parent) : QLineEdit(text, parent),
 	m_popupViewWidget(nullptr),
 	m_completer(nullptr),
 	m_dropMode(PasteDropMode),

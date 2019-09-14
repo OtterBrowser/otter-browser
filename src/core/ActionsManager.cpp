@@ -38,7 +38,7 @@ bool KeyboardProfile::Action::operator ==(const KeyboardProfile::Action &other) 
 	return (shortcuts == other.shortcuts && parameters == other.parameters && action == other.action);
 }
 
-KeyboardProfile::KeyboardProfile(const QString &identifier, LoadMode mode) : Addon(),
+KeyboardProfile::KeyboardProfile(const QString &identifier, LoadMode mode) :
 	m_identifier(identifier),
 	m_isModified(false)
 {
