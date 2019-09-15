@@ -129,7 +129,7 @@ QSize ToolBarDropZoneWidget::sizeHint() const
 {
 	if ((orientation() == Qt::Horizontal))
 	{
-		return QSize(QToolBar::sizeHint().width(), 5);
+		return {QToolBar::sizeHint().width(), 5};
 	}
 
 	return {5, QToolBar::sizeHint().height()};
