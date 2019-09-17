@@ -228,7 +228,7 @@ bool AcceptLanguageDialog::eventFilter(QObject *object, QEvent *event)
 		}
 	}
 
-	return false;
+	return Dialog::eventFilter(object, event);
 }
 
 }
