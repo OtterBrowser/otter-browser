@@ -36,7 +36,7 @@
 	},
 	{
 		"identifier": "safari",
-		"name": "Safari 11.1 (macOS)",
-		"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.1 Safari/605.1.15"
+		"name": "Safari 12.1 (macOS)",
+		"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Safari/605.1.15"
 	}
 ]
