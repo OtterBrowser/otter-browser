@@ -1895,16 +1895,21 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 		case QEvent::MouseButtonPress:
 		case QEvent::Wheel:
 			{
-				const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+				QMouseEvent *mouseEvent(nullptr);
 
-				if (mouseEvent)
+				if (event->type() != QEvent::Wheel)
 				{
-					setClickPosition(mouseEvent->pos());
-					updateHitTestResult(mouseEvent->pos());
+					mouseEvent = static_cast<QMouseEvent*>(event);
 
-					if (mouseEvent->button() == Qt::LeftButton && !getCurrentHitTestResult().linkUrl.isEmpty())
+					if (mouseEvent)
 					{
-						m_lastUrlClickTime = QDateTime::currentDateTime();
+						setClickPosition(mouseEvent->pos());
+						updateHitTestResult(mouseEvent->pos());
+
+						if (mouseEvent->button() == Qt::LeftButton && !getCurrentHitTestResult().linkUrl.isEmpty())
+						{
+							m_lastUrlClickTime = QDateTime::currentDateTime();
+						}
 					}
 				}
 
