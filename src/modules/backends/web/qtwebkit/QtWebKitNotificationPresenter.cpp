@@ -24,7 +24,7 @@
 namespace Otter
 {
 
-QtWebKitNotificationPresenter::QtWebKitNotificationPresenter() : QWebNotificationPresenter()
+QtWebKitNotificationPresenter::QtWebKitNotificationPresenter()
 {
 }
 

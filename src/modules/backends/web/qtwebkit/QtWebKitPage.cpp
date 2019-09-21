@@ -188,7 +188,7 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 	});
 }
 
-QtWebKitPage::QtWebKitPage() : QWebPage(),
+QtWebKitPage::QtWebKitPage() :
 	m_widget(nullptr),
 	m_networkManager(nullptr),
 	m_mainFrame(nullptr),
@@ -198,7 +198,7 @@ QtWebKitPage::QtWebKitPage() : QWebPage(),
 {
 }
 
-QtWebKitPage::QtWebKitPage(const QUrl &url) : QWebPage(),
+QtWebKitPage::QtWebKitPage(const QUrl &url) :
 	m_widget(nullptr),
 	m_networkManager(new QtWebKitNetworkManager(true, nullptr, nullptr)),
 	m_mainFrame(nullptr),
