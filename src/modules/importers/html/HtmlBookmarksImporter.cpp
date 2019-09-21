@@ -78,7 +78,7 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 			if (type != BookmarksModel::UnknownBookmark && !matchedElement.isNull())
 			{
 				QMap<int, QVariant> metaData({{BookmarksModel::TitleRole, matchedElement.toPlainText()}});
-				const bool isUrlBookmark(type == BookmarksModel::UrlBookmark || BookmarksModel::FeedBookmark);
+				const bool isUrlBookmark(type == BookmarksModel::UrlBookmark || type == BookmarksModel::FeedBookmark);
 
 				if (isUrlBookmark)
 				{
