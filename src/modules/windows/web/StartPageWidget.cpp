@@ -1092,7 +1092,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 		return true;
 	}
 
-	return QObject::eventFilter(object, event);
+	return QWidget::eventFilter(object, event);
 }
 
 }
