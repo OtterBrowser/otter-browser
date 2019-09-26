@@ -315,7 +315,7 @@ void NetworkAutomaticProxy::setPath(const QString &path)
 	{
 		QFile file(path);
 
-		if (file.open(QIODevice::ReadOnly | QIODevice::Text) && setup(file.readAll()))
+		if (file.open(QIODevice::ReadOnly | QIODevice::Text) && setup(QString::fromLatin1(file.readAll())))
 		{
 			m_isValid = true;
 
@@ -338,7 +338,7 @@ void NetworkAutomaticProxy::setPath(const QString &path)
 			{
 				QIODevice *device(job->getData());
 
-				if (isSuccess && device && setup(device->readAll()))
+				if (isSuccess && device && setup(QString::fromLatin1(device->readAll())))
 				{
 					m_isValid = true;
 				}

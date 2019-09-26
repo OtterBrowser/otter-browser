@@ -367,7 +367,7 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 		{
 			m_sslInformation.errors.append({errors.at(i), reply->url()});
 
-			if (exceptions.contains(errors.at(i).certificate().digest().toBase64()))
+			if (exceptions.contains(QString::fromLatin1(errors.at(i).certificate().digest().toBase64())))
 			{
 				Console::addMessage(QStringLiteral("[accepted] The page at %1 was allowed to display insecure content from %2").arg(firstPartyUrl, thirdPartyUrl), Console::SecurityCategory, Console::WarningLevel, thirdPartyUrl, -1, m_widget->getWindowIdentifier());
 
@@ -580,7 +580,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 	if (m_widget && request.url().path() == QLatin1String("/otter-message") && request.hasRawHeader(QByteArrayLiteral("X-Otter-Token")) && request.hasRawHeader(QByteArrayLiteral("X-Otter-Data")))
 	{
-		if (QString(request.rawHeader(QByteArrayLiteral("X-Otter-Token"))) == m_widget->getMessageToken())
+		if (QString::fromLatin1(request.rawHeader(QByteArrayLiteral("X-Otter-Token"))) == m_widget->getMessageToken())
 		{
 			const QString type(request.rawHeader(QByteArrayLiteral("X-Otter-Type")));
 			const QJsonObject payloadObject(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArrayLiteral("X-Otter-Data")))).object());

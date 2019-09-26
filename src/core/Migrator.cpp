@@ -286,7 +286,7 @@ public:
 
 			if (file.open(QIODevice::ReadOnly | QIODevice::Text))
 			{
-				QString data(file.readAll());
+				QString data(QString::fromLatin1(file.readAll()));
 
 				for (optionsIterator = optionsMap.begin(); optionsIterator != optionsMap.end(); ++optionsIterator)
 				{

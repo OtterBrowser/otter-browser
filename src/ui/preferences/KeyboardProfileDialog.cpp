@@ -194,7 +194,7 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 	{
 		const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(definitions.at(i).action));
 		const QString name(ActionsManager::getActionName(definitions.at(i).action));
-		const QString parameters(definitions.at(i).parameters.isEmpty() ? QString() : QJsonDocument(QJsonObject::fromVariantMap(definitions.at(i).parameters)).toJson(QJsonDocument::Compact));
+		const QString parameters(definitions.at(i).parameters.isEmpty() ? QString() : QString::fromLatin1(QJsonDocument(QJsonObject::fromVariantMap(definitions.at(i).parameters)).toJson(QJsonDocument::Compact)));
 
 		for (int j = 0; j < definitions.at(i).shortcuts.count(); ++j)
 		{

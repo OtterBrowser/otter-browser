@@ -152,7 +152,7 @@ QByteArray ListingNetworkReply::createListing(const QString &title, const QVecto
 
 		iterator.value().pixmap(iconSize, iconSize).save(&buffer, "PNG");
 
-		styleHtml.append(QStringLiteral("tr td:first-child.icon_%1\n{\n\tbackground-image:url(\"data:image/png;base64,%2\");\n}\n").arg(Utils::createIdentifier(iterator.key()), QString(byteArray.toBase64())));
+		styleHtml.append(QStringLiteral("tr td:first-child.icon_%1\n{\n\tbackground-image:url(\"data:image/png;base64,%2\");\n}\n").arg(Utils::createIdentifier(iterator.key()), QString::fromLatin1(byteArray.toBase64())));
 	}
 
 	QHash<QString, QString> variables;

@@ -207,7 +207,7 @@ void PageInformationContentsWidget::updateSections()
 
 					for (iterator = headers.constBegin(); iterator != headers.constEnd(); ++iterator)
 					{
-						addEntry(sectionItem, QString(iterator.key()), QString(iterator.value()));
+						addEntry(sectionItem, QString::fromLatin1(iterator.key()), QString::fromLatin1(iterator.value()));
 					}
 				}
 

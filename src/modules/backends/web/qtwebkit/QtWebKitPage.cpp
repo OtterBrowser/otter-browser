@@ -101,7 +101,7 @@ void QtWebKitFrame::handleLoadFinished()
 
 		if (file.open(QIODevice::ReadOnly))
 		{
-			m_frame->documentElement().evaluateJavaScript(QString(file.readAll()).arg(m_widget->getMessageToken(), (sslErrors.isEmpty() ? QByteArray() : sslErrors.value(0).error.certificate().digest().toBase64()), ((m_frame->page()->history()->currentItemIndex() > 0) ? QLatin1String("true") : QLatin1String("false"))));
+			m_frame->documentElement().evaluateJavaScript(QString::fromLatin1(file.readAll()).arg(m_widget->getMessageToken(), QString::fromLatin1((sslErrors.isEmpty() ? QByteArray() : sslErrors.value(0).error.certificate().digest().toBase64())), ((m_frame->page()->history()->currentItemIndex() > 0) ? QLatin1String("true") : QLatin1String("false"))));
 
 			file.close();
 		}
@@ -115,7 +115,7 @@ void QtWebKitFrame::handleLoadFinished()
 
 		if (file.open(QIODevice::ReadOnly))
 		{
-			m_frame->documentElement().evaluateJavaScript(QString(file.readAll()).arg(m_widget->getMessageToken()));
+			m_frame->documentElement().evaluateJavaScript(QString::fromLatin1(file.readAll()).arg(m_widget->getMessageToken()));
 
 			file.close();
 		}
@@ -534,7 +534,7 @@ QVariant QtWebKitPage::runScript(const QString &path, QWebElement element)
 
 	if (file.open(QIODevice::ReadOnly))
 	{
-		const QVariant result(element.evaluateJavaScript(file.readAll()));
+		const QVariant result(element.evaluateJavaScript(QString::fromLatin1(file.readAll())));
 
 		file.close();
 

@@ -155,7 +155,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 		if (file.open(QIODevice::ReadOnly))
 		{
-			QStringList temporaryArguments(QString(file.readAll()).trimmed().split(QLatin1Char(' '), QString::SkipEmptyParts));
+			QStringList temporaryArguments(QString::fromLatin1(file.readAll()).trimmed().split(QLatin1Char(' '), QString::SkipEmptyParts));
 
 			if (!temporaryArguments.isEmpty())
 			{
@@ -277,7 +277,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	QCryptographicHash hash(QCryptographicHash::Md5);
 	hash.addData(profilePath.toUtf8());
 
-	const QString identifier(hash.result().toHex());
+	const QString identifier(QString::fromLatin1(hash.result().toHex()));
 	const QString server(applicationName() + (identifier.isEmpty() ? QString() : (QLatin1Char('-') + identifier)));
 	QLocalSocket socket;
 	socket.connectToServer(server);
@@ -293,7 +293,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 		for (int i = 0; i < arguments.count(); ++i)
 		{
-			encodedArguments.append(arguments.at(i).toUtf8().toBase64());
+			encodedArguments.append(QString::fromLatin1(arguments.at(i).toUtf8().toBase64()));
 		}
 
 		QTextStream stream(&socket);
@@ -997,13 +997,13 @@ void Application::handleNewConnection()
 	QTextStream stream(socket);
 	stream >> data;
 
-	const QStringList encodedArguments(QString(QByteArray::fromBase64(data.toUtf8())).split(QLatin1Char(' ')));
+	const QStringList encodedArguments(QString::fromLatin1(QByteArray::fromBase64(data.toUtf8())).split(QLatin1Char(' ')));
 	QStringList decodedArguments;
 	decodedArguments.reserve(encodedArguments.count());
 
 	for (int i = 0; i < encodedArguments.count(); ++i)
 	{
-		decodedArguments.append(QString(QByteArray::fromBase64(encodedArguments.at(i).toUtf8())));
+		decodedArguments.append(QString::fromLatin1(QByteArray::fromBase64(encodedArguments.at(i).toUtf8())));
 	}
 
 	m_commandLineParser.parse(decodedArguments);

@@ -851,7 +851,7 @@ void QtWebKitWebWidget::fillPassword(const PasswordsManager::PasswordInformation
 		fieldsArray.append(QJsonObject({{QLatin1String("name"), password.fields.at(i).name}, {QLatin1String("value"), password.fields.at(i).value}, {QLatin1String("type"), ((password.fields.at(i).type == PasswordsManager::PasswordField) ? QLatin1String("password") : QLatin1String("text"))}}));
 	}
 
-	const QString script(QString(file.readAll()).arg(QString(QJsonDocument(fieldsArray).toJson(QJsonDocument::Indented))));
+	const QString script(QString::fromLatin1(file.readAll()).arg(QString::fromLatin1(QJsonDocument(fieldsArray).toJson(QJsonDocument::Indented))));
 
 	file.close();
 
@@ -1770,7 +1770,7 @@ void QtWebKitWebWidget::setHistory(const Session::Window::History &history)
 		QVariantMap entry;
 		entry[QLatin1String("pageScaleFactor")] = 0;
 		entry[QLatin1String("title")] = history.entries.at(i).title;
-		entry[QLatin1String("urlString")] = QString(QUrl::fromUserInput(history.entries.at(i).url).toEncoded());
+		entry[QLatin1String("urlString")] = QString::fromLatin1(QUrl::fromUserInput(history.entries.at(i).url).toEncoded());
 		entry[QLatin1String("scrollPosition")] = QVariantMap({{QLatin1String("x"), history.entries.at(i).position.x()}, {QLatin1String("y"), history.entries.at(i).position.y()}});
 
 		entries.append(entry);

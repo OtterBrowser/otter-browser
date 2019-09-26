@@ -39,8 +39,8 @@ CookiePropertiesDialog::CookiePropertiesDialog(const QNetworkCookie &cookie, QWi
 		setWindowTitle(tr("Edit Cookie"));
 	}
 
-	m_ui->nameLineEditWidget->setText(QString(cookie.name()));
-	m_ui->valueLineEditWidget->setText(QString(cookie.value()));
+	m_ui->nameLineEditWidget->setText(QString::fromLatin1(cookie.name()));
+	m_ui->valueLineEditWidget->setText(QString::fromLatin1(cookie.value()));
 	m_ui->domainLineEditWidget->setText(cookie.domain());
 	m_ui->pathLineEditWidget->setText(cookie.path());
 	m_ui->isSessionOnlyCheckBox->setChecked(!cookie.expirationDate().isValid());

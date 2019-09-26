@@ -76,7 +76,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QString &host, const QV
 			continue;
 		}
 
-		m_ui->encodingComboBox->addItem(codec->name(), codec->name());
+		m_ui->encodingComboBox->addItem(QString::fromLatin1(codec->name()), codec->name());
 	}
 
 	m_ui->popupsPolicyComboBox->addItem(tr("Ask"), QLatin1String("ask"));
@@ -203,7 +203,7 @@ void WebsitePreferencesDialog::changeEvent(QEvent *event)
 
 void WebsitePreferencesDialog::addCookie(const QNetworkCookie &cookie)
 {
-	QList<QStandardItem*> items({new QStandardItem(cookie.domain()), new QStandardItem(QString(cookie.name())), new QStandardItem(cookie.path()), new QStandardItem(QString(cookie.value())), new QStandardItem(cookie.isSessionCookie() ? tr("this session only") : Utils::formatDateTime(cookie.expirationDate()))});
+	QList<QStandardItem*> items({new QStandardItem(cookie.domain()), new QStandardItem(QString::fromLatin1(cookie.name())), new QStandardItem(cookie.path()), new QStandardItem(QString::fromLatin1(cookie.value())), new QStandardItem(cookie.isSessionCookie() ? tr("this session only") : Utils::formatDateTime(cookie.expirationDate()))});
 	items[0]->setData(cookie.toRawForm(), Qt::UserRole);
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);

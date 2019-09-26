@@ -285,11 +285,11 @@ void CertificateDialog::updateValue()
 		case DigestField:
 			break;
 		case VersionField:
-			m_ui->valueTextEditWidget->setPlainText(QString(certificate.version()));
+			m_ui->valueTextEditWidget->setPlainText(QString::fromLatin1(certificate.version()));
 
 			break;
 		case SerialNumberField:
-			m_ui->valueTextEditWidget->setPlainText(formatHex(QString(certificate.serialNumber()), QLatin1Char(':')));
+			m_ui->valueTextEditWidget->setPlainText(formatHex(QString::fromLatin1(certificate.serialNumber()), QLatin1Char(':')));
 
 			break;
 		case SignatureAlgorithmField:
@@ -302,7 +302,7 @@ void CertificateDialog::updateValue()
 
 				for (int i = 0; i < attributes.count(); ++i)
 				{
-					m_ui->valueTextEditWidget->appendPlainText(QStringLiteral("%1 = %2").arg(QString(attributes.at(i)), certificate.issuerInfo(attributes.at(i)).join(QLatin1String(", "))));
+					m_ui->valueTextEditWidget->appendPlainText(QStringLiteral("%1 = %2").arg(QString::fromLatin1(attributes.at(i)), certificate.issuerInfo(attributes.at(i)).join(QLatin1String(", "))));
 				}
 			}
 
@@ -321,7 +321,7 @@ void CertificateDialog::updateValue()
 
 				for (int i = 0; i < attributes.count(); ++i)
 				{
-					m_ui->valueTextEditWidget->appendPlainText(QStringLiteral("%1 = %2").arg(QString(attributes.at(i)), certificate.subjectInfo(attributes.at(i)).join(QLatin1String(", "))));
+					m_ui->valueTextEditWidget->appendPlainText(QStringLiteral("%1 = %2").arg(QString::fromLatin1(attributes.at(i)), certificate.subjectInfo(attributes.at(i)).join(QLatin1String(", "))));
 				}
 			}
 
@@ -381,11 +381,11 @@ void CertificateDialog::updateValue()
 
 			break;
 		case DigestSha1Field:
-			m_ui->valueTextEditWidget->setPlainText(formatHex(QString(certificate.digest(QCryptographicHash::Sha1).toHex())));
+			m_ui->valueTextEditWidget->setPlainText(formatHex(QString::fromLatin1(certificate.digest(QCryptographicHash::Sha1).toHex())));
 
 			break;
 		case DigestSha256Field:
-			m_ui->valueTextEditWidget->setPlainText(formatHex(QString(certificate.digest(QCryptographicHash::Sha256).toHex())));
+			m_ui->valueTextEditWidget->setPlainText(formatHex(QString::fromLatin1(certificate.digest(QCryptographicHash::Sha256).toHex())));
 
 			break;
 		default:

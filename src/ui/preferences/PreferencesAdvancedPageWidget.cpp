@@ -1651,7 +1651,7 @@ void PreferencesAdvancedPageWidget::save()
 
 		if (file.open(QIODevice::ReadOnly))
 		{
-			Application::getInstance()->setStyleSheet(file.readAll());
+			Application::getInstance()->setStyleSheet(QString::fromLatin1(file.readAll()));
 
 			file.close();
 		}

@@ -661,7 +661,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 	for (int i = 0; i < session.windows.count(); ++i)
 	{
 		const Session::MainWindow sessionEntry(session.windows.at(i));
-		QJsonObject mainWindowObject({{QLatin1String("currentIndex"), (sessionEntry.index + 1)}, {QLatin1String("geometry"), QString(sessionEntry.geometry.toBase64())}});
+		QJsonObject mainWindowObject({{QLatin1String("currentIndex"), (sessionEntry.index + 1)}, {QLatin1String("geometry"), QString::fromLatin1(sessionEntry.geometry.toBase64())}});
 		QJsonArray windowsArray;
 
 		for (int j = 0; j < sessionEntry.windows.count(); ++j)

@@ -106,7 +106,7 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 	{
 		if (errors.at(i).error() != QSslError::NoError)
 		{
-			if (exceptions.contains(errors.at(i).certificate().digest().toBase64()))
+			if (exceptions.contains(QString::fromLatin1(errors.at(i).certificate().digest().toBase64())))
 			{
 				errorsToIgnore.append(errors.at(i));
 			}

@@ -265,7 +265,7 @@ bool HtmlBookmarksImporter::import(const QString &path)
 
 	QWebPage page;
 	page.settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
-	page.mainFrame()->setHtml(file.readAll());
+	page.mainFrame()->setHtml(QString::fromLatin1(file.readAll()));
 
 	m_totalAmount = page.mainFrame()->findAllElements(QLatin1String("dt, hr")).count();
 

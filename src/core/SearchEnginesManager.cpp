@@ -192,7 +192,7 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 
 	for (iterator = values.constBegin(); iterator != values.constEnd(); ++iterator)
 	{
-		urlString = urlString.replace(QLatin1Char('{') + iterator.key() + QLatin1Char('}'), QUrl::toPercentEncoding(iterator.value()));
+		urlString = urlString.replace(QLatin1Char('{') + iterator.key() + QLatin1Char('}'), QString::fromLatin1(QUrl::toPercentEncoding(iterator.value())));
 	}
 
 	*method = ((searchUrl.method == QLatin1String("post")) ? QNetworkAccessManager::PostOperation : QNetworkAccessManager::GetOperation);
@@ -208,13 +208,13 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 
 		if (*method == QNetworkAccessManager::GetOperation)
 		{
-			getQuery.addQueryItem(parameters.at(i).first, QUrl::toPercentEncoding(value));
+			getQuery.addQueryItem(parameters.at(i).first, QString::fromLatin1(QUrl::toPercentEncoding(value)));
 		}
 		else
 		{
 			if (searchUrl.enctype == QLatin1String("application/x-www-form-urlencoded"))
 			{
-				postQuery.addQueryItem(parameters.at(i).first, QUrl::toPercentEncoding(value));
+				postQuery.addQueryItem(parameters.at(i).first, QString::fromLatin1(QUrl::toPercentEncoding(value)));
 			}
 			else if (searchUrl.enctype == QLatin1String("multipart/form-data"))
 			{

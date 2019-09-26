@@ -173,7 +173,7 @@ bool HandlersManager::handleUrl(const QUrl &url)
 			}
 			else if (QMessageBox::question(nullptr, tr("Question"), tr("Do you want to add this content blocking profile?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 			{
-				ContentFiltersProfile *profile(new AdblockContentFiltersProfile(Utils::createIdentifier(QFileInfo(location.path()).baseName(), ContentFiltersManager::getProfileNames()), QByteArray::fromPercentEncoding(query.queryItemValue(QLatin1String("title")).toUtf8()), location, {}, {}, 0, ContentFiltersProfile::OtherCategory, ContentFiltersProfile::NoFlags));
+				ContentFiltersProfile *profile(new AdblockContentFiltersProfile(Utils::createIdentifier(QFileInfo(location.path()).baseName(), ContentFiltersManager::getProfileNames()), QString::fromLatin1(QByteArray::fromPercentEncoding(query.queryItemValue(QLatin1String("title")).toUtf8())), location, {}, {}, 0, ContentFiltersProfile::OtherCategory, ContentFiltersProfile::NoFlags));
 
 				ContentFiltersManager::addProfile(profile);
 

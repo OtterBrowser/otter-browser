@@ -131,7 +131,7 @@ void FreeDesktopOrgPlatformStyle::checkForAmbianceTheme()
 	process.start(QIODevice::ReadOnly);
 	process.waitForFinished();
 
-	m_isGtkAmbianceTheme = (QString(process.readAll()).simplified().remove(QLatin1Char('\'')).remove(QLatin1Char('"')) == QLatin1String("Ambiance"));
+	m_isGtkAmbianceTheme = (QString::fromLatin1(process.readAll()).simplified().remove(QLatin1Char('\'')).remove(QLatin1Char('"')) == QLatin1String("Ambiance"));
 }
 
 int FreeDesktopOrgPlatformStyle::getExtraStyleHint(Style::ExtraStyleHint hint) const

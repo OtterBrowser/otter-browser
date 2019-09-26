@@ -403,7 +403,7 @@ void SourceViewerWebWidget::setContents(const QByteArray &contents, const QStrin
 	}
 	else
 	{
-		m_sourceViewer->setPlainText(QString(contents));
+		m_sourceViewer->setPlainText(QString::fromLatin1(contents));
 	}
 
 	m_sourceViewer->document()->setModified(false);

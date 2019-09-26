@@ -56,8 +56,8 @@ AcceptCookieDialog::AcceptCookieDialog(const QNetworkCookie &cookie, CookieJar::
 	}
 
 	m_ui->domainValueLabelWidget->setText(cookie.domain());
-	m_ui->nameValueLabelWidget->setText(QString(cookie.name()));
-	m_ui->valueValueLabelWidget->setText(QString(cookie.value()));
+	m_ui->nameValueLabelWidget->setText(QString::fromLatin1(cookie.name()));
+	m_ui->valueValueLabelWidget->setText(QString::fromLatin1(cookie.value()));
 	m_ui->expiresValueLabel->setText(cookie.expirationDate().isValid() ? cookie.expirationDate().toString(Qt::ISODate) : tr("This session only"));
 	m_ui->isSecureValueLabel->setText(cookie.isSecure() ? tr("Secure connections only") : tr("Any type of connection"));
 	m_ui->isHttpOnlyValueLabel->setText(cookie.isHttpOnly() ? tr("Yes") : tr("No"));

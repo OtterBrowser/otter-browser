@@ -277,9 +277,9 @@ void CookiesContentsWidget::handleCookieAdded(const QNetworkCookie &cookie)
 		}
 	}
 
-	QStandardItem *cookieItem(new QStandardItem(QString(cookie.name())));
+	QStandardItem *cookieItem(new QStandardItem(QString::fromLatin1(cookie.name())));
 	cookieItem->setData(cookie.toRawForm(), Qt::UserRole);
-	cookieItem->setToolTip(cookie.name());
+	cookieItem->setToolTip(QString::fromLatin1(cookie.name()));
 	cookieItem->setFlags(cookieItem->flags() | Qt::ItemNeverHasChildren);
 
 	domainItem->appendRow(cookieItem);
@@ -414,8 +414,8 @@ void CookiesContentsWidget::updateActions()
 		if (!cookie.name().isEmpty())
 		{
 			m_ui->propertiesButton->setEnabled(true);
-			m_ui->nameLabelWidget->setText(QString(cookie.name()));
-			m_ui->valueLabelWidget->setText(QString(cookie.value()));
+			m_ui->nameLabelWidget->setText(QString::fromLatin1(cookie.name()));
+			m_ui->valueLabelWidget->setText(QString::fromLatin1(cookie.value()));
 			m_ui->domainLabelWidget->setText(cookie.domain());
 			m_ui->pathLabelWidget->setText(cookie.path());
 			m_ui->expiresLabelWidget->setText(cookie.expirationDate().isValid() ? Utils::formatDateTime(cookie.expirationDate()) : tr("this session only"));

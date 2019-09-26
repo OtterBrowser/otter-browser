@@ -92,7 +92,7 @@ QString FeedParser::createIdentifier(const Feed::Entry &entry)
 	hash.addData(entry.summary.toUtf8());
 	hash.addData(entry.content.toUtf8());
 
-	return QString(hash.result());
+	return QString::fromLatin1(hash.result());
 }
 
 AtomFeedParser::AtomFeedParser() : FeedParser()

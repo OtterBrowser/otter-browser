@@ -96,7 +96,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 			{
 				const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(gestures.at(j).action));
 				const QString name(ActionsManager::getActionName(gestures.at(j).action));
-				const QString parameters(gestures.at(j).parameters.isEmpty() ? QString() : QJsonDocument(QJsonObject::fromVariantMap(gestures.at(j).parameters)).toJson(QJsonDocument::Compact));
+				const QString parameters(gestures.at(j).parameters.isEmpty() ? QString() : QString::fromLatin1(QJsonDocument(QJsonObject::fromVariantMap(gestures.at(j).parameters)).toJson(QJsonDocument::Compact)));
 				QString steps;
 
 				for (int k = 0; k < gestures.at(j).steps.count(); ++k)

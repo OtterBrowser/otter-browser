@@ -875,7 +875,7 @@ void Menu::populateCharacterEncodingMenu()
 				continue;
 			}
 
-			QAction *textCodecAction(addAction(Utils::elideText(codec->name(), fontMetrics(), this)));
+			QAction *textCodecAction(addAction(Utils::elideText(QString::fromLatin1(codec->name()), fontMetrics(), this)));
 			textCodecAction->setData(codec->name().toLower());
 			textCodecAction->setCheckable(true);
 

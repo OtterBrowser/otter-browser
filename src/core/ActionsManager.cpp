@@ -643,7 +643,7 @@ QString ActionsManager::createReport()
 
 				stream << QLatin1Char('\t');
 				stream.setFieldWidth(30);
-				stream << QLatin1Char(' ') + QJsonDocument(QJsonObject::fromVariantMap(definitions.at(j).first)).toJson(QJsonDocument::Compact);
+				stream << QLatin1Char(' ') + QString::fromLatin1(QJsonDocument(QJsonObject::fromVariantMap(definitions.at(j).first)).toJson(QJsonDocument::Compact));
 				stream.setFieldWidth(20);
 
 				for (int k = 0; k < shortcuts.count(); ++k)
