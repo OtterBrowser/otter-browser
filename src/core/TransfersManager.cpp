@@ -618,7 +618,7 @@ QString Transfer::getSuggestedFileName()
 
 	if (m_reply->hasRawHeader(QByteArrayLiteral("Content-Disposition")))
 	{
-		const QString contenDispositionHeader(m_reply->rawHeader(QByteArrayLiteral("Content-Disposition")));
+		const QString contenDispositionHeader(QString::fromLatin1(m_reply->rawHeader(QByteArrayLiteral("Content-Disposition"))));
 
 		if (contenDispositionHeader.contains(QLatin1String("filename*=")))
 		{

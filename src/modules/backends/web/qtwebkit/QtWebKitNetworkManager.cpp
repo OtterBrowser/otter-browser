@@ -582,7 +582,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 	{
 		if (QString::fromLatin1(request.rawHeader(QByteArrayLiteral("X-Otter-Token"))) == m_widget->getMessageToken())
 		{
-			const QString type(request.rawHeader(QByteArrayLiteral("X-Otter-Type")));
+			const QString type(QString::fromLatin1(request.rawHeader(QByteArrayLiteral("X-Otter-Type"))));
 			const QJsonObject payloadObject(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArrayLiteral("X-Otter-Data")))).object());
 
 			if (type == QLatin1String("add-ssl-error-exception"))
