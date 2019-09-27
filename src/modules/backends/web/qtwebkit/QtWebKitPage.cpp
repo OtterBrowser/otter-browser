@@ -353,7 +353,7 @@ void QtWebKitPage::handleConsoleMessage(MessageSource category, MessageLevel lev
 
 void QtWebKitPage::updateStyleSheets(const QUrl &url)
 {
-	QString styleSheet((QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(getOption(SettingsManager::Content_TextColorOption).toString(), getOption(SettingsManager::Content_LinkColorOption).toString(), getOption(SettingsManager::Content_VisitedLinkColorOption).toString()).toUtf8());
+	QString styleSheet(QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}").arg(getOption(SettingsManager::Content_TextColorOption).toString(), getOption(SettingsManager::Content_LinkColorOption).toString(), getOption(SettingsManager::Content_VisitedLinkColorOption).toString()));
 	const QWebElement mediaElement(mainFrame()->findFirstElement(QLatin1String("img, audio source, video source")));
 	const bool isViewingMedia(!mediaElement.isNull() && QUrl(mediaElement.attribute(QLatin1String("src"))) == (url.isEmpty() ? mainFrame()->url() : url));
 
