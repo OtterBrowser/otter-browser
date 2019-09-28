@@ -499,7 +499,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 		if (file.open(QIODevice::ReadOnly))
 		{
-			styleSheet += file.readAll();
+			styleSheet += QString::fromLatin1(file.readAll());
 
 			file.close();
 		}

@@ -852,7 +852,7 @@ QString WebWidget::getFastForwardScript(bool isSelectingTheBestLink)
 			return {};
 		}
 
-		script = file.readAll();
+		script = QString::fromLatin1(file.readAll());
 
 		file.close();
 

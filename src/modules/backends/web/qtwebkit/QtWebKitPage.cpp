@@ -392,7 +392,7 @@ void QtWebKitPage::updateStyleSheets(const QUrl &url)
 
 		if (file.open(QIODevice::ReadOnly))
 		{
-			styleSheet.append(file.readAll());
+			styleSheet.append(QString::fromLatin1(file.readAll()));
 
 			file.close();
 		}
