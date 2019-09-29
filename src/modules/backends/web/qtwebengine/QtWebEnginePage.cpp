@@ -178,7 +178,7 @@ void QtWebEnginePage::handleLoadFinished()
 
 				if (file.open(QIODevice::ReadOnly))
 				{
-					runJavaScript(QString(file.readAll()).arg(createJavaScriptList(cosmeticFilters.exceptions), createJavaScriptList(cosmeticFilters.rules)));
+					runJavaScript(QString::fromLatin1(file.readAll()).arg(createJavaScriptList(cosmeticFilters.exceptions), createJavaScriptList(cosmeticFilters.rules)));
 
 					file.close();
 				}
@@ -196,7 +196,7 @@ void QtWebEnginePage::handleLoadFinished()
 
 				if (file.open(QIODevice::ReadOnly))
 				{
-					runJavaScript(QString(file.readAll()).arg(createJavaScriptList(blockedRequests)));
+					runJavaScript(QString::fromLatin1(file.readAll()).arg(createJavaScriptList(blockedRequests)));
 
 					file.close();
 				}
@@ -218,7 +218,7 @@ void QtWebEnginePage::handleLoadFinished()
 
 			if (file.open(QIODevice::ReadOnly))
 			{
-				runJavaScript(file.readAll());
+				runJavaScript(QString::fromLatin1(file.readAll()));
 
 				file.close();
 			}
@@ -361,7 +361,7 @@ QString QtWebEnginePage::createScriptSource(const QString &path, const QStringLi
 		return {};
 	}
 
-	QString script(file.readAll());
+	QString script(QString::fromLatin1(file.readAll()));
 
 	file.close();
 

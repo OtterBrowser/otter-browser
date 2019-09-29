@@ -726,7 +726,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 					break;
 				}
 
-				m_page->runJavaScript(parsePosition(QString(file.readAll()), getClickPosition()), [&](const QVariant &result)
+				m_page->runJavaScript(parsePosition(QString::fromLatin1(file.readAll()), getClickPosition()), [&](const QVariant &result)
 				{
 					if (result.isNull())
 					{
