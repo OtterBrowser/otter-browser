@@ -207,7 +207,7 @@ void Feed::update()
 			{
 				m_parser->moveToThread(&m_parserThread);
 
-				connect(m_parser, &FeedParser::parsingFinished, [&](bool isParsingSuccess)
+				connect(m_parser, &FeedParser::parsingFinished, m_parser, [&](bool isParsingSuccess)
 				{
 					const FeedParser::FeedInformation information(m_parser->getInformation());
 
