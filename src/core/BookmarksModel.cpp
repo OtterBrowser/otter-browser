@@ -35,9 +35,7 @@
 namespace Otter
 {
 
-BookmarksModel::Bookmark::Bookmark()
-{
-}
+BookmarksModel::Bookmark::Bookmark() = default;
 
 void BookmarksModel::Bookmark::remove()
 {

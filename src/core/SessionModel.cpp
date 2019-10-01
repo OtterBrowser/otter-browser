@@ -27,9 +27,7 @@
 namespace Otter
 {
 
-SessionItem::SessionItem()
-{
-}
+SessionItem::SessionItem() = default;
 
 Window* SessionItem::getActiveWindow() const
 {

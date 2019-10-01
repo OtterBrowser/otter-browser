@@ -32,9 +32,7 @@
 namespace Otter
 {
 
-HistoryModel::Entry::Entry()
-{
-}
+HistoryModel::Entry::Entry() = default;
 
 void HistoryModel::Entry::setData(const QVariant &value, int role)
 {

@@ -46,9 +46,7 @@ namespace Otter
 class KeyboardAndMouseProfilesIniToJsonMigration final : public Migration
 {
 public:
-	KeyboardAndMouseProfilesIniToJsonMigration()
-	{
-	}
+	KeyboardAndMouseProfilesIniToJsonMigration() = default;
 
 	void createBackup() const override
 	{
@@ -203,9 +201,7 @@ public:
 class OptionsRenameMigration final : public Migration
 {
 public:
-	OptionsRenameMigration()
-	{
-	}
+	OptionsRenameMigration() = default;
 
 	void createBackup() const override
 	{
@@ -337,9 +333,7 @@ public:
 class SearchEnginesStorageMigration final : public Migration
 {
 public:
-	SearchEnginesStorageMigration()
-	{
-	}
+	SearchEnginesStorageMigration() = default;
 
 	void migrate() const override
 	{
@@ -370,9 +364,7 @@ public:
 class SessionsIniToJsonMigration final : public Migration
 {
 public:
-	SessionsIniToJsonMigration()
-	{
-	}
+	SessionsIniToJsonMigration() = default;
 
 	void createBackup() const override
 	{

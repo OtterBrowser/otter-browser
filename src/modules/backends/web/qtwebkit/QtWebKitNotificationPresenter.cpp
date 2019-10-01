@@ -24,9 +24,7 @@
 namespace Otter
 {
 
-QtWebKitNotificationPresenter::QtWebKitNotificationPresenter()
-{
-}
+QtWebKitNotificationPresenter::QtWebKitNotificationPresenter() = default;
 
 void QtWebKitNotificationPresenter::showMessage(const Notification::Message &message)
 {

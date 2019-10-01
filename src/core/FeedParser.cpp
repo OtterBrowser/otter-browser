@@ -29,9 +29,7 @@
 namespace Otter
 {
 
-FeedParser::FeedParser()
-{
-}
+FeedParser::FeedParser() = default;
 
 FeedParser* FeedParser::createParser(Feed *feed, DataFetchJob *data)
 {
