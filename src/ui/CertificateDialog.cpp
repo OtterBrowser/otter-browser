@@ -494,7 +494,7 @@ QStandardItem* CertificateDialog::createField(CertificateDialog::CertificateFiel
 	return item;
 }
 
-QString CertificateDialog::formatHex(const QString &source, const QChar &separator)
+QString CertificateDialog::formatHex(const QString &source, QChar separator)
 {
 	QString result;
 	int characterCount(0);

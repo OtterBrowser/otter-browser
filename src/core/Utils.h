@@ -115,7 +115,7 @@ QStringList getOpenPaths(const QStringList &fileNames = {}, QStringList filters 
 QVector<QUrl> extractUrls(const QMimeData *mimeData);
 QVector<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
 qreal calculatePercent(qint64 amount, qint64 total, int multiplier = 100);
-int calculateCharacterWidth(const QChar &character, const QFontMetrics &fontMetrics);
+int calculateCharacterWidth(QChar character, const QFontMetrics &fontMetrics);
 int calculateTextWidth(const QString &text, const QFontMetrics &fontMetrics);
 bool isUrl(const QString &text);
 bool isUrlEmpty(const QUrl &url);
