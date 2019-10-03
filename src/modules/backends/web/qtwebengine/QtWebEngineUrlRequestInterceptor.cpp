@@ -333,7 +333,7 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 		{
 			const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(result.profile));
 
-			Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(profile ? profile->getTitle() : QCoreApplication::translate("main", "(Unknown)")).arg(result.rule), Console::NetworkCategory, Console::LogLevel, request.requestUrl().toString(), -1);
+			Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg((profile ? profile->getTitle() : QCoreApplication::translate("main", "(Unknown)")), result.rule), Console::NetworkCategory, Console::LogLevel, request.requestUrl().toString(), -1);
 
 			if (storeBlockedUrl && !m_blockedElements.value(request.firstPartyUrl().host()).contains(request.requestUrl().url()))
 			{
