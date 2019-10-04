@@ -307,7 +307,7 @@ void Feed::update()
 								message.icon = ThemesManager::createIcon(QLatin1String("application-rss+xml"));
 							}
 
-							connect(NotificationsManager::createNotification(message, this), &Notification::clicked, [&]()
+							connect(NotificationsManager::createNotification(message, this), &Notification::clicked, this, [&]()
 							{
 								Application::getInstance()->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), FeedsManager::createFeedReaderUrl(getUrl())}});
 							});
