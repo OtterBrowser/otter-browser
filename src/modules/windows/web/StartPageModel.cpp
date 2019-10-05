@@ -380,7 +380,7 @@ bool StartPageModel::requestThumbnail(const QUrl &url, const QSize &size)
 
 	if (job)
 	{
-		connect(job, &WebPageThumbnailJob::jobFinished, [=](bool isSuccess)
+		connect(job, &WebPageThumbnailJob::jobFinished, this, [=](bool isSuccess)
 		{
 			Q_UNUSED(isSuccess)
 
