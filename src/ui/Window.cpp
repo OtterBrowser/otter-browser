@@ -643,7 +643,7 @@ ActionsManager::ActionDefinition::State Window::getActionState(int identifier, c
 
 			break;
 		case ActionsManager::MaximizeTabAction:
-			state.isEnabled = !isMaximized();
+			state.isEnabled = (parentWidget()->windowType() == Qt::SubWindow && !isMaximized());
 
 			break;
 		case ActionsManager::MinimizeTabAction:
@@ -651,7 +651,7 @@ ActionsManager::ActionDefinition::State Window::getActionState(int identifier, c
 
 			break;
 		case ActionsManager::RestoreTabAction:
-			state.isEnabled = (isMaximized() || isMinimized());
+			state.isEnabled = (parentWidget()->windowType() != Qt::SubWindow || isMaximized() || isMinimized());
 
 			break;
 		case ActionsManager::AlwaysOnTopTabAction:
@@ -708,7 +708,7 @@ Session::Window Window::getSession() const
 	session.isAlwaysOnTop = windowFlags().testFlag(Qt::WindowStaysOnTopHint);
 	session.state.state = Qt::WindowMaximized;
 
-	if (!isMaximized())
+	if (parentWidget()->windowType() == Qt::SubWindow && !isMaximized())
 	{
 		if (isMinimized())
 		{
