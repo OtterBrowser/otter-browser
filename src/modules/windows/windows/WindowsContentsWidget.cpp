@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -127,7 +127,7 @@ WindowsContentsWidget::WindowsContentsWidget(const QVariantMap &parameters, Wind
 	m_ui->windowsViewWidget->expandAll();
 	m_ui->windowsViewWidget->viewport()->setMouseTracking(true);
 
-	connect(SessionsManager::getModel(), &SessionModel::rowsInserted, [&](const QModelIndex &index)
+	connect(SessionsManager::getModel(), &SessionModel::rowsInserted, this, [&](const QModelIndex &index)
 	{
 		m_ui->windowsViewWidget->setExpanded(index, true);
 	});
