@@ -431,7 +431,7 @@ void SearchWidget::addSearchEngine(QAction *action)
 	{
 		SearchEngineFetchJob *job(new SearchEngineFetchJob(action->data().toUrl(), {}, true, this));
 
-		connect(job, &SearchEngineFetchJob::jobFinished, [&](bool isSuccess)
+		connect(job, &SearchEngineFetchJob::jobFinished, this, [&](bool isSuccess)
 		{
 			if (!isSuccess)
 			{

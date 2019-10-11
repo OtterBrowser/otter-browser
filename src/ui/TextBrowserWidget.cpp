@@ -79,7 +79,7 @@ QVariant TextBrowserWidget::loadResource(int type, const QUrl &url)
 
 	DataFetchJob *job(new DataFetchJob(url, this));
 
-	connect(job, &DataFetchJob::jobFinished, [=](bool isSuccess)
+	connect(job, &DataFetchJob::jobFinished, this, [=](bool isSuccess)
 	{
 		if (isSuccess)
 		{
