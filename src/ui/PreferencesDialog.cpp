@@ -100,7 +100,7 @@ void PreferencesDialog::changeEvent(QEvent *event)
 
 void PreferencesDialog::showTab(int tab)
 {
-	if (m_loadedTabs[tab])
+	if (m_loadedTabs.value(tab))
 	{
 		return;
 	}
