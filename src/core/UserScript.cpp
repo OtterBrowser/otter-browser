@@ -350,7 +350,7 @@ QStringList UserScript::getMatchRules() const
 
 QVector<UserScript*> UserScript::getUserScriptsForUrl(const QUrl &url, UserScript::InjectionTime injectionTime, bool isSubFrame)
 {
-	const QStringList scriptNames(AddonsManager::getUserScripts());
+	const QStringList scriptNames(AddonsManager::getAddons(Addon::UserScriptType));
 	QVector<UserScript*> scripts;
 
 	for (int i = 0; i < scriptNames.count(); ++i)

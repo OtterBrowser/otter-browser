@@ -92,7 +92,7 @@ void AddonsContentsWidget::populateAddons()
 
 	m_model->appendRow(userScriptsItem);
 
-	const QStringList userScripts(AddonsManager::getUserScripts());
+	const QStringList userScripts(AddonsManager::getAddons(Addon::UserScriptType));
 
 	for (int i = 0; i < userScripts.count(); ++i)
 	{

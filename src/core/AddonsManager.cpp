@@ -261,19 +261,26 @@ AddonsManager::SpecialPageInformation AddonsManager::getSpecialPage(const QStrin
 	return {};
 }
 
-QStringList AddonsManager::getUserScripts()
+QStringList AddonsManager::getAddons(Addon::AddonType type)
 {
-	if (!m_areUserScripsInitialized)
+	switch (type)
 	{
-		loadUserScripts();
+		case Addon::UserScriptType:
+			if (!m_areUserScripsInitialized)
+			{
+				loadUserScripts();
+			}
+
+			return m_userScripts.keys();
+
+		case Addon::WebBackendType:
+			return m_webBackends.keys();
+
+		default:
+			break;
 	}
 
-	return m_userScripts.keys();
-}
-
-QStringList AddonsManager::getWebBackends()
-{
-	return m_webBackends.keys();
+	return {};
 }
 
 QStringList AddonsManager::getSpecialPages(SpecialPageInformation::PageTypes types)

@@ -131,8 +131,7 @@ public:
 	static UserScript* getUserScript(const QString &name);
 	static WebBackend* getWebBackend(const QString &name = {});
 	static SpecialPageInformation getSpecialPage(const QString &name);
-	static QStringList getUserScripts();
-	static QStringList getWebBackends();
+	static QStringList getAddons(Addon::AddonType type);
 	static QStringList getSpecialPages(SpecialPageInformation::PageTypes types = SpecialPageInformation::StandaloneType);
 
 protected:
