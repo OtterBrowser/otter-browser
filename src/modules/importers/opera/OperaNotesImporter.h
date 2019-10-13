@@ -42,7 +42,7 @@ public:
 	QString getDescription() const override;
 	QString getVersion() const override;
 	QString getSuggestedPath(const QString &path = {}) const override;
-	QString getBrowser() const override;
+	QString getGroup() const override;
 	QUrl getHomePage() const override;
 	QStringList getFileFilters() const override;
 	ImportType getImportType() const override;

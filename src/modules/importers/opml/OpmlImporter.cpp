@@ -109,7 +109,7 @@ QString OpmlImporter::getSuggestedPath(const QString &path) const
 	return path;
 }
 
-QString OpmlImporter::getBrowser() const
+QString OpmlImporter::getGroup() const
 {
 	return QLatin1String("other");
 }

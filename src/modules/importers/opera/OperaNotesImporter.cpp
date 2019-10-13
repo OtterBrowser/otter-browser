@@ -103,7 +103,7 @@ QString OperaNotesImporter::getSuggestedPath(const QString &path) const
 	return path;
 }
 
-QString OperaNotesImporter::getBrowser() const
+QString OperaNotesImporter::getGroup() const
 {
 	return QLatin1String("opera");
 }

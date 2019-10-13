@@ -57,7 +57,7 @@ public:
 
 	virtual QWidget* createOptionsWidget(QWidget *parent) = 0;
 	virtual QString getSuggestedPath(const QString &path = {}) const = 0;
-	virtual QString getBrowser() const = 0;
+	virtual QString getGroup() const = 0;
 	virtual QStringList getFileFilters() const = 0;
 	AddonType getType() const override;
 	virtual ImportType getImportType() const = 0;

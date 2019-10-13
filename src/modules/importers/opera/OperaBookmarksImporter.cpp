@@ -89,7 +89,7 @@ QString OperaBookmarksImporter::getSuggestedPath(const QString &path) const
 	return path;
 }
 
-QString OperaBookmarksImporter::getBrowser() const
+QString OperaBookmarksImporter::getGroup() const
 {
 	return QLatin1String("opera");
 }

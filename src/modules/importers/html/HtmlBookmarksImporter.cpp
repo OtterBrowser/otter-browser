@@ -203,7 +203,7 @@ QString HtmlBookmarksImporter::getSuggestedPath(const QString &path) const
 	return path;
 }
 
-QString HtmlBookmarksImporter::getBrowser() const
+QString HtmlBookmarksImporter::getGroup() const
 {
 	return QLatin1String("other");
 }

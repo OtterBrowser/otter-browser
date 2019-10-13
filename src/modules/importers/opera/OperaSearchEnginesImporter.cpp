@@ -92,7 +92,7 @@ QString OperaSearchEnginesImporter::getSuggestedPath(const QString &path) const
 	return path;
 }
 
-QString OperaSearchEnginesImporter::getBrowser() const
+QString OperaSearchEnginesImporter::getGroup() const
 {
 	return QLatin1String("opera");
 }
