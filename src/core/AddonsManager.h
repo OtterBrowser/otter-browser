@@ -142,7 +142,7 @@ private:
 	static QMap<QString, UserScript*> m_userScripts;
 	static QMap<QString, WebBackend*> m_webBackends;
 	static QMap<QString, SpecialPageInformation> m_specialPages;
-	static bool m_areUserScripsInitialized;
+	static bool m_areUserScriptsInitialized;
 
 signals:
 	void userScriptModified(const QString &name);

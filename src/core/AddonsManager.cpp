@@ -99,7 +99,7 @@ AddonsManager* AddonsManager::m_instance(nullptr);
 QMap<QString, UserScript*> AddonsManager::m_userScripts;
 QMap<QString, WebBackend*> AddonsManager::m_webBackends;
 QMap<QString, AddonsManager::SpecialPageInformation> AddonsManager::m_specialPages;
-bool AddonsManager::m_areUserScripsInitialized(false);
+bool AddonsManager::m_areUserScriptsInitialized(false);
 
 AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 {
@@ -206,7 +206,7 @@ void AddonsManager::loadUserScripts()
 		}
 	}
 
-	m_areUserScripsInitialized = true;
+	m_areUserScriptsInitialized = true;
 }
 
 AddonsManager* AddonsManager::getInstance()
@@ -216,7 +216,7 @@ AddonsManager* AddonsManager::getInstance()
 
 UserScript* AddonsManager::getUserScript(const QString &name)
 {
-	if (!m_areUserScripsInitialized)
+	if (!m_areUserScriptsInitialized)
 	{
 		loadUserScripts();
 	}
@@ -266,7 +266,7 @@ QStringList AddonsManager::getAddons(Addon::AddonType type)
 	switch (type)
 	{
 		case Addon::UserScriptType:
-			if (!m_areUserScripsInitialized)
+			if (!m_areUserScriptsInitialized)
 			{
 				loadUserScripts();
 			}
