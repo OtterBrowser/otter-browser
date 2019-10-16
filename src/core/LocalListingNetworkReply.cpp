@@ -76,7 +76,6 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 	}
 
 	QMimeDatabase mimeDatabase;
-	QVector<ListingEntry> entries;
 	QVector<NavigationEntry> navigation;
 #ifdef Q_OS_WIN32
 	const bool isListingDevices(request.url().toLocalFile() == QLatin1String("/"));
@@ -84,6 +83,8 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 #else
 	const QFileInfoList rawEntries(directory.entryInfoList((QDir::AllEntries | QDir::Hidden), (QDir::Name | QDir::DirsFirst)));
 #endif
+	QVector<ListingEntry> entries;
+	entries.reserve(rawEntries.count());
 
 	do
 	{

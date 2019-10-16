@@ -112,9 +112,10 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 				QUrl url(request().url());
 				QMimeDatabase mimeDatabase;
-				QVector<ListingEntry> entries;
 				QVector<NavigationEntry> navigation;
 				const QVector<QUrlInfo> rawEntries(m_symlinks + m_directories + m_files);
+				QVector<ListingEntry> entries;
+				entries.reserve(rawEntries.count());
 
 				if (url.path().isEmpty())
 				{
