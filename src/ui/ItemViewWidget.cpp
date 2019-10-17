@@ -714,6 +714,7 @@ void ItemViewWidget::updateSize()
 	int maximumSectionWidth(0);
 	int minimumTotalWidth(0);
 	QVector<int> widestSections;
+	widestSections.reserve(1);
 
 	for (int i = 0; i < m_headerWidget->count(); ++i)
 	{
