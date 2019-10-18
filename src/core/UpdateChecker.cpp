@@ -67,7 +67,7 @@ UpdateChecker::UpdateChecker(QObject *parent, bool isInBackground) : QObject(par
 		const QJsonArray channelsArray(QJsonDocument::fromJson(device->readAll()).object().value(QLatin1String("channels")).toArray());
 		const QString platform(integration ? integration->getPlatformName() : QString());
 		const int mainVersion(QCoreApplication::applicationVersion().remove(QLatin1Char('.')).toInt());
-		const int subVersion(QString::fromLatin1(OTTER_VERSION_WEEKLY).toInt());
+		const int subVersion(QStringLiteral(OTTER_VERSION_WEEKLY).toInt());
 		int latestVersion(0);
 		int latestVersionIndex(0);
 		QVector<UpdateInformation> availableUpdates;
