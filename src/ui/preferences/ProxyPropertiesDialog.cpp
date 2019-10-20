@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ ProxyPropertiesDialog::ProxyPropertiesDialog(const ProxyDefinition &proxy, QWidg
 {
 	m_ui->setupUi(this);
 	m_ui->titleLineEditWidget->setText(proxy.getTitle());
+	m_ui->automaticConfigurationFilePathWidget->setFilters({tr("PAC files (*.pac)")});
 
 	if (proxy.type == ProxyDefinition::AutomaticProxy)
 	{
