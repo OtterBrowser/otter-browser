@@ -1226,7 +1226,7 @@ void AddressWidget::updateGeometries()
 
 void AddressWidget::updateCompletion(bool isTypedHistory)
 {
-	AddressCompletionModel::CompletionTypes types(AddressCompletionModel::UnknownCompletionType);
+	AddressCompletionModel::CompletionTypes types(AddressCompletionModel::NoCompletionType);
 
 	if (isTypedHistory)
 	{

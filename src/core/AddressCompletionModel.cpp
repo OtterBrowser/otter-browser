@@ -36,7 +36,7 @@ namespace Otter
 {
 
 AddressCompletionModel::AddressCompletionModel(QObject *parent) : QAbstractListModel(parent),
-	m_types(UnknownCompletionType),
+	m_types(NoCompletionType),
 	m_updateTimer(0),
 	m_showCompletionCategories(true)
 {

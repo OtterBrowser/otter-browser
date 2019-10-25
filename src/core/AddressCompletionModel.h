@@ -37,7 +37,7 @@ class AddressCompletionModel final : public QAbstractListModel
 public:
 	enum CompletionType
 	{
-		UnknownCompletionType = 0,
+		NoCompletionType = 0,
 		BookmarksCompletionType = 1,
 		HistoryCompletionType = 2,
 		TypedHistoryCompletionType = 4,
