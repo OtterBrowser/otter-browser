@@ -136,7 +136,7 @@ void AdblockContentFiltersProfile::loadHeader()
 
 void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 {
-	if (rule.indexOf(QLatin1Char('!')) == 0 || rule.isEmpty())
+	if (rule.isEmpty() || rule.indexOf(QLatin1Char('!')) == 0)
 	{
 		return;
 	}
