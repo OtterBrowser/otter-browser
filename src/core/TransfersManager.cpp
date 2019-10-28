@@ -1121,7 +1121,7 @@ void TransfersManager::handleTransferFinished()
 				message.icon = ThemesManager::createIcon(QLatin1String("download"));
 			}
 
-			connect(NotificationsManager::createNotification(message,  this), &Notification::clicked, transfer, &Transfer::openTarget);
+			connect(NotificationsManager::createNotification(message, this), &Notification::clicked, transfer, &Transfer::openTarget);
 		}
 
 		emit transferFinished(transfer);
