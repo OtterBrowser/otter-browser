@@ -19,6 +19,7 @@
 
 #include "TransfersManager.h"
 #include "Application.h"
+#include "HistoryManager.h"
 #include "NetworkManager.h"
 #include "NetworkManagerFactory.h"
 #include "NotificationsManager.h"
@@ -1037,6 +1038,10 @@ void TransfersManager::addTransfer(Transfer *transfer)
 	if (transfer->getOptions().testFlag(Transfer::IsPrivateOption))
 	{
 		m_privateTransfers.append(transfer);
+	}
+	else
+	{
+		HistoryManager::addEntry(transfer->getSource());
 	}
 }
 
