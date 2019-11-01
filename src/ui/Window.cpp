@@ -257,7 +257,7 @@ void Window::markAsActive(bool updateLastActivity)
 
 	if (updateLastActivity)
 	{
-		m_lastActivity = QDateTime::currentDateTime();
+		m_lastActivity = QDateTime::currentDateTimeUtc();
 	}
 
 	emit activated();

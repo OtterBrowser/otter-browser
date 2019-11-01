@@ -61,7 +61,7 @@ void NetworkCache::clearCache(int period)
 		return;
 	}
 
-	const QDateTime currentDateTime(QDateTime::currentDateTime());
+	const QDateTime currentDateTime(QDateTime::currentDateTimeUtc());
 	const QDir cacheMainDirectory(cacheDirectory());
 	const QStringList directories(cacheMainDirectory.entryList(QDir::AllDirs | QDir::NoDotAndDotDot));
 
@@ -76,7 +76,7 @@ void NetworkCache::clearCache(int period)
 
 			for (int k = 0; k < files.count(); ++k)
 			{
-				if (files.at(k).lastModified().secsTo(currentDateTime) < (period * 3600))
+				if (files.at(k).lastModified().toUTC().secsTo(currentDateTime) < (period * 3600))
 				{
 					const QNetworkCacheMetaData metaData(fileMetaData(files.at(k).absoluteFilePath()));
 

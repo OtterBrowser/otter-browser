@@ -261,7 +261,7 @@ void QtWebEnginePage::setHistory(const Session::Window::History &history)
 	{
 		const Session::Window::History::Entry entry(history.entries.at(i));
 
-		stream << QUrl(entry.url) << entry.title << QByteArray() << static_cast<qint32>(0) << false << QUrl() << static_cast<qint32>(0) << QUrl(entry.url) << false << QDateTime::currentDateTime().toSecsSinceEpoch() << static_cast<int>(200);
+		stream << QUrl(entry.url) << entry.title << QByteArray() << static_cast<qint32>(0) << false << QUrl() << static_cast<qint32>(0) << QUrl(entry.url) << false << QDateTime::currentDateTimeUtc().toSecsSinceEpoch() << static_cast<int>(200);
 
 		HistoryEntryInformation entryInformation;
 		entryInformation.timeVisited = entry.time;
@@ -289,7 +289,7 @@ QWebEnginePage* QtWebEnginePage::createWindow(WebWindowType type)
 	{
 		const QString popupsPolicy((m_widget ? m_widget->getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption) : SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption)).toString());
 
-		if (!m_widget || m_widget->getLastUrlClickTime().isNull() || m_widget->getLastUrlClickTime().secsTo(QDateTime::currentDateTime()) > 1)
+		if (!m_widget || m_widget->getLastUrlClickTime().isNull() || m_widget->getLastUrlClickTime().secsTo(QDateTime::currentDateTimeUtc()) > 1)
 		{
 			if (popupsPolicy == QLatin1String("blockAll"))
 			{

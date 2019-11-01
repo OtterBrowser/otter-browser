@@ -408,7 +408,7 @@ void QtWebKitNetworkManager::handleOnlineStateChanged(bool isOnline)
 
 void QtWebKitNetworkManager::handleLoadFinished(bool result)
 {
-	setPageInformation(WebWidget::LoadingFinishedInformation, QDateTime::currentDateTime());
+	setPageInformation(WebWidget::LoadingFinishedInformation, QDateTime::currentDateTimeUtc());
 	setPageInformation(WebWidget::LoadingMessageInformation, tr("Loading finished"));
 	setPageInformation(WebWidget::LoadingSpeedInformation, 0);
 	killTimer(m_loadingSpeedTimer);

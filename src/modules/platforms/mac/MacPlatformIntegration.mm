@@ -249,7 +249,7 @@ void MacPlatformIntegration::timerEvent(QTimerEvent *event)
 
 				m_notifications.remove(allNotifications.at(i));
 			}
-			else if (m_notifications[allNotifications.at(i)]->getMessage().creationTime.secsTo(QDateTime::currentDateTime()) >= visibilityDuration)
+			else if (m_notifications[allNotifications.at(i)]->getMessage().creationTime.secsTo(QDateTime::currentDateTimeUtc()) >= visibilityDuration)
 			{
 				[[NSUserNotificationCenter defaultUserNotificationCenter] removeDeliveredNotification:existingNotifications[allNotifications.at(i)]];
 

@@ -50,7 +50,7 @@ public:
 		QString message;
 		QIcon icon;
 		QImage image;
-		QDateTime creationTime = QDateTime::currentDateTime();
+		QDateTime creationTime = QDateTime::currentDateTimeUtc();
 		Level level = InformationLevel;
 		int event = -1;
 

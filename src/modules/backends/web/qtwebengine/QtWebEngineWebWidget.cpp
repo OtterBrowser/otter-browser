@@ -1908,7 +1908,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 
 						if (mouseEvent->button() == Qt::LeftButton && !getCurrentHitTestResult().linkUrl.isEmpty())
 						{
-							m_lastUrlClickTime = QDateTime::currentDateTime();
+							m_lastUrlClickTime = QDateTime::currentDateTimeUtc();
 						}
 					}
 				}
