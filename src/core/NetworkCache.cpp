@@ -166,6 +166,8 @@ QVector<QUrl> NetworkCache::getEntries() const
 			const QDir cacheFilesDirectory(cacheSubDirectory.absoluteFilePath(subDirectories.at(j)));
 			const QStringList files(cacheFilesDirectory.entryList(QDir::Files));
 
+			entries.reserve(entries.count() + files.count());
+
 			for (int k = 0; k < files.count(); ++k)
 			{
 				const QNetworkCacheMetaData metaData(fileMetaData(cacheFilesDirectory.absoluteFilePath(files.at(k))));
@@ -177,6 +179,8 @@ QVector<QUrl> NetworkCache::getEntries() const
 			}
 		}
 	}
+
+	entries.squeeze();
 
 	return entries;
 }
