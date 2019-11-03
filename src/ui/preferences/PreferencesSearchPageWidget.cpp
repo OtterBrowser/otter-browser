@@ -249,7 +249,7 @@ void PreferencesSearchPageWidget::editSearchEngine()
 
 void PreferencesSearchPageWidget::updateSearchEngine()
 {
-	const QModelIndex index(m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0));
+	const QPersistentModelIndex index(m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0));
 	const QString identifier(index.data(IdentifierRole).toString());
 
 	if (!identifier.isEmpty() && m_searchEngines.contains(identifier) && !m_updateJobs.contains(identifier))
@@ -279,7 +279,52 @@ void PreferencesSearchPageWidget::updateSearchEngine()
 
 		m_updateJobs[identifier] = job;
 
-		connect(job, &SearchEngineFetchJob::jobFinished, this, &PreferencesSearchPageWidget::handleSearchEngineUpdate);
+		connect(job, &SearchEngineFetchJob::jobFinished, this, [=](bool isSuccess)
+		{
+			SearchEnginesManager::SearchEngineDefinition searchEngine(job->getSearchEngine());
+
+			if (index.isValid())
+			{
+				if (isSuccess)
+				{
+					m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::DisplayRole);
+					m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::ToolTipRole);
+
+					if (searchEngine.icon.isNull())
+					{
+						m_ui->searchViewWidget->setData(index, QColor(Qt::transparent), Qt::DecorationRole);
+					}
+					else
+					{
+						m_ui->searchViewWidget->setData(index, searchEngine.icon, Qt::DecorationRole);
+					}
+				}
+
+				m_ui->searchViewWidget->setData(index, false, IsUpdatingRole);
+			}
+
+			m_updateJobs.remove(identifier);
+
+			if (m_updateJobs.isEmpty())
+			{
+				m_updateAnimation->deleteLater();
+				m_updateAnimation = nullptr;
+			}
+
+			if (!isSuccess)
+			{
+				QMessageBox::warning(this, tr("Error"), tr("Failed to update search engine."), QMessageBox::Close);
+
+				return;
+			}
+
+			if (m_searchEngines.contains(identifier))
+			{
+				searchEngine.keyword = m_searchEngines[identifier].second.keyword;
+
+				m_searchEngines[identifier] = {true, searchEngine};
+			}
+		});
 
 		job->start();
 	}
@@ -382,71 +427,6 @@ void PreferencesSearchPageWidget::addSearchEngine(const QString &path, const QSt
 	}
 
 	emit settingsModified();
-}
-
-void PreferencesSearchPageWidget::handleSearchEngineUpdate(bool isSuccess)
-{
-	SearchEngineFetchJob *job(qobject_cast<SearchEngineFetchJob*>(sender()));
-
-	if (!job)
-	{
-		return;
-	}
-
-	SearchEnginesManager::SearchEngineDefinition searchEngine(job->getSearchEngine());
-	const QString identifier(searchEngine.isValid() ? searchEngine.identifier : m_updateJobs.key(job));
-
-	if (!identifier.isEmpty())
-	{
-		for (int i = 0; i < m_ui->searchViewWidget->getRowCount(); ++i)
-		{
-			const QModelIndex index(m_ui->searchViewWidget->getIndex(i, 0));
-
-			if (index.data(IdentifierRole).toString() == identifier)
-			{
-				if (isSuccess)
-				{
-					m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::DisplayRole);
-					m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::ToolTipRole);
-
-					if (searchEngine.icon.isNull())
-					{
-						m_ui->searchViewWidget->setData(index, QColor(Qt::transparent), Qt::DecorationRole);
-					}
-					else
-					{
-						m_ui->searchViewWidget->setData(index, searchEngine.icon, Qt::DecorationRole);
-					}
-				}
-
-				m_ui->searchViewWidget->setData(index, false, IsUpdatingRole);
-
-				break;
-			}
-		}
-
-		m_updateJobs.remove(identifier);
-
-		if (m_updateJobs.isEmpty())
-		{
-			m_updateAnimation->deleteLater();
-			m_updateAnimation = nullptr;
-		}
-	}
-
-	if (!isSuccess)
-	{
-		QMessageBox::warning(this, tr("Error"), tr("Failed to update search engine."), QMessageBox::Close);
-
-		return;
-	}
-
-	if (m_searchEngines.contains(identifier))
-	{
-		searchEngine.keyword = m_searchEngines[identifier].second.keyword;
-
-		m_searchEngines[identifier] = {true, searchEngine};
-	}
 }
 
 void PreferencesSearchPageWidget::updateSearchEngineActions()

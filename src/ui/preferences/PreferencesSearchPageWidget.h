@@ -87,7 +87,6 @@ protected slots:
 	void editSearchEngine();
 	void updateSearchEngine();
 	void removeSearchEngine();
-	void handleSearchEngineUpdate(bool isSuccess);
 	void updateSearchEngineActions();
 
 private:
