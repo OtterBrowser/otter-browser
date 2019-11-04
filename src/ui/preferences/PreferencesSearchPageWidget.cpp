@@ -474,12 +474,13 @@ void PreferencesSearchPageWidget::updateReaddSearchEngineMenu()
 		}
 	}
 
-	m_ui->addSearchButton->menu()->actions().at(2)->menu()->clear();
-	m_ui->addSearchButton->menu()->actions().at(2)->menu()->setEnabled(!availableSearchEngines.isEmpty());
+	QMenu *menu(m_ui->addSearchButton->menu()->actions().at(2)->menu());
+	menu->clear();
+	menu->setEnabled(!availableSearchEngines.isEmpty());
 
 	for (int i = 0; i < availableSearchEngines.count(); ++i)
 	{
-		m_ui->addSearchButton->menu()->actions().at(2)->menu()->addAction(availableSearchEngines.at(i).icon, (availableSearchEngines.at(i).title.isEmpty() ? tr("(Untitled)") : availableSearchEngines.at(i).title))->setData(availableSearchEngines.at(i).identifier);
+		menu->addAction(availableSearchEngines.at(i).icon, (availableSearchEngines.at(i).title.isEmpty() ? tr("(Untitled)") : availableSearchEngines.at(i).title))->setData(availableSearchEngines.at(i).identifier);
 	}
 }
 
