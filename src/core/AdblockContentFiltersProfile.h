@@ -117,6 +117,17 @@ protected:
 		QVarLengthArray<ContentBlockingRule*, 1> rules;
 	};
 
+	struct Request final
+	{
+		QString baseHost;
+		QString requestHost;
+		QString requestUrl;
+
+		explicit Request(const QUrl &baseUrlValue, const QUrl &requestUrlValue) : baseHost(baseUrlValue.host()), requestUrl(requestUrlValue.toString()), requestHost(requestUrlValue.host())
+		{
+		}
+	};
+
 	QString getPath() const;
 	void loadHeader();
 	void parseRuleLine(const QString &rule);
