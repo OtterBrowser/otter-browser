@@ -122,8 +122,9 @@ protected:
 		QString baseHost;
 		QString requestHost;
 		QString requestUrl;
+		NetworkManager::ResourceType resourceType = NetworkManager::OtherType;
 
-		explicit Request(const QUrl &baseUrlValue, const QUrl &requestUrlValue) : baseHost(baseUrlValue.host()), requestUrl(requestUrlValue.toString()), requestHost(requestUrlValue.host())
+		explicit Request(const QUrl &baseUrlValue, const QUrl &requestUrlValue, NetworkManager::ResourceType resourceTypeValue) : baseHost(baseUrlValue.host()), requestUrl(requestUrlValue.toString()), requestHost(requestUrlValue.host()), resourceType(resourceTypeValue)
 		{
 			if (requestUrl.startsWith(QLatin1String("//")))
 			{
@@ -138,9 +139,9 @@ protected:
 	void parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list) const;
 	void addRule(ContentBlockingRule *rule, const QString &ruleString) const;
 	void deleteNode(Node *node) const;
-	ContentFiltersManager::CheckResult checkUrlSubstring(const Node *node, const QString &subString, QString currentRule, NetworkManager::ResourceType resourceType);
-	ContentFiltersManager::CheckResult checkRuleMatch(const ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType) const;
-	ContentFiltersManager::CheckResult evaluateRulesInNode(const Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType) const;
+	ContentFiltersManager::CheckResult checkUrlSubstring(const Node *node, const QString &subString, QString currentRule, const Request &request) const;
+	ContentFiltersManager::CheckResult checkRuleMatch(const ContentBlockingRule *rule, const QString &currentRule, const Request &request) const;
+	ContentFiltersManager::CheckResult evaluateRulesInNode(const Node *node, const QString &currentRule, const Request &request) const;
 	bool loadRules();
 	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList) const;
 
@@ -151,9 +152,6 @@ protected slots:
 private:
 	Node *m_root;
 	DataFetchJob *m_dataFetchJob;
-	QString m_requestUrl;
-	QString m_requestHost;
-	QString m_baseUrlHost;
 	QString m_name;
 	QString m_title;
 	QUrl m_updateUrl;

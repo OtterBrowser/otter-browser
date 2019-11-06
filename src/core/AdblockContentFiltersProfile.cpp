@@ -344,7 +344,7 @@ void AdblockContentFiltersProfile::deleteNode(Node *node) const
 	delete node;
 }
 
-ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstring(const Node *node, const QString &subString, QString currentRule, NetworkManager::ResourceType resourceType)
+ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstring(const Node *node, const QString &subString, QString currentRule, const Request &request) const
 {
 	ContentFiltersManager::CheckResult result;
 	ContentFiltersManager::CheckResult currentResult;
@@ -354,7 +354,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 		const QChar treeChar(subString.at(i));
 		bool childrenExists(false);
 
-		currentResult = evaluateRulesInNode(node, currentRule, resourceType);
+		currentResult = evaluateRulesInNode(node, currentRule, request);
 
 		if (currentResult.isBlocked)
 		{
@@ -375,7 +375,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 
 				for (int k = 0; k < wildcardSubString.length(); ++k)
 				{
-					currentResult = checkUrlSubstring(nextNode, wildcardSubString.right(wildcardSubString.length() - k), (currentRule + wildcardSubString.left(k)), resourceType);
+					currentResult = checkUrlSubstring(nextNode, wildcardSubString.right(wildcardSubString.length() - k), (currentRule + wildcardSubString.left(k)), request);
 
 					if (currentResult.isBlocked)
 					{
@@ -390,7 +390,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 
 			if (nextNode->value == QLatin1Char('^') && !treeChar.isDigit() && !treeChar.isLetter() && !m_separators.contains(treeChar))
 			{
-				currentResult = checkUrlSubstring(nextNode, subString.mid(i), currentRule, resourceType);
+				currentResult = checkUrlSubstring(nextNode, subString.mid(i), currentRule, request);
 
 				if (currentResult.isBlocked)
 				{
@@ -420,7 +420,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 		currentRule += treeChar;
 	}
 
-	currentResult = evaluateRulesInNode(node, currentRule, resourceType);
+	currentResult = evaluateRulesInNode(node, currentRule, request);
 
 	if (currentResult.isBlocked)
 	{
@@ -435,7 +435,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 	{
 		if (node->children.at(i)->value == QLatin1Char('^'))
 		{
-			currentResult = evaluateRulesInNode(node, currentRule, resourceType);
+			currentResult = evaluateRulesInNode(node, currentRule, request);
 
 			if (currentResult.isBlocked)
 			{
@@ -451,33 +451,33 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 	return result;
 }
 
-ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(const ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType) const
+ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(const ContentBlockingRule *rule, const QString &currentRule, const Request &request) const
 {
 	switch (rule->ruleMatch)
 	{
 		case StartMatch:
-			if (!m_requestUrl.startsWith(currentRule))
+			if (!request.requestUrl.startsWith(currentRule))
 			{
 				return {};
 			}
 
 			break;
 		case EndMatch:
-			if (!m_requestUrl.endsWith(currentRule))
+			if (!request.requestUrl.endsWith(currentRule))
 			{
 				return {};
 			}
 
 			break;
 		case ExactMatch:
-			if (m_requestUrl != currentRule)
+			if (request.requestUrl != currentRule)
 			{
 				return {};
 			}
 
 			break;
 		default:
-			if (!m_requestUrl.contains(currentRule))
+			if (!request.requestUrl.contains(currentRule))
 			{
 				return {};
 			}
@@ -485,7 +485,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 			break;
 	}
 
-	const QStringList requestSubdomainList(ContentFiltersManager::createSubdomainList(m_requestHost));
+	const QStringList requestSubdomainList(ContentFiltersManager::createSubdomainList(request.requestHost));
 
 	if (rule->needsDomainCheck && !requestSubdomainList.contains(currentRule.left(currentRule.indexOf(m_domainExpression))))
 	{
@@ -498,7 +498,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 
 	if (hasBlockedDomains)
 	{
-		isBlocked = resolveDomainExceptions(m_baseUrlHost, rule->blockedDomains);
+		isBlocked = resolveDomainExceptions(request.baseHost, rule->blockedDomains);
 
 		if (!isBlocked)
 		{
@@ -506,11 +506,11 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 		}
 	}
 
-	isBlocked = (hasAllowedDomains ? !resolveDomainExceptions(m_baseUrlHost, rule->allowedDomains) : isBlocked);
+	isBlocked = (hasAllowedDomains ? !resolveDomainExceptions(request.baseHost, rule->allowedDomains) : isBlocked);
 
 	if (rule->ruleOptions.testFlag(ThirdPartyExceptionOption) || rule->ruleOptions.testFlag(ThirdPartyOption))
 	{
-		if (m_baseUrlHost.isEmpty() || requestSubdomainList.contains(m_baseUrlHost))
+		if (request.baseHost.isEmpty() || requestSubdomainList.contains(request.baseHost))
 		{
 			isBlocked = rule->ruleOptions.testFlag(ThirdPartyExceptionOption);
 		}
@@ -530,7 +530,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 
 			if (rule->ruleOptions.testFlag(iterator.value()) || (supportsException && rule->ruleOptions.testFlag(static_cast<RuleOption>(iterator.value() * 2))))
 			{
-				if (resourceType == iterator.key())
+				if (request.resourceType == iterator.key())
 				{
 					isBlocked = (isBlocked ? rule->ruleOptions.testFlag(iterator.value()) : isBlocked);
 				}
@@ -545,7 +545,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 			}
 		}
 	}
-	else if (resourceType == NetworkManager::PopupType)
+	else if (request.resourceType == NetworkManager::PopupType)
 	{
 		isBlocked = false;
 	}
@@ -736,7 +736,7 @@ QUrl AdblockContentFiltersProfile::getUpdateUrl() const
 	return m_updateUrl;
 }
 
-ContentFiltersManager::CheckResult AdblockContentFiltersProfile::evaluateRulesInNode(const Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType) const
+ContentFiltersManager::CheckResult AdblockContentFiltersProfile::evaluateRulesInNode(const Node *node, const QString &currentRule, const Request &request) const
 {
 	ContentFiltersManager::CheckResult result;
 
@@ -744,7 +744,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::evaluateRulesIn
 	{
 		if (node->rules.at(i))
 		{
-			ContentFiltersManager::CheckResult currentResult(checkRuleMatch(node->rules.at(i), currentRule, resourceType));
+			ContentFiltersManager::CheckResult currentResult(checkRuleMatch(node->rules.at(i), currentRule, request));
 
 			if (currentResult.isBlocked)
 			{
@@ -769,18 +769,11 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrl(const 
 		return result;
 	}
 
-	m_baseUrlHost = baseUrl.host();
-	m_requestUrl = requestUrl.url();
-	m_requestHost = requestUrl.host();
+	const Request request(baseUrl, requestUrl, resourceType);
 
-	if (m_requestUrl.startsWith(QLatin1String("//")))
+	for (int i = 0; i < request.requestUrl.length(); ++i)
 	{
-		m_requestUrl = m_requestUrl.mid(2);
-	}
-
-	for (int i = 0; i < m_requestUrl.length(); ++i)
-	{
-		const ContentFiltersManager::CheckResult currentResult(checkUrlSubstring(m_root, m_requestUrl.right(m_requestUrl.length() - i), {}, resourceType));
+		const ContentFiltersManager::CheckResult currentResult(checkUrlSubstring(m_root, request.requestUrl.right(request.requestUrl.length() - i), {}, request));
 
 		if (currentResult.isBlocked)
 		{
