@@ -125,6 +125,10 @@ protected:
 
 		explicit Request(const QUrl &baseUrlValue, const QUrl &requestUrlValue) : baseHost(baseUrlValue.host()), requestUrl(requestUrlValue.toString()), requestHost(requestUrlValue.host())
 		{
+			if (requestUrl.startsWith(QLatin1String("//")))
+			{
+				requestUrl = requestUrl.mid(2);
+			}
 		}
 	};
 
