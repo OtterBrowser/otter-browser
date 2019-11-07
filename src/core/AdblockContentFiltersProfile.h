@@ -141,7 +141,7 @@ protected:
 	void deleteNode(Node *node) const;
 	ContentFiltersManager::CheckResult checkUrlSubstring(const Node *node, const QString &subString, QString currentRule, const Request &request) const;
 	ContentFiltersManager::CheckResult checkRuleMatch(const ContentBlockingRule *rule, const QString &currentRule, const Request &request) const;
-	ContentFiltersManager::CheckResult evaluateRulesInNode(const Node *node, const QString &currentRule, const Request &request) const;
+	ContentFiltersManager::CheckResult evaluateNodeRules(const Node *node, const QString &currentRule, const Request &request) const;
 	bool loadRules();
 	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList) const;
 

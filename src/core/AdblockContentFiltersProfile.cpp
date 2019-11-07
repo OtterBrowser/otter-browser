@@ -354,7 +354,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 		const QChar treeChar(subString.at(i));
 		bool childrenExists(false);
 
-		currentResult = evaluateRulesInNode(node, currentRule, request);
+		currentResult = evaluateNodeRules(node, currentRule, request);
 
 		if (currentResult.isBlocked)
 		{
@@ -420,7 +420,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 		currentRule += treeChar;
 	}
 
-	currentResult = evaluateRulesInNode(node, currentRule, request);
+	currentResult = evaluateNodeRules(node, currentRule, request);
 
 	if (currentResult.isBlocked)
 	{
@@ -435,7 +435,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 	{
 		if (node->children.at(i)->value == QLatin1Char('^'))
 		{
-			currentResult = evaluateRulesInNode(node, currentRule, request);
+			currentResult = evaluateNodeRules(node, currentRule, request);
 
 			if (currentResult.isBlocked)
 			{
@@ -736,7 +736,7 @@ QUrl AdblockContentFiltersProfile::getUpdateUrl() const
 	return m_updateUrl;
 }
 
-ContentFiltersManager::CheckResult AdblockContentFiltersProfile::evaluateRulesInNode(const Node *node, const QString &currentRule, const Request &request) const
+ContentFiltersManager::CheckResult AdblockContentFiltersProfile::evaluateNodeRules(const Node *node, const QString &currentRule, const Request &request) const
 {
 	ContentFiltersManager::CheckResult result;
 
