@@ -95,26 +95,26 @@ protected:
 		ExactMatch
 	};
 
-	struct ContentBlockingRule final
-	{
-		QString rule;
-		QStringList blockedDomains;
-		QStringList allowedDomains;
-		RuleOptions ruleOptions = NoOption;
-		RuleMatch ruleMatch = ContainsMatch;
-		bool isException = false;
-		bool needsDomainCheck = false;
-
-		explicit ContentBlockingRule(const QString &ruleValue, const QStringList &blockedDomainsValue, const QStringList &allowedDomainsValue, RuleOptions ruleOptionsValue, RuleMatch ruleMatchValue, bool isExceptionValue, bool needsDomainCheckValue) : rule(ruleValue), blockedDomains(blockedDomainsValue), allowedDomains(allowedDomainsValue), ruleOptions(ruleOptionsValue), ruleMatch(ruleMatchValue), isException(isExceptionValue), needsDomainCheck(needsDomainCheckValue)
-		{
-		}
-	};
-
 	struct Node final
 	{
+		struct Rule final
+		{
+			QString rule;
+			QStringList blockedDomains;
+			QStringList allowedDomains;
+			RuleOptions ruleOptions = NoOption;
+			RuleMatch ruleMatch = ContainsMatch;
+			bool isException = false;
+			bool needsDomainCheck = false;
+
+			explicit Rule(const QString &ruleValue, const QStringList &blockedDomainsValue, const QStringList &allowedDomainsValue, RuleOptions ruleOptionsValue, RuleMatch ruleMatchValue, bool isExceptionValue, bool needsDomainCheckValue) : rule(ruleValue), blockedDomains(blockedDomainsValue), allowedDomains(allowedDomainsValue), ruleOptions(ruleOptionsValue), ruleMatch(ruleMatchValue), isException(isExceptionValue), needsDomainCheck(needsDomainCheckValue)
+			{
+			}
+		};
+
 		QChar value = 0;
 		QVarLengthArray<Node*, 1> children;
-		QVarLengthArray<ContentBlockingRule*, 1> rules;
+		QVarLengthArray<Rule*, 1> rules;
 	};
 
 	struct Request final
@@ -137,10 +137,10 @@ protected:
 	void loadHeader();
 	void parseRuleLine(const QString &rule);
 	void parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list) const;
-	void addRule(ContentBlockingRule *rule, const QString &ruleString) const;
+	void addRule(Node::Rule *rule, const QString &ruleString) const;
 	void deleteNode(Node *node) const;
 	ContentFiltersManager::CheckResult checkUrlSubstring(const Node *node, const QString &subString, QString currentRule, const Request &request) const;
-	ContentFiltersManager::CheckResult checkRuleMatch(const ContentBlockingRule *rule, const QString &currentRule, const Request &request) const;
+	ContentFiltersManager::CheckResult checkRuleMatch(const Node::Rule *rule, const QString &currentRule, const Request &request) const;
 	ContentFiltersManager::CheckResult evaluateNodeRules(const Node *node, const QString &currentRule, const Request &request) const;
 	bool loadRules();
 	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList) const;

@@ -272,7 +272,7 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 		}
 	}
 
-	addRule(new ContentBlockingRule(rule, blockedDomains, allowedDomains, ruleOptions, ruleMatch, isException, needsDomainCheck), line);
+	addRule(new Node::Rule(rule, blockedDomains, allowedDomains, ruleOptions, ruleMatch, isException, needsDomainCheck), line);
 }
 
 void AdblockContentFiltersProfile::parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list) const
@@ -285,7 +285,7 @@ void AdblockContentFiltersProfile::parseStyleSheetRule(const QStringList &line, 
 	}
 }
 
-void AdblockContentFiltersProfile::addRule(ContentBlockingRule *rule, const QString &ruleString) const
+void AdblockContentFiltersProfile::addRule(Node::Rule *rule, const QString &ruleString) const
 {
 	Node *node(m_root);
 
@@ -451,7 +451,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 	return result;
 }
 
-ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(const ContentBlockingRule *rule, const QString &currentRule, const Request &request) const
+ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(const Node::Rule *rule, const QString &currentRule, const Request &request) const
 {
 	switch (rule->ruleMatch)
 	{
