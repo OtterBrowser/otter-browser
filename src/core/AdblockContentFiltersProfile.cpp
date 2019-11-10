@@ -197,7 +197,8 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 
 	QStringList allowedDomains;
 	QStringList blockedDomains;
-	RuleOptions ruleOptions;
+	RuleOptions ruleOptions(NoOption);
+	RuleOptions ruleExceptions(NoOption);
 	RuleMatch ruleMatch(ContainsMatch);
 	const bool isException(line.startsWith(QLatin1String("@@")));
 
@@ -247,7 +248,7 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 			}
 			else if (option != WebSocketOption && option != PopupOption)
 			{
-				ruleOptions |= static_cast<RuleOption>(option * 2);
+				ruleExceptions |= option;
 			}
 		}
 		else if (optionName.startsWith(QLatin1String("domain")))
@@ -311,7 +312,7 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 		}
 	}
 
-	node->rules.append(new Node::Rule(rule, blockedDomains, allowedDomains, ruleOptions, ruleMatch, isException, needsDomainCheck));
+	node->rules.append(new Node::Rule(rule, blockedDomains, allowedDomains, ruleOptions, ruleExceptions, ruleMatch, isException, needsDomainCheck));
 }
 
 void AdblockContentFiltersProfile::parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list) const
@@ -503,11 +504,11 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 
 	isBlocked = (hasAllowedDomains ? !resolveDomainExceptions(request.baseHost, rule->allowedDomains) : isBlocked);
 
-	if (rule->ruleOptions.testFlag(ThirdPartyExceptionOption) || rule->ruleOptions.testFlag(ThirdPartyOption))
+	if (rule->ruleOptions.testFlag(ThirdPartyOption) || rule->ruleExceptions.testFlag(ThirdPartyOption))
 	{
 		if (request.baseHost.isEmpty() || requestSubdomainList.contains(request.baseHost))
 		{
-			isBlocked = rule->ruleOptions.testFlag(ThirdPartyExceptionOption);
+			isBlocked = rule->ruleExceptions.testFlag(ThirdPartyOption);
 		}
 		else if (!hasBlockedDomains && !hasAllowedDomains)
 		{
@@ -523,7 +524,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 		{
 			const bool supportsException(iterator.value() != WebSocketOption && iterator.value() != PopupOption);
 
-			if (rule->ruleOptions.testFlag(iterator.value()) || (supportsException && rule->ruleOptions.testFlag(static_cast<RuleOption>(iterator.value() * 2))))
+			if (rule->ruleOptions.testFlag(iterator.value()) || (supportsException && rule->ruleExceptions.testFlag(iterator.value())))
 			{
 				if (request.resourceType == iterator.key())
 				{
@@ -531,7 +532,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 				}
 				else if (supportsException)
 				{
-					isBlocked = (isBlocked ? rule->ruleOptions.testFlag(static_cast<RuleOption>(iterator.value() * 2)) : isBlocked);
+					isBlocked = (isBlocked ? rule->ruleExceptions.testFlag(iterator.value()) : isBlocked);
 				}
 				else
 				{

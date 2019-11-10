@@ -60,29 +60,21 @@ public:
 	bool isUpdating() const override;
 
 protected:
-	enum RuleOption : quint32
+	enum RuleOption : quint16
 	{
 		NoOption = 0,
 		ThirdPartyOption = 1,
-		ThirdPartyExceptionOption = 2,
-		StyleSheetOption = 4,
-		StyleSheetExceptionOption = 8,
-		ScriptOption = 16,
-		ScriptExceptionOption = 32,
-		ImageOption = 64,
-		ImageExceptionOption = 128,
-		ObjectOption = 256,
-		ObjectExceptionOption = 512,
-		ObjectSubRequestOption = 1024,
-		ObjectSubRequestExceptionOption = 2048,
-		SubDocumentOption = 4096,
-		SubDocumentExceptionOption = 8192,
-		XmlHttpRequestOption = 16384,
-		XmlHttpRequestExceptionOption = 32768,
-		WebSocketOption = 65536,
-		PopupOption = 131072,
-		ElementHideOption = 262144,
-		GenericHideOption = 524288
+		StyleSheetOption = 2,
+		ScriptOption = 4,
+		ImageOption = 8,
+		ObjectOption = 16,
+		ObjectSubRequestOption = 32,
+		SubDocumentOption = 64,
+		XmlHttpRequestOption = 128,
+		WebSocketOption = 256,
+		PopupOption = 512,
+		ElementHideOption = 1024,
+		GenericHideOption = 2048
 	};
 
 	Q_DECLARE_FLAGS(RuleOptions, RuleOption)
@@ -103,11 +95,12 @@ protected:
 			QStringList blockedDomains;
 			QStringList allowedDomains;
 			RuleOptions ruleOptions = NoOption;
+			RuleOptions ruleExceptions = NoOption;
 			RuleMatch ruleMatch = ContainsMatch;
 			bool isException = false;
 			bool needsDomainCheck = false;
 
-			explicit Rule(const QString &ruleValue, const QStringList &blockedDomainsValue, const QStringList &allowedDomainsValue, RuleOptions ruleOptionsValue, RuleMatch ruleMatchValue, bool isExceptionValue, bool needsDomainCheckValue) : rule(ruleValue), blockedDomains(blockedDomainsValue), allowedDomains(allowedDomainsValue), ruleOptions(ruleOptionsValue), ruleMatch(ruleMatchValue), isException(isExceptionValue), needsDomainCheck(needsDomainCheckValue)
+			explicit Rule(const QString &ruleValue, const QStringList &blockedDomainsValue, const QStringList &allowedDomainsValue, RuleOptions ruleOptionsValue, RuleOptions ruleExceptionsValue, RuleMatch ruleMatchValue, bool isExceptionValue, bool needsDomainCheckValue) : rule(ruleValue), blockedDomains(blockedDomainsValue), allowedDomains(allowedDomainsValue), ruleOptions(ruleOptionsValue), ruleExceptions(ruleExceptionsValue), ruleMatch(ruleMatchValue), isException(isExceptionValue), needsDomainCheck(needsDomainCheckValue)
 			{
 			}
 		};
