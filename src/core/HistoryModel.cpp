@@ -124,6 +124,9 @@ void HistoryModel::clearRecentEntries(uint period)
 	{
 		clear();
 
+		m_urls.clear();
+		m_identifiers.clear();
+
 		emit cleared();
 
 		return;
