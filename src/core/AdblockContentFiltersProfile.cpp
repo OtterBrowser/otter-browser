@@ -195,35 +195,32 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 		return;
 	}
 
-	QStringList allowedDomains;
-	QStringList blockedDomains;
-	RuleOptions ruleOptions(NoOption);
-	RuleOptions ruleExceptions(NoOption);
-	RuleMatch ruleMatch(ContainsMatch);
-	const bool isException(line.startsWith(QLatin1String("@@")));
+	Node::Rule *definition(new Node::Rule());
+	definition->rule = rule;
+	definition->isException = line.startsWith(QLatin1String("@@"));
 
-	if (isException)
+	if (definition->isException)
 	{
 		line = line.mid(2);
 	}
 
-	const bool needsDomainCheck(line.startsWith(QLatin1String("||")));
+	definition->needsDomainCheck = line.startsWith(QLatin1String("||"));
 
-	if (needsDomainCheck)
+	if (definition->needsDomainCheck)
 	{
 		line = line.mid(2);
 	}
 
 	if (line.startsWith(QLatin1Char('|')))
 	{
-		ruleMatch = StartMatch;
+		definition->ruleMatch = StartMatch;
 
 		line = line.mid(1);
 	}
 
 	if (line.endsWith(QLatin1Char('|')))
 	{
-		ruleMatch = ((ruleMatch == StartMatch) ? ExactMatch : EndMatch);
+		definition->ruleMatch = ((definition->ruleMatch == StartMatch) ? ExactMatch : EndMatch);
 
 		line = line.left(line.length() - 1);
 	}
@@ -237,18 +234,18 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 		{
 			const RuleOption option(m_options.value(optionName));
 
-			if ((!isException || optionException) && (option == ElementHideOption || option == GenericHideOption))
+			if ((!definition->isException || optionException) && (option == ElementHideOption || option == GenericHideOption))
 			{
 				continue;
 			}
 
 			if (!optionException)
 			{
-				ruleOptions |= option;
+				definition->ruleOptions |= option;
 			}
 			else if (option != WebSocketOption && option != PopupOption)
 			{
-				ruleExceptions |= option;
+				definition->ruleExceptions |= option;
 			}
 		}
 		else if (optionName.startsWith(QLatin1String("domain")))
@@ -259,12 +256,12 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 			{
 				if (parsedDomains.at(j).startsWith(QLatin1Char('~')))
 				{
-					allowedDomains.append(parsedDomains.at(j).mid(1));
+					definition->allowedDomains.append(parsedDomains.at(j).mid(1));
 
 					continue;
 				}
 
-				blockedDomains.append(parsedDomains.at(j));
+				definition->blockedDomains.append(parsedDomains.at(j));
 			}
 		}
 		else
@@ -312,7 +309,7 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 		}
 	}
 
-	node->rules.append(new Node::Rule(rule, blockedDomains, allowedDomains, ruleOptions, ruleExceptions, ruleMatch, isException, needsDomainCheck));
+	node->rules.append(definition);
 }
 
 void AdblockContentFiltersProfile::parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list) const

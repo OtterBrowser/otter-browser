@@ -99,10 +99,6 @@ protected:
 			RuleMatch ruleMatch = ContainsMatch;
 			bool isException = false;
 			bool needsDomainCheck = false;
-
-			explicit Rule(const QString &ruleValue, const QStringList &blockedDomainsValue, const QStringList &allowedDomainsValue, RuleOptions ruleOptionsValue, RuleOptions ruleExceptionsValue, RuleMatch ruleMatchValue, bool isExceptionValue, bool needsDomainCheckValue) : rule(ruleValue), blockedDomains(blockedDomainsValue), allowedDomains(allowedDomainsValue), ruleOptions(ruleOptionsValue), ruleExceptions(ruleExceptionsValue), ruleMatch(ruleMatchValue), isException(isExceptionValue), needsDomainCheck(needsDomainCheckValue)
-			{
-			}
 		};
 
 		QChar value = 0;
