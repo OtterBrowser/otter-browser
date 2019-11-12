@@ -1338,7 +1338,12 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::BookmarkPageAction:
-			state.text = (BookmarksManager::hasBookmark(getUrl()) ? QCoreApplication::translate("actions", "Edit Bookmark…") : QCoreApplication::translate("actions", "Add Bookmark…"));
+			{
+				const QUrl url(getUrl());
+
+				state.text = (BookmarksManager::hasBookmark(url) ? QCoreApplication::translate("actions", "Edit Bookmark…") : QCoreApplication::translate("actions", "Add Bookmark…"));
+				state.isEnabled = !Utils::isUrlEmpty(url);
+			}
 
 			break;
 		case ActionsManager::LoadPluginsAction:
