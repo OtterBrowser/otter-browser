@@ -178,7 +178,7 @@ void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters
 			{
 				const QUrl url(parameters.value(QLatin1String("url"), getUrl()).toUrl().adjusted(QUrl::RemovePassword));
 
-				if (url.isEmpty())
+				if (Utils::isUrlEmpty(url))
 				{
 					break;
 				}
