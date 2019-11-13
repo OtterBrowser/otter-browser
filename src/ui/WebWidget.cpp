@@ -1240,14 +1240,14 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::CutAction:
-			state.isEnabled = (this->hasSelection() && !getSelectedText().trimmed().isEmpty() && m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest));
+			state.isEnabled = (hasSelection() && !getSelectedText().trimmed().isEmpty() && m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest));
 
 			break;
 		case ActionsManager::CopyAction:
 		case ActionsManager::CopyPlainTextAction:
 		case ActionsManager::CopyToNoteAction:
 		case ActionsManager::UnselectAction:
-			state.isEnabled = (this->hasSelection() && !getSelectedText().trimmed().isEmpty());
+			state.isEnabled = (hasSelection() && !getSelectedText().trimmed().isEmpty());
 
 			break;
 		case ActionsManager::PasteAction:
@@ -1278,7 +1278,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::DeleteAction:
-			state.isEnabled = (m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && !m_hitResult.flags.testFlag(HitTestResult::IsEmptyTest) && this->hasSelection() && !getSelectedText().trimmed().isEmpty());
+			state.isEnabled = (m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && !m_hitResult.flags.testFlag(HitTestResult::IsEmptyTest) && hasSelection() && !getSelectedText().trimmed().isEmpty());
 
 			break;
 		case ActionsManager::SelectAllAction:
