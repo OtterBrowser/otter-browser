@@ -50,9 +50,12 @@ public:
 	QIcon getIcon() const override;
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	bool eventFilter(QObject *object, QEvent *event) override;
+	virtual bool canZoom() const override;
+	int getZoom() const override;
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
+	void setZoom(int zoom) override;
 
 protected:
 	void changeEvent(QEvent *event) override;
@@ -71,6 +74,8 @@ protected slots:
 
 private:
 	Ui::NotesContentsWidget *m_ui;
+	int m_zoom;
+	QFont m_defaultFont;
 };
 
 }
