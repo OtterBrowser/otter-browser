@@ -157,7 +157,7 @@ private:
 	SessionsManager::OpenHints m_hints;
 	bool m_hasFeeds;
 	bool m_isNavigatingCompletion;
-	bool m_isUsingSimpleMode;
+	bool m_isSimplified;
 	bool m_wasEdited;
 
 	static int m_entryIdentifierEnumerator;

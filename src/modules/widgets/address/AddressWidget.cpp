@@ -318,14 +318,14 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(p
 	m_hints(SessionsManager::DefaultOpen),
 	m_hasFeeds(false),
 	m_isNavigatingCompletion(false),
-	m_isUsingSimpleMode(false),
+	m_isSimplified(false),
 	m_wasEdited(false)
 {
 	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 	if (!toolBar)
 	{
-		m_isUsingSimpleMode = true;
+		m_isSimplified = true;
 	}
 
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -368,7 +368,7 @@ void AddressWidget::changeEvent(QEvent *event)
 	switch (event->type())
 	{
 		case QEvent::LanguageChange:
-			if (!m_isUsingSimpleMode)
+			if (!m_isSimplified)
 			{
 				setPlaceholderText(tr("Enter address or search…"));
 			}
@@ -403,7 +403,7 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 		style()->drawPrimitive(QStyle::PE_IndicatorArrowDown, &dropdownArrowOption, &painter, this);
 	}
 
-	if (m_isUsingSimpleMode)
+	if (m_isSimplified)
 	{
 		return;
 	}
@@ -458,7 +458,7 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 			break;
 		case Qt::Key_Enter:
 		case Qt::Key_Return:
-			if (!m_isUsingSimpleMode)
+			if (!m_isSimplified)
 			{
 				handleUserInput(text().trimmed(), SessionsManager::calculateOpenHints(SessionsManager::CurrentTabOpen, Qt::LeftButton, event->modifiers()));
 			}
@@ -513,7 +513,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 		menu.addAction(new Action(ActionsManager::CopyAction, {}, executor, &menu));
 		menu.addAction(new Action(ActionsManager::PasteAction, {}, executor, &menu));
 
-		if (!m_isUsingSimpleMode)
+		if (!m_isSimplified)
 		{
 			menu.addAction(new Action(ActionsManager::PasteAndGoAction, {}, ActionExecutor::Object(m_window, m_window), this));
 		}
@@ -864,7 +864,7 @@ void AddressWidget::handleOptionChanged(int identifier, const QVariant &value)
 
 			break;
 		case SettingsManager::AddressField_LayoutOption:
-			if (m_isUsingSimpleMode)
+			if (m_isSimplified)
 			{
 				m_layout = {AddressEntry, HistoryDropdownEntry};
 			}
@@ -935,7 +935,7 @@ void AddressWidget::handleLoadingStateChanged()
 
 void AddressWidget::handleUserInput(const QString &text, SessionsManager::OpenHints hints)
 {
-	if (m_isUsingSimpleMode)
+	if (m_isSimplified)
 	{
 		return;
 	}
@@ -1244,7 +1244,7 @@ void AddressWidget::updateCompletion(bool isTypedHistory)
 			types |= AddressCompletionModel::HistoryCompletionType;
 		}
 
-		if (!m_isUsingSimpleMode && SettingsManager::getOption(SettingsManager::AddressField_SuggestSearchOption).toBool())
+		if (!m_isSimplified && SettingsManager::getOption(SettingsManager::AddressField_SuggestSearchOption).toBool())
 		{
 			types |= AddressCompletionModel::SearchSuggestionsCompletionType;
 		}
@@ -1366,7 +1366,7 @@ void AddressWidget::setWindow(Window *window)
 			});
 		}
 	}
-	else if (mainWindow && !mainWindow->isAboutToClose() && !m_isUsingSimpleMode)
+	else if (mainWindow && !mainWindow->isAboutToClose() && !m_isSimplified)
 	{
 		connect(this, &AddressWidget::requestedSearch, mainWindow, &MainWindow::search);
 	}
@@ -1380,12 +1380,12 @@ void AddressWidget::setUrl(const QUrl &url, bool force)
 {
 	const QString text(Utils::isUrlEmpty(url) ? QString() : url.toString());
 
-	if (!m_isUsingSimpleMode)
+	if (!m_isSimplified)
 	{
 		updateGeometries();
 	}
 
-	if (m_isUsingSimpleMode || ((force || !m_wasEdited || !hasFocus()) && url.scheme() != QLatin1String("javascript")))
+	if (m_isSimplified || ((force || !m_wasEdited || !hasFocus()) && url.scheme() != QLatin1String("javascript")))
 	{
 		const QString host(url.host(QUrl::FullyEncoded));
 		QString toolTip(text);
