@@ -57,7 +57,7 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 
 	m_ui->useBookmarkAsHomePageButton->setMenu(bookmarksMenu);
 	m_ui->useBookmarkAsHomePageButton->setEnabled(BookmarksManager::getModel()->getRootItem()->rowCount() > 0);
-	m_ui->downloadsFilePathWidget->setSelectFile(false);
+	m_ui->downloadsFilePathWidget->setOpenMode(FilePathWidget::DirectoryMode);
 	m_ui->downloadsFilePathWidget->setPath(SettingsManager::getOption(SettingsManager::Paths_DownloadsOption).toString());
 	m_ui->alwaysAskCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_AlwaysAskWhereToSaveDownloadOption).toBool());
 	m_ui->tabsInsteadOfWindowsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool());

@@ -199,7 +199,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->downloadsItemView->setModel(downloadsModel);
 	m_ui->downloadsItemView->sortByColumn(0, Qt::AscendingOrder);
-	m_ui->downloadsFilePathWidget->setSelectFile(false);
+	m_ui->downloadsFilePathWidget->setOpenMode(FilePathWidget::DirectoryMode);
 	m_ui->downloadsApplicationComboBoxWidget->setAlwaysShowDefaultApplication(true);
 
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Network_EnableReferrerOption).toBool());

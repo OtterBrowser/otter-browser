@@ -49,7 +49,7 @@ FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 	m_browseButton(new QPushButton(tr("Browse…"), this)),
 	m_lineEditWidget(new LineEditWidget(this)),
 	m_completer(nullptr),
-	m_selectFile(true)
+	m_openMode(FileMode)
 {
 	QHBoxLayout *layout(new QHBoxLayout(this));
 	layout->addWidget(m_lineEditWidget);
@@ -85,7 +85,7 @@ void FilePathWidget::focusInEvent(QFocusEvent *event)
 void FilePathWidget::selectPath()
 {
 	QString path(m_lineEditWidget->text().isEmpty() ? QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0) : m_lineEditWidget->text());
-	path = (m_selectFile ? QFileDialog::getOpenFileName(this, tr("Select File"), path, m_filter) : QFileDialog::getExistingDirectory(this, tr("Select Directory"), path));
+	path = ((m_openMode == FileMode) ? QFileDialog::getOpenFileName(this, tr("Select File"), path, m_filter) : QFileDialog::getExistingDirectory(this, tr("Select Directory"), path));
 
 	if (!path.isEmpty())
 	{
@@ -100,7 +100,7 @@ void FilePathWidget::updateCompleter()
 		m_completer = new QCompleter(this);
 
 		FileSystemCompleterModel *model(new FileSystemCompleterModel(m_completer));
-		model->setFilter(m_selectFile ? (QDir::AllDirs | QDir::Files) : QDir::AllDirs);
+		model->setFilter((m_openMode == FileMode) ? (QDir::AllDirs | QDir::Files) : QDir::AllDirs);
 
 		m_completer->setModel(model);
 
@@ -117,9 +117,9 @@ void FilePathWidget::setFilters(const QStringList &filters)
 	m_filter = Utils::formatFileTypes(filters);
 }
 
-void FilePathWidget::setSelectFile(bool mode)
+void FilePathWidget::setOpenMode(OpenMode mode)
 {
-	m_selectFile = mode;
+	m_openMode = mode;
 }
 
 void FilePathWidget::setPath(const QString &path)

@@ -45,10 +45,16 @@ class FilePathWidget final : public QWidget
 	Q_OBJECT
 
 public:
+	enum OpenMode
+	{
+		DirectoryMode = 0,
+		FileMode
+	};
+
 	explicit FilePathWidget(QWidget *parent = nullptr);
 
 	void setFilters(const QStringList &filters);
-	void setSelectFile(bool mode);
+	void setOpenMode(OpenMode mode);
 	void setPath(const QString &path);
 	QString getPath() const;
 
@@ -65,7 +71,7 @@ private:
 	LineEditWidget *m_lineEditWidget;
 	QCompleter *m_completer;
 	QString m_filter;
-	bool m_selectFile;
+	OpenMode m_openMode;
 
 signals:
 	void pathChanged(const QString &path);
