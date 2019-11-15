@@ -182,6 +182,14 @@ WindowSessionItem::WindowSessionItem(Window *window) : SessionItem(),
 	m_window(window)
 {
 	setFlags(flags() | Qt::ItemNeverHasChildren);
+
+	connect(window, &Window::titleChanged, this, &WindowSessionItem::notifyWindowModified);
+	connect(window, &Window::iconChanged, this, &WindowSessionItem::notifyWindowModified);
+}
+
+void WindowSessionItem::notifyWindowModified()
+{
+	emitDataChanged();
 }
 
 Window* WindowSessionItem::getActiveWindow() const
