@@ -139,4 +139,9 @@ QString FilePathWidget::getPath() const
 	return m_lineEditWidget->text();
 }
 
+FilePathWidget::OpenMode FilePathWidget::getOpenMode() const
+{
+	return m_openMode;
+}
+
 }

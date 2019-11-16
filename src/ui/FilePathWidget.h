@@ -57,6 +57,7 @@ public:
 	void setOpenMode(OpenMode mode);
 	void setPath(const QString &path);
 	QString getPath() const;
+	OpenMode getOpenMode() const;
 
 protected:
 	void changeEvent(QEvent *event) override;
