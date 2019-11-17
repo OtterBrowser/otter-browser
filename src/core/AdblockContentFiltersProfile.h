@@ -113,7 +113,7 @@ protected:
 		QString requestUrl;
 		NetworkManager::ResourceType resourceType = NetworkManager::OtherType;
 
-		explicit Request(const QUrl &baseUrlValue, const QUrl &requestUrlValue, NetworkManager::ResourceType resourceTypeValue) : baseHost(baseUrlValue.host()), requestUrl(requestUrlValue.toString()), requestHost(requestUrlValue.host()), resourceType(resourceTypeValue)
+		explicit Request(const QUrl &baseUrlValue, const QUrl &requestUrlValue, NetworkManager::ResourceType resourceTypeValue) : baseHost(baseUrlValue.host()), requestHost(requestUrlValue.host()), requestUrl(requestUrlValue.toString()), resourceType(resourceTypeValue)
 		{
 			if (requestUrl.startsWith(QLatin1String("//")))
 			{
