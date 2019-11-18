@@ -513,7 +513,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 		}
 	}
 
-	if (rule->ruleOptions != NoOption)
+	if (rule->ruleOptions != NoOption || rule->ruleExceptions != NoOption)
 	{
 		QHash<NetworkManager::ResourceType, RuleOption>::const_iterator iterator;
 
