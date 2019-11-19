@@ -36,6 +36,22 @@ QtWebEngineTransfer::QtWebEngineTransfer(QWebEngineDownloadItem *item, TransferO
 
 	connect(m_item, &QWebEngineDownloadItem::finished, this, &QtWebEngineTransfer::markAsFinished);
 	connect(m_item, &QWebEngineDownloadItem::downloadProgress, this, &QtWebEngineTransfer::handleDownloadProgress);
+	connect(m_item, &QWebEngineDownloadItem::stateChanged, this, [&](QWebEngineDownloadItem::DownloadState state)
+	{
+		switch (state)
+		{
+			case QWebEngineDownloadItem::DownloadCancelled:
+			case QWebEngineDownloadItem::DownloadCompleted:
+			case QWebEngineDownloadItem::DownloadInterrupted:
+				emit stopped();
+
+				break;
+			default:
+				break;
+		}
+
+		emit changed();
+	});
 }
 
 void QtWebEngineTransfer::cancel()
