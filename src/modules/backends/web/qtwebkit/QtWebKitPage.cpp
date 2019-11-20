@@ -952,7 +952,7 @@ bool QtWebKitPage::shouldInterruptJavaScript()
 	return QWebPage::shouldInterruptJavaScript();
 }
 
-bool QtWebKitPage::supportsExtension(QWebPage::Extension extension) const
+bool QtWebKitPage::supportsExtension(Extension extension) const
 {
 	return (extension == ChooseMultipleFilesExtension || extension == ErrorPageExtension);
 }

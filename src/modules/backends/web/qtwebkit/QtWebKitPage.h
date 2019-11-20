@@ -94,7 +94,7 @@ protected:
 	QString userAgentForUrl(const QUrl &url) const override;
 	QString getDefaultUserAgent() const;
 	QVariant getOption(int identifier) const;
-	bool acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type) override;
+	bool acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, NavigationType type) override;
 	bool javaScriptConfirm(QWebFrame *frame, const QString &message) override;
 	bool javaScriptPrompt(QWebFrame *frame, const QString &message, const QString &defaultValue, QString *result) override;
 
@@ -116,7 +116,7 @@ private:
 signals:
 	void requestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints, const QVariantMap &parameters);
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
-	void aboutToNavigate(const QUrl &url, QWebFrame *frame, QWebPage::NavigationType navigationType);
+	void aboutToNavigate(const QUrl &url, QWebFrame *frame, NavigationType navigationType);
 	void isDisplayingErrorPageChanged(QWebFrame *frame, bool isVisible);
 	void viewingMediaChanged(bool isViewingMedia);
 
