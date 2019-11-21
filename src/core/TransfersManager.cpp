@@ -1016,6 +1016,11 @@ void TransfersManager::updateRunningTransfersState()
 
 void TransfersManager::addTransfer(Transfer *transfer)
 {
+	if (!transfer)
+	{
+		return;
+	}
+
 	m_transfers.append(transfer);
 
 	transfer->setUpdateInterval(500);
