@@ -402,7 +402,7 @@ void QtWebKitNetworkManager::handleOnlineStateChanged(bool isOnline)
 {
 	if (isOnline)
 	{
-		setNetworkAccessible(QNetworkAccessManager::Accessible);
+		setNetworkAccessible(Accessible);
 	}
 }
 
@@ -567,7 +567,7 @@ QtWebKitNetworkManager* QtWebKitNetworkManager::clone() const
 	return new QtWebKitNetworkManager((cache() == nullptr), m_cookieJarProxy->clone(nullptr), nullptr);
 }
 
-QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)
+QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)
 {
 	if (m_widget && request.url() == m_formRequestUrl)
 	{
@@ -575,7 +575,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 		m_widget->openFormRequest(request, operation, outgoingData);
 
-		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest());
+		return QNetworkAccessManager::createRequest(GetOperation, QNetworkRequest());
 	}
 
 	if (m_widget && request.url().path() == QLatin1String("/otter-message") && request.hasRawHeader(QByteArrayLiteral("X-Otter-Token")) && request.hasRawHeader(QByteArrayLiteral("X-Otter-Data")))
@@ -645,7 +645,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 			}
 		}
 
-		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(QUrl()));
+		return QNetworkAccessManager::createRequest(GetOperation, QNetworkRequest(QUrl()));
 	}
 
 	if (m_widget && (m_contentBlockingExceptions.isEmpty() || !m_contentBlockingExceptions.contains(request.url())))
@@ -656,7 +656,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 		if (!m_areImagesEnabled && request.url() != m_mainRequestUrl && resourceType == NetworkManager::ImageType)
 		{
-			return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(QUrl()));
+			return QNetworkAccessManager::createRequest(GetOperation, QNetworkRequest(QUrl()));
 		}
 
 		if (needsContentBlockingCheck)
@@ -684,7 +684,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 				emit requestBlocked(resource);
 
-				return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest());
+				return QNetworkAccessManager::createRequest(GetOperation, QNetworkRequest());
 			}
 		}
 	}
