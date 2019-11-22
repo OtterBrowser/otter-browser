@@ -59,9 +59,13 @@ Updater::Updater(const UpdateChecker::UpdateInformation &information, QObject *p
 	downloadFile(information.scriptUrl, path);
 
 	m_transfer = downloadFile(information.fileUrl, path);
-	m_transfer->setUpdateInterval(500);
 
-	connect(m_transfer, &Transfer::progressChanged, this, &Updater::updateProgress);
+	if (m_transfer)
+	{
+		m_transfer->setUpdateInterval(500);
+
+		connect(m_transfer, &Transfer::progressChanged, this, &Updater::updateProgress);
+	}
 }
 
 void Updater::handleTransferFinished()
@@ -130,9 +134,13 @@ Transfer* Updater::downloadFile(const QUrl &url, const QString &path)
 {
 	const QString urlString(url.path());
 	Transfer *transfer(TransfersManager::startTransfer(url, path + urlString.mid(urlString.lastIndexOf(QLatin1Char('/')) + 1), (Transfer::CanOverwriteOption)));
-	transfer->setParent(this);
 
-	connect(transfer, &Transfer::finished, this, &Updater::handleTransferFinished);
+	if (transfer)
+	{
+		transfer->setParent(this);
+
+		connect(transfer, &Transfer::finished, this, &Updater::handleTransferFinished);
+	}
 
 	return transfer;
 }
