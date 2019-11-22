@@ -69,11 +69,11 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 	{
 		case ActionsManager::SaveAction:
 			{
-				const QString path(Utils::getSavePath(suggestSaveFileName(SingleFileSaveFormat)).path);
+				const SaveInformation saveInfo(Utils::getSavePath(suggestSaveFileName(SingleFileSaveFormat)));
 
-				if (!path.isEmpty())
+				if (saveInfo.canSave())
 				{
-					QFile file(path);
+					QFile file(saveInfo.path);
 
 					if (file.open(QIODevice::WriteOnly))
 					{
@@ -84,7 +84,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 					}
 					else
 					{
-						Console::addMessage(tr("Failed to save file: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, path);
+						Console::addMessage(tr("Failed to save file: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, saveInfo.path);
 
 						QMessageBox::warning(nullptr, tr("Error"), tr("Failed to save file."), QMessageBox::Close);
 					}

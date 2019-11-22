@@ -402,16 +402,16 @@ void QtWebKitWebWidget::handleDownloadRequested(const QNetworkRequest &request)
 
 			if (device && device->size() > 0)
 			{
-				const QString path(Utils::getSavePath(request.url().fileName()).path);
+				const SaveInformation saveInfo(Utils::getSavePath(request.url().fileName()));
 
-				if (path.isEmpty())
+				if (!saveInfo.canSave())
 				{
 					device->deleteLater();
 
 					return;
 				}
 
-				QFile file(path);
+				QFile file(saveInfo.path);
 
 				if (!file.open(QIODevice::WriteOnly))
 				{
@@ -435,15 +435,15 @@ void QtWebKitWebWidget::handleDownloadRequested(const QNetworkRequest &request)
 		{
 			const QString imageUrl(hitResult.imageUrl.url());
 			const QString imageType(imageUrl.mid(11, (imageUrl.indexOf(QLatin1Char(';')) - 11)));
-			const QString path(Utils::getSavePath(tr("file") + QLatin1Char('.') + imageType).path);
+			const SaveInformation saveInfo(Utils::getSavePath(tr("file") + QLatin1Char('.') + imageType));
 
-			if (!path.isEmpty())
+			if (saveInfo.canSave())
 			{
-				QImageWriter writer(path);
+				QImageWriter writer(saveInfo.path);
 
 				if (!writer.write(QImage::fromData(QByteArray::fromBase64(imageUrl.mid(imageUrl.indexOf(QLatin1String(";base64,")) + 7).toUtf8()), imageType.toStdString().c_str())))
 				{
-					Console::addMessage(tr("Failed to save image: %1").arg(writer.errorString()), Console::OtherCategory, Console::ErrorLevel, path, -1, getWindowIdentifier());
+					Console::addMessage(tr("Failed to save image: %1").arg(writer.errorString()), Console::OtherCategory, Console::ErrorLevel, saveInfo.path, -1, getWindowIdentifier());
 				}
 			}
 
@@ -875,14 +875,14 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::SaveAction:
 			if (m_page->isViewingMedia())
 			{
-				const SaveInformation information(Utils::getSavePath(suggestSaveFileName(SingleFileSaveFormat)));
+				const SaveInformation saveInfo(Utils::getSavePath(suggestSaveFileName(SingleFileSaveFormat)));
 
-				if (information.canSave)
+				if (saveInfo.canSave())
 				{
 					QNetworkRequest request(getUrl());
 					request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 
-					TransfersManager::startTransfer(m_networkManager->get(request), information.path, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::CanOverwriteOption | Transfer::IsPrivateOption));
+					TransfersManager::startTransfer(m_networkManager->get(request), saveInfo.path, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::CanOverwriteOption | Transfer::IsPrivateOption));
 				}
 			}
 			else
@@ -1598,11 +1598,11 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				m_page->setViewportSize(viewportSize);
 
 				const QStringList filters({tr("PNG image (*.png)"), tr("JPEG image (*.jpg *.jpeg)")});
-				const SaveInformation result(Utils::getSavePath(suggestSaveFileName(QLatin1String(".png")), {}, filters));
+				const SaveInformation saveInfo(Utils::getSavePath(suggestSaveFileName(QLatin1String(".png")), {}, filters));
 
-				if (result.canSave)
+				if (saveInfo.canSave())
 				{
-					pixmap.save(result.path, ((filters.indexOf(result.filter) == 0) ? "PNG" : "JPEG"));
+					pixmap.save(saveInfo.path, ((filters.indexOf(saveInfo.filter) == 0) ? "PNG" : "JPEG"));
 				}
 			}
 

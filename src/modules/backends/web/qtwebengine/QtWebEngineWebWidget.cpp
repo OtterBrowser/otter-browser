@@ -249,11 +249,11 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::SaveAction:
 			if (m_page->isViewingMedia())
 			{
-				const SaveInformation information(Utils::getSavePath(suggestSaveFileName(SingleFileSaveFormat)));
+                                const SaveInformation saveInfo(Utils::getSavePath(suggestSaveFileName(SingleFileSaveFormat)));
 
-				if (information.canSave)
+                                if (saveInfo.canSave())
 				{
-					m_page->save(information.path, QWebEngineDownloadItem::SingleHtmlSaveFormat);
+                                        m_page->save(saveInfo.path, QWebEngineDownloadItem::SingleHtmlSaveFormat);
 				}
 			}
 			else
