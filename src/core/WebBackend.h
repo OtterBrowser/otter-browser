@@ -30,6 +30,19 @@ namespace Otter
 class ContentsWidget;
 class WebWidget;
 
+class HtmlBookmarksImportJob : public Job
+{
+	Q_OBJECT
+
+public:
+	explicit HtmlBookmarksImportJob(const QString &path, QObject *parent = nullptr);
+
+signals:
+	void importStarted(int total);
+	void importProgress(int total, int amount);
+	void importFinished(bool isSuccess, int total);
+};
+
 class WebPageThumbnailJob : public Job
 {
 	Q_OBJECT
@@ -76,6 +89,7 @@ public:
 	explicit WebBackend(QObject *parent = nullptr);
 
 	virtual WebWidget* createWidget(const QVariantMap &parameters, ContentsWidget *parent = nullptr) = 0;
+	virtual HtmlBookmarksImportJob* createBookmarksImportJob(const QString &path);
 	virtual WebPageThumbnailJob* createPageThumbnailJob(const QUrl &url, const QSize &size);
 	virtual QString getEngineVersion() const = 0;
 	virtual QString getSslVersion() const = 0;

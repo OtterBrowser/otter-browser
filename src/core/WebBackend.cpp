@@ -22,6 +22,11 @@
 namespace Otter
 {
 
+HtmlBookmarksImportJob::HtmlBookmarksImportJob(const QString &path, QObject *parent) : Job(parent)
+{
+	Q_UNUSED(path)
+}
+
 WebPageThumbnailJob::WebPageThumbnailJob(const QUrl &url, const QSize &size, QObject *parent) : Job(parent)
 {
 	Q_UNUSED(url)
@@ -30,6 +35,13 @@ WebPageThumbnailJob::WebPageThumbnailJob(const QUrl &url, const QSize &size, QOb
 
 WebBackend::WebBackend(QObject *parent) : QObject(parent)
 {
+}
+
+HtmlBookmarksImportJob* WebBackend::createBookmarksImportJob(const QString &path)
+{
+	Q_UNUSED(path)
+
+	return nullptr;
 }
 
 WebPageThumbnailJob* WebBackend::createPageThumbnailJob(const QUrl &url, const QSize &size)
