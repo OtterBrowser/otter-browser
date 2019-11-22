@@ -661,6 +661,8 @@ void PreferencesAdvancedPageWidget::updateDownloadsActions()
 	m_ui->downloadsApplicationComboBoxWidget->setMimeType(QMimeDatabase().mimeTypeForName(index.data(Qt::DisplayRole).toString()));
 	m_ui->downloadsApplicationComboBoxWidget->setCurrentCommand(index.data(OpenCommandRole).toString());
 
+	updateDownloadsMode();
+
 	m_ui->downloadsButtonGroup->blockSignals(false);
 	m_ui->downloadsAskButton->blockSignals(false);
 	m_ui->downloadsSaveButton->blockSignals(false);
