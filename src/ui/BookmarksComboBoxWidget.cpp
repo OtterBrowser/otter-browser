@@ -97,6 +97,8 @@ void BookmarksComboBoxWidget::setCurrentFolder(BookmarksModel::Bookmark *folder)
 	if (folder)
 	{
 		setCurrentIndex(folder->index());
+
+		getView()->expand(folder->index());
 	}
 }
 
