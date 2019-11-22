@@ -64,19 +64,14 @@ private:
 friend class SessionModel;
 };
 
-class WindowSessionItem final : public QObject, public SessionItem
+class WindowSessionItem final : public SessionItem
 {
-	Q_OBJECT
-
 public:
 	Window* getActiveWindow() const override;
 	QVariant data(int role) const override;
 
 protected:
 	explicit WindowSessionItem(Window *window);
-
-protected slots:
-	void notifyWindowModified();
 
 private:
 	QPointer<Window> m_window;
