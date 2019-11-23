@@ -676,7 +676,7 @@ void ToolBarWidget::loadBookmarks()
 
 	for (int i = 0; i < m_bookmark->rowCount(); ++i)
 	{
-		BookmarksModel::Bookmark *bookmark(static_cast<BookmarksModel::Bookmark*>(m_bookmark->child(i)));
+		BookmarksModel::Bookmark *bookmark(m_bookmark->getChild(i));
 
 		if (bookmark)
 		{

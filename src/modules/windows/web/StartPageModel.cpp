@@ -57,7 +57,7 @@ void StartPageModel::reloadModel()
 	{
 		for (int i = 0; i < m_bookmark->rowCount(); ++i)
 		{
-			const BookmarksModel::Bookmark *bookmark(static_cast<BookmarksModel::Bookmark*>(m_bookmark->child(i)));
+			const BookmarksModel::Bookmark *bookmark(m_bookmark->getChild(i));
 
 			if (bookmark)
 			{
@@ -127,7 +127,7 @@ void StartPageModel::addTile(const QUrl &url)
 
 			for (int j = 0; j < m_bookmark->rowCount(); ++j)
 			{
-				BookmarksModel::Bookmark *childBookmark(static_cast<BookmarksModel::Bookmark*>(m_bookmark->child(j)));
+				BookmarksModel::Bookmark *childBookmark(m_bookmark->getChild(j));
 
 				if (childBookmark && childBookmark->getRawData(Qt::DisplayRole).toString() == directories.at(i))
 				{
