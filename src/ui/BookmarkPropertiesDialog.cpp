@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -40,7 +40,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksModel::Bookmark *boo
 	const bool isUrl(type == BookmarksModel::FeedBookmark || type == BookmarksModel::UrlBookmark);
 
 	m_ui->setupUi(this);
-	m_ui->folderComboBox->setCurrentFolder(static_cast<BookmarksModel::Bookmark*>(bookmark->parent()));
+	m_ui->folderComboBox->setCurrentFolder(bookmark->getParent());
 	m_ui->titleLineEditWidget->setText(m_bookmark->getTitle());
 	m_ui->addressLineEditWidget->setText(m_bookmark->getUrl().toDisplayString());
 	m_ui->addressLineEditWidget->setVisible(isUrl);

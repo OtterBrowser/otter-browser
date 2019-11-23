@@ -188,7 +188,7 @@ bool OperaNotesImporter::import(const QString &path)
 			{
 				if (m_currentFolder)
 				{
-					m_currentFolder = static_cast<BookmarksModel::Bookmark*>(m_currentFolder->parent());
+					m_currentFolder = m_currentFolder->getParent();
 				}
 
 				if (!m_currentFolder)

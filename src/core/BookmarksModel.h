@@ -76,6 +76,7 @@ public:
 		void setData(const QVariant &value, int role) override;
 		void setItemData(const QVariant &value, int role);
 		QStandardItem* clone() const override;
+		Bookmark* getParent() const;
 		Bookmark* getChild(int index) const;
 		QString getTitle() const;
 		QString getDescription() const;

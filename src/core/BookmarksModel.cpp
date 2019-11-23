@@ -83,6 +83,18 @@ QStandardItem* BookmarksModel::Bookmark::clone() const
 	return bookmark;
 }
 
+BookmarksModel::Bookmark* BookmarksModel::Bookmark::getParent() const
+{
+	BookmarksModel *model(qobject_cast<BookmarksModel*>(this->model()));
+
+	if (model)
+	{
+		return model->getBookmark(index().parent());
+	}
+
+	return nullptr;
+}
+
 BookmarksModel::Bookmark* BookmarksModel::Bookmark::getChild(int index) const
 {
 	BookmarksModel *model(qobject_cast<BookmarksModel*>(this->model()));
