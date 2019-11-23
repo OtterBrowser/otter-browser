@@ -21,6 +21,7 @@
 #define OTTER_WEBBACKEND_H
 
 #include "AddonsManager.h"
+#include "BookmarksModel.h"
 #include "Job.h"
 #include "SpellCheckManager.h"
 
@@ -35,7 +36,19 @@ class HtmlBookmarksImportJob : public Job
 	Q_OBJECT
 
 public:
-	explicit HtmlBookmarksImportJob(const QString &path, QObject *parent = nullptr);
+	explicit HtmlBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed, QObject *parent = nullptr);
+
+protected:
+	void goToParent();
+	void setCurrentFolder(BookmarksModel::Bookmark *folder);
+	BookmarksModel::Bookmark* getCurrentFolder() const;
+	BookmarksModel::Bookmark* getImportFolder() const;
+	bool areDuplicatesAllowed() const;
+
+private:
+	BookmarksModel::Bookmark *m_currentFolder;
+	BookmarksModel::Bookmark *m_importFolder;
+	bool m_areDuplicatesAllowed;
 
 signals:
 	void importStarted(int total);
