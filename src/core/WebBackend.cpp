@@ -18,54 +18,9 @@
 **************************************************************************/
 
 #include "WebBackend.h"
-#include "BookmarksManager.h"
 
 namespace Otter
 {
-
-HtmlBookmarksImportJob::HtmlBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed, QObject *parent) : Job(parent),
-	m_currentFolder(folder),
-	m_importFolder(folder),
-	m_areDuplicatesAllowed(areDuplicatesAllowed)
-{
-	Q_UNUSED(path)
-}
-
-void HtmlBookmarksImportJob::goToParent()
-{
-	if (m_currentFolder != m_importFolder)
-	{
-		if (m_currentFolder)
-		{
-			m_currentFolder = m_currentFolder->getParent();
-		}
-
-		if (!m_currentFolder)
-		{
-			m_currentFolder = (m_importFolder ? m_importFolder : BookmarksManager::getModel()->getRootItem());
-		}
-	}
-}
-
-void HtmlBookmarksImportJob::setCurrentFolder(BookmarksModel::Bookmark *folder)
-{
-	m_currentFolder = folder;
-}
-
-BookmarksModel::Bookmark* HtmlBookmarksImportJob::getCurrentFolder() const
-{
-	return m_currentFolder;
-}
-
-BookmarksModel::Bookmark* HtmlBookmarksImportJob::getImportFolder() const
-{
-	return m_importFolder;
-}
-
-bool HtmlBookmarksImportJob::areDuplicatesAllowed() const
-{
-	return m_areDuplicatesAllowed;
-}
 
 WebPageThumbnailJob::WebPageThumbnailJob(const QUrl &url, const QSize &size, QObject *parent) : Job(parent)
 {
@@ -77,9 +32,11 @@ WebBackend::WebBackend(QObject *parent) : QObject(parent)
 {
 }
 
-HtmlBookmarksImportJob* WebBackend::createBookmarksImportJob(const QString &path)
+BookmarksImportJob* WebBackend::createBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed)
 {
+	Q_UNUSED(folder)
 	Q_UNUSED(path)
+	Q_UNUSED(areDuplicatesAllowed)
 
 	return nullptr;
 }

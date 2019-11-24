@@ -22,7 +22,7 @@
 
 #include "AddonsManager.h"
 #include "BookmarksModel.h"
-#include "Job.h"
+#include "Importer.h"
 #include "SpellCheckManager.h"
 
 namespace Otter
@@ -30,31 +30,6 @@ namespace Otter
 
 class ContentsWidget;
 class WebWidget;
-
-class HtmlBookmarksImportJob : public Job
-{
-	Q_OBJECT
-
-public:
-	explicit HtmlBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed, QObject *parent = nullptr);
-
-protected:
-	void goToParent();
-	void setCurrentFolder(BookmarksModel::Bookmark *folder);
-	BookmarksModel::Bookmark* getCurrentFolder() const;
-	BookmarksModel::Bookmark* getImportFolder() const;
-	bool areDuplicatesAllowed() const;
-
-private:
-	BookmarksModel::Bookmark *m_currentFolder;
-	BookmarksModel::Bookmark *m_importFolder;
-	bool m_areDuplicatesAllowed;
-
-signals:
-	void importStarted(int total);
-	void importProgress(int total, int amount);
-	void importFinished(bool isSuccess, int total);
-};
 
 class WebPageThumbnailJob : public Job
 {
@@ -102,7 +77,7 @@ public:
 	explicit WebBackend(QObject *parent = nullptr);
 
 	virtual WebWidget* createWidget(const QVariantMap &parameters, ContentsWidget *parent = nullptr) = 0;
-	virtual HtmlBookmarksImportJob* createBookmarksImportJob(const QString &path);
+	virtual BookmarksImportJob* createBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed);
 	virtual WebPageThumbnailJob* createPageThumbnailJob(const QUrl &url, const QSize &size);
 	virtual QString getEngineVersion() const = 0;
 	virtual QString getSslVersion() const = 0;

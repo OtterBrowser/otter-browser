@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,6 +22,8 @@
 #define OTTER_IMPORTER_H
 
 #include "AddonsManager.h"
+#include "BookmarksModel.h"
+#include "Job.h"
 
 namespace Otter
 {
@@ -81,6 +84,39 @@ signals:
 	void importStarted(ImportType type, int total);
 	void importProgress(ImportType type, int total, int amount);
 	void importFinished(ImportType type, ImportResult result, int total);
+};
+
+class ImportJob : public Job
+{
+	Q_OBJECT
+
+public:
+	explicit ImportJob(QObject *parent = nullptr);
+
+signals:
+	void importStarted(Importer::ImportType type, int total);
+	void importProgress(Importer::ImportType type, int total, int amount);
+	void importFinished(Importer::ImportType type, bool isSuccess, int total);
+};
+
+class BookmarksImportJob : public ImportJob
+{
+	Q_OBJECT
+
+public:
+	explicit BookmarksImportJob(BookmarksModel::Bookmark *folder, bool areDuplicatesAllowed, QObject *parent = nullptr);
+
+protected:
+	void goToParent();
+	void setCurrentFolder(BookmarksModel::Bookmark *folder);
+	BookmarksModel::Bookmark* getCurrentFolder() const;
+	BookmarksModel::Bookmark* getImportFolder() const;
+	bool areDuplicatesAllowed() const;
+
+private:
+	BookmarksModel::Bookmark *m_currentFolder;
+	BookmarksModel::Bookmark *m_importFolder;
+	bool m_areDuplicatesAllowed;
 };
 
 }

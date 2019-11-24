@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,6 +19,7 @@
 **************************************************************************/
 
 #include "Importer.h"
+#include "BookmarksManager.h"
 
 namespace Otter
 {
@@ -53,6 +55,53 @@ Addon::AddonType Importer::getType() const
 bool Importer::canCancel()
 {
 	return false;
+}
+
+ImportJob::ImportJob(QObject *parent) : Job(parent)
+{
+}
+
+BookmarksImportJob::BookmarksImportJob(BookmarksModel::Bookmark *folder, bool areDuplicatesAllowed, QObject *parent) : ImportJob(parent),
+	m_currentFolder(folder),
+	m_importFolder(folder),
+	m_areDuplicatesAllowed(areDuplicatesAllowed)
+{
+}
+
+void BookmarksImportJob::goToParent()
+{
+	if (m_currentFolder != m_importFolder)
+	{
+		if (m_currentFolder)
+		{
+			m_currentFolder = m_currentFolder->getParent();
+		}
+
+		if (!m_currentFolder)
+		{
+			m_currentFolder = (m_importFolder ? m_importFolder : BookmarksManager::getModel()->getRootItem());
+		}
+	}
+}
+
+void BookmarksImportJob::setCurrentFolder(BookmarksModel::Bookmark *folder)
+{
+	m_currentFolder = folder;
+}
+
+BookmarksModel::Bookmark* BookmarksImportJob::getCurrentFolder() const
+{
+	return m_currentFolder;
+}
+
+BookmarksModel::Bookmark* BookmarksImportJob::getImportFolder() const
+{
+	return m_importFolder;
+}
+
+bool BookmarksImportJob::areDuplicatesAllowed() const
+{
+	return m_areDuplicatesAllowed;
 }
 
 }
