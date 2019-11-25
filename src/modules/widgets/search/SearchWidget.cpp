@@ -753,6 +753,7 @@ void SearchWidget::setWindow(Window *window)
 		disconnect(this, &SearchWidget::requestedSearch, m_window.data(), &Window::requestedSearch);
 		disconnect(m_window.data(), &Window::loadingStateChanged, this, &SearchWidget::handleLoadingStateChanged);
 		disconnect(m_window.data(), &Window::optionChanged, this, &SearchWidget::handleWindowOptionChanged);
+		disconnect(m_window->getMainWindow(), &MainWindow::currentWindowChanged, this, &SearchWidget::hidePopup);
 
 		if (m_window->getWebWidget())
 		{
@@ -776,6 +777,7 @@ void SearchWidget::setWindow(Window *window)
 		connect(this, &SearchWidget::requestedSearch, window, &Window::requestedSearch);
 		connect(window, &Window::loadingStateChanged, this, &SearchWidget::handleLoadingStateChanged);
 		connect(window, &Window::optionChanged, this, &SearchWidget::handleWindowOptionChanged);
+		connect(window->getMainWindow(), &MainWindow::currentWindowChanged, this, &SearchWidget::hidePopup);
 		connect(window, &Window::destroyed, this, [&](QObject *object)
 		{
 			if (qobject_cast<Window*>(object) == m_window)

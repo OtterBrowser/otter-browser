@@ -1307,6 +1307,7 @@ void AddressWidget::setWindow(Window *window)
 		disconnect(m_window.data(), &Window::arbitraryActionsStateChanged, this, &AddressWidget::handleActionsStateChanged);
 		disconnect(m_window.data(), &Window::contentStateChanged, this, &AddressWidget::updateGeometries);
 		disconnect(m_window.data(), &Window::loadingStateChanged, this, &AddressWidget::handleLoadingStateChanged);
+		disconnect(m_window->getMainWindow(), &MainWindow::currentWindowChanged, this, &AddressWidget::hidePopup);
 
 		if (m_window->getWebWidget())
 		{
@@ -1341,6 +1342,7 @@ void AddressWidget::setWindow(Window *window)
 		connect(window, &Window::arbitraryActionsStateChanged, this, &AddressWidget::handleActionsStateChanged);
 		connect(window, &Window::contentStateChanged, this, &AddressWidget::updateGeometries);
 		connect(window, &Window::loadingStateChanged, this, &AddressWidget::handleLoadingStateChanged);
+		connect(window->getMainWindow(), &MainWindow::currentWindowChanged, this, &AddressWidget::hidePopup);
 		connect(window, &Window::destroyed, this, [&](QObject *object)
 		{
 			if (qobject_cast<Window*>(object) == m_window)
