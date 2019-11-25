@@ -22,6 +22,8 @@
 
 #include "../../../../core/WebBackend.h"
 
+#include <QtWebKit/QWebElement>
+
 namespace Otter
 {
 
@@ -43,6 +45,7 @@ public:
 	explicit QtWebKitWebBackend(QObject *parent = nullptr);
 
 	WebWidget* createWidget(const QVariantMap &parameters, ContentsWidget *parent = nullptr) override;
+	BookmarksImportJob* createBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed) override;
 	WebPageThumbnailJob* createPageThumbnailJob(const QUrl &url, const QSize &size) override;
 	QString getName() const override;
 	QString getTitle() const override;
@@ -78,6 +81,29 @@ signals:
 	void activeDictionaryChanged(const QString &dictionary);
 
 friend class QtWebKitSpellChecker;
+};
+
+class QtWebKitBookmarksImportJob final : public BookmarksImportJob
+{
+	Q_OBJECT
+
+public:
+	explicit QtWebKitBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed, QObject *parent = nullptr);
+	bool isRunning() const override;
+
+public slots:
+	void start() override;
+	void cancel() override;
+
+protected:
+	void processElement(const QWebElement &element);
+	static QDateTime getDateTime(const QWebElement &element, const QString &attribute);
+
+private:
+	QString m_path;
+	int m_currentAmount;
+	int m_totalAmount;
+	bool m_isRunning;
 };
 
 class QtWebKitWebPageThumbnailJob final : public WebPageThumbnailJob

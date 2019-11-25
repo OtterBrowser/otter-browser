@@ -21,18 +21,14 @@
 #ifndef OTTER_HTMLBOOKMARKSIMPORTER_H
 #define OTTER_HTMLBOOKMARKSIMPORTER_H
 
-#include "../../../core/BookmarksImporter.h"
-
-#ifdef OTTER_ENABLE_QTWEBKIT
-#include <QtWebKit/QWebElement>
-#endif
+#include "../../../core/Importer.h"
 
 namespace Otter
 {
 
 class BookmarksImporterWidget;
 
-class HtmlBookmarksImporter final : public BookmarksImporter
+class HtmlBookmarksImporter final : public Importer
 {
 	Q_OBJECT
 
@@ -48,20 +44,13 @@ public:
 	QString getGroup() const override;
 	QUrl getHomePage() const override;
 	QStringList getFileFilters() const override;
+	ImportType getImportType() const override;
 
 public slots:
 	bool import(const QString &path) override;
 
-#ifdef OTTER_ENABLE_QTWEBKIT
-protected:
-	void processElement(const QWebElement &element);
-	static QDateTime getDateTime(const QWebElement &element, const QString &attribute);
-#endif
-
 private:
 	BookmarksImporterWidget *m_optionsWidget;
-	int m_currentAmount;
-	int m_totalAmount;
 };
 
 }

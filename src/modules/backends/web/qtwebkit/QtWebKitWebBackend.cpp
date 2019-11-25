@@ -22,6 +22,7 @@
 #include "QtWebKitHistoryInterface.h"
 #include "QtWebKitPage.h"
 #include "QtWebKitWebWidget.h"
+#include "../../../../core/BookmarksManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
 
@@ -177,6 +178,11 @@ WebWidget* QtWebKitWebBackend::createWidget(const QVariantMap &parameters, Conte
 	return widget;
 }
 
+BookmarksImportJob* QtWebKitWebBackend::createBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed)
+{
+	return new QtWebKitBookmarksImportJob(folder, path, areDuplicatesAllowed, this);
+}
+
 WebPageThumbnailJob* QtWebKitWebBackend::createPageThumbnailJob(const QUrl &url, const QSize &size)
 {
 	return new QtWebKitWebPageThumbnailJob(url, size, this);
@@ -275,6 +281,196 @@ int QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::OptionIdentifier
 	}
 
 	return -1;
+}
+
+QtWebKitBookmarksImportJob::QtWebKitBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed, QObject *parent) : BookmarksImportJob(folder, areDuplicatesAllowed, parent),
+	m_path(path),
+	m_currentAmount(0),
+	m_totalAmount(-1),
+	m_isRunning(false)
+{
+}
+
+void QtWebKitBookmarksImportJob::processElement(const QWebElement &element)
+{
+	QWebElement entryElement(element.findFirst(QLatin1String("dt, hr")));
+
+	while (!entryElement.isNull())
+	{
+		if (entryElement.tagName().toLower() == QLatin1String("hr"))
+		{
+			BookmarksManager::addBookmark(BookmarksModel::SeparatorBookmark, {}, getCurrentFolder());
+
+			++m_currentAmount;
+
+			emit importProgress(Importer::BookmarksImport, m_totalAmount, m_currentAmount);
+		}
+		else
+		{
+			BookmarksModel::BookmarkType type(BookmarksModel::UnknownBookmark);
+			QWebElement matchedElement(entryElement.findFirst(QLatin1String("dt > h3")));
+
+			if (matchedElement.isNull())
+			{
+				matchedElement = entryElement.findFirst(QLatin1String("dt > a"));
+
+				if (!matchedElement.isNull())
+				{
+					type = (matchedElement.hasAttribute(QLatin1String("FEEDURL")) ? BookmarksModel::FeedBookmark : BookmarksModel::UrlBookmark);
+				}
+			}
+			else
+			{
+				type = BookmarksModel::FolderBookmark;
+			}
+
+			if (type != BookmarksModel::UnknownBookmark && !matchedElement.isNull())
+			{
+				QMap<int, QVariant> metaData({{BookmarksModel::TitleRole, matchedElement.toPlainText()}});
+				const bool isUrlBookmark(type == BookmarksModel::UrlBookmark || type == BookmarksModel::FeedBookmark);
+
+				if (isUrlBookmark)
+				{
+					const QUrl url(matchedElement.attribute(QLatin1String("HREF")));
+
+					if (!areDuplicatesAllowed() && BookmarksManager::hasBookmark(url))
+					{
+						entryElement = entryElement.nextSibling();
+
+						continue;
+					}
+
+					metaData[BookmarksModel::UrlRole] = url;
+				}
+
+				if (matchedElement.hasAttribute(QLatin1String("SHORTCUTURL")))
+				{
+					const QString keyword(matchedElement.attribute(QLatin1String("SHORTCUTURL")));
+
+					if (!keyword.isEmpty() && !BookmarksManager::hasKeyword(keyword))
+					{
+						metaData[BookmarksModel::KeywordRole] = keyword;
+					}
+				}
+
+				if (matchedElement.hasAttribute(QLatin1String("ADD_DATE")))
+				{
+					const QDateTime dateTime(getDateTime(matchedElement, QLatin1String("ADD_DATE")));
+
+					if (dateTime.isValid())
+					{
+						metaData[BookmarksModel::TimeAddedRole] = dateTime;
+						metaData[BookmarksModel::TimeModifiedRole] = dateTime;
+					}
+				}
+
+				if (matchedElement.hasAttribute(QLatin1String("LAST_MODIFIED")))
+				{
+					const QDateTime dateTime(getDateTime(matchedElement, QLatin1String("LAST_MODIFIED")));
+
+					if (dateTime.isValid())
+					{
+						metaData[BookmarksModel::TimeModifiedRole] = dateTime;
+					}
+				}
+
+				if (isUrlBookmark && matchedElement.hasAttribute(QLatin1String("LAST_VISITED")))
+				{
+					const QDateTime dateTime(getDateTime(matchedElement, QLatin1String("LAST_VISITED")));
+
+					if (dateTime.isValid())
+					{
+						metaData[BookmarksModel::TimeVisitedRole] = dateTime;
+					}
+				}
+
+				BookmarksModel::Bookmark *bookmark(BookmarksManager::addBookmark(type, metaData, getCurrentFolder()));
+
+				++m_currentAmount;
+
+				emit importProgress(Importer::BookmarksImport, m_totalAmount, m_currentAmount);
+
+				if (type == BookmarksModel::FolderBookmark)
+				{
+					setCurrentFolder(bookmark);
+					processElement(entryElement);
+				}
+
+				if (entryElement.nextSibling().tagName().toLower() == QLatin1String("dd"))
+				{
+					bookmark->setItemData(entryElement.nextSibling().toPlainText(), BookmarksModel::DescriptionRole);
+
+					entryElement = entryElement.nextSibling();
+				}
+			}
+		}
+
+		entryElement = entryElement.nextSibling();
+	}
+
+	goToParent();
+}
+
+void QtWebKitBookmarksImportJob::start()
+{
+	QFile file(m_path);
+
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		emit importFinished(Importer::BookmarksImport, Importer::FailedImport, 0);
+		emit jobFinished(false);
+
+		deleteLater();
+
+		return;
+	}
+
+	m_isRunning = true;
+
+	QWebPage page;
+	page.settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
+	page.mainFrame()->setHtml(QString::fromLatin1(file.readAll()));
+
+	m_totalAmount = page.mainFrame()->findAllElements(QLatin1String("dt, hr")).count();
+
+	emit importStarted(Importer::BookmarksImport, m_totalAmount);
+
+	BookmarksManager::getModel()->beginImport(getImportFolder(), page.mainFrame()->findAllElements(QLatin1String("a[href]")).count(), page.mainFrame()->findAllElements(QLatin1String("a[shortcuturl]")).count());
+
+	processElement(page.mainFrame()->documentElement().findFirst(QLatin1String("dl")));
+
+	BookmarksManager::getModel()->endImport();
+
+	emit importFinished(Importer::BookmarksImport, Importer::SuccessfullImport, m_totalAmount);
+	emit jobFinished(true);
+
+	file.close();
+
+	m_isRunning = false;
+
+	deleteLater();
+}
+
+void QtWebKitBookmarksImportJob::cancel()
+{
+}
+
+QDateTime QtWebKitBookmarksImportJob::getDateTime(const QWebElement &element, const QString &attribute)
+{
+#if QT_VERSION < 0x050800
+	const uint seconds(element.attribute(attribute).toUInt());
+
+	return ((seconds > 0) ? QDateTime::fromTime_t(seconds) : QDateTime());
+#else
+	const qint64 seconds(element.attribute(attribute).toLongLong());
+
+	return ((seconds != 0) ? QDateTime::fromSecsSinceEpoch(seconds) : QDateTime());
+#endif
+}
+
+bool QtWebKitBookmarksImportJob::isRunning() const
+{
+	return m_isRunning;
 }
 
 QtWebKitWebPageThumbnailJob::QtWebKitWebPageThumbnailJob(const QUrl &url, const QSize &size, QObject *parent) : WebPageThumbnailJob(url, size, parent),
