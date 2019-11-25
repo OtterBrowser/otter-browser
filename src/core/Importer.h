@@ -96,7 +96,7 @@ public:
 signals:
 	void importStarted(Importer::ImportType type, int total);
 	void importProgress(Importer::ImportType type, int total, int amount);
-	void importFinished(Importer::ImportType type, bool isSuccess, int total);
+	void importFinished(Importer::ImportType type, Importer::ImportResult result, int total);
 };
 
 class BookmarksImportJob : public ImportJob
