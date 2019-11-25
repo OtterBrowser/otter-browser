@@ -31,7 +31,7 @@
 namespace Otter
 {
 
-OperaBookmarksImporter::OperaBookmarksImporter(QObject *parent) : BookmarksImporter(parent),
+OperaBookmarksImporter::OperaBookmarksImporter(QObject *parent) : Importer(parent),
 	m_optionsWidget(nullptr)
 {
 }
@@ -104,16 +104,66 @@ QStringList OperaBookmarksImporter::getFileFilters() const
 	return {tr("Opera bookmarks files (bookmarks.adr)")};
 }
 
+Importer::ImportType OperaBookmarksImporter::getImportType() const
+{
+	return BookmarksImport;
+}
+
 bool OperaBookmarksImporter::import(const QString &path)
 {
-	QFile file(getSuggestedPath(path));
+	BookmarksModel::Bookmark *folder(nullptr);
+	bool areDuplicatesAllowed(false);
+
+	if (m_optionsWidget)
+	{
+		if (m_optionsWidget->hasToRemoveExisting())
+		{
+			BookmarksManager::getModel()->getRootItem()->removeRows(0, BookmarksManager::getModel()->getRootItem()->rowCount());
+
+			if (m_optionsWidget->isImportingIntoSubfolder())
+			{
+				folder = BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, m_optionsWidget->getSubfolderName()}});
+			}
+		}
+		else
+		{
+			folder = m_optionsWidget->getTargetFolder();
+			areDuplicatesAllowed = m_optionsWidget->areDuplicatesAllowed();
+		}
+	}
+
+	BookmarksImportJob *job(new OperaBookmarksImportJob(folder, getSuggestedPath(path), areDuplicatesAllowed, this));
+
+	connect(job, &BookmarksImportJob::importStarted, this, &OperaBookmarksImporter::importStarted);
+	connect(job, &BookmarksImportJob::importProgress, this, &OperaBookmarksImporter::importProgress);
+	connect(job, &BookmarksImportJob::importFinished, this, &OperaBookmarksImporter::importFinished);
+
+	job->start();
+
+	return true;
+}
+
+OperaBookmarksImportJob::OperaBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed, QObject *parent) : BookmarksImportJob(folder, areDuplicatesAllowed, parent),
+	m_path(path),
+	m_isRunning(false)
+{
+}
+
+void OperaBookmarksImportJob::start()
+{
+	QFile file(m_path);
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		emit importFinished(BookmarksImport, FailedImport, 0);
+		emit importFinished(Importer::BookmarksImport, Importer::FailedImport, 0);
+		emit jobFinished(false);
 
-		return false;
+		deleteLater();
+
+		return;
 	}
+
+	m_isRunning = true;
 
 	QTextStream stream(&file);
 	stream.setCodec("UTF-8");
@@ -122,34 +172,15 @@ bool OperaBookmarksImporter::import(const QString &path)
 
 	if (line != QLatin1String("Opera Hotlist version 2.0"))
 	{
-		emit importFinished(BookmarksImport, FailedImport, 0);
+		emit importFinished(Importer::BookmarksImport, Importer::FailedImport, 0);
+		emit jobFinished(false);
 
-		return false;
+		deleteLater();
+
+		return;
 	}
 
-	emit importStarted(BookmarksImport, -1);
-
-	if (m_optionsWidget)
-	{
-		if (m_optionsWidget->hasToRemoveExisting())
-		{
-			removeAllBookmarks();
-
-			if (m_optionsWidget->isImportingIntoSubfolder())
-			{
-				setImportFolder(BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, m_optionsWidget->getSubfolderName()}}, BookmarksManager::getModel()->getRootItem()));
-			}
-			else
-			{
-				setImportFolder(BookmarksManager::getModel()->getRootItem());
-			}
-		}
-		else
-		{
-			setAllowDuplicates(m_optionsWidget->areDuplicatesAllowed());
-			setImportFolder(m_optionsWidget->getTargetFolder());
-		}
-	}
+	emit importStarted(Importer::BookmarksImport, -1);
 
 	const int estimatedAmount((file.size() > 0) ? static_cast<int>(file.size() / 250) : 0);
 	int totalAmount(0);
@@ -260,11 +291,23 @@ bool OperaBookmarksImporter::import(const QString &path)
 
 	BookmarksManager::getModel()->endImport();
 
-	emit importFinished(BookmarksImport, SuccessfullImport, totalAmount);
+	emit importFinished(Importer::BookmarksImport, Importer::SuccessfullImport, totalAmount);
+	emit jobFinished(true);
 
 	file.close();
 
-	return true;
+	m_isRunning = false;
+
+	deleteLater();
+}
+
+void OperaBookmarksImportJob::cancel()
+{
+}
+
+bool OperaBookmarksImportJob::isRunning() const
+{
+	return m_isRunning;
 }
 
 }

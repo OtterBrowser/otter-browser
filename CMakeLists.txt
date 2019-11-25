@@ -91,7 +91,6 @@ set(otter_src
 	src/core/AddonsManager.cpp
 	src/core/AddressCompletionModel.cpp
 	src/core/Application.cpp
-	src/core/BookmarksImporter.cpp
 	src/core/BookmarksManager.cpp
 	src/core/BookmarksModel.cpp
 	src/core/ContentFiltersManager.cpp

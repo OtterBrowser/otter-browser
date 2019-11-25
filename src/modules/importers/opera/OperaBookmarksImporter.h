@@ -21,14 +21,14 @@
 #ifndef OTTER_OPERABOOKMARKSIMPORTER_H
 #define OTTER_OPERABOOKMARKSIMPORTER_H
 
-#include "../../../core/BookmarksImporter.h"
+#include "../../../core/Importer.h"
 
 namespace Otter
 {
 
 class BookmarksImporterWidget;
 
-class OperaBookmarksImporter final : public BookmarksImporter
+class OperaBookmarksImporter final : public Importer
 {
 	Q_OBJECT
 
@@ -44,9 +44,26 @@ public:
 	QString getGroup() const override;
 	QUrl getHomePage() const override;
 	QStringList getFileFilters() const override;
+	ImportType getImportType() const override;
 
 public slots:
 	bool import(const QString &path) override;
+
+private:
+	BookmarksImporterWidget *m_optionsWidget;
+};
+
+class OperaBookmarksImportJob final : public BookmarksImportJob
+{
+	Q_OBJECT
+
+public:
+	explicit OperaBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed, QObject *parent = nullptr);
+	bool isRunning() const override;
+
+public slots:
+	void start() override;
+	void cancel() override;
 
 protected:
 	enum OperaBookmarkEntry
@@ -59,7 +76,8 @@ protected:
 	};
 
 private:
-	BookmarksImporterWidget *m_optionsWidget;
+	QString m_path;
+	bool m_isRunning;
 };
 
 }
