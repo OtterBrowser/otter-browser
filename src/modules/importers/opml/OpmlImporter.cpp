@@ -36,7 +36,7 @@ void OpmlImporter::importFolder(FeedsModel::Entry *source, FeedsModel::Entry *ta
 {
 	for (int i = 0; i < source->rowCount(); ++i)
 	{
-		FeedsModel::Entry *sourceEntry(static_cast<FeedsModel::Entry*>(source->child(i)));
+		FeedsModel::Entry *sourceEntry(source->getChild(i));
 
 		if (!sourceEntry)
 		{
