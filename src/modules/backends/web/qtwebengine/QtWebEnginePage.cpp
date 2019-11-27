@@ -346,7 +346,7 @@ QString QtWebEnginePage::createJavaScriptList(QStringList rules) const
 
 	for (int i = 0; i < rules.count(); ++i)
 	{
-		rules[i] = rules[i].replace(QLatin1Char('\''), QLatin1String("\\'"));
+		rules[i].replace(QLatin1Char('\''), QLatin1String("\\'"));
 	}
 
 	return QLatin1Char('\'') + rules.join(QLatin1String("','")) + QLatin1Char('\'');
