@@ -20,7 +20,6 @@
 
 #include "QtWebEngineWebBackend.h"
 #include "QtWebEnginePage.h"
-#include "QtWebEngineTransfer.h"
 #include "QtWebEngineUrlRequestInterceptor.h"
 #include "QtWebEngineWebWidget.h"
 #include "../../../../core/ContentFiltersManager.h"
@@ -36,6 +35,7 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
+#include <QtCore/QMimeDatabase>
 #include <QtCore/QRegularExpression>
 #include <QtWebEngineWidgets/QWebEngineProfile>
 #include <QtWebEngineWidgets/QWebEngineSettings>
@@ -67,77 +67,11 @@ void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadItem *item
 		return;
 	}
 
-	const QWebEngineProfile *profile(qobject_cast<QWebEngineProfile*>(sender()));
-	QtWebEngineTransfer *transfer(new QtWebEngineTransfer(item, (Transfer::CanNotifyOption | ((profile && profile->isOffTheRecord()) ? Transfer::IsPrivateOption : Transfer::NoOption))));
-
-	if (transfer->getState() == Transfer::CancelledState)
-	{
-		transfer->deleteLater();
-
-		return;
-	}
-
 	QtWebEnginePage *page(qobject_cast<QtWebEnginePage*>(item->page()));
 
 	if (page && page->getWebWidget())
 	{
-		page->getWebWidget()->startTransfer(transfer);
-
-		return;
-	}
-
-	const HandlersManager::HandlerDefinition handler(HandlersManager::getHandler(transfer->getMimeType()));
-
-	switch (handler.transferMode)
-	{
-		case HandlersManager::HandlerDefinition::IgnoreTransfer:
-			transfer->cancel();
-			transfer->deleteLater();
-
-			break;
-		case HandlersManager::HandlerDefinition::AskTransfer:
-			TransferDialog(transfer).exec();
-
-			break;
-		case HandlersManager::HandlerDefinition::OpenTransfer:
-			transfer->setOpenCommand(handler.openCommand);
-
-			TransfersManager::addTransfer(transfer);
-
-			break;
-		case HandlersManager::HandlerDefinition::SaveTransfer:
-			transfer->setTarget(handler.downloadsPath + QDir::separator() + transfer->getSuggestedFileName());
-
-			if (transfer->getState() == Transfer::CancelledState)
-			{
-				TransfersManager::addTransfer(transfer);
-			}
-			else
-			{
-				transfer->deleteLater();
-			}
-
-			break;
-		case HandlersManager::HandlerDefinition::SaveAsTransfer:
-			{
-				const QString path(Utils::getSavePath(transfer->getSuggestedFileName(), handler.downloadsPath, {}, true).path);
-
-				if (path.isEmpty())
-				{
-					transfer->cancel();
-					transfer->deleteLater();
-
-					return;
-				}
-
-				transfer->setTarget(path);
-
-				TransfersManager::addTransfer(transfer);
-			}
-
-			break;
-		default:
-			break;
+		page->getWebWidget()->startTransfer(item->url(), QMimeDatabase().mimeTypeForName(item->mimeType()), QFileInfo(item->path()).fileName());
 	}
 }
 

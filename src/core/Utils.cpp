@@ -651,6 +651,8 @@ SaveInformation getSavePath(const QString &fileName, const QString &directory, Q
 
 			if (dialog.exec() == QDialog::Rejected || dialog.selectedFiles().isEmpty())
 			{
+				path.clear();
+
 				break;
 			}
 

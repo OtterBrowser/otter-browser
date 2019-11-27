@@ -55,7 +55,8 @@ TransferDialog::TransferDialog(Transfer *transfer, QWidget *parent) : Dialog(par
 	}
 
 	m_ui->nameTextLabelWidget->setText(fileName);
-	m_ui->typeTextLabelWidget->setText(transfer->getMimeType().comment());
+	const QMimeType mimeType(transfer->getMimeType());
+	m_ui->typeTextLabelWidget->setText(mimeType.comment() == "unknown" ? mimeType.name() : mimeType.comment());
 	m_ui->fromTextLabelWidget->setText(Utils::extractHost(transfer->getSource()));
 	m_ui->openWithComboBoxWidget->setMimeType(transfer->getMimeType());
 
@@ -156,8 +157,6 @@ void TransferDialog::handleButtonClicked(QAbstractButton *button)
 			HandlersManager::setHandler(m_transfer->getMimeType(), definition);
 		}
 	}
-
-	TransfersManager::addTransfer(m_transfer);
 
 	accept();
 }

@@ -148,7 +148,7 @@ public:
 	static void addTransfer(Transfer *transfer);
 	static void clearTransfers(int period = 0);
 	static TransfersManager* getInstance();
-	static Transfer* startTransfer(const QUrl &source, const QString &target = {}, Transfer::TransferOptions options = Transfer::CanAskForPathOption);
+	static Transfer* startTransfer(const QUrl &source, const QString target = {}, Transfer::TransferOptions options = Transfer::CanAskForPathOption, std::function<void(Transfer *)> startCallback = nullptr);
 	static Transfer* startTransfer(const QNetworkRequest &request, const QString &target = {}, Transfer::TransferOptions options = Transfer::CanAskForPathOption);
 	static Transfer* startTransfer(QNetworkReply *reply, const QString &target = {}, Transfer::TransferOptions options = Transfer::CanAskForPathOption);
 	static QVector<Transfer*> getTransfers();
