@@ -841,7 +841,7 @@ void PreferencesAdvancedPageWidget::updateUserAgentsActions()
 	m_ui->userAgentsRemoveButton->setEnabled(index.isValid() && index.data(UserAgentsModel::IdentifierRole).toString() != QLatin1String("default"));
 }
 
-void PreferencesAdvancedPageWidget::saveUsuerAgents(QJsonArray *userAgents, const QStandardItem *parent)
+void PreferencesAdvancedPageWidget::saveUserAgents(QJsonArray *userAgents, const QStandardItem *parent)
 {
 	for (int i = 0; i < parent->rowCount(); ++i)
 	{
@@ -859,7 +859,7 @@ void PreferencesAdvancedPageWidget::saveUsuerAgents(QJsonArray *userAgents, cons
 				{
 					QJsonArray userAgentsArray;
 
-					saveUsuerAgents(&userAgentsArray, item);
+					saveUserAgents(&userAgentsArray, item);
 
 					userAgentObject.insert(QLatin1String("children"), userAgentsArray);
 				}
@@ -1702,7 +1702,7 @@ void PreferencesAdvancedPageWidget::save()
 	{
 		QJsonArray userAgentsArray;
 
-		saveUsuerAgents(&userAgentsArray, m_ui->userAgentsViewWidget->getSourceModel()->invisibleRootItem());
+		saveUserAgents(&userAgentsArray, m_ui->userAgentsViewWidget->getSourceModel()->invisibleRootItem());
 
 		JsonSettings settings;
 		settings.setArray(userAgentsArray);

@@ -84,7 +84,7 @@ protected slots:
 	void addUserAgent(QAction *action);
 	void editUserAgent();
 	void updateUserAgentsActions();
-	void saveUsuerAgents(QJsonArray *userAgents, const QStandardItem *parent);
+	void saveUserAgents(QJsonArray *userAgents, const QStandardItem *parent);
 	void addProxy(QAction *action);
 	void editProxy();
 	void updateProxiesActions();
