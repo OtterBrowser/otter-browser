@@ -63,7 +63,7 @@ protected:
 	void javaScriptConsoleMessage(JavaScriptConsoleMessageLevel level, const QString &note, int line, const QString &source) override;
 	QWebEnginePage* createWindow(WebWindowType type) override;
 	QtWebEngineWebWidget* createWidget(SessionsManager::OpenHints hints);
-	QString createJavaScriptList(QStringList rules) const;
+	QString createJavaScriptList(const QStringList &rules) const;
 	QStringList chooseFiles(FileSelectionMode mode, const QStringList &oldFiles, const QStringList &acceptedMimeTypes) override;
 	bool acceptNavigationRequest(const QUrl &url, QWebEnginePage::NavigationType type, bool isMainFrame) override;
 	bool javaScriptConfirm(const QUrl &url, const QString &message) override;

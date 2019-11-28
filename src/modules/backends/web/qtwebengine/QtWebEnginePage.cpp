@@ -337,19 +337,21 @@ QtWebEngineWebWidget* QtWebEnginePage::createWidget(SessionsManager::OpenHints h
 	return widget;
 }
 
-QString QtWebEnginePage::createJavaScriptList(QStringList rules) const
+QString QtWebEnginePage::createJavaScriptList(const QStringList &rules) const
 {
 	if (rules.isEmpty())
 	{
 		return {};
 	}
 
+	QStringList parsedRules(rules);
+
 	for (int i = 0; i < rules.count(); ++i)
 	{
-		rules[i].replace(QLatin1Char('\''), QLatin1String("\\'"));
+		parsedRules[i].replace(QLatin1Char('\''), QLatin1String("\\'"));
 	}
 
-	return QLatin1Char('\'') + rules.join(QLatin1String("','")) + QLatin1Char('\'');
+	return QLatin1Char('\'') + parsedRules.join(QLatin1String("','")) + QLatin1Char('\'');
 }
 
 QString QtWebEnginePage::createScriptSource(const QString &path, const QStringList &parameters) const
