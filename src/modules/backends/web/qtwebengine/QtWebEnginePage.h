@@ -65,7 +65,7 @@ protected:
 	QtWebEngineWebWidget* createWidget(SessionsManager::OpenHints hints);
 	QString createJavaScriptList(const QStringList &rules) const;
 	QStringList chooseFiles(FileSelectionMode mode, const QStringList &oldFiles, const QStringList &acceptedMimeTypes) override;
-	bool acceptNavigationRequest(const QUrl &url, QWebEnginePage::NavigationType type, bool isMainFrame) override;
+	bool acceptNavigationRequest(const QUrl &url, NavigationType type, bool isMainFrame) override;
 	bool javaScriptConfirm(const QUrl &url, const QString &message) override;
 	bool javaScriptPrompt(const QUrl &url, const QString &message, const QString &defaultValue, QString *result) override;
 
@@ -77,7 +77,7 @@ private:
 	QtWebEngineWebWidget *m_widget;
 	QVector<QtWebEnginePage*> m_popups;
 	QVector<HistoryEntryInformation> m_history;
-	QWebEnginePage::NavigationType m_previousNavigationType;
+	NavigationType m_previousNavigationType;
 	bool m_isIgnoringJavaScriptPopups;
 	bool m_isViewingMedia;
 	bool m_isPopup;
@@ -85,7 +85,7 @@ private:
 signals:
 	void requestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints, const QVariantMap &parameters);
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
-	void aboutToNavigate(const QUrl &url, QWebEnginePage::NavigationType navigationType);
+	void aboutToNavigate(const QUrl &url, NavigationType navigationType);
 	void viewingMediaChanged(bool isViewingMedia);
 };
 
