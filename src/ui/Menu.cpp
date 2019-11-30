@@ -692,11 +692,16 @@ void Menu::populateBookmarkSelectorMenu()
 	}
 
 	const BookmarksModel::Bookmark *folderBookmark(BookmarksManager::getModel()->getBookmark(m_menuOptions.value(QLatin1String("bookmark")).toULongLong()));
-	Action *addFolderAction(new Action(-1, {}, {{QLatin1String("icon"), QLatin1String("document-open-folder")}, {QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "This Folder")}}, ActionExecutor::Object(), this));
-	addFolderAction->setData(folderBookmark->getIdentifier());
 
-	addAction(addFolderAction);
-	addSeparator();
+	const bool supportsFolderSelection = m_menuOptions.value(QLatin1String("supportsFolderSelection"), true).toBool();
+	if (supportsFolderSelection)
+	{
+		Action *addFolderAction(new Action(-1, {}, {{QLatin1String("icon"), QLatin1String("document-open-folder")}, {QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "This Folder")}}, ActionExecutor::Object(), this));
+		addFolderAction->setData(folderBookmark->getIdentifier());
+
+		addAction(addFolderAction);
+		addSeparator();
+	}
 
 	for (int i = 0; i < folderBookmark->rowCount(); ++i)
 	{
@@ -718,7 +723,7 @@ void Menu::populateBookmarkSelectorMenu()
 			if (type != BookmarksModel::UrlBookmark)
 			{
 				Menu *menu(new Menu(BookmarkSelectorMenu, this));
-				menu->setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
+				menu->setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}, {QLatin1String("supportsFolderSelection"), supportsFolderSelection}});
 
 				action->setMenu(menu);
 			}

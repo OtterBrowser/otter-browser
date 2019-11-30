@@ -54,6 +54,7 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 	m_ui->homePageLineEditWidget->setText(SettingsManager::getOption(SettingsManager::Browser_HomePageOption).toString());
 
 	Menu *bookmarksMenu(new Menu(Menu::BookmarkSelectorMenu, m_ui->useBookmarkAsHomePageButton));
+	bookmarksMenu->setMenuOptions({{QLatin1String("supportsFolderSelection"), false}});
 
 	m_ui->useBookmarkAsHomePageButton->setMenu(bookmarksMenu);
 	m_ui->useBookmarkAsHomePageButton->setEnabled(BookmarksManager::getModel()->getRootItem()->rowCount() > 0);
