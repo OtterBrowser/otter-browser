@@ -19,7 +19,6 @@
 **************************************************************************/
 
 #include "QtWebKitWebWidget.h"
-#include "QtWebKitInspector.h"
 #include "QtWebKitNetworkManager.h"
 #include "QtWebKitPage.h"
 #include "QtWebKitPluginWidget.h"
@@ -74,10 +73,30 @@
 namespace Otter
 {
 
+QtWebKitInspectorWidget::QtWebKitInspectorWidget(QWidget *parent) : QWebInspector(parent)
+{
+	setMinimumHeight(200);
+}
+
+void QtWebKitInspectorWidget::childEvent(QChildEvent *event)
+{
+	QWebInspector::childEvent(event);
+
+	if (event->type() == QEvent::ChildAdded && event->child()->inherits("QWebView"))
+	{
+		QWebView *webView(qobject_cast<QWebView*>(event->child()));
+
+		if (webView)
+		{
+			webView->settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
+		}
+	}
+}
+
 QtWebKitWebWidget::QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *backend, QtWebKitNetworkManager *networkManager, ContentsWidget *parent) : WebWidget(parameters, backend, parent),
 	m_webView(new QWebView(this)),
 	m_page(nullptr),
-	m_inspector(nullptr),
+	m_inspectorWidget(nullptr),
 	m_networkManager(networkManager),
 	m_formRequestOperation(QNetworkAccessManager::GetOperation),
 	m_loadingState(FinishedLoadingState),
@@ -1675,7 +1694,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			{
 				const bool showInspector(parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
 
-				if (showInspector && !m_inspector)
+				if (showInspector && !m_inspectorWidget)
 				{
 					getInspector();
 				}
@@ -1951,15 +1970,15 @@ WebWidget* QtWebKitWebWidget::clone(bool cloneHistory, bool isPrivate, const QSt
 
 QWidget* QtWebKitWebWidget::getInspector()
 {
-	if (!m_inspector)
+	if (!m_inspectorWidget)
 	{
 		m_page->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
 
-		m_inspector = new QtWebKitInspector(this);
-		m_inspector->setPage(m_page);
+		m_inspectorWidget = new QtWebKitInspectorWidget(this);
+		m_inspectorWidget->setPage(m_page);
 	}
 
-	return m_inspector;
+	return m_inspectorWidget;
 }
 
 QWidget* QtWebKitWebWidget::getViewport()
@@ -2658,7 +2677,7 @@ bool QtWebKitWebWidget::isFullScreen() const
 
 bool QtWebKitWebWidget::isInspecting() const
 {
-	return (m_inspector && m_inspector->isVisible());
+	return (m_inspectorWidget && m_inspectorWidget->isVisible());
 }
 
 bool QtWebKitWebWidget::isNavigating() const

@@ -377,7 +377,6 @@ if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 		src/modules/backends/web/qtwebkit/QtWebKitCookieJar.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.cpp
-		src/modules/backends/web/qtwebkit/QtWebKitInspector.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitNotificationPresenter.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitPage.cpp

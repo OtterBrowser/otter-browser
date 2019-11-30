@@ -25,6 +25,7 @@
 
 #include <QtCore/QQueue>
 #include <QtNetwork/QNetworkReply>
+#include <QtWebKitWidgets/QWebInspector>
 #include <QtWebKitWidgets/QWebPage>
 #include <QtWebKitWidgets/QWebView>
 
@@ -32,11 +33,20 @@ namespace Otter
 {
 
 class ContentsDialog;
-class QtWebKitInspector;
+class QtWebKitInspectorWidget;
 class QtWebKitNetworkManager;
 class QtWebKitWebBackend;
 class QtWebKitPage;
 class SourceViewerWebWidget;
+
+class QtWebKitInspectorWidget final : public QWebInspector
+{
+public:
+	explicit QtWebKitInspectorWidget(QWidget *parent);
+
+protected:
+	void childEvent(QChildEvent *event) override;
+};
 
 class QtWebKitWebWidget final : public WebWidget
 {
@@ -170,7 +180,7 @@ protected slots:
 private:
 	QWebView *m_webView;
 	QtWebKitPage *m_page;
-	QtWebKitInspector *m_inspector;
+	QtWebKitInspectorWidget *m_inspectorWidget;
 	QtWebKitNetworkManager *m_networkManager;
 	QString m_messageToken;
 	QString m_pluginToken;
