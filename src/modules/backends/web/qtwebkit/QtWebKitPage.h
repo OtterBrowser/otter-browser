@@ -83,7 +83,7 @@ public slots:
 	void updateStyleSheets(const QUrl &url = {});
 
 protected:
-	QtWebKitPage();
+	explicit QtWebKitPage();
 	explicit QtWebKitPage(const QUrl &url);
 
 	void markAsPopup();
