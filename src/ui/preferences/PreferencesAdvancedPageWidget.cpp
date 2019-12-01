@@ -1672,6 +1672,8 @@ void PreferencesAdvancedPageWidget::save()
 
 	QFile::remove(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 
+	updateDownloadsOptions();
+
 	for (int i = 0; i < m_ui->downloadsItemView->getRowCount(); ++i)
 	{
 		const QModelIndex index(m_ui->downloadsItemView->getIndex(i, 0));
