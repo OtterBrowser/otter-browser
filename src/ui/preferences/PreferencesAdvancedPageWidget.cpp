@@ -398,6 +398,9 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->downloadsRemoveMimeTypeButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::removeDownloadsMimeType);
 	connect(m_ui->downloadsButtonGroup, static_cast<void(QButtonGroup::*)(int, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
 	connect(m_ui->downloadsButtonGroup, static_cast<void(QButtonGroup::*)(int, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsMode);
+	connect(m_ui->downloadsSaveDirectlyCheckBox, &QCheckBox::toggled, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
+	connect(m_ui->downloadsFilePathWidget, &Otter::FilePathWidget::pathChanged, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
+	connect(m_ui->downloadsApplicationComboBoxWidget, &Otter::ApplicationComboBoxWidget::currentCommandChanged, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
 	connect(m_ui->userAgentsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateUserAgentsActions);
 	connect(m_ui->userAgentsAddButton->menu(), &QMenu::triggered, this, &PreferencesAdvancedPageWidget::addUserAgent);
 	connect(m_ui->userAgentsEditButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::editUserAgent);

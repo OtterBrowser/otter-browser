@@ -79,7 +79,18 @@ void FilePathWidget::focusInEvent(QFocusEvent *event)
 {
 	QWidget::focusInEvent(event);
 
+	m_initialPath = getPath();
 	m_lineEditWidget->setFocus();
+}
+
+void FilePathWidget::focusOutEvent(QFocusEvent *event)
+{
+	QWidget::focusOutEvent(event);
+
+	if (m_initialPath != getPath())
+	{
+		emit pathChanged(getPath());
+	}
 }
 
 void FilePathWidget::selectPath()
