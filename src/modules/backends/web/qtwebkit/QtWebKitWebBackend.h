@@ -97,7 +97,6 @@ public slots:
 
 protected:
 	void processElement(const QWebElement &element);
-	static QDateTime getDateTime(const QWebElement &element, const QString &attribute);
 
 private:
 	QString m_path;

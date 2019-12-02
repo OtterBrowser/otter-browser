@@ -99,6 +99,19 @@ BookmarksModel::Bookmark* BookmarksImportJob::getImportFolder() const
 	return m_importFolder;
 }
 
+QDateTime BookmarksImportJob::getDateTime(const QString &timestamp) const
+{
+#if QT_VERSION < 0x050800
+	const uint seconds(timestamp.toUInt());
+
+	return ((seconds > 0) ? QDateTime::fromTime_t(seconds) : QDateTime());
+#else
+	const qint64 seconds(timestamp.toLongLong());
+
+	return ((seconds != 0) ? QDateTime::fromSecsSinceEpoch(seconds) : QDateTime());
+#endif
+}
+
 bool BookmarksImportJob::areDuplicatesAllowed() const
 {
 	return m_areDuplicatesAllowed;

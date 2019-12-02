@@ -355,7 +355,7 @@ void QtWebKitBookmarksImportJob::processElement(const QWebElement &element)
 
 				if (matchedElement.hasAttribute(QLatin1String("ADD_DATE")))
 				{
-					const QDateTime dateTime(getDateTime(matchedElement, QLatin1String("ADD_DATE")));
+					const QDateTime dateTime(getDateTime(matchedElement.attribute(QLatin1String("ADD_DATE"))));
 
 					if (dateTime.isValid())
 					{
@@ -366,7 +366,7 @@ void QtWebKitBookmarksImportJob::processElement(const QWebElement &element)
 
 				if (matchedElement.hasAttribute(QLatin1String("LAST_MODIFIED")))
 				{
-					const QDateTime dateTime(getDateTime(matchedElement, QLatin1String("LAST_MODIFIED")));
+					const QDateTime dateTime(getDateTime(matchedElement.attribute(QLatin1String("LAST_MODIFIED"))));
 
 					if (dateTime.isValid())
 					{
@@ -376,7 +376,7 @@ void QtWebKitBookmarksImportJob::processElement(const QWebElement &element)
 
 				if (isUrlBookmark && matchedElement.hasAttribute(QLatin1String("LAST_VISITED")))
 				{
-					const QDateTime dateTime(getDateTime(matchedElement, QLatin1String("LAST_VISITED")));
+					const QDateTime dateTime(getDateTime(matchedElement.attribute(QLatin1String("LAST_VISITED"))));
 
 					if (dateTime.isValid())
 					{
@@ -453,19 +453,6 @@ void QtWebKitBookmarksImportJob::start()
 
 void QtWebKitBookmarksImportJob::cancel()
 {
-}
-
-QDateTime QtWebKitBookmarksImportJob::getDateTime(const QWebElement &element, const QString &attribute)
-{
-#if QT_VERSION < 0x050800
-	const uint seconds(element.attribute(attribute).toUInt());
-
-	return ((seconds > 0) ? QDateTime::fromTime_t(seconds) : QDateTime());
-#else
-	const qint64 seconds(element.attribute(attribute).toLongLong());
-
-	return ((seconds != 0) ? QDateTime::fromSecsSinceEpoch(seconds) : QDateTime());
-#endif
 }
 
 bool QtWebKitBookmarksImportJob::isRunning() const

@@ -111,6 +111,7 @@ protected:
 	void setCurrentFolder(BookmarksModel::Bookmark *folder);
 	BookmarksModel::Bookmark* getCurrentFolder() const;
 	BookmarksModel::Bookmark* getImportFolder() const;
+	QDateTime getDateTime(const QString &timestamp) const;
 	bool areDuplicatesAllowed() const;
 
 private:
