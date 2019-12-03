@@ -70,6 +70,8 @@ void ApplicationComboBoxWidget::handleIndexChanged(int index)
 
 			insertItem(m_previousIndex, QFileInfo(path).baseName(), path);
 			setCurrentIndex(m_previousIndex);
+
+			emit currentCommandChanged();
 		}
 
 		connect(this, static_cast<void(ApplicationComboBoxWidget::*)(int)>(&ApplicationComboBoxWidget::currentIndexChanged), this, &ApplicationComboBoxWidget::handleIndexChanged);
@@ -77,6 +79,8 @@ void ApplicationComboBoxWidget::handleIndexChanged(int index)
 	else
 	{
 		m_previousIndex = index;
+
+		emit currentCommandChanged();
 	}
 }
 

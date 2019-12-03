@@ -62,6 +62,7 @@ public:
 protected:
 	void changeEvent(QEvent *event) override;
 	void focusInEvent(QFocusEvent *event) override;
+	void focusOutEvent(QFocusEvent *event) override;
 
 protected slots:
 	void selectPath();
@@ -72,6 +73,7 @@ private:
 	LineEditWidget *m_lineEditWidget;
 	QCompleter *m_completer;
 	QString m_filter;
+	QString m_initialPath;
 	OpenMode m_openMode;
 
 signals:

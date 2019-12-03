@@ -47,6 +47,9 @@ protected slots:
 private:
 	int m_previousIndex;
 	bool m_alwaysShowDefaultApplication;
+
+signals:
+	void currentCommandChanged();
 };
 
 }
