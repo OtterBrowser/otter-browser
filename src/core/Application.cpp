@@ -277,8 +277,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	QCryptographicHash hash(QCryptographicHash::Md5);
 	hash.addData(profilePath.toUtf8());
 
-	const QString identifier(QString::fromLatin1(hash.result().toHex()));
-	const QString server(applicationName() + (identifier.isEmpty() ? QString() : (QLatin1Char('-') + identifier)));
+	const QString server(applicationName() + QLatin1Char('-') + QString::fromLatin1(hash.result().toHex()));
 	QLocalSocket socket;
 	socket.connectToServer(server);
 
