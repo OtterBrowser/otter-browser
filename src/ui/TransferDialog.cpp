@@ -134,9 +134,9 @@ void TransferDialog::handleButtonClicked(QAbstractButton *button)
 			dialog = dialog->parentWidget();
 		}
 
-		const QString path(Utils::getSavePath(m_transfer->getSuggestedFileName()).path);
+		const SaveInformation saveInfo(Utils::getSavePath(m_transfer->getSuggestedFileName()));
 
-		if (path.isEmpty())
+		if (!saveInfo.canSave())
 		{
 			m_transfer->cancel();
 
@@ -145,13 +145,13 @@ void TransferDialog::handleButtonClicked(QAbstractButton *button)
 			return;
 		}
 
-		m_transfer->setTarget(path, true);
+		m_transfer->setTarget(saveInfo.path, true);
 
 		if (m_ui->rememberChoiceCheckBox->isChecked())
 		{
 			HandlersManager::HandlerDefinition definition;
 			definition.transferMode = HandlersManager::HandlerDefinition::SaveTransfer;
-			definition.downloadsPath = QFileInfo(path).canonicalPath();
+			definition.downloadsPath = QFileInfo(saveInfo.path).canonicalPath();
 
 			HandlersManager::setHandler(m_transfer->getMimeType(), definition);
 		}

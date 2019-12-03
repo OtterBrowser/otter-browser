@@ -265,11 +265,11 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 		{
 			m_isSelectingPath = true;
 
-			const SaveInformation information(Utils::getSavePath(fileName, directory));
+			const SaveInformation saveInfo(Utils::getSavePath(fileName, directory));
 
 			m_isSelectingPath = false;
 
-			if (!information.canSave)
+			if (!saveInfo.canSave())
 			{
 				if (m_reply)
 				{
@@ -283,7 +283,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 				return;
 			}
 
-			finalTarget = information.path;
+			finalTarget = saveInfo.path;
 			canOverwriteExisting = true;
 		}
 
@@ -879,16 +879,16 @@ bool Transfer::setTarget(const QString &target, bool canOverwriteExisting)
 		if (result == QMessageBox::No)
 		{
 			const QFileInfo information(target);
-			const QString path(Utils::getSavePath(information.fileName(), information.path(), {}, true).path);
+			const SaveInformation saveInfo(Utils::getSavePath(information.fileName(), information.path(), {}, true));
 
-			if (path.isEmpty())
+			if (!saveInfo.canSave())
 			{
 				cancel();
 
 				return false;
 			}
 
-			mutableTarget = path;
+			mutableTarget = saveInfo.path;
 		}
 		else if (result == QMessageBox::Cancel)
 		{

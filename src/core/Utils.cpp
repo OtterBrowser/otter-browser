@@ -655,8 +655,6 @@ SaveInformation getSavePath(const QString &fileName, const QString &directory, Q
 			}
 
 			information.filter = dialog.selectedNameFilter();
-			information.canSave = true;
-
 			path = dialog.selectedFiles().value(0);
 		}
 
@@ -687,11 +685,7 @@ SaveInformation getSavePath(const QString &fileName, const QString &directory, Q
 	}
 	while (true);
 
-	if (path.isEmpty())
-	{
-		information.canSave = false;
-	}
-	else
+	if (!path.isEmpty())
 	{
 		SettingsManager::setOption(SettingsManager::Paths_SaveFileOption, QFileInfo(path).dir().canonicalPath());
 	}

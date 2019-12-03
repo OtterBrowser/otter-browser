@@ -85,7 +85,11 @@ struct SaveInformation final
 {
 	QString path;
 	QString filter;
-	bool canSave = false;
+
+	bool canSave() const
+	{
+		return !path.isEmpty();
+	}
 };
 
 namespace Utils

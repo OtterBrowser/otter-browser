@@ -201,9 +201,9 @@ void WebWidget::startTransfer(Transfer *transfer)
 			break;
 		case HandlersManager::HandlerDefinition::SaveAsTransfer:
 			{
-				const QString path(Utils::getSavePath(transfer->getSuggestedFileName(), handler.downloadsPath, {}, true).path);
+				const SaveInformation saveInfo(Utils::getSavePath(transfer->getSuggestedFileName(), handler.downloadsPath, {}, true));
 
-				if (path.isEmpty())
+				if (!saveInfo.canSave())
 				{
 					transfer->cancel();
 					transfer->deleteLater();
@@ -211,7 +211,7 @@ void WebWidget::startTransfer(Transfer *transfer)
 					return;
 				}
 
-				transfer->setTarget(path, true);
+				transfer->setTarget(saveInfo.path, true);
 
 				TransfersManager::addTransfer(transfer);
 			}
@@ -776,16 +776,16 @@ QString WebWidget::getSavePath(const QVector<SaveFormat> &allowedFormats, SaveFo
 		filters.append(formats.value(allowedFormats.at(i)));
 	}
 
-	const SaveInformation result(Utils::getSavePath(suggestSaveFileName(SingleFileSaveFormat), {}, filters));
+	const SaveInformation saveInfo(Utils::getSavePath(suggestSaveFileName(SingleFileSaveFormat), {}, filters));
 
-	if (!result.canSave)
+	if (!saveInfo.canSave())
 	{
 		return {};
 	}
 
-	*selectedFormat = formats.key(result.filter);
+	*selectedFormat = formats.key(saveInfo.filter);
 
-	return result.path;
+	return saveInfo.path;
 }
 
 QString WebWidget::getOpenActionText(SessionsManager::OpenHints hints) const
