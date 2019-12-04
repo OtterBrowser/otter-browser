@@ -277,9 +277,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	QCryptographicHash hash(QCryptographicHash::Md5);
 	hash.addData(profilePath.toUtf8());
 
-	const QString server(applicationName() + QLatin1Char('-') + QString::fromLatin1(hash.result().toHex()));
+	const QString serverName(applicationName() + QLatin1Char('-') + QString::fromLatin1(hash.result().toHex()));
 	QLocalSocket socket;
-	socket.connectToServer(server);
+	socket.connectToServer(serverName);
 
 	if (socket.waitForConnected(500))
 	{
@@ -310,9 +310,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	m_localServer->setSocketOptions(QLocalServer::UserAccessOption);
 
-	if (!m_localServer->listen(server) && m_localServer->serverError() == QAbstractSocket::AddressInUseError && QLocalServer::removeServer(server))
+	if (!m_localServer->listen(serverName) && m_localServer->serverError() == QAbstractSocket::AddressInUseError && QLocalServer::removeServer(serverName))
 	{
-		m_localServer->listen(server);
+		m_localServer->listen(serverName);
 	}
 
 	m_isFirstRun = !QFile::exists(profilePath);
