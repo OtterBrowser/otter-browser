@@ -57,6 +57,7 @@ public:
 	QUrl getHomePage() const override;
 	BackendCapabilities getCapabilities() const override;
 	static int getOptionIdentifier(OptionIdentifier identifier);
+	bool hasSslSupport() const override;
 
 protected:
 	static QtWebKitWebBackend* getInstance();

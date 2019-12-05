@@ -85,6 +85,7 @@ public:
 	virtual QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	AddonType getType() const override;
 	virtual BackendCapabilities getCapabilities() const;
+	virtual bool hasSslSupport() const = 0;
 };
 
 }

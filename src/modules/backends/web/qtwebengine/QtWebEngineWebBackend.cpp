@@ -344,4 +344,9 @@ WebBackend::BackendCapabilities QtWebEngineWebBackend::getCapabilities() const
 	return (UserScriptsCapability | GlobalCookiesPolicyCapability | GlobalContentFilteringCapability | GlobalDoNotTrackCapability | GlobalProxyCapability | GlobalReferrerCapability | GlobalUserAgentCapability);
 }
 
+bool QtWebEngineWebBackend::hasSslSupport() const
+{
+	return true;
+}
+
 }

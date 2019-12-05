@@ -444,7 +444,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	const WebBackend *webBackend(AddonsManager::getWebBackend());
 
-	if (!QSslSocket::supportsSsl() || (webBackend && webBackend->getSslVersion().isEmpty()))
+	if (!QSslSocket::supportsSsl() || (webBackend && !webBackend->hasSslSupport()))
 	{
 		QMessageBox::warning(nullptr, tr("Warning"), tr("SSL support is not available or incomplete.\nSome websites may work incorrectly or do not work at all."), QMessageBox::Close);
 	}

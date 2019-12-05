@@ -283,6 +283,11 @@ int QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::OptionIdentifier
 	return -1;
 }
 
+bool QtWebKitWebBackend::hasSslSupport() const
+{
+	return QSslSocket::supportsSsl();
+}
+
 QtWebKitBookmarksImportJob::QtWebKitBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed, QObject *parent) : BookmarksImportJob(folder, areDuplicatesAllowed, parent),
 	m_path(path),
 	m_currentAmount(0),

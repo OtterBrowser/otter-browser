@@ -57,6 +57,7 @@ public:
 #endif
 	QUrl getHomePage() const override;
 	WebBackend::BackendCapabilities getCapabilities() const override;
+	bool hasSslSupport() const override;
 
 #if QTWEBENGINECORE_VERSION >= 0x050D00
 protected:
