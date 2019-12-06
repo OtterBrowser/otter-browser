@@ -1016,14 +1016,7 @@ void Application::handleNewConnection()
 
 		if (!mainWindow || !SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() || (isPrivate && !mainWindow->isPrivate()))
 		{
-			QVariantMap parameters;
-
-			if (isPrivate)
-			{
-				parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
-			}
-
-			createWindow(parameters);
+			createWindow({{QLatin1String("hints"), (isPrivate ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen)}});
 		}
 	}
 	else
@@ -1032,12 +1025,7 @@ void Application::handleNewConnection()
 
 		if (sessionData.isClean || QMessageBox::warning(nullptr, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::Yes)
 		{
-			QVariantMap parameters;
-
-			if (isPrivate)
-			{
-				parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
-			}
+			const QVariantMap parameters({{QLatin1String("hints"), (isPrivate ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen)}});
 
 			for (int i = 0; i < sessionData.windows.count(); ++i)
 			{
