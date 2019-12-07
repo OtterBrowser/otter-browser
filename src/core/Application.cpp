@@ -1071,12 +1071,7 @@ void Application::handlePositionalArguments(QCommandLineParser *parser, bool for
 
 	if (openHints.testFlag(SessionsManager::NewWindowOpen))
 	{
-		QVariantMap parameters;
-
-		if (openHints.testFlag(SessionsManager::PrivateOpen))
-		{
-			parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
-		}
+		const QVariantMap parameters({{QLatin1String("hints"), (openHints.testFlag(SessionsManager::PrivateOpen) ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen)}});
 
 		if (urls.isEmpty())
 		{
