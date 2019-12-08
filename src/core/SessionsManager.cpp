@@ -558,12 +558,7 @@ bool SessionsManager::restoreSession(const SessionInformation &session, MainWind
 		m_sessionTitle = session.title;
 	}
 
-	QVariantMap parameters;
-
-	if (isPrivate)
-	{
-		parameters[QLatin1String("hints")] = PrivateOpen;
-	}
+	const QVariantMap parameters({{QLatin1String("hints"), (isPrivate ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen)}});
 
 	for (int i = 0; i < session.windows.count(); ++i)
 	{
