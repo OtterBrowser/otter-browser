@@ -311,14 +311,7 @@ void WebContentsWidget::search(const QString &search, const QString &query)
 {
 	if (m_webWidget->getUrl().scheme() == QLatin1String("view-source"))
 	{
-		QVariantMap parameters;
-
-		if (isPrivate())
-		{
-			parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
-		}
-
-		setWidget(nullptr, parameters, (m_webWidget ? m_webWidget->getOptions() : QHash<int, QVariant>()));
+		setWidget(nullptr, {{QLatin1String("hints"), (isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen)}}, (m_webWidget ? m_webWidget->getOptions() : QHash<int, QVariant>()));
 	}
 
 	m_webWidget->search(search, query);
@@ -1277,12 +1270,7 @@ void WebContentsWidget::setZoom(int zoom)
 void WebContentsWidget::setUrl(const QUrl &url, bool isTyped)
 {
 	const QHash<int, QVariant> options(m_webWidget ? m_webWidget->getOptions() : QHash<int, QVariant>());
-	QVariantMap parameters;
-
-	if (isPrivate())
-	{
-		parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
-	}
+	const QVariantMap parameters({{QLatin1String("hints"), (isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen)}});
 
 	if (url.scheme() == QLatin1String("view-source") && m_webWidget->getUrl().scheme() != QLatin1String("view-source"))
 	{
@@ -1328,14 +1316,7 @@ void WebContentsWidget::setParent(Window *window)
 
 WebContentsWidget* WebContentsWidget::clone(bool cloneHistory) const
 {
-	QVariantMap parameters;
-
-	if (m_webWidget->isPrivate())
-	{
-		parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
-	}
-
-	WebContentsWidget *webWidget(new WebContentsWidget(parameters, m_webWidget->getOptions(), m_webWidget->clone(cloneHistory), nullptr, nullptr));
+	WebContentsWidget *webWidget(new WebContentsWidget({{QLatin1String("hints"), (isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen)}}, m_webWidget->getOptions(), m_webWidget->clone(cloneHistory), nullptr, nullptr));
 	webWidget->m_webWidget->setRequestedUrl(m_webWidget->getUrl(), false, true);
 
 	return webWidget;
