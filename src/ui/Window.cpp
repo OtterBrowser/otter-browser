@@ -224,14 +224,7 @@ void Window::search(const QString &query, const QString &searchEngine)
 			return;
 		}
 
-		QVariantMap parameters;
-
-		if (isPrivate())
-		{
-			parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
-		}
-
-		widget = new WebContentsWidget(parameters, {}, nullptr, this, this);
+		widget = new WebContentsWidget({{QLatin1String("hints"), (isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen)}}, {}, nullptr, this, this);
 
 		setContentsWidget(widget);
 	}
@@ -531,14 +524,7 @@ Window* Window::clone(bool cloneHistory, MainWindow *mainWindow) const
 		return nullptr;
 	}
 
-	QVariantMap parameters({{QLatin1String("size"), size()}});
-
-	if (isPrivate())
-	{
-		parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
-	}
-
-	return new Window(parameters, m_contentsWidget->clone(cloneHistory), mainWindow);
+	return new Window({{QLatin1String("size"), size()}, {QLatin1String("hints"), (isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen)}}, m_contentsWidget->clone(cloneHistory), mainWindow);
 }
 
 MainWindow* Window::getMainWindow() const
