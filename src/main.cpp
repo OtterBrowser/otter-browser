@@ -207,14 +207,7 @@ int main(int argc, char *argv[])
 
 	if (Application::getWindows().isEmpty())
 	{
-		QVariantMap parameters;
-
-		if (isPrivate)
-		{
-			parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
-		}
-
-		Application::createWindow(parameters);
+		Application::createWindow({{QLatin1String("hints"), (isPrivate ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen)}});
 	}
 
 	return Application::exec();
