@@ -347,7 +347,7 @@ void SidebarWidget::updatePanels()
 {
 	const ToolBarsManager::ToolBarDefinition definition(m_toolBarWidget->getDefinition());
 
-	if (m_buttons.keys().toSet() == definition.panels.toSet())
+	if (m_buttons.keys() == definition.panels)
 	{
 		selectPanel(definition.currentPanel);
 
