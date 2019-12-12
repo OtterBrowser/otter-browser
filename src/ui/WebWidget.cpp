@@ -151,75 +151,82 @@ void WebWidget::startReloadTimer()
 	}
 }
 
-void WebWidget::startTransfer(Transfer *transfer)
+void WebWidget::startSaveAsTransfer(const QUrl url)
 {
-	if (transfer->getState() == Transfer::CancelledState)
-	{
-		transfer->deleteLater();
+	QString suggestedFilename = QFileInfo(url.toString()).fileName();
+	const QString directory(Utils::normalizePath(SettingsManager::getOption(SettingsManager::Paths_DownloadsOption).toString()));
 
+	const SaveInformation saveInfo = Utils::getSavePath(suggestedFilename, directory, {}, true);
+	if (!saveInfo.canSave)
+	{
+		return;
+	}
+	QString target = saveInfo.path;
+	TransfersManager::startTransfer(url, target, Transfer::CanNotifyOption | Transfer::CanOverwriteOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption));
+}
+
+void WebWidget::startDownloadsTransfer(const QUrl url)
+{
+	QString suggestedFilename = QFileInfo(url.toString()).fileName();
+	const QString directory(Utils::normalizePath(SettingsManager::getOption(SettingsManager::Paths_DownloadsOption).toString()));
+
+	QString target = directory + QDir::separator() + suggestedFilename;
+	TransfersManager::startTransfer(url, target, Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption));
+}
+
+void WebWidget::startTransfer(const QUrl url, QMimeType mimeType, QString suggestedFilename)
+{
+	const HandlersManager::HandlerDefinition handler(HandlersManager::getHandler(mimeType));
+
+	if (handler.transferMode == HandlersManager::HandlerDefinition::IgnoreTransfer)
+	{
 		return;
 	}
 
-	const HandlersManager::HandlerDefinition handler(HandlersManager::getHandler(transfer->getMimeType()));
+	QString target;
+	Transfer::TransferOptions transferOptions = Transfer::CanNotifyOption;
 
 	switch (handler.transferMode)
 	{
-		case HandlersManager::HandlerDefinition::IgnoreTransfer:
-			transfer->cancel();
-			transfer->deleteLater();
+	case HandlersManager::HandlerDefinition::OpenTransfer:
+		transferOptions |= Transfer::HasToOpenAfterFinishOption;
 
-			break;
-		case HandlersManager::HandlerDefinition::AskTransfer:
-			{
-				TransferDialog *transferDialog(new TransferDialog(transfer, this));
-				ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("download")), transferDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, transferDialog, this));
+		break;
+	case HandlersManager::HandlerDefinition::SaveTransfer:
+		target = handler.downloadsPath + QDir::separator() + suggestedFilename;
 
-				connect(transferDialog, &TransferDialog::finished, dialog, &ContentsDialog::close);
+		break;
+	case HandlersManager::HandlerDefinition::SaveAsTransfer:
+	{
+		const SaveInformation saveInfo = Utils::getSavePath(suggestedFilename, handler.downloadsPath, {}, true);
+		if (!saveInfo.canSave)
+		{
+			return;
+		}
+		target = saveInfo.path;
 
-				showDialog(dialog, false);
-			}
-
-			break;
-		case HandlersManager::HandlerDefinition::OpenTransfer:
-			transfer->setOpenCommand(handler.openCommand);
-
-			TransfersManager::addTransfer(transfer);
-
-			break;
-		case HandlersManager::HandlerDefinition::SaveTransfer:
-			transfer->setTarget(handler.downloadsPath + QDir::separator() + transfer->getSuggestedFileName());
-
-			if (transfer->getState() == Transfer::CancelledState)
-			{
-				TransfersManager::addTransfer(transfer);
-			}
-			else
-			{
-				transfer->deleteLater();
-			}
-
-			break;
-		case HandlersManager::HandlerDefinition::SaveAsTransfer:
-			{
-				const QString path(Utils::getSavePath(transfer->getSuggestedFileName(), handler.downloadsPath, {}, true).path);
-
-				if (path.isEmpty())
-				{
-					transfer->cancel();
-					transfer->deleteLater();
-
-					return;
-				}
-
-				transfer->setTarget(path, true);
-
-				TransfersManager::addTransfer(transfer);
-			}
-
-			break;
-		default:
-			break;
+		break;
 	}
+	default:
+		break;
+	}
+
+	TransfersManager::startTransfer(url, target, transferOptions, [this, handler](Transfer *transfer){
+
+		if (handler.transferMode == HandlersManager::HandlerDefinition::OpenTransfer)
+		{
+			transfer->setOpenCommand(handler.openCommand);
+		}
+		else if (handler.transferMode == HandlersManager::HandlerDefinition::AskTransfer)
+		{
+			TransferDialog *transferDialog(new TransferDialog(transfer, this));
+			ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("download")), transferDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, transferDialog, this));
+
+			connect(transferDialog, &TransferDialog::finished, dialog, &ContentsDialog::close);
+
+			showDialog(dialog, false);
+		}
+	});
 }
 
 void WebWidget::clearOptions()

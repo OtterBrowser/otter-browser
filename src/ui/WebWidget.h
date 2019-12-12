@@ -28,6 +28,7 @@
 #include "../core/PasswordsManager.h"
 #include "../core/SessionsManager.h"
 #include "../core/SpellCheckManager.h"
+#include "../core/TransfersManager.h"
 
 #include <QtGui/QHelpEvent>
 #include <QtNetwork/QSslCertificate>
@@ -273,8 +274,10 @@ protected:
 
 	void timerEvent(QTimerEvent *event) override;
 	void openUrl(const QUrl &url, SessionsManager::OpenHints hints);
-	void startReloadTimer();
-	void startTransfer(Transfer *transfer);
+        void startReloadTimer();
+	void startTransfer(const QUrl url, QMimeType mimeType, QString suggestedFilename);
+        void startSaveAsTransfer(const QUrl url);
+        void startDownloadsTransfer(const QUrl url);
 	void handleToolTipEvent(QHelpEvent *event, QWidget *widget);
 	void updateHitTestResult(const QPoint &position);
 	virtual void updateWatchedData(ChangeWatcher watcher);

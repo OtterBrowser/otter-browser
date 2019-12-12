@@ -341,11 +341,11 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			break;
 		case ActionsManager::SaveLinkToDiskAction:
-			startTransfer(TransfersManager::startTransfer(m_hitResult.linkUrl.toString(), {}, (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+			startSaveAsTransfer(m_hitResult.linkUrl.toString());
 
 			break;
 		case ActionsManager::SaveLinkToDownloadsAction:
-			TransfersManager::startTransfer(m_hitResult.linkUrl.toString(), {}, (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption)));
+			startDownloadsTransfer(m_hitResult.linkUrl.toString());
 
 			break;
 		case ActionsManager::OpenFrameAction:
