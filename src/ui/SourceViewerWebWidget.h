@@ -49,7 +49,6 @@ public:
 	HitTestResult getHitTestResult(const QPoint &position) override;
 	WebWidget::LoadingState getLoadingState() const override;
 	int getZoom() const override;
-	int findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
 	bool canRedo() const override;
 	bool canUndo() const override;
 	bool hasSelection() const override;
@@ -57,6 +56,7 @@ public:
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
+	void findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
 	void setOption(int identifier, const QVariant &value) override;
 	void setScrollPosition(const QPoint &position) override;
 	void setHistory(const Session::Window::History &history) override;

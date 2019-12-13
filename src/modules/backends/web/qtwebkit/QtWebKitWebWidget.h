@@ -88,7 +88,6 @@ public:
 	ContentStates getContentState() const override;
 	LoadingState getLoadingState() const override;
 	int getZoom() const override;
-	int findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
 	bool hasSelection() const override;
 	bool hasWatchedChanges(ChangeWatcher watcher) const override;
 	bool isAudible() const override;
@@ -99,6 +98,7 @@ public:
 
 public slots:
 	void clearOptions() override;
+	void findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
 	void fillPassword(const PasswordsManager::PasswordInformation &password) override;
 	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
 	void setActiveStyleSheet(const QString &styleSheet) override;

@@ -244,7 +244,6 @@ public:
 	virtual WebWidget::LoadingState getLoadingState() const = 0;
 	quint64 getWindowIdentifier() const;
 	virtual int getZoom() const = 0;
-	virtual int findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
 	bool hasOption(int identifier) const;
 	virtual bool hasSelection() const;
 	virtual bool hasWatchedChanges(ChangeWatcher watcher) const;
@@ -258,6 +257,7 @@ public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
 	virtual void clearOptions();
 	virtual void fillPassword(const PasswordsManager::PasswordInformation &password);
+	virtual void findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
 	virtual void showContextMenu(const QPoint &position = {});
 	virtual void setActiveStyleSheet(const QString &styleSheet);
 	virtual void setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies);
@@ -338,6 +338,7 @@ signals:
 	void requestedGeometryChange(const QRect &geometry);
 	void requestedInspectorVisibilityChange(bool isVisible);
 	void geometryChanged();
+	void findInPageResultsChanged(const QString &text, int matchesAmount, int activeResult);
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);

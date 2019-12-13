@@ -257,6 +257,11 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 	}
 }
 
+void SourceViewerWebWidget::findInPage(const QString &text, WebWidget::FindFlags flags)
+{
+	m_sourceViewer->findText(text, flags);
+}
+
 void SourceViewerWebWidget::print(QPrinter *printer)
 {
 	m_sourceViewer->print(printer);
@@ -520,11 +525,6 @@ WebWidget::LoadingState SourceViewerWebWidget::getLoadingState() const
 int SourceViewerWebWidget::getZoom() const
 {
 	return m_sourceViewer->getZoom();
-}
-
-int SourceViewerWebWidget::findInPage(const QString &text, WebWidget::FindFlags flags)
-{
-	return m_sourceViewer->findText(text, flags);
 }
 
 bool SourceViewerWebWidget::canRedo() const

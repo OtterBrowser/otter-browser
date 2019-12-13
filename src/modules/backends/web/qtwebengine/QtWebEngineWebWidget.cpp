@@ -198,50 +198,6 @@ void QtWebEngineWebWidget::ensureInitialized()
 	}
 }
 
-void QtWebEngineWebWidget::search(const QString &query, const QString &searchEngine)
-{
-	QNetworkRequest request;
-	QNetworkAccessManager::Operation method;
-	QByteArray body;
-
-	if (SearchEnginesManager::setupSearchQuery(query, searchEngine, &request, &method, &body))
-	{
-		setRequestedUrl(request.url(), false, true);
-		updateOptions(request.url());
-
-		if (method == QNetworkAccessManager::PostOperation)
-		{
-			QWebEngineHttpRequest httpRequest(request.url(), QWebEngineHttpRequest::Post);
-			httpRequest.setPostData(body);
-
-			m_page->load(httpRequest);
-		}
-		else
-		{
-			setUrl(request.url(), false);
-		}
-	}
-}
-
-void QtWebEngineWebWidget::print(QPrinter *printer)
-{
-	QEventLoop eventLoop;
-
-	m_page->print(printer, [&](bool)
-	{
-		eventLoop.quit();
-	});
-
-	eventLoop.exec();
-}
-
-void QtWebEngineWebWidget::clearOptions()
-{
-	WebWidget::clearOptions();
-
-	updateOptions(getUrl());
-}
-
 void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	switch (identifier)
@@ -877,6 +833,74 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		default:
 			break;
 	}
+}
+
+void QtWebEngineWebWidget::clearOptions()
+{
+	WebWidget::clearOptions();
+
+	updateOptions(getUrl());
+}
+
+void QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
+{
+	if (text.isEmpty())
+	{
+		m_page->findText(text);
+
+		return;
+	}
+
+	QWebEnginePage::FindFlags nativeFlags;
+
+	if (flags.testFlag(BackwardFind))
+	{
+		nativeFlags |= QWebEnginePage::FindBackward;
+	}
+
+	if (flags.testFlag(CaseSensitiveFind))
+	{
+		nativeFlags |= QWebEnginePage::FindCaseSensitively;
+	}
+
+	m_page->findText(text, nativeFlags);
+}
+
+void QtWebEngineWebWidget::search(const QString &query, const QString &searchEngine)
+{
+	QNetworkRequest request;
+	QNetworkAccessManager::Operation method;
+	QByteArray body;
+
+	if (SearchEnginesManager::setupSearchQuery(query, searchEngine, &request, &method, &body))
+	{
+		setRequestedUrl(request.url(), false, true);
+		updateOptions(request.url());
+
+		if (method == QNetworkAccessManager::PostOperation)
+		{
+			QWebEngineHttpRequest httpRequest(request.url(), QWebEngineHttpRequest::Post);
+			httpRequest.setPostData(body);
+
+			m_page->load(httpRequest);
+		}
+		else
+		{
+			setUrl(request.url(), false);
+		}
+	}
+}
+
+void QtWebEngineWebWidget::print(QPrinter *printer)
+{
+	QEventLoop eventLoop;
+
+	m_page->print(printer, [&](bool)
+	{
+		eventLoop.quit();
+	});
+
+	eventLoop.exec();
 }
 
 void QtWebEngineWebWidget::handleLoadStarted()
@@ -1728,45 +1752,6 @@ WebWidget::LoadingState QtWebEngineWebWidget::getLoadingState() const
 int QtWebEngineWebWidget::getZoom() const
 {
 	return static_cast<int>(m_page->zoomFactor() * 100);
-}
-
-int QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
-{
-	if (text.isEmpty())
-	{
-		m_page->findText(text);
-
-		return 0;
-	}
-
-	QWebEnginePage::FindFlags nativeFlags;
-
-	if (flags.testFlag(BackwardFind))
-	{
-		nativeFlags |= QWebEnginePage::FindBackward;
-	}
-
-	if (flags.testFlag(CaseSensitiveFind))
-	{
-		nativeFlags |= QWebEnginePage::FindCaseSensitively;
-	}
-
-	QEventLoop eventLoop;
-	bool hasMatch(false);
-
-	m_page->findText(text, nativeFlags, [&](const QVariant &result)
-	{
-		hasMatch = result.toBool();
-
-		eventLoop.quit();
-	});
-
-	connect(this, &QtWebEngineWebWidget::aboutToReload, &eventLoop, &QEventLoop::quit);
-	connect(this, &QtWebEngineWebWidget::destroyed, &eventLoop, &QEventLoop::quit);
-
-	eventLoop.exec();
-
-	return (hasMatch ? -1 : 0);
 }
 
 bool QtWebEngineWebWidget::canGoBack() const
