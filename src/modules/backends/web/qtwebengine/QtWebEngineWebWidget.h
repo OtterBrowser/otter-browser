@@ -167,6 +167,9 @@ private:
 #if QTWEBENGINECORE_VERSION >= 0x050D00
 	QtWebEngineUrlRequestInterceptor *m_requestInterceptor;
 #endif
+#if QTWEBENGINECORE_VERSION >= 0x050E00
+	QString m_findInPageText;
+#endif
 	QDateTime m_lastUrlClickTime;
 	QPixmap m_thumbnail;
 	HitTestResult m_hitResult;

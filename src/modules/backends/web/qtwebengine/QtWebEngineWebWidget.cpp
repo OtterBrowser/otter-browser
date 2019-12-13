@@ -54,6 +54,9 @@
 #include <QtGui/QImageWriter>
 #include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtWebEngineCore/QWebEngineCookieStore>
+#if QTWEBENGINECORE_VERSION >= 0x050E00
+#include <QtWebEngineCore/QWebEngineFindTextResult>
+#endif
 #include <QtWebEngineWidgets/QWebEngineHistory>
 #include <QtWebEngineWidgets/QWebEngineProfile>
 #include <QtWebEngineWidgets/QWebEngineScript>
@@ -112,6 +115,12 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	{
 		notifyPermissionRequested(url, feature, true);
 	});
+#if QTWEBENGINECORE_VERSION >= 0x050E00
+	connect(m_page, &QtWebEnginePage::findTextFinished, [&](const QWebEngineFindTextResult &result)
+	{
+		emit findInPageResultsChanged(m_findInPageText, result.numberOfMatches(), result.activeMatch());
+	});
+#endif
 	connect(m_page, &QtWebEnginePage::recentlyAudibleChanged, this, &QtWebEngineWebWidget::isAudibleChanged);
 	connect(m_page, &QtWebEnginePage::viewingMediaChanged, this, &QtWebEngineWebWidget::notifyNavigationActionsChanged);
 	connect(m_page, &QtWebEnginePage::titleChanged, this, &QtWebEngineWebWidget::notifyTitleChanged);
@@ -844,6 +853,10 @@ void QtWebEngineWebWidget::clearOptions()
 
 void QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
 {
+#if QTWEBENGINECORE_VERSION >= 0x050E00
+	m_findInPageText = text;
+#endif
+
 	if (text.isEmpty())
 	{
 		m_page->findText(text);
