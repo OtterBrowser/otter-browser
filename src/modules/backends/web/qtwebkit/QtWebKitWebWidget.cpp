@@ -1135,7 +1135,7 @@ void QtWebKitWebWidget::findInPage(const QString &text, FindFlags flags)
 		m_page->findText(text, (nativeFlags | QWebPage::HighlightAllOccurrences));
 	}
 
-	m_page->findText(text, nativeFlags);
+	emit findInPageResultsChanged(text, (m_page->findText(text, nativeFlags) ? -1 : 0), -1);
 }
 
 void QtWebKitWebWidget::search(const QString &query, const QString &searchEngine)
