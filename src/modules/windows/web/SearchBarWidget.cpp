@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -104,27 +104,14 @@ void SearchBarWidget::selectAll()
 	m_ui->queryLineEditWidget->selectAll();
 }
 
-void SearchBarWidget::setQuery(const QString &query)
+void SearchBarWidget::updateResults(const QString &query, int matchesAmount, int activeResult)
 {
-	m_ui->queryLineEditWidget->setText(query);
-}
+	Q_UNUSED(activeResult)
 
-void SearchBarWidget::setVisible(bool visible)
-{
-	QWidget::setVisible(visible);
-
-	if (!visible && parentWidget())
-	{
-		parentWidget()->setFocus();
-	}
-}
-
-void SearchBarWidget::setMatchesAmount(int matchesAmount)
-{
 	QPalette palette(this->palette());
 	const bool hasMatches(matchesAmount != 0);
 
-	if (!m_ui->queryLineEditWidget->text().isEmpty())
+	if (m_ui->queryLineEditWidget->text() == query)
 	{
 //TODO Ensure that text is readable
 		if (hasMatches)
@@ -140,6 +127,21 @@ void SearchBarWidget::setMatchesAmount(int matchesAmount)
 	m_ui->queryLineEditWidget->setPalette(palette);
 	m_ui->nextButton->setEnabled(hasMatches);
 	m_ui->previousButton->setEnabled(hasMatches);
+}
+
+void SearchBarWidget::setQuery(const QString &query)
+{
+	m_ui->queryLineEditWidget->setText(query);
+}
+
+void SearchBarWidget::setVisible(bool visible)
+{
+	QWidget::setVisible(visible);
+
+	if (!visible && parentWidget())
+	{
+		parentWidget()->setFocus();
+	}
 }
 
 QString SearchBarWidget::getQuery() const
