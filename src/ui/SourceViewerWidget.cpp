@@ -330,7 +330,6 @@ bool MarginWidget::event(QEvent *event)
 SourceViewerWidget::SourceViewerWidget(QWidget *parent) : QPlainTextEdit(parent),
 	m_marginWidget(nullptr),
 	m_findFlags(WebWidget::NoFlagsFind),
-	m_findTextResultsAmount(0),
 	m_zoom(100)
 {
 	new SyntaxHighlighter(document());
@@ -379,129 +378,7 @@ void SourceViewerWidget::wheelEvent(QWheelEvent *event)
 	QPlainTextEdit::wheelEvent(event);
 }
 
-void SourceViewerWidget::handleOptionChanged(int identifier, const QVariant &value)
-{
-	switch (identifier)
-	{
-		case SettingsManager::Interface_ShowScrollBarsOption:
-			setHorizontalScrollBarPolicy(value.toBool() ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
-			setVerticalScrollBarPolicy(value.toBool() ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
-
-			break;
-		case SettingsManager::SourceViewer_ShowLineNumbersOption:
-			if (value.toBool() && !m_marginWidget)
-			{
-				m_marginWidget = new MarginWidget(this);
-				m_marginWidget->show();
-				m_marginWidget->setGeometry(QRect(contentsRect().left(), contentsRect().top(), m_marginWidget->width(), contentsRect().height()));
-			}
-			else if (!value.toBool() && m_marginWidget)
-			{
-				m_marginWidget->deleteLater();
-				m_marginWidget = nullptr;
-
-				setViewportMargins(0, 0, 0, 0);
-			}
-
-			break;
-		case SettingsManager::SourceViewer_WrapLinesOption:
-			setLineWrapMode(value.toBool() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
-
-			break;
-		default:
-			break;
-	}
-}
-
-void SourceViewerWidget::updateTextCursor()
-{
-	m_findTextAnchor = textCursor();
-}
-
-void SourceViewerWidget::updateSelection()
-{
-	QList<QTextEdit::ExtraSelection> extraSelections;
-
-	if (m_findText.isEmpty())
-	{
-		m_findTextResultsAmount = 0;
-
-		setExtraSelections(extraSelections);
-
-		return;
-	}
-
-	int findTextResultsAmount(0);
-	QTextEdit::ExtraSelection currentResultSelection;
-	currentResultSelection.format.setBackground(QColor(255, 150, 50));
-	currentResultSelection.format.setProperty(QTextFormat::FullWidthSelection, true);
-	currentResultSelection.cursor = m_findTextSelection;
-
-	extraSelections.append(currentResultSelection);
-
-	QTextCursor textCursor(this->textCursor());
-	textCursor.setPosition(0);
-
-	if (m_findFlags.testFlag(WebWidget::HighlightAllFind))
-	{
-		QTextDocument::FindFlags nativeFlags;
-
-		if (m_findFlags.testFlag(WebWidget::CaseSensitiveFind))
-		{
-			nativeFlags |= QTextDocument::FindCaseSensitively;
-		}
-
-		while (!textCursor.isNull())
-		{
-			textCursor = document()->find(m_findText, textCursor, nativeFlags);
-
-			if (!textCursor.isNull())
-			{
-				if (textCursor != m_findTextSelection)
-				{
-					QTextEdit::ExtraSelection extraResultSelection;
-					extraResultSelection.format.setBackground(QColor(255, 255, 0));
-					extraResultSelection.cursor = textCursor;
-
-					extraSelections.append(extraResultSelection);
-				}
-
-				++findTextResultsAmount;
-			}
-		}
-	}
-
-	m_findTextResultsAmount = findTextResultsAmount;
-
-	setExtraSelections(extraSelections);
-}
-
-void SourceViewerWidget::setZoom(int zoom)
-{
-	if (zoom != m_zoom)
-	{
-		m_zoom = zoom;
-
-		QFont font(QFontDatabase::systemFont(QFontDatabase::FixedFont));
-		font.setPointSize(qRound(font.pointSize() * (static_cast<qreal>(zoom) / 100)));
-
-		setFont(font);
-
-		if (m_marginWidget)
-		{
-			m_marginWidget->setFont(font);
-		}
-
-		emit zoomChanged(zoom);
-	}
-}
-
-int SourceViewerWidget::getZoom() const
-{
-	return m_zoom;
-}
-
-int SourceViewerWidget::findText(const QString &text, WebWidget::FindFlags flags)
+void SourceViewerWidget::findText(const QString &text, WebWidget::FindFlags flags)
 {
 	const bool isTheSame(text == m_findText);
 
@@ -565,8 +442,131 @@ int SourceViewerWidget::findText(const QString &text, WebWidget::FindFlags flags
 	m_findTextSelection = m_findTextAnchor;
 
 	updateSelection();
+}
 
-	return m_findTextResultsAmount;
+void SourceViewerWidget::handleOptionChanged(int identifier, const QVariant &value)
+{
+	switch (identifier)
+	{
+		case SettingsManager::Interface_ShowScrollBarsOption:
+			setHorizontalScrollBarPolicy(value.toBool() ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
+			setVerticalScrollBarPolicy(value.toBool() ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
+
+			break;
+		case SettingsManager::SourceViewer_ShowLineNumbersOption:
+			if (value.toBool() && !m_marginWidget)
+			{
+				m_marginWidget = new MarginWidget(this);
+				m_marginWidget->show();
+				m_marginWidget->setGeometry(QRect(contentsRect().left(), contentsRect().top(), m_marginWidget->width(), contentsRect().height()));
+			}
+			else if (!value.toBool() && m_marginWidget)
+			{
+				m_marginWidget->deleteLater();
+				m_marginWidget = nullptr;
+
+				setViewportMargins(0, 0, 0, 0);
+			}
+
+			break;
+		case SettingsManager::SourceViewer_WrapLinesOption:
+			setLineWrapMode(value.toBool() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
+
+			break;
+		default:
+			break;
+	}
+}
+
+void SourceViewerWidget::updateTextCursor()
+{
+	m_findTextAnchor = textCursor();
+}
+
+void SourceViewerWidget::updateSelection()
+{
+	QList<QTextEdit::ExtraSelection> extraSelections;
+
+	if (m_findText.isEmpty())
+	{
+		setExtraSelections(extraSelections);
+
+		return;
+	}
+
+	int findTextMatchesAmount(0);
+	int findTextActiveResult(0);
+	QTextEdit::ExtraSelection currentResultSelection;
+	currentResultSelection.format.setBackground(QColor(255, 150, 50));
+	currentResultSelection.format.setProperty(QTextFormat::FullWidthSelection, true);
+	currentResultSelection.cursor = m_findTextSelection;
+
+	extraSelections.append(currentResultSelection);
+
+	QTextCursor textCursor(this->textCursor());
+	textCursor.setPosition(0);
+
+	if (m_findFlags.testFlag(WebWidget::HighlightAllFind))
+	{
+		QTextDocument::FindFlags nativeFlags;
+
+		if (m_findFlags.testFlag(WebWidget::CaseSensitiveFind))
+		{
+			nativeFlags |= QTextDocument::FindCaseSensitively;
+		}
+
+		while (!textCursor.isNull())
+		{
+			textCursor = document()->find(m_findText, textCursor, nativeFlags);
+
+			if (!textCursor.isNull())
+			{
+				if (textCursor == m_findTextSelection)
+				{
+					findTextActiveResult = findTextMatchesAmount;
+				}
+				else
+				{
+					QTextEdit::ExtraSelection extraResultSelection;
+					extraResultSelection.format.setBackground(QColor(255, 255, 0));
+					extraResultSelection.cursor = textCursor;
+
+					extraSelections.append(extraResultSelection);
+				}
+
+				++findTextMatchesAmount;
+			}
+		}
+	}
+
+	emit findTextResultsChanged(m_findText, findTextMatchesAmount, findTextActiveResult);
+
+	setExtraSelections(extraSelections);
+}
+
+void SourceViewerWidget::setZoom(int zoom)
+{
+	if (zoom != m_zoom)
+	{
+		m_zoom = zoom;
+
+		QFont font(QFontDatabase::systemFont(QFontDatabase::FixedFont));
+		font.setPointSize(qRound(font.pointSize() * (static_cast<qreal>(zoom) / 100)));
+
+		setFont(font);
+
+		if (m_marginWidget)
+		{
+			m_marginWidget->setFont(font);
+		}
+
+		emit zoomChanged(zoom);
+	}
+}
+
+int SourceViewerWidget::getZoom() const
+{
+	return m_zoom;
 }
 
 }

@@ -104,9 +104,9 @@ class SourceViewerWidget final : public QPlainTextEdit
 public:
 	explicit SourceViewerWidget(QWidget *parent = nullptr);
 
+	void findText(const QString &text, WebWidget::FindFlags flags = WebWidget::NoFlagsFind);
 	void setZoom(int zoom);
 	int getZoom() const;
-	int findText(const QString &text, WebWidget::FindFlags flags = WebWidget::NoFlagsFind);
 
 protected:
 	void resizeEvent(QResizeEvent *event) override;
@@ -124,10 +124,10 @@ private:
 	QTextCursor m_findTextAnchor;
 	QTextCursor m_findTextSelection;
 	WebWidget::FindFlags m_findFlags;
-	int m_findTextResultsAmount;
 	int m_zoom;
 
 signals:
+	void findTextResultsChanged(const QString &text, int matchesAmount, int activeResult);
 	void zoomChanged(int zoom);
 
 friend class MarginWidget;

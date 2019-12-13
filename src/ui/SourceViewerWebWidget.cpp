@@ -55,6 +55,7 @@ SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *par
 	setContextMenuPolicy(Qt::CustomContextMenu);
 
 	connect(this, &SourceViewerWebWidget::customContextMenuRequested, this, &SourceViewerWebWidget::showContextMenu);
+	connect(m_sourceViewer, &SourceViewerWidget::findTextResultsChanged, this, &SourceViewerWebWidget::findInPageResultsChanged);
 	connect(m_sourceViewer, &SourceViewerWidget::zoomChanged, this, &SourceViewerWebWidget::zoomChanged);
 	connect(m_sourceViewer, &SourceViewerWidget::zoomChanged, this, &SourceViewerWebWidget::handleZoomChanged);
 	connect(m_sourceViewer, &SourceViewerWidget::redoAvailable, this, &SourceViewerWebWidget::notifyRedoActionStateChanged);
