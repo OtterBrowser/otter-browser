@@ -106,12 +106,11 @@ void SearchBarWidget::selectAll()
 
 void SearchBarWidget::updateResults(const QString &query, int matchesAmount, int activeResult)
 {
-	Q_UNUSED(activeResult)
-
+	QString resultsText;
 	QPalette palette(this->palette());
 	const bool hasMatches(matchesAmount != 0);
 
-	if (m_ui->queryLineEditWidget->text() == query)
+	if (!query.isEmpty() && m_ui->queryLineEditWidget->text() == query)
 	{
 //TODO Ensure that text is readable
 		if (hasMatches)
@@ -122,8 +121,18 @@ void SearchBarWidget::updateResults(const QString &query, int matchesAmount, int
 		{
 			palette.setColor(QPalette::Base, QColor(0xF1, 0xE7, 0xE4));
 		}
+
+		if (matchesAmount > 0 && activeResult > 0)
+		{
+			resultsText = tr("%1 of %n result(s)", "", matchesAmount).arg(activeResult);
+		}
+		else if (matchesAmount == 0)
+		{
+			resultsText = tr("Phrase not found");
+		}
 	}
 
+	m_ui->resultsLabel->setText(resultsText);
 	m_ui->queryLineEditWidget->setPalette(palette);
 	m_ui->nextButton->setEnabled(hasMatches);
 	m_ui->previousButton->setEnabled(hasMatches);
