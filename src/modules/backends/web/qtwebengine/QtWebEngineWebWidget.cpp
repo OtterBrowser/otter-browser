@@ -861,6 +861,10 @@ void QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
 	{
 		m_page->findText(text);
 
+#if QTWEBENGINECORE_VERSION <= 0x050E00
+		emit findInPageResultsChanged(text, 0, 0);
+#endif
+
 		return;
 	}
 
@@ -876,7 +880,14 @@ void QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
 		nativeFlags |= QWebEnginePage::FindCaseSensitively;
 	}
 
+#if QTWEBENGINECORE_VERSION >= 0x050E00
 	m_page->findText(text, nativeFlags);
+#else
+	m_page->findText(text, nativeFlags, [&](bool hasMatches)
+	{
+		emit findInPageResultsChanged(text, (hasMatches ? -1 : 0), (hasMatches ? -1 : 0));
+	});
+#endif
 }
 
 void QtWebEngineWebWidget::search(const QString &query, const QString &searchEngine)
