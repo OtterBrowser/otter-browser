@@ -495,7 +495,7 @@ void SourceViewerWidget::updateSelection()
 	}
 
 	int findTextMatchesAmount(0);
-	int findTextActiveResult(1);
+	int findTextActiveResult(0);
 	QTextEdit::ExtraSelection currentResultSelection;
 	currentResultSelection.format.setBackground(QColor(255, 150, 50));
 	currentResultSelection.format.setProperty(QTextFormat::FullWidthSelection, true);
