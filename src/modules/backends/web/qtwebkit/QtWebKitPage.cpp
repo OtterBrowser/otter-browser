@@ -577,28 +577,6 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 		return false;
 	}
 
-	const bool isAnchorNavigation(frame && (type == NavigationTypeLinkClicked || type == NavigationTypeOther) && frame->url().matches(request.url(), QUrl::RemoveFragment));
-
-	if (mainFrame() == frame)
-	{
-		if (m_widget && !isAnchorNavigation)
-		{
-			if (frame->url().isEmpty())
-			{
-				m_widget->setRequestedUrl(request.url(), false, true);
-			}
-
-			m_widget->handleNavigationRequest(request.url(), type);
-		}
-
-		m_networkManager->setMainRequest(request.url());
-	}
-
-	if (type == NavigationTypeFormSubmitted && QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier))
-	{
-		m_networkManager->setFormRequest(request.url());
-	}
-
 	if (type == NavigationTypeFormResubmitted && SettingsManager::getOption(SettingsManager::Choices_WarnFormResendOption).toBool())
 	{
 		bool shouldCancelRequest(false);
@@ -637,6 +615,28 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 		{
 			return false;
 		}
+	}
+
+	const bool isAnchorNavigation(frame && (type == NavigationTypeLinkClicked || type == NavigationTypeOther) && frame->url().matches(request.url(), QUrl::RemoveFragment));
+
+	if (mainFrame() == frame)
+	{
+		if (m_widget && !isAnchorNavigation)
+		{
+			if (frame->url().isEmpty())
+			{
+				m_widget->setRequestedUrl(request.url(), false, true);
+			}
+
+			m_widget->handleNavigationRequest(request.url(), type);
+		}
+
+		m_networkManager->setMainRequest(request.url());
+	}
+
+	if (type == NavigationTypeFormSubmitted && QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier))
+	{
+		m_networkManager->setFormRequest(request.url());
 	}
 
 	if (type != NavigationTypeOther)
