@@ -586,6 +586,30 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType ty
 	return true;
 }
 
+#if QTWEBENGINECORE_VERSION >= 0x050E00
+bool QtWebEnginePage::certificateError(const QWebEngineCertificateError &error)
+{
+	if (!m_widget || error.certificateChain().isEmpty())
+	{
+		return false;
+	}
+
+	const QString firstPartyUrl(m_widget->getUrl().toString());
+	const QString thirdPartyUrl(error.url().toString());
+
+	if (m_widget->getOption(SettingsManager::Security_IgnoreSslErrorsOption, m_widget->getUrl()).toStringList().contains(QString::fromLatin1(error.certificateChain().first().digest().toBase64())))
+	{
+		Console::addMessage(QStringLiteral("[accepted] The page at %1 was allowed to display insecure content from %2").arg(firstPartyUrl, thirdPartyUrl), Console::SecurityCategory, Console::WarningLevel, thirdPartyUrl, -1, m_widget->getWindowIdentifier());
+
+		return true;
+	}
+
+	Console::addMessage(QStringLiteral("[blocked] The page at %1 was not allowed to display insecure content from %2").arg(firstPartyUrl, thirdPartyUrl), Console::SecurityCategory, Console::WarningLevel, thirdPartyUrl, -1, m_widget->getWindowIdentifier());
+
+	return false;
+}
+#endif
+
 bool QtWebEnginePage::javaScriptConfirm(const QUrl &url, const QString &message)
 {
 	if (m_isIgnoringJavaScriptPopups)

@@ -23,6 +23,10 @@
 
 #include "../../../../core/SessionsManager.h"
 
+#include <QtWebEngineCore/QtWebEngineCoreVersion>
+#if QTWEBENGINECORE_VERSION >= 0x050E00
+#include <QtWebEngineWidgets/QWebEngineCertificateError>
+#endif
 #include <QtWebEngineWidgets/QWebEnginePage>
 
 namespace Otter
@@ -66,6 +70,9 @@ protected:
 	QString createJavaScriptList(const QStringList &rules) const;
 	QStringList chooseFiles(FileSelectionMode mode, const QStringList &oldFiles, const QStringList &acceptedMimeTypes) override;
 	bool acceptNavigationRequest(const QUrl &url, NavigationType type, bool isMainFrame) override;
+#if QTWEBENGINECORE_VERSION >= 0x050E00
+	bool certificateError(const QWebEngineCertificateError &error) override;
+#endif
 	bool javaScriptConfirm(const QUrl &url, const QString &message) override;
 	bool javaScriptPrompt(const QUrl &url, const QString &message, const QString &defaultValue, QString *result) override;
 
