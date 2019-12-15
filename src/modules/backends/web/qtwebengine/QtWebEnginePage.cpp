@@ -404,6 +404,13 @@ QVariant QtWebEnginePage::runScriptFile(const QString &path, const QStringList &
 	return runScriptSource(createScriptSource(path, parameters));
 }
 
+#if QTWEBENGINECORE_VERSION >= 0x050E00
+WebWidget::SslInformation QtWebEnginePage::getSslInformation() const
+{
+	return m_sslInformation;
+}
+#endif
+
 Session::Window::History QtWebEnginePage::getHistory() const
 {
 	QWebEngineHistory *pageHistory(history());
@@ -528,6 +535,10 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType ty
 		}
 	}
 
+#if QTWEBENGINECORE_VERSION >= 0x050E00
+	m_sslInformation = {};
+#endif
+
 	if (type != NavigationTypeReload)
 	{
 		m_previousNavigationType = type;
@@ -592,6 +603,15 @@ bool QtWebEnginePage::certificateError(const QWebEngineCertificateError &error)
 	if (!m_widget || error.certificateChain().isEmpty())
 	{
 		return false;
+	}
+
+	const QList<QSslError> errors(QSslCertificate::verify(error.certificateChain(), error.url().host()));
+
+	m_sslInformation.errors.reserve(m_sslInformation.errors.count() + errors.count());
+
+	for (int i = 0; i < errors.count(); ++i)
+	{
+		m_sslInformation.errors.append({errors.at(i), error.url()});
 	}
 
 	const QString firstPartyUrl(m_widget->getUrl().toString());

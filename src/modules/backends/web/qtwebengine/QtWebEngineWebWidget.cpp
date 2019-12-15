@@ -1699,6 +1699,13 @@ WebWidget::LinkUrl QtWebEngineWebWidget::getActiveMedia() const
 	return link;
 }
 
+#if QTWEBENGINECORE_VERSION >= 0x050E00
+WebWidget::SslInformation QtWebEngineWebWidget::getSslInformation() const
+{
+	return m_page->getSslInformation();
+}
+#endif
+
 Session::Window::History QtWebEngineWebWidget::getHistory() const
 {
 	return m_page->getHistory();

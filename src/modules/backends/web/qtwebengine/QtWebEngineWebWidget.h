@@ -80,6 +80,9 @@ public:
 	LinkUrl getActiveImage() const override;
 	LinkUrl getActiveLink() const override;
 	LinkUrl getActiveMedia() const override;
+#if QTWEBENGINECORE_VERSION >= 0x050E00
+	SslInformation getSslInformation() const override;
+#endif
 	Session::Window::History getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;
 	QStringList getStyleSheets() const override;

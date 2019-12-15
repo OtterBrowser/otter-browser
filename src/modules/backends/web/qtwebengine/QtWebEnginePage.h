@@ -22,6 +22,7 @@
 #define OTTER_QTWEBENGINEPAGE_H
 
 #include "../../../../core/SessionsManager.h"
+#include "../../../../ui/WebWidget.h"
 
 #include <QtWebEngineCore/QtWebEngineCoreVersion>
 #if QTWEBENGINECORE_VERSION >= 0x050E00
@@ -57,6 +58,9 @@ public:
 	QString createScriptSource(const QString &path, const QStringList &parameters = {}) const;
 	QVariant runScriptSource(const QString &script);
 	QVariant runScriptFile(const QString &path, const QStringList &parameters = {});
+#if QTWEBENGINECORE_VERSION >= 0x050E00
+	WebWidget::SslInformation getSslInformation() const;
+#endif
 	Session::Window::History getHistory() const;
 	bool isPopup() const;
 	bool isViewingMedia() const;
@@ -82,6 +86,9 @@ protected slots:
 
 private:
 	QtWebEngineWebWidget *m_widget;
+#if QTWEBENGINECORE_VERSION >= 0x050E00
+	WebWidget::SslInformation m_sslInformation;
+#endif
 	QVector<QtWebEnginePage*> m_popups;
 	QVector<HistoryEntryInformation> m_history;
 	NavigationType m_previousNavigationType;
