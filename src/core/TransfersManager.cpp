@@ -1046,7 +1046,12 @@ void TransfersManager::addTransfer(Transfer *transfer)
 	}
 	else
 	{
-		HistoryManager::addEntry(transfer->getSource());
+		const QString scheme(transfer->getSource().scheme());
+
+		if (scheme == QLatin1String("http") || scheme == QLatin1String("https"))
+		{
+			HistoryManager::addEntry(transfer->getSource());
+		}
 	}
 }
 
