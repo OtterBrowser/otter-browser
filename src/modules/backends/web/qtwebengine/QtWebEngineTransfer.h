@@ -22,6 +22,7 @@
 
 #include "../../../../core/TransfersManager.h"
 
+#include <QtWebEngineCore/QtWebEngineCoreVersion>
 #include <QtWebEngineWidgets/QWebEngineDownloadItem>
 
 namespace Otter
@@ -48,7 +49,9 @@ public slots:
 
 private:
 	QPointer<QWebEngineDownloadItem> m_item;
+#if QTWEBENGINECORE_VERSION < 0x050E00
 	QString m_suggestedFileName;
+#endif
 };
 
 }

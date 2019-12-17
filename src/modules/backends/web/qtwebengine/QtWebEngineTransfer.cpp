@@ -26,8 +26,10 @@ namespace Otter
 {
 
 QtWebEngineTransfer::QtWebEngineTransfer(QWebEngineDownloadItem *item, TransferOptions options, QObject *parent) : Transfer(options, parent),
-	m_item(item),
-	m_suggestedFileName(QFileInfo(item->path()).fileName())
+	m_item(item)
+#if QTWEBENGINECORE_VERSION < 0x050E00
+	, m_suggestedFileName(QFileInfo(item->path()).fileName())
+#endif
 {
 	m_item->accept();
 	m_item->setParent(this);
@@ -79,7 +81,16 @@ QUrl QtWebEngineTransfer::getSource() const
 
 QString QtWebEngineTransfer::getSuggestedFileName()
 {
+#if QTWEBENGINECORE_VERSION >= 0x050E00
+	if (!m_item)
+	{
+		return {};
+	}
+
+	return m_item->suggestedFileName();
+#else
 	return m_suggestedFileName;
+#endif
 }
 
 QString QtWebEngineTransfer::getTarget() const
