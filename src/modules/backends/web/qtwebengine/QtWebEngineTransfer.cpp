@@ -19,6 +19,9 @@
 
 #include "QtWebEngineTransfer.h"
 
+#if QTWEBENGINECORE_VERSION >= 0x050E00
+#include <QtCore/QDir>
+#endif
 #include <QtCore/QFileInfo>
 #include <QtCore/QMimeDatabase>
 
@@ -100,7 +103,11 @@ QString QtWebEngineTransfer::getTarget() const
 		return Transfer::getTarget();
 	}
 
+#if QTWEBENGINECORE_VERSION >= 0x050E00
+	return QDir(m_item->downloadDirectory()).absoluteFilePath(m_item->downloadFileName());
+#else
 	return m_item->path();
+#endif
 }
 
 QMimeType QtWebEngineTransfer::getMimeType() const
