@@ -172,7 +172,14 @@ bool QtWebEngineTransfer::setTarget(const QString &target, bool canOverwriteExis
 		return Transfer::setTarget(target, canOverwriteExisting);
 	}
 
+#if QTWEBENGINECORE_VERSION >= 0x050E00
+	QFileInfo fileInformation(target);
+
+	m_item->setDownloadDirectory(fileInformation.path());
+	m_item->setDownloadFileName(fileInformation.fileName());
+#else
 	m_item->setPath(target);
+#endif
 
 	return true;
 }
