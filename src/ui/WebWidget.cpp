@@ -650,7 +650,18 @@ void WebWidget::setOption(int identifier, const QVariant &value)
 
 void WebWidget::setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions)
 {
-	const QList<int> identifiers((m_options.keys() + options.keys()).toSet().toList());
+	QList<int> identifiers(m_options.keys());
+	identifiers.reserve(identifiers.count() + options.count());
+
+	QHash<int, QVariant>::const_iterator iterator;
+
+	for (iterator = options.begin(); iterator != options.end(); ++iterator)
+	{
+		if (!identifiers.contains(iterator.key()))
+		{
+			identifiers.append(iterator.key());
+		}
+	}
 
 	m_options = options;
 
