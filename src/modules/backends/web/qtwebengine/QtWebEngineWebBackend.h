@@ -45,6 +45,7 @@ public:
 	explicit QtWebEngineWebBackend(QObject *parent = nullptr);
 
 	WebWidget* createWidget(const QVariantMap &parameters, ContentsWidget *parent = nullptr) override;
+	BookmarksImportJob* createBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed) override;
 	QString getName() const override;
 	QString getTitle() const override;
 	QString getDescription() const override;
@@ -79,6 +80,34 @@ private:
 	static QMap<QString, QString> m_userAgents;
 
 friend class QtWebEnginePage;
+};
+
+class QtWebEngineBookmarksImportJob final : public BookmarksImportJob
+{
+	Q_OBJECT
+
+public:
+	explicit QtWebEngineBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed, QObject *parent = nullptr);
+	bool isRunning() const override;
+
+	Q_INVOKABLE void beginImport(const int totalAmount, const int estimatedUrlsCount, const int estimatedKeywordsCount);
+	Q_INVOKABLE void endImport();
+	Q_INVOKABLE void beginFolder(QVariant itemVariant);
+	Q_INVOKABLE void endFolder();
+	Q_INVOKABLE void addBookmark(QVariant itemVariant);
+
+public slots:
+	void start() override;
+	void cancel() override;
+
+protected:
+	static QDateTime getDateTime(const QVariant &attribute);
+
+private:
+	QString m_path;
+	int m_currentAmount;
+	int m_totalAmount;
+	bool m_isRunning;
 };
 
 }
