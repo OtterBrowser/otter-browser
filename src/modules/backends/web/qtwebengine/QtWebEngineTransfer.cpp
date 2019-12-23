@@ -158,8 +158,6 @@ Transfer::TransferState QtWebEngineTransfer::getState() const
 			return CancelledState;
 		case QWebEngineDownloadItem::DownloadInterrupted:
 			return ErrorState;
-		default:
-			return UnknownState;
 	}
 
 	return UnknownState;
