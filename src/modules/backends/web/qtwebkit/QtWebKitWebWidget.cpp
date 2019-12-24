@@ -1641,8 +1641,11 @@ void QtWebKitWebWidget::notifyPermissionRequested(QWebFrame *frame, QWebPage::Fe
 			feature = NotificationsFeature;
 
 			break;
-		default:
-			return;
+	}
+
+	if (feature == UnknownFeature)
+	{
+		return;
 	}
 
 	const QUrl url(frame->url().isValid() ? frame->url() : frame->requestedUrl());
