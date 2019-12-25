@@ -2580,8 +2580,6 @@ QVector<ToolBarWidget*> MainWindow::getToolBars(Qt::ToolBarArea area) const
 			default:
 				return (firstPosition.y() > secondPosition.y());
 		}
-
-		return true;
 	});
 
 	return toolBars;
