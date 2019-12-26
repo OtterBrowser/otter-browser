@@ -276,8 +276,6 @@ int QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::OptionIdentifier
 			return m_enableMediaSourceOption;
 		case QtWebKitBackend_EnableWebSecurityOption:
 			return m_enableWebSecurityOption;
-		default:
-			return -1;
 	}
 
 	return -1;
