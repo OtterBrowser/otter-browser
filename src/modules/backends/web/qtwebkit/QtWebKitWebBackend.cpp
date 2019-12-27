@@ -43,6 +43,7 @@ QHash<QString, QString> QtWebKitWebBackend::m_userAgentComponents;
 QMap<QString, QString> QtWebKitWebBackend::m_userAgents;
 int QtWebKitWebBackend::m_enableMediaOption(-1);
 int QtWebKitWebBackend::m_enableMediaSourceOption(-1);
+int QtWebKitWebBackend::m_enableSiteSpecificQuirksOption(-1);
 int QtWebKitWebBackend::m_enableWebSecurityOption(-1);
 
 QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
@@ -51,6 +52,7 @@ QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
 	m_instance = this;
 	m_enableMediaOption = SettingsManager::registerOption(QLatin1String("QtWebKitBackend/EnableMedia"), SettingsManager::BooleanType, true);
 	m_enableMediaSourceOption = SettingsManager::registerOption(QLatin1String("QtWebKitBackend/EnableMediaSource"), SettingsManager::BooleanType, false);
+	m_enableSiteSpecificQuirksOption = SettingsManager::registerOption(QLatin1String("QtWebKitBackend/EnableSiteSpecificQuirks"), SettingsManager::BooleanType, true);
 	m_enableWebSecurityOption = SettingsManager::registerOption(QLatin1String("QtWebKitBackend/EnableWebSecurity"), SettingsManager::BooleanType, true);
 
 	const QString cachePath(SessionsManager::getCachePath());
@@ -274,6 +276,8 @@ int QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::OptionIdentifier
 			return m_enableMediaOption;
 		case QtWebKitBackend_EnableMediaSourceOption:
 			return m_enableMediaSourceOption;
+		case QtWebKitBackend_EnableSiteSpecificQuirksOption:
+			return m_enableSiteSpecificQuirksOption;
 		case QtWebKitBackend_EnableWebSecurityOption:
 			return m_enableWebSecurityOption;
 	}

@@ -39,6 +39,7 @@ public:
 	{
 		QtWebKitBackend_EnableMediaOption = 0,
 		QtWebKitBackend_EnableMediaSourceOption,
+		QtWebKitBackend_EnableSiteSpecificQuirksOption,
 		QtWebKitBackend_EnableWebSecurityOption
 	};
 
@@ -76,6 +77,7 @@ private:
 	static QMap<QString, QString> m_userAgents;
 	static int m_enableMediaOption;
 	static int m_enableMediaSourceOption;
+	static int m_enableSiteSpecificQuirksOption;
 	static int m_enableWebSecurityOption;
 
 signals:
