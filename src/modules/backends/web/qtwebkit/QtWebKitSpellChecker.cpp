@@ -118,7 +118,7 @@ void QtWebKitSpellChecker::ignoreWordInSpellDocument(const QString &word)
 
 void QtWebKitSpellChecker::guessesForWord(const QString &word, const QString &context, QStringList &guesses)
 {
-	Q_UNUSED(context);
+	Q_UNUSED(context)
 
 	if (m_speller)
 	{
