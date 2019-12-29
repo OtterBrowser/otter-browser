@@ -2688,6 +2688,15 @@ bool MainWindow::event(QEvent *event)
 			updateWindowTitle();
 
 			break;
+		case QEvent::MouseButtonDblClick:
+		case QEvent::MouseButtonPress:
+		case QEvent::Wheel:
+			if (!GesturesManager::isTracking())
+			{
+				GesturesManager::startGesture(this, event);
+			}
+
+			break;
 		case QEvent::Move:
 			SessionsManager::markSessionAsModified();
 
@@ -2777,11 +2786,6 @@ bool MainWindow::event(QEvent *event)
 			break;
 		default:
 			break;
-	}
-
-	if (!GesturesManager::isTracking() && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))
-	{
-		GesturesManager::startGesture(this, event);
 	}
 
 	return QMainWindow::event(event);
