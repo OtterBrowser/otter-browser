@@ -1042,29 +1042,32 @@ bool ToolBarWidget::shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const
 
 bool ToolBarWidget::event(QEvent *event)
 {
-	if (!GesturesManager::isTracking() && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))
+	if (!GesturesManager::isTracking())
 	{
-		QPoint position;
-
-		if (event->type() == QEvent::Wheel)
+		switch (event->type())
 		{
-			position = static_cast<QWheelEvent*>(event)->pos();
-		}
-		else
-		{
-			position = static_cast<QMouseEvent*>(event)->pos();
-		}
+			case QEvent::MouseButtonDblClick:
+			case QEvent::MouseButtonPress:
+			case QEvent::Wheel:
+				{
+					const QPoint position((event->type() == QEvent::Wheel) ? static_cast<QWheelEvent*>(event)->pos() : static_cast<QMouseEvent*>(event)->pos());
 
-		if (position.isNull() || !isDragHandle(position))
-		{
-			QVector<GesturesManager::GesturesContext> contexts({GesturesManager::ToolBarContext, GesturesManager::GenericContext});
+					if (position.isNull() || !isDragHandle(position))
+					{
+						QVector<GesturesManager::GesturesContext> contexts({GesturesManager::ToolBarContext, GesturesManager::GenericContext});
 
-			if (m_identifier == ToolBarsManager::TabBar)
-			{
-				contexts.prepend(GesturesManager::NoTabHandleContext);
-			}
+						if (m_identifier == ToolBarsManager::TabBar)
+						{
+							contexts.prepend(GesturesManager::NoTabHandleContext);
+						}
 
-			GesturesManager::startGesture(this, event, contexts);
+						GesturesManager::startGesture(this, event, contexts);
+					}
+				}
+
+				break;
+			default:
+				break;
 		}
 	}
 
