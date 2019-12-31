@@ -888,9 +888,19 @@ QPixmap StartPageWidget::createThumbnail()
 
 bool StartPageWidget::event(QEvent *event)
 {
-	if (!GesturesManager::isTracking() && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))
+	if (!GesturesManager::isTracking())
 	{
-		GesturesManager::startGesture(this, event, {GesturesManager::GenericContext});
+		switch (event->type())
+		{
+			case QEvent::MouseButtonDblClick:
+			case QEvent::MouseButtonPress:
+			case QEvent::Wheel:
+				GesturesManager::startGesture(this, event, {GesturesManager::GenericContext});
+
+				break;
+			default:
+				break;
+		}
 	}
 
 	return QScrollArea::event(event);
