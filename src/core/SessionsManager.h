@@ -173,8 +173,6 @@ public:
 						fullScreenVisibility = visibility;
 
 						break;
-					default:
-						break;
 				}
 			}
 
