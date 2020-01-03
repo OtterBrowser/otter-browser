@@ -1,8 +1,8 @@
-var elements = document.querySelectorAll('%1');
-var urls = [];
-var links = [];
+let elements = document.querySelectorAll('%1');
+let urls = [];
+let links = [];
 
-for (var i = 0; i < elements.length; ++i)
+for (let i = 0; i < elements.length; ++i)
 {
 	if (urls.includes(elements[i].href))
 	{
@@ -11,7 +11,7 @@ for (var i = 0; i < elements.length; ++i)
 
 	urls.push(elements[i].href);
 
-	var link = {
+	let link = {
 		title: elements[i].title.trim(),
 		mimeType: elements[i].type,
 		url: elements[i].href
@@ -24,7 +24,7 @@ for (var i = 0; i < elements.length; ++i)
 
 	if (link.title == '')
 	{
-		var imageElement = elements[i].querySelector('img[alt]:not([alt=\'\'])');
+		let imageElement = elements[i].querySelector('img[alt]:not([alt=\'\'])');
 
 		if (imageElement)
 		{

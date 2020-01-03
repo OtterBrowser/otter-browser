@@ -1,4 +1,4 @@
-var result = {
+let result = {
 	alternateText: '',
 	flags: 0,
 	formUrl: '',
@@ -16,7 +16,7 @@ var result = {
 
 function normalizeUrl(url)
 {
-	var element = document.createElement('a');
+	let element = document.createElement('a');
 	element.href = url;
 
 	return element.href;
@@ -24,7 +24,7 @@ function normalizeUrl(url)
 
 function getOrigin(url)
 {
-	var element = document.createElement('a');
+	let element = document.createElement('a');
 	element.href = url;
 
 	return element.origin;
@@ -37,7 +37,7 @@ function createHitTest(window, element, result)
 		return result;
 	}
 
-	var geometry = element.getBoundingClientRect();
+	let geometry = element.getBoundingClientRect();
 
 	result.geometry = { x: geometry.top, y: geometry.left, w: geometry.width, h: geometry.height };
 	result.tagName = element.tagName.toLowerCase();
@@ -48,7 +48,7 @@ function createHitTest(window, element, result)
 
 		if (getOrigin(document.location.href) == getOrigin(element.src))
 		{
-			var frameDocument = element.contentWindow.document;
+			let frameDocument = element.contentWindow.document;
 
 			result.title = frameDocument.title;
 			result.offset = [(result.offset[0] + geometry.left), (result.offset[1] + geometry.top)];
@@ -59,8 +59,8 @@ function createHitTest(window, element, result)
 		return result;
 	}
 
-	var anchorElement = element.closest('a[href]');
-	var titledElement = element.closest('[title]');
+	let anchorElement = element.closest('a[href]');
+	let titledElement = element.closest('[title]');
 
 	if (anchorElement)
 	{
@@ -111,7 +111,7 @@ function createHitTest(window, element, result)
 
 	if (result.tagName == 'input' || result.tagName == 'textarea')
 	{
-		var type = (element.type ? element.type.toLowerCase() : '');
+		let type = (element.type ? element.type.toLowerCase() : '');
 
 		if (result.tagName == 'textarea' || type == 'email' || type == 'password' || type == 'search' || type == 'tel' || type == 'text' || type == 'url')
 		{
@@ -133,11 +133,11 @@ function createHitTest(window, element, result)
 
 	if (result.tagName == 'button' || result.tagName == 'input' || result.tagName == 'select'|| result.tagName == 'textarea')
 	{
-		var formElement = element.closest('form');
+		let formElement = element.closest('form');
 
 		if (formElement)
 		{
-			var type = (element.type ? element.type.toLowerCase() : '');
+			let type = (element.type ? element.type.toLowerCase() : '');
 
 			if ((result.tagName == 'button'|| result.tagName == 'input') && (type == 'image' || type == 'submit'))
 			{

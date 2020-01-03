@@ -1,7 +1,7 @@
-var title = '';
-var isDefault = true;
+let title = '';
+let isDefault = true;
 
-for (var i = 0; i < document.styleSheets.length; ++i)
+for (let i = 0; i < document.styleSheets.length; ++i)
 {
 	if (document.styleSheets[i].ownerNode.rel.indexOf('alt') >= 0)
 	{
@@ -13,7 +13,7 @@ for (var i = 0; i < document.styleSheets.length; ++i)
 
 if (!isDefault)
 {
-	var element = document.querySelector('link[rel=\'alternate stylesheet\']:not([disabled])');
+	let element = document.querySelector('link[rel=\'alternate stylesheet\']:not([disabled])');
 
 	if (element)
 	{

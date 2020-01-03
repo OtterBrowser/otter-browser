@@ -1,7 +1,7 @@
-var elements = document.querySelectorAll('link[rel=\'alternate stylesheet\']');
-var titles = [];
+let elements = document.querySelectorAll('link[rel=\'alternate stylesheet\']');
+let titles = [];
 
-for (var i = 0; i < elements.length; ++i)
+for (let i = 0; i < elements.length; ++i)
 {
 	if (elements[i].title !== '' && !titles.includes(elements[i].title))
 	{

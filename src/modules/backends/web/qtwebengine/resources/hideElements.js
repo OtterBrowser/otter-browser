@@ -1,8 +1,8 @@
-var whitelist = [%1];
-var blacklist = [%2];
-var ignoredElements = [];
+let whitelist = [%1];
+let blacklist = [%2];
+let ignoredElements = [];
 
-for (var i = 0; i < whitelist.length; ++i)
+for (let i = 0; i < whitelist.length; ++i)
 {
 	try
 	{
@@ -10,15 +10,15 @@ for (var i = 0; i < whitelist.length; ++i)
 	}
 	catch (e)
 	{
-		console.error("Invalid selector: " + whitelist[i]);
+		console.error('Invalid selector: ' + whitelist[i]);
 
 		continue;
 	}
 }
 
-for (var i = 0; i < blacklist.length; ++i)
+for (let i = 0; i < blacklist.length; ++i)
 {
-	var elements = [];
+	let elements = [];
 
 	try
 	{
@@ -26,16 +26,16 @@ for (var i = 0; i < blacklist.length; ++i)
 	}
 	catch (e)
 	{
-		console.error("Invalid selector: " + blacklist[i]);
+		console.error('Invalid selector: ' + blacklist[i]);
 
 		continue;
 	}
 
-	for (var j = 0; j < elements.length; ++j)
+	for (let j = 0; j < elements.length; ++j)
 	{
 		if (ignoredElements.indexOf(elements[j]) < 0)
 		{
-			elements[j].style.cssText = "display:none !important";
+			elements[j].style.cssText = 'display:none !important';
 		}
 	}
 }

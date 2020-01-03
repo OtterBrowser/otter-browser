@@ -1,33 +1,33 @@
-var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement);
+let element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement);
 
 if (element)
 {
 	function createUrl(url)
 	{
-		var element = document.createElement('a');
+		let element = document.createElement('a');
 		element.href = url;
 
 		return element.href;
 	}
 
-	var formElement = element.closest('form');
+	let formElement = element.closest('form');
 
 	if (formElement)
 	{
-		var result = {
+		let result = {
 			url: createUrl(formElement.action),
 			method: formElement.method,
 			enctype: formElement.enctype,
 			query: ''
 		}
-		var tagName = element.tagName.toLowerCase();
-		var searchTermsElement = null;
-		var inputElements = Array.from(formElement.querySelectorAll('button:not([disabled])[name][type="submit"], input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]'));
-		var query = [];
+		let tagName = element.tagName.toLowerCase();
+		let searchTermsElement = null;
+		let inputElements = Array.from(formElement.querySelectorAll('button:not([disabled])[name][type="submit"], input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]'));
+		let query = [];
 
 		if (tagName !== 'select')
 		{
-			var type = (element.type ? element.type.toLowerCase() : '');
+			let type = (element.type ? element.type.toLowerCase() : '');
 
 			if (inputElements.indexOf(element) < 0 && (type == 'image' || type == 'submit'))
 			{
@@ -45,14 +45,14 @@ if (element)
 			searchTermsElement = formElement.querySelector('input:not([disabled])[name][type="search"]');
 		}
 
-		for (var i = 0; i < inputElements.length; ++i)
+		for (let i = 0; i < inputElements.length; ++i)
 		{
-			var tagName = inputElements[i].tagName.toLowerCase();
+			let tagName = inputElements[i].tagName.toLowerCase();
 
 			if (tagName !== 'select')
 			{
-				var type = (inputElements[i].type ? inputElements[i].type.toLowerCase() : '');
-				var isSubmit = (type == 'image' || type == 'submit');
+				let type = (inputElements[i].type ? inputElements[i].type.toLowerCase() : '');
+				let isSubmit = (type == 'image' || type == 'submit');
 
 				if ((isSubmit && inputElements[i] != element) || ((type == 'checkbox' || type == 'radio') && !inputElements[i].checked))
 				{
@@ -89,9 +89,9 @@ if (element)
 			}
 			else if (inputElements[i].name !== '')
 			{
-				var optionElements = inputElements[i].querySelectorAll('option:checked');
+				let optionElements = inputElements[i].querySelectorAll('option:checked');
 
-				for (var j = 0; j < optionElements.length; ++j)
+				for (let j = 0; j < optionElements.length; ++j)
 				{
 					query.push(inputElements[i].name + '=' + encodeURIComponent(optionElements[j].value));
 				}
