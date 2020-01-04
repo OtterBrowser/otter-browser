@@ -956,7 +956,24 @@ bool GesturesManager::startGesture(QObject *object, QEvent *event, const QVector
 {
 	QInputEvent *inputEvent(static_cast<QInputEvent*>(event));
 
-	if (!object || !inputEvent || m_gestures.keys().toSet().intersect(contexts.toList().toSet()).isEmpty() || m_events.contains(inputEvent))
+	if (!object || !inputEvent || m_events.contains(inputEvent))
+	{
+		return false;
+	}
+
+	bool hasContext(false);
+
+	for (int i = 0; i < contexts.count(); ++i)
+	{
+		if (m_gestures.contains(contexts.at(i)))
+		{
+			hasContext = true;
+
+			break;
+		}
+	}
+
+	if (!hasContext)
 	{
 		return false;
 	}
