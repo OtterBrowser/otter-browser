@@ -1044,22 +1044,20 @@ bool GesturesManager::triggerAction(const MouseProfile::Gesture &gesture)
 
 		cancelGesture();
 	}
-	else if (gesture.action == ActionsManager::ContextMenuAction)
-	{
-		if (m_trackedObject)
-		{
-			QContextMenuEvent event(QContextMenuEvent::Other, m_lastPosition);
-
-			QCoreApplication::sendEvent(m_trackedObject, &event);
-		}
-	}
-	else
+	else if (gesture.action != ActionsManager::ContextMenuAction)
 	{
 		Application::triggerAction(gesture.action, QVariantMap(gesture.parameters).unite(m_parameters), m_trackedObject, ActionsManager::MouseTrigger);
 	}
 
 	if (m_trackedObject)
 	{
+		if (gesture.action == ActionsManager::ContextMenuAction)
+		{
+			QContextMenuEvent event(QContextMenuEvent::Other, m_lastPosition);
+
+			QCoreApplication::sendEvent(m_trackedObject, &event);
+		}
+
 		m_trackedObject->installEventFilter(m_instance);
 	}
 
