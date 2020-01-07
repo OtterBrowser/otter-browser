@@ -130,7 +130,7 @@ protected:
 
 	void timerEvent(QTimerEvent *event) override;
 	static void recognizeMoveStep(const QInputEvent *event);
-	static void releaseObject();
+	static void releaseTrackedObject();
 	static MouseProfile::Gesture matchGesture();
 	static int calculateLastMoveDistance(bool measureFinished = false);
 	static int calculateGesturesDifference(const QVector<MouseProfile::Gesture::Step> &steps);

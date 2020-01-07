@@ -736,7 +736,7 @@ void GesturesManager::recognizeMoveStep(const QInputEvent *event)
 
 void GesturesManager::cancelGesture()
 {
-	releaseObject();
+	releaseTrackedObject();
 
 	m_steps.clear();
 
@@ -745,7 +745,7 @@ void GesturesManager::cancelGesture()
 	m_events.clear();
 }
 
-void GesturesManager::releaseObject()
+void GesturesManager::releaseTrackedObject()
 {
 	if (m_trackedObject)
 	{
@@ -988,7 +988,7 @@ bool GesturesManager::startGesture(QObject *object, QEvent *event, const QVector
 	}
 
 	createInstance();
-	releaseObject();
+	releaseTrackedObject();
 
 	m_trackedObject = object;
 
@@ -1016,7 +1016,7 @@ bool GesturesManager::continueGesture(QObject *object)
 		return false;
 	}
 
-	releaseObject();
+	releaseTrackedObject();
 
 	m_trackedObject = object;
 	m_trackedObject->installEventFilter(m_instance);
