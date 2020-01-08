@@ -1173,7 +1173,6 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 				if (gesture.action != UNKNOWN_GESTURE)
 				{
 					recognizeMoveStep(mouseEvent);
-
 					triggerAction(gesture);
 				}
 				else
