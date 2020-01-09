@@ -213,45 +213,33 @@ void HistoryManager::handleOptionChanged(int identifier)
 
 			break;
 		case SettingsManager::History_BrowsingLimitAmountGlobalOption:
+		case SettingsManager::History_BrowsingLimitPeriodOption:
+			if (!m_browsingHistoryModel)
 			{
-				if (!m_browsingHistoryModel)
-				{
-					getBrowsingHistoryModel();
-				}
+				getBrowsingHistoryModel();
+			}
 
-				if (!m_typedHistoryModel)
-				{
-					getTypedHistoryModel();
-				}
+			if (!m_typedHistoryModel)
+			{
+				getTypedHistoryModel();
+			}
 
+			if (identifier == SettingsManager::History_BrowsingLimitAmountGlobalOption)
+			{
 				const int limit(SettingsManager::getOption(SettingsManager::History_BrowsingLimitAmountGlobalOption).toInt());
 
 				m_browsingHistoryModel->clearExcessEntries(limit);
 				m_typedHistoryModel->clearExcessEntries(limit);
-
-				scheduleSave();
 			}
-
-			break;
-		case SettingsManager::History_BrowsingLimitPeriodOption:
+			else
 			{
-				if (!m_browsingHistoryModel)
-				{
-					getBrowsingHistoryModel();
-				}
-
-				if (!m_typedHistoryModel)
-				{
-					getTypedHistoryModel();
-				}
-
 				const int period(SettingsManager::getOption(SettingsManager::History_BrowsingLimitPeriodOption).toInt());
 
 				m_browsingHistoryModel->clearOldestEntries(period);
 				m_typedHistoryModel->clearOldestEntries(period);
-
-				scheduleSave();
 			}
+
+			scheduleSave();
 
 			break;
 		case SettingsManager::History_StoreFaviconsOption:
