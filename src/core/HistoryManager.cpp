@@ -320,15 +320,15 @@ QVector<HistoryModel::HistoryEntryMatch> HistoryManager::findEntries(const QStri
 		getTypedHistoryModel();
 	}
 
-	if (!isTypedInOnly && !m_browsingHistoryModel)
-	{
-		getBrowsingHistoryModel();
-	}
-
 	QVector<HistoryModel::HistoryEntryMatch> entries(m_typedHistoryModel->findEntries(prefix, true));
 
 	if (!isTypedInOnly)
 	{
+		if (!m_browsingHistoryModel)
+		{
+			getBrowsingHistoryModel();
+		}
+
 		entries.append(m_browsingHistoryModel->findEntries(prefix));
 	}
 
