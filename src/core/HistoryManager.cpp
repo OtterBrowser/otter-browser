@@ -198,9 +198,9 @@ void HistoryManager::updateEntry(quint64 identifier, const QUrl &url, const QStr
 		item->setData(url, HistoryModel::UrlRole);
 		item->setData(title, HistoryModel::TitleRole);
 		item->setIcon(icon);
-	}
 
-	m_instance->scheduleSave();
+		m_instance->scheduleSave();
+	}
 }
 
 void HistoryManager::handleOptionChanged(int identifier)
