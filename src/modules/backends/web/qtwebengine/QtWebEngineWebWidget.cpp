@@ -1001,7 +1001,7 @@ void QtWebEngineWebWidget::handlePrintRequest()
 
 	if (Application::getActiveWindow())
 	{
-		printPreviewDialog.resize(Application::getActiveWindow()->size());
+		printPreviewDialog.resize(printPreviewDialog.size().expandedTo(Application::getActiveWindow()->size()));
 	}
 
 	connect(&printPreviewDialog, &QPrintPreviewDialog::paintRequested, this, [&](QPrinter *printer)
