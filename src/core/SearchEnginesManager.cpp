@@ -268,110 +268,108 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEngine(QIODevice *device, const QString &identifier, bool checkKeyword)
 {
 	SearchEngineDefinition searchEngine;
-	searchEngine.identifier = identifier;
-
 	QXmlStreamReader reader(device);
 
-	if (reader.readNextStartElement() && reader.name() == QLatin1String("OpenSearchDescription"))
+	if (!reader.readNextStartElement() || reader.name() != QLatin1String("OpenSearchDescription"))
 	{
-		SearchUrl *currentUrl(nullptr);
+		return searchEngine;
+	}
 
-		while (!reader.atEnd())
+	SearchUrl *currentUrl(nullptr);
+
+	searchEngine.identifier = identifier;
+
+	while (!reader.atEnd())
+	{
+		reader.readNext();
+
+		if (reader.isStartElement())
 		{
-			reader.readNext();
+			const QXmlStreamAttributes attributes(reader.attributes());
 
-			if (reader.isStartElement())
+			if (reader.name() == QLatin1String("Url"))
 			{
-				const QXmlStreamAttributes attributes(reader.attributes());
+				const QString rel(attributes.value(QLatin1String("rel")).toString());
+				const QString type(attributes.value(QLatin1String("type")).toString());
 
-				if (reader.name() == QLatin1String("Url"))
+				if (rel == QLatin1String("self") || type == QLatin1String("application/opensearchdescription+xml"))
 				{
-					const QString rel(attributes.value(QLatin1String("rel")).toString());
-					const QString type(attributes.value(QLatin1String("type")).toString());
+					searchEngine.selfUrl = QUrl(attributes.value(QLatin1String("template")).toString());
 
-					if (rel == QLatin1String("self") || type == QLatin1String("application/opensearchdescription+xml"))
-					{
-						searchEngine.selfUrl = QUrl(attributes.value(QLatin1String("template")).toString());
+					currentUrl = nullptr;
+				}
+				else if ((rel == QLatin1String("suggestions") && type != QLatin1String("x-suggestions+xm")) || type == QLatin1String("application/x-suggestions+json"))
+				{
+					currentUrl = &searchEngine.suggestionsUrl;
+				}
+				else if ((rel.isEmpty() || rel == QLatin1String("results")) && !type.contains(QLatin1String("suggestions")))
+				{
+					currentUrl = &searchEngine.resultsUrl;
+				}
+				else
+				{
+					currentUrl = nullptr;
+				}
 
-						currentUrl = nullptr;
-					}
-					else if ((rel == QLatin1String("suggestions") && type != QLatin1String("x-suggestions+xm")) || type == QLatin1String("application/x-suggestions+json"))
-					{
-						currentUrl = &searchEngine.suggestionsUrl;
-					}
-					else if ((rel.isEmpty() || rel == QLatin1String("results")) && !type.contains(QLatin1String("suggestions")))
-					{
-						currentUrl = &searchEngine.resultsUrl;
-					}
-					else
-					{
-						currentUrl = nullptr;
-					}
-
-					if (currentUrl)
-					{
-						currentUrl->url = attributes.value(QLatin1String("template")).toString();
-						currentUrl->enctype = attributes.value(QLatin1String("enctype")).toString().toLower();
-						currentUrl->method = attributes.value(QLatin1String("method")).toString().toLower();
-					}
-				}
-				else if (currentUrl && (reader.name() == QLatin1String("Param") || reader.name() == QLatin1String("Parameter")))
+				if (currentUrl)
 				{
-					currentUrl->parameters.addQueryItem(attributes.value(QLatin1String("name")).toString(), attributes.value(QLatin1String("value")).toString());
-				}
-				else if (reader.name() == QLatin1String("Shortcut"))
-				{
-					const QString keyword(reader.readElementText());
-
-					if (!keyword.isEmpty())
-					{
-						if (!m_searchKeywords.contains(keyword))
-						{
-							searchEngine.keyword = keyword;
-
-							m_searchKeywords.append(keyword);
-						}
-						else if (!checkKeyword)
-						{
-							searchEngine.keyword = keyword;
-						}
-					}
-				}
-				else if (reader.name() == QLatin1String("ShortName"))
-				{
-					searchEngine.title = reader.readElementText();
-				}
-				else if (reader.name() == QLatin1String("Description"))
-				{
-					searchEngine.description = reader.readElementText();
-				}
-				else if (reader.name() == QLatin1String("InputEncoding"))
-				{
-					searchEngine.encoding = reader.readElementText();
-				}
-				else if (reader.name() == QLatin1String("Image"))
-				{
-					const QString data(reader.readElementText());
-
-					if (data.startsWith(QLatin1String("data:image/")))
-					{
-						searchEngine.icon = QIcon(Utils::loadPixmapFromDataUri(data));
-					}
-					else
-					{
-						searchEngine.iconUrl = QUrl(data);
-					}
-				}
-				else if (reader.name() == QLatin1String("SearchForm"))
-				{
-					searchEngine.formUrl = QUrl(reader.readElementText());
+					currentUrl->url = attributes.value(QLatin1String("template")).toString();
+					currentUrl->enctype = attributes.value(QLatin1String("enctype")).toString().toLower();
+					currentUrl->method = attributes.value(QLatin1String("method")).toString().toLower();
 				}
 			}
+			else if (currentUrl && (reader.name() == QLatin1String("Param") || reader.name() == QLatin1String("Parameter")))
+			{
+				currentUrl->parameters.addQueryItem(attributes.value(QLatin1String("name")).toString(), attributes.value(QLatin1String("value")).toString());
+			}
+			else if (reader.name() == QLatin1String("Shortcut"))
+			{
+				const QString keyword(reader.readElementText());
+
+				if (!keyword.isEmpty())
+				{
+					if (!m_searchKeywords.contains(keyword))
+					{
+						searchEngine.keyword = keyword;
+
+						m_searchKeywords.append(keyword);
+					}
+					else if (!checkKeyword)
+					{
+						searchEngine.keyword = keyword;
+					}
+				}
+			}
+			else if (reader.name() == QLatin1String("ShortName"))
+			{
+				searchEngine.title = reader.readElementText();
+			}
+			else if (reader.name() == QLatin1String("Description"))
+			{
+				searchEngine.description = reader.readElementText();
+			}
+			else if (reader.name() == QLatin1String("InputEncoding"))
+			{
+				searchEngine.encoding = reader.readElementText();
+			}
+			else if (reader.name() == QLatin1String("Image"))
+			{
+				const QString data(reader.readElementText());
+
+				if (data.startsWith(QLatin1String("data:image/")))
+				{
+					searchEngine.icon = QIcon(Utils::loadPixmapFromDataUri(data));
+				}
+				else
+				{
+					searchEngine.iconUrl = QUrl(data);
+				}
+			}
+			else if (reader.name() == QLatin1String("SearchForm"))
+			{
+				searchEngine.formUrl = QUrl(reader.readElementText());
+			}
 		}
-	}
-	else
-	{
-		searchEngine.identifier.clear();
 	}
 
 	return searchEngine;
