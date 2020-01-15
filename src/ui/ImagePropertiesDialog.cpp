@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QVariantMap 
 	m_ui->alternativeTextLabelWidget->setText(properties.value(QLatin1String("alternativeText")).toString());
 	m_ui->longDescriptionLabelWidget->setText(properties.value(QLatin1String("longDescription")).toString());
 
-	if (url.scheme() == QLatin1String("data") && !device)
+	if (!device && url.scheme() == QLatin1String("data"))
 	{
 		const QString imageData(url.path());
 		QBuffer *buffer(new QBuffer(this));
