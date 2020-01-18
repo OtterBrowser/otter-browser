@@ -37,6 +37,6 @@ If you want to help with the development of Otter Browser, please observe the fo
 * Try to keep a proper order of methods in the source file (check existing code in case of doubt):
   * constructor(s),
   * destructor,
-  * methods returning void (reimplementations of *Event methods and others should go first),
+  * methods returning void (reimplementations of ``*Event`` methods and others should go first),
   * setters,
   * methods returning value (from pointers through data structures to primitive data types).
