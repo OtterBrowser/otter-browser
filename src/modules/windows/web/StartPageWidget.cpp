@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -69,7 +69,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	const bool isAddTile(index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"));
 	const bool isDragged(index.data(StartPageModel::IsDraggedRole).toBool());
 	QRect rectangle(option.rect);
-	rectangle.adjust(3, 3, -3, -3);
+	rectangle.adjust(10, 10, -10, -10);
 
 	QPainterPath path;
 	path.addRoundedRect(rectangle, 5, 5);
@@ -814,8 +814,8 @@ void StartPageWidget::handleIsReloadingTileChanged(const QModelIndex &index)
 void StartPageWidget::updateSize()
 {
 	const qreal zoom(SettingsManager::getOption(SettingsManager::StartPage_ZoomLevelOption).toInt() / static_cast<qreal>(100));
-	const int tileHeight(qRound((SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt() + 6) * zoom));
-	const int tileWidth(qRound((SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt() + 6) * zoom));
+	const int tileHeight(qRound((SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt() + 10) * zoom));
+	const int tileWidth(qRound((SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt() + 10) * zoom));
 	const int tilesPerRow(SettingsManager::getOption(SettingsManager::StartPage_TilesPerRowOption).toInt());
 	const int amount(m_model->rowCount());
 	const int columns((tilesPerRow > 0) ? tilesPerRow : qMax(1, ((width() - 50) / tileWidth)));
