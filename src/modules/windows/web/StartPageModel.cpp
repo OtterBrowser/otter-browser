@@ -77,9 +77,10 @@ void StartPageModel::reloadModel()
 
 				if (type == BookmarksModel::FolderBookmark && bookmark->rowCount() == 0)
 				{
-					item->setEnabled(false);
+					item->setData(true, IsEmptyRole);
 				}
-				else if (url.isValid() && SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail") && !QFile::exists(getThumbnailPath(identifier)))
+
+				if (url.isValid() && SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail") && !QFile::exists(getThumbnailPath(identifier)))
 				{
 					ThumbnailRequestInformation thumbnailRequestInformation;
 					thumbnailRequestInformation.bookmarkIdentifier = identifier;

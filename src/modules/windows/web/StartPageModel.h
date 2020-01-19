@@ -33,6 +33,7 @@ public:
 	enum
 	{
 		IsDraggedRole = BookmarksModel::UserRole,
+		IsEmptyRole,
 		IsReloadingRole
 	};
 
