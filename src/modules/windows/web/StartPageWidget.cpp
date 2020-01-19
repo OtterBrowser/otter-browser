@@ -64,8 +64,10 @@ TileDelegate::TileDelegate(QObject *parent) : QStyledItemDelegate(parent),
 
 void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+	const QPalette::ColorGroup colorGroup(index.flags().testFlag(Qt::ItemIsEnabled) ? QPalette::Active : QPalette::Disabled);
 	const int textHeight(qRound(option.fontMetrics.boundingRect(QLatin1String("X")).height() * 1.5));
 	const bool isAddTile(index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"));
+	const bool isDragged(index.data(StartPageModel::IsDraggedRole).toBool());
 	QRect rectangle(option.rect);
 	rectangle.adjust(3, 3, -3, -3);
 
@@ -74,17 +76,24 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 	painter->setRenderHint(QPainter::HighQualityAntialiasing);
 
-	if (isAddTile || index.data(StartPageModel::IsDraggedRole).toBool())
+	if (!isDragged && (option.state.testFlag(QStyle::State_MouseOver) || option.state.testFlag(QStyle::State_HasFocus)))
 	{
-		if (isAddTile && (option.state.testFlag(QStyle::State_MouseOver) || option.state.testFlag(QStyle::State_HasFocus)))
+		QColor highlightColor(QGuiApplication::palette().color(colorGroup, QPalette::Highlight));
+
+		if (option.state.testFlag(QStyle::State_MouseOver))
 		{
-			painter->setPen(QPen(QGuiApplication::palette().color(QPalette::Highlight), 3));
-		}
-		else
-		{
-			painter->setPen(QPen(QColor(26, 35, 126, 51), 1));
+			highlightColor.setAlpha(150);
 		}
 
+		painter->setPen(QPen(highlightColor, 3));
+	}
+	else
+	{
+		painter->setPen(QPen(QColor(26, 35, 126, 51), 1));
+	}
+
+	if (isAddTile || isDragged)
+	{
 		if (isAddTile)
 		{
 			painter->setBrush(QColor(179, 229, 252, 224));
@@ -133,10 +142,12 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 				break;
 			case ThumbnailBackground:
+				painter->save();
 				painter->setBrush(Qt::white);
 				painter->setPen(Qt::transparent);
 				painter->drawRect(rectangle);
 				painter->drawPixmap(rectangle, QPixmap(StartPageModel::getThumbnailPath(index.data(BookmarksModel::IdentifierRole).toULongLong())), QRect(0, 0, rectangle.width(), rectangle.height()));
+				painter->restore();
 
 				break;
 			default:
@@ -162,7 +173,9 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	palette.setColor(QPalette::Text, QColor(26, 35, 128));
 
 	painter->setClipping(false);
-	painter->setPen(palette.color((index.flags().testFlag(Qt::ItemIsEnabled) ? QPalette::Active : QPalette::Disabled), QPalette::Text));
+	painter->setBrush(Qt::transparent);
+	painter->drawPath(path);
+	painter->setPen(palette.color(colorGroup, QPalette::Text));
 
 	if (m_mode == NoBackground)
 	{
@@ -172,18 +185,6 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	{
 		painter->drawText(QRect(rectangle.x(), (rectangle.y() + rectangle.height()), rectangle.width(), textHeight), Qt::AlignCenter, option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), option.textElideMode, (rectangle.width() - 20)));
 	}
-
-	if (option.state.testFlag(QStyle::State_MouseOver) || option.state.testFlag(QStyle::State_HasFocus))
-	{
-		painter->setPen(QPen(QGuiApplication::palette().color(QPalette::Highlight), 3));
-	}
-	else
-	{
-		painter->setPen(QPen(QColor(26, 35, 126, 51), 1));
-	}
-
-	painter->setBrush(Qt::transparent);
-	painter->drawPath(path);
 }
 
 void TileDelegate::handleOptionChanged(int identifier, const QVariant &value)
