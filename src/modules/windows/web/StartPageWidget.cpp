@@ -121,11 +121,9 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		rectangle.adjust(0, 0, 0, -textHeight);
 	}
 
-	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
-
-	if (type == BookmarksModel::FolderBookmark && m_mode != NoBackground)
+	if (m_mode != NoBackground && static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::FolderBookmark)
 	{
-		ThemesManager::createIcon(QLatin1String("inode-directory")).paint(painter, rectangle, Qt::AlignCenter, (index.flags().testFlag(Qt::ItemIsEnabled) ? QIcon::Normal : QIcon::Disabled));
+		ThemesManager::createIcon(QLatin1String("inode-directory")).paint(painter, rectangle, Qt::AlignCenter, (index.data(StartPageModel::IsEmptyRole).toBool() ? QIcon::Disabled : QIcon::Normal));
 	}
 	else
 	{
