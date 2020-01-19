@@ -1080,13 +1080,34 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
 		const QModelIndex index(m_listView->indexAt(helpEvent->pos()));
-		const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(index.data(BookmarksModel::IdentifierRole).toULongLong()));
+		QString toolTip;
 
-		if (bookmark)
+		if (index.isValid())
 		{
-			const QKeySequence shortcut(ActionsManager::getActionShortcut(ActionsManager::OpenBookmarkAction, {{QLatin1String("startPageTile"), (index.row() + 1)}}));
+			if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
+			{
+				toolTip = index.data(Qt::ToolTipRole).toString();
+			}
+			else
+			{
+				const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(index.data(BookmarksModel::IdentifierRole).toULongLong()));
 
-			QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(bookmark->getTitle() + (shortcut.isEmpty() ? QString() : QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')')), Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_listView).width() / 2)), m_listView, m_listView->visualRect(index));
+				if (bookmark)
+				{
+					const QKeySequence shortcut(ActionsManager::getActionShortcut(ActionsManager::OpenBookmarkAction, {{QLatin1String("startPageTile"), (index.row() + 1)}}));
+
+					toolTip = bookmark->getTitle() + (shortcut.isEmpty() ? QString() : QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')'));
+				}
+			}
+		}
+
+		if (toolTip.isEmpty())
+		{
+			QToolTip::hideText();
+		}
+		else
+		{
+			QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_listView).width() / 2)), m_listView, m_listView->visualRect(index));
 		}
 
 		return true;
