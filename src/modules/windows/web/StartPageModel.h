@@ -1,6 +1,10 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
+<<<<<<< HEAD
 * Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+=======
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+>>>>>>> 97337a46c... Force layout reload after finishing drag
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
