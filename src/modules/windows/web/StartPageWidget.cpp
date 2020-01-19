@@ -64,7 +64,7 @@ TileDelegate::TileDelegate(QObject *parent) : QStyledItemDelegate(parent),
 
 void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	const QPalette::ColorGroup colorGroup(index.flags().testFlag(Qt::ItemIsEnabled) ? QPalette::Active : QPalette::Disabled);
+	const QPalette::ColorGroup colorGroup(index.data(StartPageModel::IsEmptyRole).toBool() ? QPalette::Disabled : QPalette::Active);
 	const int textHeight(qRound(option.fontMetrics.boundingRect(QLatin1String("X")).height() * 1.5));
 	const bool isAddTile(index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"));
 	const bool isDragged(index.data(StartPageModel::IsDraggedRole).toBool());
