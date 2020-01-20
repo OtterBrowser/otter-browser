@@ -76,6 +76,7 @@ public:
 	explicit StartPageContentsWidget(QWidget *parent);
 
 	void setBackgroundMode(BackgroundMode mode);
+	QString getPixmapCacheKey() const;
 
 protected:
 	void paintEvent(QPaintEvent *event) override;
