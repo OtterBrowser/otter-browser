@@ -70,8 +70,6 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 {
 	const QPalette::ColorGroup colorGroup(index.data(StartPageModel::IsEmptyRole).toBool() ? QPalette::Disabled : QPalette::Active);
 	const int textHeight(qRound(option.fontMetrics.boundingRect(QLatin1String("X")).height() * 1.5));
-	const bool isAddTile(index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"));
-	const bool isDragged(index.data(StartPageModel::IsDraggedRole).toBool());
 	QRect rectangle(option.rect);
 	rectangle.adjust(10, 10, -10, -10);
 
@@ -82,13 +80,23 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		rectangle.adjust(0, 0, 0, -textHeight);
 	}
 
-	const QRect textRectangle(QRect(rectangle.x(), (rectangle.y() + rectangle.height()), rectangle.width(), textHeight));
 	QPainterPath path;
 	path.addRoundedRect(tileRectangle, 5, 5);
 
+	painter->setPen(QPen(QColor(26, 35, 126, 51), 1));
 	painter->setRenderHint(QPainter::HighQualityAntialiasing);
 
-	if (!isDragged && (option.state.testFlag(QStyle::State_MouseOver) || option.state.testFlag(QStyle::State_HasFocus)))
+	if (index.data(StartPageModel::IsDraggedRole).toBool())
+	{
+		painter->drawPath(path);
+
+		return;
+	}
+
+	const QRect textRectangle(QRect(rectangle.x(), (rectangle.y() + rectangle.height()), rectangle.width(), textHeight));
+	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
+
+	if (option.state.testFlag(QStyle::State_MouseOver) || option.state.testFlag(QStyle::State_HasFocus))
 	{
 		QColor highlightColor(QGuiApplication::palette().color(colorGroup, QPalette::Highlight));
 
@@ -99,30 +107,16 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 		painter->setPen(QPen(highlightColor, 3));
 	}
-	else
-	{
-		painter->setPen(QPen(QColor(26, 35, 126, 51), 1));
-	}
 
-	if (isAddTile || isDragged)
+	if (type == BookmarksModel::UnknownBookmark && index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
 	{
-		if (isAddTile)
-		{
-			painter->setBrush(QColor(179, 229, 252, 192));
+		painter->setBrush(QColor(179, 229, 252, 192));
 
-			drawBlurBehind(painter, tileRectangle);
-		}
-		else
-		{
-			painter->setBrush(Qt::transparent);
-		}
+		drawBlurBehind(painter, tileRectangle);
 
 		painter->drawPath(path);
 
-		if (isAddTile)
-		{
-			ThemesManager::createIcon(QLatin1String("list-add")).paint(painter, tileRectangle);
-		}
+		ThemesManager::createIcon(QLatin1String("list-add")).paint(painter, tileRectangle);
 
 		return;
 	}
@@ -145,7 +139,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 	painter->fillRect(tileRectangle, QColor(179, 229, 252, 128));
 
-	if (m_mode != NoBackground && static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::FolderBookmark)
+	if (type == BookmarksModel::FolderBookmark && m_mode != NoBackground)
 	{
 		ThemesManager::createIcon(QLatin1String("inode-directory")).paint(painter, rectangle, Qt::AlignCenter, (index.data(StartPageModel::IsEmptyRole).toBool() ? QIcon::Disabled : QIcon::Normal));
 	}
