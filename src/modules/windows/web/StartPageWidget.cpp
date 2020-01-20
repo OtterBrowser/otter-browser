@@ -319,24 +319,14 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 
 				if (QPixmapCache::find(key, &cachedBackground))
 				{
-					painter.drawPixmap(contentsRect(), cachedBackground, contentsRect().translated(((cachedBackground.width() - width()) / 2), ((cachedBackground.height() - height()) / 2)));
+					painter.drawPixmap(contentsRect(), cachedBackground);
 				}
 				else
 				{
-					const qreal pixmapAspectRatio(pixmap.width() / static_cast<qreal>(pixmap.height()));
-					const qreal backgroundAspectRatio(width() / static_cast<qreal>(height()));
-					QPixmap newBackground(size());
+					QPixmap newBackground(pixmap.scaled(size(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
+					newBackground = newBackground.copy(contentsRect().translated(((newBackground.width() - width()) / 2), ((newBackground.height() - height()) / 2)));
 
-					if (pixmapAspectRatio > backgroundAspectRatio)
-					{
-						newBackground = pixmap.scaledToHeight(height(), Qt::SmoothTransformation);
-					}
-					else
-					{
-						newBackground = pixmap.scaledToWidth(width(), Qt::SmoothTransformation);
-					}
-
-					painter.drawPixmap(contentsRect(), newBackground, contentsRect().translated(((newBackground.width() - width()) / 2), ((newBackground.height() - height()) / 2)));
+					painter.drawPixmap(contentsRect(), newBackground);
 
 					QPixmapCache::insert(key, newBackground);
 				}
@@ -353,13 +343,13 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 
 				if (QPixmapCache::find(key, &cachedBackground))
 				{
-					painter.drawPixmap(contentsRect(), cachedBackground, contentsRect());
+					painter.drawPixmap(contentsRect(), cachedBackground);
 				}
 				else
 				{
 					const QPixmap newBackground(pixmap.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 
-					painter.drawPixmap(contentsRect(), newBackground, contentsRect());
+					painter.drawPixmap(contentsRect(), newBackground);
 
 					QPixmapCache::insert(key, newBackground);
 				}
