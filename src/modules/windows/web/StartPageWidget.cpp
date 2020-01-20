@@ -306,11 +306,12 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 		return;
 	}
 
+	const QString key(getPixmapCacheKey());
+
 	switch (m_mode)
 	{
 		case BestFitBackground:
 			{
-				const QString key(QLatin1String("start-page-best-fit-") + QString::number(width()) + QLatin1Char('-') + QString::number(height()));
 				QPixmap cachedBackground;
 
 				if (QPixmapCache::find(key, &cachedBackground))
@@ -345,7 +346,6 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 			break;
 		case StretchBackground:
 			{
-				const QString key(QLatin1String("start-page-stretch-") + QString::number(width()) + QLatin1Char('-') + QString::number(height()));
 				QPixmap cachedBackground;
 
 				if (QPixmapCache::find(key, &cachedBackground))
@@ -381,6 +381,27 @@ void StartPageContentsWidget::setBackgroundMode(StartPageContentsWidget::Backgro
 	m_mode = mode;
 
 	update();
+}
+
+QString StartPageContentsWidget::getPixmapCacheKey() const
+{
+	QString prefix;
+
+	switch (m_mode)
+	{
+		case BestFitBackground:
+			prefix = QLatin1String("start-page-best-fit");
+
+			break;
+		case StretchBackground:
+			prefix = QLatin1String("start-page-stretch");
+
+			break;
+		default:
+			break;
+	}
+
+	return (prefix.isEmpty() ? QString() : prefix + QLatin1Char('-') + QString::number(width()) + QLatin1Char('-') + QString::number(height()));
 }
 
 StartPageWidget::StartPageWidget(Window *parent) : QScrollArea(parent),
