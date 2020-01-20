@@ -49,15 +49,19 @@ public:
 		ThumbnailBackground
 	};
 
-	explicit TileDelegate(QObject *parent = nullptr);
+	explicit TileDelegate(QWidget *parent = nullptr);
 
 	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+
+protected:
+	void drawBlurBehind(QPainter *painter, const QRect &rectangle) const;
 
 protected slots:
 	void handleOptionChanged(int identifier, const QVariant &value);
 
 private:
+	QWidget *m_widget;
 	BackgroundMode m_mode;
 };
 

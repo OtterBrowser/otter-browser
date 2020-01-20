@@ -347,6 +347,15 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/windows/WindowsContentsWidget.ui
 )
 
+foreach(_current_dir ${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
+	if (EXISTS "${_current_dir}/private/qpixmapfilter_p.h")
+		add_definitions(-DOTTER_ENABLE_STARTPAGEBLUR)
+		include_directories(${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
+
+		break()
+	endif()
+endforeach()
+
 if (Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
 	add_definitions(-DOTTER_ENABLE_QTWEBENGINE)
 

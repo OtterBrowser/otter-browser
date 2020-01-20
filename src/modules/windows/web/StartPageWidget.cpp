@@ -46,6 +46,9 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QScrollBar>
 #include <QtWidgets/QToolTip>
+#ifdef OTTER_ENABLE_STARTPAGEBLUR
+#include <QtWidgets/private/qpixmapfilter_p.h>
+#endif
 
 namespace Otter
 {
@@ -54,7 +57,8 @@ StartPageModel* StartPageWidget::m_model(nullptr);
 Animation* StartPageWidget::m_spinnerAnimation(nullptr);
 QPointer<StartPagePreferencesDialog> StartPageWidget::m_preferencesDialog(nullptr);
 
-TileDelegate::TileDelegate(QObject *parent) : QStyledItemDelegate(parent),
+TileDelegate::TileDelegate(QWidget *parent) : QStyledItemDelegate(parent),
+	m_widget(parent),
 	m_mode(NoBackground)
 {
 	handleOptionChanged(SettingsManager::StartPage_TileBackgroundModeOption, SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption));
@@ -71,8 +75,16 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	QRect rectangle(option.rect);
 	rectangle.adjust(10, 10, -10, -10);
 
+	const QRect tileRectangle(rectangle);
+
+	if (m_mode != NoBackground)
+	{
+		rectangle.adjust(0, 0, 0, -textHeight);
+	}
+
+	const QRect textRectangle(QRect(rectangle.x(), (rectangle.y() + rectangle.height()), rectangle.width(), textHeight));
 	QPainterPath path;
-	path.addRoundedRect(rectangle, 5, 5);
+	path.addRoundedRect(tileRectangle, 5, 5);
 
 	painter->setRenderHint(QPainter::HighQualityAntialiasing);
 
@@ -96,7 +108,9 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	{
 		if (isAddTile)
 		{
-			painter->setBrush(QColor(179, 229, 252, 224));
+			painter->setBrush(QColor(179, 229, 252, 192));
+
+			drawBlurBehind(painter, tileRectangle);
 		}
 		else
 		{
@@ -107,19 +121,29 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 		if (isAddTile)
 		{
-			ThemesManager::createIcon(QLatin1String("list-add")).paint(painter, rectangle);
+			ThemesManager::createIcon(QLatin1String("list-add")).paint(painter, tileRectangle);
 		}
 
 		return;
 	}
 
 	painter->setClipPath(path);
-	painter->fillRect(rectangle, QColor(179, 229, 252, 128));
 
-	if (m_mode != NoBackground)
+	switch (m_mode)
 	{
-		rectangle.adjust(0, 0, 0, -textHeight);
+		case FaviconBackground:
+			drawBlurBehind(painter, tileRectangle);
+
+			break;
+		case ThumbnailBackground:
+			drawBlurBehind(painter, textRectangle);
+
+			break;
+		default:
+			break;
 	}
+
+	painter->fillRect(tileRectangle, QColor(179, 229, 252, 128));
 
 	if (m_mode != NoBackground && static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::FolderBookmark)
 	{
@@ -167,6 +191,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		}
 	}
 
+	const QString text(option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), option.textElideMode, (rectangle.width() - 20)));
 	QPalette palette(QGuiApplication::palette());
 	palette.setColor(QPalette::Text, QColor(26, 35, 128));
 
@@ -177,12 +202,44 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 	if (m_mode == NoBackground)
 	{
-		painter->drawText(rectangle, Qt::AlignCenter, option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), option.textElideMode, (rectangle.width() - 20)));
+		painter->drawText(rectangle, Qt::AlignCenter, text);
 	}
 	else
 	{
-		painter->drawText(QRect(rectangle.x(), (rectangle.y() + rectangle.height()), rectangle.width(), textHeight), Qt::AlignCenter, option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), option.textElideMode, (rectangle.width() - 20)));
+		painter->drawText(textRectangle, Qt::AlignCenter, text);
 	}
+}
+
+void TileDelegate::drawBlurBehind(QPainter *painter, const QRect &rectangle) const
+{
+#ifdef OTTER_ENABLE_STARTPAGEBLUR
+	QRect parentRectangle;
+	parentRectangle.setTopLeft(m_widget->mapToParent(rectangle.topLeft()));
+	parentRectangle.setBottomRight(m_widget->mapToParent(rectangle.bottomRight()));
+	parentRectangle.adjust(-8, -8, 8, 8);
+
+	QPixmap parentPixmap(parentRectangle.size());
+	parentPixmap.fill(Qt::transparent);
+
+	m_widget->parentWidget()->render(&parentPixmap, {}, QRegion(parentRectangle), (QWidget::DrawWindowBackground | QWidget::IgnoreMask));
+
+	QPixmap blurredPixmap(parentRectangle.size());
+	blurredPixmap.fill(Qt::transparent);
+
+	QPainter blurredPainter(&blurredPixmap);
+	QPixmapBlurFilter filter;
+	filter.setBlurHints(QGraphicsBlurEffect::PerformanceHint);
+	filter.setRadius(5);
+	filter.draw(&blurredPainter, {}, parentPixmap);
+
+	QRect blurredRectangle(rectangle);
+	blurredRectangle.moveTo(8, 8);
+
+	painter->drawPixmap(rectangle, blurredPixmap, blurredRectangle);
+#else
+	Q_UNUSED(painter)
+	Q_UNUSED(rectangle)
+#endif
 }
 
 void TileDelegate::handleOptionChanged(int identifier, const QVariant &value)
