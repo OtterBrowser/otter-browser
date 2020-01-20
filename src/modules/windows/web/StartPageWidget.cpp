@@ -422,6 +422,8 @@ StartPageWidget::StartPageWidget(Window *parent) : QScrollArea(parent),
 	handleOptionChanged(SettingsManager::StartPage_BackgroundPathOption, SettingsManager::getOption(SettingsManager::StartPage_BackgroundPathOption));
 	handleOptionChanged(SettingsManager::StartPage_ShowSearchFieldOption, SettingsManager::getOption(SettingsManager::StartPage_ShowSearchFieldOption));
 
+	QPixmapCache::setCacheLimit(51200);
+
 	connect(m_model, &StartPageModel::modelModified, this, &StartPageWidget::updateSize);
 	connect(m_model, &StartPageModel::isReloadingTileChanged, this, &StartPageWidget::handleIsReloadingTileChanged);
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &StartPageWidget::handleOptionChanged);
