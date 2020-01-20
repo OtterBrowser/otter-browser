@@ -123,18 +123,13 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 	painter->setClipPath(path);
 
-	switch (m_mode)
+	if (type == BookmarksModel::FolderBookmark || m_mode != ThumbnailBackground)
 	{
-		case FaviconBackground:
-			drawBlurBehind(painter, tileRectangle);
-
-			break;
-		case ThumbnailBackground:
-			drawBlurBehind(painter, textRectangle);
-
-			break;
-		default:
-			break;
+		drawBlurBehind(painter, tileRectangle);
+	}
+	else
+	{
+		drawBlurBehind(painter, textRectangle);
 	}
 
 	painter->fillRect(tileRectangle, QColor(179, 229, 252, 128));
