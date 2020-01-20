@@ -68,6 +68,8 @@ private:
 
 class StartPageContentsWidget final : public QWidget
 {
+	Q_OBJECT
+
 public:
 	enum BackgroundMode
 	{
@@ -85,6 +87,9 @@ public:
 
 protected:
 	void paintEvent(QPaintEvent *event) override;
+
+protected slots:
+	void handleOptionChanged(int identifier);
 
 private:
 	QString m_path;

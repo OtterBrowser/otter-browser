@@ -283,8 +283,11 @@ StartPageContentsWidget::StartPageContentsWidget(QWidget *parent) : QWidget(pare
 	m_color(Qt::transparent),
 	m_mode(NoCustomBackground)
 {
+	handleOptionChanged(SettingsManager::StartPage_BackgroundPathOption);
 	setAutoFillBackground(true);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &StartPageContentsWidget::handleOptionChanged);
 }
 
 void StartPageContentsWidget::paintEvent(QPaintEvent *event)
@@ -369,6 +372,16 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 			break;
 		default:
 			break;
+	}
+}
+
+void StartPageContentsWidget::handleOptionChanged(int identifier)
+{
+	if (identifier == SettingsManager::StartPage_BackgroundPathOption)
+	{
+		QPixmapCache::remove(getPixmapCacheKey());
+
+		update();
 	}
 }
 
