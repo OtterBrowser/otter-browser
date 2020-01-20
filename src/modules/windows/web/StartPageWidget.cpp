@@ -59,8 +59,10 @@ QPointer<StartPagePreferencesDialog> StartPageWidget::m_preferencesDialog(nullpt
 
 TileDelegate::TileDelegate(QWidget *parent) : QStyledItemDelegate(parent),
 	m_widget(parent),
-	m_mode(NoBackground)
+	m_mode(NoBackground),
+	m_needsBlur(true)
 {
+	handleOptionChanged(SettingsManager::StartPage_BackgroundModeOption, SettingsManager::getOption(SettingsManager::StartPage_BackgroundModeOption));
 	handleOptionChanged(SettingsManager::StartPage_TileBackgroundModeOption, SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption));
 
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &TileDelegate::handleOptionChanged);
@@ -202,6 +204,11 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 void TileDelegate::drawBlurBehind(QPainter *painter, const QRect &rectangle) const
 {
 #ifdef OTTER_ENABLE_STARTPAGEBLUR
+	if (!m_needsBlur)
+	{
+		return;
+	}
+
 	QRect parentRectangle;
 	parentRectangle.setTopLeft(m_widget->mapToParent(rectangle.topLeft()));
 	parentRectangle.setBottomRight(m_widget->mapToParent(rectangle.bottomRight()));
@@ -233,22 +240,32 @@ void TileDelegate::drawBlurBehind(QPainter *painter, const QRect &rectangle) con
 
 void TileDelegate::handleOptionChanged(int identifier, const QVariant &value)
 {
-	if (identifier == SettingsManager::StartPage_TileBackgroundModeOption)
+	switch (identifier)
 	{
-		const QString mode(value.toString());
+		case SettingsManager::StartPage_BackgroundModeOption:
+		case SettingsManager::StartPage_BackgroundPathOption:
+			m_needsBlur = (!SettingsManager::getOption(SettingsManager::StartPage_BackgroundPathOption).toString().isEmpty() && SettingsManager::getOption(SettingsManager::StartPage_BackgroundModeOption).toString() != QLatin1String("standard"));
 
-		if (mode == QLatin1String("favicon"))
-		{
-			m_mode = FaviconBackground;
-		}
-		else if (mode == QLatin1String("thumbnail"))
-		{
-			m_mode = ThumbnailBackground;
-		}
-		else
-		{
-			m_mode = NoBackground;
-		}
+			break;
+		case SettingsManager::StartPage_TileBackgroundModeOption:
+			{
+				const QString mode(value.toString());
+
+				if (mode == QLatin1String("favicon"))
+				{
+					m_mode = FaviconBackground;
+				}
+				else if (mode == QLatin1String("thumbnail"))
+				{
+					m_mode = ThumbnailBackground;
+				}
+				else
+				{
+					m_mode = NoBackground;
+				}
+			}
+
+			break;
 	}
 }
 

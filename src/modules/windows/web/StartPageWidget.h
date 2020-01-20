@@ -63,6 +63,7 @@ protected slots:
 private:
 	QWidget *m_widget;
 	BackgroundMode m_mode;
+	bool m_needsBlur;
 };
 
 class StartPageContentsWidget final : public QWidget
