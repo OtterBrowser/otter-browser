@@ -302,6 +302,16 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 		return;
 	}
 
+	const QString key(getPixmapCacheKey());
+	QPixmap cachedPixmap;
+
+	if (QPixmapCache::find(key, &cachedPixmap))
+	{
+		painter.drawPixmap(contentsRect(), cachedPixmap);
+
+		return;
+	}
+
 	const QPixmap pixmap(m_path);
 
 	if (pixmap.isNull())
@@ -309,28 +319,13 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 		return;
 	}
 
-	const QString key(getPixmapCacheKey());
-
 	switch (m_mode)
 	{
 		case BestFitBackground:
-			{
-				QPixmap cachedBackground;
+			cachedPixmap = pixmap.scaled(size(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+			cachedPixmap = cachedPixmap.copy(contentsRect().translated(((cachedPixmap.width() - width()) / 2), ((cachedPixmap.height() - height()) / 2)));
 
-				if (QPixmapCache::find(key, &cachedBackground))
-				{
-					painter.drawPixmap(contentsRect(), cachedBackground);
-				}
-				else
-				{
-					QPixmap newBackground(pixmap.scaled(size(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
-					newBackground = newBackground.copy(contentsRect().translated(((newBackground.width() - width()) / 2), ((newBackground.height() - height()) / 2)));
-
-					painter.drawPixmap(contentsRect(), newBackground);
-
-					QPixmapCache::insert(key, newBackground);
-				}
-			}
+			painter.drawPixmap(contentsRect(), cachedPixmap);
 
 			break;
 		case CenterBackground:
@@ -338,22 +333,9 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 
 			break;
 		case StretchBackground:
-			{
-				QPixmap cachedBackground;
+			cachedPixmap = pixmap.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
-				if (QPixmapCache::find(key, &cachedBackground))
-				{
-					painter.drawPixmap(contentsRect(), cachedBackground);
-				}
-				else
-				{
-					const QPixmap newBackground(pixmap.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-
-					painter.drawPixmap(contentsRect(), newBackground);
-
-					QPixmapCache::insert(key, newBackground);
-				}
-			}
+			painter.drawPixmap(contentsRect(), cachedPixmap);
 
 			break;
 		case TileBackground:
@@ -362,6 +344,11 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 			break;
 		default:
 			break;
+	}
+
+	if (!cachedPixmap.isNull())
+	{
+		QPixmapCache::insert(key, cachedPixmap);
 	}
 }
 
