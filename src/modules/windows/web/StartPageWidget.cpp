@@ -356,7 +356,7 @@ void StartPageContentsWidget::handleOptionChanged(int identifier)
 {
 	if (identifier == SettingsManager::StartPage_BackgroundPathOption)
 	{
-		QPixmapCache::remove(getPixmapCacheKey());
+		QPixmapCache::clear();
 
 		update();
 	}
