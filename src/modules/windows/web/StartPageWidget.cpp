@@ -297,7 +297,7 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 	QPainter painter(this);
 	painter.fillRect(contentsRect(), m_color);
 
-	if (m_mode == NoCustomBackground || m_path.isEmpty())
+	if (m_mode == NoCustomBackground || m_path.isEmpty() || !QFile::exists(m_path))
 	{
 		return;
 	}
