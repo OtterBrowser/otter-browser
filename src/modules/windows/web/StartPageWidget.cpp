@@ -95,50 +95,75 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		return;
 	}
 
-	const QRect textRectangle(QRect(rectangle.x(), (rectangle.y() + rectangle.height()), rectangle.width(), textHeight));
-	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
+	const quint64 identifier(index.data(BookmarksModel::IdentifierRole).toULongLong());
+	const bool isReloading(index.data(StartPageModel::IsReloadingRole).toBool());
+	QByteArray array;
+	QDataStream stream(&array, QIODevice::WriteOnly);
+	stream << tileRectangle;
 
-	if (option.state.testFlag(QStyle::State_MouseOver) || option.state.testFlag(QStyle::State_HasFocus))
+	const QString key(m_pixmapCachePrefix + QLatin1String("-tile-") + QString::number(identifier) + QLatin1Char('-') + array.toBase64(QByteArray::OmitTrailingEquals));
+	QPixmap cachedPixmap;
+
+	if (QPixmapCache::find(key, &cachedPixmap))
 	{
-		QColor highlightColor(QGuiApplication::palette().color(colorGroup, QPalette::Highlight));
+		painter->drawPixmap(tileRectangle, cachedPixmap);
 
-		if (option.state.testFlag(QStyle::State_MouseOver))
+		if (isReloading)
 		{
-			highlightColor.setAlpha(150);
+			drawAnimation(painter, rectangle);
 		}
 
-		painter->setPen(QPen(highlightColor, 3));
-	}
-
-	if (type == BookmarksModel::UnknownBookmark && index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
-	{
-		painter->setBrush(QColor(179, 229, 252, 192));
-
-		drawBlurBehind(painter, tileRectangle);
-
-		painter->drawPath(path);
-
-		ThemesManager::createIcon(QLatin1String("list-add")).paint(painter, tileRectangle);
+		drawFocusIndicator(painter, path, option, colorGroup);
 
 		return;
 	}
 
-	painter->setClipPath(path);
+	cachedPixmap = QPixmap(tileRectangle.size());
+	cachedPixmap.fill(Qt::transparent);
+
+	QPainter pixmapPainter(&cachedPixmap);
+	pixmapPainter.translate(-rectangle.topLeft());
+	pixmapPainter.setPen(QPen(QColor(26, 35, 126, 51), 1));
+	pixmapPainter.setRenderHint(QPainter::HighQualityAntialiasing);
+
+	const QRect textRectangle(QRect(rectangle.x(), (rectangle.y() + rectangle.height()), rectangle.width(), textHeight));
+	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
+
+	if (type == BookmarksModel::UnknownBookmark && index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
+	{
+		pixmapPainter.setBrush(QColor(179, 229, 252, 192));
+
+		drawBlurBehind(&pixmapPainter, tileRectangle);
+
+		pixmapPainter.drawPath(path);
+
+		ThemesManager::createIcon(QLatin1String("list-add")).paint(&pixmapPainter, tileRectangle);
+
+		painter->drawPixmap(tileRectangle, cachedPixmap);
+
+		QPixmapCache::insert(key, cachedPixmap);
+
+		drawFocusIndicator(painter, path, option, colorGroup);
+
+		return;
+	}
+
+	pixmapPainter.setClipPath(path);
 
 	if (type == BookmarksModel::FolderBookmark || m_mode != ThumbnailBackground)
 	{
-		drawBlurBehind(painter, tileRectangle);
+		drawBlurBehind(&pixmapPainter, tileRectangle);
 	}
 	else
 	{
-		drawBlurBehind(painter, textRectangle);
+		drawBlurBehind(&pixmapPainter, textRectangle);
 	}
 
-	painter->fillRect(tileRectangle, QColor(179, 229, 252, 128));
+	pixmapPainter.fillRect(tileRectangle, QColor(179, 229, 252, 128));
 
 	if (type == BookmarksModel::FolderBookmark && m_mode != NoBackground)
 	{
-		ThemesManager::createIcon(QLatin1String("inode-directory")).paint(painter, rectangle, Qt::AlignCenter, (index.data(StartPageModel::IsEmptyRole).toBool() ? QIcon::Disabled : QIcon::Normal));
+		ThemesManager::createIcon(QLatin1String("inode-directory")).paint(&pixmapPainter, rectangle, Qt::AlignCenter, (index.data(StartPageModel::IsEmptyRole).toBool() ? QIcon::Disabled : QIcon::Normal));
 	}
 	else
 	{
@@ -150,17 +175,17 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 					QRect faviconRectangle(0, 0, faviconSize, faviconSize);
 					faviconRectangle.moveCenter(rectangle.center());
 
-					HistoryManager::getIcon(index.data(BookmarksModel::UrlRole).toUrl()).paint(painter, faviconRectangle);
+					HistoryManager::getIcon(index.data(BookmarksModel::UrlRole).toUrl()).paint(&pixmapPainter, faviconRectangle);
 				}
 
 				break;
 			case ThumbnailBackground:
-				painter->save();
-				painter->setBrush(Qt::white);
-				painter->setPen(Qt::transparent);
-				painter->drawRect(rectangle);
-				painter->drawPixmap(rectangle, QPixmap(StartPageModel::getThumbnailPath(index.data(BookmarksModel::IdentifierRole).toULongLong())), QRect(0, 0, rectangle.width(), rectangle.height()));
-				painter->restore();
+				pixmapPainter.save();
+				pixmapPainter.setBrush(Qt::white);
+				pixmapPainter.setPen(Qt::transparent);
+				pixmapPainter.drawRect(rectangle);
+				pixmapPainter.drawPixmap(rectangle, QPixmap(StartPageModel::getThumbnailPath(identifier)), QRect(0, 0, rectangle.width(), rectangle.height()));
+				pixmapPainter.restore();
 
 				break;
 			default:
@@ -168,36 +193,47 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		}
 	}
 
-	if (index.data(StartPageModel::IsReloadingRole).toBool())
-	{
-		const Animation *animation(StartPageWidget::getLoadingAnimation());
-
-		if (animation)
-		{
-			const QPixmap pixmap(animation->getCurrentPixmap());
-			QRect pixmapRectangle(QPoint(0, 0), pixmap.size());
-			pixmapRectangle.moveCenter(rectangle.center());
-
-			painter->drawPixmap(pixmapRectangle, pixmap);
-		}
-	}
-
 	const QString text(option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), option.textElideMode, (rectangle.width() - 20)));
 	QPalette palette(QGuiApplication::palette());
 	palette.setColor(QPalette::Text, QColor(26, 35, 128));
 
-	painter->setClipping(false);
-	painter->setBrush(Qt::transparent);
-	painter->drawPath(path);
-	painter->setPen(palette.color(colorGroup, QPalette::Text));
+	pixmapPainter.setClipping(false);
+	pixmapPainter.setBrush(Qt::transparent);
+	pixmapPainter.drawPath(path);
+	pixmapPainter.setPen(palette.color(colorGroup, QPalette::Text));
 
 	if (m_mode == NoBackground)
 	{
-		painter->drawText(rectangle, Qt::AlignCenter, text);
+		pixmapPainter.drawText(rectangle, Qt::AlignCenter, text);
 	}
 	else
 	{
-		painter->drawText(textRectangle, Qt::AlignCenter, text);
+		pixmapPainter.drawText(textRectangle, Qt::AlignCenter, text);
+	}
+
+	painter->drawPixmap(tileRectangle, cachedPixmap);
+
+	QPixmapCache::insert(key, cachedPixmap);
+
+	if (isReloading)
+	{
+		drawAnimation(painter, rectangle);
+	}
+
+	drawFocusIndicator(painter, path, option, colorGroup);
+}
+
+void TileDelegate::drawAnimation(QPainter *painter, const QRect &rectangle) const
+{
+	const Animation *animation(StartPageWidget::getLoadingAnimation());
+
+	if (animation)
+	{
+		const QPixmap pixmap(animation->getCurrentPixmap());
+		QRect pixmapRectangle(QPoint(0, 0), pixmap.size());
+		pixmapRectangle.moveCenter(rectangle.center());
+
+		painter->drawPixmap(pixmapRectangle, pixmap);
 	}
 }
 
@@ -238,6 +274,24 @@ void TileDelegate::drawBlurBehind(QPainter *painter, const QRect &rectangle) con
 #endif
 }
 
+void TileDelegate::drawFocusIndicator(QPainter *painter, const QPainterPath &path, const QStyleOptionViewItem &option, QPalette::ColorGroup colorGroup) const
+{
+	if (option.state.testFlag(QStyle::State_MouseOver) || option.state.testFlag(QStyle::State_HasFocus))
+	{
+		QColor highlightColor(QGuiApplication::palette().color(colorGroup, QPalette::Highlight));
+
+		if (option.state.testFlag(QStyle::State_MouseOver))
+		{
+			highlightColor.setAlpha(150);
+		}
+
+		painter->setPen(QPen(highlightColor, 3));
+		painter->setClipping(false);
+		painter->setBrush(Qt::transparent);
+		painter->drawPath(path);
+	}
+}
+
 void TileDelegate::handleOptionChanged(int identifier, const QVariant &value)
 {
 	switch (identifier)
@@ -267,6 +321,11 @@ void TileDelegate::handleOptionChanged(int identifier, const QVariant &value)
 
 			break;
 	}
+}
+
+void TileDelegate::setPixmapCachePrefix(const QString &prefix)
+{
+	m_pixmapCachePrefix = prefix;
 }
 
 QSize TileDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -302,7 +361,7 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 		return;
 	}
 
-	const QString key(getPixmapCacheKey());
+	const QString key(getPixmapCachePrefix() + QLatin1String("-background"));
 	QPixmap cachedPixmap;
 
 	if (QPixmapCache::find(key, &cachedPixmap))
@@ -373,7 +432,7 @@ void StartPageContentsWidget::setBackgroundMode(StartPageContentsWidget::Backgro
 	update();
 }
 
-QString StartPageContentsWidget::getPixmapCacheKey() const
+QString StartPageContentsWidget::getPixmapCachePrefix() const
 {
 	QString prefix;
 
@@ -399,6 +458,7 @@ StartPageWidget::StartPageWidget(Window *parent) : QScrollArea(parent),
 	m_contentsWidget(new StartPageContentsWidget(this)),
 	m_listView(new QListView(this)),
 	m_searchWidget(nullptr),
+	m_tileDelegate(new TileDelegate(m_listView)),
 	m_deleteTimer(0),
 	m_isIgnoringEnter(false)
 {
@@ -419,7 +479,7 @@ StartPageWidget::StartPageWidget(Window *parent) : QScrollArea(parent),
 	m_listView->setTabKeyNavigation(true);
 	m_listView->setViewMode(QListView::IconMode);
 	m_listView->setModel(m_model);
-	m_listView->setItemDelegate(new TileDelegate(m_listView));
+	m_listView->setItemDelegate(m_tileDelegate);
 	m_listView->installEventFilter(this);
 	m_listView->viewport()->setAttribute(Qt::WA_Hover);
 	m_listView->viewport()->setMouseTracking(true);
@@ -792,6 +852,8 @@ void StartPageWidget::handleOptionChanged(int identifier, const QVariant &value)
 					m_contentsWidget->setBackgroundMode(StartPageContentsWidget::NoCustomBackground);
 				}
 
+				m_tileDelegate->setPixmapCachePrefix(m_contentsWidget->getPixmapCachePrefix());
+
 				update();
 			}
 
@@ -897,6 +959,8 @@ void StartPageWidget::updateSize()
 
 	m_listView->setGridSize(QSize(tileWidth, tileHeight));
 	m_listView->setFixedSize(((qMin(amount, columns) * tileWidth) + 2), ((rows * tileHeight) + 20));
+
+	m_tileDelegate->setPixmapCachePrefix(m_contentsWidget->getPixmapCachePrefix());
 
 	m_thumbnail = {};
 }

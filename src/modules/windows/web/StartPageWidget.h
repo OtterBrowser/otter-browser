@@ -52,16 +52,20 @@ public:
 	explicit TileDelegate(QWidget *parent = nullptr);
 
 	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+	void setPixmapCachePrefix(const QString &prefix);
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
 protected:
+	void drawAnimation(QPainter *painter, const QRect &rectangle) const;
 	void drawBlurBehind(QPainter *painter, const QRect &rectangle) const;
+	void drawFocusIndicator(QPainter *painter, const QPainterPath &path, const QStyleOptionViewItem &option, QPalette::ColorGroup colorGroup) const;
 
 protected slots:
 	void handleOptionChanged(int identifier, const QVariant &value);
 
 private:
 	QWidget *m_widget;
+	QString m_pixmapCachePrefix;
 	BackgroundMode m_mode;
 	bool m_needsBlur;
 };
@@ -83,7 +87,7 @@ public:
 	explicit StartPageContentsWidget(QWidget *parent);
 
 	void setBackgroundMode(BackgroundMode mode);
-	QString getPixmapCacheKey() const;
+	QString getPixmapCachePrefix() const;
 
 protected:
 	void paintEvent(QPaintEvent *event) override;
@@ -138,6 +142,7 @@ private:
 	StartPageContentsWidget *m_contentsWidget;
 	QListView *m_listView;
 	SearchWidget *m_searchWidget;
+	TileDelegate *m_tileDelegate;
 	QPixmap m_thumbnail;
 	QTime m_urlOpenTime;
 	QModelIndex m_currentIndex;
