@@ -184,7 +184,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 				pixmapPainter.setBrush(Qt::white);
 				pixmapPainter.setPen(Qt::transparent);
 				pixmapPainter.drawRect(rectangle);
-				pixmapPainter.drawPixmap(rectangle, QPixmap(StartPageModel::getThumbnailPath(identifier)), QRect(0, 0, rectangle.width(), rectangle.height()));
+				pixmapPainter.drawPixmap(rectangle, QPixmap(StartPageModel::getThumbnailPath(identifier)), rectangle.translated(-rectangle.topLeft()));
 				pixmapPainter.restore();
 
 				break;
