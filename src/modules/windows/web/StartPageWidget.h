@@ -53,6 +53,7 @@ public:
 
 	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 	void setPixmapCachePrefix(const QString &prefix);
+	QString createPixmapCacheKey(const QRect &rectangle, quint64 identifier) const;
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
 protected:

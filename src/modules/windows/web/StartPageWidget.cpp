@@ -97,11 +97,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 	const quint64 identifier(index.data(BookmarksModel::IdentifierRole).toULongLong());
 	const bool isReloading(index.data(StartPageModel::IsReloadingRole).toBool());
-	QByteArray array;
-	QDataStream stream(&array, QIODevice::WriteOnly);
-	stream << tileRectangle;
-
-	const QString key(m_pixmapCachePrefix + QLatin1String("-tile-") + QString::number(identifier) + QLatin1Char('-') + array.toBase64(QByteArray::OmitTrailingEquals));
+	const QString key(createPixmapCacheKey(option.rect, identifier));
 	QPixmap cachedPixmap;
 
 	if (QPixmapCache::find(key, &cachedPixmap))
@@ -326,6 +322,15 @@ void TileDelegate::handleOptionChanged(int identifier, const QVariant &value)
 void TileDelegate::setPixmapCachePrefix(const QString &prefix)
 {
 	m_pixmapCachePrefix = prefix;
+}
+
+QString TileDelegate::createPixmapCacheKey(const QRect &rectangle, quint64 identifier) const
+{
+	QByteArray array;
+	QDataStream stream(&array, QIODevice::WriteOnly);
+	stream << rectangle;
+
+	return m_pixmapCachePrefix + QLatin1String("-tile-") + QString::number(identifier) + QLatin1Char('-') + array.toBase64(QByteArray::OmitTrailingEquals);
 }
 
 QSize TileDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -936,6 +941,8 @@ void StartPageWidget::handleOptionChanged(int identifier, const QVariant &value)
 
 void StartPageWidget::handleIsReloadingTileChanged(const QModelIndex &index)
 {
+	QPixmapCache::remove(m_tileDelegate->createPixmapCacheKey(m_listView->visualRect(index), index.data(BookmarksModel::IdentifierRole).toULongLong()));
+
 	m_listView->update(index);
 
 	m_thumbnail = {};
