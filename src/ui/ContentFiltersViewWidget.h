@@ -66,6 +66,7 @@ public slots:
 	void setSelectedProfiles(const QStringList &profiles);
 
 protected:
+	void contextMenuEvent(QContextMenuEvent *event) override;
 	void updateModel(ContentFiltersProfile *profile, bool isNewOrMoved);
 
 protected slots:

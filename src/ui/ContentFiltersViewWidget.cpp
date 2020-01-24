@@ -27,6 +27,7 @@
 #include "../core/Utils.h"
 
 #include <QtCore/QTimer>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QToolTip>
 
@@ -169,6 +170,24 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 	getViewportWidget()->setUpdateDataRole(ContentFiltersManager::IsShowingProgressIndicatorRole);
 
 	connect(ContentFiltersManager::getInstance(), &ContentFiltersManager::profileModified, this, &ContentFiltersViewWidget::handleProfileModified);
+}
+
+void ContentFiltersViewWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
+	QMenu menu(this);
+	menu.addAction(tr("Add…"), this, &ContentFiltersViewWidget::addProfile);
+
+	if (index.isValid() && index.flags().testFlag(Qt::ItemNeverHasChildren))
+	{
+		menu.addSeparator();
+		menu.addAction(tr("Edit…"), this, &ContentFiltersViewWidget::editProfile);
+		menu.addAction(tr("Update"), this, &ContentFiltersViewWidget::updateProfile)->setEnabled(index.isValid() && index.data(ContentFiltersManager::UpdateUrlRole).toUrl().isValid());
+		menu.addSeparator();
+		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-delete")), tr("Remove"), this, &ContentFiltersViewWidget::removeProfile);
+	}
+
+	menu.exec(event->globalPos());
 }
 
 void ContentFiltersViewWidget::addProfile()
