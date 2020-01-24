@@ -52,12 +52,6 @@ public slots:
 	void addTile(const QUrl &url);
 
 protected:
-	struct ThumbnailRequestInformation final
-	{
-		quint64 identifier = 0;
-		bool needsTitleUpdate = false;
-	};
-
 	bool requestThumbnail(const QUrl &url, quint64 identifier, bool needsTitleUpdate = false);
 
 protected slots:
@@ -66,11 +60,11 @@ protected slots:
 	void handleBookmarkModified(BookmarksModel::Bookmark *bookmark);
 	void handleBookmarkMoved(BookmarksModel::Bookmark *bookmark, BookmarksModel::Bookmark *previousParent);
 	void handleBookmarkRemoved(BookmarksModel::Bookmark *bookmark, BookmarksModel::Bookmark *previousParent);
-	void handleThumbnailCreated(const QUrl &url, const QPixmap &thumbnail, const QString &title);
+	void handleThumbnailCreated(quint64 identifier, const QPixmap &thumbnail, const QString &title);
 
 private:
 	BookmarksModel::Bookmark *m_bookmark;
-	QHash<QUrl, ThumbnailRequestInformation> m_reloads;
+	QHash<quint64, bool> m_reloads;
 
 signals:
 	void modelModified();

@@ -238,28 +238,28 @@ void StartPageModel::handleBookmarkRemoved(BookmarksModel::Bookmark *bookmark, B
 	}
 }
 
-void StartPageModel::handleThumbnailCreated(const QUrl &url, const QPixmap &thumbnail, const QString &title)
+void StartPageModel::handleThumbnailCreated(quint64 identifier, const QPixmap &thumbnail, const QString &title)
 {
-	if (!m_reloads.contains(url))
+	if (!m_reloads.contains(identifier))
 	{
 		return;
 	}
 
-	const ThumbnailRequestInformation request(m_reloads[url]);
-	BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(request.identifier));
+	const bool needsTitleUpdate(m_reloads[identifier]);
+	BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(identifier));
 
-	m_reloads.remove(url);
+	m_reloads.remove(identifier);
 
 	if (!SessionsManager::isReadOnly() && !thumbnail.isNull() && bookmark)
 	{
 		QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")));
 
-		thumbnail.save(getThumbnailPath(request.identifier), "png");
+		thumbnail.save(getThumbnailPath(identifier), "png");
 	}
 
 	if (bookmark)
 	{
-		if (request.needsTitleUpdate)
+		if (needsTitleUpdate)
 		{
 			bookmark->setData(title, BookmarksModel::TitleRole);
 		}
@@ -310,7 +310,7 @@ QVariant StartPageModel::data(const QModelIndex &index, int role) const
 {
 	if (role == IsReloadingRole)
 	{
-		return m_reloads.contains(index.data(BookmarksModel::UrlRole).toUrl());
+		return m_reloads.contains(index.data(BookmarksModel::IdentifierRole).toULongLong());
 	}
 
 	return QStandardItemModel::data(index, role);
@@ -332,18 +332,12 @@ bool StartPageModel::requestThumbnail(const QUrl &url, quint64 identifier, bool 
 
 	if (job)
 	{
-		connect(job, &WebPageThumbnailJob::jobFinished, this, [=](bool isSuccess)
+		connect(job, &WebPageThumbnailJob::jobFinished, this, [=]()
 		{
-			Q_UNUSED(isSuccess)
-
-			handleThumbnailCreated(url, job->getThumbnail(), job->getTitle());
+			handleThumbnailCreated(identifier, job->getThumbnail(), job->getTitle());
 		});
 
-		ThumbnailRequestInformation request;
-		request.identifier = identifier;
-		request.needsTitleUpdate = needsTitleUpdate;
-
-		m_reloads[url] = request;
+		m_reloads[identifier] = needsTitleUpdate;
 
 		job->start();
 
@@ -370,7 +364,7 @@ bool StartPageModel::reloadTile(const QModelIndex &index, bool needsTitleUpdate)
 
 		if (SessionsManager::isReadOnly())
 		{
-			handleThumbnailCreated(url, {}, information.getTitle());
+			handleThumbnailCreated(identifier, {}, information.getTitle());
 
 			return false;
 		}
@@ -383,13 +377,9 @@ bool StartPageModel::reloadTile(const QModelIndex &index, bool needsTitleUpdate)
 
 		information.icon.paint(&painter, QRect(QPoint(0, 0), size));
 
-		ThumbnailRequestInformation request;
-		request.identifier = identifier;
-		request.needsTitleUpdate = needsTitleUpdate;
+		m_reloads[identifier] = needsTitleUpdate;
 
-		m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = request;
-
-		handleThumbnailCreated(url, thumbnail, information.getTitle());
+		handleThumbnailCreated(identifier, thumbnail, information.getTitle());
 
 		return true;
 	}
