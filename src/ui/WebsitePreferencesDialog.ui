@@ -846,7 +846,7 @@
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="Otter::ItemViewWidget" name="contentBlockingProfilesViewWidget">
+        <widget class="Otter::ContentFiltersViewWidget" name="contentBlockingProfilesViewWidget">
          <property name="sizeAdjustPolicy">
           <enum>QAbstractScrollArea::AdjustIgnored</enum>
          </property>
@@ -899,6 +899,11 @@
    <class>Otter::ComboBoxWidget</class>
    <extends>QComboBox</extends>
    <header>src/ui/ComboBoxWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Otter::ContentFiltersViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ContentFiltersViewWidget.h</header>
   </customwidget>
   <customwidget>
    <class>Otter::FilePathWidget</class>

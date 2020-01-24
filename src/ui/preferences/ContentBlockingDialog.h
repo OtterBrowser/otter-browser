@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -32,30 +32,6 @@ namespace Ui
 	class ContentBlockingDialog;
 }
 
-class Animation;
-class ContentFiltersProfile;
-
-class ContentBlockingTitleDelegate final : public ItemDelegate
-{
-public:
-	explicit ContentBlockingTitleDelegate(QObject *parent = nullptr);
-
-	bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index) override;
-
-protected:
-	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
-};
-
-class ContentBlockingIntervalDelegate final : public ItemDelegate
-{
-public:
-	explicit ContentBlockingIntervalDelegate(QObject *parent = nullptr);
-
-	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
-	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
-	QString displayText(const QVariant &value, const QLocale &locale) const override;
-};
-
 class ContentBlockingDialog final : public Dialog
 {
 	Q_OBJECT
@@ -64,29 +40,19 @@ public:
 	explicit ContentBlockingDialog(QWidget *parent = nullptr);
 	~ContentBlockingDialog();
 
-	static Animation* getUpdateAnimation();
-
 protected:
 	void changeEvent(QEvent *event) override;
-	void updateModel(ContentFiltersProfile *profile, bool isNewOrMoved);
 
 protected slots:
-	void addProfile();
-	void editProfile();
-	void removeProfile();
-	void updateProfile();
 	void updateProfilesActions();
 	void addRule();
 	void editRule();
 	void removeRule();
 	void updateRulesActions();
-	void handleProfileModified(const QString &name);
 	void save();
 
 private:
 	Ui::ContentBlockingDialog *m_ui;
-
-	static Animation* m_updateAnimation;
 };
 
 }

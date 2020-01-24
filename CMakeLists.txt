@@ -151,6 +151,7 @@ set(otter_src
 	src/ui/ClearHistoryDialog.cpp
 	src/ui/ColorWidget.cpp
 	src/ui/ComboBoxWidget.cpp
+	src/ui/ContentFiltersViewWidget.cpp
 	src/ui/ContentsDialog.cpp
 	src/ui/ContentsWidget.cpp
 	src/ui/CookiePropertiesDialog.cpp

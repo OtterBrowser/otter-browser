@@ -52,7 +52,7 @@
          <item>
           <layout class="QVBoxLayout" name="profilesVerticalLayout">
            <item>
-            <widget class="Otter::ItemViewWidget" name="profilesViewWidget">
+            <widget class="Otter::ContentFiltersViewWidget" name="profilesViewWidget">
              <property name="editTriggers">
               <set>QAbstractItemView::CurrentChanged</set>
              </property>
@@ -239,6 +239,11 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>Otter::ContentFiltersViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ContentFiltersViewWidget.h</header>
+  </customwidget>
   <customwidget>
    <class>Otter::ItemViewWidget</class>
    <extends>QTreeView</extends>

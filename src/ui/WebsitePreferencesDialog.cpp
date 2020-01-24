@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -20,8 +20,8 @@
 **************************************************************************/
 
 #include "WebsitePreferencesDialog.h"
+#include "ContentFiltersViewWidget.h"
 #include "CookiePropertiesDialog.h"
-#include "preferences/ContentBlockingDialog.h"
 #include "../core/ContentFiltersManager.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/SettingsManager.h"
@@ -174,7 +174,6 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QString &host, const QV
 		connect(comboBoxes.at(i), static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &WebsitePreferencesDialog::handleValueChanged);
 	}
 
-	connect(ContentFiltersManager::getInstance(), &ContentFiltersManager::profileModified, this, &WebsitePreferencesDialog::updateContentBlockingProfile);
 	connect(m_ui->userStyleSheetFilePathWidget, &FilePathWidget::pathChanged, this, &WebsitePreferencesDialog::handleValueChanged);
 	connect(m_ui->cookiesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &WebsitePreferencesDialog::updateCookiesActions);
 	connect(m_ui->cookiesAddButton, &QPushButton::clicked, this, &WebsitePreferencesDialog::addNewCookie);
@@ -397,34 +396,6 @@ void WebsitePreferencesDialog::updateCookiesActions()
 	m_ui->cookiesDeleteButton->setEnabled(index.isValid());
 }
 
-void WebsitePreferencesDialog::updateContentBlockingProfile(const QString &name)
-{
-	const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(name));
-
-	if (!profile)
-	{
-		return;
-	}
-
-	for (int i = 0; i < m_ui->contentBlockingProfilesViewWidget->getRowCount(); ++i)
-	{
-		const QModelIndex categoryIndex(m_ui->contentBlockingProfilesViewWidget->getIndex(i));
-
-		for (int j = 0; j < m_ui->contentBlockingProfilesViewWidget->getRowCount(categoryIndex); ++j)
-		{
-			const QModelIndex entryIndex(m_ui->contentBlockingProfilesViewWidget->getIndex(j, 0, categoryIndex));
-
-			if (entryIndex.data(ContentFiltersManager::NameRole).toString() == name)
-			{
-				m_ui->contentBlockingProfilesViewWidget->setData(entryIndex, profile->getTitle(), Qt::DisplayRole);
-				m_ui->contentBlockingProfilesViewWidget->setData(entryIndex.sibling(j, 2), Utils::formatDateTime(profile->getLastUpdate()), Qt::DisplayRole);
-
-				return;
-			}
-		}
-	}
-}
-
 void WebsitePreferencesDialog::updateValues(bool isChecked)
 {
 	if (isChecked)
@@ -488,11 +459,7 @@ void WebsitePreferencesDialog::updateValues(bool isChecked)
 
 	const QStringList contentBlockingProfiles(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption, host).toStringList());
 
-	m_ui->contentBlockingProfilesViewWidget->setModel(ContentFiltersManager::createModel(this, contentBlockingProfiles));
-	m_ui->contentBlockingProfilesViewWidget->setItemDelegateForColumn(0, new ContentBlockingTitleDelegate(this));
-	m_ui->contentBlockingProfilesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
-	m_ui->contentBlockingProfilesViewWidget->setViewMode(ItemViewWidget::TreeView);
-	m_ui->contentBlockingProfilesViewWidget->expandAll();
+	m_ui->contentBlockingProfilesViewWidget->setSelectedProfiles(contentBlockingProfiles);
 
 	m_ui->enableCustomRulesCheckBox->setChecked(contentBlockingProfiles.contains("custom"));
 
