@@ -1037,7 +1037,7 @@ void StartPageWidget::showContextMenu(const QPoint &position)
 		}
 
 		menu.addSeparator();
-		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-delete")), tr("Delete"), this, &StartPageWidget::removeTile);
+		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-delete")), tr("Remove"), this, &StartPageWidget::removeTile);
 	}
 	else
 	{
