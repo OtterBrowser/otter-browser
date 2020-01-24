@@ -43,22 +43,22 @@ public:
 	static QString getThumbnailPath(quint64 identifier);
 	QVariant data(const QModelIndex &index, int role) const override;
 	QStringList mimeTypes() const override;
+	bool reloadTile(const QModelIndex &index, bool needsTitleUpdate = false);
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
 	bool event(QEvent *event) override;
 
 public slots:
 	void reloadModel();
 	void addTile(const QUrl &url);
-	void reloadTile(const QModelIndex &index, bool needsTitleUpdate = false);
 
 protected:
 	struct ThumbnailRequestInformation final
 	{
-		quint64 bookmarkIdentifier = 0;
+		quint64 identifier = 0;
 		bool needsTitleUpdate = false;
 	};
 
-	bool requestThumbnail(const QUrl &url, const QSize &size);
+	bool requestThumbnail(const QUrl &url, quint64 identifier, bool needsTitleUpdate = false);
 
 protected slots:
 	void handleOptionChanged(int identifier);

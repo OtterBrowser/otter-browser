@@ -785,11 +785,9 @@ void StartPageWidget::editTile()
 
 void StartPageWidget::reloadTile()
 {
-	startReloadingAnimation();
-
-	if (m_currentIndex.isValid())
+	if (m_currentIndex.isValid() && m_model->reloadTile(m_currentIndex))
 	{
-		m_model->reloadTile(m_currentIndex);
+		startReloadingAnimation();
 	}
 }
 

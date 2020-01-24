@@ -80,14 +80,9 @@ void StartPageModel::reloadModel()
 					item->setData(true, IsEmptyRole);
 				}
 
-				if (url.isValid() && SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail") && !QFile::exists(getThumbnailPath(identifier)))
+				if (url.isValid() && !QFile::exists(getThumbnailPath(identifier)))
 				{
-					ThumbnailRequestInformation thumbnailRequestInformation;
-					thumbnailRequestInformation.bookmarkIdentifier = identifier;
-
-					m_reloads[url] = thumbnailRequestInformation;
-
-					requestThumbnail(url, QSize(SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt(), SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt()));
+					requestThumbnail(url, identifier);
 				}
 
 				appendRow(item);
@@ -155,57 +150,6 @@ void StartPageModel::addTile(const QUrl &url)
 	if (bookmark)
 	{
 		reloadTile(bookmark->index(), true);
-	}
-}
-
-void StartPageModel::reloadTile(const QModelIndex &index, bool needsTitleUpdate)
-{
-	const QUrl url(index.data(BookmarksModel::UrlRole).toUrl());
-
-	if (!url.isValid())
-	{
-		return;
-	}
-
-	QSize size;
-	ThumbnailRequestInformation thumbnailRequestInformation;
-	thumbnailRequestInformation.bookmarkIdentifier = index.data(BookmarksModel::IdentifierRole).toULongLong();
-	thumbnailRequestInformation.needsTitleUpdate = needsTitleUpdate;
-
-	if (!SessionsManager::isReadOnly() && SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail"))
-	{
-		size = QSize(SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt(), SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt());
-	}
-	else if (!needsTitleUpdate)
-	{
-		return;
-	}
-
-	if (url.scheme() == QLatin1String("about"))
-	{
-		const AddonsManager::SpecialPageInformation information(AddonsManager::getSpecialPage(url.path()));
-
-		if (SessionsManager::isReadOnly())
-		{
-			handleThumbnailCreated(url, {}, information.getTitle());
-		}
-		else
-		{
-			QPixmap thumbnail(size);
-			thumbnail.fill(Qt::white);
-
-			QPainter painter(&thumbnail);
-
-			information.icon.paint(&painter, QRect(QPoint(0, 0), size));
-
-			m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = thumbnailRequestInformation;
-
-			handleThumbnailCreated(url, thumbnail, information.getTitle());
-		}
-	}
-	else if (requestThumbnail(url, size))
-	{
-		m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = thumbnailRequestInformation;
 	}
 }
 
@@ -301,8 +245,8 @@ void StartPageModel::handleThumbnailCreated(const QUrl &url, const QPixmap &thum
 		return;
 	}
 
-	const ThumbnailRequestInformation information(m_reloads[url]);
-	BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(information.bookmarkIdentifier));
+	const ThumbnailRequestInformation request(m_reloads[url]);
+	BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(request.identifier));
 
 	m_reloads.remove(url);
 
@@ -310,12 +254,12 @@ void StartPageModel::handleThumbnailCreated(const QUrl &url, const QPixmap &thum
 	{
 		QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")));
 
-		thumbnail.save(getThumbnailPath(information.bookmarkIdentifier), "png");
+		thumbnail.save(getThumbnailPath(request.identifier), "png");
 	}
 
 	if (bookmark)
 	{
-		if (information.needsTitleUpdate)
+		if (request.needsTitleUpdate)
 		{
 			bookmark->setData(title, BookmarksModel::TitleRole);
 		}
@@ -377,9 +321,14 @@ QStringList StartPageModel::mimeTypes() const
 	return {QLatin1String("text/uri-list")};
 }
 
-bool StartPageModel::requestThumbnail(const QUrl &url, const QSize &size)
+bool StartPageModel::requestThumbnail(const QUrl &url, quint64 identifier, bool needsTitleUpdate)
 {
-	WebPageThumbnailJob *job(AddonsManager::getWebBackend()->createPageThumbnailJob(url, size));
+	if (SessionsManager::isReadOnly() || SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption) != QLatin1String("thumbnail"))
+	{
+		return false;
+	}
+
+	WebPageThumbnailJob *job(AddonsManager::getWebBackend()->createPageThumbnailJob(url, QSize(SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt(), SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt())));
 
 	if (job)
 	{
@@ -390,12 +339,62 @@ bool StartPageModel::requestThumbnail(const QUrl &url, const QSize &size)
 			handleThumbnailCreated(url, job->getThumbnail(), job->getTitle());
 		});
 
+		ThumbnailRequestInformation request;
+		request.identifier = identifier;
+		request.needsTitleUpdate = needsTitleUpdate;
+
+		m_reloads[url] = request;
+
 		job->start();
 
 		return true;
 	}
 
 	return false;
+}
+
+bool StartPageModel::reloadTile(const QModelIndex &index, bool needsTitleUpdate)
+{
+	const QUrl url(index.data(BookmarksModel::UrlRole).toUrl());
+
+	if (!url.isValid())
+	{
+		return false;
+	}
+
+	const quint64 identifier(index.data(BookmarksModel::IdentifierRole).toULongLong());
+
+	if (url.scheme() == QLatin1String("about"))
+	{
+		const AddonsManager::SpecialPageInformation information(AddonsManager::getSpecialPage(url.path()));
+
+		if (SessionsManager::isReadOnly())
+		{
+			handleThumbnailCreated(url, {}, information.getTitle());
+
+			return false;
+		}
+
+		const QSize size(SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt(), SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt());
+		QPixmap thumbnail(size);
+		thumbnail.fill(Qt::white);
+
+		QPainter painter(&thumbnail);
+
+		information.icon.paint(&painter, QRect(QPoint(0, 0), size));
+
+		ThumbnailRequestInformation request;
+		request.identifier = identifier;
+		request.needsTitleUpdate = needsTitleUpdate;
+
+		m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = request;
+
+		handleThumbnailCreated(url, thumbnail, information.getTitle());
+
+		return true;
+	}
+
+	return requestThumbnail(url, identifier, needsTitleUpdate);
 }
 
 bool StartPageModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
