@@ -500,6 +500,11 @@ StartPageWidget::StartPageWidget(Window *parent) : QScrollArea(parent),
 
 	QPixmapCache::setCacheLimit(51200);
 
+	if (!m_model->match(m_model->index(0, 0), StartPageModel::IsReloadingRole, true, 1, Qt::MatchExactly).isEmpty())
+	{
+		startReloadingAnimation();
+	}
+
 	connect(m_model, &StartPageModel::modelModified, this, &StartPageWidget::updateSize);
 	connect(m_model, &StartPageModel::isReloadingTileChanged, this, &StartPageWidget::handleIsReloadingTileChanged);
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &StartPageWidget::handleOptionChanged);
@@ -780,25 +785,12 @@ void StartPageWidget::editTile()
 
 void StartPageWidget::reloadTile()
 {
-	if (!m_spinnerAnimation)
+	startReloadingAnimation();
+
+	if (m_currentIndex.isValid())
 	{
-		const QString path(ThemesManager::getAnimationPath(QLatin1String("spinner")));
-
-		if (path.isEmpty())
-		{
-			m_spinnerAnimation = new SpinnerAnimation(QCoreApplication::instance());
-		}
-		else
-		{
-			m_spinnerAnimation = new GenericAnimation(path, QCoreApplication::instance());
-		}
-
-		m_spinnerAnimation->start();
-
-		connect(m_spinnerAnimation, &Animation::frameChanged, m_listView, static_cast<void(QListView::*)()>(&QListView::update));
+		m_model->reloadTile(m_currentIndex);
 	}
-
-	m_model->reloadTile(m_currentIndex);
 }
 
 void StartPageWidget::removeTile()
@@ -824,6 +816,27 @@ void StartPageWidget::markForDeletion()
 	{
 		m_deleteTimer = startTimer(250);
 	}
+}
+
+void StartPageWidget::startReloadingAnimation()
+{
+	if (!m_spinnerAnimation)
+	{
+		const QString path(ThemesManager::getAnimationPath(QLatin1String("spinner")));
+
+		if (path.isEmpty())
+		{
+			m_spinnerAnimation = new SpinnerAnimation(QCoreApplication::instance());
+		}
+		else
+		{
+			m_spinnerAnimation = new GenericAnimation(path, QCoreApplication::instance());
+		}
+
+		m_spinnerAnimation->start();
+	}
+
+	connect(m_spinnerAnimation, &Animation::frameChanged, m_listView, static_cast<void(QListView::*)()>(&QListView::update), Qt::UniqueConnection);
 }
 
 void StartPageWidget::handleOptionChanged(int identifier, const QVariant &value)

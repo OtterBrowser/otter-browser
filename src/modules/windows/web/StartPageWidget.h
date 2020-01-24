@@ -125,6 +125,7 @@ protected:
 	void wheelEvent(QWheelEvent *event) override;
 	void dragEnterEvent(QDragEnterEvent *event) override;
 	void dropEvent(QDropEvent *event) override;
+	void startReloadingAnimation();
 
 protected slots:
 	void configure();
