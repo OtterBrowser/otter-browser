@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>360</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,10 +15,23 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QCheckBox" name="customBackgroundCheckBox">
+    <widget class="QRadioButton" name="defaultBackgroundRadioButton">
      <property name="text">
-      <string>Use custom background image</string>
+      <string>Default background</string>
      </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
+    </widget>
+   </item>
+   <item>
+    <widget class="QRadioButton" name="customBackgroundRadioButton">
+     <property name="text">
+      <string>Custom style</string>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
     </widget>
    </item>
    <item>
@@ -100,6 +113,16 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QRadioButton" name="noBackgroundRadioButton">
+     <property name="text">
+      <string>No background</string>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
+    </widget>
    </item>
    <item>
     <layout class="QFormLayout" name="formLayout">
@@ -201,7 +224,7 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>customBackgroundCheckBox</tabstop>
+  <tabstop>customBackgroundRadioButton</tabstop>
   <tabstop>backgroundModeComboBox</tabstop>
   <tabstop>backgroundColorWidget</tabstop>
   <tabstop>columnsPerRowSpinBox</tabstop>
@@ -244,4 +267,7 @@
    </hints>
   </connection>
  </connections>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>

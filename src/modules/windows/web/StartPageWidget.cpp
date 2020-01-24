@@ -294,7 +294,11 @@ void TileDelegate::handleOptionChanged(int identifier, const QVariant &value)
 	{
 		case SettingsManager::StartPage_BackgroundModeOption:
 		case SettingsManager::StartPage_BackgroundPathOption:
-			m_needsBlur = (!SettingsManager::getOption(SettingsManager::StartPage_BackgroundPathOption).toString().isEmpty() && SettingsManager::getOption(SettingsManager::StartPage_BackgroundModeOption).toString() != QLatin1String("standard"));
+			{
+				const QString mode(SettingsManager::getOption(SettingsManager::StartPage_BackgroundModeOption).toString());
+
+				m_needsBlur = (!SettingsManager::getOption(SettingsManager::StartPage_BackgroundPathOption).toString().isEmpty() && mode != QLatin1String("standard") && mode != QLatin1String("none"));
+			}
 
 			break;
 		case SettingsManager::StartPage_TileBackgroundModeOption:
@@ -345,7 +349,7 @@ QSize TileDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 
 StartPageContentsWidget::StartPageContentsWidget(QWidget *parent) : QWidget(parent),
 	m_color(Qt::transparent),
-	m_mode(NoCustomBackground)
+	m_mode(DefaultBackground)
 {
 	handleOptionChanged(SettingsManager::StartPage_BackgroundPathOption);
 	setAutoFillBackground(true);
@@ -361,7 +365,7 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 	QPainter painter(this);
 	painter.fillRect(contentsRect(), m_color);
 
-	if (m_mode == NoCustomBackground || m_path.isEmpty() || !QFile::exists(m_path))
+	if (m_mode == NoBackground || m_path.isEmpty() || !QFile::exists(m_path))
 	{
 		return;
 	}
@@ -385,6 +389,7 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 
 	switch (m_mode)
 	{
+		case DefaultBackground:
 		case BestFitBackground:
 			cachedPixmap = pixmap.scaled(size(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
 			cachedPixmap = cachedPixmap.copy(contentsRect().translated(((cachedPixmap.width() - width()) / 2), ((cachedPixmap.height() - height()) / 2)));
@@ -426,12 +431,29 @@ void StartPageContentsWidget::handleOptionChanged(int identifier)
 	}
 }
 
-void StartPageContentsWidget::setBackgroundMode(StartPageContentsWidget::BackgroundMode mode)
+void StartPageContentsWidget::setBackgroundMode(BackgroundMode mode)
 {
 	const QString color(SettingsManager::getOption(SettingsManager::StartPage_BackgroundColorOption).toString());
 
-	m_path = ((mode == NoCustomBackground) ? QString() : SettingsManager::getOption(SettingsManager::StartPage_BackgroundPathOption).toString());
-	m_color = ((mode == NoCustomBackground || color.isEmpty()) ? QColor(Qt::transparent) : QColor(color));
+	switch (mode)
+	{
+		case DefaultBackground:
+			m_path = QLatin1String(":/style/start-page.svgz");
+			m_color = QColor(Qt::transparent);
+
+			break;
+		case NoBackground:
+			m_path = QString();
+			m_color = QColor(Qt::transparent);
+
+			break;
+		default:
+			m_path = SettingsManager::getOption(SettingsManager::StartPage_BackgroundPathOption).toString();
+			m_color = (color.isEmpty() ? QColor(Qt::transparent) : QColor(color));
+
+			break;
+	}
+
 	m_mode = mode;
 
 	update();
@@ -443,6 +465,10 @@ QString StartPageContentsWidget::getPixmapCachePrefix() const
 
 	switch (m_mode)
 	{
+		case DefaultBackground:
+			prefix = QLatin1String("start-page-standard");
+
+			break;
 		case BestFitBackground:
 			prefix = QLatin1String("start-page-best-fit");
 
@@ -863,9 +889,13 @@ void StartPageWidget::handleOptionChanged(int identifier, const QVariant &value)
 				{
 					m_contentsWidget->setBackgroundMode(StartPageContentsWidget::TileBackground);
 				}
+				else if (backgroundMode == QLatin1String("none"))
+				{
+					m_contentsWidget->setBackgroundMode(StartPageContentsWidget::NoBackground);
+				}
 				else
 				{
-					m_contentsWidget->setBackgroundMode(StartPageContentsWidget::NoCustomBackground);
+					m_contentsWidget->setBackgroundMode(StartPageContentsWidget::DefaultBackground);
 				}
 
 				m_tileDelegate->setPixmapCachePrefix(m_contentsWidget->getPixmapCachePrefix());

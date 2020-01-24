@@ -78,7 +78,8 @@ class StartPageContentsWidget final : public QWidget
 public:
 	enum BackgroundMode
 	{
-		NoCustomBackground = 0,
+		DefaultBackground = 0,
+		NoBackground,
 		BestFitBackground,
 		CenterBackground,
 		StretchBackground,

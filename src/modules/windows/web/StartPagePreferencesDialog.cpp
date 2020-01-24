@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -35,7 +35,19 @@ StartPagePreferencesDialog::StartPagePreferencesDialog(QWidget *parent) : Dialog
 
 	const QString backgroundModeString(SettingsManager::getOption(SettingsManager::StartPage_BackgroundModeOption).toString());
 
-	m_ui->customBackgroundCheckBox->setChecked(backgroundModeString != QLatin1String("standard"));
+	if (backgroundModeString == QLatin1String("standard"))
+	{
+		m_ui->defaultBackgroundRadioButton->setChecked(true);
+	}
+	else if (backgroundModeString == QLatin1String("none"))
+	{
+		m_ui->noBackgroundRadioButton->setChecked(true);
+	}
+	else
+	{
+		m_ui->customBackgroundRadioButton->setChecked(backgroundModeString != QLatin1String("standard"));
+	}
+
 	m_ui->backgroundFilePathWidget->setPath(SettingsManager::getOption(SettingsManager::StartPage_BackgroundPathOption).toString());
 	m_ui->backgroundFilePathWidget->setFilters({tr("Images (*.png *.jpg *.bmp *.gif *.svg *.svgz)")});
 	m_ui->backgroundModeComboBox->addItem(tr("Best fit"), QLatin1String("bestFit"));
@@ -47,14 +59,14 @@ StartPagePreferencesDialog::StartPagePreferencesDialog(QWidget *parent) : Dialog
 	const int backgroundModeIndex(m_ui->backgroundModeComboBox->findData(backgroundModeString));
 
 	m_ui->backgroundModeComboBox->setCurrentIndex((backgroundModeIndex < 0) ? 0 : backgroundModeIndex);
-	m_ui->backgroundWidget->setEnabled(m_ui->customBackgroundCheckBox->isChecked());
+	m_ui->backgroundWidget->setEnabled(m_ui->customBackgroundRadioButton->isChecked());
 	m_ui->columnsPerRowSpinBox->setValue(SettingsManager::getOption(SettingsManager::StartPage_TilesPerRowOption).toInt());
 	m_ui->zoomLevelSpinBox->setValue(SettingsManager::getOption(SettingsManager::StartPage_ZoomLevelOption).toInt());
 	m_ui->showSearchFieldCheckBox->setChecked(SettingsManager::getOption(SettingsManager::StartPage_ShowSearchFieldOption).toBool());
 	m_ui->showAddTileCheckBox->setChecked(SettingsManager::getOption(SettingsManager::StartPage_ShowAddTileOption).toBool());
 
 	connect(this, &StartPagePreferencesDialog::accepted, this, &StartPagePreferencesDialog::save);
-	connect(m_ui->customBackgroundCheckBox, &QCheckBox::toggled, m_ui->backgroundWidget, &QWidget::setEnabled);
+	connect(m_ui->customBackgroundRadioButton, &QCheckBox::toggled, m_ui->backgroundWidget, &QWidget::setEnabled);
 	connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &StartPagePreferencesDialog::save);
 }
 
@@ -75,10 +87,23 @@ void StartPagePreferencesDialog::changeEvent(QEvent *event)
 
 void StartPagePreferencesDialog::save()
 {
-	const QString backgroundModeString(m_ui->backgroundModeComboBox->currentData().toString());
+	QString backgroundModeString;
+
+	if (m_ui->defaultBackgroundRadioButton->isChecked())
+	{
+		backgroundModeString = QLatin1String("standard");
+	}
+	else if (m_ui->noBackgroundRadioButton->isChecked())
+	{
+		backgroundModeString = QLatin1String("none");
+	}
+	else
+	{
+		backgroundModeString = m_ui->backgroundModeComboBox->currentData().toString();
+	}
 
 	SettingsManager::setOption(SettingsManager::StartPage_BackgroundColorOption, (m_ui->backgroundColorWidget->getColor().isValid() ? m_ui->backgroundColorWidget->getColor().name() : QString()));
-	SettingsManager::setOption(SettingsManager::StartPage_BackgroundModeOption, (m_ui->customBackgroundCheckBox->isChecked() ? backgroundModeString : QLatin1String("standard")));
+	SettingsManager::setOption(SettingsManager::StartPage_BackgroundModeOption, backgroundModeString);
 	SettingsManager::setOption(SettingsManager::StartPage_BackgroundPathOption, m_ui->backgroundFilePathWidget->getPath());
 	SettingsManager::setOption(SettingsManager::StartPage_TilesPerRowOption, m_ui->columnsPerRowSpinBox->value());
 	SettingsManager::setOption(SettingsManager::StartPage_ZoomLevelOption, m_ui->zoomLevelSpinBox->value());

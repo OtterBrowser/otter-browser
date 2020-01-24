@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -214,8 +214,8 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(SourceViewer_ShowLineNumbersOption, BooleanType, true);
 	registerOption(SourceViewer_WrapLinesOption, BooleanType, false);
 	registerOption(StartPage_BackgroundColorOption, ColorType, QColor());
-	registerOption(StartPage_BackgroundModeOption, EnumerationType, QLatin1String("bestFit"), QStringList({QLatin1String("standard"), QLatin1String("bestFit"), QLatin1String("center"), QLatin1String("stretch"), QLatin1String("tile")}));
-	registerOption(StartPage_BackgroundPathOption, StringType, QLatin1String(":/style/start-page.svgz"));
+	registerOption(StartPage_BackgroundModeOption, EnumerationType, QLatin1String("standard"), QStringList({QLatin1String("standard"), QLatin1String("none"), QLatin1String("bestFit"), QLatin1String("center"), QLatin1String("stretch"), QLatin1String("tile")}));
+	registerOption(StartPage_BackgroundPathOption, StringType, QString());
 	registerOption(StartPage_BookmarksFolderOption, StringType, QLatin1String("/Start Page/"));
 	registerOption(StartPage_EnableStartPageOption, BooleanType, true);
 	registerOption(StartPage_ShowAddTileOption, BooleanType, true);
