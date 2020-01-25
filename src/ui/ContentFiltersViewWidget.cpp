@@ -27,7 +27,9 @@
 #include "../core/Utils.h"
 
 #include <QtCore/QTimer>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QMessageBox>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QToolTip>
 
@@ -222,9 +224,26 @@ void ContentFiltersViewWidget::removeProfile()
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
 	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
 
-	if (profile)
+	if (!profile)
 	{
-		ContentFiltersManager::removeProfile(profile);
+		return;
+	}
+
+	QMessageBox messageBox;
+	messageBox.setWindowTitle(tr("Question"));
+	messageBox.setText(tr("Do you really want to remove this profile?"));
+	messageBox.setIcon(QMessageBox::Question);
+	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+	messageBox.setDefaultButton(QMessageBox::Cancel);
+
+	if (QFile::exists(profile->getPath()))
+	{
+		messageBox.setCheckBox(new QCheckBox(tr("Delete profile permanently")));
+	}
+
+	if (messageBox.exec() == QMessageBox::Yes)
+	{
+		ContentFiltersManager::removeProfile(profile, (messageBox.checkBox() && messageBox.checkBox()->isChecked()));
 
 		model()->removeRow(index.row(), index.parent());
 
