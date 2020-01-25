@@ -322,9 +322,9 @@ void ContentFiltersManager::handleOptionChanged(int identifier, const QVariant &
 	}
 }
 
-void ContentFiltersManager::removeProfile(ContentFiltersProfile *profile)
+void ContentFiltersManager::removeProfile(ContentFiltersProfile *profile, bool removeFile)
 {
-	if (!profile || !profile->remove())
+	if (!profile || (removeFile && !profile->remove()))
 	{
 		Console::addMessage(tr("Failed to remove content blocking profile file: %1").arg(profile ? profile->getName() : tr("Unknown")), Console::OtherCategory, Console::ErrorLevel);
 

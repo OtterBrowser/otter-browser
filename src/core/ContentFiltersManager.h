@@ -73,7 +73,7 @@ public:
 	static void createInstance();
 	static void initialize();
 	static void addProfile(ContentFiltersProfile *profile);
-	static void removeProfile(ContentFiltersProfile *profile);
+	static void removeProfile(ContentFiltersProfile *profile, bool removeFile = false);
 	static QStandardItemModel* createModel(QObject *parent, const QStringList &profiles);
 	static ContentFiltersManager* getInstance();
 	static ContentFiltersProfile* getProfile(const QString &profile);
