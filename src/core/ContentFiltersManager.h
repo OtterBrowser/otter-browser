@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -153,6 +153,7 @@ public:
 	virtual void setUpdateUrl(const QUrl &url) = 0;
 	virtual QString getName() const = 0;
 	virtual QString getTitle() const = 0;
+	virtual QString getPath() const = 0;
 	virtual QUrl getUpdateUrl() const = 0;
 	virtual QDateTime getLastUpdate() const = 0;
 	virtual ContentFiltersManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType) = 0;
