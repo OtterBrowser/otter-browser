@@ -276,7 +276,9 @@ void ContentFiltersManager::addProfile(ContentFiltersProfile *profile)
 	{
 		m_contentBlockingProfiles.append(profile);
 
-		getInstance()->scheduleSave();
+		m_instance->scheduleSave();
+
+		emit m_instance->profileAdded(profile->getName());
 
 		connect(profile, &ContentFiltersProfile::profileModified, m_instance, &ContentFiltersManager::scheduleSave);
 	}

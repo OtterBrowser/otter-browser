@@ -56,7 +56,8 @@ class ContentFiltersViewWidget final : public ItemViewWidget
 public:
 	enum DataRole
 	{
-		HasErrorRole = Qt::UserRole,
+		CategoryRole = Qt::UserRole,
+		HasErrorRole,
 		IsShowingProgressIndicatorRole,
 		IsUpdatingRole,
 		NameRole,
@@ -78,13 +79,17 @@ public slots:
 
 protected:
 	void contextMenuEvent(QContextMenuEvent *event) override;
-	void updateModel(ContentFiltersProfile *profile, bool isNewOrMoved);
+	QString createProfileTitle(const ContentFiltersProfile *profile) const;
+	QList<QStandardItem*> createEntry(const ContentFiltersProfile *profile, const QStringList &profiles) const;
 
 protected slots:
+	void handleProfileAdded(const QString &name);
 	void handleProfileModified(const QString &name);
 	void handleProfileRemoved(const QString &name);
 
 private:
+	QStandardItemModel *m_model;
+
 	static Animation* m_updateAnimation;
 };
 
