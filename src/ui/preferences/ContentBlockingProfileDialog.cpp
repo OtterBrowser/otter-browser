@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -106,7 +106,10 @@ void ContentBlockingProfileDialog::save()
 	{
 		QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking")));
 
-		const QString fileName(Utils::createIdentifier(QFileInfo(url.fileName()).completeBaseName(), ContentFiltersManager::getProfileNames()));
+		QStringList profiles(ContentFiltersManager::getProfileNames());
+		profiles.append(QLatin1String("custom"));
+
+		const QString fileName(Utils::createIdentifier(QFileInfo(url.fileName()).completeBaseName(), profiles));
 		QFile file(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking/%1.txt")).arg(fileName));
 
 		if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
