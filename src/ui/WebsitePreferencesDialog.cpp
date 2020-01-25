@@ -303,7 +303,7 @@ void WebsitePreferencesDialog::handleButtonClicked(QAbstractButton *button)
 
 						if (entryIndex.data(Qt::CheckStateRole).toBool())
 						{
-							contentBlockingProfiles.append(entryIndex.data(ContentFiltersManager::NameRole).toString());
+							contentBlockingProfiles.append(entryIndex.data(ContentFiltersViewWidget::NameRole).toString());
 						}
 					}
 				}

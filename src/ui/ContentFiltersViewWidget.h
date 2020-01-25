@@ -54,6 +54,17 @@ public:
 class ContentFiltersViewWidget final : public ItemViewWidget
 {
 public:
+	enum DataRole
+	{
+		HasErrorRole = Qt::UserRole,
+		IsShowingProgressIndicatorRole,
+		IsUpdatingRole,
+		NameRole,
+		UpdateProgressValueRole,
+		UpdateTimeRole,
+		UpdateUrlRole
+	};
+
 	explicit ContentFiltersViewWidget(QWidget *parent);
 
 	static Animation* getUpdateAnimation();

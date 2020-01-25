@@ -121,7 +121,7 @@ void ContentBlockingDialog::updateProfilesActions()
 
 	m_ui->editProfileButton->setEnabled(isEditable);
 	m_ui->removeProfileButton->setEnabled(isEditable);
-	m_ui->updateProfileButton->setEnabled(index.isValid() && index.data(ContentFiltersManager::UpdateUrlRole).toUrl().isValid());
+	m_ui->updateProfileButton->setEnabled(index.isValid() && index.data(ContentFiltersViewWidget::UpdateUrlRole).toUrl().isValid());
 }
 
 void ContentBlockingDialog::addRule()
@@ -166,7 +166,7 @@ void ContentBlockingDialog::save()
 		{
 			const QModelIndex entryIndex(m_ui->profilesViewWidget->getIndex(j, 0, categoryIndex));
 			const QModelIndex intervalIndex(m_ui->profilesViewWidget->getIndex(j, 1, categoryIndex));
-			const QString name(entryIndex.data(ContentFiltersManager::NameRole).toString());
+			const QString name(entryIndex.data(ContentFiltersViewWidget::NameRole).toString());
 			ContentFiltersProfile *profile(ContentFiltersManager::getProfile(name));
 
 			if (intervalIndex.data(Qt::EditRole).toInt() != profile->getUpdateInterval())

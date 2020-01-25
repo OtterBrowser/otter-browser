@@ -36,7 +36,7 @@
 namespace Otter
 {
 
-ContentFiltersTitleDelegate::ContentFiltersTitleDelegate(QObject *parent) : ItemDelegate({{ItemDelegate::ProgressHasErrorRole, ContentFiltersManager::HasErrorRole}, {ItemDelegate::ProgressHasIndicatorRole, ContentFiltersManager::IsShowingProgressIndicatorRole}, {ItemDelegate::ProgressValueRole, ContentFiltersManager::UpdateProgressValueRole}}, parent)
+ContentFiltersTitleDelegate::ContentFiltersTitleDelegate(QObject *parent) : ItemDelegate({{ItemDelegate::ProgressHasErrorRole, ContentFiltersViewWidget::HasErrorRole}, {ItemDelegate::ProgressHasIndicatorRole, ContentFiltersViewWidget::IsShowingProgressIndicatorRole}, {ItemDelegate::ProgressValueRole, ContentFiltersViewWidget::UpdateProgressValueRole}}, parent)
 {
 }
 
@@ -48,7 +48,7 @@ void ContentFiltersTitleDelegate::initStyleOption(QStyleOptionViewItem *option, 
 	{
 		option->features |= QStyleOptionViewItem::HasDecoration;
 
-		if (index.data(ContentFiltersManager::IsUpdatingRole).toBool())
+		if (index.data(ContentFiltersViewWidget::IsUpdatingRole).toBool())
 		{
 			const Animation *animation(ContentFiltersViewWidget::getUpdateAnimation());
 
@@ -57,11 +57,11 @@ void ContentFiltersTitleDelegate::initStyleOption(QStyleOptionViewItem *option, 
 				option->icon = QIcon(animation->getCurrentPixmap());
 			}
 		}
-		else if (index.data(ContentFiltersManager::HasErrorRole).toBool())
+		else if (index.data(ContentFiltersViewWidget::HasErrorRole).toBool())
 		{
 			option->icon = ThemesManager::createIcon(QLatin1String("dialog-error"));
 		}
-		else if (index.data(ContentFiltersManager::UpdateTimeRole).isNull() || index.data(ContentFiltersManager::UpdateTimeRole).toDateTime().daysTo(QDateTime::currentDateTimeUtc()) > 7)
+		else if (index.data(ContentFiltersViewWidget::UpdateTimeRole).isNull() || index.data(ContentFiltersViewWidget::UpdateTimeRole).toDateTime().daysTo(QDateTime::currentDateTimeUtc()) > 7)
 		{
 			option->icon = ThemesManager::createIcon(QLatin1String("dialog-warning"));
 		}
@@ -72,7 +72,7 @@ bool ContentFiltersTitleDelegate::helpEvent(QHelpEvent *event, QAbstractItemView
 {
 	if (event->type() == QEvent::ToolTip)
 	{
-		const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
+		const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersViewWidget::NameRole).toString()));
 
 		if (profile)
 		{
@@ -169,7 +169,7 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 	setViewMode(ItemViewWidget::TreeView);
 	setItemDelegateForColumn(0, new ContentFiltersTitleDelegate(this));
 	setItemDelegateForColumn(1, new ContentFiltersIntervalDelegate(this));
-	getViewportWidget()->setUpdateDataRole(ContentFiltersManager::IsShowingProgressIndicatorRole);
+	getViewportWidget()->setUpdateDataRole(ContentFiltersViewWidget::IsShowingProgressIndicatorRole);
 
 	connect(ContentFiltersManager::getInstance(), &ContentFiltersManager::profileModified, this, &ContentFiltersViewWidget::handleProfileModified);
 }
@@ -184,7 +184,7 @@ void ContentFiltersViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	{
 		menu.addSeparator();
 		menu.addAction(tr("Edit…"), this, &ContentFiltersViewWidget::editProfile);
-		menu.addAction(tr("Update"), this, &ContentFiltersViewWidget::updateProfile)->setEnabled(index.isValid() && index.data(ContentFiltersManager::UpdateUrlRole).toUrl().isValid());
+		menu.addAction(tr("Update"), this, &ContentFiltersViewWidget::updateProfile)->setEnabled(index.isValid() && index.data(ContentFiltersViewWidget::UpdateUrlRole).toUrl().isValid());
 		menu.addSeparator();
 		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-delete")), tr("Remove"), this, &ContentFiltersViewWidget::removeProfile);
 	}
@@ -205,7 +205,7 @@ void ContentFiltersViewWidget::addProfile()
 void ContentFiltersViewWidget::editProfile()
 {
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
-	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
+	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersViewWidget::NameRole).toString()));
 
 	if (profile)
 	{
@@ -222,7 +222,7 @@ void ContentFiltersViewWidget::editProfile()
 void ContentFiltersViewWidget::removeProfile()
 {
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
-	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
+	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersViewWidget::NameRole).toString()));
 
 	if (!profile)
 	{
@@ -259,7 +259,7 @@ void ContentFiltersViewWidget::removeProfile()
 void ContentFiltersViewWidget::updateProfile()
 {
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
-	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
+	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersViewWidget::NameRole).toString()));
 
 	if (!profile)
 	{
@@ -291,7 +291,7 @@ void ContentFiltersViewWidget::updateModel(ContentFiltersProfile *profile, bool 
 {
 	if (isNewOrMoved)
 	{
-		const QModelIndexList removeList(model()->match(model()->index(0, 0), ContentFiltersManager::NameRole, QVariant::fromValue(profile->getName()), 2, Qt::MatchRecursive));
+		const QModelIndexList removeList(model()->match(model()->index(0, 0), ContentFiltersViewWidget::NameRole, QVariant::fromValue(profile->getName()), 2, Qt::MatchRecursive));
 
 		if (removeList.count() > 0)
 		{
@@ -299,15 +299,15 @@ void ContentFiltersViewWidget::updateModel(ContentFiltersProfile *profile, bool 
 		}
 
 		QList<QStandardItem*> profileItems({new QStandardItem(profile->getTitle()), new QStandardItem(QString::number(profile->getUpdateInterval())), new QStandardItem(Utils::formatDateTime(profile->getLastUpdate()))});
-		profileItems[0]->setData(profile->getName(), ContentFiltersManager::NameRole);
-		profileItems[0]->setData(profile->getUpdateUrl(), ContentFiltersManager::UpdateUrlRole);
+		profileItems[0]->setData(profile->getName(), ContentFiltersViewWidget::NameRole);
+		profileItems[0]->setData(profile->getUpdateUrl(), ContentFiltersViewWidget::UpdateUrlRole);
 		profileItems[0]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		profileItems[0]->setCheckable(true);
 		profileItems[0]->setCheckState(Qt::Unchecked);
 		profileItems[1]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
 		profileItems[2]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-		const QModelIndexList indexList(model()->match(model()->index(0, 0), ContentFiltersManager::NameRole, QVariant::fromValue(static_cast<int>(profile->getCategory()))));
+		const QModelIndexList indexList(model()->match(model()->index(0, 0), ContentFiltersViewWidget::NameRole, QVariant::fromValue(static_cast<int>(profile->getCategory()))));
 
 		if (indexList.count() > 0)
 		{
@@ -322,7 +322,7 @@ void ContentFiltersViewWidget::updateModel(ContentFiltersProfile *profile, bool 
 	const QModelIndex currentIndex(this->currentIndex());
 
 	setData(currentIndex.sibling(currentIndex.row(), 0), profile->getTitle(), Qt::DisplayRole);
-	setData(currentIndex.sibling(currentIndex.row(), 0), profile->getUpdateUrl(), ContentFiltersManager::UpdateUrlRole);
+	setData(currentIndex.sibling(currentIndex.row(), 0), profile->getUpdateUrl(), ContentFiltersViewWidget::UpdateUrlRole);
 	setData(currentIndex.sibling(currentIndex.row(), 1), profile->getUpdateInterval(), Qt::DisplayRole);
 	setData(currentIndex.sibling(currentIndex.row(), 2), Utils::formatDateTime(profile->getLastUpdate()), Qt::DisplayRole);
 }
@@ -347,7 +347,7 @@ void ContentFiltersViewWidget::handleProfileModified(const QString &name)
 		{
 			const QModelIndex entryIndex(getIndex(j, 0, categoryIndex));
 
-			if (entryIndex.data(ContentFiltersManager::NameRole).toString() == name)
+			if (entryIndex.data(ContentFiltersViewWidget::NameRole).toString() == name)
 			{
 				QString title(profile->getTitle());
 
@@ -385,34 +385,34 @@ void ContentFiltersViewWidget::handleProfileModified(const QString &name)
 	{
 		const bool hasError(profile->getError() != ContentFiltersProfile::NoError);
 
-		entryItem->setData(hasError, ContentFiltersManager::HasErrorRole);
-		entryItem->setData(profile->getLastUpdate(), ContentFiltersManager::UpdateTimeRole);
+		entryItem->setData(hasError, ContentFiltersViewWidget::HasErrorRole);
+		entryItem->setData(profile->getLastUpdate(), ContentFiltersViewWidget::UpdateTimeRole);
 
-		if (profile->isUpdating() != entryItem->data(ContentFiltersManager::IsUpdatingRole).toBool())
+		if (profile->isUpdating() != entryItem->data(ContentFiltersViewWidget::IsUpdatingRole).toBool())
 		{
-			entryItem->setData(profile->isUpdating(), ContentFiltersManager::IsUpdatingRole);
+			entryItem->setData(profile->isUpdating(), ContentFiltersViewWidget::IsUpdatingRole);
 
 			if (profile->isUpdating())
 			{
-				entryItem->setData(true, ContentFiltersManager::IsShowingProgressIndicatorRole);
+				entryItem->setData(true, ContentFiltersViewWidget::IsShowingProgressIndicatorRole);
 
 				connect(profile, &ContentFiltersProfile::updateProgressChanged, profile, [=](int progress)
 				{
-					entryItem->setData(((progress < 0 && entryItem->data(ContentFiltersManager::HasErrorRole).toBool()) ? 0 : progress), ContentFiltersManager::UpdateProgressValueRole);
+					entryItem->setData(((progress < 0 && entryItem->data(ContentFiltersViewWidget::HasErrorRole).toBool()) ? 0 : progress), ContentFiltersViewWidget::UpdateProgressValueRole);
 				});
 			}
 			else
 			{
-				if (entryItem->data(ContentFiltersManager::UpdateProgressValueRole).toInt() < 0)
+				if (entryItem->data(ContentFiltersViewWidget::UpdateProgressValueRole).toInt() < 0)
 				{
-					entryItem->setData((hasError ? 0 : 100), ContentFiltersManager::UpdateProgressValueRole);
+					entryItem->setData((hasError ? 0 : 100), ContentFiltersViewWidget::UpdateProgressValueRole);
 				}
 
 				QTimer::singleShot(2500, this, [=]()
 				{
 					if (!profile->isUpdating())
 					{
-						entryItem->setData(false, ContentFiltersManager::IsShowingProgressIndicatorRole);
+						entryItem->setData(false, ContentFiltersViewWidget::IsShowingProgressIndicatorRole);
 					}
 				});
 			}
@@ -429,7 +429,87 @@ void ContentFiltersViewWidget::setSelectedProfiles(const QStringList &profiles)
 		model()->deleteLater();
 	}
 
-	setModel(ContentFiltersManager::createModel(this, profiles));
+	QHash<ContentFiltersProfile::ProfileCategory, QMultiMap<QString, QList<QStandardItem*> > > categoryEntries;
+	const QVector<ContentFiltersProfile*> contentBlockingProfiles(ContentFiltersManager::getContentBlockingProfiles());
+	QStandardItemModel *model(new QStandardItemModel(this));
+	model->setHorizontalHeaderLabels({tr("Title"), tr("Update Interval"), tr("Last Update")});
+	model->setHeaderData(0, Qt::Horizontal, 250, HeaderViewWidget::WidthRole);
+
+	for (int i = 0; i < contentBlockingProfiles.count(); ++i)
+	{
+		const ContentFiltersProfile *profile(contentBlockingProfiles.at(i));
+		const QString name(profile->getName());
+
+		if (name == QLatin1String("custom"))
+		{
+			continue;
+		}
+
+		const ContentFiltersProfile::ProfileCategory category(profile->getCategory());
+		QString title(profile->getTitle());
+
+		if (category == ContentFiltersProfile::RegionalCategory)
+		{
+			const QVector<QLocale::Language> languages(profile->getLanguages());
+			QStringList languageNames;
+			languageNames.reserve(languages.count());
+
+			for (int j = 0; j < languages.count(); ++j)
+			{
+				languageNames.append(QLocale::languageToString(languages.at(j)));
+			}
+
+			title = QStringLiteral("%1 [%2]").arg(title, languageNames.join(QLatin1String(", ")));
+		}
+
+		QList<QStandardItem*> profileItems({new QStandardItem(title), new QStandardItem(QString::number(profile->getUpdateInterval())), new QStandardItem(Utils::formatDateTime(profile->getLastUpdate()))});
+		profileItems[0]->setData(name, NameRole);
+		profileItems[0]->setData(false, HasErrorRole);
+		profileItems[0]->setData(false, IsShowingProgressIndicatorRole);
+		profileItems[0]->setData(false, IsUpdatingRole);
+		profileItems[0]->setData(-1, UpdateProgressValueRole);
+		profileItems[0]->setData(profile->getLastUpdate(), UpdateTimeRole);
+		profileItems[0]->setData(profile->getUpdateUrl(), UpdateUrlRole);
+		profileItems[0]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		profileItems[0]->setCheckable(true);
+		profileItems[0]->setCheckState(profiles.contains(name) ? Qt::Checked : Qt::Unchecked);
+		profileItems[1]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+		profileItems[2]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+		if (!categoryEntries.contains(category))
+		{
+			categoryEntries[category] = {};
+		}
+
+		categoryEntries[category].insert(title, profileItems);
+	}
+
+	const QVector<QPair<ContentFiltersProfile::ProfileCategory, QString> > categoryTitles({{ContentFiltersProfile::AdvertisementsCategory, tr("Advertisements")}, {ContentFiltersProfile::AnnoyanceCategory, tr("Annoyance")}, {ContentFiltersProfile::PrivacyCategory, tr("Privacy")}, {ContentFiltersProfile::SocialCategory, tr("Social")}, {ContentFiltersProfile::RegionalCategory, tr("Regional")}, {ContentFiltersProfile::OtherCategory, tr("Other")}});
+
+	for (int i = 0; i < categoryTitles.count(); ++i)
+	{
+		if (!categoryEntries.contains(categoryTitles.at(i).first))
+		{
+			continue;
+		}
+
+		const QList<QList<QStandardItem*> > profileItems(categoryEntries[categoryTitles.at(i).first].values());
+		QList<QStandardItem*> categoryItems({new QStandardItem(categoryTitles.at(i).second), new QStandardItem(), new QStandardItem()});
+		categoryItems[0]->setData(false, IsShowingProgressIndicatorRole);
+		categoryItems[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		categoryItems[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		categoryItems[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+		for (int j = 0; j < profileItems.count(); ++j)
+		{
+			categoryItems[0]->appendRow(profileItems.at(j));
+		}
+
+		model->appendRow(categoryItems);
+	}
+
+	setModel(model);
+
 	expandAll();
 }
 

@@ -24,7 +24,6 @@
 #include "NetworkManager.h"
 
 #include <QtCore/QUrl>
-#include <QtGui/QStandardItemModel>
 
 namespace Otter
 {
@@ -36,17 +35,6 @@ class ContentFiltersManager final : public QObject
 	Q_OBJECT
 
 public:
-	enum DataRole
-	{
-		HasErrorRole = Qt::UserRole,
-		IsShowingProgressIndicatorRole,
-		IsUpdatingRole,
-		NameRole,
-		UpdateProgressValueRole,
-		UpdateTimeRole,
-		UpdateUrlRole
-	};
-
 	enum CosmeticFiltersMode
 	{
 		NoFilters = 0,
@@ -74,7 +62,6 @@ public:
 	static void initialize();
 	static void addProfile(ContentFiltersProfile *profile);
 	static void removeProfile(ContentFiltersProfile *profile, bool removeFile = false);
-	static QStandardItemModel* createModel(QObject *parent, const QStringList &profiles);
 	static ContentFiltersManager* getInstance();
 	static ContentFiltersProfile* getProfile(const QString &profile);
 	static ContentFiltersProfile* getProfile(const QUrl &url);
