@@ -82,6 +82,7 @@ protected:
 
 protected slots:
 	void handleProfileModified(const QString &name);
+	void handleProfileRemoved(const QString &name);
 
 private:
 	static Animation* m_updateAnimation;

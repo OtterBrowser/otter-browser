@@ -172,6 +172,7 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 	getViewportWidget()->setUpdateDataRole(ContentFiltersViewWidget::IsShowingProgressIndicatorRole);
 
 	connect(ContentFiltersManager::getInstance(), &ContentFiltersManager::profileModified, this, &ContentFiltersViewWidget::handleProfileModified);
+	connect(ContentFiltersManager::getInstance(), &ContentFiltersManager::profileRemoved, this, &ContentFiltersViewWidget::handleProfileRemoved);
 }
 
 void ContentFiltersViewWidget::contextMenuEvent(QContextMenuEvent *event)
@@ -244,15 +245,6 @@ void ContentFiltersViewWidget::removeProfile()
 	if (messageBox.exec() == QMessageBox::Yes)
 	{
 		ContentFiltersManager::removeProfile(profile, (messageBox.checkBox() && messageBox.checkBox()->isChecked()));
-
-		model()->removeRow(index.row(), index.parent());
-
-		if (getRowCount(index.parent()) == 0)
-		{
-			model()->removeRow(index.parent().row(), index.parent().parent());
-		}
-
-		clearSelection();
 	}
 }
 
@@ -420,6 +412,39 @@ void ContentFiltersViewWidget::handleProfileModified(const QString &name)
 	}
 
 	viewport()->update();
+}
+
+void ContentFiltersViewWidget::handleProfileRemoved(const QString &name)
+{
+	for (int i = 0; i < getRowCount(); ++i)
+	{
+		const QModelIndex categoryIndex(getIndex(i));
+		bool hasFound(false);
+
+		for (int j = 0; j < getRowCount(categoryIndex); ++j)
+		{
+			const QModelIndex entryIndex(getIndex(j, 0, categoryIndex));
+
+			if (entryIndex.data(ContentFiltersViewWidget::NameRole).toString() == name)
+			{
+				model()->removeRow(entryIndex.row(), entryIndex.parent());
+
+				if (getRowCount(entryIndex.parent()) == 0)
+				{
+					model()->removeRow(entryIndex.parent().row(), entryIndex.parent().parent());
+				}
+
+				hasFound = true;
+
+				break;
+			}
+		}
+
+		if (hasFound)
+		{
+			break;
+		}
+	}
 }
 
 void ContentFiltersViewWidget::setSelectedProfiles(const QStringList &profiles)

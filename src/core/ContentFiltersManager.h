@@ -97,6 +97,7 @@ private:
 
 signals:
 	void profileModified(const QString &profile);
+	void profileRemoved(const QString &profile);
 };
 
 class ContentFiltersProfile : public QObject

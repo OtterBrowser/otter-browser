@@ -328,20 +328,21 @@ void ContentFiltersManager::removeProfile(ContentFiltersProfile *profile, bool r
 		return;
 	}
 
+	const QString name(profile->getName());
 	JsonSettings localSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.json")));
 	QJsonObject localMainObject(localSettings.object());
 	const QJsonObject bundledMainObject(JsonSettings(SessionsManager::getReadableDataPath(QLatin1String("contentBlocking.json"), true)).object());
 
-	if (bundledMainObject.keys().contains(profile->getName()))
+	if (bundledMainObject.keys().contains(name))
 	{
-		QJsonObject profileObject(localMainObject.value(profile->getName()).toObject());
+		QJsonObject profileObject(localMainObject.value(name).toObject());
 		profileObject.insert(QLatin1String("isHidden"), true);
 
-		localMainObject.insert(profile->getName(), profileObject);
+		localMainObject.insert(name, profileObject);
 	}
 	else
 	{
-		localMainObject.remove(profile->getName());
+		localMainObject.remove(name);
 	}
 
 	localSettings.setObject(localMainObject);
@@ -350,6 +351,8 @@ void ContentFiltersManager::removeProfile(ContentFiltersProfile *profile, bool r
 	m_contentBlockingProfiles.removeAll(profile);
 
 	profile->deleteLater();
+
+	emit m_instance->profileRemoved(name);
 }
 
 ContentFiltersManager* ContentFiltersManager::getInstance()
