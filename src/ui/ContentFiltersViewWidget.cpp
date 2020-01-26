@@ -516,8 +516,17 @@ void ContentFiltersViewWidget::handleProfileRemoved(const QString &name)
 	}
 }
 
-void ContentFiltersViewWidget::setSelectedProfiles(const QStringList &profiles)
+void ContentFiltersViewWidget::setHost(const QString &host)
 {
+	if (host == m_host)
+	{
+		return;
+	}
+
+	const QStringList profiles(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption, host).toStringList());
+
+	m_host = host;
+
 	for (int i = 0; i < getRowCount(); ++i)
 	{
 		const QModelIndex categoryIndex(getIndex(i));
@@ -553,6 +562,11 @@ QString ContentFiltersViewWidget::createProfileTitle(const ContentFiltersProfile
 	}
 
 	return QStringLiteral("%1 [%2]").arg(profile->getTitle(), languageNames.join(QLatin1String(", ")));
+}
+
+QString ContentFiltersViewWidget::getHost() const
+{
+	return m_host;
 }
 
 QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFiltersProfile *profile, const QStringList &profiles) const

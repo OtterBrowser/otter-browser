@@ -457,11 +457,8 @@ void WebsitePreferencesDialog::updateValues(bool isChecked)
 	m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->model()->match(m_ui->userAgentComboBox->model()->index(0, 0), UserAgentsModel::IdentifierRole, SettingsManager::getOption(SettingsManager::Network_UserAgentOption, (m_ui->userAgentOverrideCheckBox->isChecked() ? host : QString())).toString(), 1, Qt::MatchRecursive).value(0));
 	m_ui->proxyComboBox->setCurrentIndex(m_ui->proxyComboBox->model()->match(m_ui->proxyComboBox->model()->index(0, 0), ProxiesModel::IdentifierRole, SettingsManager::getOption(SettingsManager::Network_ProxyOption, (m_ui->proxyOverrideCheckBox->isChecked() ? host : QString())).toString(), 1, Qt::MatchRecursive).value(0));
 
-	const QStringList contentBlockingProfiles(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption, host).toStringList());
-
-	m_ui->contentBlockingProfilesViewWidget->setSelectedProfiles(contentBlockingProfiles);
-
-	m_ui->enableCustomRulesCheckBox->setChecked(contentBlockingProfiles.contains("custom"));
+	m_ui->contentBlockingProfilesViewWidget->setHost(host);
+	m_ui->enableCustomRulesCheckBox->setChecked(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption, host).toStringList().contains("custom"));
 
 	m_updateOverride = true;
 }

@@ -69,13 +69,14 @@ public:
 	explicit ContentFiltersViewWidget(QWidget *parent);
 
 	static Animation* getUpdateAnimation();
+	QString getHost() const;
 
 public slots:
 	void addProfile();
 	void editProfile();
 	void removeProfile();
 	void updateProfile();
-	void setSelectedProfiles(const QStringList &profiles);
+	void setHost(const QString &host);
 
 protected:
 	void changeEvent(QEvent *event) override;
@@ -91,6 +92,7 @@ protected slots:
 
 private:
 	QStandardItemModel *m_model;
+	QString m_host;
 
 	static Animation* m_updateAnimation;
 };
