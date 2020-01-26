@@ -78,6 +78,7 @@ public slots:
 	void setSelectedProfiles(const QStringList &profiles);
 
 protected:
+	void changeEvent(QEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
 	QString createProfileTitle(const ContentFiltersProfile *profile) const;
 	QList<QStandardItem*> createEntry(const ContentFiltersProfile *profile, const QStringList &profiles) const;

@@ -232,6 +232,13 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 	connect(ContentFiltersManager::getInstance(), &ContentFiltersManager::profileRemoved, this, &ContentFiltersViewWidget::handleProfileRemoved);
 }
 
+void ContentFiltersViewWidget::changeEvent(QEvent *event)
+{
+	ItemViewWidget::changeEvent(event);
+
+	m_model->setHorizontalHeaderLabels({tr("Title"), tr("Update Interval"), tr("Last Update")});
+}
+
 void ContentFiltersViewWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
