@@ -173,6 +173,59 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 	setItemDelegateForColumn(1, new ContentFiltersIntervalDelegate(this));
 	getViewportWidget()->setUpdateDataRole(ContentFiltersViewWidget::IsShowingProgressIndicatorRole);
 
+	m_model->setHorizontalHeaderLabels({tr("Title"), tr("Update Interval"), tr("Last Update")});
+	m_model->setHeaderData(0, Qt::Horizontal, 250, HeaderViewWidget::WidthRole);
+
+	QHash<ContentFiltersProfile::ProfileCategory, QList<QList<QStandardItem*> > > categoryEntries;
+	const QVector<ContentFiltersProfile*> contentBlockingProfiles(ContentFiltersManager::getContentBlockingProfiles());
+	const QStringList profiles(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
+
+	for (int i = 0; i < contentBlockingProfiles.count(); ++i)
+	{
+		const QList<QStandardItem*> profileItems(createEntry(contentBlockingProfiles.at(i), profiles));
+		const ContentFiltersProfile::ProfileCategory category(contentBlockingProfiles.at(i)->getCategory());
+
+		if (!profileItems.isEmpty())
+		{
+			if (!categoryEntries.contains(category))
+			{
+				categoryEntries[category] = {};
+			}
+
+			categoryEntries[category].append(profileItems);
+		}
+	}
+
+	const QVector<QPair<ContentFiltersProfile::ProfileCategory, QString> > categories({{ContentFiltersProfile::AdvertisementsCategory, tr("Advertisements")}, {ContentFiltersProfile::AnnoyanceCategory, tr("Annoyance")}, {ContentFiltersProfile::PrivacyCategory, tr("Privacy")}, {ContentFiltersProfile::SocialCategory, tr("Social")}, {ContentFiltersProfile::RegionalCategory, tr("Regional")}, {ContentFiltersProfile::OtherCategory, tr("Other")}});
+
+	for (int i = 0; i < categories.count(); ++i)
+	{
+		QList<QStandardItem*> categoryItems({new QStandardItem(categories.at(i).second), new QStandardItem(), new QStandardItem()});
+		categoryItems[0]->setData(categories.at(i).first, CategoryRole);
+		categoryItems[0]->setData(false, IsShowingProgressIndicatorRole);
+		categoryItems[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		categoryItems[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		categoryItems[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+		m_model->appendRow(categoryItems);
+
+		if (categoryEntries.contains(categories.at(i).first))
+		{
+			const QList<QList<QStandardItem*> > profileItems(categoryEntries[categories.at(i).first]);
+
+			for (int j = 0; j < profileItems.count(); ++j)
+			{
+				categoryItems[0]->appendRow(profileItems.at(j));
+			}
+		}
+		else
+		{
+			setRowHidden(i, m_model->invisibleRootItem()->index(), true);
+		}
+	}
+
+	expandAll();
+
 	connect(selectionModel(), &QItemSelectionModel::currentChanged, this, &ContentFiltersViewWidget::updateSelection);
 	connect(ContentFiltersManager::getInstance(), &ContentFiltersManager::profileAdded, this, &ContentFiltersViewWidget::handleProfileAdded);
 	connect(ContentFiltersManager::getInstance(), &ContentFiltersManager::profileModified, this, &ContentFiltersViewWidget::handleProfileModified);
@@ -458,58 +511,17 @@ void ContentFiltersViewWidget::handleProfileRemoved(const QString &name)
 
 void ContentFiltersViewWidget::setSelectedProfiles(const QStringList &profiles)
 {
-	m_model->clear();
-	m_model->setHorizontalHeaderLabels({tr("Title"), tr("Update Interval"), tr("Last Update")});
-	m_model->setHeaderData(0, Qt::Horizontal, 250, HeaderViewWidget::WidthRole);
-
-	QHash<ContentFiltersProfile::ProfileCategory, QList<QList<QStandardItem*> > > categoryEntries;
-	const QVector<ContentFiltersProfile*> contentBlockingProfiles(ContentFiltersManager::getContentBlockingProfiles());
-
-	for (int i = 0; i < contentBlockingProfiles.count(); ++i)
+	for (int i = 0; i < getRowCount(); ++i)
 	{
-		const QList<QStandardItem*> profileItems(createEntry(contentBlockingProfiles.at(i), profiles));
-		const ContentFiltersProfile::ProfileCategory category(contentBlockingProfiles.at(i)->getCategory());
+		const QModelIndex categoryIndex(getIndex(i));
 
-		if (!profileItems.isEmpty())
+		for (int j = 0; j < getRowCount(categoryIndex); ++j)
 		{
-			if (!categoryEntries.contains(category))
-			{
-				categoryEntries[category] = {};
-			}
+			const QModelIndex entryIndex(getIndex(j, 0, categoryIndex));
 
-			categoryEntries[category].append(profileItems);
+			m_model->setData(entryIndex, (profiles.contains(entryIndex.data(NameRole).toString()) ? Qt::Checked : Qt::Unchecked), Qt::CheckStateRole);
 		}
 	}
-
-	const QVector<QPair<ContentFiltersProfile::ProfileCategory, QString> > categories({{ContentFiltersProfile::AdvertisementsCategory, tr("Advertisements")}, {ContentFiltersProfile::AnnoyanceCategory, tr("Annoyance")}, {ContentFiltersProfile::PrivacyCategory, tr("Privacy")}, {ContentFiltersProfile::SocialCategory, tr("Social")}, {ContentFiltersProfile::RegionalCategory, tr("Regional")}, {ContentFiltersProfile::OtherCategory, tr("Other")}});
-
-	for (int i = 0; i < categories.count(); ++i)
-	{
-		QList<QStandardItem*> categoryItems({new QStandardItem(categories.at(i).second), new QStandardItem(), new QStandardItem()});
-		categoryItems[0]->setData(categories.at(i).first, CategoryRole);
-		categoryItems[0]->setData(false, IsShowingProgressIndicatorRole);
-		categoryItems[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-		categoryItems[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-		categoryItems[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-
-		m_model->appendRow(categoryItems);
-
-		if (categoryEntries.contains(categories.at(i).first))
-		{
-			const QList<QList<QStandardItem*> > profileItems(categoryEntries[categories.at(i).first]);
-
-			for (int j = 0; j < profileItems.count(); ++j)
-			{
-				categoryItems[0]->appendRow(profileItems.at(j));
-			}
-		}
-		else
-		{
-			setRowHidden(i, m_model->invisibleRootItem()->index(), true);
-		}
-	}
-
-	expandAll();
 }
 
 Animation* ContentFiltersViewWidget::getUpdateAnimation()

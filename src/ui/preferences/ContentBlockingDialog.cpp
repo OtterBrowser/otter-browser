@@ -37,10 +37,6 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::ContentBlockingDialog)
 {
 	m_ui->setupUi(this);
-
-	const QStringList globalProfiles(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
-
-	m_ui->profilesViewWidget->setSelectedProfiles(globalProfiles);
 	m_ui->cosmeticFiltersComboBox->addItem(tr("All"), QLatin1String("all"));
 	m_ui->cosmeticFiltersComboBox->addItem(tr("Domain specific only"), QLatin1String("domainOnly"));
 	m_ui->cosmeticFiltersComboBox->addItem(tr("None"), QLatin1String("none"));
@@ -48,7 +44,7 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	const int cosmeticFiltersIndex(m_ui->cosmeticFiltersComboBox->findData(SettingsManager::getOption(SettingsManager::ContentBlocking_CosmeticFiltersModeOption).toString()));
 
 	m_ui->cosmeticFiltersComboBox->setCurrentIndex((cosmeticFiltersIndex < 0) ? 0 : cosmeticFiltersIndex);
-	m_ui->enableCustomRulesCheckBox->setChecked(globalProfiles.contains(QLatin1String("custom")));
+	m_ui->enableCustomRulesCheckBox->setChecked(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList().contains(QLatin1String("custom")));
 
 	QStandardItemModel *customRulesModel(new QStandardItemModel(this));
 	QFile file(SessionsManager::getWritableDataPath("contentBlocking/custom.txt"));
