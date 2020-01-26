@@ -19,10 +19,10 @@
 **************************************************************************/
 
 #include "ContentBlockingProfileDialog.h"
-#include "../../core/AdblockContentFiltersProfile.h"
-#include "../../core/ContentFiltersManager.h"
-#include "../../core/SessionsManager.h"
-#include "../../core/Utils.h"
+#include "../core/AdblockContentFiltersProfile.h"
+#include "../core/ContentFiltersManager.h"
+#include "../core/SessionsManager.h"
+#include "../core/Utils.h"
 
 #include "ui_ContentBlockingProfileDialog.h"
 

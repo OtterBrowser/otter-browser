@@ -20,7 +20,7 @@
 
 #include "ContentFiltersViewWidget.h"
 #include "Animation.h"
-#include "preferences/ContentBlockingProfileDialog.h"
+#include "ContentBlockingProfileDialog.h"
 #include "../core/ContentFiltersManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"

@@ -21,7 +21,7 @@
 #ifndef CONTENTBLOCKINGPROFILEDIALOG
 #define CONTENTBLOCKINGPROFILEDIALOG
 
-#include "../Dialog.h"
+#include "Dialog.h"
 
 namespace Otter
 {

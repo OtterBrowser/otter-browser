@@ -151,6 +151,7 @@ set(otter_src
 	src/ui/ClearHistoryDialog.cpp
 	src/ui/ColorWidget.cpp
 	src/ui/ComboBoxWidget.cpp
+	src/ui/ContentBlockingProfileDialog.cpp
 	src/ui/ContentFiltersViewWidget.cpp
 	src/ui/ContentsDialog.cpp
 	src/ui/ContentsWidget.cpp
@@ -211,7 +212,6 @@ set(otter_src
 	src/ui/WorkspaceWidget.cpp
 	src/ui/preferences/AcceptLanguageDialog.cpp
 	src/ui/preferences/ContentBlockingDialog.cpp
-	src/ui/preferences/ContentBlockingProfileDialog.cpp
 	src/ui/preferences/CookiesExceptionsDialog.cpp
 	src/ui/preferences/JavaScriptPreferencesDialog.cpp
 	src/ui/preferences/KeyboardProfileDialog.cpp
@@ -286,6 +286,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/BookmarksImporterWidget.ui
 	src/ui/CertificateDialog.ui
 	src/ui/ClearHistoryDialog.ui
+	src/ui/ContentBlockingProfileDialog.ui
 	src/ui/CookiePropertiesDialog.ui
 	src/ui/FeedPropertiesDialog.ui
 	src/ui/ImagePropertiesDialog.ui
@@ -310,7 +311,6 @@ qt5_wrap_ui(otter_ui
 	src/ui/WebsitePreferencesDialog.ui
 	src/ui/preferences/AcceptLanguageDialog.ui
 	src/ui/preferences/ContentBlockingDialog.ui
-	src/ui/preferences/ContentBlockingProfileDialog.ui
 	src/ui/preferences/CookiesExceptionsDialog.ui
 	src/ui/preferences/JavaScriptPreferencesDialog.ui
 	src/ui/preferences/KeyboardProfileDialog.ui
