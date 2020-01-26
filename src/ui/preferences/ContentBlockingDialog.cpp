@@ -114,11 +114,6 @@ void ContentBlockingDialog::updateProfilesActions()
 	const QModelIndex index(m_ui->profilesViewWidget->currentIndex().sibling(m_ui->profilesViewWidget->currentIndex().row(), 0));
 	const bool isEditable(index.isValid() && index.flags().testFlag(Qt::ItemNeverHasChildren));
 
-	if (index.column() != 1)
-	{
-		m_ui->profilesViewWidget->setCurrentIndex(index.sibling(index.row(), 1));
-	}
-
 	m_ui->editProfileButton->setEnabled(isEditable);
 	m_ui->removeProfileButton->setEnabled(isEditable);
 	m_ui->updateProfileButton->setEnabled(index.isValid() && index.data(ContentFiltersViewWidget::UpdateUrlRole).toUrl().isValid());

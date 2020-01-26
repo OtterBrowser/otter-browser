@@ -86,6 +86,7 @@ protected slots:
 	void handleProfileAdded(const QString &name);
 	void handleProfileModified(const QString &name);
 	void handleProfileRemoved(const QString &name);
+	void updateSelection();
 
 private:
 	QStandardItemModel *m_model;

@@ -173,6 +173,7 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 	setItemDelegateForColumn(1, new ContentFiltersIntervalDelegate(this));
 	getViewportWidget()->setUpdateDataRole(ContentFiltersViewWidget::IsShowingProgressIndicatorRole);
 
+	connect(selectionModel(), &QItemSelectionModel::currentChanged, this, &ContentFiltersViewWidget::updateSelection);
 	connect(ContentFiltersManager::getInstance(), &ContentFiltersManager::profileAdded, this, &ContentFiltersViewWidget::handleProfileAdded);
 	connect(ContentFiltersManager::getInstance(), &ContentFiltersManager::profileModified, this, &ContentFiltersViewWidget::handleProfileModified);
 	connect(ContentFiltersManager::getInstance(), &ContentFiltersManager::profileRemoved, this, &ContentFiltersViewWidget::handleProfileRemoved);
@@ -271,6 +272,16 @@ void ContentFiltersViewWidget::updateProfile()
 	}
 
 	profile->update();
+}
+
+void ContentFiltersViewWidget::updateSelection()
+{
+	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
+
+	if (index.column() != 1)
+	{
+		setCurrentIndex(index.sibling(index.row(), 1));
+	}
 }
 
 void ContentFiltersViewWidget::handleProfileAdded(const QString &name)
