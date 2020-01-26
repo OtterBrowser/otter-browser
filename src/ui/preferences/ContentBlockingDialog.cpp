@@ -147,30 +147,7 @@ void ContentBlockingDialog::updateRulesActions()
 
 void ContentBlockingDialog::save()
 {
-	QStringList profiles;
-
-	for (int i = 0; i < m_ui->profilesViewWidget->getRowCount(); ++i)
-	{
-		const QModelIndex categoryIndex(m_ui->profilesViewWidget->getIndex(i));
-
-		for (int j = 0; j < m_ui->profilesViewWidget->getRowCount(categoryIndex); ++j)
-		{
-			const QModelIndex entryIndex(m_ui->profilesViewWidget->getIndex(j, 0, categoryIndex));
-			const QModelIndex intervalIndex(m_ui->profilesViewWidget->getIndex(j, 1, categoryIndex));
-			const QString name(entryIndex.data(ContentFiltersViewWidget::NameRole).toString());
-			ContentFiltersProfile *profile(ContentFiltersManager::getProfile(name));
-
-			if (intervalIndex.data(Qt::EditRole).toInt() != profile->getUpdateInterval())
-			{
-				profile->setUpdateInterval(intervalIndex.data(Qt::EditRole).toInt());
-			}
-
-			if (entryIndex.data(Qt::CheckStateRole).toBool())
-			{
-				profiles.append(name);
-			}
-		}
-	}
+	m_ui->profilesViewWidget->save(m_ui->enableCustomRulesCheckBox->isChecked());
 
 	if (m_ui->enableCustomRulesCheckBox->isChecked())
 	{
@@ -201,8 +178,6 @@ void ContentBlockingDialog::save()
 
 				ContentFiltersManager::addProfile(profile);
 			}
-
-			profiles.append(QLatin1String("custom"));
 		}
 		else
 		{
@@ -210,7 +185,6 @@ void ContentBlockingDialog::save()
 		}
 	}
 
-	SettingsManager::setOption(SettingsManager::ContentBlocking_ProfilesOption, profiles);
 	SettingsManager::setOption(SettingsManager::ContentBlocking_EnableWildcardsOption, m_ui->enableWildcardsCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::ContentBlocking_CosmeticFiltersModeOption, m_ui->cosmeticFiltersComboBox->currentData().toString());
 

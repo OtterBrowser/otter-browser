@@ -540,6 +540,41 @@ void ContentFiltersViewWidget::setHost(const QString &host)
 	}
 }
 
+void ContentFiltersViewWidget::save(bool areCustomRulesEnabled)
+{
+	QStringList profiles;
+
+	for (int i = 0; i < getRowCount(); ++i)
+	{
+		const QModelIndex categoryIndex(getIndex(i));
+
+		for (int j = 0; j < getRowCount(categoryIndex); ++j)
+		{
+			const QModelIndex entryIndex(getIndex(j, 0, categoryIndex));
+			const QModelIndex intervalIndex(getIndex(j, 1, categoryIndex));
+			const QString name(entryIndex.data(ContentFiltersViewWidget::NameRole).toString());
+			ContentFiltersProfile *profile(ContentFiltersManager::getProfile(name));
+
+			if (intervalIndex.data(Qt::EditRole).toInt() != profile->getUpdateInterval())
+			{
+				profile->setUpdateInterval(intervalIndex.data(Qt::EditRole).toInt());
+			}
+
+			if (entryIndex.data(Qt::CheckStateRole).toBool())
+			{
+				profiles.append(name);
+			}
+		}
+	}
+
+	if (areCustomRulesEnabled)
+	{
+		profiles.append(QLatin1String("custom"));
+	}
+
+	SettingsManager::setOption(SettingsManager::ContentBlocking_ProfilesOption, profiles, m_host);
+}
+
 Animation* ContentFiltersViewWidget::getUpdateAnimation()
 {
 	return m_updateAnimation;

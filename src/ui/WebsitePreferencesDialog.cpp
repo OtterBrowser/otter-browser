@@ -265,8 +265,6 @@ void WebsitePreferencesDialog::handleButtonClicked(QAbstractButton *button)
 		return;
 	}
 
-	QStringList contentBlockingProfiles;
-
 	switch (m_ui->buttonBox->buttonRole(button))
 	{
 		case QDialogButtonBox::AcceptRole:
@@ -293,28 +291,12 @@ void WebsitePreferencesDialog::handleButtonClicked(QAbstractButton *button)
 
 			if (m_ui->contentBlockingProfilesOverrideCheckBox->isChecked())
 			{
-				for (int i = 0; i < m_ui->contentBlockingProfilesViewWidget->getRowCount(); ++i)
-				{
-					const QModelIndex categoryIndex(m_ui->contentBlockingProfilesViewWidget->getIndex(i));
-
-					for (int j = 0; j < m_ui->contentBlockingProfilesViewWidget->getRowCount(categoryIndex); ++j)
-					{
-						const QModelIndex entryIndex(m_ui->contentBlockingProfilesViewWidget->getIndex(j, 0, categoryIndex));
-
-						if (entryIndex.data(Qt::CheckStateRole).toBool())
-						{
-							contentBlockingProfiles.append(entryIndex.data(ContentFiltersViewWidget::NameRole).toString());
-						}
-					}
-				}
-
-				if (m_ui->enableCustomRulesCheckBox->isChecked())
-				{
-					contentBlockingProfiles.append(QLatin1String("custom"));
-				}
+				m_ui->contentBlockingProfilesViewWidget->save(m_ui->enableCustomRulesCheckBox->isChecked());
 			}
-
-			SettingsManager::setOption(SettingsManager::ContentBlocking_ProfilesOption, (contentBlockingProfiles.isEmpty() ? QVariant() : contentBlockingProfiles), host);
+			else
+			{
+				SettingsManager::setOption(SettingsManager::ContentBlocking_ProfilesOption, {}, host);
+			}
 
 			accept();
 
