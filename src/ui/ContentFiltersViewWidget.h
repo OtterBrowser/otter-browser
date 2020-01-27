@@ -56,6 +56,8 @@ class ContentFiltersViewWidget final : public ItemViewWidget
 public:
 	enum DataRole
 	{
+		TitleRole = Qt::DisplayRole,
+		UpdateUrlRole = Qt::StatusTipRole,
 		CategoryRole = Qt::UserRole,
 		HasErrorRole,
 		IsModifiedRole,
@@ -63,8 +65,7 @@ public:
 		IsUpdatingRole,
 		NameRole,
 		UpdateProgressValueRole,
-		UpdateTimeRole,
-		UpdateUrlRole
+		UpdateTimeRole
 	};
 
 	explicit ContentFiltersViewWidget(QWidget *parent);

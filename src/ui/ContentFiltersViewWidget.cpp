@@ -173,6 +173,7 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 	setViewMode(ItemViewWidget::TreeView);
 	setItemDelegateForColumn(0, new ContentFiltersTitleDelegate(this));
 	setItemDelegateForColumn(1, new ContentFiltersIntervalDelegate(this));
+	getViewportWidget()->setMouseTracking(true);
 	getViewportWidget()->setUpdateDataRole(IsShowingProgressIndicatorRole);
 
 	m_model->setHorizontalHeaderLabels({tr("Title"), tr("Update Interval"), tr("Last Update")});
@@ -326,7 +327,9 @@ void ContentFiltersViewWidget::addProfile()
 		items[0]->setCheckable(true);
 		items[0]->setCheckState(profiles.contains(name) ? Qt::Checked : Qt::Unchecked);
 		items[1]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+		items[1]->setData(profileSummary.updateUrl, UpdateUrlRole);
 		items[2]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[2]->setData(profileSummary.updateUrl, UpdateUrlRole);
 
 		for (int i = 0; i < getRowCount(); ++i)
 		{
@@ -357,7 +360,7 @@ void ContentFiltersViewWidget::editProfile()
 	{
 		ContentBlockingProfileDialog::ProfileSummary profileSummary;
 		profileSummary.name = index.data(NameRole).toString();
-		profileSummary.title = index.data(Qt::DisplayRole).toString();
+		profileSummary.title = index.data(TitleRole).toString();
 		profileSummary.updateUrl = index.data(UpdateUrlRole).toUrl();
 		profileSummary.lastUpdate = index.sibling(index.row(), 2).data(Qt::DisplayRole).toDateTime();
 		profileSummary.category = static_cast<ContentFiltersProfile::ProfileCategory>(index.parent().data(CategoryRole).toInt());
@@ -370,8 +373,10 @@ void ContentFiltersViewWidget::editProfile()
 			profileSummary = dialog.getProfile();
 
 			m_model->setData(index, true, IsModifiedRole);
-			m_model->setData(index, profileSummary.title, Qt::DisplayRole);
+			m_model->setData(index, profileSummary.title, TitleRole);
 			m_model->setData(index, profileSummary.updateUrl, UpdateUrlRole);
+			m_model->setData(index.sibling(index.row(), 1), profileSummary.updateUrl, UpdateUrlRole);
+			m_model->setData(index.sibling(index.row(), 2), profileSummary.updateUrl, UpdateUrlRole);
 			m_model->setData(index.sibling(index.row(), 1), profileSummary.updateInterval, Qt::DisplayRole);
 
 			if (index.parent().data(CategoryRole).toInt() != profileSummary.category)
@@ -514,7 +519,7 @@ void ContentFiltersViewWidget::handleProfileModified(const QString &name)
 				entryItem = m_model->itemFromIndex(entryIndex);
 				hasFound = true;
 
-				setData(entryIndex, createProfileTitle(profile), Qt::DisplayRole);
+				setData(entryIndex, createProfileTitle(profile), TitleRole);
 				setData(entryIndex.sibling(j, 2), Utils::formatDateTime(profile->getLastUpdate()), Qt::DisplayRole);
 
 				break;
@@ -667,9 +672,9 @@ void ContentFiltersViewWidget::save(bool areCustomRulesEnabled)
 			}
 
 			const QString name(entryIndex.data(NameRole).toString());
-			const QString title(entryIndex.data(Qt::DisplayRole).toString());
+			const QString title(entryIndex.data(TitleRole).toString());
 			const QUrl updateUrl(entryIndex.data(UpdateUrlRole).toUrl());
-			const int updateInterval(entryIndex.sibling(entryIndex.row(), 1).data(Qt::EditRole).toInt());
+			const int updateInterval(entryIndex.sibling(entryIndex.row(), 1).data(Qt::DisplayRole).toInt());
 			ContentFiltersProfile::ProfileCategory category(static_cast<ContentFiltersProfile::ProfileCategory>(categoryIndex.data(CategoryRole).toInt()));
 			ContentFiltersProfile *profile(ContentFiltersManager::getProfile(name));
 
@@ -754,7 +759,9 @@ QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFilters
 	items[0]->setCheckable(true);
 	items[0]->setCheckState(profiles.contains(name) ? Qt::Checked : Qt::Unchecked);
 	items[1]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+	items[1]->setData(profile->getUpdateUrl(), UpdateUrlRole);
 	items[2]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items[2]->setData(profile->getUpdateUrl(), UpdateUrlRole);
 
 	return items;
 }
