@@ -295,7 +295,19 @@ void ContentFiltersViewWidget::moveProfile(QStandardItem *entryItem, ContentFilt
 
 void ContentFiltersViewWidget::addProfile()
 {
-	ContentBlockingProfileDialog dialog({}, this);
+	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
+	ContentBlockingProfileDialog::ProfileSummary profileSummary;
+
+	if (!index.data(CategoryRole).isNull())
+	{
+		profileSummary.category = static_cast<ContentFiltersProfile::ProfileCategory>(index.data(CategoryRole).toInt());
+	}
+	else if (!index.parent().data(CategoryRole).isNull())
+	{
+		profileSummary.category = static_cast<ContentFiltersProfile::ProfileCategory>(index.parent().data(CategoryRole).toInt());
+	}
+
+	ContentBlockingProfileDialog dialog(profileSummary, this);
 
 	if (dialog.exec() == QDialog::Accepted)
 	{
@@ -313,7 +325,8 @@ void ContentFiltersViewWidget::addProfile()
 			}
 		}
 
-		const ContentBlockingProfileDialog::ProfileSummary profileSummary(dialog.getProfile());
+		profileSummary = dialog.getProfile();
+
 		const QString name(Utils::createIdentifier(QFileInfo(profileSummary.updateUrl.fileName()).completeBaseName(), profiles));
 		QList<QStandardItem*> items({new QStandardItem(profileSummary.title), new QStandardItem(QString::number(profileSummary.updateInterval)), new QStandardItem()});
 		items[0]->setData(name, NameRole);
