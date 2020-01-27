@@ -23,12 +23,12 @@
 
 #include "ItemDelegate.h"
 #include "ItemViewWidget.h"
+#include "../core/ContentFiltersManager.h"
 
 namespace Otter
 {
 
 class Animation;
-class ContentFiltersProfile;
 
 class ContentFiltersTitleDelegate final : public ItemDelegate
 {
@@ -58,6 +58,7 @@ public:
 	{
 		CategoryRole = Qt::UserRole,
 		HasErrorRole,
+		IsModifiedRole,
 		IsShowingProgressIndicatorRole,
 		IsUpdatingRole,
 		NameRole,
@@ -82,6 +83,7 @@ public slots:
 protected:
 	void changeEvent(QEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
+	void moveProfile(QStandardItem *entryItem, ContentFiltersProfile::ProfileCategory newCategory);
 	QString createProfileTitle(const ContentFiltersProfile *profile) const;
 	QList<QStandardItem*> createEntry(const ContentFiltersProfile *profile, const QStringList &profiles) const;
 
@@ -94,6 +96,7 @@ protected slots:
 private:
 	QStandardItemModel *m_model;
 	QString m_host;
+	QHash<QString, bool> m_profilesToRemove;
 
 	static Animation* m_updateAnimation;
 };

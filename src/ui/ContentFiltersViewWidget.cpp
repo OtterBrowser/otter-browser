@@ -21,11 +21,12 @@
 #include "ContentFiltersViewWidget.h"
 #include "Animation.h"
 #include "ContentBlockingProfileDialog.h"
-#include "../core/ContentFiltersManager.h"
+#include "../core/AdblockContentFiltersProfile.h"
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
 #include "../core/Utils.h"
 
+#include <QtCore/QFileInfo>
 #include <QtCore/QTimer>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QMenu>
@@ -130,6 +131,7 @@ void ContentFiltersIntervalDelegate::setModelData(QWidget *editor, QAbstractItem
 	if (widget)
 	{
 		model->setData(index, widget->value(), Qt::DisplayRole);
+		model->setData(index.sibling(index.row(), 0), true, ContentFiltersViewWidget::IsModifiedRole);
 	}
 }
 
@@ -138,8 +140,8 @@ QWidget* ContentFiltersIntervalDelegate::createEditor(QWidget *parent, const QSt
 	Q_UNUSED(option)
 
 	QSpinBox *widget(new QSpinBox(parent));
-	widget->setSuffix(QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", " day(s)"));
-	widget->setSpecialValueText(QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "Never"));
+	widget->setSuffix(QCoreApplication::translate("Otter::ContentFiltersIntervalDelegate", " day(s)"));
+	widget->setSpecialValueText(QCoreApplication::translate("Otter::ContentFiltersIntervalDelegate", "Never"));
 	widget->setMinimum(0);
 	widget->setMaximum(365);
 	widget->setValue(index.data(Qt::DisplayRole).toInt());
@@ -171,7 +173,7 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 	setViewMode(ItemViewWidget::TreeView);
 	setItemDelegateForColumn(0, new ContentFiltersTitleDelegate(this));
 	setItemDelegateForColumn(1, new ContentFiltersIntervalDelegate(this));
-	getViewportWidget()->setUpdateDataRole(ContentFiltersViewWidget::IsShowingProgressIndicatorRole);
+	getViewportWidget()->setUpdateDataRole(IsShowingProgressIndicatorRole);
 
 	m_model->setHorizontalHeaderLabels({tr("Title"), tr("Update Interval"), tr("Last Update")});
 	m_model->setHeaderData(0, Qt::Horizontal, 250, HeaderViewWidget::WidthRole);
@@ -249,7 +251,7 @@ void ContentFiltersViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	{
 		menu.addSeparator();
 		menu.addAction(tr("Edit…"), this, &ContentFiltersViewWidget::editProfile);
-		menu.addAction(tr("Update"), this, &ContentFiltersViewWidget::updateProfile)->setEnabled(index.isValid() && index.data(ContentFiltersViewWidget::UpdateUrlRole).toUrl().isValid());
+		menu.addAction(tr("Update"), this, &ContentFiltersViewWidget::updateProfile)->setEnabled(index.isValid() && index.data(UpdateUrlRole).toUrl().isValid());
 		menu.addSeparator();
 		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-delete")), tr("Remove"), this, &ContentFiltersViewWidget::removeProfile);
 	}
@@ -257,28 +259,133 @@ void ContentFiltersViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu.exec(event->globalPos());
 }
 
+void ContentFiltersViewWidget::moveProfile(QStandardItem *entryItem, ContentFiltersProfile::ProfileCategory newCategory)
+{
+	QStandardItem *currentCategoryItem(entryItem->parent());
+
+	if (!currentCategoryItem)
+	{
+		return;
+	}
+
+	for (int i = 0; i < getRowCount(); ++i)
+	{
+		QStandardItem *categoryItem(m_model->item(i));
+
+		if (categoryItem && categoryItem->data(CategoryRole).toInt() == newCategory)
+		{
+			categoryItem->appendRow(currentCategoryItem->takeRow(entryItem->row()));
+
+			if (getRowCount(categoryItem->index()) == 1)
+			{
+				setRowHidden(i, m_model->invisibleRootItem()->index(), false);
+				expand(categoryItem->index());
+			}
+
+			if (getRowCount(currentCategoryItem->index()) == 0)
+			{
+				setRowHidden(currentCategoryItem->row(), m_model->invisibleRootItem()->index(), true);
+			}
+
+			break;
+		}
+	}
+}
+
 void ContentFiltersViewWidget::addProfile()
 {
-	ContentBlockingProfileDialog dialog(this);
-	dialog.exec();
+	ContentBlockingProfileDialog dialog({}, this);
+
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		QStringList profiles({QLatin1String("custom")});
+
+		for (int i = 0; i < getRowCount(); ++i)
+		{
+			const QModelIndex categoryIndex(getIndex(i));
+
+			profiles.reserve(profiles.count() + getRowCount(categoryIndex));
+
+			for (int j = 0; j < getRowCount(categoryIndex); ++j)
+			{
+				profiles.append(getIndex(j, 0, categoryIndex).data(NameRole).toString());
+			}
+		}
+
+		const ContentBlockingProfileDialog::ProfileSummary profileSummary(dialog.getProfile());
+		const QString name(Utils::createIdentifier(QFileInfo(profileSummary.updateUrl.fileName()).completeBaseName(), profiles));
+		QList<QStandardItem*> items({new QStandardItem(profileSummary.title), new QStandardItem(QString::number(profileSummary.updateInterval)), new QStandardItem()});
+		items[0]->setData(name, NameRole);
+		items[0]->setData(false, HasErrorRole);
+		items[0]->setData(true, IsModifiedRole);
+		items[0]->setData(false, IsShowingProgressIndicatorRole);
+		items[0]->setData(false, IsUpdatingRole);
+		items[0]->setData(-1, UpdateProgressValueRole);
+		items[0]->setData(profileSummary.updateUrl, UpdateUrlRole);
+		items[0]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[0]->setCheckable(true);
+		items[0]->setCheckState(profiles.contains(name) ? Qt::Checked : Qt::Unchecked);
+		items[1]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+		items[2]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+		for (int i = 0; i < getRowCount(); ++i)
+		{
+			QStandardItem *categoryItem(m_model->itemFromIndex(getIndex(i)));
+
+			if (categoryItem && categoryItem->data(CategoryRole).toInt() == profileSummary.category)
+			{
+				categoryItem->appendRow(items);
+
+				if (getRowCount(categoryItem->index()) == 1)
+				{
+					setRowHidden(i, m_model->invisibleRootItem()->index(), false);
+					expand(categoryItem->index());
+				}
+
+				break;
+			}
+		}
+	}
 }
 
 void ContentFiltersViewWidget::editProfile()
 {
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
-	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersViewWidget::NameRole).toString()));
+	QStandardItem *item(m_model->itemFromIndex(index));
 
-	if (profile)
+	if (item)
 	{
-		ContentBlockingProfileDialog dialog(this, profile);
-		dialog.exec();
+		ContentBlockingProfileDialog::ProfileSummary profileSummary;
+		profileSummary.name = index.data(NameRole).toString();
+		profileSummary.title = index.data(Qt::DisplayRole).toString();
+		profileSummary.updateUrl = index.data(UpdateUrlRole).toUrl();
+		profileSummary.lastUpdate = index.sibling(index.row(), 2).data(Qt::DisplayRole).toDateTime();
+		profileSummary.category = static_cast<ContentFiltersProfile::ProfileCategory>(index.parent().data(CategoryRole).toInt());
+		profileSummary.updateInterval = index.sibling(index.row(), 1).data(Qt::DisplayRole).toInt();
+
+		ContentBlockingProfileDialog dialog(profileSummary, this);
+
+		if (dialog.exec() == QDialog::Accepted)
+		{
+			profileSummary = dialog.getProfile();
+
+			m_model->setData(index, true, IsModifiedRole);
+			m_model->setData(index, profileSummary.title, Qt::DisplayRole);
+			m_model->setData(index, profileSummary.updateUrl, UpdateUrlRole);
+			m_model->setData(index.sibling(index.row(), 1), profileSummary.updateInterval, Qt::DisplayRole);
+
+			if (index.parent().data(CategoryRole).toInt() != profileSummary.category)
+			{
+				moveProfile(item, profileSummary.category);
+			}
+		}
 	}
 }
 
 void ContentFiltersViewWidget::removeProfile()
 {
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
-	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersViewWidget::NameRole).toString()));
+	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(NameRole).toString()));
 
 	if (!profile)
 	{
@@ -299,14 +406,14 @@ void ContentFiltersViewWidget::removeProfile()
 
 	if (messageBox.exec() == QMessageBox::Yes)
 	{
-		ContentFiltersManager::removeProfile(profile, (messageBox.checkBox() && messageBox.checkBox()->isChecked()));
+		m_profilesToRemove[profile->getName()] = (messageBox.checkBox() && messageBox.checkBox()->isChecked());
 	}
 }
 
 void ContentFiltersViewWidget::updateProfile()
 {
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
-	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersViewWidget::NameRole).toString()));
+	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(NameRole).toString()));
 
 	if (!profile)
 	{
@@ -368,6 +475,12 @@ void ContentFiltersViewWidget::handleProfileAdded(const QString &name)
 				if (categoryItem)
 				{
 					categoryItem->appendRow(profileItems);
+
+					if (getRowCount(categoryItem->index()) == 1)
+					{
+						setRowHidden(i, m_model->invisibleRootItem()->index(), false);
+						expand(categoryItem->index());
+					}
 				}
 			}
 
@@ -396,7 +509,7 @@ void ContentFiltersViewWidget::handleProfileModified(const QString &name)
 		{
 			const QModelIndex entryIndex(getIndex(j, 0, categoryIndex));
 
-			if (entryIndex.data(ContentFiltersViewWidget::NameRole).toString() == name)
+			if (entryIndex.data(NameRole).toString() == name)
 			{
 				entryItem = m_model->itemFromIndex(entryIndex);
 				hasFound = true;
@@ -418,64 +531,46 @@ void ContentFiltersViewWidget::handleProfileModified(const QString &name)
 	{
 		const bool hasError(profile->getError() != ContentFiltersProfile::NoError);
 
-		entryItem->setData(hasError, ContentFiltersViewWidget::HasErrorRole);
-		entryItem->setData(profile->getLastUpdate(), ContentFiltersViewWidget::UpdateTimeRole);
+		entryItem->setData(hasError, HasErrorRole);
+		entryItem->setData(profile->getLastUpdate(), UpdateTimeRole);
 
-		if (profile->isUpdating() != entryItem->data(ContentFiltersViewWidget::IsUpdatingRole).toBool())
+		if (profile->isUpdating() != entryItem->data(IsUpdatingRole).toBool())
 		{
-			entryItem->setData(profile->isUpdating(), ContentFiltersViewWidget::IsUpdatingRole);
+			entryItem->setData(profile->isUpdating(), IsUpdatingRole);
 
 			if (profile->isUpdating())
 			{
-				entryItem->setData(true, ContentFiltersViewWidget::IsShowingProgressIndicatorRole);
+				entryItem->setData(true, IsShowingProgressIndicatorRole);
 
 				connect(profile, &ContentFiltersProfile::updateProgressChanged, profile, [=](int progress)
 				{
-					entryItem->setData(((progress < 0 && entryItem->data(ContentFiltersViewWidget::HasErrorRole).toBool()) ? 0 : progress), ContentFiltersViewWidget::UpdateProgressValueRole);
+					entryItem->setData(((progress < 0 && entryItem->data(HasErrorRole).toBool()) ? 0 : progress), UpdateProgressValueRole);
 				});
 			}
 			else
 			{
-				if (entryItem->data(ContentFiltersViewWidget::UpdateProgressValueRole).toInt() < 0)
+				if (entryItem->data(UpdateProgressValueRole).toInt() < 0)
 				{
-					entryItem->setData((hasError ? 0 : 100), ContentFiltersViewWidget::UpdateProgressValueRole);
+					entryItem->setData((hasError ? 0 : 100), UpdateProgressValueRole);
 				}
 
 				QTimer::singleShot(2500, this, [=]()
 				{
 					if (!profile->isUpdating())
 					{
-						entryItem->setData(false, ContentFiltersViewWidget::IsShowingProgressIndicatorRole);
+						entryItem->setData(false, IsShowingProgressIndicatorRole);
 					}
 				});
 			}
 		}
 
-		QStandardItem *currentCategoryItem(entryItem->parent());
-
-		if (currentCategoryItem && profile->getCategory() != currentCategoryItem->data(CategoryRole).toInt())
+		if (!entryItem->data(IsModifiedRole).toBool())
 		{
-			for (int i = 0; i < getRowCount(); ++i)
+			QStandardItem *currentCategoryItem(entryItem->parent());
+
+			if (currentCategoryItem && profile->getCategory() != currentCategoryItem->data(CategoryRole).toInt())
 			{
-				QStandardItem *categoryItem(m_model->item(i));
-
-				if (categoryItem && profile->getCategory() == categoryItem->data(CategoryRole).toInt())
-				{
-					categoryItem->appendRow(currentCategoryItem->takeRow(entryItem->row()));
-
-					if (getRowCount(categoryItem->index()) == 1)
-					{
-						setRowHidden(i, m_model->invisibleRootItem()->index(), false);
-						expand(categoryItem->index());
-					}
-
-					if (getRowCount(currentCategoryItem->index()) == 0)
-					{
-						setRowHidden(currentCategoryItem->row(), m_model->invisibleRootItem()->index(), true);
-					}
-
-					break;
-				}
+				moveProfile(entryItem, profile->getCategory());
 			}
 		}
 	}
@@ -494,7 +589,7 @@ void ContentFiltersViewWidget::handleProfileRemoved(const QString &name)
 		{
 			const QModelIndex entryIndex(getIndex(j, 0, categoryIndex));
 
-			if (entryIndex.data(ContentFiltersViewWidget::NameRole).toString() == name)
+			if (entryIndex.data(NameRole).toString() == name)
 			{
 				hasFound = true;
 
@@ -542,6 +637,20 @@ void ContentFiltersViewWidget::setHost(const QString &host)
 
 void ContentFiltersViewWidget::save(bool areCustomRulesEnabled)
 {
+	QHash<QString, bool>::iterator iterator;
+
+	for (iterator = m_profilesToRemove.begin(); iterator != m_profilesToRemove.end(); ++iterator)
+	{
+		ContentFiltersProfile *profile(ContentFiltersManager::getProfile(iterator.key()));
+
+		if (profile)
+		{
+			ContentFiltersManager::removeProfile(profile, iterator.value());
+		}
+	}
+
+	m_profilesToRemove.clear();
+
 	QStringList profiles;
 
 	for (int i = 0; i < getRowCount(); ++i)
@@ -551,14 +660,34 @@ void ContentFiltersViewWidget::save(bool areCustomRulesEnabled)
 		for (int j = 0; j < getRowCount(categoryIndex); ++j)
 		{
 			const QModelIndex entryIndex(getIndex(j, 0, categoryIndex));
-			const QModelIndex intervalIndex(getIndex(j, 1, categoryIndex));
-			const QString name(entryIndex.data(ContentFiltersViewWidget::NameRole).toString());
+
+			if (!entryIndex.data(IsModifiedRole).toBool())
+			{
+				continue;
+			}
+
+			const QString name(entryIndex.data(NameRole).toString());
+			const QString title(entryIndex.data(Qt::DisplayRole).toString());
+			const QUrl updateUrl(entryIndex.data(UpdateUrlRole).toUrl());
+			const int updateInterval(entryIndex.sibling(entryIndex.row(), 1).data(Qt::EditRole).toInt());
+			ContentFiltersProfile::ProfileCategory category(static_cast<ContentFiltersProfile::ProfileCategory>(categoryIndex.data(CategoryRole).toInt()));
 			ContentFiltersProfile *profile(ContentFiltersManager::getProfile(name));
 
-			if (intervalIndex.data(Qt::EditRole).toInt() != profile->getUpdateInterval())
+			if (profile)
 			{
-				profile->setUpdateInterval(intervalIndex.data(Qt::EditRole).toInt());
+				profile->setTitle(title);
+				profile->setUpdateUrl(updateUrl);
+				profile->setCategory(category);
+				profile->setUpdateInterval(updateInterval);
 			}
+			else if (!AdblockContentFiltersProfile::create(name, title, updateUrl, updateInterval, category))
+			{
+				QMessageBox::critical(this, tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
+
+				continue;
+			}
+
+			m_model->setData(entryIndex, false, IsModifiedRole);
 
 			if (entryIndex.data(Qt::CheckStateRole).toBool())
 			{

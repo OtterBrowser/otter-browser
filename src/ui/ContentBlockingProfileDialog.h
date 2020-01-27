@@ -22,6 +22,7 @@
 #define CONTENTBLOCKINGPROFILEDIALOG
 
 #include "Dialog.h"
+#include "../core/ContentFiltersManager.h"
 
 namespace Otter
 {
@@ -38,23 +39,29 @@ class ContentBlockingProfileDialog final : public Dialog
 	Q_OBJECT
 
 public:
-	explicit ContentBlockingProfileDialog(QWidget *parent = nullptr, ContentFiltersProfile *profile = nullptr);
+	struct ProfileSummary
+	{
+		QString name;
+		QString title;
+		QUrl updateUrl;
+		QDateTime lastUpdate;
+		ContentFiltersProfile::ProfileCategory category = ContentFiltersProfile::OtherCategory;
+		int updateInterval = -1;
+	};
+
+	explicit ContentBlockingProfileDialog(const ProfileSummary &profile, QWidget *parent = nullptr);
 	~ContentBlockingProfileDialog();
 
-	ContentFiltersProfile* getProfile();
+	ProfileSummary getProfile() const;
 
 protected:
 	void changeEvent(QEvent *event) override;
 
-protected slots:
-	void save();
-
 private:
-	ContentFiltersProfile *m_profile;
+	QString m_name;
 	Ui::ContentBlockingProfileDialog *m_ui;
 };
 
 }
 
 #endif
-

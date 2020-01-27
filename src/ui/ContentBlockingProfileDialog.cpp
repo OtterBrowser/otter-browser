@@ -19,21 +19,17 @@
 **************************************************************************/
 
 #include "ContentBlockingProfileDialog.h"
-#include "../core/AdblockContentFiltersProfile.h"
-#include "../core/ContentFiltersManager.h"
-#include "../core/SessionsManager.h"
 #include "../core/Utils.h"
 
 #include "ui_ContentBlockingProfileDialog.h"
 
-#include <QtCore/QDir>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
 
-ContentBlockingProfileDialog::ContentBlockingProfileDialog(QWidget *parent, ContentFiltersProfile *profile) : Dialog(parent),
-	m_profile(profile),
+ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ProfileSummary &profile, QWidget *parent) : Dialog(parent),
+	m_name(profile.name),
 	m_ui(new Ui::ContentBlockingProfileDialog)
 {
 	m_ui->setupUi(this);
@@ -43,28 +39,29 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(QWidget *parent, Cont
 	m_ui->categoryComboBox->addItem(tr("Social"), ContentFiltersProfile::SocialCategory);
 	m_ui->categoryComboBox->addItem(tr("Regional"), ContentFiltersProfile::RegionalCategory);
 	m_ui->categoryComboBox->addItem(tr("Other"), ContentFiltersProfile::OtherCategory);
+	m_ui->categoryComboBox->setCurrentIndex(m_ui->categoryComboBox->findData(profile.category));
+	m_ui->titleLineEdit->setText(profile.title);
+	m_ui->updateUrLineEdit->setText(profile.updateUrl.toString());
+	m_ui->lastUpdateTextLabel->setText(Utils::formatDateTime(profile.lastUpdate));
+	m_ui->updateIntervalSpinBox->setValue(profile.updateInterval);
 
-	if (profile)
+	connect(m_ui->confirmButtonBox, &QDialogButtonBox::accepted, [&]()
 	{
-		m_ui->titleLineEdit->setText(profile->getTitle());
-		m_ui->updateUrLineEdit->setText(profile->getUpdateUrl().url());
-		m_ui->categoryComboBox->setCurrentIndex(m_ui->categoryComboBox->findData(profile->getCategory()));
-		m_ui->lastUpdateTextLabel->setText(Utils::formatDateTime(profile->getLastUpdate()));
-		m_ui->updateIntervalSpinBox->setValue(profile->getUpdateInterval());
-	}
-
-	connect(m_ui->confirmButtonBox, &QDialogButtonBox::accepted, this, &ContentBlockingProfileDialog::save);
+		if (QUrl(m_ui->updateUrLineEdit->text()).isValid())
+		{
+			accept();
+		}
+		else
+		{
+			QMessageBox::critical(this, tr("Error"), tr("Valid update URL is required."), QMessageBox::Close);
+		}
+	});
 	connect(m_ui->confirmButtonBox, &QDialogButtonBox::rejected, this, &ContentBlockingProfileDialog::close);
 }
 
 ContentBlockingProfileDialog::~ContentBlockingProfileDialog()
 {
 	delete m_ui;
-}
-
-ContentFiltersProfile* ContentBlockingProfileDialog::getProfile()
-{
-	return m_profile;
 }
 
 void ContentBlockingProfileDialog::changeEvent(QEvent *event)
@@ -83,53 +80,16 @@ void ContentBlockingProfileDialog::changeEvent(QEvent *event)
 	}
 }
 
-void ContentBlockingProfileDialog::save()
+ContentBlockingProfileDialog::ProfileSummary ContentBlockingProfileDialog::getProfile() const
 {
-	const ContentFiltersProfile::ProfileCategory category(static_cast<ContentFiltersProfile::ProfileCategory>(m_ui->categoryComboBox->itemData(m_ui->categoryComboBox->currentIndex()).toInt()));
-	const QUrl url(m_ui->updateUrLineEdit->text());
+	ProfileSummary profile;
+	profile.name = m_name;
+	profile.title = m_ui->titleLineEdit->text();
+	profile.updateUrl = QUrl(m_ui->updateUrLineEdit->text());
+	profile.category = static_cast<ContentFiltersProfile::ProfileCategory>(m_ui->categoryComboBox->itemData(m_ui->categoryComboBox->currentIndex()).toInt());
+	profile.updateInterval = m_ui->updateIntervalSpinBox->value();
 
-	if (!url.isValid())
-	{
-		QMessageBox::critical(this, tr("Error"), tr("Valid update URL is required."), QMessageBox::Close);
-
-		return;
-	}
-
-	if (m_profile)
-	{
-		m_profile->setCategory(category);
-		m_profile->setTitle(m_ui->titleLineEdit->text());
-		m_profile->setUpdateUrl(url);
-		m_profile->setUpdateInterval(m_ui->updateIntervalSpinBox->value());
-	}
-	else
-	{
-		QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking")));
-
-		QStringList profiles(ContentFiltersManager::getProfileNames());
-		profiles.append(QLatin1String("custom"));
-
-		const QString fileName(Utils::createIdentifier(QFileInfo(url.fileName()).completeBaseName(), profiles));
-		QFile file(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking/%1.txt")).arg(fileName));
-
-		if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-		{
-			QMessageBox::critical(this, tr("Error"), tr("Failed to create profile file: %1.").arg(file.errorString()), QMessageBox::Close);
-
-			return;
-		}
-
-		file.write(QStringLiteral("[AdBlock Plus 2.0]\n").toUtf8());
-		file.close();
-
-		ContentFiltersProfile *profile(new AdblockContentFiltersProfile(fileName, m_ui->titleLineEdit->text(), url, {}, {}, m_ui->updateIntervalSpinBox->value(), category, (ContentFiltersProfile::HasCustomTitleFlag | ContentFiltersProfile::HasCustomUpdateUrlFlag), ContentFiltersManager::getInstance()));
-
-		ContentFiltersManager::addProfile(profile);
-
-		m_profile = profile;
-	}
-
-	accept();
+	return profile;
 }
 
 }
