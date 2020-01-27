@@ -57,10 +57,15 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 		{
 			while (!stream.atEnd())
 			{
-				QStandardItem *item(new QStandardItem(stream.readLine().trimmed()));
-				item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+				const QString line(stream.readLine().trimmed());
 
-				customRulesModel->appendRow(item);
+				if (!line.isEmpty() && !line.startsWith(QLatin1Char('!')))
+				{
+					QStandardItem *item(new QStandardItem(line));
+					item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+
+					customRulesModel->appendRow(item);
+				}
 			}
 		}
 		else
