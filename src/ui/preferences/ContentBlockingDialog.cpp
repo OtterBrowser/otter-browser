@@ -28,7 +28,7 @@
 
 #include "ui_ContentBlockingDialog.h"
 
-#include <QtCore/QDir>
+#include <QtCore/QBuffer>
 
 namespace Otter
 {
@@ -151,38 +151,18 @@ void ContentBlockingDialog::save()
 
 	if (m_ui->enableCustomRulesCheckBox->isChecked())
 	{
-		QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking")));
+		QByteArray data;
+		QBuffer buffer(&data);
+		buffer.open(QIODevice::ReadWrite | QIODevice::Text);
 
-		QFile file(SessionsManager::getWritableDataPath("contentBlocking/custom.txt"));
-
-		if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+		for (int i = 0; i < m_ui->customRulesViewWidget->getRowCount(); ++i)
 		{
-			file.write(QStringLiteral("[AdBlock Plus 2.0]\n").toUtf8());
-
-			for (int i = 0; i < m_ui->customRulesViewWidget->getRowCount(); ++i)
-			{
-				file.write(m_ui->customRulesViewWidget->getIndex(i, 0).data().toString().toLatin1() + QStringLiteral("\n").toUtf8());
-			}
-
-			file.close();
-
-			ContentFiltersProfile *profile(ContentFiltersManager::getProfile(QLatin1String("custom")));
-
-			if (profile)
-			{
-				profile->clear();
-			}
-			else
-			{
-				profile = new AdblockContentFiltersProfile(QLatin1String("custom"), tr("Custom Rules"), {}, {}, {}, 0, ContentFiltersProfile::OtherCategory, ContentFiltersProfile::NoFlags);
-
-				ContentFiltersManager::addProfile(profile);
-			}
+			buffer.write(m_ui->customRulesViewWidget->getIndex(i, 0).data().toString().toLatin1() + QStringLiteral("\n").toUtf8());
 		}
-		else
-		{
-			Console::addMessage(QCoreApplication::translate("main", "Failed to create a file with custom rules: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
-		}
+
+		buffer.reset();
+
+		AdblockContentFiltersProfile::create(QLatin1String("custom"), tr("Custom Rules"), {}, 0, ContentFiltersProfile::OtherCategory, &buffer, true);
 	}
 
 	SettingsManager::setOption(SettingsManager::ContentBlocking_EnableWildcardsOption, m_ui->enableWildcardsCheckBox->isChecked());

@@ -834,6 +834,50 @@ int AdblockContentFiltersProfile::getUpdateProgress() const
 	return (m_dataFetchJob ? m_dataFetchJob->getProgress() : -1);
 }
 
+bool AdblockContentFiltersProfile::create(const QString &name, const QString &title, const QUrl &updateUrl, int updateInterval, ProfileCategory category, QIODevice *rules, bool canOverwriteExisting)
+{
+	const QString path(SessionsManager::getWritableDataPath(QStringLiteral("contentBlocking/%1.txt")).arg(name));
+
+	if (SessionsManager::isReadOnly() || (!canOverwriteExisting && QFile::exists(path)))
+	{
+		Console::addMessage(QCoreApplication::translate("main", "Failed to create a content blocking profile: %1").arg(tr("File already exists")), Console::OtherCategory, Console::ErrorLevel, path);
+
+		return false;
+	}
+
+	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking")));
+
+	QFile file(path);
+
+	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+	{
+		Console::addMessage(QCoreApplication::translate("main", "Failed to create a content blocking profile: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
+
+		return false;
+	}
+
+	file.write(QStringLiteral("[AdBlock Plus 2.0]\n").toUtf8());
+	file.write((QLatin1String("! Title: ") + title + QLatin1Char('\n')).toUtf8());
+
+	if (rules)
+	{
+		file.write(rules->readAll());
+	}
+
+	file.close();
+
+	AdblockContentFiltersProfile *profile(new AdblockContentFiltersProfile(name, title, updateUrl, {}, {}, updateInterval, category, ContentFiltersProfile::NoFlags, ContentFiltersManager::getInstance()));
+
+	ContentFiltersManager::addProfile(profile);
+
+	if (!rules && updateUrl.isValid())
+	{
+		profile->update();
+	}
+
+	return true;
+}
+
 bool AdblockContentFiltersProfile::loadRules()
 {
 	m_error = NoError;

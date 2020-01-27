@@ -56,6 +56,7 @@ public:
 	ProfileFlags getFlags() const override;
 	int getUpdateInterval() const override;
 	int getUpdateProgress() const override;
+	static bool create(const QString &name, const QString &title, const QUrl &updateUrl = {}, int updateInterval = 0, ProfileCategory category = OtherCategory, QIODevice *rules = nullptr, bool canOverwriteExisting = false);
 	bool update() override;
 	bool remove() override;
 	bool isUpdating() const override;

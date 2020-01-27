@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -173,11 +173,7 @@ bool HandlersManager::handleUrl(const QUrl &url)
 			}
 			else if (QMessageBox::question(nullptr, tr("Question"), tr("Do you want to add this content blocking profile?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 			{
-				ContentFiltersProfile *profile(new AdblockContentFiltersProfile(Utils::createIdentifier(QFileInfo(location.path()).baseName(), ContentFiltersManager::getProfileNames()), QString::fromLatin1(QByteArray::fromPercentEncoding(query.queryItemValue(QLatin1String("title")).toUtf8())), location, {}, {}, 0, ContentFiltersProfile::OtherCategory, ContentFiltersProfile::NoFlags));
-
-				ContentFiltersManager::addProfile(profile);
-
-				profile->update();
+				AdblockContentFiltersProfile::create(Utils::createIdentifier(QFileInfo(location.path()).baseName(), ContentFiltersManager::getProfileNames()), QString::fromLatin1(QByteArray::fromPercentEncoding(query.queryItemValue(QLatin1String("title")).toUtf8())), location);
 ///TODO Some sort of passive confirmation that profile was added
 			}
 		}
