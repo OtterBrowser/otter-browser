@@ -251,7 +251,29 @@ void ContentFiltersViewWidget::changeEvent(QEvent *event)
 {
 	ItemViewWidget::changeEvent(event);
 
-	m_model->setHorizontalHeaderLabels({tr("Title"), tr("Update Interval"), tr("Last Update")});
+	if (event->type() == QEvent::LanguageChange)
+	{
+		m_model->setHorizontalHeaderLabels({tr("Title"), tr("Update Interval"), tr("Last Update")});
+
+		for (int i = 0; i < getRowCount(); ++i)
+		{
+			const QModelIndex categoryIndex(getIndex(i));
+
+			if (categoryIndex.data(CategoryRole).toInt() == ContentFiltersProfile::RegionalCategory)
+			{
+				for (int j = 0; j < getRowCount(categoryIndex); ++j)
+				{
+					const QModelIndex entryIndex(getIndex(j, 0, categoryIndex));
+					ContentFiltersProfile *profile(ContentFiltersManager::getProfile(entryIndex.data(NameRole).toString()));
+
+					if (profile)
+					{
+						m_model->setData(entryIndex, createLanguagesList(profile), LanguagesRole);
+					}
+				}
+			}
+		}
+	}
 }
 
 void ContentFiltersViewWidget::contextMenuEvent(QContextMenuEvent *event)
