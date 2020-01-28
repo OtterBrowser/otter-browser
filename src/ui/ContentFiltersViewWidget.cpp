@@ -45,26 +45,38 @@ void ContentFiltersTitleDelegate::initStyleOption(QStyleOptionViewItem *option, 
 {
 	ItemDelegate::initStyleOption(option, index);
 
-	if (index.parent().isValid())
+	if (!index.parent().isValid())
 	{
-		option->features |= QStyleOptionViewItem::HasDecoration;
+		return;
+	}
 
-		if (index.data(ContentFiltersViewWidget::IsUpdatingRole).toBool())
-		{
-			const Animation *animation(ContentFiltersViewWidget::getUpdateAnimation());
+	option->features |= QStyleOptionViewItem::HasDecoration;
 
-			if (animation)
-			{
-				option->icon = QIcon(animation->getCurrentPixmap());
-			}
-		}
-		else if (index.data(ContentFiltersViewWidget::HasErrorRole).toBool())
+	if (index.data(ContentFiltersViewWidget::IsUpdatingRole).toBool())
+	{
+		const Animation *animation(ContentFiltersViewWidget::getUpdateAnimation());
+
+		if (animation)
 		{
-			option->icon = ThemesManager::createIcon(QLatin1String("dialog-error"));
+			option->icon = QIcon(animation->getCurrentPixmap());
 		}
-		else if (index.data(ContentFiltersViewWidget::UpdateTimeRole).isNull() || index.data(ContentFiltersViewWidget::UpdateTimeRole).toDateTime().daysTo(QDateTime::currentDateTimeUtc()) > 7)
+	}
+	else if (index.data(ContentFiltersViewWidget::HasErrorRole).toBool())
+	{
+		option->icon = ThemesManager::createIcon(QLatin1String("dialog-error"));
+	}
+	else if (index.data(ContentFiltersViewWidget::UpdateTimeRole).isNull() || index.data(ContentFiltersViewWidget::UpdateTimeRole).toDateTime().daysTo(QDateTime::currentDateTimeUtc()) > 7)
+	{
+		option->icon = ThemesManager::createIcon(QLatin1String("dialog-warning"));
+	}
+
+	if (index.parent().data(ContentFiltersViewWidget::CategoryRole).toInt() == ContentFiltersProfile::RegionalCategory)
+	{
+		const QStringList languages(index.data(ContentFiltersViewWidget::LanguagesRole).toStringList());
+
+		if (!languages.isEmpty())
 		{
-			option->icon = ThemesManager::createIcon(QLatin1String("dialog-warning"));
+			option->text = QStringLiteral("%1 [%2]").arg(index.data(Qt::DisplayRole).toString(), languages.join(QLatin1String(", ")));
 		}
 	}
 }
@@ -532,7 +544,9 @@ void ContentFiltersViewWidget::handleProfileModified(const QString &name)
 				entryItem = m_model->itemFromIndex(entryIndex);
 				hasFound = true;
 
-				setData(entryIndex, createProfileTitle(profile), TitleRole);
+				setData(entryIndex, profile->getTitle(), TitleRole);
+				setData(entryIndex, createLanguagesList(profile), LanguagesRole);
+				setData(entryIndex.sibling(j, 1), profile->getUpdateInterval(), Qt::DisplayRole);
 				setData(entryIndex.sibling(j, 2), Utils::formatDateTime(profile->getLastUpdate()), Qt::DisplayRole);
 
 				break;
@@ -727,28 +741,23 @@ Animation* ContentFiltersViewWidget::getUpdateAnimation()
 	return m_updateAnimation;
 }
 
-QString ContentFiltersViewWidget::createProfileTitle(const ContentFiltersProfile *profile) const
+QString ContentFiltersViewWidget::getHost() const
 {
-	if (profile->getCategory() != ContentFiltersProfile::RegionalCategory)
-	{
-		return profile->getTitle();
-	}
+	return m_host;
+}
 
+QStringList ContentFiltersViewWidget::createLanguagesList(const ContentFiltersProfile *profile) const
+{
 	const QVector<QLocale::Language> languages(profile->getLanguages());
 	QStringList languageNames;
 	languageNames.reserve(languages.count());
 
-	for (int j = 0; j < languages.count(); ++j)
+	for (int i = 0; i < languages.count(); ++i)
 	{
-		languageNames.append(QLocale::languageToString(languages.at(j)));
+		languageNames.append(QLocale::languageToString(languages.at(i)));
 	}
 
-	return QStringLiteral("%1 [%2]").arg(profile->getTitle(), languageNames.join(QLatin1String(", ")));
-}
-
-QString ContentFiltersViewWidget::getHost() const
-{
-	return m_host;
+	return languageNames;
 }
 
 QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFiltersProfile *profile, const QStringList &profiles) const
@@ -760,11 +769,12 @@ QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFilters
 		return {};
 	}
 
-	QList<QStandardItem*> items({new QStandardItem(createProfileTitle(profile)), new QStandardItem(QString::number(profile->getUpdateInterval())), new QStandardItem(Utils::formatDateTime(profile->getLastUpdate()))});
+	QList<QStandardItem*> items({new QStandardItem(profile->getTitle()), new QStandardItem(QString::number(profile->getUpdateInterval())), new QStandardItem(Utils::formatDateTime(profile->getLastUpdate()))});
 	items[0]->setData(name, NameRole);
 	items[0]->setData(false, HasErrorRole);
 	items[0]->setData(false, IsShowingProgressIndicatorRole);
 	items[0]->setData(false, IsUpdatingRole);
+	items[0]->setData(createLanguagesList(profile), LanguagesRole);
 	items[0]->setData(-1, UpdateProgressValueRole);
 	items[0]->setData(profile->getLastUpdate(), UpdateTimeRole);
 	items[0]->setData(profile->getUpdateUrl(), UpdateUrlRole);

@@ -63,6 +63,7 @@ public:
 		IsModifiedRole,
 		IsShowingProgressIndicatorRole,
 		IsUpdatingRole,
+		LanguagesRole,
 		NameRole,
 		UpdateProgressValueRole,
 		UpdateTimeRole
@@ -85,7 +86,7 @@ protected:
 	void changeEvent(QEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
 	void moveProfile(QStandardItem *entryItem, ContentFiltersProfile::ProfileCategory newCategory);
-	QString createProfileTitle(const ContentFiltersProfile *profile) const;
+	QStringList createLanguagesList(const ContentFiltersProfile *profile) const;
 	QList<QStandardItem*> createEntry(const ContentFiltersProfile *profile, const QStringList &profiles) const;
 
 protected slots:
