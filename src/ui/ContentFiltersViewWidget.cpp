@@ -566,6 +566,11 @@ void ContentFiltersViewWidget::handleProfileModified(const QString &name)
 				entryItem = m_model->itemFromIndex(entryIndex);
 				hasFound = true;
 
+				if (entryIndex.data(IsModifiedRole).toBool())
+				{
+					break;
+				}
+
 				setData(entryIndex, profile->getTitle(), TitleRole);
 				setData(entryIndex, createLanguagesList(profile), LanguagesRole);
 				setData(entryIndex.sibling(j, 1), profile->getUpdateInterval(), Qt::DisplayRole);
