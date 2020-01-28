@@ -272,16 +272,36 @@ void ContentFiltersManager::scheduleSave()
 
 void ContentFiltersManager::addProfile(ContentFiltersProfile *profile)
 {
-	if (profile)
+	if (!profile)
+	{
+		return;
+	}
+
+	bool isReplacing(false);
+
+	for (int i = 0; i < m_contentBlockingProfiles.count(); ++i)
+	{
+		if (m_contentBlockingProfiles.at(i)->getName() == profile->getName())
+		{
+			isReplacing = true;
+
+			m_contentBlockingProfiles.at(i)->deleteLater();
+			m_contentBlockingProfiles.replace(i, profile);
+
+			break;
+		}
+	}
+
+	if (!isReplacing)
 	{
 		m_contentBlockingProfiles.append(profile);
-
-		m_instance->scheduleSave();
-
-		emit m_instance->profileAdded(profile->getName());
-
-		connect(profile, &ContentFiltersProfile::profileModified, m_instance, &ContentFiltersManager::scheduleSave);
 	}
+
+	m_instance->scheduleSave();
+
+	emit m_instance->profileAdded(profile->getName());
+
+	connect(profile, &ContentFiltersProfile::profileModified, m_instance, &ContentFiltersManager::scheduleSave);
 }
 
 void ContentFiltersManager::handleOptionChanged(int identifier, const QVariant &value)
