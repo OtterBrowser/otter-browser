@@ -573,7 +573,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 	return {};
 }
 
-void AdblockContentFiltersProfile::raiseError(const QString &message, ContentFiltersProfile::ProfileError error)
+void AdblockContentFiltersProfile::raiseError(const QString &message, ProfileError error)
 {
 	m_error = error;
 
@@ -604,7 +604,16 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 	QTextStream stream(device);
 	stream.setCodec("UTF-8");
 
-	QByteArray data(stream.readLine().toUtf8());
+	const QString header(stream.readLine());
+
+	if (!header.contains(QLatin1String("[Adblock")))
+	{
+		raiseError(QCoreApplication::translate("main", "Failed to update content blocking profile: invalid header"), DownloadError);
+
+		return;
+	}
+
+	QByteArray data(header.toUtf8());
 	QByteArray checksum;
 
 	while (!stream.atEnd())
