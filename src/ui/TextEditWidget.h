@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -41,10 +41,12 @@ public:
 	explicit TextEditWidget(QWidget *parent = nullptr);
 
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters) const override;
+	bool isSpellCheckingEnabled() const;
 	bool hasSelection() const;
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
+	void setSpellCheckingEnabled(bool isEnabled);
 
 protected:
 	void focusInEvent(QFocusEvent *event) override;

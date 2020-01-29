@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -240,6 +240,15 @@ void TextEditWidget::notifyPasteActionStateChanged()
 	emit arbitraryActionsStateChanged({ActionsManager::PasteAction});
 }
 
+void TextEditWidget::setSpellCheckingEnabled(bool isEnabled)
+{
+#ifdef OTTER_ENABLE_SPELLCHECK
+	m_highlighter->setActive(isEnabled);
+#else
+	Q_UNUSED(isEnabled)
+#endif
+}
+
 ActionsManager::ActionDefinition::State TextEditWidget::getActionState(int identifier, const QVariantMap &parameters) const
 {
 	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(identifier));
@@ -328,6 +337,15 @@ ActionsManager::ActionDefinition::State TextEditWidget::getActionState(int ident
 	}
 
 	return state;
+}
+
+bool TextEditWidget::isSpellCheckingEnabled() const
+{
+#ifdef OTTER_ENABLE_SPELLCHECK
+	return m_highlighter->isActive();
+#else
+	return false;
+#endif
 }
 
 bool TextEditWidget::hasSelection() const
