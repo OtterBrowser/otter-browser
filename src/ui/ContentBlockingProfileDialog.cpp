@@ -42,7 +42,6 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ProfileSummary 
 	m_ui->categoryComboBox->setCurrentIndex(m_ui->categoryComboBox->findData(profileSummary.category));
 	m_ui->titleLineEdit->setText(profileSummary.title);
 	m_ui->updateUrLineEdit->setText(profileSummary.updateUrl.toString());
-	m_ui->lastUpdateTextLabel->setText(Utils::formatDateTime(profileSummary.lastUpdate));
 	m_ui->updateIntervalSpinBox->setValue(profileSummary.updateInterval);
 
 	if (!profileSummary.name.isEmpty())
@@ -51,6 +50,7 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ProfileSummary 
 
 		if (profile)
 		{
+			m_ui->lastUpdateTextLabel->setText(Utils::formatDateTime(profile->getLastUpdate()));
 			m_ui->updateButton->setEnabled(profileSummary.updateUrl.isValid());
 
 			connect(profile, &ContentFiltersProfile::profileModified, [&]()

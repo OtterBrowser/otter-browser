@@ -409,7 +409,6 @@ void ContentFiltersViewWidget::editProfile()
 		profileSummary.name = index.data(NameRole).toString();
 		profileSummary.title = index.data(TitleRole).toString();
 		profileSummary.updateUrl = index.data(UpdateUrlRole).toUrl();
-		profileSummary.lastUpdate = index.sibling(index.row(), 2).data(Qt::DisplayRole).toDateTime();
 		profileSummary.category = static_cast<ContentFiltersProfile::ProfileCategory>(index.parent().data(CategoryRole).toInt());
 		profileSummary.updateInterval = index.sibling(index.row(), 1).data(Qt::DisplayRole).toInt();
 

@@ -44,7 +44,6 @@ public:
 		QString name;
 		QString title;
 		QUrl updateUrl;
-		QDateTime lastUpdate;
 		ContentFiltersProfile::ProfileCategory category = ContentFiltersProfile::OtherCategory;
 		int updateInterval = -1;
 	};
