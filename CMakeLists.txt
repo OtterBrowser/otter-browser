@@ -175,6 +175,7 @@ set(otter_src
 	src/ui/OpenAddressDialog.cpp
 	src/ui/OpenBookmarkDialog.cpp
 	src/ui/OptionWidget.cpp
+	src/ui/PassiveNotificationWidget.cpp
 	src/ui/PreferencesDialog.cpp
 	src/ui/PreviewWidget.cpp
 	src/ui/ProgressBarWidget.cpp
