@@ -153,7 +153,7 @@ public:
 	virtual ProfileFlags getFlags() const = 0;
 	virtual int getUpdateInterval() const = 0;
 	virtual int getUpdateProgress() const = 0;
-	virtual bool update() = 0;
+	virtual bool update(const QUrl &url = {}) = 0;
 	virtual bool remove() = 0;
 	virtual bool isUpdating() const = 0;
 	virtual bool isFraud(const QUrl &url);

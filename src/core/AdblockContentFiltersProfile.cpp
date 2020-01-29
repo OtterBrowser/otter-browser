@@ -924,28 +924,30 @@ bool AdblockContentFiltersProfile::loadRules()
 	return true;
 }
 
-bool AdblockContentFiltersProfile::update()
+bool AdblockContentFiltersProfile::update(const QUrl &url)
 {
 	if (m_dataFetchJob || thread() != QThread::currentThread())
 	{
 		return false;
 	}
 
-	if (!m_updateUrl.isValid())
+	const QUrl updateUrl(url.isValid() ? url : m_updateUrl);
+
+	if (!updateUrl.isValid())
 	{
-		if (m_updateUrl.isEmpty())
+		if (updateUrl.isEmpty())
 		{
 			raiseError(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL is empty"), DownloadError);
 		}
 		else
 		{
-			raiseError(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL (%1) is invalid").arg(m_updateUrl.toString()), DownloadError);
+			raiseError(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL (%1) is invalid").arg(updateUrl.toString()), DownloadError);
 		}
 
 		return false;
 	}
 
-	m_dataFetchJob = new DataFetchJob(m_updateUrl, this);
+	m_dataFetchJob = new DataFetchJob(updateUrl, this);
 
 	connect(m_dataFetchJob, &Job::jobFinished, this, &AdblockContentFiltersProfile::handleJobFinished);
 	connect(m_dataFetchJob, &Job::progressChanged, this, &AdblockContentFiltersProfile::updateProgressChanged);
