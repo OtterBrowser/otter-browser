@@ -49,7 +49,7 @@ public:
 		int updateInterval = -1;
 	};
 
-	explicit ContentBlockingProfileDialog(const ProfileSummary &profile, QWidget *parent = nullptr);
+	explicit ContentBlockingProfileDialog(const ProfileSummary &profileSummary, QWidget *parent = nullptr);
 	~ContentBlockingProfileDialog();
 
 	ProfileSummary getProfile() const;

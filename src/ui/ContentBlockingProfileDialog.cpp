@@ -28,8 +28,8 @@
 namespace Otter
 {
 
-ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ProfileSummary &profile, QWidget *parent) : Dialog(parent),
-	m_name(profile.name),
+ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ProfileSummary &profileSummary, QWidget *parent) : Dialog(parent),
+	m_name(profileSummary.name),
 	m_ui(new Ui::ContentBlockingProfileDialog)
 {
 	m_ui->setupUi(this);
@@ -39,11 +39,24 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ProfileSummary 
 	m_ui->categoryComboBox->addItem(tr("Social"), ContentFiltersProfile::SocialCategory);
 	m_ui->categoryComboBox->addItem(tr("Regional"), ContentFiltersProfile::RegionalCategory);
 	m_ui->categoryComboBox->addItem(tr("Other"), ContentFiltersProfile::OtherCategory);
-	m_ui->categoryComboBox->setCurrentIndex(m_ui->categoryComboBox->findData(profile.category));
-	m_ui->titleLineEdit->setText(profile.title);
-	m_ui->updateUrLineEdit->setText(profile.updateUrl.toString());
-	m_ui->lastUpdateTextLabel->setText(Utils::formatDateTime(profile.lastUpdate));
-	m_ui->updateIntervalSpinBox->setValue(profile.updateInterval);
+	m_ui->categoryComboBox->setCurrentIndex(m_ui->categoryComboBox->findData(profileSummary.category));
+	m_ui->titleLineEdit->setText(profileSummary.title);
+	m_ui->updateUrLineEdit->setText(profileSummary.updateUrl.toString());
+	m_ui->lastUpdateTextLabel->setText(Utils::formatDateTime(profileSummary.lastUpdate));
+	m_ui->updateIntervalSpinBox->setValue(profileSummary.updateInterval);
+
+	if (!profileSummary.name.isEmpty())
+	{
+		ContentFiltersProfile *profile(ContentFiltersManager::getProfile(profileSummary.name));
+
+		if (profile)
+		{
+			connect(profile, &ContentFiltersProfile::profileModified, [&]()
+			{
+				m_ui->lastUpdateTextLabel->setText(Utils::formatDateTime(profile->getLastUpdate()));
+			});
+		}
+	}
 
 	connect(m_ui->confirmButtonBox, &QDialogButtonBox::accepted, [&]()
 	{
@@ -82,14 +95,14 @@ void ContentBlockingProfileDialog::changeEvent(QEvent *event)
 
 ContentBlockingProfileDialog::ProfileSummary ContentBlockingProfileDialog::getProfile() const
 {
-	ProfileSummary profile;
-	profile.name = m_name;
-	profile.title = m_ui->titleLineEdit->text();
-	profile.updateUrl = QUrl(m_ui->updateUrLineEdit->text());
-	profile.category = static_cast<ContentFiltersProfile::ProfileCategory>(m_ui->categoryComboBox->itemData(m_ui->categoryComboBox->currentIndex()).toInt());
-	profile.updateInterval = m_ui->updateIntervalSpinBox->value();
+	ProfileSummary profileSummary;
+	profileSummary.name = m_name;
+	profileSummary.title = m_ui->titleLineEdit->text();
+	profileSummary.updateUrl = QUrl(m_ui->updateUrLineEdit->text());
+	profileSummary.category = static_cast<ContentFiltersProfile::ProfileCategory>(m_ui->categoryComboBox->itemData(m_ui->categoryComboBox->currentIndex()).toInt());
+	profileSummary.updateInterval = m_ui->updateIntervalSpinBox->value();
 
-	return profile;
+	return profileSummary;
 }
 
 }
