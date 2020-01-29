@@ -51,9 +51,31 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ProfileSummary 
 
 		if (profile)
 		{
+			m_ui->updateButton->setEnabled(profileSummary.updateUrl.isValid());
+
 			connect(profile, &ContentFiltersProfile::profileModified, [&]()
 			{
-				m_ui->lastUpdateTextLabel->setText(Utils::formatDateTime(profile->getLastUpdate()));
+				profile = ContentFiltersManager::getProfile(m_name);
+
+				if (profile)
+				{
+					m_ui->lastUpdateTextLabel->setText(Utils::formatDateTime(profile->getLastUpdate()));
+				}
+			});
+			connect(m_ui->updateUrLineEdit, &QLineEdit::textChanged, [&]()
+			{
+				m_ui->updateButton->setEnabled(QUrl(m_ui->updateUrLineEdit->text()).isValid());
+			});
+			connect(m_ui->updateButton, &QPushButton::clicked, [&]()
+			{
+				profile = ContentFiltersManager::getProfile(m_name);
+
+				const QUrl url(m_ui->updateUrLineEdit->text());
+
+				if (profile && url.isValid())
+				{
+					profile->update(url);
+				}
 			});
 		}
 	}
