@@ -66,9 +66,11 @@ public:
 	int getZoom() const;
 
 protected:
+	void changeEvent(QEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
 	void focusInEvent(QFocusEvent *event) override;
 	void wheelEvent(QWheelEvent *event) override;
+	QRect getMarginGeometry() const;
 
 protected slots:
 	void handleOptionChanged(int identifier, const QVariant &value);

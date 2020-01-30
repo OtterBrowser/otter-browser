@@ -45,9 +45,10 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 	painter.fillRect(event->rect(), Qt::transparent);
 
 	QTextBlock block(m_sourceEditWidget->firstVisibleBlock());
+	const Qt::AlignmentFlag alignment(isLeftToRight() ? Qt::AlignRight : Qt::AlignLeft);
 	int top(m_sourceEditWidget->blockBoundingGeometry(block).translated(m_sourceEditWidget->contentOffset()).toRect().top());
 	int bottom(top + m_sourceEditWidget->blockBoundingRect(block).toRect().height());
-	const int right(width() - 5);
+	const int right(width() - 6);
 	const int selectionStart(m_sourceEditWidget->document()->findBlock(m_sourceEditWidget->textCursor().selectionStart()).blockNumber());
 	const int selectionEnd(m_sourceEditWidget->document()->findBlock(m_sourceEditWidget->textCursor().selectionEnd()).blockNumber());
 
@@ -59,7 +60,7 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 			textColor.setAlpha((block.blockNumber() >= selectionStart && block.blockNumber() <= selectionEnd) ? 250 : 150);
 
 			painter.setPen(textColor);
-			painter.drawText(0, top, right, fontMetrics().height(), Qt::AlignRight, QString::number(block.blockNumber() + 1));
+			painter.drawText(3, top, right, fontMetrics().height(), alignment, QString::number(block.blockNumber() + 1));
 		}
 
 		block = block.next();
@@ -147,7 +148,14 @@ void MarginWidget::updateWidth()
 
 	setFixedWidth(6 + (Utils::calculateCharacterWidth(QLatin1Char('9'), fontMetrics()) * digits));
 
-	m_sourceEditWidget->setViewportMargins(width(), 0, 0, 0);
+	if (isRightToLeft())
+	{
+		m_sourceEditWidget->setViewportMargins(0, 0, width(), 0);
+	}
+	else
+	{
+		m_sourceEditWidget->setViewportMargins(width(), 0, 0, 0);
+	}
 }
 
 bool MarginWidget::event(QEvent *event)
@@ -179,13 +187,24 @@ SourceEditWidget::SourceEditWidget(QWidget *parent) : TextEditWidget(parent),
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &SourceEditWidget::handleOptionChanged);
 }
 
+void SourceEditWidget::changeEvent(QEvent *event)
+{
+	TextEditWidget::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange && m_marginWidget)
+	{
+		m_marginWidget->updateWidth();
+		m_marginWidget->setGeometry(getMarginGeometry());
+	}
+}
+
 void SourceEditWidget::resizeEvent(QResizeEvent *event)
 {
 	TextEditWidget::resizeEvent(event);
 
 	if (m_marginWidget)
 	{
-		m_marginWidget->setGeometry(QRect(contentsRect().left(), contentsRect().top(), m_marginWidget->width(), contentsRect().height()));
+		m_marginWidget->setGeometry(getMarginGeometry());
 	}
 }
 
@@ -293,7 +312,7 @@ void SourceEditWidget::handleOptionChanged(int identifier, const QVariant &value
 			{
 				m_marginWidget = new MarginWidget(this);
 				m_marginWidget->show();
-				m_marginWidget->setGeometry(QRect(contentsRect().left(), contentsRect().top(), m_marginWidget->width(), contentsRect().height()));
+				m_marginWidget->setGeometry(getMarginGeometry());
 			}
 			else if (!value.toBool() && m_marginWidget)
 			{
@@ -412,6 +431,16 @@ void SourceEditWidget::setZoom(int zoom)
 
 		emit zoomChanged(zoom);
 	}
+}
+
+QRect SourceEditWidget::getMarginGeometry() const
+{
+	if (!m_marginWidget)
+	{
+		return {};
+	}
+
+	return QRect((isRightToLeft() ? (contentsRect().right() - m_marginWidget->width()) : contentsRect().left()), contentsRect().top(), m_marginWidget->width(), contentsRect().height());
 }
 
 int SourceEditWidget::getZoom() const
