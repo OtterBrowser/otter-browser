@@ -23,54 +23,8 @@
 #include "TextEditWidget.h"
 #include "WebWidget.h"
 
-#include <QtGui/QSyntaxHighlighter>
-
 namespace Otter
 {
-
-class SyntaxHighlighter final : public QSyntaxHighlighter
-{
-	Q_OBJECT
-
-public:
-	enum HighlightingSyntax
-	{
-		NoSyntax = 0,
-		HtmlSyntax
-	};
-
-	Q_ENUM(HighlightingSyntax)
-
-	enum HighlightingState
-	{
-		NoState = 0,
-		DoctypeState,
-		KeywordState,
-		AttributeState,
-		EntityState,
-		ValueState,
-		CharacterDataState,
-		CommentState
-	};
-
-	Q_ENUM(HighlightingState)
-
-	struct BlockData final : public QTextBlockUserData
-	{
-		QString context;
-		HighlightingSyntax currentSyntax = HtmlSyntax;
-		HighlightingSyntax previousSyntax = HtmlSyntax;
-		HighlightingState state = NoState;
-	};
-
-	explicit SyntaxHighlighter(QTextDocument *parent);
-
-protected:
-	void highlightBlock(const QString &text) override;
-
-private:
-	static QMap<HighlightingSyntax, QMap<HighlightingState, QTextCharFormat> > m_formats;
-};
 
 class SourceEditWidget;
 

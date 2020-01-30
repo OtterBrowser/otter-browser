@@ -193,6 +193,7 @@ set(otter_src
 	src/ui/StartupDialog.cpp
 	src/ui/StatusBarWidget.cpp
 	src/ui/Style.cpp
+	src/ui/SyntaxHighlighter.cpp
 	src/ui/TabBarWidget.cpp
 	src/ui/TabSwitcherWidget.cpp
 	src/ui/TextBrowserWidget.cpp
