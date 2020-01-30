@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "SourceEditWidget.h"
+#include "Menu.h"
 #include "../core/SettingsManager.h"
 
 #include <QtGui/QPainter>
@@ -32,7 +33,6 @@ MarginWidget::MarginWidget(SourceEditWidget *parent) : QWidget(parent),
 	m_lastClickedLine(-1)
 {
 	updateWidth();
-	setContextMenuPolicy(Qt::NoContextMenu);
 
 	connect(m_sourceEditWidget, &SourceEditWidget::updateRequest, this, &MarginWidget::updateNumbers);
 	connect(m_sourceEditWidget, &SourceEditWidget::blockCountChanged, this, &MarginWidget::updateWidth);
@@ -66,6 +66,19 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 		top = bottom;
 		bottom = (top + m_sourceEditWidget->blockBoundingRect(block).toRect().height());
 	}
+}
+
+void MarginWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+	Menu menu(Menu::UnknownMenu, this);
+	QAction *showLineNumbersAction(menu.addAction(tr("Show Line Numbers"), [&](bool show)
+	{
+		SettingsManager::setOption(SettingsManager::SourceViewer_ShowLineNumbersOption, show);
+	}));
+	showLineNumbersAction->setCheckable(true);
+	showLineNumbersAction->setChecked(SettingsManager::getOption(SettingsManager::SourceViewer_ShowLineNumbersOption).toBool());
+
+	menu.exec(event->globalPos());
 }
 
 void MarginWidget::mousePressEvent(QMouseEvent *event)

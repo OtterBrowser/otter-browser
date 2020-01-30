@@ -298,27 +298,9 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 
 	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::EditingCategory});
 
-	const QWidget *child(childAt(position.isNull() ? mapFromGlobal(QCursor::pos()) : position));
-	const QPoint menuPosition(position.isNull() ? QCursor::pos() : mapToGlobal(position));
-
-	if (child && child->metaObject()->className() == QLatin1String("Otter::MarginWidget"))
-	{
-		QMenu menu(this);
-		QAction *showLineNumbersAction(menu.addAction(tr("Show Line Numbers"), [&](bool show)
-		{
-			SettingsManager::setOption(SettingsManager::SourceViewer_ShowLineNumbersOption, show);
-		}));
-		showLineNumbersAction->setCheckable(true);
-		showLineNumbersAction->setChecked(SettingsManager::getOption(SettingsManager::SourceViewer_ShowLineNumbersOption).toBool());
-
-		menu.exec(menuPosition);
-	}
-	else
-	{
-		Menu menu(Menu::UnknownMenu, this);
-		menu.load(QLatin1String("menu/webWidget.json"), {QLatin1String("edit"), QLatin1String("source")}, ActionExecutor::Object(this, this));
-		menu.exec(menuPosition);
-	}
+	Menu menu(Menu::UnknownMenu, this);
+	menu.load(QLatin1String("menu/webWidget.json"), {QLatin1String("edit"), QLatin1String("source")}, ActionExecutor::Object(this, this));
+	menu.exec(position.isNull() ? QCursor::pos() : mapToGlobal(position));
 }
 
 void SourceViewerWebWidget::setOption(int identifier, const QVariant &value)
