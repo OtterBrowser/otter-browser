@@ -187,8 +187,8 @@ set(otter_src
 	src/ui/SearchEnginePropertiesDialog.cpp
 	src/ui/SessionsManagerDialog.cpp
 	src/ui/SidebarWidget.cpp
+	src/ui/SourceEditWidget.cpp
 	src/ui/SourceViewerWebWidget.cpp
-	src/ui/SourceViewerWidget.cpp
 	src/ui/SplitterWidget.cpp
 	src/ui/StartupDialog.cpp
 	src/ui/StatusBarWidget.cpp

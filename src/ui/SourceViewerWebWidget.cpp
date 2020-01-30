@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 
 #include "SourceViewerWebWidget.h"
 #include "Menu.h"
-#include "SourceViewerWidget.h"
+#include "SourceEditWidget.h"
 #include "../core/Console.h"
 #include "../core/HistoryManager.h"
 #include "../core/NetworkManager.h"
@@ -39,7 +39,7 @@ namespace Otter
 {
 
 SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *parent) : WebWidget({}, nullptr, parent),
-	m_sourceViewer(new SourceViewerWidget(this)),
+	m_sourceEditWidget(new SourceEditWidget(this)),
 	m_networkManager(nullptr),
 	m_viewSourceReply(nullptr),
 	m_isLoading(true),
@@ -48,20 +48,20 @@ SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *par
 	QVBoxLayout *layout(new QVBoxLayout(this));
 	layout->setContentsMargins(0, 0, 0, 0);
 	layout->setSpacing(0);
-	layout->addWidget(m_sourceViewer);
+	layout->addWidget(m_sourceEditWidget);
 
-	m_sourceViewer->setContextMenuPolicy(Qt::NoContextMenu);
+	m_sourceEditWidget->setContextMenuPolicy(Qt::NoContextMenu);
 
 	setContextMenuPolicy(Qt::CustomContextMenu);
 
 	connect(this, &SourceViewerWebWidget::customContextMenuRequested, this, &SourceViewerWebWidget::showContextMenu);
-	connect(m_sourceViewer, &SourceViewerWidget::findTextResultsChanged, this, &SourceViewerWebWidget::findInPageResultsChanged);
-	connect(m_sourceViewer, &SourceViewerWidget::zoomChanged, this, &SourceViewerWebWidget::zoomChanged);
-	connect(m_sourceViewer, &SourceViewerWidget::zoomChanged, this, &SourceViewerWebWidget::handleZoomChanged);
-	connect(m_sourceViewer, &SourceViewerWidget::redoAvailable, this, &SourceViewerWebWidget::notifyRedoActionStateChanged);
-	connect(m_sourceViewer, &SourceViewerWidget::undoAvailable, this, &SourceViewerWebWidget::notifyUndoActionStateChanged);
-	connect(m_sourceViewer, &SourceViewerWidget::copyAvailable, this, &SourceViewerWebWidget::notifyEditingActionsStateChanged);
-	connect(m_sourceViewer, &SourceViewerWidget::cursorPositionChanged, this, &SourceViewerWebWidget::notifyEditingActionsStateChanged);
+	connect(m_sourceEditWidget, &SourceEditWidget::findTextResultsChanged, this, &SourceViewerWebWidget::findInPageResultsChanged);
+	connect(m_sourceEditWidget, &SourceEditWidget::zoomChanged, this, &SourceViewerWebWidget::zoomChanged);
+	connect(m_sourceEditWidget, &SourceEditWidget::zoomChanged, this, &SourceViewerWebWidget::handleZoomChanged);
+	connect(m_sourceEditWidget, &SourceEditWidget::redoAvailable, this, &SourceViewerWebWidget::notifyRedoActionStateChanged);
+	connect(m_sourceEditWidget, &SourceEditWidget::undoAvailable, this, &SourceViewerWebWidget::notifyUndoActionStateChanged);
+	connect(m_sourceEditWidget, &SourceEditWidget::copyAvailable, this, &SourceViewerWebWidget::notifyEditingActionsStateChanged);
+	connect(m_sourceEditWidget, &SourceEditWidget::cursorPositionChanged, this, &SourceViewerWebWidget::notifyEditingActionsStateChanged);
 }
 
 void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
@@ -79,7 +79,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 					if (file.open(QIODevice::WriteOnly))
 					{
 						QTextStream stream(&file);
-						stream << m_sourceViewer->toPlainText();
+						stream << m_sourceEditWidget->toPlainText();
 
 						file.close();
 					}
@@ -111,7 +111,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 			break;
 		case ActionsManager::ReloadAction:
 			{
-				if (m_sourceViewer->document()->isModified())
+				if (m_sourceEditWidget->document()->isModified())
 				{
 					const QMessageBox::StandardButton result(QMessageBox::warning(this, tr("Warning"), tr("The document has been modified.\nDo you want to save your changes or discard them?"), (QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel)));
 
@@ -188,20 +188,20 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 			break;
 		case ActionsManager::UndoAction:
-			m_sourceViewer->undo();
+			m_sourceEditWidget->undo();
 
 			break;
 		case ActionsManager::RedoAction:
-			m_sourceViewer->redo();
+			m_sourceEditWidget->redo();
 
 			break;
 		case ActionsManager::CutAction:
-			m_sourceViewer->cut();
+			m_sourceEditWidget->cut();
 
 			break;
 		case ActionsManager::CopyAction:
 		case ActionsManager::CopyPlainTextAction:
-			m_sourceViewer->copy();
+			m_sourceEditWidget->copy();
 
 			break;
 		case ActionsManager::CopyAddressAction:
@@ -224,33 +224,33 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 			}
 			else if (parameters.contains(QLatin1String("text")))
 			{
-				m_sourceViewer->textCursor().insertText(parameters[QLatin1String("text")].toString());
+				m_sourceEditWidget->textCursor().insertText(parameters[QLatin1String("text")].toString());
 			}
 			else
 			{
-				m_sourceViewer->paste();
+				m_sourceEditWidget->paste();
 			}
 
 			break;
 		case ActionsManager::DeleteAction:
-			m_sourceViewer->textCursor().removeSelectedText();
+			m_sourceEditWidget->textCursor().removeSelectedText();
 
 			break;
 		case ActionsManager::SelectAllAction:
-			m_sourceViewer->selectAll();
+			m_sourceEditWidget->selectAll();
 
 			break;
 		case ActionsManager::UnselectAction:
-			m_sourceViewer->textCursor().clearSelection();
+			m_sourceEditWidget->textCursor().clearSelection();
 
 			break;
 		case ActionsManager::ClearAllAction:
-			m_sourceViewer->selectAll();
-			m_sourceViewer->textCursor().removeSelectedText();
+			m_sourceEditWidget->selectAll();
+			m_sourceEditWidget->textCursor().removeSelectedText();
 
 			break;
 		case ActionsManager::ActivateContentAction:
-			m_sourceViewer->setFocus();
+			m_sourceEditWidget->setFocus();
 
 			break;
 		default:
@@ -260,12 +260,12 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 void SourceViewerWebWidget::findInPage(const QString &text, WebWidget::FindFlags flags)
 {
-	m_sourceViewer->findText(text, flags);
+	m_sourceEditWidget->findText(text, flags);
 }
 
 void SourceViewerWebWidget::print(QPrinter *printer)
 {
-	m_sourceViewer->print(printer);
+	m_sourceEditWidget->print(printer);
 }
 
 void SourceViewerWebWidget::handleViewSourceReplyFinished()
@@ -344,8 +344,8 @@ void SourceViewerWebWidget::setOptions(const QHash<int, QVariant> &options, cons
 
 void SourceViewerWebWidget::setScrollPosition(const QPoint &position)
 {
-	m_sourceViewer->horizontalScrollBar()->setValue(position.x());
-	m_sourceViewer->verticalScrollBar()->setValue(position.y());
+	m_sourceEditWidget->horizontalScrollBar()->setValue(position.x());
+	m_sourceEditWidget->verticalScrollBar()->setValue(position.y());
 }
 
 void SourceViewerWebWidget::setHistory(const Session::Window::History &history)
@@ -355,9 +355,9 @@ void SourceViewerWebWidget::setHistory(const Session::Window::History &history)
 
 void SourceViewerWebWidget::setZoom(int zoom)
 {
-	if (zoom != m_sourceViewer->getZoom())
+	if (zoom != m_sourceEditWidget->getZoom())
 	{
-		m_sourceViewer->setZoom(zoom);
+		m_sourceEditWidget->setZoom(zoom);
 
 		SessionsManager::markSessionAsModified();
 
@@ -405,14 +405,14 @@ void SourceViewerWebWidget::setContents(const QByteArray &contents, const QStrin
 
 	if (codec)
 	{
-		m_sourceViewer->setPlainText(codec->toUnicode(contents));
+		m_sourceEditWidget->setPlainText(codec->toUnicode(contents));
 	}
 	else
 	{
-		m_sourceViewer->setPlainText(QString::fromLatin1(contents));
+		m_sourceEditWidget->setPlainText(QString::fromLatin1(contents));
 	}
 
-	m_sourceViewer->document()->setModified(false);
+	m_sourceEditWidget->document()->setModified(false);
 }
 
 WebWidget* SourceViewerWebWidget::clone(bool cloneHistory, bool isPrivate, const QStringList &excludedOptions) const
@@ -431,7 +431,7 @@ QString SourceViewerWebWidget::getTitle() const
 
 QString SourceViewerWebWidget::getSelectedText() const
 {
-	return m_sourceViewer->textCursor().selectedText();
+	return m_sourceEditWidget->textCursor().selectedText();
 }
 
 QUrl SourceViewerWebWidget::getUrl() const
@@ -446,7 +446,7 @@ QIcon SourceViewerWebWidget::getIcon() const
 
 QPoint SourceViewerWebWidget::getScrollPosition() const
 {
-	return {m_sourceViewer->horizontalScrollBar()->value(), m_sourceViewer->verticalScrollBar()->value()};
+	return {m_sourceEditWidget->horizontalScrollBar()->value(), m_sourceEditWidget->verticalScrollBar()->value()};
 }
 
 ActionsManager::ActionDefinition::State SourceViewerWebWidget::getActionState(int identifier, const QVariantMap &parameters) const
@@ -510,7 +510,7 @@ WebWidget::HitTestResult SourceViewerWebWidget::getHitTestResult(const QPoint &p
 	result.hitPosition = position;
 	result.flags = HitTestResult::IsContentEditableTest;
 
-	if (m_sourceViewer->document()->isEmpty())
+	if (m_sourceEditWidget->document()->isEmpty())
 	{
 		result.flags |= HitTestResult::IsEmptyTest;
 	}
@@ -525,17 +525,17 @@ WebWidget::LoadingState SourceViewerWebWidget::getLoadingState() const
 
 int SourceViewerWebWidget::getZoom() const
 {
-	return m_sourceViewer->getZoom();
+	return m_sourceEditWidget->getZoom();
 }
 
 bool SourceViewerWebWidget::canRedo() const
 {
-	return m_sourceViewer->document()->isRedoAvailable();
+	return m_sourceEditWidget->document()->isRedoAvailable();
 }
 
 bool SourceViewerWebWidget::canUndo() const
 {
-	return m_sourceViewer->document()->isUndoAvailable();
+	return m_sourceEditWidget->document()->isUndoAvailable();
 }
 
 bool SourceViewerWebWidget::canViewSource() const
@@ -545,7 +545,7 @@ bool SourceViewerWebWidget::canViewSource() const
 
 bool SourceViewerWebWidget::hasSelection() const
 {
-	return m_sourceViewer->textCursor().hasSelection();
+	return m_sourceEditWidget->textCursor().hasSelection();
 }
 
 bool SourceViewerWebWidget::isPrivate() const

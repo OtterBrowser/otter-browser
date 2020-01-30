@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 *
 **************************************************************************/
 
-#include "SourceViewerWidget.h"
+#include "SourceEditWidget.h"
 #include "../core/SettingsManager.h"
 
 #include <QtCore/QJsonArray>
@@ -205,16 +205,16 @@ void SyntaxHighlighter::highlightBlock(const QString &text)
 	setCurrentBlockState(currentState);
 }
 
-MarginWidget::MarginWidget(SourceViewerWidget *parent) : QWidget(parent),
-	m_sourceViewer(parent),
+MarginWidget::MarginWidget(SourceEditWidget *parent) : QWidget(parent),
+	m_sourceEditWidget(parent),
 	m_lastClickedLine(-1)
 {
 	updateWidth();
 	setContextMenuPolicy(Qt::NoContextMenu);
 
-	connect(m_sourceViewer, &SourceViewerWidget::updateRequest, this, &MarginWidget::updateNumbers);
-	connect(m_sourceViewer, &SourceViewerWidget::blockCountChanged, this, &MarginWidget::updateWidth);
-	connect(m_sourceViewer, &SourceViewerWidget::textChanged, this, &MarginWidget::updateWidth);
+	connect(m_sourceEditWidget, &SourceEditWidget::updateRequest, this, &MarginWidget::updateNumbers);
+	connect(m_sourceEditWidget, &SourceEditWidget::blockCountChanged, this, &MarginWidget::updateWidth);
+	connect(m_sourceEditWidget, &SourceEditWidget::textChanged, this, &MarginWidget::updateWidth);
 }
 
 void MarginWidget::paintEvent(QPaintEvent *event)
@@ -222,12 +222,12 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 	QPainter painter(this);
 	painter.fillRect(event->rect(), Qt::transparent);
 
-	QTextBlock block(m_sourceViewer->firstVisibleBlock());
-	int top(m_sourceViewer->blockBoundingGeometry(block).translated(m_sourceViewer->contentOffset()).toRect().top());
-	int bottom(top + m_sourceViewer->blockBoundingRect(block).toRect().height());
+	QTextBlock block(m_sourceEditWidget->firstVisibleBlock());
+	int top(m_sourceEditWidget->blockBoundingGeometry(block).translated(m_sourceEditWidget->contentOffset()).toRect().top());
+	int bottom(top + m_sourceEditWidget->blockBoundingRect(block).toRect().height());
 	const int right(width() - 5);
-	const int selectionStart(m_sourceViewer->document()->findBlock(m_sourceViewer->textCursor().selectionStart()).blockNumber());
-	const int selectionEnd(m_sourceViewer->document()->findBlock(m_sourceViewer->textCursor().selectionEnd()).blockNumber());
+	const int selectionStart(m_sourceEditWidget->document()->findBlock(m_sourceEditWidget->textCursor().selectionStart()).blockNumber());
+	const int selectionEnd(m_sourceEditWidget->document()->findBlock(m_sourceEditWidget->textCursor().selectionEnd()).blockNumber());
 
 	while (block.isValid() && top <= event->rect().bottom())
 	{
@@ -242,7 +242,7 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 
 		block = block.next();
 		top = bottom;
-		bottom = (top + m_sourceViewer->blockBoundingRect(block).toRect().height());
+		bottom = (top + m_sourceEditWidget->blockBoundingRect(block).toRect().height());
 	}
 }
 
@@ -250,13 +250,13 @@ void MarginWidget::mousePressEvent(QMouseEvent *event)
 {
 	if (event->button() == Qt::LeftButton)
 	{
-		QTextCursor textCursor(m_sourceViewer->cursorForPosition(QPoint(1, event->y())));
+		QTextCursor textCursor(m_sourceEditWidget->cursorForPosition(QPoint(1, event->y())));
 		textCursor.select(QTextCursor::LineUnderCursor);
 		textCursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
 
 		m_lastClickedLine = textCursor.blockNumber();
 
-		m_sourceViewer->setTextCursor(textCursor);
+		m_sourceEditWidget->setTextCursor(textCursor);
 	}
 	else
 	{
@@ -266,7 +266,7 @@ void MarginWidget::mousePressEvent(QMouseEvent *event)
 
 void MarginWidget::mouseMoveEvent(QMouseEvent *event)
 {
-	QTextCursor textCursor(m_sourceViewer->cursorForPosition(QPoint(1, event->y())));
+	QTextCursor textCursor(m_sourceEditWidget->cursorForPosition(QPoint(1, event->y())));
 	const int currentLine(textCursor.blockNumber());
 
 	if (currentLine != m_lastClickedLine)
@@ -275,7 +275,7 @@ void MarginWidget::mouseMoveEvent(QMouseEvent *event)
 
 		textCursor.movePosition((isMovingUp ? QTextCursor::Down : QTextCursor::Up), QTextCursor::KeepAnchor, qAbs(m_lastClickedLine - currentLine - (isMovingUp ? 0 : 1)));
 
-		m_sourceViewer->setTextCursor(textCursor);
+		m_sourceEditWidget->setTextCursor(textCursor);
 	}
 }
 
@@ -301,7 +301,7 @@ void MarginWidget::updateNumbers(const QRect &rectangle, int offset)
 void MarginWidget::updateWidth()
 {
 	int digits(1);
-	int maximum(qMax(1, m_sourceViewer->blockCount()));
+	int maximum(qMax(1, m_sourceEditWidget->blockCount()));
 
 	while (maximum >= 10)
 	{
@@ -312,7 +312,7 @@ void MarginWidget::updateWidth()
 
 	setFixedWidth(6 + (Utils::calculateCharacterWidth(QLatin1Char('9'), fontMetrics()) * digits));
 
-	m_sourceViewer->setViewportMargins(width(), 0, 0, 0);
+	m_sourceEditWidget->setViewportMargins(width(), 0, 0, 0);
 }
 
 bool MarginWidget::event(QEvent *event)
@@ -327,26 +327,27 @@ bool MarginWidget::event(QEvent *event)
 	return result;
 }
 
-SourceViewerWidget::SourceViewerWidget(QWidget *parent) : QPlainTextEdit(parent),
+SourceEditWidget::SourceEditWidget(QWidget *parent) : TextEditWidget(parent),
 	m_marginWidget(nullptr),
 	m_findFlags(WebWidget::NoFlagsFind),
 	m_zoom(100)
 {
 	new SyntaxHighlighter(document());
 
+	setSpellCheckingEnabled(false);
 	setZoom(SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());
 	handleOptionChanged(SettingsManager::Interface_ShowScrollBarsOption, SettingsManager::getOption(SettingsManager::Interface_ShowScrollBarsOption));
 	handleOptionChanged(SettingsManager::SourceViewer_ShowLineNumbersOption, SettingsManager::getOption(SettingsManager::SourceViewer_ShowLineNumbersOption));
 	handleOptionChanged(SettingsManager::SourceViewer_WrapLinesOption, SettingsManager::getOption(SettingsManager::SourceViewer_WrapLinesOption));
 
-	connect(this, &SourceViewerWidget::textChanged, this, &SourceViewerWidget::updateSelection);
-	connect(this, &SourceViewerWidget::cursorPositionChanged, this, &SourceViewerWidget::updateTextCursor);
-	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &SourceViewerWidget::handleOptionChanged);
+	connect(this, &SourceEditWidget::textChanged, this, &SourceEditWidget::updateSelection);
+	connect(this, &SourceEditWidget::cursorPositionChanged, this, &SourceEditWidget::updateTextCursor);
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &SourceEditWidget::handleOptionChanged);
 }
 
-void SourceViewerWidget::resizeEvent(QResizeEvent *event)
+void SourceEditWidget::resizeEvent(QResizeEvent *event)
 {
-	QPlainTextEdit::resizeEvent(event);
+	TextEditWidget::resizeEvent(event);
 
 	if (m_marginWidget)
 	{
@@ -354,9 +355,9 @@ void SourceViewerWidget::resizeEvent(QResizeEvent *event)
 	}
 }
 
-void SourceViewerWidget::focusInEvent(QFocusEvent *event)
+void SourceEditWidget::focusInEvent(QFocusEvent *event)
 {
-	QPlainTextEdit::focusInEvent(event);
+	TextEditWidget::focusInEvent(event);
 
 	if (event->reason() != Qt::MouseFocusReason && event->reason() != Qt::PopupFocusReason && !m_findText.isEmpty())
 	{
@@ -364,7 +365,7 @@ void SourceViewerWidget::focusInEvent(QFocusEvent *event)
 	}
 }
 
-void SourceViewerWidget::wheelEvent(QWheelEvent *event)
+void SourceEditWidget::wheelEvent(QWheelEvent *event)
 {
 	if (event->modifiers().testFlag(Qt::ControlModifier))
 	{
@@ -375,10 +376,10 @@ void SourceViewerWidget::wheelEvent(QWheelEvent *event)
 		return;
 	}
 
-	QPlainTextEdit::wheelEvent(event);
+	TextEditWidget::wheelEvent(event);
 }
 
-void SourceViewerWidget::findText(const QString &text, WebWidget::FindFlags flags)
+void SourceEditWidget::findText(const QString &text, WebWidget::FindFlags flags)
 {
 	const bool isTheSame(text == m_findText);
 
@@ -423,7 +424,7 @@ void SourceViewerWidget::findText(const QString &text, WebWidget::FindFlags flag
 		{
 			const QTextCursor currentTextCursor(textCursor());
 
-			disconnect(this, &SourceViewerWidget::cursorPositionChanged, this, &SourceViewerWidget::updateTextCursor);
+			disconnect(this, &SourceEditWidget::cursorPositionChanged, this, &SourceEditWidget::updateTextCursor);
 
 			setTextCursor(m_findTextAnchor);
 			ensureCursorVisible();
@@ -435,7 +436,7 @@ void SourceViewerWidget::findText(const QString &text, WebWidget::FindFlags flag
 			horizontalScrollBar()->setValue(position.x());
 			verticalScrollBar()->setValue(position.y());
 
-			connect(this, &SourceViewerWidget::cursorPositionChanged, this, &SourceViewerWidget::updateTextCursor);
+			connect(this, &SourceEditWidget::cursorPositionChanged, this, &SourceEditWidget::updateTextCursor);
 		}
 	}
 
@@ -444,7 +445,7 @@ void SourceViewerWidget::findText(const QString &text, WebWidget::FindFlags flag
 	updateSelection();
 }
 
-void SourceViewerWidget::handleOptionChanged(int identifier, const QVariant &value)
+void SourceEditWidget::handleOptionChanged(int identifier, const QVariant &value)
 {
 	switch (identifier)
 	{
@@ -478,12 +479,12 @@ void SourceViewerWidget::handleOptionChanged(int identifier, const QVariant &val
 	}
 }
 
-void SourceViewerWidget::updateTextCursor()
+void SourceEditWidget::updateTextCursor()
 {
 	m_findTextAnchor = textCursor();
 }
 
-void SourceViewerWidget::updateSelection()
+void SourceEditWidget::updateSelection()
 {
 	QList<QTextEdit::ExtraSelection> extraSelections;
 
@@ -544,7 +545,7 @@ void SourceViewerWidget::updateSelection()
 	setExtraSelections(extraSelections);
 }
 
-void SourceViewerWidget::setZoom(int zoom)
+void SourceEditWidget::setZoom(int zoom)
 {
 	if (zoom != m_zoom)
 	{
@@ -564,7 +565,7 @@ void SourceViewerWidget::setZoom(int zoom)
 	}
 }
 
-int SourceViewerWidget::getZoom() const
+int SourceEditWidget::getZoom() const
 {
 	return m_zoom;
 }

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,13 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_SOURCEVIEWERWIDGET_H
-#define OTTER_SOURCEVIEWERWIDGET_H
+#ifndef OTTER_SOURCEEDITWIDGET_H
+#define OTTER_SOURCEEDITWIDGET_H
 
+#include "TextEditWidget.h"
 #include "WebWidget.h"
 
 #include <QtGui/QSyntaxHighlighter>
-#include <QtWidgets/QPlainTextEdit>
 
 namespace Otter
 {
@@ -72,14 +72,14 @@ private:
 	static QMap<HighlightingSyntax, QMap<HighlightingState, QTextCharFormat> > m_formats;
 };
 
-class SourceViewerWidget;
+class SourceEditWidget;
 
 class MarginWidget final : public QWidget
 {
 	Q_OBJECT
 
 public:
-	explicit MarginWidget(SourceViewerWidget *parent);
+	explicit MarginWidget(SourceEditWidget *parent);
 
 public slots:
 	void updateNumbers(const QRect &rectangle, int offset);
@@ -93,16 +93,16 @@ protected:
 	bool event(QEvent *event) override;
 
 private:
-	SourceViewerWidget *m_sourceViewer;
+	SourceEditWidget *m_sourceEditWidget;
 	int m_lastClickedLine;
 };
 
-class SourceViewerWidget final : public QPlainTextEdit
+class SourceEditWidget final : public TextEditWidget
 {
 	Q_OBJECT
 
 public:
-	explicit SourceViewerWidget(QWidget *parent = nullptr);
+	explicit SourceEditWidget(QWidget *parent = nullptr);
 
 	void findText(const QString &text, WebWidget::FindFlags flags = WebWidget::NoFlagsFind);
 	void setZoom(int zoom);
