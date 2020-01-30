@@ -25,7 +25,7 @@
 namespace Otter
 {
 
-class SyntaxHighlighter final : public QSyntaxHighlighter
+class SyntaxHighlighter : public QSyntaxHighlighter
 {
 	Q_OBJECT
 
@@ -38,6 +38,27 @@ public:
 
 	Q_ENUM(HighlightingSyntax)
 
+	struct BlockData final : public QTextBlockUserData
+	{
+		QString context;
+		HighlightingSyntax currentSyntax = HtmlSyntax;
+		HighlightingSyntax previousSyntax = HtmlSyntax;
+		int state = 0;
+	};
+
+	explicit SyntaxHighlighter(QTextDocument *document);
+
+	static SyntaxHighlighter* createHighlighter(HighlightingSyntax syntax, QTextDocument *document);
+
+protected:
+	QJsonObject loadSyntax(HighlightingSyntax syntax) const;
+};
+
+class HtmlSyntaxHighlighter final : public SyntaxHighlighter
+{
+	Q_OBJECT
+
+public:
 	enum HighlightingState
 	{
 		NoState = 0,
@@ -52,21 +73,13 @@ public:
 
 	Q_ENUM(HighlightingState)
 
-	struct BlockData final : public QTextBlockUserData
-	{
-		QString context;
-		HighlightingSyntax currentSyntax = HtmlSyntax;
-		HighlightingSyntax previousSyntax = HtmlSyntax;
-		HighlightingState state = NoState;
-	};
-
-	explicit SyntaxHighlighter(QTextDocument *parent);
+	explicit HtmlSyntaxHighlighter(QTextDocument *document);
 
 protected:
 	void highlightBlock(const QString &text) override;
 
 private:
-	static QMap<HighlightingSyntax, QMap<HighlightingState, QTextCharFormat> > m_formats;
+	static QMap<HighlightingState, QTextCharFormat> m_formats;
 };
 
 }

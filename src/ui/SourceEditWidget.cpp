@@ -155,7 +155,7 @@ SourceEditWidget::SourceEditWidget(QWidget *parent) : TextEditWidget(parent),
 	m_findFlags(WebWidget::NoFlagsFind),
 	m_zoom(100)
 {
-	new SyntaxHighlighter(document());
+	SyntaxHighlighter::createHighlighter(SyntaxHighlighter::HtmlSyntax, document());
 
 	setSpellCheckingEnabled(false);
 	setZoom(SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());

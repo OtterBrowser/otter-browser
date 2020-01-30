@@ -27,69 +27,80 @@
 namespace Otter
 {
 
-QMap<SyntaxHighlighter::HighlightingSyntax, QMap<SyntaxHighlighter::HighlightingState, QTextCharFormat> > SyntaxHighlighter::m_formats;
-
-SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) : QSyntaxHighlighter(parent)
+SyntaxHighlighter::SyntaxHighlighter(QTextDocument *document) : QSyntaxHighlighter(document)
 {
-	if (m_formats[HtmlSyntax].isEmpty())
+}
+
+SyntaxHighlighter* SyntaxHighlighter::createHighlighter(HighlightingSyntax syntax, QTextDocument *document)
+{
+	if (syntax == HtmlSyntax)
 	{
-		QFile file(SessionsManager::getReadableDataPath(QLatin1String("syntaxHighlighting.json")));
-		file.open(QIODevice::ReadOnly);
+		return new HtmlSyntaxHighlighter(document);
+	}
 
-		const QJsonObject syntaxesObject(QJsonDocument::fromJson(file.readAll()).object());
-		const QMetaEnum highlightingSyntaxEnum(metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingSyntax").data())));
-		const QMetaEnum highlightingStateEnum(metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingState").data())));
+	return nullptr;
+}
 
-		for (int i = 1; i < highlightingSyntaxEnum.keyCount(); ++i)
+QJsonObject SyntaxHighlighter::loadSyntax(SyntaxHighlighter::HighlightingSyntax syntax) const
+{
+	QFile file(SessionsManager::getReadableDataPath(QLatin1String("syntaxHighlighting.json")));
+	file.open(QIODevice::ReadOnly);
+
+	const QMetaEnum highlightingSyntaxEnum(metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingSyntax").data())));
+	QString syntaxName(highlightingSyntaxEnum.valueToKey(syntax));
+	syntaxName.chop(6);
+
+	return QJsonDocument::fromJson(file.readAll()).object().value(syntaxName).toObject();
+}
+
+QMap<HtmlSyntaxHighlighter::HighlightingState, QTextCharFormat> HtmlSyntaxHighlighter::m_formats;
+
+HtmlSyntaxHighlighter::HtmlSyntaxHighlighter(QTextDocument *document) : SyntaxHighlighter(document)
+{
+	if (!m_formats.isEmpty())
+	{
+		return;
+	}
+
+	const QJsonObject definitionsObject(loadSyntax(HtmlSyntax));
+	const QMetaEnum highlightingStateEnum(metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingState").data())));
+
+	for (int j = 0; j < highlightingStateEnum.keyCount(); ++j)
+	{
+		QString state(highlightingStateEnum.valueToKey(j));
+		state.chop(5);
+
+		const QJsonObject definitionObject(definitionsObject.value(state).toObject());
+		const QString foreground(definitionObject.value(QLatin1String("foreground")).toString(QLatin1String("auto")));
+		const QString fontStyle(definitionObject.value(QLatin1String("fontStyle")).toString(QLatin1String("auto")));
+		const QString fontWeight(definitionObject.value(QLatin1String("fontWeight")).toString(QLatin1String("auto")));
+		QTextCharFormat format;
+
+		if (foreground != QLatin1String("auto"))
 		{
-			QMap<HighlightingState, QTextCharFormat> formats;
-			QString syntax(highlightingSyntaxEnum.valueToKey(i));
-			syntax.chop(6);
-
-			const QJsonObject definitionsObject(syntaxesObject.value(syntax).toObject());
-
-			for (int j = 0; j < highlightingStateEnum.keyCount(); ++j)
-			{
-				QString state(highlightingStateEnum.valueToKey(j));
-				state.chop(5);
-
-				const QJsonObject definitionObject(definitionsObject.value(state).toObject());
-				const QString foreground(definitionObject.value(QLatin1String("foreground")).toString(QLatin1String("auto")));
-				const QString fontStyle(definitionObject.value(QLatin1String("fontStyle")).toString(QLatin1String("auto")));
-				const QString fontWeight(definitionObject.value(QLatin1String("fontWeight")).toString(QLatin1String("auto")));
-				QTextCharFormat format;
-
-				if (foreground != QLatin1String("auto"))
-				{
-					format.setForeground(QColor(foreground));
-				}
-
-				if (fontStyle == QLatin1String("italic"))
-				{
-					format.setFontItalic(true);
-				}
-
-				if (fontWeight != QLatin1String("auto"))
-				{
-					format.setFontWeight((fontWeight == QLatin1String("bold")) ? QFont::Bold : QFont::Normal);
-				}
-
-				if (definitionObject.value(QLatin1String("isUnderlined")).toBool(false))
-				{
-					format.setUnderlineStyle(QTextCharFormat::SingleUnderline);
-				}
-
-				formats[static_cast<HighlightingState>(j)] = format;
-			}
-
-			m_formats[static_cast<HighlightingSyntax>(i)] = formats;
+			format.setForeground(QColor(foreground));
 		}
 
-		file.close();
+		if (fontStyle == QLatin1String("italic"))
+		{
+			format.setFontItalic(true);
+		}
+
+		if (fontWeight != QLatin1String("auto"))
+		{
+			format.setFontWeight((fontWeight == QLatin1String("bold")) ? QFont::Bold : QFont::Normal);
+		}
+
+		if (definitionObject.value(QLatin1String("isUnderlined")).toBool(false))
+		{
+			format.setUnderlineStyle(QTextCharFormat::SingleUnderline);
+		}
+
+		m_formats[static_cast<HighlightingState>(j)] = format;
 	}
 }
 
-void SyntaxHighlighter::highlightBlock(const QString &text)
+void HtmlSyntaxHighlighter::highlightBlock(const QString &text)
 {
 	QString buffer;
 	BlockData currentData;
@@ -168,7 +179,7 @@ void SyntaxHighlighter::highlightBlock(const QString &text)
 		}
 		else if (currentState == ValueState && text.at(position - 1) == currentData.context)
 		{
-			currentState = currentData.state;
+			currentState = static_cast<HighlightingState>(currentData.state);
 			currentStateBegin = position;
 			currentData.context.clear();
 			currentData.state = NoState;
@@ -176,11 +187,11 @@ void SyntaxHighlighter::highlightBlock(const QString &text)
 
 		if (previousState != currentState || isEndOfLine)
 		{
-			setFormat(previousStateBegin, (position - previousStateBegin), m_formats[HtmlSyntax][previousState]);
+			setFormat(previousStateBegin, (position - previousStateBegin), m_formats[previousState]);
 
 			if (isEndOfLine)
 			{
-				setFormat(currentStateBegin, (position - currentStateBegin), m_formats[HtmlSyntax][currentState]);
+				setFormat(currentStateBegin, (position - currentStateBegin), m_formats[currentState]);
 			}
 
 			buffer.clear();
