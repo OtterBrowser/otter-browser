@@ -217,4 +217,9 @@ void HtmlSyntaxHighlighter::highlightBlock(const QString &text)
 	setCurrentBlockState(currentState);
 }
 
+SyntaxHighlighter::HighlightingSyntax HtmlSyntaxHighlighter::getSyntax() const
+{
+	return HtmlSyntax;
+}
+
 }

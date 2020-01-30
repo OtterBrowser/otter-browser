@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "SourceEditWidget.h"
-#include "SyntaxHighlighter.h"
 #include "../core/SettingsManager.h"
 
 #include <QtGui/QPainter>
@@ -152,11 +151,10 @@ bool MarginWidget::event(QEvent *event)
 
 SourceEditWidget::SourceEditWidget(QWidget *parent) : TextEditWidget(parent),
 	m_marginWidget(nullptr),
+	m_highlighter(nullptr),
 	m_findFlags(WebWidget::NoFlagsFind),
 	m_zoom(100)
 {
-	SyntaxHighlighter::createHighlighter(SyntaxHighlighter::HtmlSyntax, document());
-
 	setSpellCheckingEnabled(false);
 	setZoom(SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());
 	handleOptionChanged(SettingsManager::Interface_ShowScrollBarsOption, SettingsManager::getOption(SettingsManager::Interface_ShowScrollBarsOption));
@@ -366,6 +364,21 @@ void SourceEditWidget::updateSelection()
 	emit findTextResultsChanged(m_findText, findTextMatchesAmount, findTextActiveResult);
 
 	setExtraSelections(extraSelections);
+}
+
+void SourceEditWidget::setSyntax(SyntaxHighlighter::HighlightingSyntax syntax)
+{
+	if (m_highlighter)
+	{
+		if (m_highlighter->getSyntax() == syntax)
+		{
+			return;
+		}
+
+		m_highlighter->deleteLater();
+	}
+
+	m_highlighter = SyntaxHighlighter::createHighlighter(syntax, document());
 }
 
 void SourceEditWidget::setZoom(int zoom)

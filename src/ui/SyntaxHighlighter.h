@@ -49,6 +49,7 @@ public:
 	explicit SyntaxHighlighter(QTextDocument *document);
 
 	static SyntaxHighlighter* createHighlighter(HighlightingSyntax syntax, QTextDocument *document);
+	virtual HighlightingSyntax getSyntax() const = 0;
 
 protected:
 	QJsonObject loadSyntax(HighlightingSyntax syntax) const;
@@ -75,6 +76,8 @@ public:
 	Q_ENUM(HighlightingState)
 
 	explicit HtmlSyntaxHighlighter(QTextDocument *document);
+
+	HighlightingSyntax getSyntax() const override;
 
 protected:
 	void highlightBlock(const QString &text) override;

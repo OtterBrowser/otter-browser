@@ -20,6 +20,7 @@
 #ifndef OTTER_SOURCEEDITWIDGET_H
 #define OTTER_SOURCEEDITWIDGET_H
 
+#include "SyntaxHighlighter.h"
 #include "TextEditWidget.h"
 #include "WebWidget.h"
 
@@ -59,6 +60,7 @@ public:
 	explicit SourceEditWidget(QWidget *parent = nullptr);
 
 	void findText(const QString &text, WebWidget::FindFlags flags = WebWidget::NoFlagsFind);
+	void setSyntax(SyntaxHighlighter::HighlightingSyntax syntax);
 	void setZoom(int zoom);
 	int getZoom() const;
 
@@ -74,6 +76,7 @@ protected slots:
 
 private:
 	MarginWidget *m_marginWidget;
+	SyntaxHighlighter *m_highlighter;
 	QString m_findText;
 	QTextCursor m_findTextAnchor;
 	QTextCursor m_findTextSelection;

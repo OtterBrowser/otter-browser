@@ -51,6 +51,7 @@ SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *par
 	layout->addWidget(m_sourceEditWidget);
 
 	m_sourceEditWidget->setContextMenuPolicy(Qt::NoContextMenu);
+	m_sourceEditWidget->setSyntax(SyntaxHighlighter::HtmlSyntax);
 
 	setContextMenuPolicy(Qt::CustomContextMenu);
 
