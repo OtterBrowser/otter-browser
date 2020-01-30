@@ -52,6 +52,7 @@ public:
 
 protected:
 	QJsonObject loadSyntax(HighlightingSyntax syntax) const;
+	QTextCharFormat loadFormat(const QJsonObject &definitionObject) const;
 };
 
 class HtmlSyntaxHighlighter final : public SyntaxHighlighter

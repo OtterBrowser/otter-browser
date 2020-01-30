@@ -33,12 +33,13 @@ SyntaxHighlighter::SyntaxHighlighter(QTextDocument *document) : QSyntaxHighlight
 
 SyntaxHighlighter* SyntaxHighlighter::createHighlighter(HighlightingSyntax syntax, QTextDocument *document)
 {
-	if (syntax == HtmlSyntax)
+	switch (syntax)
 	{
-		return new HtmlSyntaxHighlighter(document);
+		case HtmlSyntax:
+			return new HtmlSyntaxHighlighter(document);
+		default:
+			return nullptr;
 	}
-
-	return nullptr;
 }
 
 QJsonObject SyntaxHighlighter::loadSyntax(SyntaxHighlighter::HighlightingSyntax syntax) const
@@ -51,6 +52,36 @@ QJsonObject SyntaxHighlighter::loadSyntax(SyntaxHighlighter::HighlightingSyntax 
 	syntaxName.chop(6);
 
 	return QJsonDocument::fromJson(file.readAll()).object().value(syntaxName).toObject();
+}
+
+QTextCharFormat SyntaxHighlighter::loadFormat(const QJsonObject &definitionObject) const
+{
+	const QString foreground(definitionObject.value(QLatin1String("foreground")).toString(QLatin1String("auto")));
+	const QString fontStyle(definitionObject.value(QLatin1String("fontStyle")).toString(QLatin1String("auto")));
+	const QString fontWeight(definitionObject.value(QLatin1String("fontWeight")).toString(QLatin1String("auto")));
+	QTextCharFormat format;
+
+	if (foreground != QLatin1String("auto"))
+	{
+		format.setForeground(QColor(foreground));
+	}
+
+	if (fontStyle == QLatin1String("italic"))
+	{
+		format.setFontItalic(true);
+	}
+
+	if (fontWeight != QLatin1String("auto"))
+	{
+		format.setFontWeight((fontWeight == QLatin1String("bold")) ? QFont::Bold : QFont::Normal);
+	}
+
+	if (definitionObject.value(QLatin1String("isUnderlined")).toBool(false))
+	{
+		format.setUnderlineStyle(QTextCharFormat::SingleUnderline);
+	}
+
+	return format;
 }
 
 QMap<HtmlSyntaxHighlighter::HighlightingState, QTextCharFormat> HtmlSyntaxHighlighter::m_formats;
@@ -70,33 +101,7 @@ HtmlSyntaxHighlighter::HtmlSyntaxHighlighter(QTextDocument *document) : SyntaxHi
 		QString state(highlightingStateEnum.valueToKey(j));
 		state.chop(5);
 
-		const QJsonObject definitionObject(definitionsObject.value(state).toObject());
-		const QString foreground(definitionObject.value(QLatin1String("foreground")).toString(QLatin1String("auto")));
-		const QString fontStyle(definitionObject.value(QLatin1String("fontStyle")).toString(QLatin1String("auto")));
-		const QString fontWeight(definitionObject.value(QLatin1String("fontWeight")).toString(QLatin1String("auto")));
-		QTextCharFormat format;
-
-		if (foreground != QLatin1String("auto"))
-		{
-			format.setForeground(QColor(foreground));
-		}
-
-		if (fontStyle == QLatin1String("italic"))
-		{
-			format.setFontItalic(true);
-		}
-
-		if (fontWeight != QLatin1String("auto"))
-		{
-			format.setFontWeight((fontWeight == QLatin1String("bold")) ? QFont::Bold : QFont::Normal);
-		}
-
-		if (definitionObject.value(QLatin1String("isUnderlined")).toBool(false))
-		{
-			format.setUnderlineStyle(QTextCharFormat::SingleUnderline);
-		}
-
-		m_formats[static_cast<HighlightingState>(j)] = format;
+		m_formats[static_cast<HighlightingState>(j)] = loadFormat(definitionsObject.value(state).toObject());
 	}
 }
 
