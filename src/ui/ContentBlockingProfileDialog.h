@@ -58,6 +58,7 @@ protected:
 
 protected slots:
 	void handleCurrentTabChanged(int index);
+	void saveSource();
 
 private:
 	QString m_name;

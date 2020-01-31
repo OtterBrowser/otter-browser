@@ -95,6 +95,7 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ProfileSummary 
 			QMessageBox::critical(this, tr("Error"), tr("Valid update URL is required."), QMessageBox::Close);
 		}
 	});
+	connect(m_ui->saveButton, &QPushButton::clicked, this, &ContentBlockingProfileDialog::saveSource);
 	connect(m_ui->confirmButtonBox, &QDialogButtonBox::rejected, this, &ContentBlockingProfileDialog::close);
 }
 
@@ -135,10 +136,42 @@ void ContentBlockingProfileDialog::handleCurrentTabChanged(int index)
 
 		if (file.open(QIODevice::ReadOnly | QIODevice::Text))
 		{
-			m_ui->sourceEditWidget->setPlainText(QTextStream(&file).readAll());
+			QTextStream stream(&file);
+			stream.setCodec("UTF-8");
+
+			m_ui->sourceEditWidget->setPlainText(stream.readAll());
 			m_ui->sourceEditWidget->markAsLoaded();
 
+			file.close();
+
 			m_isSourceLoaded = true;
+
+			connect(m_ui->sourceEditWidget, &SourceEditWidget::textChanged, [&]()
+			{
+				m_ui->saveButton->setEnabled(true);
+			});
+		}
+	}
+}
+
+void ContentBlockingProfileDialog::saveSource()
+{
+	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(m_name));
+
+	if (profile)
+	{
+		QFile file(profile->getPath());
+
+		if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+		{
+			QTextStream stream(&file);
+			stream.setCodec("UTF-8");
+			stream << m_ui->sourceEditWidget->toPlainText();
+
+			file.close();
+
+			m_ui->sourceEditWidget->markAsSaved();
+			m_ui->saveButton->setEnabled(false);
 		}
 	}
 }
