@@ -22,7 +22,6 @@
 #define OTTER_CONTENTBLOCKINGDIALOG_H
 
 #include "../Dialog.h"
-#include "../ItemDelegate.h"
 
 namespace Otter
 {
@@ -44,11 +43,7 @@ protected:
 	void changeEvent(QEvent *event) override;
 
 protected slots:
-	void updateProfilesActions();
-	void addRule();
-	void editRule();
-	void removeRule();
-	void updateRulesActions();
+	void updateActions();
 	void save();
 
 private:

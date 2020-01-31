@@ -111,11 +111,7 @@ void ContentFiltersManager::initialize()
 		QUrl updateUrl;
 		ContentFiltersProfile::ProfileFlags flags(ContentFiltersProfile::NoFlags);
 
-		if (profiles.at(i) == QLatin1String("custom"))
-		{
-			title = tr("Custom Rules");
-		}
-		else if (profileObject.isEmpty())
+		if (profileObject.isEmpty())
 		{
 			profileObject = bundledProfileObject;
 			updateUrl = QUrl(profileObject.value(QLatin1String("updateUrl")).toString());
@@ -208,7 +204,7 @@ void ContentFiltersManager::timerEvent(QTimerEvent *event)
 		{
 			const ContentFiltersProfile *profile(m_contentBlockingProfiles.at(i));
 
-			if (!profile || profile->getName() == QLatin1String("custom"))
+			if (!profile)
 			{
 				continue;
 			}

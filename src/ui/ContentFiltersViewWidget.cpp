@@ -345,7 +345,7 @@ void ContentFiltersViewWidget::addProfile()
 
 	if (dialog.exec() == QDialog::Accepted)
 	{
-		QStringList profiles({QLatin1String("custom")});
+		QStringList profiles;
 
 		for (int i = 0; i < getRowCount(); ++i)
 		{
@@ -692,7 +692,7 @@ void ContentFiltersViewWidget::setHost(const QString &host)
 	}
 }
 
-void ContentFiltersViewWidget::save(bool areCustomRulesEnabled)
+void ContentFiltersViewWidget::save()
 {
 	QHash<QString, bool>::iterator iterator;
 
@@ -753,11 +753,6 @@ void ContentFiltersViewWidget::save(bool areCustomRulesEnabled)
 		}
 	}
 
-	if (areCustomRulesEnabled)
-	{
-		profiles.append(QLatin1String("custom"));
-	}
-
 	SettingsManager::setOption(SettingsManager::ContentBlocking_ProfilesOption, profiles, m_host);
 }
 
@@ -788,12 +783,6 @@ QStringList ContentFiltersViewWidget::createLanguagesList(const ContentFiltersPr
 QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFiltersProfile *profile, const QStringList &profiles) const
 {
 	const QString name(profile->getName());
-
-	if (name == QLatin1String("custom"))
-	{
-		return {};
-	}
-
 	QList<QStandardItem*> items({new QStandardItem(profile->getTitle()), new QStandardItem(QString::number(profile->getUpdateInterval())), new QStandardItem(Utils::formatDateTime(profile->getLastUpdate()))});
 	items[0]->setData(name, NameRole);
 	items[0]->setData(false, HasErrorRole);

@@ -7,25 +7,55 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>450</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Content Blocking</string>
   </property>
-  <layout class="QVBoxLayout" name="contentBlockingVerticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1,0,0">
    <item>
-    <widget class="QTabWidget" name="tabWidget">
-     <property name="currentIndex">
-      <number>0</number>
+    <widget class="QLabel" name="profilesHeaderLabel">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
-     <widget class="QWidget" name="generalTab">
-      <attribute name="title">
-       <string>General</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="generalVerticalLayout">
+     <property name="text">
+      <string>Profiles</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="profilesDescriptionLabel">
+     <property name="text">
+      <string>Select lists which you want to use for content blocking (AdBlock Plus compatible):</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="profilesHorizontalLayout">
+     <item>
+      <layout class="QVBoxLayout" name="profilesVerticalLayout">
        <item>
-        <widget class="QLabel" name="profilesHeaderLabel">
+        <widget class="Otter::ContentFiltersViewWidget" name="profilesViewWidget">
+         <property name="editTriggers">
+          <set>QAbstractItemView::CurrentChanged</set>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <attribute name="headerDefaultSectionSize">
+          <number>200</number>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="settingsHeaderLabel">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -33,198 +63,95 @@
           </font>
          </property>
          <property name="text">
-          <string>Profiles</string>
+          <string>Settings</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="profilesDescriptionLabel">
-         <property name="text">
-          <string>Select lists which you want to use for content blocking (AdBlock Plus compatible):</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="profilesHorizontalLayout">
-         <item>
-          <layout class="QVBoxLayout" name="profilesVerticalLayout">
-           <item>
-            <widget class="Otter::ContentFiltersViewWidget" name="profilesViewWidget">
-             <property name="editTriggers">
-              <set>QAbstractItemView::CurrentChanged</set>
-             </property>
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <attribute name="headerDefaultSectionSize">
-              <number>200</number>
-             </attribute>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="settingsHeaderLabel">
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Settings</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QFormLayout" name="settingsFormLayout">
-             <item row="1" column="0">
-              <widget class="QLabel" name="cosmeticFiltersLabel">
-               <property name="text">
-                <string>Cosmetic filters:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QComboBox" name="cosmeticFiltersComboBox"/>
-             </item>
-             <item row="2" column="0">
-              <widget class="QCheckBox" name="enableWildcardsCheckBox">
-               <property name="text">
-                <string>Enable wildcard expressions</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QCheckBox" name="enableCustomRulesCheckBox">
-               <property name="text">
-                <string>Enable custom rules</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="profilesButtonsLayout" stretch="0,0,0,0,1">
-           <item>
-            <widget class="QPushButton" name="addProfileButton">
-             <property name="text">
-              <string>Add</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="editProfileButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Edit</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="updateProfileButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Update</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="removeProfileButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Remove</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="profilesVerticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="customRulesTab">
-      <attribute name="title">
-       <string>Custom Rules</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="customVerticalLayout">
-       <item>
-        <layout class="QHBoxLayout" name="customRulesHorizontalLayout">
-         <item>
-          <widget class="Otter::ItemViewWidget" name="customRulesViewWidget">
-           <property name="alternatingRowColors">
-            <bool>true</bool>
+        <layout class="QFormLayout" name="settingsFormLayout">
+         <item row="1" column="0">
+          <widget class="QLabel" name="cosmeticFiltersLabel">
+           <property name="text">
+            <string>Cosmetic filters:</string>
            </property>
-           <attribute name="headerVisible">
-            <bool>false</bool>
-           </attribute>
           </widget>
          </item>
-         <item>
-          <layout class="QVBoxLayout" name="customRulesButtonsLayout" stretch="0,0,0,1">
-           <item>
-            <widget class="QPushButton" name="addRuleButton">
-             <property name="text">
-              <string>Add</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="editRuleButton">
-             <property name="text">
-              <string>Edit</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="removeRuleButton">
-             <property name="text">
-              <string>Remove</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="customRulesVerticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
+         <item row="1" column="1">
+          <widget class="QComboBox" name="cosmeticFiltersComboBox"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QCheckBox" name="enableWildcardsCheckBox">
+           <property name="text">
+            <string>Enable wildcard expressions</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
       </layout>
-     </widget>
-    </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="profilesButtonsLayout" stretch="0,0,0,0,1">
+       <item>
+        <widget class="QPushButton" name="addProfileButton">
+         <property name="text">
+          <string>Add</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="editProfileButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Edit</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="updateProfileButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Update</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="removeProfileButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Remove</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="profilesVerticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </spacer>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="confirmButtonBox">
@@ -244,27 +171,7 @@
    <extends>QTreeView</extends>
    <header>src/ui/ContentFiltersViewWidget.h</header>
   </customwidget>
-  <customwidget>
-   <class>Otter::ItemViewWidget</class>
-   <extends>QTreeView</extends>
-   <header>src/ui/ItemViewWidget.h</header>
-  </customwidget>
  </customwidgets>
- <tabstops>
-  <tabstop>tabWidget</tabstop>
-  <tabstop>profilesViewWidget</tabstop>
-  <tabstop>addProfileButton</tabstop>
-  <tabstop>editProfileButton</tabstop>
-  <tabstop>updateProfileButton</tabstop>
-  <tabstop>removeProfileButton</tabstop>
-  <tabstop>cosmeticFiltersComboBox</tabstop>
-  <tabstop>enableWildcardsCheckBox</tabstop>
-  <tabstop>enableCustomRulesCheckBox</tabstop>
-  <tabstop>customRulesViewWidget</tabstop>
-  <tabstop>addRuleButton</tabstop>
-  <tabstop>editRuleButton</tabstop>
-  <tabstop>removeRuleButton</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>

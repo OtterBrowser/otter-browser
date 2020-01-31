@@ -80,7 +80,7 @@ public slots:
 	void removeProfile();
 	void updateProfile();
 	void setHost(const QString &host);
-	void save(bool areCustomRulesEnabled);
+	void save();
 
 protected:
 	void changeEvent(QEvent *event) override;

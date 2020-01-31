@@ -19,16 +19,9 @@
 **************************************************************************/
 
 #include "ContentBlockingDialog.h"
-#include "../../core/AdblockContentFiltersProfile.h"
-#include "../../core/Console.h"
-#include "../../core/ContentFiltersManager.h"
-#include "../../core/SessionsManager.h"
 #include "../../core/SettingsManager.h"
-#include "../../core/ThemesManager.h"
 
 #include "ui_ContentBlockingDialog.h"
-
-#include <QtCore/QBuffer>
 
 namespace Otter
 {
@@ -44,55 +37,15 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	const int cosmeticFiltersIndex(m_ui->cosmeticFiltersComboBox->findData(SettingsManager::getOption(SettingsManager::ContentBlocking_CosmeticFiltersModeOption).toString()));
 
 	m_ui->cosmeticFiltersComboBox->setCurrentIndex((cosmeticFiltersIndex < 0) ? 0 : cosmeticFiltersIndex);
-	m_ui->enableCustomRulesCheckBox->setChecked(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList().contains(QLatin1String("custom")));
-
-	QStandardItemModel *customRulesModel(new QStandardItemModel(this));
-	QFile file(SessionsManager::getWritableDataPath("contentBlocking/custom.txt"));
-
-	if (file.open(QIODevice::ReadOnly | QIODevice::Text))
-	{
-		QTextStream stream(&file);
-
-		if (stream.readLine().trimmed().startsWith(QLatin1String("[Adblock Plus"), Qt::CaseInsensitive))
-		{
-			while (!stream.atEnd())
-			{
-				const QString line(stream.readLine().trimmed());
-
-				if (!line.isEmpty() && !line.startsWith(QLatin1Char('!')))
-				{
-					QStandardItem *item(new QStandardItem(line));
-					item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
-
-					customRulesModel->appendRow(item);
-				}
-			}
-		}
-		else
-		{
-			Console::addMessage(QCoreApplication::translate("main", "Failed to load custom rules: invalid adblock header"), Console::OtherCategory, Console::ErrorLevel, file.fileName());
-		}
-
-		file.close();
-	}
-
-	m_ui->customRulesViewWidget->setModel(customRulesModel);
 	m_ui->enableWildcardsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool());
 
-	connect(m_ui->profilesViewWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, &ContentBlockingDialog::updateProfilesActions);
+	connect(m_ui->profilesViewWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, &ContentBlockingDialog::updateActions);
 	connect(m_ui->addProfileButton, &QPushButton::clicked, m_ui->profilesViewWidget, &ContentFiltersViewWidget::addProfile);
 	connect(m_ui->editProfileButton, &QPushButton::clicked, m_ui->profilesViewWidget, &ContentFiltersViewWidget::editProfile);
 	connect(m_ui->updateProfileButton, &QPushButton::clicked, m_ui->profilesViewWidget, &ContentFiltersViewWidget::updateProfile);
 	connect(m_ui->removeProfileButton, &QPushButton::clicked, m_ui->profilesViewWidget, &ContentFiltersViewWidget::removeProfile);
 	connect(m_ui->confirmButtonBox, &QDialogButtonBox::accepted, this, &ContentBlockingDialog::save);
 	connect(m_ui->confirmButtonBox, &QDialogButtonBox::rejected, this, &ContentBlockingDialog::close);
-	connect(m_ui->enableCustomRulesCheckBox, &QCheckBox::toggled, this, &ContentBlockingDialog::updateRulesActions);
-	connect(m_ui->customRulesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &ContentBlockingDialog::updateRulesActions);
-	connect(m_ui->addRuleButton, &QPushButton::clicked, this, &ContentBlockingDialog::addRule);
-	connect(m_ui->editRuleButton, &QPushButton::clicked, this, &ContentBlockingDialog::editRule);
-	connect(m_ui->removeRuleButton, &QPushButton::clicked, this, &ContentBlockingDialog::removeRule);
-
-	updateRulesActions();
 }
 
 ContentBlockingDialog::~ContentBlockingDialog()
@@ -110,7 +63,7 @@ void ContentBlockingDialog::changeEvent(QEvent *event)
 	}
 }
 
-void ContentBlockingDialog::updateProfilesActions()
+void ContentBlockingDialog::updateActions()
 {
 	const QModelIndex index(m_ui->profilesViewWidget->currentIndex().sibling(m_ui->profilesViewWidget->currentIndex().row(), 0));
 	const bool isEditable(index.isValid() && index.flags().testFlag(Qt::ItemNeverHasChildren));
@@ -120,55 +73,9 @@ void ContentBlockingDialog::updateProfilesActions()
 	m_ui->updateProfileButton->setEnabled(index.isValid() && index.data(ContentFiltersViewWidget::UpdateUrlRole).toUrl().isValid());
 }
 
-void ContentBlockingDialog::addRule()
-{
-	m_ui->customRulesViewWidget->insertRow();
-
-	editRule();
-}
-
-void ContentBlockingDialog::editRule()
-{
-	m_ui->customRulesViewWidget->edit(m_ui->customRulesViewWidget->getIndex(m_ui->customRulesViewWidget->getCurrentRow()));
-}
-
-void ContentBlockingDialog::removeRule()
-{
-	m_ui->customRulesViewWidget->removeRow();
-	m_ui->customRulesViewWidget->setFocus();
-
-	updateRulesActions();
-}
-
-void ContentBlockingDialog::updateRulesActions()
-{
-	m_ui->tabWidget->setTabEnabled(1, m_ui->enableCustomRulesCheckBox->isChecked());
-
-	const bool isEditable(m_ui->customRulesViewWidget->getCurrentRow() >= 0);
-
-	m_ui->editRuleButton->setEnabled(isEditable);
-	m_ui->removeRuleButton->setEnabled(isEditable);
-}
-
 void ContentBlockingDialog::save()
 {
-	m_ui->profilesViewWidget->save(m_ui->enableCustomRulesCheckBox->isChecked());
-
-	if (m_ui->enableCustomRulesCheckBox->isChecked())
-	{
-		QByteArray data;
-		QBuffer buffer(&data);
-		buffer.open(QIODevice::ReadWrite | QIODevice::Text);
-
-		for (int i = 0; i < m_ui->customRulesViewWidget->getRowCount(); ++i)
-		{
-			buffer.write(m_ui->customRulesViewWidget->getIndex(i, 0).data().toString().toLatin1() + QStringLiteral("\n").toUtf8());
-		}
-
-		buffer.reset();
-
-		AdblockContentFiltersProfile::create(QLatin1String("custom"), tr("Custom Rules"), {}, 0, ContentFiltersProfile::OtherCategory, &buffer, true);
-	}
+	m_ui->profilesViewWidget->save();
 
 	SettingsManager::setOption(SettingsManager::ContentBlocking_EnableWildcardsOption, m_ui->enableWildcardsCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::ContentBlocking_CosmeticFiltersModeOption, m_ui->cosmeticFiltersComboBox->currentData().toString());

@@ -180,7 +180,6 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QString &host, const QV
 	connect(m_ui->cookiesDeleteButton, &QPushButton::clicked, this, &WebsitePreferencesDialog::removeCookie);
 	connect(m_ui->cookiesPropertiesButton, &QPushButton::clicked, this, &WebsitePreferencesDialog::cookieProperties);
 	connect(m_ui->contentBlockingProfilesViewWidget, &ItemViewWidget::modified, this, &WebsitePreferencesDialog::handleValueChanged);
-	connect(m_ui->enableCustomRulesCheckBox, &QCheckBox::toggled, this, &WebsitePreferencesDialog::handleValueChanged);
 	connect(m_ui->buttonBox, &QDialogButtonBox::clicked, this, &WebsitePreferencesDialog::handleButtonClicked);
 }
 
@@ -291,7 +290,7 @@ void WebsitePreferencesDialog::handleButtonClicked(QAbstractButton *button)
 
 			if (m_ui->contentBlockingProfilesOverrideCheckBox->isChecked())
 			{
-				m_ui->contentBlockingProfilesViewWidget->save(m_ui->enableCustomRulesCheckBox->isChecked());
+				m_ui->contentBlockingProfilesViewWidget->save();
 			}
 			else
 			{
@@ -324,7 +323,7 @@ void WebsitePreferencesDialog::handleValueChanged()
 		return;
 	}
 
-	if (widget == m_ui->contentBlockingProfilesViewWidget || widget == m_ui->enableCustomRulesCheckBox)
+	if (widget == m_ui->contentBlockingProfilesViewWidget)
 	{
 		m_ui->contentBlockingProfilesOverrideCheckBox->setChecked(true);
 
@@ -440,7 +439,6 @@ void WebsitePreferencesDialog::updateValues(bool isChecked)
 	m_ui->proxyComboBox->setCurrentIndex(m_ui->proxyComboBox->model()->match(m_ui->proxyComboBox->model()->index(0, 0), ProxiesModel::IdentifierRole, SettingsManager::getOption(SettingsManager::Network_ProxyOption, (m_ui->proxyOverrideCheckBox->isChecked() ? host : QString())).toString(), 1, Qt::MatchRecursive).value(0));
 
 	m_ui->contentBlockingProfilesViewWidget->setHost(host);
-	m_ui->enableCustomRulesCheckBox->setChecked(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption, host).toStringList().contains("custom"));
 
 	m_updateOverride = true;
 }

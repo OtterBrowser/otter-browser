@@ -831,13 +831,6 @@
        <string>Content Blocking</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="contentBlockingOverrideLabel">
-         <property name="text">
-          <string>Override</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="1">
         <widget class="QLabel" name="contentBlockingProfilesLabel">
          <property name="text">
@@ -861,17 +854,17 @@
          </property>
         </widget>
        </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="contentBlockingOverrideLabel">
+         <property name="text">
+          <string>Override</string>
+         </property>
+        </widget>
+       </item>
        <item row="2" column="0" alignment="Qt::AlignHCenter">
         <widget class="QCheckBox" name="contentBlockingProfilesOverrideCheckBox">
          <property name="text">
           <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QCheckBox" name="enableCustomRulesCheckBox">
-         <property name="text">
-          <string>Enable custom rules</string>
          </property>
         </widget>
        </item>
@@ -974,7 +967,6 @@
   <tabstop>proxyComboBox</tabstop>
   <tabstop>contentBlockingProfilesOverrideCheckBox</tabstop>
   <tabstop>contentBlockingProfilesViewWidget</tabstop>
-  <tabstop>enableCustomRulesCheckBox</tabstop>
  </tabstops>
  <resources/>
  <connections/>
