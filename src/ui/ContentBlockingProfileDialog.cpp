@@ -85,19 +85,7 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ProfileSummary 
 		}
 	}
 
-	connect(m_ui->confirmButtonBox, &QDialogButtonBox::accepted, [&]()
-	{
-		if (QUrl(m_ui->updateUrLineEdit->text()).isValid())
-		{
-			accept();
-		}
-		else
-		{
-			QMessageBox::critical(this, tr("Error"), tr("Valid update URL is required."), QMessageBox::Close);
-		}
-	});
 	connect(m_ui->saveButton, &QPushButton::clicked, this, &ContentBlockingProfileDialog::saveSource);
-	connect(m_ui->confirmButtonBox, &QDialogButtonBox::rejected, this, &ContentBlockingProfileDialog::close);
 }
 
 ContentBlockingProfileDialog::~ContentBlockingProfileDialog()
