@@ -56,8 +56,12 @@ public:
 protected:
 	void changeEvent(QEvent *event) override;
 
+protected slots:
+	void handleCurrentTabChanged(int index);
+
 private:
 	QString m_name;
+	bool m_isSourceLoaded;
 	Ui::ContentBlockingProfileDialog *m_ui;
 };
 

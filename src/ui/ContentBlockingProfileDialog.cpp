@@ -30,6 +30,7 @@ namespace Otter
 
 ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ProfileSummary &profileSummary, QWidget *parent) : Dialog(parent),
 	m_name(profileSummary.name),
+	m_isSourceLoaded(false),
 	m_ui(new Ui::ContentBlockingProfileDialog)
 {
 	m_ui->setupUi(this);
@@ -43,6 +44,8 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ProfileSummary 
 	m_ui->titleLineEdit->setText(profileSummary.title);
 	m_ui->updateUrLineEdit->setText(profileSummary.updateUrl.toString());
 	m_ui->updateIntervalSpinBox->setValue(profileSummary.updateInterval);
+	m_ui->passiveNotificationWidget->setMessage(tr("Any changes made here are going to be lost during manual or automatic update."), Notification::Message::WarningLevel);
+	m_ui->saveButton->setIcon(ThemesManager::createIcon(QLatin1String("document-save")));
 
 	if (!profileSummary.name.isEmpty())
 	{
@@ -77,6 +80,7 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ProfileSummary 
 					profile->update(url);
 				}
 			});
+			connect(m_ui->tabWidget, &QTabWidget::currentChanged, this, &ContentBlockingProfileDialog::handleCurrentTabChanged);
 		}
 	}
 
@@ -112,6 +116,30 @@ void ContentBlockingProfileDialog::changeEvent(QEvent *event)
 		m_ui->categoryComboBox->setItemText(3, tr("Social"));
 		m_ui->categoryComboBox->setItemText(4, tr("Regional"));
 		m_ui->categoryComboBox->setItemText(5, tr("Other"));
+		m_ui->passiveNotificationWidget->setMessage(tr("Any changes made here are going to be lost during manual or automatic update."), Notification::Message::WarningLevel);
+	}
+}
+
+void ContentBlockingProfileDialog::handleCurrentTabChanged(int index)
+{
+	if (m_isSourceLoaded || index != 1 || m_name.isEmpty())
+	{
+		return;
+	}
+
+	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(m_name));
+
+	if (profile)
+	{
+		QFile file(profile->getPath());
+
+		if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+		{
+			m_ui->sourceEditWidget->setPlainText(QTextStream(&file).readAll());
+			m_ui->sourceEditWidget->markAsLoaded();
+
+			m_isSourceLoaded = true;
+		}
 	}
 }
 
