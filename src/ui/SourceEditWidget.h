@@ -61,6 +61,8 @@ public:
 	explicit SourceEditWidget(QWidget *parent = nullptr);
 
 	void findText(const QString &text, WebWidget::FindFlags flags = WebWidget::NoFlagsFind);
+	void markAsLoaded();
+	void markAsSaved();
 	void setSyntax(SyntaxHighlighter::HighlightingSyntax syntax);
 	void setZoom(int zoom);
 	int getZoom() const;
@@ -71,6 +73,8 @@ protected:
 	void focusInEvent(QFocusEvent *event) override;
 	void wheelEvent(QWheelEvent *event) override;
 	QRect getMarginGeometry() const;
+	int getInitialRevision() const;
+	int getSavedRevision() const;
 
 protected slots:
 	void handleOptionChanged(int identifier, const QVariant &value);
@@ -84,6 +88,8 @@ private:
 	QTextCursor m_findTextAnchor;
 	QTextCursor m_findTextSelection;
 	WebWidget::FindFlags m_findFlags;
+	int m_initialRevision;
+	int m_savedRevision;
 	int m_zoom;
 
 signals:

@@ -82,6 +82,8 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 						QTextStream stream(&file);
 						stream << m_sourceEditWidget->toPlainText();
 
+						m_sourceEditWidget->markAsSaved();
+
 						file.close();
 					}
 					else
@@ -395,7 +397,7 @@ void SourceViewerWebWidget::setContents(const QByteArray &contents, const QStrin
 		m_sourceEditWidget->setPlainText(QString::fromLatin1(contents));
 	}
 
-	m_sourceEditWidget->document()->setModified(false);
+	m_sourceEditWidget->markAsLoaded();
 }
 
 WebWidget* SourceViewerWebWidget::clone(bool cloneHistory, bool isPrivate, const QStringList &excludedOptions) const

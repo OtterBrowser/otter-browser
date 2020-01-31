@@ -48,9 +48,12 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 	const Qt::AlignmentFlag alignment(isLeftToRight() ? Qt::AlignRight : Qt::AlignLeft);
 	int top(m_sourceEditWidget->blockBoundingGeometry(block).translated(m_sourceEditWidget->contentOffset()).toRect().top());
 	int bottom(top + m_sourceEditWidget->blockBoundingRect(block).toRect().height());
-	const int right(width() - 6);
+	const int numberHeight(fontMetrics().height());
+	const int numberWidth(width() - 8);
 	const int selectionStart(m_sourceEditWidget->document()->findBlock(m_sourceEditWidget->textCursor().selectionStart()).blockNumber());
 	const int selectionEnd(m_sourceEditWidget->document()->findBlock(m_sourceEditWidget->textCursor().selectionEnd()).blockNumber());
+	const int initialRevison(m_sourceEditWidget->getInitialRevision());
+	const int savedRevison(m_sourceEditWidget->getSavedRevision());
 
 	while (block.isValid() && top <= event->rect().bottom())
 	{
@@ -60,7 +63,14 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 			textColor.setAlpha((block.blockNumber() >= selectionStart && block.blockNumber() <= selectionEnd) ? 250 : 150);
 
 			painter.setPen(textColor);
-			painter.drawText(3, top, right, fontMetrics().height(), alignment, QString::number(block.blockNumber() + 1));
+			painter.drawText(4, top, numberWidth, numberHeight, alignment, QString::number(block.blockNumber() + 1));
+
+			if (block.revision() > initialRevison)
+			{
+				painter.setPen(QPen(((block.revision() <= savedRevison) ? Qt::green : Qt::red), 2));
+				painter.drawLine(1, top, 1, (top + numberHeight));
+				painter.drawLine((width() - 2), top, (width() - 2), (top + numberHeight));
+			}
 		}
 
 		block = block.next();
@@ -146,7 +156,7 @@ void MarginWidget::updateWidth()
 		++digits;
 	}
 
-	setFixedWidth(6 + (Utils::calculateCharacterWidth(QLatin1Char('9'), fontMetrics()) * digits));
+	setFixedWidth((Utils::calculateCharacterWidth(QLatin1Char('9'), fontMetrics()) * digits) + 8);
 
 	if (isRightToLeft())
 	{
@@ -174,6 +184,8 @@ SourceEditWidget::SourceEditWidget(QWidget *parent) : TextEditWidget(parent),
 	m_marginWidget(nullptr),
 	m_highlighter(nullptr),
 	m_findFlags(WebWidget::NoFlagsFind),
+	m_initialRevision(-1),
+	m_savedRevision(-1),
 	m_zoom(100)
 {
 	setSpellCheckingEnabled(false);
@@ -332,6 +344,31 @@ void SourceEditWidget::handleOptionChanged(int identifier, const QVariant &value
 	}
 }
 
+void SourceEditWidget::markAsLoaded()
+{
+	m_initialRevision = document()->revision();
+	m_savedRevision = document()->revision();
+
+	document()->setModified(false);
+
+	if (m_marginWidget)
+	{
+		m_marginWidget->update();
+	}
+}
+
+void SourceEditWidget::markAsSaved()
+{
+	m_savedRevision = document()->revision();
+
+	document()->setModified(false);
+
+	if (m_marginWidget)
+	{
+		m_marginWidget->update();
+	}
+}
+
 void SourceEditWidget::updateTextCursor()
 {
 	m_findTextAnchor = textCursor();
@@ -441,6 +478,16 @@ QRect SourceEditWidget::getMarginGeometry() const
 	}
 
 	return QRect((isRightToLeft() ? (contentsRect().right() - m_marginWidget->width()) : contentsRect().left()), contentsRect().top(), m_marginWidget->width(), contentsRect().height());
+}
+
+int SourceEditWidget::getInitialRevision() const
+{
+	return m_initialRevision;
+}
+
+int SourceEditWidget::getSavedRevision() const
+{
+	return m_savedRevision;
 }
 
 int SourceEditWidget::getZoom() const
