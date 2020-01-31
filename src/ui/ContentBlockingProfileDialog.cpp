@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "ContentBlockingProfileDialog.h"
+#include "../core/Console.h"
 #include "../core/Utils.h"
 
 #include "ui_ContentBlockingProfileDialog.h"
@@ -151,6 +152,12 @@ void ContentBlockingProfileDialog::handleCurrentTabChanged(int index)
 				m_ui->saveButton->setEnabled(true);
 			});
 		}
+		else
+		{
+			Console::addMessage(QCoreApplication::translate("main", "Failed to load content blocking profile: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
+
+			QMessageBox::critical(this, tr("Error"), tr("Failed to load profile file."), QMessageBox::Close);
+		}
 	}
 }
 
@@ -172,6 +179,12 @@ void ContentBlockingProfileDialog::saveSource()
 
 			m_ui->sourceEditWidget->markAsSaved();
 			m_ui->saveButton->setEnabled(false);
+		}
+		else
+		{
+			Console::addMessage(QCoreApplication::translate("main", "Failed to save content blocking profile: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
+
+			QMessageBox::critical(this, tr("Error"), tr("Failed to save profile file."), QMessageBox::Close);
 		}
 	}
 }
