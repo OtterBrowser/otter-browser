@@ -57,7 +57,7 @@ public:
 	QString getPath() const override;
 	QUrl getUpdateUrl() const override;
 	QDateTime getLastUpdate() const override;
-	static HeaderInformation loadHeader(const QString &path);
+	static HeaderInformation loadHeader(QIODevice *device);
 	ContentFiltersManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType) override;
 	ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly) override;
 	QVector<QLocale::Language> getLanguages() const override;

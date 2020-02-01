@@ -25,6 +25,7 @@
 #include "SessionsManager.h"
 
 #include <QtConcurrent/QtConcurrentRun>
+#include <QtCore/QBuffer>
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 #include <QtCore/QSaveFile>
@@ -89,7 +90,25 @@ void AdblockContentFiltersProfile::clear()
 
 void AdblockContentFiltersProfile::loadHeader()
 {
-	const HeaderInformation information(loadHeader(getPath()));
+	const QString path(getPath());
+
+	if (!QFile::exists(path))
+	{
+		return;
+	}
+
+	QFile file(path);
+
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+		raiseError(QCoreApplication::translate("main", "Failed to open content blocking profile file: %1").arg(file.errorString()), ReadError);
+
+		return;
+	}
+
+	const HeaderInformation information(loadHeader(&file));
+
+	file.close();
 
 	if (information.error != NoError)
 	{
@@ -109,69 +128,6 @@ void AdblockContentFiltersProfile::loadHeader()
 	{
 		update();
 	}
-}
-
-AdblockContentFiltersProfile::HeaderInformation AdblockContentFiltersProfile::loadHeader(const QString &path)
-{
-	HeaderInformation information;
-
-	if (!QFile::exists(path))
-	{
-		return information;
-	}
-
-	QFile file(path);
-
-	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-	{
-		information.errorString = QCoreApplication::translate("main", "Failed to open content blocking profile file: %1").arg(file.errorString());
-		information.error = ReadError;
-
-		return information;
-	}
-
-	QTextStream stream(&file);
-	stream.setCodec("UTF-8");
-
-	const QString header(stream.readLine());
-
-	if (!header.contains(QLatin1String("[Adblock"), Qt::CaseInsensitive))
-	{
-		information.errorString = QCoreApplication::translate("main", "Failed to update content blocking profile: invalid header");
-		information.error = ParseError;
-
-		return information;
-	}
-
-	int lineNumber(1);
-
-	while (!stream.atEnd())
-	{
-		QString line(stream.readLine().trimmed());
-
-		if (information.isEmpty && !line.isEmpty() && !line.startsWith(QLatin1Char('!')))
-		{
-			information.isEmpty = false;
-		}
-
-		if (line.startsWith(QLatin1String("! Title: ")))
-		{
-			information.title = line.remove(QLatin1String("! Title: ")).trimmed();
-
-			continue;
-		}
-
-		if (lineNumber > 50)
-		{
-			break;
-		}
-
-		++lineNumber;
-	}
-
-	file.close();
-
-	return information;
 }
 
 void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
@@ -641,6 +597,21 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 		return;
 	}
 
+	QBuffer buffer;
+	buffer.setData(device->readAll());
+	buffer.open(QIODevice::ReadOnly | QIODevice::Text);
+
+	const HeaderInformation information(loadHeader(&buffer));
+
+	buffer.reset();
+
+	if (information.error != NoError)
+	{
+		raiseError(information.errorString, information.error);
+
+		return;
+	}
+
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking")));
 
 	QSaveFile file(getPath());
@@ -652,7 +623,7 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 		return;
 	}
 
-	file.write(device->readAll());
+	file.write(buffer.data());
 
 	m_lastUpdate = QDateTime::currentDateTimeUtc();
 
@@ -737,6 +708,51 @@ QDateTime AdblockContentFiltersProfile::getLastUpdate() const
 QUrl AdblockContentFiltersProfile::getUpdateUrl() const
 {
 	return m_updateUrl;
+}
+
+AdblockContentFiltersProfile::HeaderInformation AdblockContentFiltersProfile::loadHeader(QIODevice *device)
+{
+	HeaderInformation information;
+	QTextStream stream(device);
+	stream.setCodec("UTF-8");
+
+	const QString header(stream.readLine());
+
+	if (!header.contains(QLatin1String("[Adblock"), Qt::CaseInsensitive))
+	{
+		information.errorString = QCoreApplication::translate("main", "Failed to update content blocking profile: invalid header");
+		information.error = ParseError;
+
+		return information;
+	}
+
+	int lineNumber(1);
+
+	while (!stream.atEnd())
+	{
+		QString line(stream.readLine().trimmed());
+
+		if (information.isEmpty && !line.isEmpty() && !line.startsWith(QLatin1Char('!')))
+		{
+			information.isEmpty = false;
+		}
+
+		if (line.startsWith(QLatin1String("! Title: ")))
+		{
+			information.title = line.remove(QLatin1String("! Title: ")).trimmed();
+
+			continue;
+		}
+
+		if (lineNumber > 50)
+		{
+			break;
+		}
+
+		++lineNumber;
+	}
+
+	return information;
 }
 
 ContentFiltersManager::CheckResult AdblockContentFiltersProfile::evaluateNodeRules(const Node *node, const QString &currentRule, const Request &request) const
