@@ -641,45 +641,6 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 		return;
 	}
 
-	QTextStream stream(device);
-	stream.setCodec("UTF-8");
-
-	const QString header(stream.readLine());
-
-	if (!header.contains(QLatin1String("[Adblock")))
-	{
-		raiseError(QCoreApplication::translate("main", "Failed to update content blocking profile: invalid header"), ParseError);
-
-		return;
-	}
-
-	QByteArray data(header.toUtf8());
-	QByteArray checksum;
-
-	while (!stream.atEnd())
-	{
-		QString line(stream.readLine());
-
-		if (!line.isEmpty())
-		{
-			if (checksum.isEmpty() && line.startsWith(QLatin1String("! Checksum:")))
-			{
-				checksum = line.remove(0, 11).trimmed().toUtf8();
-			}
-			else
-			{
-				data.append(QLatin1Char('\n') + line);
-			}
-		}
-	}
-
-	if (!checksum.isEmpty() && QCryptographicHash::hash(data, QCryptographicHash::Md5).toBase64().remove(22, 2) != checksum)
-	{
-		raiseError(QCoreApplication::translate("main", "Failed to update content blocking profile: checksum mismatch"), ChecksumError);
-
-		return;
-	}
-
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking")));
 
 	QSaveFile file(getPath());
@@ -691,7 +652,7 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 		return;
 	}
 
-	file.write(data);
+	file.write(device->readAll());
 
 	m_lastUpdate = QDateTime::currentDateTimeUtc();
 

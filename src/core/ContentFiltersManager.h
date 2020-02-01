@@ -111,8 +111,7 @@ public:
 		NoError = 0,
 		ReadError,
 		ParseError,
-		DownloadError,
-		ChecksumError
+		DownloadError
 	};
 
 	enum ProfileFlag
