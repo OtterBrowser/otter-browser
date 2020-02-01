@@ -99,12 +99,12 @@ bool ContentFiltersTitleDelegate::helpEvent(QHelpEvent *event, QAbstractItemView
 						toolTip = tr("Failed to read profile file");
 
 						break;
-					case ContentFiltersProfile::DownloadError:
-						toolTip = tr("Failed to download profile rules");
+					case ContentFiltersProfile::ParseError:
+						toolTip = tr("Failed to parse profile file");
 
 						break;
-					case ContentFiltersProfile::ChecksumError:
-						toolTip = tr("Failed to verify profile rules using checksum");
+					case ContentFiltersProfile::DownloadError:
+						toolTip = tr("Failed to download profile rules");
 
 						break;
 					default:
