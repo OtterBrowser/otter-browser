@@ -39,7 +39,7 @@ class ContentBlockingProfileDialog final : public Dialog
 	Q_OBJECT
 
 public:
-	struct ProfileSummary
+	struct ProfileSummary final
 	{
 		QString name;
 		QString title;

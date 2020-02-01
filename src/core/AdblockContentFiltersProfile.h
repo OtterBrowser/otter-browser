@@ -36,7 +36,7 @@ class AdblockContentFiltersProfile final : public ContentFiltersProfile
 	Q_OBJECT
 
 public:
-	struct HeaderInformation
+	struct HeaderInformation final
 	{
 		QString title;
 		QString errorString;
