@@ -36,6 +36,15 @@ class AdblockContentFiltersProfile final : public ContentFiltersProfile
 	Q_OBJECT
 
 public:
+	struct HeaderInformation
+	{
+		QString title;
+		QString errorString;
+		QUrl updateUrl;
+		ProfileError error = NoError;
+		bool isEmpty = true;
+	};
+
 	explicit AdblockContentFiltersProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime &lastUpdate, const QStringList &languages, int updateInterval, ProfileCategory category, ProfileFlags flags, QObject *parent = nullptr);
 
 	void clear() override;
@@ -48,6 +57,7 @@ public:
 	QString getPath() const override;
 	QUrl getUpdateUrl() const override;
 	QDateTime getLastUpdate() const override;
+	static HeaderInformation loadHeader(const QString &path);
 	ContentFiltersManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType) override;
 	ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly) override;
 	QVector<QLocale::Language> getLanguages() const override;

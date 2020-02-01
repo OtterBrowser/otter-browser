@@ -89,49 +89,89 @@ void AdblockContentFiltersProfile::clear()
 
 void AdblockContentFiltersProfile::loadHeader()
 {
-	const QString &path(getPath());
+	const HeaderInformation information(loadHeader(getPath()));
+
+	if (information.error != NoError)
+	{
+		raiseError(information.errorString, information.error);
+
+		return;
+	}
+
+	if (!m_flags.testFlag(HasCustomTitleFlag) && !information.title.isEmpty())
+	{
+		m_title = information.title;
+	}
+
+	m_isEmpty = information.isEmpty;
+
+	if (!m_dataFetchJob && m_updateInterval > 0 && (!m_lastUpdate.isValid() || m_lastUpdate.daysTo(QDateTime::currentDateTimeUtc()) > m_updateInterval))
+	{
+		update();
+	}
+}
+
+AdblockContentFiltersProfile::HeaderInformation AdblockContentFiltersProfile::loadHeader(const QString &path)
+{
+	HeaderInformation information;
 
 	if (!QFile::exists(path))
 	{
-		return;
+		return information;
 	}
 
 	QFile file(path);
 
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
-		raiseError(QCoreApplication::translate("main", "Failed to open content blocking profile file: %1").arg(file.errorString()), m_error);
+		information.errorString = QCoreApplication::translate("main", "Failed to open content blocking profile file: %1").arg(file.errorString());
+		information.error = ReadError;
 
-		return;
+		return information;
 	}
 
 	QTextStream stream(&file);
+	stream.setCodec("UTF-8");
+
+	const QString header(stream.readLine());
+
+	if (!header.contains(QLatin1String("[Adblock"), Qt::CaseInsensitive))
+	{
+		information.errorString = QCoreApplication::translate("main", "Failed to update content blocking profile: invalid header");
+		information.error = ParseError;
+
+		return information;
+	}
+
+	int lineNumber(1);
 
 	while (!stream.atEnd())
 	{
 		QString line(stream.readLine().trimmed());
 
-		if (!line.startsWith(QLatin1Char('!')))
+		if (information.isEmpty && !line.isEmpty() && !line.startsWith(QLatin1Char('!')))
 		{
-			m_isEmpty = false;
-
-			break;
+			information.isEmpty = false;
 		}
 
-		if (!m_flags.testFlag(HasCustomTitleFlag) && line.startsWith(QLatin1String("! Title: ")))
+		if (line.startsWith(QLatin1String("! Title: ")))
 		{
-			m_title = line.remove(QLatin1String("! Title: "));
+			information.title = line.remove(QLatin1String("! Title: ")).trimmed();
 
 			continue;
 		}
+
+		if (lineNumber > 50)
+		{
+			break;
+		}
+
+		++lineNumber;
 	}
 
 	file.close();
 
-	if (!m_dataFetchJob && m_updateInterval > 0 && (!m_lastUpdate.isValid() || m_lastUpdate.daysTo(QDateTime::currentDateTimeUtc()) > m_updateInterval))
-	{
-		update();
-	}
+	return information;
 }
 
 void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
@@ -608,7 +648,7 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 
 	if (!header.contains(QLatin1String("[Adblock")))
 	{
-		raiseError(QCoreApplication::translate("main", "Failed to update content blocking profile: invalid header"), DownloadError);
+		raiseError(QCoreApplication::translate("main", "Failed to update content blocking profile: invalid header"), ParseError);
 
 		return;
 	}
