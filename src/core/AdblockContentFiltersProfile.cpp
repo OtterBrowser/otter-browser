@@ -730,7 +730,7 @@ AdblockContentFiltersProfile::HeaderInformation AdblockContentFiltersProfile::lo
 
 	while (!stream.atEnd())
 	{
-		QString line(stream.readLine().trimmed());
+		const QString line(stream.readLine().trimmed());
 
 		if (information.isEmpty && !line.isEmpty() && !line.startsWith(QLatin1Char('!')))
 		{
@@ -739,7 +739,7 @@ AdblockContentFiltersProfile::HeaderInformation AdblockContentFiltersProfile::lo
 
 		if (line.startsWith(QLatin1String("! Title: ")))
 		{
-			information.title = line.remove(QLatin1String("! Title: ")).trimmed();
+			information.title = line.section(QLatin1Char(':'), 1).trimmed();
 
 			continue;
 		}
