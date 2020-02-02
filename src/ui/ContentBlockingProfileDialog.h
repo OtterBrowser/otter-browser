@@ -54,6 +54,7 @@ protected slots:
 
 private:
 	QString m_name;
+	QString m_rulesPath;
 	bool m_isSourceLoaded;
 	Ui::ContentBlockingProfileDialog *m_ui;
 };

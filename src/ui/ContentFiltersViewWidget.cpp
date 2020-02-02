@@ -396,6 +396,7 @@ void ContentFiltersViewWidget::importProfileFromFile()
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
 	ProfileSummary profileSummary;
 	profileSummary.title = information.title;
+	profileSummary.rulesPath = path;
 	profileSummary.category = getCategory(index);
 
 	ContentBlockingProfileDialog dialog(profileSummary, this);
@@ -425,6 +426,17 @@ void ContentFiltersViewWidget::editProfile()
 		profileSummary.updateUrl = index.data(UpdateUrlRole).toUrl();
 		profileSummary.category = static_cast<ContentFiltersProfile::ProfileCategory>(index.parent().data(CategoryRole).toInt());
 		profileSummary.updateInterval = index.sibling(index.row(), 1).data(Qt::DisplayRole).toInt();
+
+		ContentFiltersProfile *profile(ContentFiltersManager::getProfile(profileSummary.name));
+
+		if (profile)
+		{
+			profileSummary.rulesPath = profile->getPath();
+		}
+		else
+		{
+			profileSummary.rulesPath = index.data(ImportPathRole).toString();
+		}
 
 		ContentBlockingProfileDialog dialog(profileSummary, this);
 

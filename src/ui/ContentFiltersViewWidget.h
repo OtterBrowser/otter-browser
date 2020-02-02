@@ -74,6 +74,7 @@ public:
 	{
 		QString name;
 		QString title;
+		QString rulesPath;
 		QUrl updateUrl;
 		ContentFiltersProfile::ProfileCategory category = ContentFiltersProfile::OtherCategory;
 		int updateInterval = -1;

@@ -31,6 +31,7 @@ namespace Otter
 
 ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersViewWidget::ProfileSummary &profileSummary, QWidget *parent) : Dialog(parent),
 	m_name(profileSummary.name),
+	m_rulesPath(profileSummary.rulesPath),
 	m_isSourceLoaded(false),
 	m_ui(new Ui::ContentBlockingProfileDialog)
 {
@@ -81,11 +82,11 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersV
 					profile->update(url);
 				}
 			});
-			connect(m_ui->tabWidget, &QTabWidget::currentChanged, this, &ContentBlockingProfileDialog::handleCurrentTabChanged);
 		}
 	}
 
 	connect(m_ui->saveButton, &QPushButton::clicked, this, &ContentBlockingProfileDialog::saveSource);
+	connect(m_ui->tabWidget, &QTabWidget::currentChanged, this, &ContentBlockingProfileDialog::handleCurrentTabChanged);
 }
 
 ContentBlockingProfileDialog::~ContentBlockingProfileDialog()
@@ -112,68 +113,63 @@ void ContentBlockingProfileDialog::changeEvent(QEvent *event)
 
 void ContentBlockingProfileDialog::handleCurrentTabChanged(int index)
 {
-	if (m_isSourceLoaded || index != 1 || m_name.isEmpty())
+	if (m_isSourceLoaded || index != 1 || m_rulesPath.isEmpty())
 	{
 		return;
 	}
 
-	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(m_name));
+	QFile file(m_rulesPath);
 
-	if (profile)
+	if (file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
-		QFile file(profile->getPath());
+		QTextStream stream(&file);
+		stream.setCodec("UTF-8");
 
-		if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+		m_ui->sourceEditWidget->setPlainText(stream.readAll());
+		m_ui->sourceEditWidget->markAsLoaded();
+
+		file.close();
+
+		m_isSourceLoaded = true;
+
+		connect(m_ui->sourceEditWidget, &SourceEditWidget::textChanged, [&]()
 		{
-			QTextStream stream(&file);
-			stream.setCodec("UTF-8");
+			m_ui->saveButton->setEnabled(true);
+		});
+	}
+	else
+	{
+		Console::addMessage(QCoreApplication::translate("main", "Failed to load content blocking profile: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
 
-			m_ui->sourceEditWidget->setPlainText(stream.readAll());
-			m_ui->sourceEditWidget->markAsLoaded();
-
-			file.close();
-
-			m_isSourceLoaded = true;
-
-			connect(m_ui->sourceEditWidget, &SourceEditWidget::textChanged, [&]()
-			{
-				m_ui->saveButton->setEnabled(true);
-			});
-		}
-		else
-		{
-			Console::addMessage(QCoreApplication::translate("main", "Failed to load content blocking profile: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
-
-			QMessageBox::critical(this, tr("Error"), tr("Failed to load profile file."), QMessageBox::Close);
-		}
+		QMessageBox::critical(this, tr("Error"), tr("Failed to load profile file."), QMessageBox::Close);
 	}
 }
 
 void ContentBlockingProfileDialog::saveSource()
 {
-	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(m_name));
-
-	if (profile)
+	if (!m_rulesPath.isEmpty())
 	{
-		QFile file(profile->getPath());
+		return;
+	}
 
-		if (file.open(QIODevice::WriteOnly | QIODevice::Text))
-		{
-			QTextStream stream(&file);
-			stream.setCodec("UTF-8");
-			stream << m_ui->sourceEditWidget->toPlainText();
+	QFile file(m_rulesPath);
 
-			file.close();
+	if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+	{
+		QTextStream stream(&file);
+		stream.setCodec("UTF-8");
+		stream << m_ui->sourceEditWidget->toPlainText();
 
-			m_ui->sourceEditWidget->markAsSaved();
-			m_ui->saveButton->setEnabled(false);
-		}
-		else
-		{
-			Console::addMessage(QCoreApplication::translate("main", "Failed to save content blocking profile: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
+		file.close();
 
-			QMessageBox::critical(this, tr("Error"), tr("Failed to save profile file."), QMessageBox::Close);
-		}
+		m_ui->sourceEditWidget->markAsSaved();
+		m_ui->saveButton->setEnabled(false);
+	}
+	else
+	{
+		Console::addMessage(QCoreApplication::translate("main", "Failed to save content blocking profile: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
+
+		QMessageBox::critical(this, tr("Error"), tr("Failed to save profile file."), QMessageBox::Close);
 	}
 }
 
@@ -182,6 +178,7 @@ ContentFiltersViewWidget::ProfileSummary ContentBlockingProfileDialog::getProfil
 	ContentFiltersViewWidget::ProfileSummary profileSummary;
 	profileSummary.name = m_name;
 	profileSummary.title = m_ui->titleLineEdit->text();
+	profileSummary.rulesPath = m_rulesPath;
 	profileSummary.updateUrl = QUrl(m_ui->updateUrLineEdit->text());
 	profileSummary.category = static_cast<ContentFiltersProfile::ProfileCategory>(m_ui->categoryComboBox->itemData(m_ui->categoryComboBox->currentIndex()).toInt());
 	profileSummary.updateInterval = m_ui->updateIntervalSpinBox->value();
