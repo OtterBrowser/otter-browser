@@ -113,8 +113,18 @@ void ContentBlockingProfileDialog::changeEvent(QEvent *event)
 
 void ContentBlockingProfileDialog::handleCurrentTabChanged(int index)
 {
-	if (m_isSourceLoaded || index != 1 || m_rulesPath.isEmpty())
+	if (m_isSourceLoaded || index != 1)
 	{
+		return;
+	}
+
+	if (m_rulesPath.isEmpty())
+	{
+		m_ui->sourceEditWidget->setPlainText(QLatin1String("[AdBlock Plus 2.0]\n"));
+		m_ui->sourceEditWidget->markAsLoaded();
+
+		m_isSourceLoaded = true;
+
 		return;
 	}
 
