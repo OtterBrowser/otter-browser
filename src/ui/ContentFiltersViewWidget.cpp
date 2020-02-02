@@ -20,15 +20,16 @@
 
 #include "ContentFiltersViewWidget.h"
 #include "Animation.h"
-#include "ContentBlockingProfileDialog.h"
 #include "../core/AdblockContentFiltersProfile.h"
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
 #include "../core/Utils.h"
 
 #include <QtCore/QFileInfo>
+#include <QtCore/QStandardPaths>
 #include <QtCore/QTimer>
 #include <QtWidgets/QCheckBox>
+#include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QSpinBox>
@@ -280,7 +281,9 @@ void ContentFiltersViewWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
 	QMenu menu(this);
-	menu.addAction(tr("Add…"), this, &ContentFiltersViewWidget::addProfile);
+	QMenu *addMenu(menu.addMenu(tr("Add")));
+	addMenu->addAction(tr("New…"), this, &ContentFiltersViewWidget::addProfile);
+	addMenu->addAction(tr("File…"), this, &ContentFiltersViewWidget::importProfileFromFile);
 
 	if (index.isValid() && index.flags().testFlag(Qt::ItemNeverHasChildren))
 	{
@@ -294,22 +297,15 @@ void ContentFiltersViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu.exec(event->globalPos());
 }
 
-void ContentFiltersViewWidget::moveProfile(QStandardItem *entryItem, ContentFiltersProfile::ProfileCategory newCategory)
+void ContentFiltersViewWidget::appendProfile(QList<QStandardItem*> items, ContentFiltersProfile::ProfileCategory category)
 {
-	QStandardItem *currentCategoryItem(entryItem->parent());
-
-	if (!currentCategoryItem)
-	{
-		return;
-	}
-
 	for (int i = 0; i < getRowCount(); ++i)
 	{
 		QStandardItem *categoryItem(m_model->item(i));
 
-		if (categoryItem && categoryItem->data(CategoryRole).toInt() == newCategory)
+		if (categoryItem && categoryItem->data(CategoryRole).toInt() == category)
 		{
-			categoryItem->appendRow(currentCategoryItem->takeRow(entryItem->row()));
+			categoryItem->appendRow(items);
 
 			if (getRowCount(categoryItem->index()) == 1)
 			{
@@ -317,12 +313,22 @@ void ContentFiltersViewWidget::moveProfile(QStandardItem *entryItem, ContentFilt
 				expand(categoryItem->index());
 			}
 
-			if (getRowCount(currentCategoryItem->index()) == 0)
-			{
-				setRowHidden(currentCategoryItem->row(), m_model->invisibleRootItem()->index(), true);
-			}
-
 			break;
+		}
+	}
+}
+
+void ContentFiltersViewWidget::moveProfile(QStandardItem *entryItem, ContentFiltersProfile::ProfileCategory newCategory)
+{
+	QStandardItem *currentCategoryItem(entryItem->parent());
+
+	if (currentCategoryItem)
+	{
+		appendProfile(currentCategoryItem->takeRow(entryItem->row()), newCategory);
+
+		if (getRowCount(currentCategoryItem->index()) == 0)
+		{
+			setRowHidden(currentCategoryItem->row(), m_model->invisibleRootItem()->index(), true);
 		}
 	}
 }
@@ -331,70 +337,64 @@ void ContentFiltersViewWidget::addProfile()
 {
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
 	ContentBlockingProfileDialog::ProfileSummary profileSummary;
-
-	if (!index.data(CategoryRole).isNull())
-	{
-		profileSummary.category = static_cast<ContentFiltersProfile::ProfileCategory>(index.data(CategoryRole).toInt());
-	}
-	else if (!index.parent().data(CategoryRole).isNull())
-	{
-		profileSummary.category = static_cast<ContentFiltersProfile::ProfileCategory>(index.parent().data(CategoryRole).toInt());
-	}
+	profileSummary.category = getCategory(index);
 
 	ContentBlockingProfileDialog dialog(profileSummary, this);
 
 	if (dialog.exec() == QDialog::Accepted)
 	{
-		QStringList profiles;
-
-		for (int i = 0; i < getRowCount(); ++i)
-		{
-			const QModelIndex categoryIndex(getIndex(i));
-
-			profiles.reserve(profiles.count() + getRowCount(categoryIndex));
-
-			for (int j = 0; j < getRowCount(categoryIndex); ++j)
-			{
-				profiles.append(getIndex(j, 0, categoryIndex).data(NameRole).toString());
-			}
-		}
-
 		profileSummary = dialog.getProfile();
+		profileSummary.name = Utils::createIdentifier(QFileInfo(profileSummary.updateUrl.fileName()).completeBaseName(), getProfileNames());
 
-		const QString name(Utils::createIdentifier(QFileInfo(profileSummary.updateUrl.fileName()).completeBaseName(), profiles));
-		QList<QStandardItem*> items({new QStandardItem(profileSummary.title), new QStandardItem(QString::number(profileSummary.updateInterval)), new QStandardItem()});
-		items[0]->setData(name, NameRole);
-		items[0]->setData(false, HasErrorRole);
-		items[0]->setData(true, IsModifiedRole);
-		items[0]->setData(false, IsShowingProgressIndicatorRole);
-		items[0]->setData(false, IsUpdatingRole);
-		items[0]->setData(-1, UpdateProgressValueRole);
-		items[0]->setData(profileSummary.updateUrl, UpdateUrlRole);
-		items[0]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-		items[0]->setCheckable(true);
-		items[0]->setCheckState(profiles.contains(name) ? Qt::Checked : Qt::Unchecked);
-		items[1]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
-		items[1]->setData(profileSummary.updateUrl, UpdateUrlRole);
-		items[2]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-		items[2]->setData(profileSummary.updateUrl, UpdateUrlRole);
+		appendProfile(createEntry(profileSummary), profileSummary.category);
+	}
+}
 
-		for (int i = 0; i < getRowCount(); ++i)
-		{
-			QStandardItem *categoryItem(m_model->itemFromIndex(getIndex(i)));
+void ContentFiltersViewWidget::importProfileFromFile()
+{
+	const QString path(QFileDialog::getOpenFileName(this, tr("Select File"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), tr("AdBlock files (*.txt)")));
 
-			if (categoryItem && categoryItem->data(CategoryRole).toInt() == profileSummary.category)
-			{
-				categoryItem->appendRow(items);
+	if (path.isEmpty())
+	{
+		return;
+	}
 
-				if (getRowCount(categoryItem->index()) == 1)
-				{
-					setRowHidden(i, m_model->invisibleRootItem()->index(), false);
-					expand(categoryItem->index());
-				}
+	QFile file(path);
 
-				break;
-			}
-		}
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+		QMessageBox::critical(this, tr("Error"), tr("Failed to open content blocking profile file:\n%1").arg(file.errorString()));
+
+		return;
+	}
+
+	const AdblockContentFiltersProfile::HeaderInformation information(AdblockContentFiltersProfile::loadHeader(&file));
+
+	file.close();
+
+	if (information.error != ContentFiltersProfile::NoError)
+	{
+		QMessageBox::critical(this, tr("Error"), information.errorString);
+
+		return;
+	}
+
+	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
+	ContentBlockingProfileDialog::ProfileSummary profileSummary;
+	profileSummary.title = information.title;
+	profileSummary.category = getCategory(index);
+
+	ContentBlockingProfileDialog dialog(profileSummary, this);
+
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		profileSummary = dialog.getProfile();
+		profileSummary.name = Utils::createIdentifier(QFileInfo(path).completeBaseName(), getProfileNames());
+
+		QList<QStandardItem*> items(createEntry(profileSummary));
+		items[0]->setData(path, ImportPathRole);
+
+		appendProfile(items, profileSummary.category);
 	}
 }
 
@@ -737,11 +737,51 @@ void ContentFiltersViewWidget::save()
 				profile->setCategory(category);
 				profile->setUpdateInterval(updateInterval);
 			}
-			else if (!AdblockContentFiltersProfile::create(name, title, updateUrl, updateInterval, category))
+			else
 			{
-				QMessageBox::critical(this, tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
+				const QString importPath(entryIndex.data(ImportPathRole).toString());
+				QIODevice *device(nullptr);
 
-				continue;
+				if (!importPath.isEmpty())
+				{
+					if (!QFile::exists(importPath))
+					{
+						QMessageBox::critical(this, tr("Error"), tr("Rules file does not exist."), QMessageBox::Close);
+
+						continue;
+					}
+
+					device = new QFile(importPath, this);
+
+					if (!device->open(QIODevice::ReadOnly | QIODevice::Text))
+					{
+						device->deleteLater();
+						device = nullptr;
+
+						QMessageBox::critical(this, tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
+
+						continue;
+					}
+				}
+
+				if (!AdblockContentFiltersProfile::create(name, title, updateUrl, updateInterval, category, device))
+				{
+					if (device)
+					{
+						device->deleteLater();
+						device = nullptr;
+					}
+
+					QMessageBox::critical(this, tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
+
+					continue;
+				}
+
+				if (device)
+				{
+					device->deleteLater();
+					device = nullptr;
+				}
 			}
 
 			m_model->setData(entryIndex, false, IsModifiedRole);
@@ -780,6 +820,25 @@ QStringList ContentFiltersViewWidget::createLanguagesList(const ContentFiltersPr
 	return languageNames;
 }
 
+QStringList ContentFiltersViewWidget::getProfileNames() const
+{
+	QStringList profiles;
+
+	for (int i = 0; i < getRowCount(); ++i)
+	{
+		const QModelIndex categoryIndex(getIndex(i));
+
+		profiles.reserve(profiles.count() + getRowCount(categoryIndex));
+
+		for (int j = 0; j < getRowCount(categoryIndex); ++j)
+		{
+			profiles.append(getIndex(j, 0, categoryIndex).data(NameRole).toString());
+		}
+	}
+
+	return profiles;
+}
+
 QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFiltersProfile *profile, const QStringList &profiles) const
 {
 	const QString name(profile->getName());
@@ -801,6 +860,40 @@ QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFilters
 	items[2]->setData(profile->getUpdateUrl(), UpdateUrlRole);
 
 	return items;
+}
+
+QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentBlockingProfileDialog::ProfileSummary &profileSummary) const
+{
+	QList<QStandardItem*> items({new QStandardItem(profileSummary.title), new QStandardItem(QString::number(profileSummary.updateInterval)), new QStandardItem()});
+	items[0]->setData(profileSummary.name, NameRole);
+	items[0]->setData(false, HasErrorRole);
+	items[0]->setData(true, IsModifiedRole);
+	items[0]->setData(false, IsShowingProgressIndicatorRole);
+	items[0]->setData(false, IsUpdatingRole);
+	items[0]->setData(-1, UpdateProgressValueRole);
+	items[0]->setData(profileSummary.updateUrl, UpdateUrlRole);
+	items[0]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items[0]->setCheckable(true);
+	items[1]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+	items[1]->setData(profileSummary.updateUrl, UpdateUrlRole);
+	items[2]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items[2]->setData(profileSummary.updateUrl, UpdateUrlRole);
+
+	return items;
+}
+
+ContentFiltersProfile::ProfileCategory ContentFiltersViewWidget::getCategory(const QModelIndex &index) const
+{
+	if (!index.data(CategoryRole).isNull())
+	{
+		return static_cast<ContentFiltersProfile::ProfileCategory>(index.data(CategoryRole).toInt());
+	}
+	else if (!index.parent().data(CategoryRole).isNull())
+	{
+		return static_cast<ContentFiltersProfile::ProfileCategory>(index.parent().data(CategoryRole).toInt());
+	}
+
+	return ContentFiltersProfile::OtherCategory;
 }
 
 }

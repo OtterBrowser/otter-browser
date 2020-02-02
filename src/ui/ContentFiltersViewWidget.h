@@ -21,6 +21,7 @@
 #ifndef OTTER_CONTENTFILTERSVIEWWIDGET_H
 #define OTTER_CONTENTFILTERSVIEWWIDGET_H
 
+#include "ContentBlockingProfileDialog.h"
 #include "ItemDelegate.h"
 #include "ItemViewWidget.h"
 #include "../core/ContentFiltersManager.h"
@@ -60,6 +61,7 @@ public:
 		UpdateUrlRole = Qt::StatusTipRole,
 		CategoryRole = Qt::UserRole,
 		HasErrorRole,
+		ImportPathRole,
 		IsModifiedRole,
 		IsShowingProgressIndicatorRole,
 		IsUpdatingRole,
@@ -76,6 +78,7 @@ public:
 
 public slots:
 	void addProfile();
+	void importProfileFromFile();
 	void editProfile();
 	void removeProfile();
 	void updateProfile();
@@ -85,9 +88,13 @@ public slots:
 protected:
 	void changeEvent(QEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
+	void appendProfile(QList<QStandardItem*> items, ContentFiltersProfile::ProfileCategory category);
 	void moveProfile(QStandardItem *entryItem, ContentFiltersProfile::ProfileCategory newCategory);
 	QStringList createLanguagesList(const ContentFiltersProfile *profile) const;
+	QStringList getProfileNames() const;
 	QList<QStandardItem*> createEntry(const ContentFiltersProfile *profile, const QStringList &profiles) const;
+	QList<QStandardItem*> createEntry(const ContentBlockingProfileDialog::ProfileSummary &profileSummary) const;
+	ContentFiltersProfile::ProfileCategory getCategory(const QModelIndex &index) const;
 
 protected slots:
 	void handleProfileAdded(const QString &name);
