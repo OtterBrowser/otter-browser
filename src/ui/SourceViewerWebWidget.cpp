@@ -50,12 +50,10 @@ SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *par
 	layout->setSpacing(0);
 	layout->addWidget(m_sourceEditWidget);
 
-	m_sourceEditWidget->setContextMenuPolicy(Qt::NoContextMenu);
 	m_sourceEditWidget->setSyntax(SyntaxHighlighter::HtmlSyntax);
 
 	setContextMenuPolicy(Qt::CustomContextMenu);
 
-	connect(this, &SourceViewerWebWidget::customContextMenuRequested, this, &SourceViewerWebWidget::showContextMenu);
 	connect(m_sourceEditWidget, &SourceEditWidget::findTextResultsChanged, this, &SourceViewerWebWidget::findInPageResultsChanged);
 	connect(m_sourceEditWidget, &SourceEditWidget::zoomChanged, this, &SourceViewerWebWidget::zoomChanged);
 	connect(m_sourceEditWidget, &SourceEditWidget::zoomChanged, this, &SourceViewerWebWidget::handleZoomChanged);
@@ -187,7 +185,11 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 			break;
 		case ActionsManager::ContextMenuAction:
-			showContextMenu();
+			{
+				QContextMenuEvent event(QContextMenuEvent::Other, QCursor::pos());
+
+				QCoreApplication::sendEvent(m_sourceEditWidget, &event);
+			}
 
 			break;
 		case ActionsManager::UndoAction:
