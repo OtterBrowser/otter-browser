@@ -437,12 +437,6 @@ void ContentFiltersViewWidget::removeProfile()
 {
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
 	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(NameRole).toString()));
-
-	if (!profile)
-	{
-		return;
-	}
-
 	QMessageBox messageBox;
 	messageBox.setWindowTitle(tr("Question"));
 	messageBox.setText(tr("Do you really want to remove this profile?"));
@@ -450,7 +444,7 @@ void ContentFiltersViewWidget::removeProfile()
 	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
 	messageBox.setDefaultButton(QMessageBox::Cancel);
 
-	if (QFile::exists(profile->getPath()))
+	if (profile && QFile::exists(profile->getPath()))
 	{
 		messageBox.setCheckBox(new QCheckBox(tr("Delete profile permanently")));
 	}
@@ -458,6 +452,18 @@ void ContentFiltersViewWidget::removeProfile()
 	if (messageBox.exec() == QMessageBox::Yes)
 	{
 		m_profilesToRemove[profile->getName()] = (messageBox.checkBox() && messageBox.checkBox()->isChecked());
+	}
+
+	QStandardItem *categoryItem(m_model->itemFromIndex(index.parent()));
+
+	if (categoryItem)
+	{
+		categoryItem->removeRow(index.row());
+
+		if (getRowCount(categoryItem->index()) == 0)
+		{
+			setRowHidden(categoryItem->row(), m_model->invisibleRootItem()->index(), true);
+		}
 	}
 }
 
