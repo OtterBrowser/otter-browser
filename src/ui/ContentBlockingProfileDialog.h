@@ -21,6 +21,7 @@
 #ifndef CONTENTBLOCKINGPROFILEDIALOG
 #define CONTENTBLOCKINGPROFILEDIALOG
 
+#include "ContentFiltersViewWidget.h"
 #include "Dialog.h"
 #include "../core/ContentFiltersManager.h"
 
@@ -39,19 +40,10 @@ class ContentBlockingProfileDialog final : public Dialog
 	Q_OBJECT
 
 public:
-	struct ProfileSummary final
-	{
-		QString name;
-		QString title;
-		QUrl updateUrl;
-		ContentFiltersProfile::ProfileCategory category = ContentFiltersProfile::OtherCategory;
-		int updateInterval = -1;
-	};
-
-	explicit ContentBlockingProfileDialog(const ProfileSummary &profileSummary, QWidget *parent = nullptr);
+	explicit ContentBlockingProfileDialog(const ContentFiltersViewWidget::ProfileSummary &profileSummary, QWidget *parent = nullptr);
 	~ContentBlockingProfileDialog();
 
-	ProfileSummary getProfile() const;
+	ContentFiltersViewWidget::ProfileSummary getProfile() const;
 
 protected:
 	void changeEvent(QEvent *event) override;

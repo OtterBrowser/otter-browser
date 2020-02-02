@@ -21,7 +21,6 @@
 #ifndef OTTER_CONTENTFILTERSVIEWWIDGET_H
 #define OTTER_CONTENTFILTERSVIEWWIDGET_H
 
-#include "ContentBlockingProfileDialog.h"
 #include "ItemDelegate.h"
 #include "ItemViewWidget.h"
 #include "../core/ContentFiltersManager.h"
@@ -71,6 +70,15 @@ public:
 		UpdateTimeRole
 	};
 
+	struct ProfileSummary final
+	{
+		QString name;
+		QString title;
+		QUrl updateUrl;
+		ContentFiltersProfile::ProfileCategory category = ContentFiltersProfile::OtherCategory;
+		int updateInterval = -1;
+	};
+
 	explicit ContentFiltersViewWidget(QWidget *parent);
 
 	static Animation* getUpdateAnimation();
@@ -93,7 +101,7 @@ protected:
 	QStringList createLanguagesList(const ContentFiltersProfile *profile) const;
 	QStringList getProfileNames() const;
 	QList<QStandardItem*> createEntry(const ContentFiltersProfile *profile, const QStringList &profiles) const;
-	QList<QStandardItem*> createEntry(const ContentBlockingProfileDialog::ProfileSummary &profileSummary) const;
+	QList<QStandardItem*> createEntry(const ProfileSummary &profileSummary) const;
 	ContentFiltersProfile::ProfileCategory getCategory(const QModelIndex &index) const;
 
 protected slots:

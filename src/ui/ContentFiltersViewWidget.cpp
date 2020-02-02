@@ -20,6 +20,7 @@
 
 #include "ContentFiltersViewWidget.h"
 #include "Animation.h"
+#include "ContentBlockingProfileDialog.h"
 #include "../core/AdblockContentFiltersProfile.h"
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
@@ -349,7 +350,7 @@ void ContentFiltersViewWidget::moveProfile(QStandardItem *entryItem, ContentFilt
 void ContentFiltersViewWidget::addProfile()
 {
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
-	ContentBlockingProfileDialog::ProfileSummary profileSummary;
+	ProfileSummary profileSummary;
 	profileSummary.category = getCategory(index);
 
 	ContentBlockingProfileDialog dialog(profileSummary, this);
@@ -393,7 +394,7 @@ void ContentFiltersViewWidget::importProfileFromFile()
 	}
 
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
-	ContentBlockingProfileDialog::ProfileSummary profileSummary;
+	ProfileSummary profileSummary;
 	profileSummary.title = information.title;
 	profileSummary.category = getCategory(index);
 
@@ -418,7 +419,7 @@ void ContentFiltersViewWidget::editProfile()
 
 	if (item)
 	{
-		ContentBlockingProfileDialog::ProfileSummary profileSummary;
+		ProfileSummary profileSummary;
 		profileSummary.name = index.data(NameRole).toString();
 		profileSummary.title = index.data(TitleRole).toString();
 		profileSummary.updateUrl = index.data(UpdateUrlRole).toUrl();
@@ -881,7 +882,7 @@ QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFilters
 	return items;
 }
 
-QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentBlockingProfileDialog::ProfileSummary &profileSummary) const
+QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ProfileSummary &profileSummary) const
 {
 	QList<QStandardItem*> items({new QStandardItem(profileSummary.title), new QStandardItem(QString::number(profileSummary.updateInterval)), new QStandardItem()});
 	items[0]->setData(profileSummary.name, NameRole);
