@@ -49,7 +49,6 @@ AdblockContentFiltersProfile::AdblockContentFiltersProfile(const QString &name, 
 	m_error(NoError),
 	m_flags(flags),
 	m_updateInterval(updateInterval),
-	m_isEmpty(true),
 	m_wasLoaded(false)
 {
 	if (languages.isEmpty())
@@ -121,8 +120,6 @@ void AdblockContentFiltersProfile::loadHeader()
 	{
 		m_title = information.title;
 	}
-
-	m_isEmpty = information.isEmpty;
 
 	if (!m_dataFetchJob && m_updateInterval > 0 && (!m_lastUpdate.isValid() || m_lastUpdate.daysTo(QDateTime::currentDateTimeUtc()) > m_updateInterval))
 	{
@@ -732,11 +729,6 @@ AdblockContentFiltersProfile::HeaderInformation AdblockContentFiltersProfile::lo
 	{
 		const QString line(stream.readLine().trimmed());
 
-		if (information.isEmpty && !line.isEmpty() && !line.startsWith(QLatin1Char('!')))
-		{
-			information.isEmpty = false;
-		}
-
 		if (line.startsWith(QLatin1String("! Title: ")))
 		{
 			information.title = line.section(QLatin1Char(':'), 1).trimmed();
@@ -906,9 +898,11 @@ bool AdblockContentFiltersProfile::create(const QString &name, const QString &ti
 
 bool AdblockContentFiltersProfile::loadRules()
 {
+	const QString path(getPath());
+
 	m_error = NoError;
 
-	if (m_isEmpty && !m_updateUrl.isEmpty())
+	if (!QFile::exists(path) && !m_updateUrl.isEmpty())
 	{
 		update();
 
@@ -923,10 +917,11 @@ bool AdblockContentFiltersProfile::loadRules()
 		m_domainExpression.optimize();
 	}
 
-	QFile file(getPath());
+	QFile file(path);
 	file.open(QIODevice::ReadOnly | QIODevice::Text);
 
 	QTextStream stream(&file);
+	stream.setCodec("UTF-8");
 	stream.readLine(); // header
 
 	m_root = new Node();

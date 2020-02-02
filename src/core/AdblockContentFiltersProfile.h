@@ -42,7 +42,6 @@ public:
 		QString errorString;
 		QUrl updateUrl;
 		ProfileError error = NoError;
-		bool isEmpty = true;
 	};
 
 	explicit AdblockContentFiltersProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime &lastUpdate, const QStringList &languages, int updateInterval, ProfileCategory category, ProfileFlags flags, QObject *parent = nullptr);
@@ -164,7 +163,6 @@ private:
 	ProfileError m_error;
 	ProfileFlags m_flags;
 	int m_updateInterval;
-	bool m_isEmpty;
 	bool m_wasLoaded;
 
 	static QVector<QChar> m_separators;
