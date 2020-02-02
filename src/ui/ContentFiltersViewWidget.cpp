@@ -66,7 +66,7 @@ void ContentFiltersTitleDelegate::initStyleOption(QStyleOptionViewItem *option, 
 	{
 		option->icon = ThemesManager::createIcon(QLatin1String("dialog-error"));
 	}
-	else if (index.data(ContentFiltersViewWidget::UpdateTimeRole).isNull() || index.data(ContentFiltersViewWidget::UpdateTimeRole).toDateTime().daysTo(QDateTime::currentDateTimeUtc()) > 7)
+	else if (!index.data(ContentFiltersViewWidget::UpdateUrlRole).toUrl().isValid() || index.data(ContentFiltersViewWidget::UpdateTimeRole).isNull() || index.data(ContentFiltersViewWidget::UpdateTimeRole).toDateTime().daysTo(QDateTime::currentDateTimeUtc()) > 7)
 	{
 		option->icon = ThemesManager::createIcon(QLatin1String("dialog-warning"));
 	}
@@ -86,47 +86,60 @@ bool ContentFiltersTitleDelegate::helpEvent(QHelpEvent *event, QAbstractItemView
 {
 	if (event->type() == QEvent::ToolTip)
 	{
-		const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersViewWidget::NameRole).toString()));
+		const QModelIndex entryIndex(index.sibling(index.row(), 0));
+		const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(entryIndex.data(ContentFiltersViewWidget::NameRole).toString()));
+		QStringList toolTip;
 
 		if (profile)
 		{
-			QString toolTip;
-
 			if (profile->getError() != ContentFiltersProfile::NoError)
 			{
 				switch (profile->getError())
 				{
 					case ContentFiltersProfile::ReadError:
-						toolTip = tr("Failed to read profile file");
+						toolTip.append(tr("Failed to read profile file"));
 
 						break;
 					case ContentFiltersProfile::ParseError:
-						toolTip = tr("Failed to parse profile file");
+						toolTip.append(tr("Failed to parse profile file"));
 
 						break;
 					case ContentFiltersProfile::DownloadError:
-						toolTip = tr("Failed to download profile rules");
+						toolTip.append(tr("Failed to download profile rules"));
 
 						break;
 					default:
 						break;
 				}
 			}
-			else if (profile->getLastUpdate().isNull())
-			{
-				toolTip = tr("Profile was never updated");
-			}
-			else if (profile->getLastUpdate().daysTo(QDateTime::currentDateTimeUtc()) > 7)
-			{
-				toolTip = tr("Profile was last updated more than one week ago");
-			}
+		}
 
-			if (!toolTip.isEmpty())
-			{
-				QToolTip::showText(event->globalPos(), displayText(index.data(Qt::DisplayRole), view->locale()) + QLatin1Char('\n') + toolTip, view);
+		const QUrl updateUrl(entryIndex.data(ContentFiltersViewWidget::UpdateUrlRole).toUrl());
+		const QDateTime lastUpdate(entryIndex.data(ContentFiltersViewWidget::UpdateTimeRole).toDateTime());
 
-				return true;
+		if (updateUrl.isValid())
+		{
+			if (lastUpdate.isNull())
+			{
+				toolTip.append(tr("Profile was never updated"));
 			}
+			else if (lastUpdate.daysTo(QDateTime::currentDateTimeUtc()) > 7)
+			{
+				toolTip.append(tr("Profile was last updated more than one week ago"));
+			}
+		}
+		else
+		{
+			toolTip.append(tr("No update URL"));
+		}
+
+		if (!toolTip.isEmpty())
+		{
+			toolTip.prepend(displayText(index.data(Qt::DisplayRole), view->locale()));
+
+			QToolTip::showText(event->globalPos(), toolTip.join(QLatin1Char('\n')), view);
+
+			return true;
 		}
 	}
 
