@@ -360,7 +360,16 @@ void ContentFiltersViewWidget::addProfile()
 		profileSummary = dialog.getProfile();
 		profileSummary.name = Utils::createIdentifier(QFileInfo(profileSummary.updateUrl.fileName()).completeBaseName(), getProfileNames());
 
-		appendProfile(createEntry(profileSummary), profileSummary.category);
+		QList<QStandardItem*> items(createEntry(profileSummary));
+
+		if (!profileSummary.rulesPath.isEmpty())
+		{
+			m_filesToRemove.append(profileSummary.rulesPath);
+
+			items[0]->setData(profileSummary.rulesPath, ImportPathRole);
+		}
+
+		appendProfile(items, profileSummary.category);
 	}
 }
 
@@ -824,6 +833,13 @@ void ContentFiltersViewWidget::save()
 			}
 		}
 	}
+
+	for (int i = 0; i < m_filesToRemove.count(); ++i)
+	{
+		QFile::remove(m_filesToRemove.at(i));
+	}
+
+	m_filesToRemove.clear();
 
 	SettingsManager::setOption(SettingsManager::ContentBlocking_ProfilesOption, profiles, m_host);
 }

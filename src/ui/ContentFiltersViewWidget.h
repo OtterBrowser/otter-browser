@@ -115,6 +115,7 @@ private:
 	QStandardItemModel *m_model;
 	QString m_host;
 	QHash<QString, bool> m_profilesToRemove;
+	QStringList m_filesToRemove;
 
 	static Animation* m_updateAnimation;
 };

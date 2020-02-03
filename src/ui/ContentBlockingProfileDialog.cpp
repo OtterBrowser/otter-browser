@@ -24,6 +24,7 @@
 
 #include "ui_ContentBlockingProfileDialog.h"
 
+#include <QtCore/QTemporaryFile>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -85,6 +86,10 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersV
 		}
 	}
 
+	connect(m_ui->sourceEditWidget, &SourceEditWidget::textChanged, [&]()
+	{
+		m_ui->saveButton->setEnabled(true);
+	});
 	connect(m_ui->saveButton, &QPushButton::clicked, this, &ContentBlockingProfileDialog::saveSource);
 	connect(m_ui->tabWidget, &QTabWidget::currentChanged, this, &ContentBlockingProfileDialog::handleCurrentTabChanged);
 }
@@ -141,11 +146,6 @@ void ContentBlockingProfileDialog::handleCurrentTabChanged(int index)
 		file.close();
 
 		m_isSourceLoaded = true;
-
-		connect(m_ui->sourceEditWidget, &SourceEditWidget::textChanged, [&]()
-		{
-			m_ui->saveButton->setEnabled(true);
-		});
 	}
 	else
 	{
@@ -157,9 +157,23 @@ void ContentBlockingProfileDialog::handleCurrentTabChanged(int index)
 
 void ContentBlockingProfileDialog::saveSource()
 {
-	if (!m_rulesPath.isEmpty())
+	if (m_rulesPath.isEmpty())
 	{
-		return;
+		QTemporaryFile temporaryFile;
+		temporaryFile.setAutoRemove(false);
+
+		if (!temporaryFile.open())
+		{
+			Console::addMessage(QCoreApplication::translate("main", "Failed to save content blocking profile: %1").arg(temporaryFile.errorString()), Console::OtherCategory, Console::ErrorLevel, temporaryFile.fileName());
+
+			QMessageBox::critical(this, tr("Error"), tr("Failed to save profile file."), QMessageBox::Close);
+
+			return;
+		}
+
+		m_rulesPath = temporaryFile.fileName();
+
+		temporaryFile.close();
 	}
 
 	QFile file(m_rulesPath);
