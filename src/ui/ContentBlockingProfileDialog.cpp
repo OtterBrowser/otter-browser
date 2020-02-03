@@ -169,6 +169,7 @@ void ContentBlockingProfileDialog::handleCurrentTabChanged(int index)
 	{
 		m_ui->sourceEditWidget->setPlainText(QLatin1String("[AdBlock Plus 2.0]\n"));
 		m_ui->sourceEditWidget->markAsLoaded();
+		m_ui->saveButton->setEnabled(false);
 
 		m_isSourceLoaded = true;
 
@@ -184,6 +185,7 @@ void ContentBlockingProfileDialog::handleCurrentTabChanged(int index)
 
 		m_ui->sourceEditWidget->setPlainText(stream.readAll());
 		m_ui->sourceEditWidget->markAsLoaded();
+		m_ui->saveButton->setEnabled(false);
 
 		file.close();
 
