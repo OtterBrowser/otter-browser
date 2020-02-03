@@ -870,7 +870,7 @@ QStringList ContentFiltersViewWidget::createLanguagesList(const ContentFiltersPr
 
 QStringList ContentFiltersViewWidget::getProfileNames() const
 {
-	QStringList profiles;
+	QStringList profiles(ContentFiltersManager::getProfileNames());
 
 	for (int i = 0; i < getRowCount(); ++i)
 	{
@@ -880,7 +880,12 @@ QStringList ContentFiltersViewWidget::getProfileNames() const
 
 		for (int j = 0; j < getRowCount(categoryIndex); ++j)
 		{
-			profiles.append(getIndex(j, 0, categoryIndex).data(NameRole).toString());
+			const QString name(getIndex(j, 0, categoryIndex).data(NameRole).toString());
+
+			if (!profiles.contains(name))
+			{
+				profiles.append(name);
+			}
 		}
 	}
 
