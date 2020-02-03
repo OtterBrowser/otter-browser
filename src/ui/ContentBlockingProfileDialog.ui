@@ -23,109 +23,123 @@
       <attribute name="title">
        <string>Settings</string>
       </attribute>
-      <layout class="QFormLayout" name="formLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="titleLabel">
-         <property name="text">
-          <string>Title:</string>
-         </property>
-         <property name="buddy">
-          <cstring>titleLineEdit</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="titleLineEdit"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="categoryLabel">
-         <property name="text">
-          <string>Category:</string>
-         </property>
-         <property name="buddy">
-          <cstring>categoryComboBox</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QComboBox" name="categoryComboBox">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="updateUrlLabel">
-         <property name="text">
-          <string>Address:</string>
-         </property>
-         <property name="buddy">
-          <cstring>updateUrLineEdit</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="updateUrLineEdit"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="updateIntervalLabel">
-         <property name="text">
-          <string>Update interval:</string>
-         </property>
-         <property name="buddy">
-          <cstring>updateIntervalSpinBox</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QSpinBox" name="updateIntervalSpinBox">
-         <property name="specialValueText">
-          <string>Never</string>
-         </property>
-         <property name="suffix">
-          <string> days</string>
-         </property>
-         <property name="maximum">
-          <number>365</number>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="lastUpdateLabel">
-         <property name="text">
-          <string>Last update:</string>
-         </property>
-         <property name="buddy">
-          <cstring>lastUpdateTextLabel</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <layout class="QHBoxLayout" name="updateLayout" stretch="1,0">
-         <item>
-          <widget class="Otter::TextLabelWidget" name="lastUpdateTextLabel" native="true"/>
-         </item>
-         <item>
-          <widget class="QPushButton" name="updateButton">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
+      <layout class="QVBoxLayout" name="settingsLayout">
+       <item>
+        <layout class="QFormLayout" name="formLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="titleLabel">
            <property name="text">
-            <string>Update</string>
+            <string>Title:</string>
+           </property>
+           <property name="buddy">
+            <cstring>titleLineEdit</cstring>
            </property>
           </widget>
          </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="titleLineEdit"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="categoryLabel">
+           <property name="text">
+            <string>Category:</string>
+           </property>
+           <property name="buddy">
+            <cstring>categoryComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QComboBox" name="categoryComboBox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="updateUrlLabel">
+           <property name="text">
+            <string>Address:</string>
+           </property>
+           <property name="buddy">
+            <cstring>updateUrLineEdit</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="updateUrLineEdit"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="updateIntervalLabel">
+           <property name="text">
+            <string>Update interval:</string>
+           </property>
+           <property name="buddy">
+            <cstring>updateIntervalSpinBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QSpinBox" name="updateIntervalSpinBox">
+           <property name="specialValueText">
+            <string>Never</string>
+           </property>
+           <property name="suffix">
+            <string> days</string>
+           </property>
+           <property name="maximum">
+            <number>365</number>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="lastUpdateLabel">
+           <property name="text">
+            <string>Last update:</string>
+           </property>
+           <property name="buddy">
+            <cstring>lastUpdateTextLabel</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <layout class="QHBoxLayout" name="updateLayout" stretch="1,0">
+           <item>
+            <widget class="Otter::TextLabelWidget" name="lastUpdateTextLabel" native="true"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="updateButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Update</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
         </layout>
        </item>
-       <item row="5" column="0">
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QProgressBar" name="progressBar">
+         <property name="maximum">
+          <number>0</number>
+         </property>
+         <property name="value">
+          <number>0</number>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

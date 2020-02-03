@@ -19,7 +19,9 @@
 **************************************************************************/
 
 #include "ContentBlockingProfileDialog.h"
+#include "../core/AdblockContentFiltersProfile.h"
 #include "../core/Console.h"
+#include "../core/Job.h"
 #include "../core/Utils.h"
 
 #include "ui_ContentBlockingProfileDialog.h"
@@ -31,8 +33,10 @@ namespace Otter
 {
 
 ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersViewWidget::ProfileSummary &profileSummary, QWidget *parent) : Dialog(parent),
+	m_dataFetchJob(nullptr),
 	m_name(profileSummary.name),
 	m_rulesPath(profileSummary.rulesPath),
+	m_lastUpdate(profileSummary.lastUpdate),
 	m_isSourceLoaded(false),
 	m_ui(new Ui::ContentBlockingProfileDialog)
 {
@@ -47,8 +51,14 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersV
 	m_ui->titleLineEdit->setText(profileSummary.title);
 	m_ui->updateUrLineEdit->setText(profileSummary.updateUrl.toString());
 	m_ui->updateIntervalSpinBox->setValue(profileSummary.updateInterval);
+	m_ui->progressBar->hide();
 	m_ui->passiveNotificationWidget->setMessage(tr("Any changes made here are going to be lost during manual or automatic update."), Notification::Message::WarningLevel);
 	m_ui->saveButton->setIcon(ThemesManager::createIcon(QLatin1String("document-save")));
+
+	if (profileSummary.lastUpdate.isValid())
+	{
+		m_ui->lastUpdateTextLabel->setText(Utils::formatDateTime(profileSummary.lastUpdate));
+	}
 
 	if (!profileSummary.name.isEmpty())
 	{
@@ -56,7 +66,6 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersV
 
 		if (profile)
 		{
-			m_ui->lastUpdateTextLabel->setText(Utils::formatDateTime(profile->getLastUpdate()));
 			m_ui->updateButton->setEnabled(profileSummary.updateUrl.isValid());
 
 			connect(profile, &ContentFiltersProfile::profileModified, [&]()
@@ -65,6 +74,8 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersV
 
 				if (profile)
 				{
+					m_lastUpdate = profile->getLastUpdate();
+
 					m_ui->lastUpdateTextLabel->setText(Utils::formatDateTime(profile->getLastUpdate()));
 				}
 			});
@@ -85,6 +96,32 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersV
 			});
 		}
 	}
+	else if (profileSummary.updateUrl.isValid())
+	{
+		m_ui->tabWidget->setTabEnabled(1, false);
+		m_ui->titleLineEdit->setReadOnly(true);
+		m_ui->updateUrLineEdit->setReadOnly(true);
+		m_ui->lastUpdateLabel->hide();
+		m_ui->lastUpdateTextLabel->hide();
+		m_ui->updateButton->hide();
+		m_ui->progressBar->show();
+		m_ui->confirmButtonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+
+		m_dataFetchJob = new DataFetchJob(profileSummary.updateUrl, this);
+
+		connect(m_dataFetchJob, &DataFetchJob::progressChanged, this, [&](int progress)
+		{
+			if (m_ui->progressBar->maximum() == 0)
+			{
+				m_ui->progressBar->setMaximum(100);
+			}
+
+			m_ui->progressBar->setValue(progress);
+		});
+		connect(m_dataFetchJob, &Job::jobFinished, this, &ContentBlockingProfileDialog::handleJobFinished);
+
+		m_dataFetchJob->start();
+	}
 
 	connect(m_ui->sourceEditWidget, &SourceEditWidget::textChanged, [&]()
 	{
@@ -97,6 +134,11 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersV
 ContentBlockingProfileDialog::~ContentBlockingProfileDialog()
 {
 	delete m_ui;
+
+	if (m_dataFetchJob)
+	{
+		m_dataFetchJob->cancel();
+	}
 }
 
 void ContentBlockingProfileDialog::changeEvent(QEvent *event)
@@ -155,25 +197,85 @@ void ContentBlockingProfileDialog::handleCurrentTabChanged(int index)
 	}
 }
 
+void ContentBlockingProfileDialog::handleJobFinished(bool isSuccess)
+{
+	QIODevice *device(m_dataFetchJob->getData());
+
+	m_dataFetchJob = nullptr;
+
+	if (!isSuccess || !device)
+	{
+		Console::addMessage(QCoreApplication::translate("main", "Failed to download content blocking profile."), Console::OtherCategory, Console::ErrorLevel);
+
+		QMessageBox::critical(this, tr("Error"), tr("Failed to download profile file."), QMessageBox::Close);
+
+		return;
+	}
+
+	const QString path(createTemporaryFile());
+
+	if (path.isEmpty())
+	{
+		return;
+	}
+
+	QFile file(path);
+
+	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+	{
+		Console::addMessage(QCoreApplication::translate("main", "Failed to save content blocking profile: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
+
+		QMessageBox::critical(this, tr("Error"), tr("Failed to save profile file."), QMessageBox::Close);
+
+		return;
+	}
+
+	file.write(device->readAll());
+	file.close();
+
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+		Console::addMessage(QCoreApplication::translate("main", "Failed to open content blocking profile: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
+
+		QMessageBox::critical(this, tr("Error"), tr("Failed to open content blocking profile file:\n%1").arg(file.errorString()));
+
+		return;
+	}
+
+	const AdblockContentFiltersProfile::HeaderInformation information(AdblockContentFiltersProfile::loadHeader(&file));
+
+	file.close();
+
+	if (information.error != ContentFiltersProfile::NoError)
+	{
+		Console::addMessage(information.errorString, Console::OtherCategory, Console::ErrorLevel, file.fileName());
+
+		QMessageBox::critical(this, tr("Error"), information.errorString);
+
+		return;
+	}
+
+	m_lastUpdate = QDateTime::currentDateTime();
+
+	m_ui->tabWidget->setTabEnabled(1, true);
+	m_ui->titleLineEdit->setReadOnly(false);
+	m_ui->titleLineEdit->setText(information.title);
+	m_ui->updateUrLineEdit->setReadOnly(false);
+	m_ui->lastUpdateLabel->show();
+	m_ui->lastUpdateTextLabel->setText(Utils::formatDateTime(m_lastUpdate));
+	m_ui->lastUpdateTextLabel->show();
+	m_ui->updateButton->show();
+	m_ui->progressBar->hide();
+	m_ui->confirmButtonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
+
+	m_rulesPath = path;
+}
+
 void ContentBlockingProfileDialog::saveSource()
 {
 	if (m_rulesPath.isEmpty())
 	{
-		QTemporaryFile temporaryFile;
-		temporaryFile.setAutoRemove(false);
-
-		if (!temporaryFile.open())
-		{
-			Console::addMessage(QCoreApplication::translate("main", "Failed to save content blocking profile: %1").arg(temporaryFile.errorString()), Console::OtherCategory, Console::ErrorLevel, temporaryFile.fileName());
-
-			QMessageBox::critical(this, tr("Error"), tr("Failed to save profile file."), QMessageBox::Close);
-
-			return;
-		}
-
-		m_rulesPath = temporaryFile.fileName();
-
-		temporaryFile.close();
+		m_rulesPath = createTemporaryFile();
 	}
 
 	QFile file(m_rulesPath);
@@ -197,12 +299,34 @@ void ContentBlockingProfileDialog::saveSource()
 	}
 }
 
+QString ContentBlockingProfileDialog::createTemporaryFile()
+{
+	QTemporaryFile file;
+	file.setAutoRemove(false);
+
+	if (!file.open())
+	{
+		Console::addMessage(QCoreApplication::translate("main", "Failed to save content blocking profile: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
+
+		QMessageBox::critical(this, tr("Error"), tr("Failed to save profile file."), QMessageBox::Close);
+
+		return {};
+	}
+
+	const QString path(file.fileName());
+
+	file.close();
+
+	return path;
+}
+
 ContentFiltersViewWidget::ProfileSummary ContentBlockingProfileDialog::getProfile() const
 {
 	ContentFiltersViewWidget::ProfileSummary profileSummary;
 	profileSummary.name = m_name;
 	profileSummary.title = m_ui->titleLineEdit->text();
 	profileSummary.rulesPath = m_rulesPath;
+	profileSummary.lastUpdate = m_lastUpdate;
 	profileSummary.updateUrl = QUrl(m_ui->updateUrLineEdit->text());
 	profileSummary.category = static_cast<ContentFiltersProfile::ProfileCategory>(m_ui->categoryComboBox->itemData(m_ui->categoryComboBox->currentIndex()).toInt());
 	profileSummary.updateInterval = m_ui->updateIntervalSpinBox->value();

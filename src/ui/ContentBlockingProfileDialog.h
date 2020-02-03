@@ -34,6 +34,7 @@ namespace Ui
 }
 
 class ContentFiltersProfile;
+class DataFetchJob;
 
 class ContentBlockingProfileDialog final : public Dialog
 {
@@ -47,14 +48,18 @@ public:
 
 protected:
 	void changeEvent(QEvent *event) override;
+	QString createTemporaryFile();
 
 protected slots:
 	void handleCurrentTabChanged(int index);
+	void handleJobFinished(bool isSuccess);
 	void saveSource();
 
 private:
+	DataFetchJob *m_dataFetchJob;
 	QString m_name;
 	QString m_rulesPath;
+	QDateTime m_lastUpdate;
 	bool m_isSourceLoaded;
 	Ui::ContentBlockingProfileDialog *m_ui;
 };

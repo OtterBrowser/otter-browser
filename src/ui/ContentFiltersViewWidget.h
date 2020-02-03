@@ -75,6 +75,7 @@ public:
 		QString name;
 		QString title;
 		QString rulesPath;
+		QDateTime lastUpdate;
 		QUrl updateUrl;
 		ContentFiltersProfile::ProfileCategory category = ContentFiltersProfile::OtherCategory;
 		int updateInterval = -1;
@@ -88,6 +89,7 @@ public:
 public slots:
 	void addProfile();
 	void importProfileFromFile();
+	void importProfileFromUrl();
 	void editProfile();
 	void removeProfile();
 	void updateProfile();

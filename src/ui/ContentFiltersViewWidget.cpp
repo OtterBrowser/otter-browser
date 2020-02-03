@@ -31,6 +31,7 @@
 #include <QtCore/QTimer>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QFileDialog>
+#include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QSpinBox>
@@ -298,6 +299,7 @@ void ContentFiltersViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	QMenu *addMenu(menu.addMenu(tr("Add")));
 	addMenu->addAction(tr("New…"), this, &ContentFiltersViewWidget::addProfile);
 	addMenu->addAction(tr("File…"), this, &ContentFiltersViewWidget::importProfileFromFile);
+	addMenu->addAction(tr("URL…"), this, &ContentFiltersViewWidget::importProfileFromUrl);
 
 	if (index.isValid() && index.flags().testFlag(Qt::ItemNeverHasChildren))
 	{
@@ -422,6 +424,43 @@ void ContentFiltersViewWidget::importProfileFromFile()
 	}
 }
 
+void ContentFiltersViewWidget::importProfileFromUrl()
+{
+	const QUrl url(QInputDialog::getText(this, tr("Select URL"), tr("Enter URL:")));
+
+	if (url.isEmpty())
+	{
+		return;
+	}
+
+	if (!url.isValid())
+	{
+		QMessageBox::critical(this, tr("Error"), tr("Invaid URL"), QMessageBox::Close);
+
+		return;
+	}
+
+	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
+	ProfileSummary profileSummary;
+	profileSummary.updateUrl = url;
+	profileSummary.category = getCategory(index);
+
+	ContentBlockingProfileDialog dialog(profileSummary, this);
+
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		profileSummary = dialog.getProfile();
+		profileSummary.name = Utils::createIdentifier(QFileInfo(profileSummary.updateUrl.fileName()).completeBaseName(), getProfileNames());
+
+		QList<QStandardItem*> items(createEntry(profileSummary));
+		items[0]->setData(profileSummary.rulesPath, ImportPathRole);
+
+		m_filesToRemove.append(profileSummary.rulesPath);
+
+		appendProfile(items, profileSummary.category);
+	}
+}
+
 void ContentFiltersViewWidget::editProfile()
 {
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
@@ -432,6 +471,7 @@ void ContentFiltersViewWidget::editProfile()
 		ProfileSummary profileSummary;
 		profileSummary.name = index.data(NameRole).toString();
 		profileSummary.title = index.data(TitleRole).toString();
+		profileSummary.lastUpdate = index.data(UpdateTimeRole).toDateTime();
 		profileSummary.updateUrl = index.data(UpdateUrlRole).toUrl();
 		profileSummary.category = static_cast<ContentFiltersProfile::ProfileCategory>(index.parent().data(CategoryRole).toInt());
 		profileSummary.updateInterval = index.sibling(index.row(), 1).data(Qt::DisplayRole).toInt();
@@ -908,29 +948,26 @@ QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFilters
 	items[0]->setCheckable(true);
 	items[0]->setCheckState(profiles.contains(name) ? Qt::Checked : Qt::Unchecked);
 	items[1]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
-	items[1]->setData(profile->getUpdateUrl(), UpdateUrlRole);
 	items[2]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-	items[2]->setData(profile->getUpdateUrl(), UpdateUrlRole);
 
 	return items;
 }
 
 QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ProfileSummary &profileSummary) const
 {
-	QList<QStandardItem*> items({new QStandardItem(profileSummary.title), new QStandardItem(QString::number(profileSummary.updateInterval)), new QStandardItem()});
+	QList<QStandardItem*> items({new QStandardItem(profileSummary.title), new QStandardItem(QString::number(profileSummary.updateInterval)), new QStandardItem(Utils::formatDateTime(profileSummary.lastUpdate))});
 	items[0]->setData(profileSummary.name, NameRole);
 	items[0]->setData(false, HasErrorRole);
 	items[0]->setData(true, IsModifiedRole);
 	items[0]->setData(false, IsShowingProgressIndicatorRole);
 	items[0]->setData(false, IsUpdatingRole);
 	items[0]->setData(-1, UpdateProgressValueRole);
+	items[0]->setData(profileSummary.lastUpdate, UpdateTimeRole);
 	items[0]->setData(profileSummary.updateUrl, UpdateUrlRole);
 	items[0]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 	items[0]->setCheckable(true);
 	items[1]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
-	items[1]->setData(profileSummary.updateUrl, UpdateUrlRole);
 	items[2]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-	items[2]->setData(profileSummary.updateUrl, UpdateUrlRole);
 
 	return items;
 }
