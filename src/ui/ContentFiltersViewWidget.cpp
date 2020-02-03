@@ -845,7 +845,7 @@ void ContentFiltersViewWidget::save()
 					}
 				}
 
-				if (!AdblockContentFiltersProfile::create(name, title, updateUrl, updateInterval, category, device))
+				if (!AdblockContentFiltersProfile::create(name, title, updateUrl, entryIndex.data(UpdateTimeRole).toDateTime(), updateInterval, category, device))
 				{
 					if (device)
 					{

@@ -852,7 +852,7 @@ int AdblockContentFiltersProfile::getUpdateProgress() const
 	return (m_dataFetchJob ? m_dataFetchJob->getProgress() : -1);
 }
 
-bool AdblockContentFiltersProfile::create(const QString &name, const QString &title, const QUrl &updateUrl, int updateInterval, ProfileCategory category, QIODevice *rules, bool canOverwriteExisting)
+bool AdblockContentFiltersProfile::create(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime &lastUpdate, int updateInterval, ProfileCategory category, QIODevice *rules, bool canOverwriteExisting)
 {
 	const QString path(SessionsManager::getWritableDataPath(QStringLiteral("contentBlocking/%1.txt")).arg(name));
 
@@ -880,7 +880,7 @@ bool AdblockContentFiltersProfile::create(const QString &name, const QString &ti
 		file.close();
 	}
 
-	AdblockContentFiltersProfile *profile(new AdblockContentFiltersProfile(name, title, updateUrl, {}, {}, updateInterval, category, ContentFiltersProfile::NoFlags, ContentFiltersManager::getInstance()));
+	AdblockContentFiltersProfile *profile(new AdblockContentFiltersProfile(name, title, updateUrl, lastUpdate, {}, updateInterval, category, ContentFiltersProfile::NoFlags, ContentFiltersManager::getInstance()));
 
 	ContentFiltersManager::addProfile(profile);
 
