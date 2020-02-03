@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -128,6 +128,7 @@ AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Bookmarks"), {}, QUrl(QLatin1String("about:bookmarks")), ThemesManager::createIcon(QLatin1String("bookmarks"), false), SpecialPageInformation::UniversalType), QLatin1String("bookmarks"));
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Cache"), {}, QUrl(QLatin1String("about:cache")), ThemesManager::createIcon(QLatin1String("cache"), false), SpecialPageInformation::UniversalType), QLatin1String("cache"));
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Advanced Configuration"), {}, QUrl(QLatin1String("about:config")), ThemesManager::createIcon(QLatin1String("configuration"), false), SpecialPageInformation::UniversalType), QLatin1String("config"));
+	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Content Filters"), {}, QUrl(QLatin1String("about:content-filters")), ThemesManager::createIcon(QLatin1String("content-blocking"), false), SpecialPageInformation::UniversalType), QLatin1String("contentFilters"));
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Cookies"), {}, QUrl(QLatin1String("about:cookies")), ThemesManager::createIcon(QLatin1String("cookies"), false), SpecialPageInformation::UniversalType), QLatin1String("cookies"));
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Feeds"), {}, QUrl(QLatin1String("about:feeds")), ThemesManager::createIcon(QLatin1String("feeds"), false), SpecialPageInformation::UniversalType), QLatin1String("feeds"));
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "History"), {}, QUrl(QLatin1String("about:history")), ThemesManager::createIcon(QLatin1String("view-history"), false), SpecialPageInformation::UniversalType), QLatin1String("history"));

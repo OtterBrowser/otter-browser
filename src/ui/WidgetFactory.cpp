@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -42,6 +42,7 @@
 #include "../modules/windows/bookmarks/BookmarksContentsWidget.h"
 #include "../modules/windows/cache/CacheContentsWidget.h"
 #include "../modules/windows/configuration/ConfigurationContentsWidget.h"
+#include "../modules/windows/contentFilters/ContentFiltersContentsWidget.h"
 #include "../modules/windows/cookies/CookiesContentsWidget.h"
 #include "../modules/windows/feeds/FeedsContentsWidget.h"
 #include "../modules/windows/history/HistoryContentsWidget.h"
@@ -227,6 +228,11 @@ ContentsWidget* createContentsWidget(const QString &identifier, const QVariantMa
 	if (identifier == QLatin1String("config"))
 	{
 		return new ConfigurationContentsWidget(parameters, window, parent);
+	}
+
+	if (identifier == QLatin1String("contentFilters") || identifier == QLatin1String("content-filters"))
+	{
+		return new ContentFiltersContentsWidget(parameters, window, parent);
 	}
 
 	if (identifier == QLatin1String("cookies"))
