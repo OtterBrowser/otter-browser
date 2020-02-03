@@ -168,8 +168,8 @@ QWidget* ContentFiltersIntervalDelegate::createEditor(QWidget *parent, const QSt
 	Q_UNUSED(option)
 
 	QSpinBox *widget(new QSpinBox(parent));
-	widget->setSuffix(QCoreApplication::translate("Otter::ContentFiltersIntervalDelegate", " day(s)"));
-	widget->setSpecialValueText(QCoreApplication::translate("Otter::ContentFiltersIntervalDelegate", "Never"));
+	widget->setSuffix(tr(" day(s)"));
+	widget->setSpecialValueText(tr("Never"));
 	widget->setMinimum(0);
 	widget->setMaximum(365);
 	widget->setValue(index.data(Qt::DisplayRole).toInt());
@@ -189,7 +189,7 @@ QString ContentFiltersIntervalDelegate::displayText(const QVariant &value, const
 
 	const int updateInterval(value.toInt());
 
-	return ((updateInterval > 0) ? QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "%n day(s)", "", updateInterval) : QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "Never"));
+	return ((updateInterval > 0) ? tr("%n day(s)", "", updateInterval) : tr("Never"));
 }
 
 Animation* ContentFiltersViewWidget::m_updateAnimation = nullptr;
