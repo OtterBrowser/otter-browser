@@ -131,10 +131,6 @@ void ContentFiltersManager::initialize()
 			{
 				updateUrl = QUrl(bundledProfileObject.value(QLatin1String("updateUrl")).toString());
 			}
-			else
-			{
-				flags |= ContentFiltersProfile::HasCustomUpdateUrlFlag;
-			}
 
 			if (title.isEmpty())
 			{
@@ -229,11 +225,7 @@ void ContentFiltersManager::timerEvent(QTimerEvent *event)
 				profileObject.insert(QLatin1String("title"), profile->getTitle());
 			}
 
-			if (profile->getFlags().testFlag(ContentFiltersProfile::HasCustomUpdateUrlFlag))
-			{
-				profileObject.insert(QLatin1String("updateUrl"), profile->getUpdateUrl().url());
-			}
-
+			profileObject.insert(QLatin1String("updateUrl"), profile->getUpdateUrl().url());
 			profileObject.insert(QLatin1String("category"), categoryTitles.value(profile->getCategory()));
 
 			const QVector<QLocale::Language> languages(m_contentBlockingProfiles.at(i)->getLanguages());

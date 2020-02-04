@@ -655,7 +655,6 @@ void AdblockContentFiltersProfile::setUpdateUrl(const QUrl &url)
 	if (url.isValid() && url != m_updateUrl)
 	{
 		m_updateUrl = url;
-		m_flags |= HasCustomUpdateUrlFlag;
 
 		emit profileModified();
 	}

@@ -117,8 +117,7 @@ public:
 	enum ProfileFlag
 	{
 		NoFlags = 0,
-		HasCustomTitleFlag = 1,
-		HasCustomUpdateUrlFlag = 2
+		HasCustomTitleFlag = 1
 	};
 
 	Q_DECLARE_FLAGS(ProfileFlags, ProfileFlag)
