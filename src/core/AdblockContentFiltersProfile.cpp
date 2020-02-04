@@ -880,7 +880,14 @@ bool AdblockContentFiltersProfile::create(const QString &name, const QString &ti
 		file.close();
 	}
 
-	AdblockContentFiltersProfile *profile(new AdblockContentFiltersProfile(name, title, updateUrl, lastUpdate, {}, updateInterval, category, ContentFiltersProfile::NoFlags, ContentFiltersManager::getInstance()));
+	ProfileFlags flags(NoFlags);
+
+	if (!title.isEmpty())
+	{
+		flags |= HasCustomTitleFlag;
+	}
+
+	AdblockContentFiltersProfile *profile(new AdblockContentFiltersProfile(name, title, updateUrl, lastUpdate, {}, updateInterval, category, flags, ContentFiltersManager::getInstance()));
 
 	ContentFiltersManager::addProfile(profile);
 
