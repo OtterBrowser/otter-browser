@@ -36,7 +36,7 @@ ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &pa
 {
 	m_ui->setupUi(this);
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
-	m_ui->profilesViewWidget->setFilterRoles({Qt::DisplayRole, ContentFiltersViewWidget::NameRole});
+	m_ui->profilesViewWidget->setFilterRoles({Qt::DisplayRole, ContentFiltersViewWidget::UpdateUrlRole});
 
 	QMenu *menu(new QMenu(m_ui->addlButton));
 	menu->addAction(tr("New…"), m_ui->profilesViewWidget, &ContentFiltersViewWidget::addProfile);
