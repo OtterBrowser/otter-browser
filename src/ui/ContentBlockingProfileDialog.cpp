@@ -38,6 +38,7 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersV
 	m_rulesPath(profileSummary.rulesPath),
 	m_lastUpdate(profileSummary.lastUpdate),
 	m_isSourceLoaded(false),
+	m_isUsingTemporaryFile(false),
 	m_ui(new Ui::ContentBlockingProfileDialog)
 {
 	m_ui->setupUi(this);
@@ -129,6 +130,7 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersV
 	});
 	connect(m_ui->saveButton, &QPushButton::clicked, this, &ContentBlockingProfileDialog::saveSource);
 	connect(m_ui->tabWidget, &QTabWidget::currentChanged, this, &ContentBlockingProfileDialog::handleCurrentTabChanged);
+	connect(m_ui->confirmButtonBox, &QDialogButtonBox::accepted, this, &ContentBlockingProfileDialog::markAsAccepted);
 }
 
 ContentBlockingProfileDialog::~ContentBlockingProfileDialog()
@@ -138,6 +140,11 @@ ContentBlockingProfileDialog::~ContentBlockingProfileDialog()
 	if (m_dataFetchJob)
 	{
 		m_dataFetchJob->cancel();
+	}
+
+	if (m_isUsingTemporaryFile && !isAccepted() && !m_rulesPath.isEmpty())
+	{
+		QFile::remove(m_rulesPath);
 	}
 }
 
@@ -318,6 +325,8 @@ QString ContentBlockingProfileDialog::createTemporaryFile()
 	const QString path(file.fileName());
 
 	file.close();
+
+	m_isUsingTemporaryFile = true;
 
 	return path;
 }

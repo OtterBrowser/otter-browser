@@ -61,6 +61,7 @@ private:
 	QString m_rulesPath;
 	QDateTime m_lastUpdate;
 	bool m_isSourceLoaded;
+	bool m_isUsingTemporaryFile;
 	Ui::ContentBlockingProfileDialog *m_ui;
 };
 
