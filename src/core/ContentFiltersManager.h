@@ -109,9 +109,9 @@ public:
 	enum ProfileError
 	{
 		NoError = 0,
+		DownloadError,
 		ReadError,
-		ParseError,
-		DownloadError
+		ParseError
 	};
 
 	enum ProfileFlag

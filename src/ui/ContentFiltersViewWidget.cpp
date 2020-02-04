@@ -98,16 +98,16 @@ bool ContentFiltersTitleDelegate::helpEvent(QHelpEvent *event, QAbstractItemView
 			{
 				switch (profile->getError())
 				{
+					case ContentFiltersProfile::DownloadError:
+						toolTip.append(tr("Failed to download profile rules"));
+
+						break;
 					case ContentFiltersProfile::ReadError:
 						toolTip.append(tr("Failed to read profile file"));
 
 						break;
 					case ContentFiltersProfile::ParseError:
 						toolTip.append(tr("Failed to parse profile file"));
-
-						break;
-					case ContentFiltersProfile::DownloadError:
-						toolTip.append(tr("Failed to download profile rules"));
 
 						break;
 					default:
