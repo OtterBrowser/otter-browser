@@ -352,7 +352,7 @@ void ContentFiltersViewWidget::moveProfile(QStandardItem *entryItem, ContentFilt
 void ContentFiltersViewWidget::addProfile()
 {
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
-	ProfileSummary profileSummary;
+	ContentFiltersProfile::ProfileSummary profileSummary;
 	profileSummary.category = getCategory(index);
 
 	ContentBlockingProfileDialog dialog(profileSummary, {}, this);
@@ -405,7 +405,7 @@ void ContentFiltersViewWidget::importProfileFromFile()
 	}
 
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
-	ProfileSummary profileSummary;
+	ContentFiltersProfile::ProfileSummary profileSummary;
 	profileSummary.title = information.title;
 	profileSummary.category = getCategory(index);
 
@@ -440,7 +440,7 @@ void ContentFiltersViewWidget::importProfileFromUrl()
 	}
 
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
-	ProfileSummary profileSummary;
+	ContentFiltersProfile::ProfileSummary profileSummary;
 	profileSummary.updateUrl = url;
 	profileSummary.category = getCategory(index);
 
@@ -467,7 +467,7 @@ void ContentFiltersViewWidget::editProfile()
 
 	if (item)
 	{
-		ProfileSummary profileSummary;
+		ContentFiltersProfile::ProfileSummary profileSummary;
 		profileSummary.name = index.data(NameRole).toString();
 		profileSummary.title = index.data(TitleRole).toString();
 		profileSummary.lastUpdate = index.data(UpdateTimeRole).toDateTime();
@@ -942,7 +942,7 @@ QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFilters
 	return items;
 }
 
-QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ProfileSummary &profileSummary) const
+QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFiltersProfile::ProfileSummary &profileSummary) const
 {
 	QList<QStandardItem*> items({new QStandardItem(profileSummary.title), new QStandardItem(QString::number(profileSummary.updateInterval)), new QStandardItem(Utils::formatDateTime(profileSummary.lastUpdate))});
 	items[0]->setData(profileSummary.name, NameRole);

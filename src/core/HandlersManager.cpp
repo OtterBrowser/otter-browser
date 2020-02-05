@@ -19,7 +19,6 @@
 
 #include "HandlersManager.h"
 #include "AdblockContentFiltersProfile.h"
-#include "ContentFiltersManager.h"
 #include "IniSettings.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
@@ -175,16 +174,16 @@ bool HandlersManager::handleUrl(const QUrl &url)
 			}
 			else if (QMessageBox::question(QApplication::activeWindow(), tr("Question"), tr("Do you want to add this content blocking profile?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 			{
-				ContentFiltersViewWidget::ProfileSummary profileSummary;
+				ContentFiltersProfile::ProfileSummary profileSummary;
 				profileSummary.updateUrl = location;
 
-				ContentBlockingProfileDialog dialog(profileSummary, QApplication::activeWindow());
+				ContentBlockingProfileDialog dialog(profileSummary, {}, QApplication::activeWindow());
 
 				if (dialog.exec() == QDialog::Accepted)
 				{
 					profileSummary = dialog.getProfile();
 
-					QFile file(profileSummary.rulesPath);
+					QFile file(dialog.getRulesPath());
 
 					if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 					{

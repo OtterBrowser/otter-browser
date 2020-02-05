@@ -132,6 +132,16 @@ public:
 		RegionalCategory = 16
 	};
 
+	struct ProfileSummary final
+	{
+		QString name;
+		QString title;
+		QDateTime lastUpdate;
+		QUrl updateUrl;
+		ProfileCategory category = OtherCategory;
+		int updateInterval = 0;
+	};
+
 	explicit ContentFiltersProfile(QObject *parent = nullptr);
 
 	virtual void clear() = 0;

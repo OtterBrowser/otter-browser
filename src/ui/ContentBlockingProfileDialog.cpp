@@ -32,7 +32,7 @@
 namespace Otter
 {
 
-ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersViewWidget::ProfileSummary &profileSummary, const QString &rulesPath, QWidget *parent) : Dialog(parent),
+ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersProfile::ProfileSummary &profileSummary, const QString &rulesPath, QWidget *parent) : Dialog(parent),
 	m_dataFetchJob(nullptr),
 	m_name(profileSummary.name),
 	m_rulesPath(rulesPath),
@@ -336,9 +336,9 @@ QString ContentBlockingProfileDialog::getRulesPath() const
 	return m_rulesPath;
 }
 
-ContentFiltersViewWidget::ProfileSummary ContentBlockingProfileDialog::getProfile() const
+ContentFiltersProfile::ProfileSummary ContentBlockingProfileDialog::getProfile() const
 {
-	ContentFiltersViewWidget::ProfileSummary profileSummary;
+	ContentFiltersProfile::ProfileSummary profileSummary;
 	profileSummary.name = m_name;
 	profileSummary.title = m_ui->titleLineEdit->text();
 	profileSummary.lastUpdate = m_lastUpdate;
