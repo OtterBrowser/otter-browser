@@ -44,7 +44,7 @@ public:
 		ProfileError error = NoError;
 	};
 
-	explicit AdblockContentFiltersProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime &lastUpdate, const QStringList &languages, int updateInterval, ProfileCategory category, ProfileFlags flags, QObject *parent = nullptr);
+	explicit AdblockContentFiltersProfile(const ProfileSummary &profileSummary, const QStringList &languages, ProfileFlags flags, QObject *parent = nullptr);
 
 	void clear() override;
 	void setCategory(ProfileCategory category) override;

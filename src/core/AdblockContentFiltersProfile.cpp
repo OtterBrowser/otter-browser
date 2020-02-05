@@ -38,17 +38,17 @@ QVector<QChar> AdblockContentFiltersProfile::m_separators({QLatin1Char('_'), QLa
 QHash<QString, AdblockContentFiltersProfile::RuleOption> AdblockContentFiltersProfile::m_options({{QLatin1String("third-party"), ThirdPartyOption}, {QLatin1String("stylesheet"), StyleSheetOption}, {QLatin1String("image"), ImageOption}, {QLatin1String("script"), ScriptOption}, {QLatin1String("object"), ObjectOption}, {QLatin1String("object-subrequest"), ObjectSubRequestOption}, {QLatin1String("object_subrequest"), ObjectSubRequestOption}, {QLatin1String("subdocument"), SubDocumentOption}, {QLatin1String("xmlhttprequest"), XmlHttpRequestOption}, {QLatin1String("websocket"), WebSocketOption}, {QLatin1String("popup"), PopupOption}, {QLatin1String("elemhide"), ElementHideOption}, {QLatin1String("generichide"), GenericHideOption}});
 QHash<NetworkManager::ResourceType, AdblockContentFiltersProfile::RuleOption> AdblockContentFiltersProfile::m_resourceTypes({{NetworkManager::ImageType, ImageOption}, {NetworkManager::ScriptType, ScriptOption}, {NetworkManager::StyleSheetType, StyleSheetOption}, {NetworkManager::ObjectType, ObjectOption}, {NetworkManager::XmlHttpRequestType, XmlHttpRequestOption}, {NetworkManager::SubFrameType, SubDocumentOption},{NetworkManager::PopupType, PopupOption}, {NetworkManager::ObjectSubrequestType, ObjectSubRequestOption}, {NetworkManager::WebSocketType, WebSocketOption}});
 
-AdblockContentFiltersProfile::AdblockContentFiltersProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime &lastUpdate, const QStringList &languages, int updateInterval, ProfileCategory category, ProfileFlags flags, QObject *parent) : ContentFiltersProfile(parent),
+AdblockContentFiltersProfile::AdblockContentFiltersProfile(const ContentFiltersProfile::ProfileSummary &profileSummary, const QStringList &languages, ContentFiltersProfile::ProfileFlags flags, QObject *parent) : ContentFiltersProfile(parent),
 	m_root(nullptr),
 	m_dataFetchJob(nullptr),
-	m_name(name),
-	m_title(title),
-	m_updateUrl(updateUrl),
-	m_lastUpdate(lastUpdate),
-	m_category(category),
+	m_name(profileSummary.name),
+	m_title(profileSummary.title),
+	m_updateUrl(profileSummary.updateUrl),
+	m_lastUpdate(profileSummary.lastUpdate),
+	m_category(profileSummary.category),
 	m_error(NoError),
 	m_flags(flags),
-	m_updateInterval(updateInterval),
+	m_updateInterval(profileSummary.updateInterval),
 	m_wasLoaded(false)
 {
 	if (languages.isEmpty())
@@ -886,7 +886,7 @@ bool AdblockContentFiltersProfile::create(const ContentFiltersProfile::ProfileSu
 		flags |= HasCustomTitleFlag;
 	}
 
-	AdblockContentFiltersProfile *profile(new AdblockContentFiltersProfile(profileSummary.name, profileSummary.title, profileSummary.updateUrl, profileSummary.lastUpdate, {}, profileSummary.updateInterval, profileSummary.category, flags, ContentFiltersManager::getInstance()));
+	AdblockContentFiltersProfile *profile(new AdblockContentFiltersProfile(profileSummary, {}, flags, ContentFiltersManager::getInstance()));
 
 	ContentFiltersManager::addProfile(profile);
 

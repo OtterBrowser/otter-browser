@@ -107,15 +107,16 @@ void ContentFiltersManager::initialize()
 	{
 		QJsonObject profileObject(localMainObject.value(profiles.at(i)).toObject());
 		const QJsonObject bundledProfileObject(bundledMainObject.value(profiles.at(i)).toObject());
-		QString title;
-		QUrl updateUrl;
+		ContentFiltersProfile::ProfileSummary profileSummary;
+		profileSummary.name = profiles.at(i);
+
 		ContentFiltersProfile::ProfileFlags flags(ContentFiltersProfile::NoFlags);
 
 		if (profileObject.isEmpty())
 		{
 			profileObject = bundledProfileObject;
-			updateUrl = QUrl(profileObject.value(QLatin1String("updateUrl")).toString());
-			title = profileObject.value(QLatin1String("title")).toString();
+			profileSummary.title = profileObject.value(QLatin1String("title")).toString();
+			profileSummary.updateUrl = QUrl(profileObject.value(QLatin1String("updateUrl")).toString());
 		}
 		else
 		{
@@ -124,17 +125,17 @@ void ContentFiltersManager::initialize()
 				continue;
 			}
 
-			updateUrl = QUrl(profileObject.value(QLatin1String("updateUrl")).toString());
-			title = profileObject.value(QLatin1String("title")).toString();
+			profileSummary.title = profileObject.value(QLatin1String("title")).toString();
+			profileSummary.updateUrl = QUrl(profileObject.value(QLatin1String("updateUrl")).toString());
 
-			if (updateUrl.isEmpty())
+			if (profileSummary.updateUrl.isEmpty())
 			{
-				updateUrl = QUrl(bundledProfileObject.value(QLatin1String("updateUrl")).toString());
+				profileSummary.updateUrl = QUrl(bundledProfileObject.value(QLatin1String("updateUrl")).toString());
 			}
 
-			if (title.isEmpty())
+			if (profileSummary.title.isEmpty())
 			{
-				title = bundledProfileObject.value(QLatin1String("title")).toString();
+				profileSummary.title = bundledProfileObject.value(QLatin1String("title")).toString();
 			}
 			else
 			{
@@ -142,8 +143,10 @@ void ContentFiltersManager::initialize()
 			}
 		}
 
-		QDateTime lastUpdate(QDateTime::fromString(profileObject.value(QLatin1String("lastUpdate")).toString(), Qt::ISODate));
-		lastUpdate.setTimeSpec(Qt::UTC);
+		profileSummary.lastUpdate = QDateTime::fromString(profileObject.value(QLatin1String("lastUpdate")).toString(), Qt::ISODate);
+		profileSummary.lastUpdate.setTimeSpec(Qt::UTC);
+		profileSummary.updateInterval = profileObject.value(QLatin1String("updateInterval")).toInt();
+		profileSummary.category = categoryTitles.value(profileObject.value(QLatin1String("category")).toString());
 
 		const QJsonArray languagesArray(profileObject.value(QLatin1String("languages")).toArray());
 		QStringList languages;
@@ -154,7 +157,7 @@ void ContentFiltersManager::initialize()
 			languages.append(languagesArray.at(j).toString());
 		}
 
-		ContentFiltersProfile *profile(new AdblockContentFiltersProfile(profiles.at(i), title, updateUrl, lastUpdate, languages, profileObject.value(QLatin1String("updateInterval")).toInt(), categoryTitles.value(profileObject.value(QLatin1String("category")).toString()), flags, m_instance));
+		ContentFiltersProfile *profile(new AdblockContentFiltersProfile(profileSummary, languages, flags, m_instance));
 
 		m_contentBlockingProfiles.append(profile);
 
