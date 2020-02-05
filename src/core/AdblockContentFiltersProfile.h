@@ -57,6 +57,7 @@ public:
 	QUrl getUpdateUrl() const override;
 	QDateTime getLastUpdate() const override;
 	static HeaderInformation loadHeader(QIODevice *device);
+	ProfileSummary getProfileSummary() const override;
 	ContentFiltersManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType) override;
 	ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly) override;
 	QVector<QLocale::Language> getLanguages() const override;
@@ -150,16 +151,12 @@ protected slots:
 private:
 	Node *m_root;
 	DataFetchJob *m_dataFetchJob;
-	QString m_name;
-	QString m_title;
-	QUrl m_updateUrl;
-	QDateTime m_lastUpdate;
+	ProfileSummary m_profileSummary;
 	QRegularExpression m_domainExpression;
 	QStringList m_cosmeticFiltersRules;
 	QVector<QLocale::Language> m_languages;
 	QMultiHash<QString, QString> m_cosmeticFiltersDomainRules;
 	QMultiHash<QString, QString> m_cosmeticFiltersDomainExceptions;
-	ProfileCategory m_category;
 	ProfileError m_error;
 	ProfileFlags m_flags;
 	int m_updateInterval;

@@ -41,11 +41,7 @@ QHash<NetworkManager::ResourceType, AdblockContentFiltersProfile::RuleOption> Ad
 AdblockContentFiltersProfile::AdblockContentFiltersProfile(const ContentFiltersProfile::ProfileSummary &profileSummary, const QStringList &languages, ContentFiltersProfile::ProfileFlags flags, QObject *parent) : ContentFiltersProfile(parent),
 	m_root(nullptr),
 	m_dataFetchJob(nullptr),
-	m_name(profileSummary.name),
-	m_title(profileSummary.title),
-	m_updateUrl(profileSummary.updateUrl),
-	m_lastUpdate(profileSummary.lastUpdate),
-	m_category(profileSummary.category),
+	m_profileSummary(profileSummary),
 	m_error(NoError),
 	m_flags(flags),
 	m_updateInterval(profileSummary.updateInterval),
@@ -118,10 +114,10 @@ void AdblockContentFiltersProfile::loadHeader()
 
 	if (!m_flags.testFlag(HasCustomTitleFlag) && !information.title.isEmpty())
 	{
-		m_title = information.title;
+		m_profileSummary.title = information.title;
 	}
 
-	if (!m_dataFetchJob && m_updateInterval > 0 && (!m_lastUpdate.isValid() || m_lastUpdate.daysTo(QDateTime::currentDateTimeUtc()) > m_updateInterval))
+	if (!m_dataFetchJob && m_updateInterval > 0 && (!m_profileSummary.lastUpdate.isValid() || m_profileSummary.lastUpdate.daysTo(QDateTime::currentDateTimeUtc()) > m_updateInterval))
 	{
 		update();
 	}
@@ -622,7 +618,7 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 
 	file.write(buffer.data());
 
-	m_lastUpdate = QDateTime::currentDateTimeUtc();
+	m_profileSummary.lastUpdate = QDateTime::currentDateTimeUtc();
 
 	if (!file.commit())
 	{
@@ -652,9 +648,9 @@ void AdblockContentFiltersProfile::setUpdateInterval(int interval)
 
 void AdblockContentFiltersProfile::setUpdateUrl(const QUrl &url)
 {
-	if (url.isValid() && url != m_updateUrl)
+	if (url.isValid() && url != m_profileSummary.updateUrl)
 	{
-		m_updateUrl = url;
+		m_profileSummary.updateUrl = url;
 
 		emit profileModified();
 	}
@@ -662,9 +658,9 @@ void AdblockContentFiltersProfile::setUpdateUrl(const QUrl &url)
 
 void AdblockContentFiltersProfile::setCategory(ProfileCategory category)
 {
-	if (category != m_category)
+	if (category != m_profileSummary.category)
 	{
-		m_category = category;
+		m_profileSummary.category = category;
 
 		emit profileModified();
 	}
@@ -672,9 +668,9 @@ void AdblockContentFiltersProfile::setCategory(ProfileCategory category)
 
 void AdblockContentFiltersProfile::setTitle(const QString &title)
 {
-	if (title != m_title)
+	if (title != m_profileSummary.title)
 	{
-		m_title = title;
+		m_profileSummary.title = title;
 		m_flags |= HasCustomTitleFlag;
 
 		emit profileModified();
@@ -683,27 +679,27 @@ void AdblockContentFiltersProfile::setTitle(const QString &title)
 
 QString AdblockContentFiltersProfile::getName() const
 {
-	return m_name;
+	return m_profileSummary.name;
 }
 
 QString AdblockContentFiltersProfile::getTitle() const
 {
-	return (m_title.isEmpty() ? tr("(Unknown)") : m_title);
+	return (m_profileSummary.title.isEmpty() ? tr("(Unknown)") : m_profileSummary.title);
 }
 
 QString AdblockContentFiltersProfile::getPath() const
 {
-	return SessionsManager::getWritableDataPath(QLatin1String("contentBlocking/%1.txt")).arg(m_name);
+	return SessionsManager::getWritableDataPath(QLatin1String("contentBlocking/%1.txt")).arg(m_profileSummary.name);
 }
 
 QDateTime AdblockContentFiltersProfile::getLastUpdate() const
 {
-	return m_lastUpdate;
+	return m_profileSummary.lastUpdate;
 }
 
 QUrl AdblockContentFiltersProfile::getUpdateUrl() const
 {
-	return m_updateUrl;
+	return m_profileSummary.updateUrl;
 }
 
 AdblockContentFiltersProfile::HeaderInformation AdblockContentFiltersProfile::loadHeader(QIODevice *device)
@@ -744,6 +740,11 @@ AdblockContentFiltersProfile::HeaderInformation AdblockContentFiltersProfile::lo
 	}
 
 	return information;
+}
+
+ContentFiltersProfile::ProfileSummary AdblockContentFiltersProfile::getProfileSummary() const
+{
+	return m_profileSummary;
 }
 
 ContentFiltersManager::CheckResult AdblockContentFiltersProfile::evaluateNodeRules(const Node *node, const QString &currentRule, const Request &request) const
@@ -828,7 +829,7 @@ QVector<QLocale::Language> AdblockContentFiltersProfile::getLanguages() const
 
 ContentFiltersProfile::ProfileCategory AdblockContentFiltersProfile::getCategory() const
 {
-	return m_category;
+	return m_profileSummary.category;
 }
 
 ContentFiltersProfile::ProfileError AdblockContentFiltersProfile::getError() const
@@ -904,7 +905,7 @@ bool AdblockContentFiltersProfile::loadRules()
 
 	m_error = NoError;
 
-	if (!QFile::exists(path) && !m_updateUrl.isEmpty())
+	if (!QFile::exists(path) && !m_profileSummary.updateUrl.isEmpty())
 	{
 		update();
 
@@ -945,7 +946,7 @@ bool AdblockContentFiltersProfile::update(const QUrl &url)
 		return false;
 	}
 
-	const QUrl updateUrl(url.isValid() ? url : m_updateUrl);
+	const QUrl updateUrl(url.isValid() ? url : m_profileSummary.updateUrl);
 
 	if (!updateUrl.isValid())
 	{
