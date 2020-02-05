@@ -47,10 +47,7 @@ public:
 	explicit AdblockContentFiltersProfile(const ProfileSummary &profileSummary, const QStringList &languages, ProfileFlags flags, QObject *parent = nullptr);
 
 	void clear() override;
-	void setCategory(ProfileCategory category) override;
-	void setTitle(const QString &title) override;
-	void setUpdateInterval(int interval) override;
-	void setUpdateUrl(const QUrl &url) override;
+	void setProfileSummary(const ProfileSummary &profileSummary) override;
 	QString getName() const override;
 	QString getTitle() const override;
 	QString getPath() const override;

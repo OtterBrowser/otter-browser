@@ -796,10 +796,7 @@ void ContentFiltersViewWidget::save()
 
 			if (profile)
 			{
-				profile->setTitle(profileSummary.title);
-				profile->setUpdateUrl(profileSummary.updateUrl);
-				profile->setCategory(profileSummary.category);
-				profile->setUpdateInterval(profileSummary.updateInterval);
+				profile->setProfileSummary(profileSummary);
 			}
 			else
 			{

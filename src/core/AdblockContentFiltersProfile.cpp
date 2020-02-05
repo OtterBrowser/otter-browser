@@ -636,45 +636,20 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 	emit profileModified();
 }
 
-void AdblockContentFiltersProfile::setUpdateInterval(int interval)
+void AdblockContentFiltersProfile::setProfileSummary(const ContentFiltersProfile::ProfileSummary &profileSummary)
 {
-	if (interval != m_updateInterval)
+	if (profileSummary.title != m_profileSummary.title)
 	{
-		m_updateInterval = interval;
-
-		emit profileModified();
-	}
-}
-
-void AdblockContentFiltersProfile::setUpdateUrl(const QUrl &url)
-{
-	if (url.isValid() && url != m_profileSummary.updateUrl)
-	{
-		m_profileSummary.updateUrl = url;
-
-		emit profileModified();
-	}
-}
-
-void AdblockContentFiltersProfile::setCategory(ProfileCategory category)
-{
-	if (category != m_profileSummary.category)
-	{
-		m_profileSummary.category = category;
-
-		emit profileModified();
-	}
-}
-
-void AdblockContentFiltersProfile::setTitle(const QString &title)
-{
-	if (title != m_profileSummary.title)
-	{
-		m_profileSummary.title = title;
 		m_flags |= HasCustomTitleFlag;
-
-		emit profileModified();
 	}
+	else if (profileSummary.updateUrl == m_profileSummary.updateUrl || profileSummary.updateInterval == m_profileSummary.updateInterval || profileSummary.category == m_profileSummary.category)
+	{
+		return;
+	}
+
+	m_profileSummary = profileSummary;
+
+	emit profileModified();
 }
 
 QString AdblockContentFiltersProfile::getName() const
