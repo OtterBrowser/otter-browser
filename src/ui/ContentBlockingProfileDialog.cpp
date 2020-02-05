@@ -32,10 +32,10 @@
 namespace Otter
 {
 
-ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersViewWidget::ProfileSummary &profileSummary, QWidget *parent) : Dialog(parent),
+ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersViewWidget::ProfileSummary &profileSummary, const QString &rulesPath, QWidget *parent) : Dialog(parent),
 	m_dataFetchJob(nullptr),
 	m_name(profileSummary.name),
-	m_rulesPath(profileSummary.rulesPath),
+	m_rulesPath(rulesPath),
 	m_lastUpdate(profileSummary.lastUpdate),
 	m_isSourceLoaded(false),
 	m_isUsingTemporaryFile(false),
@@ -331,12 +331,16 @@ QString ContentBlockingProfileDialog::createTemporaryFile()
 	return path;
 }
 
+QString ContentBlockingProfileDialog::getRulesPath() const
+{
+	return m_rulesPath;
+}
+
 ContentFiltersViewWidget::ProfileSummary ContentBlockingProfileDialog::getProfile() const
 {
 	ContentFiltersViewWidget::ProfileSummary profileSummary;
 	profileSummary.name = m_name;
 	profileSummary.title = m_ui->titleLineEdit->text();
-	profileSummary.rulesPath = m_rulesPath;
 	profileSummary.lastUpdate = m_lastUpdate;
 	profileSummary.updateUrl = QUrl(m_ui->updateUrLineEdit->text());
 	profileSummary.category = static_cast<ContentFiltersProfile::ProfileCategory>(m_ui->categoryComboBox->itemData(m_ui->categoryComboBox->currentIndex()).toInt());

@@ -41,9 +41,10 @@ class ContentBlockingProfileDialog final : public Dialog
 	Q_OBJECT
 
 public:
-	explicit ContentBlockingProfileDialog(const ContentFiltersViewWidget::ProfileSummary &profileSummary, QWidget *parent = nullptr);
+	explicit ContentBlockingProfileDialog(const ContentFiltersViewWidget::ProfileSummary &profileSummary, const QString &rulesPath = {}, QWidget *parent = nullptr);
 	~ContentBlockingProfileDialog();
 
+	QString getRulesPath() const;
 	ContentFiltersViewWidget::ProfileSummary getProfile() const;
 
 protected:

@@ -355,7 +355,7 @@ void ContentFiltersViewWidget::addProfile()
 	ProfileSummary profileSummary;
 	profileSummary.category = getCategory(index);
 
-	ContentBlockingProfileDialog dialog(profileSummary, this);
+	ContentBlockingProfileDialog dialog(profileSummary, {}, this);
 
 	if (dialog.exec() == QDialog::Accepted)
 	{
@@ -364,11 +364,11 @@ void ContentFiltersViewWidget::addProfile()
 
 		QList<QStandardItem*> items(createEntry(profileSummary));
 
-		if (!profileSummary.rulesPath.isEmpty())
+		if (!dialog.getRulesPath().isEmpty())
 		{
-			m_filesToRemove.append(profileSummary.rulesPath);
+			m_filesToRemove.append(dialog.getRulesPath());
 
-			items[0]->setData(profileSummary.rulesPath, ImportPathRole);
+			items[0]->setData(dialog.getRulesPath(), ImportPathRole);
 		}
 
 		appendProfile(items, profileSummary.category);
@@ -407,10 +407,9 @@ void ContentFiltersViewWidget::importProfileFromFile()
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
 	ProfileSummary profileSummary;
 	profileSummary.title = information.title;
-	profileSummary.rulesPath = path;
 	profileSummary.category = getCategory(index);
 
-	ContentBlockingProfileDialog dialog(profileSummary, this);
+	ContentBlockingProfileDialog dialog(profileSummary, path, this);
 
 	if (dialog.exec() == QDialog::Accepted)
 	{
@@ -445,7 +444,7 @@ void ContentFiltersViewWidget::importProfileFromUrl()
 	profileSummary.updateUrl = url;
 	profileSummary.category = getCategory(index);
 
-	ContentBlockingProfileDialog dialog(profileSummary, this);
+	ContentBlockingProfileDialog dialog(profileSummary, {}, this);
 
 	if (dialog.exec() == QDialog::Accepted)
 	{
@@ -453,9 +452,9 @@ void ContentFiltersViewWidget::importProfileFromUrl()
 		profileSummary.name = Utils::createIdentifier(QFileInfo(profileSummary.updateUrl.fileName()).completeBaseName(), getProfileNames());
 
 		QList<QStandardItem*> items(createEntry(profileSummary));
-		items[0]->setData(profileSummary.rulesPath, ImportPathRole);
+		items[0]->setData(dialog.getRulesPath(), ImportPathRole);
 
-		m_filesToRemove.append(profileSummary.rulesPath);
+		m_filesToRemove.append(dialog.getRulesPath());
 
 		appendProfile(items, profileSummary.category);
 	}
@@ -477,17 +476,7 @@ void ContentFiltersViewWidget::editProfile()
 		profileSummary.updateInterval = index.sibling(index.row(), 1).data(Qt::DisplayRole).toInt();
 
 		ContentFiltersProfile *profile(ContentFiltersManager::getProfile(profileSummary.name));
-
-		if (profile)
-		{
-			profileSummary.rulesPath = profile->getPath();
-		}
-		else
-		{
-			profileSummary.rulesPath = index.data(ImportPathRole).toString();
-		}
-
-		ContentBlockingProfileDialog dialog(profileSummary, this);
+		ContentBlockingProfileDialog dialog(profileSummary, (profile ? profile->getPath() : index.data(ImportPathRole).toString()), this);
 
 		if (dialog.exec() == QDialog::Accepted)
 		{

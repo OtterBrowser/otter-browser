@@ -74,7 +74,6 @@ public:
 	{
 		QString name;
 		QString title;
-		QString rulesPath;
 		QDateTime lastUpdate;
 		QUrl updateUrl;
 		ContentFiltersProfile::ProfileCategory category = ContentFiltersProfile::OtherCategory;
