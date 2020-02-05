@@ -192,7 +192,9 @@ bool HandlersManager::handleUrl(const QUrl &url)
 						return false;
 					}
 
-					if (!AdblockContentFiltersProfile::create(Utils::createIdentifier(QFileInfo(location.path()).baseName(), ContentFiltersManager::getProfileNames()), profileSummary.title, location, profileSummary.lastUpdate, profileSummary.updateInterval, profileSummary.category, &file))
+					profileSummary.name = Utils::createIdentifier(QFileInfo(location.path()).baseName(), ContentFiltersManager::getProfileNames());
+
+					if (!AdblockContentFiltersProfile::create(profileSummary, &file))
 					{
 						QMessageBox::critical(QApplication::activeWindow(), tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
 					}

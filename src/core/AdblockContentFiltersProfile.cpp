@@ -851,9 +851,9 @@ int AdblockContentFiltersProfile::getUpdateProgress() const
 	return (m_dataFetchJob ? m_dataFetchJob->getProgress() : -1);
 }
 
-bool AdblockContentFiltersProfile::create(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime &lastUpdate, int updateInterval, ProfileCategory category, QIODevice *rules, bool canOverwriteExisting)
+bool AdblockContentFiltersProfile::create(const ContentFiltersProfile::ProfileSummary &profileSummary, QIODevice *rulesDevice, bool canOverwriteExisting)
 {
-	const QString path(SessionsManager::getWritableDataPath(QStringLiteral("contentBlocking/%1.txt")).arg(name));
+	const QString path(SessionsManager::getWritableDataPath(QStringLiteral("contentBlocking/%1.txt")).arg(profileSummary.name));
 
 	if (SessionsManager::isReadOnly() || (!canOverwriteExisting && QFile::exists(path)))
 	{
@@ -862,7 +862,7 @@ bool AdblockContentFiltersProfile::create(const QString &name, const QString &ti
 		return false;
 	}
 
-	if (rules)
+	if (rulesDevice)
 	{
 		QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking")));
 
@@ -875,22 +875,22 @@ bool AdblockContentFiltersProfile::create(const QString &name, const QString &ti
 			return false;
 		}
 
-		file.write(rules->readAll());
+		file.write(rulesDevice->readAll());
 		file.close();
 	}
 
 	ProfileFlags flags(NoFlags);
 
-	if (!title.isEmpty())
+	if (!profileSummary.title.isEmpty())
 	{
 		flags |= HasCustomTitleFlag;
 	}
 
-	AdblockContentFiltersProfile *profile(new AdblockContentFiltersProfile(name, title, updateUrl, lastUpdate, {}, updateInterval, category, flags, ContentFiltersManager::getInstance()));
+	AdblockContentFiltersProfile *profile(new AdblockContentFiltersProfile(profileSummary.name, profileSummary.title, profileSummary.updateUrl, profileSummary.lastUpdate, {}, profileSummary.updateInterval, profileSummary.category, flags, ContentFiltersManager::getInstance()));
 
 	ContentFiltersManager::addProfile(profile);
 
-	if (!rules && updateUrl.isValid())
+	if (!rulesDevice && profileSummary.updateUrl.isValid())
 	{
 		profile->update();
 	}

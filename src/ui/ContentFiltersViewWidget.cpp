@@ -786,19 +786,15 @@ void ContentFiltersViewWidget::save()
 				continue;
 			}
 
-			const QString name(entryIndex.data(NameRole).toString());
-			const QString title(entryIndex.data(TitleRole).toString());
-			const QUrl updateUrl(entryIndex.data(UpdateUrlRole).toUrl());
-			const int updateInterval(entryIndex.sibling(entryIndex.row(), 1).data(Qt::DisplayRole).toInt());
-			ContentFiltersProfile::ProfileCategory category(static_cast<ContentFiltersProfile::ProfileCategory>(categoryIndex.data(CategoryRole).toInt()));
-			ContentFiltersProfile *profile(ContentFiltersManager::getProfile(name));
+			const ContentFiltersProfile::ProfileSummary profileSummary(getProfileSummary(entryIndex));
+			ContentFiltersProfile *profile(ContentFiltersManager::getProfile(profileSummary.name));
 
 			if (profile)
 			{
-				profile->setTitle(title);
-				profile->setUpdateUrl(updateUrl);
-				profile->setCategory(category);
-				profile->setUpdateInterval(updateInterval);
+				profile->setTitle(profileSummary.title);
+				profile->setUpdateUrl(profileSummary.updateUrl);
+				profile->setCategory(profileSummary.category);
+				profile->setUpdateInterval(profileSummary.updateInterval);
 			}
 			else
 			{
@@ -827,7 +823,7 @@ void ContentFiltersViewWidget::save()
 					}
 				}
 
-				if (!AdblockContentFiltersProfile::create(name, title, updateUrl, entryIndex.data(UpdateTimeRole).toDateTime(), updateInterval, category, device))
+				if (!AdblockContentFiltersProfile::create(profileSummary, device))
 				{
 					if (device)
 					{
@@ -851,7 +847,7 @@ void ContentFiltersViewWidget::save()
 
 			if (entryIndex.data(Qt::CheckStateRole).toBool())
 			{
-				profiles.append(name);
+				profiles.append(profileSummary.name);
 			}
 		}
 	}
