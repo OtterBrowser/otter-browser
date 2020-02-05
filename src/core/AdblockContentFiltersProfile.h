@@ -156,7 +156,6 @@ private:
 	QMultiHash<QString, QString> m_cosmeticFiltersDomainExceptions;
 	ProfileError m_error;
 	ProfileFlags m_flags;
-	int m_updateInterval;
 	bool m_wasLoaded;
 
 	static QVector<QChar> m_separators;

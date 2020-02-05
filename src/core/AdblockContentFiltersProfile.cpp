@@ -44,7 +44,6 @@ AdblockContentFiltersProfile::AdblockContentFiltersProfile(const ContentFiltersP
 	m_profileSummary(profileSummary),
 	m_error(NoError),
 	m_flags(flags),
-	m_updateInterval(profileSummary.updateInterval),
 	m_wasLoaded(false)
 {
 	if (languages.isEmpty())
@@ -117,7 +116,7 @@ void AdblockContentFiltersProfile::loadHeader()
 		m_profileSummary.title = information.title;
 	}
 
-	if (!m_dataFetchJob && m_updateInterval > 0 && (!m_profileSummary.lastUpdate.isValid() || m_profileSummary.lastUpdate.daysTo(QDateTime::currentDateTimeUtc()) > m_updateInterval))
+	if (!m_dataFetchJob && m_profileSummary.updateInterval > 0 && (!m_profileSummary.lastUpdate.isValid() || m_profileSummary.lastUpdate.daysTo(QDateTime::currentDateTimeUtc()) > m_profileSummary.updateInterval))
 	{
 		update();
 	}
@@ -819,7 +818,7 @@ ContentFiltersProfile::ProfileFlags AdblockContentFiltersProfile::getFlags() con
 
 int AdblockContentFiltersProfile::getUpdateInterval() const
 {
-	return m_updateInterval;
+	return m_profileSummary.updateInterval;
 }
 
 int AdblockContentFiltersProfile::getUpdateProgress() const
