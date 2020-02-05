@@ -90,6 +90,7 @@ protected:
 	void contextMenuEvent(QContextMenuEvent *event) override;
 	void appendProfile(QList<QStandardItem*> items, ContentFiltersProfile::ProfileCategory category);
 	void moveProfile(QStandardItem *entryItem, ContentFiltersProfile::ProfileCategory newCategory);
+	ContentFiltersProfile::ProfileSummary getProfileSummary(const QModelIndex &index) const;
 	QStringList createLanguagesList(const ContentFiltersProfile *profile) const;
 	QStringList getProfileNames() const;
 	QList<QStandardItem*> createEntry(const ContentFiltersProfile *profile, const QStringList &profiles) const;

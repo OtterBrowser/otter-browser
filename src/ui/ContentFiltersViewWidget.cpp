@@ -467,14 +467,7 @@ void ContentFiltersViewWidget::editProfile()
 
 	if (item)
 	{
-		ContentFiltersProfile::ProfileSummary profileSummary;
-		profileSummary.name = index.data(NameRole).toString();
-		profileSummary.title = index.data(TitleRole).toString();
-		profileSummary.lastUpdate = index.data(UpdateTimeRole).toDateTime();
-		profileSummary.updateUrl = index.data(UpdateUrlRole).toUrl();
-		profileSummary.category = static_cast<ContentFiltersProfile::ProfileCategory>(index.parent().data(CategoryRole).toInt());
-		profileSummary.updateInterval = index.sibling(index.row(), 1).data(Qt::DisplayRole).toInt();
-
+		ContentFiltersProfile::ProfileSummary profileSummary(getProfileSummary(index));
 		ContentFiltersProfile *profile(ContentFiltersManager::getProfile(profileSummary.name));
 		ContentBlockingProfileDialog dialog(profileSummary, (profile ? profile->getPath() : index.data(ImportPathRole).toString()), this);
 
@@ -881,6 +874,19 @@ Animation* ContentFiltersViewWidget::getUpdateAnimation()
 QString ContentFiltersViewWidget::getHost() const
 {
 	return m_host;
+}
+
+ContentFiltersProfile::ProfileSummary ContentFiltersViewWidget::getProfileSummary(const QModelIndex &index) const
+{
+	ContentFiltersProfile::ProfileSummary profileSummary;
+	profileSummary.name = index.data(NameRole).toString();
+	profileSummary.title = index.data(TitleRole).toString();
+	profileSummary.lastUpdate = index.data(UpdateTimeRole).toDateTime();
+	profileSummary.updateUrl = index.data(UpdateUrlRole).toUrl();
+	profileSummary.category = static_cast<ContentFiltersProfile::ProfileCategory>(index.parent().data(CategoryRole).toInt());
+	profileSummary.updateInterval = index.sibling(index.row(), 1).data(Qt::DisplayRole).toInt();
+
+	return profileSummary;
 }
 
 QStringList ContentFiltersViewWidget::createLanguagesList(const ContentFiltersProfile *profile) const
