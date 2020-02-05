@@ -93,8 +93,7 @@ protected:
 	ContentFiltersProfile::ProfileSummary getProfileSummary(const QModelIndex &index) const;
 	QStringList createLanguagesList(const ContentFiltersProfile *profile) const;
 	QStringList getProfileNames() const;
-	QList<QStandardItem*> createEntry(const ContentFiltersProfile *profile, const QStringList &profiles) const;
-	QList<QStandardItem*> createEntry(const ContentFiltersProfile::ProfileSummary &profileSummary) const;
+	QList<QStandardItem*> createEntry(const ContentFiltersProfile::ProfileSummary &profileSummary, const QStringList &profiles = {}) const;
 	ContentFiltersProfile::ProfileCategory getCategory(const QModelIndex &index) const;
 
 protected slots:

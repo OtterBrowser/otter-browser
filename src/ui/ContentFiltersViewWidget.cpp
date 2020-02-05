@@ -213,11 +213,14 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 
 	for (int i = 0; i < contentBlockingProfiles.count(); ++i)
 	{
-		const QList<QStandardItem*> profileItems(createEntry(contentBlockingProfiles.at(i), profiles));
+		const ContentFiltersProfile *profile(contentBlockingProfiles.at(i));
+		QList<QStandardItem*> profileItems(createEntry(profile->getProfileSummary(), profiles));
 		const ContentFiltersProfile::ProfileCategory category(contentBlockingProfiles.at(i)->getCategory());
 
 		if (!profileItems.isEmpty())
 		{
+			profileItems[0]->setData(createLanguagesList(profile), LanguagesRole);
+
 			if (!categoryEntries.contains(category))
 			{
 				categoryEntries[category] = {};
@@ -580,7 +583,7 @@ void ContentFiltersViewWidget::handleProfileAdded(const QString &name)
 
 		if (categoryIndex.data(CategoryRole).toInt() == profile->getCategory())
 		{
-			const QList<QStandardItem*> profileItems(createEntry(profile, {}));
+			QList<QStandardItem*> profileItems(createEntry(profile->getProfileSummary()));
 
 			if (!profileItems.isEmpty())
 			{
@@ -588,6 +591,8 @@ void ContentFiltersViewWidget::handleProfileAdded(const QString &name)
 
 				if (categoryItem)
 				{
+					profileItems[0]->setData(createLanguagesList(profile));
+
 					categoryItem->appendRow(profileItems);
 
 					if (getRowCount(categoryItem->index()) == 1)
@@ -923,28 +928,7 @@ QStringList ContentFiltersViewWidget::getProfileNames() const
 	return profiles;
 }
 
-QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFiltersProfile *profile, const QStringList &profiles) const
-{
-	const QString name(profile->getName());
-	QList<QStandardItem*> items({new QStandardItem(profile->getTitle()), new QStandardItem(QString::number(profile->getUpdateInterval())), new QStandardItem(Utils::formatDateTime(profile->getLastUpdate()))});
-	items[0]->setData(name, NameRole);
-	items[0]->setData(false, HasErrorRole);
-	items[0]->setData(false, IsShowingProgressIndicatorRole);
-	items[0]->setData(false, IsUpdatingRole);
-	items[0]->setData(createLanguagesList(profile), LanguagesRole);
-	items[0]->setData(-1, UpdateProgressValueRole);
-	items[0]->setData(profile->getLastUpdate(), UpdateTimeRole);
-	items[0]->setData(profile->getUpdateUrl(), UpdateUrlRole);
-	items[0]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-	items[0]->setCheckable(true);
-	items[0]->setCheckState(profiles.contains(name) ? Qt::Checked : Qt::Unchecked);
-	items[1]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
-	items[2]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-
-	return items;
-}
-
-QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFiltersProfile::ProfileSummary &profileSummary) const
+QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFiltersProfile::ProfileSummary &profileSummary, const QStringList &profiles) const
 {
 	QList<QStandardItem*> items({new QStandardItem(profileSummary.title), new QStandardItem(QString::number(profileSummary.updateInterval)), new QStandardItem(Utils::formatDateTime(profileSummary.lastUpdate))});
 	items[0]->setData(profileSummary.name, NameRole);
@@ -956,6 +940,7 @@ QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFilters
 	items[0]->setData(profileSummary.lastUpdate, UpdateTimeRole);
 	items[0]->setData(profileSummary.updateUrl, UpdateUrlRole);
 	items[0]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items[0]->setCheckState(profiles.contains(profileSummary.name) ? Qt::Checked : Qt::Unchecked);
 	items[0]->setCheckable(true);
 	items[1]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
 	items[2]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
