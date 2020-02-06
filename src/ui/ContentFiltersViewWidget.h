@@ -100,6 +100,7 @@ protected:
 	ContentFiltersProfile::ProfileCategory getCategory(const QModelIndex &index) const;
 
 protected slots:
+	void handleDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles);
 	void handleProfileAdded(const QString &name);
 	void handleProfileModified(const QString &name);
 	void handleProfileRemoved(const QString &name);

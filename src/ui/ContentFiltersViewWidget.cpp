@@ -261,6 +261,7 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 
 	expandAll();
 
+	connect(m_model, &QStandardItemModel::dataChanged, this, &ContentFiltersViewWidget::handleDataChanged);
 	connect(selectionModel(), &QItemSelectionModel::currentChanged, this, &ContentFiltersViewWidget::updateSelection);
 	connect(ContentFiltersManager::getInstance(), &ContentFiltersManager::profileAdded, this, &ContentFiltersViewWidget::handleProfileAdded);
 	connect(ContentFiltersManager::getInstance(), &ContentFiltersManager::profileModified, this, &ContentFiltersViewWidget::handleProfileModified);
@@ -586,6 +587,16 @@ void ContentFiltersViewWidget::updateSelection()
 	}
 }
 
+void ContentFiltersViewWidget::handleDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
+{
+	Q_UNUSED(topLeft)
+
+	if (bottomRight.column() >= 1 || roles.contains(Qt::CheckStateRole))
+	{
+		markProfilesAsModified();
+	}
+}
+
 void ContentFiltersViewWidget::handleProfileAdded(const QString &name)
 {
 	const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(name));
@@ -761,6 +772,8 @@ void ContentFiltersViewWidget::setHost(const QString &host)
 		return;
 	}
 
+	disconnect(m_model, &QStandardItemModel::dataChanged, this, &ContentFiltersViewWidget::handleDataChanged);
+
 	const QStringList profiles(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption, host).toStringList());
 
 	m_host = host;
@@ -776,6 +789,8 @@ void ContentFiltersViewWidget::setHost(const QString &host)
 			m_model->setData(entryIndex, (profiles.contains(entryIndex.data(NameRole).toString()) ? Qt::Checked : Qt::Unchecked), Qt::CheckStateRole);
 		}
 	}
+
+	connect(m_model, &QStandardItemModel::dataChanged, this, &ContentFiltersViewWidget::handleDataChanged);
 }
 
 void ContentFiltersViewWidget::save()
