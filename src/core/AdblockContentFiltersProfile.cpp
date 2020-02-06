@@ -637,16 +637,23 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 
 void AdblockContentFiltersProfile::setProfileSummary(const ContentFiltersProfile::ProfileSummary &profileSummary)
 {
+	const bool needsReload(profileSummary.cosmeticFiltersMode != m_profileSummary.cosmeticFiltersMode || profileSummary.areWildcardsEnabled != m_profileSummary.areWildcardsEnabled);
+
 	if (profileSummary.title != m_profileSummary.title)
 	{
 		m_flags |= HasCustomTitleFlag;
 	}
-	else if (profileSummary.updateUrl == m_profileSummary.updateUrl || profileSummary.updateInterval == m_profileSummary.updateInterval || profileSummary.category == m_profileSummary.category)
+	else if (!needsReload && profileSummary.updateUrl == m_profileSummary.updateUrl && profileSummary.updateInterval == m_profileSummary.updateInterval && profileSummary.category == m_profileSummary.category)
 	{
 		return;
 	}
 
 	m_profileSummary = profileSummary;
+
+	if (needsReload)
+	{
+		clear();
+	}
 
 	emit profileModified();
 }
