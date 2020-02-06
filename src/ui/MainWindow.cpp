@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -36,7 +36,6 @@
 #include "WidgetFactory.h"
 #include "Window.h"
 #include "WorkspaceWidget.h"
-#include "preferences/ContentBlockingDialog.h"
 #include "../core/ActionsManager.h"
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
@@ -1075,8 +1074,12 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 			return;
 		case ActionsManager::ContentBlockingAction:
 			{
-				ContentBlockingDialog dialog(this);
-				dialog.exec();
+				const QUrl url(QLatin1String("about:content-filters"));
+
+				if (!SessionsManager::hasUrl(url, true))
+				{
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, trigger);
+				}
 			}
 
 			return;

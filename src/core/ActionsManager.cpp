@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -444,7 +444,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ResetToolBarsAction, QT_TRANSLATE_NOOP("actions", "Reset to Defaults…"), QT_TRANSLATE_NOOP("actions", "Reset Toolbars to Defaults…"), {}, ActionDefinition::ApplicationScope);
 	registerAction(ShowPanelAction, QT_TRANSLATE_NOOP("actions", "Show Panel"), QT_TRANSLATE_NOOP("actions", "Show Specified Panel in Sidebar"), {}, ActionDefinition::MainWindowScope);
 	registerAction(OpenPanelAction, QT_TRANSLATE_NOOP("actions", "Open Panel as Tab"), QT_TRANSLATE_NOOP("actions", "Open Curent Sidebar Panel as Tab"), ThemesManager::createIcon(QLatin1String("arrow-right")), ActionDefinition::MainWindowScope);
-	registerAction(ContentBlockingAction, QT_TRANSLATE_NOOP("actions", "Content Blocking…"), {}, ThemesManager::createIcon(QLatin1String("content-blocking")), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
+	registerAction(ContentBlockingAction, QT_TRANSLATE_NOOP("actions", "Content Blocking"), {}, ThemesManager::createIcon(QLatin1String("content-blocking")), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(HistoryAction, QT_TRANSLATE_NOOP("actions", "View History"), {}, ThemesManager::createIcon(QLatin1String("view-history")), ActionDefinition::MainWindowScope);
 	registerAction(ClearHistoryAction, QT_TRANSLATE_NOOP("actions", "Clear History…"), {}, ThemesManager::createIcon(QLatin1String("edit-clear-history")), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(AddonsAction, QT_TRANSLATE_NOOP("actions", "Addons"), {}, ThemesManager::createIcon(QLatin1String("preferences-plugin")), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
