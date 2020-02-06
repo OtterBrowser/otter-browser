@@ -73,8 +73,6 @@ public:
 	static QVector<ContentFiltersProfile*> getContentBlockingProfiles();
 	static QVector<ContentFiltersProfile*> getFraudCheckingProfiles();
 	static QVector<int> getProfileIdentifiers(const QStringList &names);
-	static CosmeticFiltersMode getCosmeticFiltersMode();
-	static bool areWildcardsEnabled();
 	static bool isFraud(const QUrl &url);
 
 protected:
@@ -139,7 +137,9 @@ public:
 		QDateTime lastUpdate;
 		QUrl updateUrl;
 		ProfileCategory category = OtherCategory;
+		ContentFiltersManager::CosmeticFiltersMode cosmeticFiltersMode = ContentFiltersManager::AllFilters;
 		int updateInterval = 0;
+		bool areWildcardsEnabled = false;
 	};
 
 	explicit ContentFiltersProfile(QObject *parent = nullptr);
@@ -156,12 +156,14 @@ public:
 	virtual ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly);
 	virtual QVector<QLocale::Language> getLanguages() const;
 	virtual ProfileCategory getCategory() const;
+	virtual ContentFiltersManager::CosmeticFiltersMode getCosmeticFiltersMode() const = 0;
 	virtual ProfileError getError() const = 0;
 	virtual ProfileFlags getFlags() const = 0;
 	virtual int getUpdateInterval() const = 0;
 	virtual int getUpdateProgress() const = 0;
 	virtual bool update(const QUrl &url = {}) = 0;
 	virtual bool remove() = 0;
+	virtual bool areWildcardsEnabled() const = 0;
 	virtual bool isUpdating() const = 0;
 	virtual bool isFraud(const QUrl &url);
 

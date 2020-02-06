@@ -131,7 +131,7 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 
 	if (rule.startsWith(QLatin1String("##")))
 	{
-		if (ContentFiltersManager::getCosmeticFiltersMode() == ContentFiltersManager::AllFilters)
+		if (m_profileSummary.cosmeticFiltersMode == ContentFiltersManager::AllFilters)
 		{
 			m_cosmeticFiltersRules.append(rule.mid(2));
 		}
@@ -141,7 +141,7 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 
 	if (rule.contains(QLatin1String("##")))
 	{
-		if (ContentFiltersManager::getCosmeticFiltersMode() != ContentFiltersManager::NoFilters)
+		if (m_profileSummary.cosmeticFiltersMode != ContentFiltersManager::NoFilters)
 		{
 			parseStyleSheetRule(rule.split(QLatin1String("##")), m_cosmeticFiltersDomainRules);
 		}
@@ -151,7 +151,7 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 
 	if (rule.contains(QLatin1String("#@#")))
 	{
-		if (ContentFiltersManager::getCosmeticFiltersMode() != ContentFiltersManager::NoFilters)
+		if (m_profileSummary.cosmeticFiltersMode != ContentFiltersManager::NoFilters)
 		{
 			parseStyleSheetRule(rule.split(QLatin1String("#@#")), m_cosmeticFiltersDomainExceptions);
 		}
@@ -178,7 +178,7 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 		line = line.mid(1);
 	}
 
-	if (!ContentFiltersManager::areWildcardsEnabled() && line.contains(QLatin1Char('*')))
+	if (!m_profileSummary.areWildcardsEnabled && line.contains(QLatin1Char('*')))
 	{
 		return;
 	}
@@ -806,6 +806,11 @@ ContentFiltersProfile::ProfileCategory AdblockContentFiltersProfile::getCategory
 	return m_profileSummary.category;
 }
 
+ContentFiltersManager::CosmeticFiltersMode AdblockContentFiltersProfile::getCosmeticFiltersMode() const
+{
+	return m_profileSummary.cosmeticFiltersMode;
+}
+
 ContentFiltersProfile::ProfileError AdblockContentFiltersProfile::getError() const
 {
 	return m_error;
@@ -978,6 +983,11 @@ bool AdblockContentFiltersProfile::resolveDomainExceptions(const QString &url, c
 	}
 
 	return false;
+}
+
+bool AdblockContentFiltersProfile::areWildcardsEnabled() const
+{
+	return m_profileSummary.areWildcardsEnabled;
 }
 
 bool AdblockContentFiltersProfile::isUpdating() const

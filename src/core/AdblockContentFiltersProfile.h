@@ -59,6 +59,7 @@ public:
 	ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly) override;
 	QVector<QLocale::Language> getLanguages() const override;
 	ProfileCategory getCategory() const override;
+	ContentFiltersManager::CosmeticFiltersMode getCosmeticFiltersMode() const override;
 	ProfileError getError() const override;
 	ProfileFlags getFlags() const override;
 	int getUpdateInterval() const override;
@@ -66,6 +67,7 @@ public:
 	static bool create(const ProfileSummary &profileSummary, QIODevice *rulesDevice = nullptr, bool canOverwriteExisting = false);
 	bool update(const QUrl &url = {}) override;
 	bool remove() override;
+	bool areWildcardsEnabled() const override;
 	bool isUpdating() const override;
 
 protected:

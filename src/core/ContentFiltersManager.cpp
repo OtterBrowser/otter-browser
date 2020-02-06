@@ -109,6 +109,8 @@ void ContentFiltersManager::initialize()
 		const QJsonObject bundledProfileObject(bundledMainObject.value(profiles.at(i)).toObject());
 		ContentFiltersProfile::ProfileSummary profileSummary;
 		profileSummary.name = profiles.at(i);
+		profileSummary.cosmeticFiltersMode = m_cosmeticFiltersMode;
+		profileSummary.areWildcardsEnabled = m_areWildcardsEnabled;
 
 		ContentFiltersProfile::ProfileFlags flags(ContentFiltersProfile::NoFlags);
 
@@ -544,16 +546,6 @@ QVector<int> ContentFiltersManager::getProfileIdentifiers(const QStringList &nam
 	}
 
 	return identifiers;
-}
-
-ContentFiltersManager::CosmeticFiltersMode ContentFiltersManager::getCosmeticFiltersMode()
-{
-	return m_cosmeticFiltersMode;
-}
-
-bool ContentFiltersManager::areWildcardsEnabled()
-{
-	return m_areWildcardsEnabled;
 }
 
 bool ContentFiltersManager::isFraud(const QUrl &url)
