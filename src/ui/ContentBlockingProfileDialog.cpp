@@ -43,6 +43,7 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersP
 	m_ui(new Ui::ContentBlockingProfileDialog)
 {
 	m_ui->setupUi(this);
+	m_ui->titleLineEdit->setText(profileSummary.title);
 	m_ui->categoryComboBox->addItem(tr("Advertisements"), ContentFiltersProfile::AdvertisementsCategory);
 	m_ui->categoryComboBox->addItem(tr("Annoyance"), ContentFiltersProfile::AnnoyanceCategory);
 	m_ui->categoryComboBox->addItem(tr("Privacy"), ContentFiltersProfile::PrivacyCategory);
@@ -50,10 +51,11 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersP
 	m_ui->categoryComboBox->addItem(tr("Regional"), ContentFiltersProfile::RegionalCategory);
 	m_ui->categoryComboBox->addItem(tr("Other"), ContentFiltersProfile::OtherCategory);
 	m_ui->categoryComboBox->setCurrentIndex(m_ui->categoryComboBox->findData(profileSummary.category));
-	m_ui->cosmeticFiltersComboBox->addItem(tr("All"), QLatin1String("all"));
-	m_ui->cosmeticFiltersComboBox->addItem(tr("Domain specific only"), QLatin1String("domainOnly"));
-	m_ui->cosmeticFiltersComboBox->addItem(tr("None"), QLatin1String("none"));
-	m_ui->titleLineEdit->setText(profileSummary.title);
+	m_ui->cosmeticFiltersComboBox->addItem(tr("All"), ContentFiltersManager::AllFilters);
+	m_ui->cosmeticFiltersComboBox->addItem(tr("Domain specific only"), ContentFiltersManager::DomainOnlyFilters);
+	m_ui->cosmeticFiltersComboBox->addItem(tr("None"), ContentFiltersManager::NoFilters);
+	m_ui->cosmeticFiltersComboBox->setCurrentIndex(m_ui->cosmeticFiltersComboBox->findData(profileSummary.cosmeticFiltersMode));
+	m_ui->enableWildcardsCheckBox->setChecked(profileSummary.areWildcardsEnabled);
 	m_ui->updateUrLineEdit->setText(profileSummary.updateUrl.toString());
 	m_ui->updateIntervalSpinBox->setValue(profileSummary.updateInterval);
 	m_ui->progressBar->hide();
@@ -354,8 +356,10 @@ ContentFiltersProfile::ProfileSummary ContentBlockingProfileDialog::getProfile()
 	profileSummary.title = m_ui->titleLineEdit->text();
 	profileSummary.lastUpdate = m_lastUpdate;
 	profileSummary.updateUrl = QUrl(m_ui->updateUrLineEdit->text());
-	profileSummary.category = static_cast<ContentFiltersProfile::ProfileCategory>(m_ui->categoryComboBox->itemData(m_ui->categoryComboBox->currentIndex()).toInt());
+	profileSummary.category = static_cast<ContentFiltersProfile::ProfileCategory>(m_ui->categoryComboBox->currentData().toInt());
+	profileSummary.cosmeticFiltersMode = static_cast<ContentFiltersManager::CosmeticFiltersMode>(m_ui->cosmeticFiltersComboBox->currentData().toInt());
 	profileSummary.updateInterval = m_ui->updateIntervalSpinBox->value();
+	profileSummary.areWildcardsEnabled = m_ui->enableWildcardsCheckBox->isChecked();
 
 	return profileSummary;
 }
