@@ -195,7 +195,8 @@ QString ContentFiltersIntervalDelegate::displayText(const QVariant &value, const
 Animation* ContentFiltersViewWidget::m_updateAnimation = nullptr;
 
 ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWidget(parent),
-	m_model(new QStandardItemModel(this))
+	m_model(new QStandardItemModel(this)),
+	m_areProfilesModified(false)
 {
 	setModel(m_model);
 	setViewMode(ItemViewWidget::TreeView);
@@ -316,6 +317,16 @@ void ContentFiltersViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu.exec(event->globalPos());
 }
 
+void ContentFiltersViewWidget::markProfilesAsModified()
+{
+	if (!m_areProfilesModified)
+	{
+		m_areProfilesModified = true;
+
+		emit areProfilesModifiedChanged(true);
+	}
+}
+
 void ContentFiltersViewWidget::appendProfile(QList<QStandardItem*> items, ContentFiltersProfile::ProfileCategory category)
 {
 	for (int i = 0; i < getRowCount(); ++i)
@@ -375,6 +386,7 @@ void ContentFiltersViewWidget::addProfile()
 		}
 
 		appendProfile(items, profileSummary.category);
+		markProfilesAsModified();
 	}
 }
 
@@ -423,6 +435,7 @@ void ContentFiltersViewWidget::importProfileFromFile()
 		items[0]->setData(path, ImportPathRole);
 
 		appendProfile(items, profileSummary.category);
+		markProfilesAsModified();
 	}
 }
 
@@ -460,6 +473,7 @@ void ContentFiltersViewWidget::importProfileFromUrl()
 		m_filesToRemove.append(dialog.getRulesPath());
 
 		appendProfile(items, profileSummary.category);
+		markProfilesAsModified();
 	}
 }
 
@@ -489,6 +503,8 @@ void ContentFiltersViewWidget::editProfile()
 			{
 				moveProfile(item, profileSummary.category);
 			}
+
+			markProfilesAsModified();
 		}
 	}
 }
@@ -512,18 +528,20 @@ void ContentFiltersViewWidget::removeProfile()
 	if (messageBox.exec() == QMessageBox::Yes)
 	{
 		m_profilesToRemove[profile->getName()] = (messageBox.checkBox() && messageBox.checkBox()->isChecked());
-	}
 
-	QStandardItem *categoryItem(m_model->itemFromIndex(index.parent()));
+		QStandardItem *categoryItem(m_model->itemFromIndex(index.parent()));
 
-	if (categoryItem)
-	{
-		categoryItem->removeRow(index.row());
-
-		if (getRowCount(categoryItem->index()) == 0)
+		if (categoryItem)
 		{
-			setRowHidden(categoryItem->row(), m_model->invisibleRootItem()->index(), true);
+			categoryItem->removeRow(index.row());
+
+			if (getRowCount(categoryItem->index()) == 0)
+			{
+				setRowHidden(categoryItem->row(), m_model->invisibleRootItem()->index(), true);
+			}
 		}
+
+		markProfilesAsModified();
 	}
 }
 
@@ -862,6 +880,10 @@ void ContentFiltersViewWidget::save()
 	m_filesToRemove.clear();
 
 	SettingsManager::setOption(SettingsManager::ContentBlocking_ProfilesOption, profiles, m_host);
+
+	m_areProfilesModified = false;
+
+	emit areProfilesModifiedChanged(false);
 }
 
 Animation* ContentFiltersViewWidget::getUpdateAnimation()

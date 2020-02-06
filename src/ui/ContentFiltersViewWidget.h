@@ -53,6 +53,8 @@ public:
 
 class ContentFiltersViewWidget final : public ItemViewWidget
 {
+	Q_OBJECT
+
 public:
 	enum DataRole
 	{
@@ -88,6 +90,7 @@ public slots:
 protected:
 	void changeEvent(QEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
+	void markProfilesAsModified();
 	void appendProfile(QList<QStandardItem*> items, ContentFiltersProfile::ProfileCategory category);
 	void moveProfile(QStandardItem *entryItem, ContentFiltersProfile::ProfileCategory newCategory);
 	ContentFiltersProfile::ProfileSummary getProfileSummary(const QModelIndex &index) const;
@@ -107,8 +110,12 @@ private:
 	QString m_host;
 	QHash<QString, bool> m_profilesToRemove;
 	QStringList m_filesToRemove;
+	bool m_areProfilesModified;
 
 	static Animation* m_updateAnimation;
+
+signals:
+	void areProfilesModifiedChanged(bool areModified);
 };
 
 }

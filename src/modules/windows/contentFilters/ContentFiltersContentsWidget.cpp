@@ -47,6 +47,7 @@ ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &pa
 
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->profilesViewWidget, &ContentFiltersViewWidget::setFilterString);
 	connect(m_ui->profilesViewWidget, &ContentFiltersViewWidget::needsActionsUpdate, this, &ContentFiltersContentsWidget::updateActions);
+	connect(m_ui->profilesViewWidget, &ContentFiltersViewWidget::areProfilesModifiedChanged, m_ui->saveButton, &QPushButton::setEnabled);
 	connect(m_ui->saveButton, &QPushButton::clicked, m_ui->profilesViewWidget, &ContentFiltersViewWidget::save);
 	connect(m_ui->editButton, &QPushButton::clicked, m_ui->profilesViewWidget, &ContentFiltersViewWidget::editProfile);
 }
