@@ -213,7 +213,6 @@ set(otter_src
 	src/ui/Window.cpp
 	src/ui/WorkspaceWidget.cpp
 	src/ui/preferences/AcceptLanguageDialog.cpp
-	src/ui/preferences/ContentBlockingDialog.cpp
 	src/ui/preferences/CookiesExceptionsDialog.cpp
 	src/ui/preferences/JavaScriptPreferencesDialog.cpp
 	src/ui/preferences/KeyboardProfileDialog.cpp
@@ -313,7 +312,6 @@ qt5_wrap_ui(otter_ui
 	src/ui/WebsiteInformationDialog.ui
 	src/ui/WebsitePreferencesDialog.ui
 	src/ui/preferences/AcceptLanguageDialog.ui
-	src/ui/preferences/ContentBlockingDialog.ui
 	src/ui/preferences/CookiesExceptionsDialog.ui
 	src/ui/preferences/JavaScriptPreferencesDialog.ui
 	src/ui/preferences/KeyboardProfileDialog.ui
