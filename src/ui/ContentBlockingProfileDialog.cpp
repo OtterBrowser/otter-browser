@@ -23,6 +23,7 @@
 #include "../core/Console.h"
 #include "../core/Job.h"
 #include "../core/Utils.h"
+#include "../../3rdparty/columnresizer/ColumnResizer.h"
 
 #include "ui_ContentBlockingProfileDialog.h"
 
@@ -49,6 +50,9 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersP
 	m_ui->categoryComboBox->addItem(tr("Regional"), ContentFiltersProfile::RegionalCategory);
 	m_ui->categoryComboBox->addItem(tr("Other"), ContentFiltersProfile::OtherCategory);
 	m_ui->categoryComboBox->setCurrentIndex(m_ui->categoryComboBox->findData(profileSummary.category));
+	m_ui->cosmeticFiltersComboBox->addItem(tr("All"), QLatin1String("all"));
+	m_ui->cosmeticFiltersComboBox->addItem(tr("Domain specific only"), QLatin1String("domainOnly"));
+	m_ui->cosmeticFiltersComboBox->addItem(tr("None"), QLatin1String("none"));
 	m_ui->titleLineEdit->setText(profileSummary.title);
 	m_ui->updateUrLineEdit->setText(profileSummary.updateUrl.toString());
 	m_ui->updateIntervalSpinBox->setValue(profileSummary.updateInterval);
@@ -124,6 +128,10 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersP
 		m_dataFetchJob->start();
 	}
 
+	ColumnResizer *columnResizer(new ColumnResizer(this));
+	columnResizer->addWidgetsFromFormLayout(m_ui->settingsTopLayout, QFormLayout::LabelRole);
+	columnResizer->addWidgetsFromFormLayout(m_ui->settingsBottomLayout, QFormLayout::LabelRole);
+
 	connect(m_ui->sourceEditWidget, &SourceEditWidget::textChanged, [&]()
 	{
 		m_ui->saveButton->setEnabled(true);
@@ -161,6 +169,9 @@ void ContentBlockingProfileDialog::changeEvent(QEvent *event)
 		m_ui->categoryComboBox->setItemText(3, tr("Social"));
 		m_ui->categoryComboBox->setItemText(4, tr("Regional"));
 		m_ui->categoryComboBox->setItemText(5, tr("Other"));
+		m_ui->cosmeticFiltersComboBox->setItemText(0, tr("All"));
+		m_ui->cosmeticFiltersComboBox->setItemText(1, tr("Domain specific only"));
+		m_ui->cosmeticFiltersComboBox->setItemText(2, tr("None"));
 		m_ui->passiveNotificationWidget->setMessage(tr("Any changes made here are going to be lost during manual or automatic update."), Notification::Message::WarningLevel);
 	}
 }
