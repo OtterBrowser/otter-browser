@@ -75,7 +75,7 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersP
 		{
 			m_ui->updateButton->setEnabled(profileSummary.updateUrl.isValid());
 
-			connect(profile, &ContentFiltersProfile::profileModified, [&]()
+			connect(profile, &ContentFiltersProfile::profileModified, this, [&]()
 			{
 				profile = ContentFiltersManager::getProfile(m_name);
 
