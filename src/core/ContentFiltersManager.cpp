@@ -36,22 +36,14 @@ namespace Otter
 ContentFiltersManager* ContentFiltersManager::m_instance(nullptr);
 QVector<ContentFiltersProfile*> ContentFiltersManager::m_contentBlockingProfiles;
 QVector<ContentFiltersProfile*> ContentFiltersManager::m_fraudCheckingProfiles;
-ContentFiltersManager::CosmeticFiltersMode ContentFiltersManager::m_cosmeticFiltersMode(AllFilters);
-bool ContentFiltersManager::m_areWildcardsEnabled(true);
 
 ContentFiltersManager::ContentFiltersManager(QObject *parent) : QObject(parent),
 	m_saveTimer(0)
 {
-	m_areWildcardsEnabled = SettingsManager::getOption(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool();
-
-	handleOptionChanged(SettingsManager::ContentBlocking_CosmeticFiltersModeOption, SettingsManager::getOption(SettingsManager::ContentBlocking_CosmeticFiltersModeOption).toString());
-
 	QTimer::singleShot(1000, this, [&]()
 	{
 		initialize();
 	});
-
-	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &ContentFiltersManager::handleOptionChanged);
 }
 
 void ContentFiltersManager::createInstance()
@@ -109,8 +101,6 @@ void ContentFiltersManager::initialize()
 		const QJsonObject bundledProfileObject(bundledMainObject.value(profiles.at(i)).toObject());
 		ContentFiltersProfile::ProfileSummary profileSummary;
 		profileSummary.name = profiles.at(i);
-		profileSummary.cosmeticFiltersMode = m_cosmeticFiltersMode;
-		profileSummary.areWildcardsEnabled = m_areWildcardsEnabled;
 
 		ContentFiltersProfile::ProfileFlags flags(ContentFiltersProfile::NoFlags);
 
@@ -145,10 +135,26 @@ void ContentFiltersManager::initialize()
 			}
 		}
 
+		const QString cosmeticFiltersMode(profileObject.value(QLatin1String("cosmeticFiltersMode")).toString());
+
+		if (cosmeticFiltersMode == QLatin1String("none"))
+		{
+			profileSummary.cosmeticFiltersMode = NoFilters;
+		}
+		else if (cosmeticFiltersMode == QLatin1String("domainOnly"))
+		{
+			profileSummary.cosmeticFiltersMode = DomainOnlyFilters;
+		}
+		else
+		{
+			profileSummary.cosmeticFiltersMode = AllFilters;
+		}
+
 		profileSummary.lastUpdate = QDateTime::fromString(profileObject.value(QLatin1String("lastUpdate")).toString(), Qt::ISODate);
 		profileSummary.lastUpdate.setTimeSpec(Qt::UTC);
-		profileSummary.updateInterval = profileObject.value(QLatin1String("updateInterval")).toInt();
 		profileSummary.category = categoryTitles.value(profileObject.value(QLatin1String("category")).toString());
+		profileSummary.updateInterval = profileObject.value(QLatin1String("updateInterval")).toInt();
+		profileSummary.areWildcardsEnabled = profileObject.value(QLatin1String("areWildcardsEnabled")).toBool();
 
 		const QJsonArray languagesArray(profileObject.value(QLatin1String("languages")).toArray());
 		QStringList languages;
@@ -182,7 +188,8 @@ void ContentFiltersManager::timerEvent(QTimerEvent *event)
 
 		m_saveTimer = 0;
 
-		const QHash<ContentFiltersProfile::ProfileCategory, QString> categoryTitles({{ContentFiltersProfile::AdvertisementsCategory, QLatin1String("advertisements")}, {ContentFiltersProfile::AnnoyanceCategory, QLatin1String("annoyance")}, {ContentFiltersProfile::PrivacyCategory, QLatin1String("privacy")}, {ContentFiltersProfile::SocialCategory, QLatin1String("social")}, {ContentFiltersProfile::RegionalCategory, QLatin1String("regional")}, {ContentFiltersProfile::OtherCategory, QLatin1String("other")}});
+		const QHash<ContentFiltersProfile::ProfileCategory, QString> categories({{ContentFiltersProfile::AdvertisementsCategory, QLatin1String("advertisements")}, {ContentFiltersProfile::AnnoyanceCategory, QLatin1String("annoyance")}, {ContentFiltersProfile::PrivacyCategory, QLatin1String("privacy")}, {ContentFiltersProfile::SocialCategory, QLatin1String("social")}, {ContentFiltersProfile::RegionalCategory, QLatin1String("regional")}, {ContentFiltersProfile::OtherCategory, QLatin1String("other")}});
+		const QHash<CosmeticFiltersMode, QString> cosmeticFiltersModes({{AllFilters, QLatin1String("all")}, {DomainOnlyFilters, QLatin1String("domainOnly")}, {NoFilters, QLatin1String("none")}});
 		JsonSettings settings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.json")));
 		QJsonObject mainObject(settings.object());
 		QJsonObject::iterator iterator(mainObject.begin());
@@ -231,7 +238,9 @@ void ContentFiltersManager::timerEvent(QTimerEvent *event)
 			}
 
 			profileObject.insert(QLatin1String("updateUrl"), profile->getUpdateUrl().url());
-			profileObject.insert(QLatin1String("category"), categoryTitles.value(profile->getCategory()));
+			profileObject.insert(QLatin1String("category"), categories.value(profile->getCategory()));
+			profileObject.insert(QLatin1String("cosmeticFiltersMode"), cosmeticFiltersModes.value(profile->getCosmeticFiltersMode()));
+			profileObject.insert(QLatin1String("areWildcardsEnabled"), profile->areWildcardsEnabled());
 
 			const QVector<QLocale::Language> languages(m_contentBlockingProfiles.at(i)->getLanguages());
 
@@ -295,43 +304,6 @@ void ContentFiltersManager::addProfile(ContentFiltersProfile *profile)
 	emit m_instance->profileAdded(profile->getName());
 
 	connect(profile, &ContentFiltersProfile::profileModified, m_instance, &ContentFiltersManager::scheduleSave);
-}
-
-void ContentFiltersManager::handleOptionChanged(int identifier, const QVariant &value)
-{
-	switch (identifier)
-	{
-		case SettingsManager::ContentBlocking_EnableWildcardsOption:
-			m_areWildcardsEnabled = value.toBool();
-
-			break;
-		case SettingsManager::ContentBlocking_CosmeticFiltersModeOption:
-			{
-				const QString cosmeticFiltersMode(value.toString());
-
-				if (cosmeticFiltersMode == QLatin1String("none"))
-				{
-					m_cosmeticFiltersMode = NoFilters;
-				}
-				else if (cosmeticFiltersMode == QLatin1String("domainOnly"))
-				{
-					m_cosmeticFiltersMode = DomainOnlyFilters;
-				}
-				else
-				{
-					m_cosmeticFiltersMode = AllFilters;
-				}
-			}
-
-			break;
-		default:
-			return;
-	}
-
-	for (int i = 0; i < m_contentBlockingProfiles.count(); ++i)
-	{
-		m_contentBlockingProfiles.at(i)->clear();
-	}
 }
 
 void ContentFiltersManager::removeProfile(ContentFiltersProfile *profile, bool removeFile)
@@ -452,7 +424,7 @@ ContentFiltersManager::CheckResult ContentFiltersManager::checkUrl(const QVector
 
 ContentFiltersManager::CosmeticFiltersResult ContentFiltersManager::getCosmeticFilters(const QVector<int> &profiles, const QUrl &requestUrl)
 {
-	if (profiles.isEmpty() || m_cosmeticFiltersMode == NoFilters)
+	if (profiles.isEmpty())
 	{
 		return {};
 	}

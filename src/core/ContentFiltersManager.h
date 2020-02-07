@@ -82,7 +82,6 @@ protected:
 
 protected slots:
 	void scheduleSave();
-	void handleOptionChanged(int identifier, const QVariant &value);
 
 private:
 	int m_saveTimer;
@@ -90,8 +89,6 @@ private:
 	static ContentFiltersManager *m_instance;
 	static QVector<ContentFiltersProfile*> m_contentBlockingProfiles;
 	static QVector<ContentFiltersProfile*> m_fraudCheckingProfiles;
-	static CosmeticFiltersMode m_cosmeticFiltersMode;
-	static bool m_areWildcardsEnabled;
 
 signals:
 	void profileAdded(const QString &profile);
