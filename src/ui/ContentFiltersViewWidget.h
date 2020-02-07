@@ -60,7 +60,9 @@ public:
 	{
 		TitleRole = Qt::DisplayRole,
 		UpdateUrlRole = Qt::StatusTipRole,
-		CategoryRole = Qt::UserRole,
+		AreWildcardsEnabledRole = Qt::UserRole,
+		CategoryRole,
+		CosmeticFiltersModeRole,
 		HasErrorRole,
 		ImportPathRole,
 		IsModifiedRole,

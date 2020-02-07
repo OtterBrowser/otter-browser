@@ -919,7 +919,9 @@ ContentFiltersProfile::ProfileSummary ContentFiltersViewWidget::getProfileSummar
 	profileSummary.lastUpdate = index.data(UpdateTimeRole).toDateTime();
 	profileSummary.updateUrl = index.data(UpdateUrlRole).toUrl();
 	profileSummary.category = static_cast<ContentFiltersProfile::ProfileCategory>(index.parent().data(CategoryRole).toInt());
+	profileSummary.cosmeticFiltersMode = static_cast<ContentFiltersManager::CosmeticFiltersMode>(index.data(CosmeticFiltersModeRole).toInt());
 	profileSummary.updateInterval = index.sibling(index.row(), 1).data(Qt::DisplayRole).toInt();
+	profileSummary.areWildcardsEnabled = index.data(AreWildcardsEnabledRole).toBool();
 
 	return profileSummary;
 }
@@ -966,6 +968,8 @@ QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFilters
 {
 	QList<QStandardItem*> items({new QStandardItem(profileSummary.title), new QStandardItem(QString::number(profileSummary.updateInterval)), new QStandardItem(Utils::formatDateTime(profileSummary.lastUpdate))});
 	items[0]->setData(profileSummary.name, NameRole);
+	items[0]->setData(profileSummary.areWildcardsEnabled, AreWildcardsEnabledRole);
+	items[0]->setData(profileSummary.cosmeticFiltersMode, CosmeticFiltersModeRole);
 	items[0]->setData(false, HasErrorRole);
 	items[0]->setData(true, IsModifiedRole);
 	items[0]->setData(false, IsShowingProgressIndicatorRole);
