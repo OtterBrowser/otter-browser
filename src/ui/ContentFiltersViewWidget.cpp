@@ -158,8 +158,12 @@ void ContentFiltersIntervalDelegate::setModelData(QWidget *editor, QAbstractItem
 
 	if (widget)
 	{
+		const QModelIndex entryIndex(index.sibling(index.row(), 0));
+
 		model->setData(index, widget->value(), Qt::DisplayRole);
-		model->setData(index.sibling(index.row(), 0), true, ContentFiltersViewWidget::IsModifiedRole);
+		model->setData(entryIndex, true, ContentFiltersViewWidget::IsModifiedRole);
+
+		emit model->dataChanged(entryIndex, entryIndex, {ContentFiltersViewWidget::IsModifiedRole});
 	}
 }
 
@@ -592,8 +596,9 @@ void ContentFiltersViewWidget::updateSelection()
 void ContentFiltersViewWidget::handleDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
 {
 	Q_UNUSED(topLeft)
+	Q_UNUSED(bottomRight)
 
-	if (bottomRight.column() >= 1 || roles.contains(Qt::CheckStateRole))
+	if (roles.contains(Qt::CheckStateRole) || roles.contains(IsModifiedRole))
 	{
 		markProfilesAsModified();
 	}
