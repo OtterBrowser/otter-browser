@@ -297,7 +297,7 @@ void TileDelegate::handleOptionChanged(int identifier, const QVariant &value)
 			{
 				const QString mode(SettingsManager::getOption(SettingsManager::StartPage_BackgroundModeOption).toString());
 
-				m_needsBlur = (!SettingsManager::getOption(SettingsManager::StartPage_BackgroundPathOption).toString().isEmpty() && mode != QLatin1String("standard") && mode != QLatin1String("none"));
+				m_needsBlur = (mode == QLatin1String("standard") || (mode != QLatin1String("none") && !SettingsManager::getOption(SettingsManager::StartPage_BackgroundPathOption).toString().isEmpty()));
 			}
 
 			break;
