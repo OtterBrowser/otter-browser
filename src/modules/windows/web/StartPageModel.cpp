@@ -349,6 +349,11 @@ bool StartPageModel::requestThumbnail(const QUrl &url, quint64 identifier, bool 
 
 bool StartPageModel::reloadTile(const QModelIndex &index, bool needsTitleUpdate)
 {
+	if (static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) != BookmarksModel::UrlBookmark)
+	{
+		return false;
+	}
+
 	const QUrl url(index.data(BookmarksModel::UrlRole).toUrl());
 
 	if (!url.isValid())
