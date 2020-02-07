@@ -976,7 +976,9 @@ QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFilters
 	items[0]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 	items[0]->setCheckState(profiles.contains(profileSummary.name) ? Qt::Checked : Qt::Unchecked);
 	items[0]->setCheckable(true);
+	items[1]->setData(profileSummary.updateUrl, UpdateUrlRole);
 	items[1]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+	items[2]->setData(profileSummary.updateUrl, UpdateUrlRole);
 	items[2]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 	return items;
