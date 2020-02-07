@@ -126,9 +126,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Content_UserStyleSheetOption, PathType, QString());
 	registerOption(Content_VisitedLinkColorOption, ColorType, QColor(0x55, 0x1A, 0x8B));
 	registerOption(Content_ZoomTextOnlyOption, BooleanType, false);
-	registerOption(ContentBlocking_CosmeticFiltersModeOption, EnumerationType, QLatin1String("all"), {QLatin1String("all"), QLatin1String("domainOnly"), QLatin1String("none")});
 	registerOption(ContentBlocking_EnableContentBlockingOption, BooleanType, true);
-	registerOption(ContentBlocking_EnableWildcardsOption, BooleanType, true);
 	registerOption(ContentBlocking_IgnoreHostsOption, ListType, QStringList());
 	registerOption(ContentBlocking_ProfilesOption, ListType, QStringList());
 	registerOption(History_BrowsingLimitAmountGlobalOption, IntegerType, 1000);
