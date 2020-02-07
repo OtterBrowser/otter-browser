@@ -120,11 +120,11 @@ public:
 	enum ProfileCategory
 	{
 		OtherCategory = 0,
-		AdvertisementsCategory = 1,
-		AnnoyanceCategory = 2,
-		PrivacyCategory = 4,
-		SocialCategory = 8,
-		RegionalCategory = 16
+		AdvertisementsCategory,
+		AnnoyanceCategory,
+		PrivacyCategory,
+		SocialCategory,
+		RegionalCategory
 	};
 
 	struct ProfileSummary final
