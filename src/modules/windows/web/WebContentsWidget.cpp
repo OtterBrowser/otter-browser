@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -662,6 +662,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 					case ActionsManager::OpenLinkInNewPrivateWindowAction:
 					case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
 					case ActionsManager::ContextMenuAction:
+					case ActionsManager::ReloadAction:
 						m_startPageWidget->triggerAction(identifier, parameters, trigger);
 
 						return;

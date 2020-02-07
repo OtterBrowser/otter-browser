@@ -689,6 +689,25 @@ void StartPageWidget::triggerAction(int identifier, const QVariantMap &parameter
 			showContextMenu();
 
 			return;
+		case ActionsManager::ReloadAction:
+			{
+				bool isReloading(false);
+
+				for (int i = 0; i < m_model->rowCount(); ++i)
+				{
+					if (m_model->reloadTile(m_model->index(i, 0)))
+					{
+						isReloading = true;
+					}
+				}
+
+				if (isReloading)
+				{
+					startReloadingAnimation();
+				}
+			}
+
+			return;
 		default:
 			return;
 	}
