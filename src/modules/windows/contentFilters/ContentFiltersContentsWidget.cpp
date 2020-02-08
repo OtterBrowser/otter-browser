@@ -31,7 +31,6 @@ namespace Otter
 {
 
 ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
-	m_model(new QStandardItemModel(this)),
 	m_ui(new Ui::ContentFiltersContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -66,8 +65,6 @@ void ContentFiltersContentsWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		m_model->setHorizontalHeaderLabels({tr("Action"), tr("Shortcuts"), tr("Gestures")});
 	}
 }
 

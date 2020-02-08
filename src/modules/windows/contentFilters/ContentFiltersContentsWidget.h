@@ -23,8 +23,6 @@
 
 #include "../../../ui/ContentsWidget.h"
 
-#include <QtGui/QStandardItemModel>
-
 namespace Otter
 {
 
@@ -56,7 +54,6 @@ protected slots:
 	void updateActions();
 
 private:
-	QStandardItemModel *m_model;
 	Ui::ContentFiltersContentsWidget *m_ui;
 };
 
