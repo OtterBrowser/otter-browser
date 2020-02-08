@@ -431,7 +431,7 @@ ContentFiltersManager::CosmeticFiltersResult ContentFiltersManager::getCosmeticF
 
 	const CosmeticFiltersMode mode(checkUrl(profiles, requestUrl, requestUrl, NetworkManager::OtherType).comesticFiltersMode);
 
-	if (mode == ContentFiltersManager::NoFilters)
+	if (mode == NoFilters)
 	{
 		return {};
 	}
