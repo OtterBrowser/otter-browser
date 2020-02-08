@@ -44,6 +44,8 @@ AdblockContentFiltersProfile::AdblockContentFiltersProfile(const ContentFiltersP
 	m_profileSummary(profileSummary),
 	m_error(NoError),
 	m_flags(flags),
+	m_activeRulesAmount(0),
+	m_totalRulesAmount(0),
 	m_wasLoaded(false)
 {
 	if (languages.isEmpty())
@@ -79,6 +81,8 @@ void AdblockContentFiltersProfile::clear()
 	m_cosmeticFiltersDomainExceptions.clear();
 	m_cosmeticFiltersDomainRules.clear();
 
+	m_activeRulesAmount = 0;
+	m_totalRulesAmount = 0;
 	m_wasLoaded = false;
 }
 
@@ -124,15 +128,19 @@ void AdblockContentFiltersProfile::loadHeader()
 
 void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 {
-	if (rule.isEmpty() || rule.indexOf(QLatin1Char('!')) == 0)
+	if (rule.isEmpty() || rule.startsWith(QLatin1Char('!')))
 	{
 		return;
 	}
+
+	++m_totalRulesAmount;
 
 	if (rule.startsWith(QLatin1String("##")))
 	{
 		if (m_profileSummary.cosmeticFiltersMode == ContentFiltersManager::AllFilters)
 		{
+			++m_activeRulesAmount;
+
 			m_cosmeticFiltersRules.append(rule.mid(2));
 		}
 
@@ -297,10 +305,12 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 		}
 	}
 
+	++m_activeRulesAmount;
+
 	node->rules.append(definition);
 }
 
-void AdblockContentFiltersProfile::parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list) const
+void AdblockContentFiltersProfile::parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list)
 {
 	const QStringList domains(line.at(0).split(QLatin1Char(',')));
 
@@ -308,6 +318,8 @@ void AdblockContentFiltersProfile::parseStyleSheetRule(const QStringList &line, 
 	{
 		list.insert(domains.at(i), line.at(1));
 	}
+
+	++m_activeRulesAmount;
 }
 
 void AdblockContentFiltersProfile::deleteNode(Node *node) const
@@ -828,6 +840,16 @@ ContentFiltersProfile::ProfileFlags AdblockContentFiltersProfile::getFlags() con
 	return m_flags;
 }
 
+quint32 AdblockContentFiltersProfile::getActiveRulesAmount() const
+{
+	return m_activeRulesAmount;
+}
+
+quint32 AdblockContentFiltersProfile::getTotalRulesAmount() const
+{
+	return m_totalRulesAmount;
+}
+
 int AdblockContentFiltersProfile::getUpdateInterval() const
 {
 	return m_profileSummary.updateInterval;
@@ -898,6 +920,8 @@ bool AdblockContentFiltersProfile::loadRules()
 		return false;
 	}
 
+	m_activeRulesAmount = 0;
+	m_totalRulesAmount = 0;
 	m_wasLoaded = true;
 
 	if (m_domainExpression.pattern().isEmpty())

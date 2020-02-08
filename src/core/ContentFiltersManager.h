@@ -156,6 +156,8 @@ public:
 	virtual ContentFiltersManager::CosmeticFiltersMode getCosmeticFiltersMode() const = 0;
 	virtual ProfileError getError() const = 0;
 	virtual ProfileFlags getFlags() const = 0;
+	virtual quint32 getActiveRulesAmount() const = 0;
+	virtual quint32 getTotalRulesAmount() const = 0;
 	virtual int getUpdateInterval() const = 0;
 	virtual int getUpdateProgress() const = 0;
 	virtual bool update(const QUrl &url = {}) = 0;
