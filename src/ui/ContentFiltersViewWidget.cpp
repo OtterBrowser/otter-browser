@@ -209,7 +209,7 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 	getViewportWidget()->setMouseTracking(true);
 	getViewportWidget()->setUpdateDataRole(IsShowingProgressIndicatorRole);
 
-	m_model->setHorizontalHeaderLabels({tr("Title"), tr("Update Interval"), tr("Last Update")});
+	m_model->setHorizontalHeaderLabels({tr("Title"), tr("Update Interval"), tr("Last Update"), tr("Active Rules"), tr("All Rules")});
 	m_model->setHeaderData(0, Qt::Horizontal, 250, HeaderViewWidget::WidthRole);
 
 	QHash<ContentFiltersProfile::ProfileCategory, QList<QList<QStandardItem*> > > categoryEntries;
@@ -225,6 +225,12 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 		if (!profileItems.isEmpty())
 		{
 			profileItems[0]->setData(createLanguagesList(profile), LanguagesRole);
+
+			if (profile->getTotalRulesAmount() > 0)
+			{
+				profileItems[3]->setText(QString::number(profile->getActiveRulesAmount()));
+				profileItems[4]->setText(QString::number(profile->getTotalRulesAmount()));
+			}
 
 			if (!categoryEntries.contains(category))
 			{
@@ -278,7 +284,7 @@ void ContentFiltersViewWidget::changeEvent(QEvent *event)
 
 	if (event->type() == QEvent::LanguageChange)
 	{
-		m_model->setHorizontalHeaderLabels({tr("Title"), tr("Update Interval"), tr("Last Update")});
+		m_model->setHorizontalHeaderLabels({tr("Title"), tr("Update Interval"), tr("Last Update"), tr("Active Rules"), tr("All Rules")});
 
 		for (int i = 0; i < getRowCount(); ++i)
 		{
@@ -504,6 +510,8 @@ void ContentFiltersViewWidget::editProfile()
 			m_model->setData(index, profileSummary.areWildcardsEnabled, AreWildcardsEnabledRole);
 			m_model->setData(index.sibling(index.row(), 1), profileSummary.updateUrl, UpdateUrlRole);
 			m_model->setData(index.sibling(index.row(), 2), profileSummary.updateUrl, UpdateUrlRole);
+			m_model->setData(index.sibling(index.row(), 3), profileSummary.updateUrl, UpdateUrlRole);
+			m_model->setData(index.sibling(index.row(), 4), profileSummary.updateUrl, UpdateUrlRole);
 			m_model->setData(index.sibling(index.row(), 1), profileSummary.updateInterval, Qt::DisplayRole);
 
 			if (index.parent().data(CategoryRole).toInt() != profileSummary.category)
@@ -973,7 +981,7 @@ QStringList ContentFiltersViewWidget::getProfileNames() const
 
 QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFiltersProfile::ProfileSummary &profileSummary, const QStringList &profiles) const
 {
-	QList<QStandardItem*> items({new QStandardItem(profileSummary.title), new QStandardItem(QString::number(profileSummary.updateInterval)), new QStandardItem(Utils::formatDateTime(profileSummary.lastUpdate))});
+	QList<QStandardItem*> items({new QStandardItem(profileSummary.title), new QStandardItem(QString::number(profileSummary.updateInterval)), new QStandardItem(Utils::formatDateTime(profileSummary.lastUpdate)), new QStandardItem(), new QStandardItem()});
 	items[0]->setData(profileSummary.name, NameRole);
 	items[0]->setData(profileSummary.areWildcardsEnabled, AreWildcardsEnabledRole);
 	items[0]->setData(profileSummary.cosmeticFiltersMode, CosmeticFiltersModeRole);
@@ -991,6 +999,10 @@ QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFilters
 	items[1]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
 	items[2]->setData(profileSummary.updateUrl, UpdateUrlRole);
 	items[2]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items[3]->setData(profileSummary.updateUrl, UpdateUrlRole);
+	items[3]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items[4]->setData(profileSummary.updateUrl, UpdateUrlRole);
+	items[4]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 	return items;
 }
