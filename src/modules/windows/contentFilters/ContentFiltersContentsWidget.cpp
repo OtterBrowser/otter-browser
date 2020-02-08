@@ -19,9 +19,7 @@
 **************************************************************************/
 
 #include "ContentFiltersContentsWidget.h"
-#include "../../../core/ContentFiltersManager.h"
 #include "../../../core/ThemesManager.h"
-#include "../../../ui/Animation.h"
 
 #include "ui_ContentFiltersContentsWidget.h"
 
