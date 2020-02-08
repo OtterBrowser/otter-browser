@@ -150,9 +150,9 @@ public:
 	virtual QDateTime getLastUpdate() const = 0;
 	virtual ProfileSummary getProfileSummary() const = 0;
 	virtual ContentFiltersManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType) = 0;
-	virtual ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly);
-	virtual QVector<QLocale::Language> getLanguages() const;
-	virtual ProfileCategory getCategory() const;
+	virtual ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly) = 0;
+	virtual QVector<QLocale::Language> getLanguages() const = 0;
+	virtual ProfileCategory getCategory() const = 0;
 	virtual ContentFiltersManager::CosmeticFiltersMode getCosmeticFiltersMode() const = 0;
 	virtual ProfileError getError() const = 0;
 	virtual ProfileFlags getFlags() const = 0;
@@ -164,7 +164,7 @@ public:
 	virtual bool remove() = 0;
 	virtual bool areWildcardsEnabled() const = 0;
 	virtual bool isUpdating() const = 0;
-	virtual bool isFraud(const QUrl &url);
+	virtual bool isFraud(const QUrl &url) = 0;
 
 signals:
 	void profileModified();

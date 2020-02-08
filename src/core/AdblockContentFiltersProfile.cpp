@@ -1021,6 +1021,13 @@ bool AdblockContentFiltersProfile::areWildcardsEnabled() const
 	return m_profileSummary.areWildcardsEnabled;
 }
 
+bool AdblockContentFiltersProfile::isFraud(const QUrl &url)
+{
+	Q_UNUSED(url)
+
+	return false;
+}
+
 bool AdblockContentFiltersProfile::isUpdating() const
 {
 	return (m_dataFetchJob != nullptr);
