@@ -35,6 +35,8 @@ ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &pa
 	m_ui(new Ui::ContentFiltersContentsWidget)
 {
 	m_ui->setupUi(this);
+	m_ui->hostComboBox->addItem(tr("Default"));
+	m_ui->hostComboBox->insertSeparator(1);
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->profilesViewWidget->setFilterRoles({Qt::DisplayRole, ContentFiltersViewWidget::UpdateUrlRole});
 
