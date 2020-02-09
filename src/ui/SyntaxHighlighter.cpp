@@ -150,6 +150,16 @@ void AdblockPlusSyntaxHighlighter::highlightBlock(const QString &text)
 			currentState = NoState;
 			currentStateBegin = position;
 		}
+		else if (currentState == NoState && text.at(position - 1) == QLatin1Char('|'))
+		{
+			currentState = AnchorState;
+			currentStateBegin = (position - 1);
+		}
+		else if (currentState == AnchorState && text.at(position - 1) != QLatin1Char('|'))
+		{
+			currentState = NoState;
+			currentStateBegin = (position - 1);
+		}
 
 		if (previousState != currentState || isEndOfLine)
 		{

@@ -8,6 +8,13 @@
 			"fontWeight": "bold",
 			"isUnderlined": false
 		},
+		"Anchor":
+		{
+			"foreground": "#4EB380",
+			"fontStyle": "normal",
+			"fontWeight": "bold",
+			"isUnderlined": false
+		},
 		"Comment":
 		{
 			"foreground": "#4C5174",
