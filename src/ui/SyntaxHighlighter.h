@@ -66,6 +66,10 @@ public:
 	{
 		NoState = 0,
 		HeaderState,
+		AnchorState,
+		ExceptionState,
+		SeparatorState,
+		WildcardState,
 		CommentState
 	};
 
