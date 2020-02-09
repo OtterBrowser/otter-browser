@@ -15,6 +15,13 @@
 			"fontWeight": "bold",
 			"isUnderlined": false
 		},
+		"Exception":
+		{
+			"foreground": "#AA0000",
+			"fontStyle": "normal",
+			"fontWeight": "bold",
+			"isUnderlined": false
+		},
 		"Comment":
 		{
 			"foreground": "#4C5174",
