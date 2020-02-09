@@ -134,12 +134,21 @@ void AdblockPlusSyntaxHighlighter::highlightBlock(const QString &text)
 
 		if (isOption)
 		{
-			if (currentState != OptionState)
+			if (text.at(position - 1) == QLatin1Char('~') || text.at(position - 1) == QLatin1Char('|'))
 			{
+				currentState = ExceptionState;
 				currentStateBegin = (position - 1);
 			}
-
-			currentState = OptionState;
+			else if (text.at(position - 1) == QLatin1Char(',') || text.at(position - 1) == QLatin1Char('='))
+			{
+				currentState = NoState;
+				currentStateBegin = (position - 1);
+			}
+			else if (currentState != OptionState)
+			{
+				currentState = OptionState;
+				currentStateBegin = (position - 1);
+			}
 		}
 		else if ((currentState == NoState || currentState == CommentState) && buffer.compare(QLatin1String("[AdBlock"), Qt::CaseInsensitive) == 0)
 		{
