@@ -33,6 +33,7 @@ public:
 	enum HighlightingSyntax
 	{
 		NoSyntax = 0,
+		AdblockPlusSyntax,
 		HtmlSyntax
 	};
 
@@ -54,6 +55,31 @@ public:
 protected:
 	QJsonObject loadSyntax(HighlightingSyntax syntax) const;
 	QTextCharFormat loadFormat(const QJsonObject &definitionObject) const;
+};
+
+class AdblockPlusSyntaxHighlighter final : public SyntaxHighlighter
+{
+	Q_OBJECT
+
+public:
+	enum HighlightingState
+	{
+		NoState = 0,
+		HeaderState,
+		CommentState
+	};
+
+	Q_ENUM(HighlightingState)
+
+	explicit AdblockPlusSyntaxHighlighter(QTextDocument *document);
+
+	HighlightingSyntax getSyntax() const override;
+
+protected:
+	void highlightBlock(const QString &text) override;
+
+private:
+	static QMap<HighlightingState, QTextCharFormat> m_formats;
 };
 
 class HtmlSyntaxHighlighter final : public SyntaxHighlighter

@@ -60,6 +60,7 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersP
 	m_ui->updateIntervalSpinBox->setValue(profileSummary.updateInterval);
 	m_ui->progressBar->hide();
 	m_ui->passiveNotificationWidget->setMessage(tr("Any changes made here are going to be lost during manual or automatic update."), Notification::Message::WarningLevel);
+	m_ui->sourceEditWidget->setSyntax(SyntaxHighlighter::AdblockPlusSyntax);
 	m_ui->saveButton->setIcon(ThemesManager::createIcon(QLatin1String("document-save")));
 
 	if (profileSummary.lastUpdate.isValid())

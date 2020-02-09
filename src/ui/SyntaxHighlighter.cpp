@@ -35,6 +35,8 @@ SyntaxHighlighter* SyntaxHighlighter::createHighlighter(HighlightingSyntax synta
 {
 	switch (syntax)
 	{
+		case AdblockPlusSyntax:
+			return new AdblockPlusSyntaxHighlighter(document);
 		case HtmlSyntax:
 			return new HtmlSyntaxHighlighter(document);
 		default:
@@ -82,6 +84,102 @@ QTextCharFormat SyntaxHighlighter::loadFormat(const QJsonObject &definitionObjec
 	}
 
 	return format;
+}
+
+QMap<AdblockPlusSyntaxHighlighter::HighlightingState, QTextCharFormat> AdblockPlusSyntaxHighlighter::m_formats;
+
+AdblockPlusSyntaxHighlighter::AdblockPlusSyntaxHighlighter(QTextDocument *document) : SyntaxHighlighter(document)
+{
+	if (!m_formats.isEmpty())
+	{
+		return;
+	}
+
+	const QJsonObject definitionsObject(loadSyntax(AdblockPlusSyntax));
+	const QMetaEnum highlightingStateEnum(metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingState").data())));
+
+	for (int j = 0; j < highlightingStateEnum.keyCount(); ++j)
+	{
+		QString state(highlightingStateEnum.valueToKey(j));
+		state.chop(5);
+
+		m_formats[static_cast<HighlightingState>(j)] = loadFormat(definitionsObject.value(state).toObject());
+	}
+}
+
+void AdblockPlusSyntaxHighlighter::highlightBlock(const QString &text)
+{
+	QString buffer;
+	BlockData currentData;
+	HighlightingState previousState(static_cast<HighlightingState>(qMax(previousBlockState(), 0)));
+	HighlightingState currentState(previousState);
+	int previousStateBegin(0);
+	int currentStateBegin(0);
+	int position(0);
+
+	if (currentBlock().previous().userData())
+	{
+		currentData = *static_cast<BlockData*>(currentBlock().previous().userData());
+	}
+
+	while (position < text.length())
+	{
+		buffer.append(text.at(position));
+
+		++position;
+
+		const bool isEndOfLine(position == text.length());
+
+		if ((currentState == NoState || currentState == CommentState) && buffer.compare(QLatin1String("[AdBlock"), Qt::CaseInsensitive) == 0)
+		{
+			currentState = HeaderState;
+			currentStateBegin = (position - 8);
+		}
+		else if (currentState == HeaderState && text.at(position - 1) == QLatin1Char(']'))
+		{
+			currentState = NoState;
+			currentStateBegin = position;
+		}
+		else if (currentState == NoState && text.at(position - 1) == QLatin1Char('!'))
+		{
+			currentState = CommentState;
+		}
+		else if (currentState == CommentState && isEndOfLine)
+		{
+			currentState = NoState;
+			currentStateBegin = position;
+		}
+
+		if (previousState != currentState || isEndOfLine)
+		{
+			setFormat(previousStateBegin, (position - previousStateBegin), m_formats[previousState]);
+
+			if (isEndOfLine)
+			{
+				setFormat(currentStateBegin, (position - currentStateBegin), m_formats[currentState]);
+			}
+
+			buffer.clear();
+			previousState = currentState;
+			previousStateBegin = currentStateBegin;
+		}
+	}
+
+	if (!currentData.context.isEmpty())
+	{
+		BlockData *nextBlockData(new BlockData());
+		nextBlockData->context = currentData.context;
+		nextBlockData->state = currentData.state;
+
+		setCurrentBlockUserData(nextBlockData);
+	}
+
+	setCurrentBlockState(currentState);
+}
+
+SyntaxHighlighter::HighlightingSyntax AdblockPlusSyntaxHighlighter::getSyntax() const
+{
+	return AdblockPlusSyntax;
 }
 
 QMap<HtmlSyntaxHighlighter::HighlightingState, QTextCharFormat> HtmlSyntaxHighlighter::m_formats;

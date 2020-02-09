@@ -1,4 +1,21 @@
 {
+	"AdblockPlus":
+	{
+		"Header":
+		{
+			"foreground": "#539FA3",
+			"fontStyle": "normal",
+			"fontWeight": "bold",
+			"isUnderlined": false
+		},
+		"Comment":
+		{
+			"foreground": "#4C5174",
+			"fontStyle": "normal",
+			"fontWeight": "normal",
+			"isUnderlined": false
+		}
+	},
 	"Html":
 	{
 		"Doctype":
