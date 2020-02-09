@@ -42,8 +42,8 @@ public:
 	struct BlockData final : public QTextBlockUserData
 	{
 		QString context;
-		HighlightingSyntax currentSyntax = HtmlSyntax;
-		HighlightingSyntax previousSyntax = HtmlSyntax;
+		HighlightingSyntax currentSyntax = NoSyntax;
+		HighlightingSyntax previousSyntax = NoSyntax;
 		int state = 0;
 	};
 
