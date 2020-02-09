@@ -68,6 +68,7 @@ public:
 		HeaderState,
 		AnchorState,
 		ExceptionState,
+		OptionState,
 		SeparatorState,
 		WildcardState,
 		CommentState

@@ -117,6 +117,7 @@ void AdblockPlusSyntaxHighlighter::highlightBlock(const QString &text)
 	int currentStateBegin(0);
 	int position(0);
 	const bool isComment(text.trimmed().startsWith(QLatin1Char('!')));
+	bool isOption(false);
 
 	if (currentBlock().previous().userData())
 	{
@@ -131,7 +132,16 @@ void AdblockPlusSyntaxHighlighter::highlightBlock(const QString &text)
 
 		const bool isEndOfLine(position == text.length());
 
-		if ((currentState == NoState || currentState == CommentState) && buffer.compare(QLatin1String("[AdBlock"), Qt::CaseInsensitive) == 0)
+		if (isOption)
+		{
+			if (currentState != OptionState)
+			{
+				currentStateBegin = (position - 1);
+			}
+
+			currentState = OptionState;
+		}
+		else if ((currentState == NoState || currentState == CommentState) && buffer.compare(QLatin1String("[AdBlock"), Qt::CaseInsensitive) == 0)
 		{
 			currentState = HeaderState;
 			currentStateBegin = (position - 8);
@@ -174,6 +184,11 @@ void AdblockPlusSyntaxHighlighter::highlightBlock(const QString &text)
 		{
 			currentState = SeparatorState;
 			currentStateBegin = (position - 1);
+
+			if (text.at(position - 1) == QLatin1Char('$'))
+			{
+				isOption = true;
+			}
 		}
 		else if (currentState == SeparatorState && (text.at(position - 1) != QLatin1Char('*') && text.at(position - 1) != QLatin1Char('$')))
 		{
@@ -198,6 +213,8 @@ void AdblockPlusSyntaxHighlighter::highlightBlock(const QString &text)
 			if (isEndOfLine)
 			{
 				setFormat(currentStateBegin, (position - currentStateBegin), m_formats[currentState]);
+
+				currentState = NoState;
 			}
 
 			buffer.clear();
