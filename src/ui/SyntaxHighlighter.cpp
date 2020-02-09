@@ -116,6 +116,7 @@ void AdblockPlusSyntaxHighlighter::highlightBlock(const QString &text)
 	int previousStateBegin(0);
 	int currentStateBegin(0);
 	int position(0);
+	const bool isComment(text.trimmed().startsWith(QLatin1Char('!')));
 
 	if (currentBlock().previous().userData())
 	{
@@ -137,7 +138,7 @@ void AdblockPlusSyntaxHighlighter::highlightBlock(const QString &text)
 		}
 		else if (currentState == HeaderState && text.at(position - 1) == QLatin1Char(']'))
 		{
-			currentState = NoState;
+			currentState = (isComment ? CommentState : NoState);
 			currentStateBegin = position;
 		}
 		else if (currentState == NoState && text.at(position - 1) == QLatin1Char('!'))
