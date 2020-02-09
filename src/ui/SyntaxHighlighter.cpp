@@ -170,6 +170,16 @@ void AdblockPlusSyntaxHighlighter::highlightBlock(const QString &text)
 			currentState = NoState;
 			currentStateBegin = (position - 1);
 		}
+		else if ((currentState == NoState || currentState == AnchorState || currentState == SeparatorState || currentState == WildcardState) && (text.at(position - 1) == QLatin1Char('^') || text.at(position - 1) == QLatin1Char('$')))
+		{
+			currentState = SeparatorState;
+			currentStateBegin = (position - 1);
+		}
+		else if (currentState == SeparatorState && (text.at(position - 1) != QLatin1Char('*') && text.at(position - 1) != QLatin1Char('$')))
+		{
+			currentState = NoState;
+			currentStateBegin = (position - 1);
+		}
 		else if ((currentState == NoState || currentState == AnchorState || currentState == WildcardState) && text.at(position - 1) == QLatin1Char('*'))
 		{
 			currentState = WildcardState;
