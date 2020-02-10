@@ -24,6 +24,7 @@
 #include "ui_ContentFiltersContentsWidget.h"
 
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -54,6 +55,28 @@ ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &pa
 ContentFiltersContentsWidget::~ContentFiltersContentsWidget()
 {
 	delete m_ui;
+}
+
+void ContentFiltersContentsWidget::closeEvent(QCloseEvent *event)
+{
+	if (m_ui->saveButton->isEnabled())
+	{
+		const int result(QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel));
+
+		if (result == QMessageBox::Cancel)
+		{
+			event->ignore();
+
+			return;
+		}
+
+		if (result == QMessageBox::Yes)
+		{
+			m_ui->profilesViewWidget->save();
+		}
+	}
+
+	event->accept();
 }
 
 void ContentFiltersContentsWidget::changeEvent(QEvent *event)

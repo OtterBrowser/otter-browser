@@ -48,6 +48,7 @@ public:
 	QIcon getIcon() const override;
 
 protected:
+	void closeEvent(QCloseEvent *event) override;
 	void changeEvent(QEvent *event) override;
 
 protected slots:
