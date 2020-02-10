@@ -59,7 +59,7 @@ ContentFiltersContentsWidget::~ContentFiltersContentsWidget()
 
 void ContentFiltersContentsWidget::closeEvent(QCloseEvent *event)
 {
-	if (m_ui->saveButton->isEnabled())
+	if (m_ui->profilesViewWidget->areProfilesModified())
 	{
 		const int result(QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel));
 

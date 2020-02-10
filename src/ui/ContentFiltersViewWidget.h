@@ -78,6 +78,7 @@ public:
 
 	static Animation* getUpdateAnimation();
 	QString getHost() const;
+	bool areProfilesModified() const;
 
 public slots:
 	void addProfile();

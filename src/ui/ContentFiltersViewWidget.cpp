@@ -1021,4 +1021,9 @@ ContentFiltersProfile::ProfileCategory ContentFiltersViewWidget::getCategory(con
 	return ContentFiltersProfile::OtherCategory;
 }
 
+bool ContentFiltersViewWidget::areProfilesModified() const
+{
+	return m_areProfilesModified;
+}
+
 }
