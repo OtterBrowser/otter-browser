@@ -17,9 +17,9 @@
 		},
 		"Exception":
 		{
-			"foreground": "#AA0000",
+			"foreground": "#DD0000",
 			"fontStyle": "normal",
-			"fontWeight": "bold",
+			"fontWeight": "normal",
 			"isUnderlined": false
 		},
 		"Option":
@@ -38,7 +38,7 @@
 		},
 		"Wildcard":
 		{
-			"foreground": "#AA0000",
+			"foreground": "#DD0000",
 			"fontStyle": "normal",
 			"fontWeight": "bold",
 			"isUnderlined": false
