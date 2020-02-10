@@ -244,6 +244,14 @@ void SourceEditWidget::wheelEvent(QWheelEvent *event)
 	TextEditWidget::wheelEvent(event);
 }
 
+void SourceEditWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
+{
+	if (identifier != ActionsManager::CheckSpellingAction)
+	{
+		TextEditWidget::triggerAction(identifier, parameters, trigger);
+	}
+}
+
 void SourceEditWidget::findText(const QString &text, WebWidget::FindFlags flags)
 {
 	const bool isTheSame(text == m_findText);
@@ -468,6 +476,19 @@ void SourceEditWidget::setZoom(int zoom)
 
 		emit zoomChanged(zoom);
 	}
+}
+
+ActionsManager::ActionDefinition::State SourceEditWidget::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	if (identifier == ActionsManager::CheckSpellingAction)
+	{
+		ActionsManager::ActionDefinition::State state(TextEditWidget::getActionState(identifier, parameters));
+		state.isEnabled = false;
+
+		return state;
+	}
+
+	return TextEditWidget::getActionState(identifier, parameters);
 }
 
 QRect SourceEditWidget::getMarginGeometry() const
