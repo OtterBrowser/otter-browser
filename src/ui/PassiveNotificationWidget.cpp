@@ -30,6 +30,8 @@ PassiveNotificationWidget::PassiveNotificationWidget(QWidget *parent) : QWidget(
 	m_iconLabel(new QLabel(this)),
 	m_messageLabel(new QLabel(this))
 {
+	m_messageLabel->setWordWrap(true);
+
 	QBoxLayout *layout(new QBoxLayout(QBoxLayout::LeftToRight));
 	layout->setSizeConstraint(QLayout::SetMinimumSize);
 	layout->addWidget(m_iconLabel, 0);
