@@ -159,6 +159,28 @@ ContentBlockingProfileDialog::~ContentBlockingProfileDialog()
 	}
 }
 
+void ContentBlockingProfileDialog::closeEvent(QCloseEvent *event)
+{
+	if (m_ui->saveButton->isEnabled())
+	{
+		const int result(QMessageBox::question(this, tr("Question"), tr("The source has been modified.\nDo you want to save it?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel));
+
+		if (result == QMessageBox::Cancel)
+		{
+			event->ignore();
+
+			return;
+		}
+
+		if (result == QMessageBox::Yes)
+		{
+			saveSource();
+		}
+	}
+
+	event->accept();
+}
+
 void ContentBlockingProfileDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);

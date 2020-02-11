@@ -47,6 +47,7 @@ public:
 	ContentFiltersProfile::ProfileSummary getProfile() const;
 
 protected:
+	void closeEvent(QCloseEvent *event) override;
 	void changeEvent(QEvent *event) override;
 	QString createTemporaryFile();
 
