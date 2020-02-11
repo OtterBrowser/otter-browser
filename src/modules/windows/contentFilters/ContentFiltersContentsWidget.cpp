@@ -38,6 +38,13 @@ ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &pa
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->profilesViewWidget->setFilterRoles({Qt::DisplayRole, ContentFiltersViewWidget::UpdateUrlRole});
 
+	const QStringList hosts(SettingsManager::getOverrideHosts(SettingsManager::ContentBlocking_ProfilesOption));
+
+	for (int i = 0; i < hosts.count(); ++i)
+	{
+		m_ui->hostComboBox->addItem(hosts.at(i));
+	}
+
 	QMenu *menu(new QMenu(m_ui->addlButton));
 	menu->addAction(tr("New…"), m_ui->profilesViewWidget, &ContentFiltersViewWidget::addProfile);
 	menu->addAction(tr("File…"), m_ui->profilesViewWidget, &ContentFiltersViewWidget::importProfileFromFile);
