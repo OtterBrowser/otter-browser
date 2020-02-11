@@ -156,7 +156,7 @@ void ContentFiltersIntervalDelegate::setModelData(QWidget *editor, QAbstractItem
 {
 	const QSpinBox *widget(qobject_cast<QSpinBox*>(editor));
 
-	if (widget)
+	if (widget && widget->value() != index.data(Qt::DisplayRole).toInt())
 	{
 		const QModelIndex entryIndex(index.sibling(index.row(), 0));
 
