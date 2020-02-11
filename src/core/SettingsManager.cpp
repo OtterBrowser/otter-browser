@@ -532,9 +532,27 @@ QStringList SettingsManager::getOptions()
 	return options;
 }
 
-QStringList SettingsManager::getOverrideHosts()
+QStringList SettingsManager::getOverrideHosts(int identifier)
 {
-	return QSettings(m_overridePath, QSettings::IniFormat).childGroups();
+	if (identifier < 0)
+	{
+		return QSettings(m_overridePath, QSettings::IniFormat).childGroups();
+	}
+
+	const QSettings overrides(m_overridePath, QSettings::IniFormat);
+	const QStringList overridesGroups(overrides.childGroups());
+	QStringList hosts;
+	const QString optionName(getOptionName(identifier));
+
+	for (int i = 0; i < overridesGroups.count(); ++i)
+	{
+		if (overrides.contains(overridesGroups.at(i) + QLatin1Char('/') + optionName))
+		{
+			hosts.append(overridesGroups.at(i));
+		}
+	}
+
+	return hosts;
 }
 
 SettingsManager::OptionDefinition SettingsManager::getOptionDefinition(int identifier)

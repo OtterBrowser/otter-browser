@@ -312,7 +312,7 @@ public:
 	static QString getOptionName(int identifier);
 	static QVariant getOption(int identifier, const QString &host = {});
 	static QStringList getOptions();
-	static QStringList getOverrideHosts();
+	static QStringList getOverrideHosts(int identifier = -1);
 	static OptionDefinition getOptionDefinition(int identifier);
 	static int registerOption(const QString &name, OptionType type, const QVariant &defaultValue = {}, const QStringList &choices = {}, OptionDefinition::OptionFlags flags = static_cast<OptionDefinition::OptionFlags>(OptionDefinition::IsEnabledFlag | OptionDefinition::IsVisibleFlag));
 	static int getOptionIdentifier(const QString &name);
