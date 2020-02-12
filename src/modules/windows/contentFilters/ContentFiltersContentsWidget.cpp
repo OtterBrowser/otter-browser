@@ -58,7 +58,26 @@ ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &pa
 
 	connect(m_ui->hostComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [&](int index)
 	{
-		m_ui->profilesViewWidget->setHost((index == 0) ? QString() : m_ui->hostComboBox->itemText(index));
+		const QString host((index == 0) ? QString() : m_ui->hostComboBox->itemText(index));
+
+		if (m_ui->profilesViewWidget->areProfilesModified() && host != m_ui->profilesViewWidget->getHost())
+		{
+			const int result(QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel));
+
+			if (result == QMessageBox::Cancel)
+			{
+				m_ui->hostComboBox->setCurrentIndex(m_ui->hostComboBox->findText(host));
+
+				return;
+			}
+
+			if (result == QMessageBox::Yes)
+			{
+				m_ui->profilesViewWidget->save();
+			}
+		}
+
+		m_ui->profilesViewWidget->setHost(host);
 		m_ui->removeHostButton->setEnabled(index > 0);
 	});
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->profilesViewWidget, &ContentFiltersViewWidget::setFilterString);
