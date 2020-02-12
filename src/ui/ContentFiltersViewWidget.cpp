@@ -1013,7 +1013,8 @@ ContentFiltersProfile::ProfileCategory ContentFiltersViewWidget::getCategory(con
 	{
 		return static_cast<ContentFiltersProfile::ProfileCategory>(index.data(CategoryRole).toInt());
 	}
-	else if (!index.parent().data(CategoryRole).isNull())
+
+	if (!index.parent().data(CategoryRole).isNull())
 	{
 		return static_cast<ContentFiltersProfile::ProfileCategory>(index.parent().data(CategoryRole).toInt());
 	}
