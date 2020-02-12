@@ -80,6 +80,15 @@ ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &pa
 		m_ui->profilesViewWidget->setHost(host);
 		m_ui->removeHostButton->setEnabled(index > 0);
 	});
+	connect(m_ui->removeHostButton, &QPushButton::clicked, this, [&]()
+	{
+		if (m_ui->hostComboBox->currentIndex() > 1)
+		{
+			SettingsManager::removeOverride(m_ui->hostComboBox->currentText(), SettingsManager::ContentBlocking_ProfilesOption);
+
+			m_ui->hostComboBox->removeItem(m_ui->hostComboBox->currentIndex());
+		}
+	});
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->profilesViewWidget, &ContentFiltersViewWidget::setFilterString);
 	connect(m_ui->profilesViewWidget, &ContentFiltersViewWidget::needsActionsUpdate, this, &ContentFiltersContentsWidget::updateActions);
 	connect(m_ui->profilesViewWidget, &ContentFiltersViewWidget::areProfilesModifiedChanged, m_ui->saveButton, &QPushButton::setEnabled);
