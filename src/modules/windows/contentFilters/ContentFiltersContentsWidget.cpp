@@ -87,6 +87,11 @@ ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &pa
 			SettingsManager::removeOverride(m_ui->hostComboBox->currentText(), SettingsManager::ContentBlocking_ProfilesOption);
 
 			m_ui->hostComboBox->removeItem(m_ui->hostComboBox->currentIndex());
+
+			if (m_ui->hostComboBox->count() == 2)
+			{
+				m_ui->hostComboBox->removeItem(1);
+			}
 		}
 	});
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->profilesViewWidget, &ContentFiltersViewWidget::setFilterString);
