@@ -56,6 +56,11 @@ ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &pa
 
 	m_ui->addlButton->setMenu(menu);
 
+	connect(m_ui->hostComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [&](int index)
+	{
+		m_ui->profilesViewWidget->setHost((index == 0) ? QString() : m_ui->hostComboBox->itemText(index));
+		m_ui->removeHostButton->setEnabled(index > 0);
+	});
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->profilesViewWidget, &ContentFiltersViewWidget::setFilterString);
 	connect(m_ui->profilesViewWidget, &ContentFiltersViewWidget::needsActionsUpdate, this, &ContentFiltersContentsWidget::updateActions);
 	connect(m_ui->profilesViewWidget, &ContentFiltersViewWidget::areProfilesModifiedChanged, m_ui->saveButton, &QPushButton::setEnabled);
