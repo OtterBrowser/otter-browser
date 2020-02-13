@@ -23,6 +23,7 @@
 
 #include "ui_ContentFiltersContentsWidget.h"
 
+#include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 
@@ -79,6 +80,21 @@ ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &pa
 
 		m_ui->profilesViewWidget->setHost(host);
 		m_ui->removeHostButton->setEnabled(index > 0);
+	});
+	connect(m_ui->addHostButton, &QPushButton::clicked, this, [&]()
+	{
+		const QString host(QInputDialog::getText(this, tr("Select Website"), tr("Enter website name:")));
+
+		if (!host.isEmpty())
+		{
+			if (m_ui->hostComboBox->count() == 1)
+			{
+				m_ui->hostComboBox->insertSeparator(1);
+			}
+
+			m_ui->hostComboBox->addItem(host);
+			m_ui->hostComboBox->setCurrentIndex(m_ui->hostComboBox->findText(host));
+		}
 	});
 	connect(m_ui->removeHostButton, &QPushButton::clicked, this, [&]()
 	{

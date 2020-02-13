@@ -88,9 +88,6 @@
          </item>
          <item>
           <widget class="QToolButton" name="addHostButton">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="text">
             <string>Add…</string>
            </property>
