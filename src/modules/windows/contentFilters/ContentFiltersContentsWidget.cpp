@@ -83,7 +83,7 @@ ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &pa
 	});
 	connect(m_ui->addHostButton, &QPushButton::clicked, this, [&]()
 	{
-		const QString host(QInputDialog::getText(this, tr("Select Website"), tr("Enter website name:")));
+		const QString host(QInputDialog::getText(this, tr("Select Website"), tr("Enter website name:")).simplified());
 
 		if (!host.isEmpty())
 		{
