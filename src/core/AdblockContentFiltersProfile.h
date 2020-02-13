@@ -36,6 +36,14 @@ class AdblockContentFiltersProfile final : public ContentFiltersProfile
 	Q_OBJECT
 
 public:
+	enum RuleType
+	{
+		AnyRule = 0,
+		ActiveRule,
+		CosmeticRule,
+		WildcardRule
+	};
+
 	struct HeaderInformation final
 	{
 		QString title;
