@@ -87,12 +87,16 @@ ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &pa
 
 		if (!host.isEmpty())
 		{
-			if (m_ui->hostComboBox->count() == 1)
+			if (m_ui->hostComboBox->findText(host) < 0)
 			{
-				m_ui->hostComboBox->insertSeparator(1);
+				if (m_ui->hostComboBox->count() == 1)
+				{
+					m_ui->hostComboBox->insertSeparator(1);
+				}
+
+				m_ui->hostComboBox->addItem(host);
 			}
 
-			m_ui->hostComboBox->addItem(host);
 			m_ui->hostComboBox->setCurrentIndex(m_ui->hostComboBox->findText(host));
 		}
 	});
