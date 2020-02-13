@@ -61,7 +61,7 @@ public:
 	QString getPath() const override;
 	QUrl getUpdateUrl() const override;
 	QDateTime getLastUpdate() const override;
-	static HeaderInformation loadHeader(QIODevice *device);
+	static HeaderInformation loadHeader(QIODevice *rulesDevice);
 	ProfileSummary getProfileSummary() const override;
 	ContentFiltersManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType) override;
 	ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly) override;

@@ -695,10 +695,10 @@ QUrl AdblockContentFiltersProfile::getUpdateUrl() const
 	return m_profileSummary.updateUrl;
 }
 
-AdblockContentFiltersProfile::HeaderInformation AdblockContentFiltersProfile::loadHeader(QIODevice *device)
+AdblockContentFiltersProfile::HeaderInformation AdblockContentFiltersProfile::loadHeader(QIODevice *rulesDevice)
 {
 	HeaderInformation information;
-	QTextStream stream(device);
+	QTextStream stream(rulesDevice);
 	stream.setCodec("UTF-8");
 
 	const QString header(stream.readLine());
