@@ -65,6 +65,7 @@ public:
 	ProfileSummary getProfileSummary() const override;
 	ContentFiltersManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType) override;
 	ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly) override;
+	static QHash<RuleType, quint32> loadRulesInformation(const ProfileSummary &profileSummary, QIODevice *rulesDevice);
 	QVector<QLocale::Language> getLanguages() const override;
 	ProfileCategory getCategory() const override;
 	ContentFiltersManager::CosmeticFiltersMode getCosmeticFiltersMode() const override;

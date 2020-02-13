@@ -815,6 +815,78 @@ ContentFiltersManager::CosmeticFiltersResult AdblockContentFiltersProfile::getCo
 	return result;
 }
 
+QHash<AdblockContentFiltersProfile::RuleType, quint32> AdblockContentFiltersProfile::loadRulesInformation(const ContentFiltersProfile::ProfileSummary &profileSummary, QIODevice *rulesDevice)
+{
+	QHash<RuleType, quint32> information({{AnyRule, 0}, {ActiveRule, 0}, {CosmeticRule, 0}, {WildcardRule, 0}});
+	QTextStream stream(rulesDevice);
+	stream.setCodec("UTF-8");
+	stream.readLine();
+
+	while (!stream.atEnd())
+	{
+		const QString line(stream.readLine().simplified());
+
+		if (line.isEmpty() || line.startsWith(QLatin1Char('!')))
+		{
+			continue;
+		}
+
+		++information[AnyRule];
+
+		if (line.startsWith(QLatin1String("##")))
+		{
+			++information[CosmeticRule];
+
+			if (profileSummary.cosmeticFiltersMode == ContentFiltersManager::AllFilters)
+			{
+				++information[ActiveRule];
+			}
+
+			continue;
+		}
+
+		if (line.contains(QLatin1String("##")))
+		{
+			++information[CosmeticRule];
+
+			if (profileSummary.cosmeticFiltersMode != ContentFiltersManager::NoFilters)
+			{
+				++information[ActiveRule];
+			}
+
+			continue;
+		}
+
+		if (line.contains(QLatin1String("#@#")))
+		{
+			++information[CosmeticRule];
+
+			if (profileSummary.cosmeticFiltersMode != ContentFiltersManager::NoFilters)
+			{
+				++information[ActiveRule];
+			}
+
+			continue;
+		}
+
+		if (line.contains(QLatin1Char('*')))
+		{
+			++information[WildcardRule];
+
+			if (profileSummary.areWildcardsEnabled)
+			{
+				++information[ActiveRule];
+			}
+
+			continue;
+		}
+
+		++information[ActiveRule];
+	}
+
+	return information;
+}
+
 QVector<QLocale::Language> AdblockContentFiltersProfile::getLanguages() const
 {
 	return m_languages;
