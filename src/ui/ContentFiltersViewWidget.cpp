@@ -21,7 +21,6 @@
 #include "ContentFiltersViewWidget.h"
 #include "Animation.h"
 #include "ContentBlockingProfileDialog.h"
-#include "../core/AdblockContentFiltersProfile.h"
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
 #include "../core/Utils.h"
@@ -224,19 +223,11 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 
 		if (!profileItems.isEmpty())
 		{
-			QFile file(profile->getPath());
-
-			if (file.open(QIODevice::ReadOnly | QIODevice::Text))
-			{
-				const QHash<AdblockContentFiltersProfile::RuleType, quint32> information(AdblockContentFiltersProfile::loadRulesInformation(profile->getProfileSummary(), &file));
-
-				profileItems[3]->setText(QString::number(information.value(AdblockContentFiltersProfile::ActiveRule)));
-				profileItems[4]->setText(QString::number(information.value(AdblockContentFiltersProfile::AnyRule)));
-
-				file.close();
-			}
+			const QHash<AdblockContentFiltersProfile::RuleType, quint32> information(getRulesInformation(profile->getProfileSummary(), profile->getPath()));
 
 			profileItems[0]->setData(createLanguagesList(profile), LanguagesRole);
+			profileItems[3]->setText(QString::number(information.value(AdblockContentFiltersProfile::ActiveRule)));
+			profileItems[4]->setText(QString::number(information.value(AdblockContentFiltersProfile::AnyRule)));
 
 			if (!categoryEntries.contains(category))
 			{
@@ -951,6 +942,21 @@ ContentFiltersProfile::ProfileSummary ContentFiltersViewWidget::getProfileSummar
 	profileSummary.areWildcardsEnabled = index.data(AreWildcardsEnabledRole).toBool();
 
 	return profileSummary;
+}
+
+QHash<AdblockContentFiltersProfile::RuleType, quint32> ContentFiltersViewWidget::getRulesInformation(const ContentFiltersProfile::ProfileSummary &profileSummary, const QString &path)
+{
+	QHash<AdblockContentFiltersProfile::RuleType, quint32> information;
+	QFile file(path);
+
+	if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+		information = AdblockContentFiltersProfile::loadRulesInformation(profileSummary, &file);
+
+		file.close();
+	}
+
+	return information;
 }
 
 QStringList ContentFiltersViewWidget::createLanguagesList(const ContentFiltersProfile *profile) const

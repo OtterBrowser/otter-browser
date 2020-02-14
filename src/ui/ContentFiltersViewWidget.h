@@ -23,7 +23,7 @@
 
 #include "ItemDelegate.h"
 #include "ItemViewWidget.h"
-#include "../core/ContentFiltersManager.h"
+#include "../core/AdblockContentFiltersProfile.h"
 
 namespace Otter
 {
@@ -98,6 +98,7 @@ protected:
 	void moveProfile(QStandardItem *entryItem, ContentFiltersProfile::ProfileCategory newCategory);
 	QString getProfilePath(const QModelIndex &index) const;
 	ContentFiltersProfile::ProfileSummary getProfileSummary(const QModelIndex &index) const;
+	QHash<AdblockContentFiltersProfile::RuleType, quint32> getRulesInformation(const ContentFiltersProfile::ProfileSummary &profileSummary, const QString &path);
 	QStringList createLanguagesList(const ContentFiltersProfile *profile) const;
 	QStringList getProfileNames() const;
 	QList<QStandardItem*> createEntry(const ContentFiltersProfile::ProfileSummary &profileSummary, const QStringList &profiles = {}) const;
