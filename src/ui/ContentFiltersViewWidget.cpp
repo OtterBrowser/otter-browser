@@ -224,13 +224,19 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 
 		if (!profileItems.isEmpty())
 		{
-			profileItems[0]->setData(createLanguagesList(profile), LanguagesRole);
+			QFile file(profile->getPath());
 
-			if (profile->getTotalRulesAmount() > 0)
+			if (file.open(QIODevice::ReadOnly | QIODevice::Text))
 			{
-				profileItems[3]->setText(QString::number(profile->getActiveRulesAmount()));
-				profileItems[4]->setText(QString::number(profile->getTotalRulesAmount()));
+				const QHash<AdblockContentFiltersProfile::RuleType, quint32> information(AdblockContentFiltersProfile::loadRulesInformation(profile->getProfileSummary(), &file));
+
+				profileItems[3]->setText(QString::number(information.value(AdblockContentFiltersProfile::ActiveRule)));
+				profileItems[4]->setText(QString::number(information.value(AdblockContentFiltersProfile::AnyRule)));
+
+				file.close();
 			}
+
+			profileItems[0]->setData(createLanguagesList(profile), LanguagesRole);
 
 			if (!categoryEntries.contains(category))
 			{
