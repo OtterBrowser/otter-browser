@@ -496,8 +496,7 @@ void ContentFiltersViewWidget::editProfile()
 	if (item)
 	{
 		ContentFiltersProfile::ProfileSummary profileSummary(getProfileSummary(index));
-		ContentFiltersProfile *profile(ContentFiltersManager::getProfile(profileSummary.name));
-		ContentBlockingProfileDialog dialog(profileSummary, (profile ? profile->getPath() : index.data(ImportPathRole).toString()), this);
+		ContentBlockingProfileDialog dialog(profileSummary, getProfilePath(index), this);
 
 		if (dialog.exec() == QDialog::Accepted)
 		{
@@ -919,6 +918,13 @@ void ContentFiltersViewWidget::save()
 Animation* ContentFiltersViewWidget::getUpdateAnimation()
 {
 	return m_updateAnimation;
+}
+
+QString ContentFiltersViewWidget::getProfilePath(const QModelIndex &index) const
+{
+	const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(NameRole).toString()));
+
+	return (profile ? profile->getPath() : index.data(ImportPathRole).toString());
 }
 
 QString ContentFiltersViewWidget::getHost() const

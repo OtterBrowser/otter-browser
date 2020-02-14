@@ -96,6 +96,7 @@ protected:
 	void markProfilesAsModified();
 	void appendProfile(QList<QStandardItem*> items, ContentFiltersProfile::ProfileCategory category);
 	void moveProfile(QStandardItem *entryItem, ContentFiltersProfile::ProfileCategory newCategory);
+	QString getProfilePath(const QModelIndex &index) const;
 	ContentFiltersProfile::ProfileSummary getProfileSummary(const QModelIndex &index) const;
 	QStringList createLanguagesList(const ContentFiltersProfile *profile) const;
 	QStringList getProfileNames() const;
