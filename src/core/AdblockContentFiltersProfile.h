@@ -71,8 +71,6 @@ public:
 	ContentFiltersManager::CosmeticFiltersMode getCosmeticFiltersMode() const override;
 	ProfileError getError() const override;
 	ProfileFlags getFlags() const override;
-	quint32 getActiveRulesAmount() const override;
-	quint32 getTotalRulesAmount() const override;
 	int getUpdateInterval() const override;
 	int getUpdateProgress() const override;
 	static bool create(const ProfileSummary &profileSummary, QIODevice *rulesDevice = nullptr, bool canOverwriteExisting = false);
@@ -170,8 +168,6 @@ private:
 	QMultiHash<QString, QString> m_cosmeticFiltersDomainExceptions;
 	ProfileError m_error;
 	ProfileFlags m_flags;
-	quint32 m_activeRulesAmount;
-	quint32 m_totalRulesAmount;
 	bool m_wasLoaded;
 
 	static QVector<QChar> m_separators;
