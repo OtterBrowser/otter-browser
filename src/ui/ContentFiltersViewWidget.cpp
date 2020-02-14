@@ -492,23 +492,28 @@ void ContentFiltersViewWidget::editProfile()
 
 	if (item)
 	{
+		const QString path(getProfilePath(index));
 		ContentFiltersProfile::ProfileSummary profileSummary(getProfileSummary(index));
-		ContentBlockingProfileDialog dialog(profileSummary, getProfilePath(index), this);
+		ContentBlockingProfileDialog dialog(profileSummary, path, this);
 
 		if (dialog.exec() == QDialog::Accepted)
 		{
 			profileSummary = dialog.getProfile();
+
+			const QHash<AdblockContentFiltersProfile::RuleType, quint32> information(getRulesInformation(profileSummary, path));
 
 			m_model->setData(index, true, IsModifiedRole);
 			m_model->setData(index, profileSummary.title, TitleRole);
 			m_model->setData(index, profileSummary.updateUrl, UpdateUrlRole);
 			m_model->setData(index, profileSummary.cosmeticFiltersMode, CosmeticFiltersModeRole);
 			m_model->setData(index, profileSummary.areWildcardsEnabled, AreWildcardsEnabledRole);
+			m_model->setData(index.sibling(index.row(), 1), profileSummary.updateInterval, Qt::DisplayRole);
 			m_model->setData(index.sibling(index.row(), 1), profileSummary.updateUrl, UpdateUrlRole);
 			m_model->setData(index.sibling(index.row(), 2), profileSummary.updateUrl, UpdateUrlRole);
+			m_model->setData(index.sibling(index.row(), 3), QString::number(information.value(AdblockContentFiltersProfile::ActiveRule)), Qt::DisplayRole);
 			m_model->setData(index.sibling(index.row(), 3), profileSummary.updateUrl, UpdateUrlRole);
+			m_model->setData(index.sibling(index.row(), 4), QString::number(information.value(AdblockContentFiltersProfile::AnyRule)), Qt::DisplayRole);
 			m_model->setData(index.sibling(index.row(), 4), profileSummary.updateUrl, UpdateUrlRole);
-			m_model->setData(index.sibling(index.row(), 1), profileSummary.updateInterval, Qt::DisplayRole);
 
 			if (index.parent().data(CategoryRole).toInt() != profileSummary.category)
 			{
