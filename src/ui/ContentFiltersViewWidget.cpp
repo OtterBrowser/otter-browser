@@ -636,7 +636,11 @@ void ContentFiltersViewWidget::handleProfileAdded(const QString &name)
 
 				if (categoryItem)
 				{
+					const QHash<AdblockContentFiltersProfile::RuleType, quint32> information(getRulesInformation(profile->getProfileSummary(), profile->getPath()));
+
 					profileItems[0]->setData(createLanguagesList(profile), LanguagesRole);
+					profileItems[3]->setText(QString::number(information.value(AdblockContentFiltersProfile::ActiveRule)));
+					profileItems[4]->setText(QString::number(information.value(AdblockContentFiltersProfile::AnyRule)));
 
 					categoryItem->appendRow(profileItems);
 
