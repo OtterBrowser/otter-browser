@@ -636,7 +636,7 @@ void ContentFiltersViewWidget::handleProfileAdded(const QString &name)
 
 				if (categoryItem)
 				{
-					profileItems[0]->setData(createLanguagesList(profile));
+					profileItems[0]->setData(createLanguagesList(profile), LanguagesRole);
 
 					categoryItem->appendRow(profileItems);
 
