@@ -728,6 +728,12 @@ void ContentFiltersViewWidget::handleProfileModified(const QString &name)
 					entryItem->setData((hasError ? 0 : 100), UpdateProgressValueRole);
 				}
 
+				const QModelIndex entryIndex(entryItem->index());
+				const QHash<AdblockContentFiltersProfile::RuleType, quint32> information(getRulesInformation(getProfileSummary(entryIndex), getProfilePath(entryIndex)));
+
+				m_model->setData(entryIndex.sibling(entryIndex.row(), 3), QString::number(information.value(AdblockContentFiltersProfile::ActiveRule)), Qt::DisplayRole);
+				m_model->setData(entryIndex.sibling(entryIndex.row(), 4), QString::number(information.value(AdblockContentFiltersProfile::AnyRule)), Qt::DisplayRole);
+
 				QTimer::singleShot(2500, this, [=]()
 				{
 					if (!profile->isUpdating())
