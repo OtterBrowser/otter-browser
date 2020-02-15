@@ -180,7 +180,7 @@ bool MarginWidget::event(QEvent *event)
 	return result;
 }
 
-SourceEditWidget::SourceEditWidget(QWidget *parent) : TextEditWidget(parent),
+SourceEditWidget::SourceEditWidget(QWidget *parent) : TextEditWidget(false, parent),
 	m_marginWidget(nullptr),
 	m_highlighter(nullptr),
 	m_findFlags(WebWidget::NoFlagsFind),
@@ -188,7 +188,6 @@ SourceEditWidget::SourceEditWidget(QWidget *parent) : TextEditWidget(parent),
 	m_savedRevision(-1),
 	m_zoom(100)
 {
-	setSpellCheckingEnabled(false);
 	setZoom(SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());
 	handleOptionChanged(SettingsManager::Interface_ShowScrollBarsOption, SettingsManager::getOption(SettingsManager::Interface_ShowScrollBarsOption));
 	handleOptionChanged(SettingsManager::SourceViewer_ShowLineNumbersOption, SettingsManager::getOption(SettingsManager::SourceViewer_ShowLineNumbersOption));

@@ -38,7 +38,8 @@ class TextEditWidget : public QPlainTextEdit, public ActionExecutor
 
 public:
 	explicit TextEditWidget(const QString &text, QWidget *parent = nullptr);
-	explicit TextEditWidget(QWidget *parent = nullptr);
+	explicit TextEditWidget(bool isSpellCheckingEnabled, QWidget *parent);
+	explicit TextEditWidget(QWidget *parent);
 
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters) const override;
 	bool isSpellCheckingEnabled() const;
@@ -46,7 +47,6 @@ public:
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
-	void setSpellCheckingEnabled(bool isEnabled);
 
 protected:
 	void focusInEvent(QFocusEvent *event) override;
@@ -60,6 +60,7 @@ protected slots:
 
 private:
 	Sonnet::Highlighter *m_highlighter;
+	bool m_isSpellCheckingEnabled;
 	bool m_hadSelection;
 	bool m_wasEmpty;
 

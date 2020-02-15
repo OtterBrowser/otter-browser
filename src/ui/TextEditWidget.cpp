@@ -35,14 +35,25 @@ namespace Otter
 
 TextEditWidget::TextEditWidget(const QString &text, QWidget *parent) : QPlainTextEdit(text, parent),
 	m_highlighter(nullptr),
+	m_isSpellCheckingEnabled(true),
 	m_hadSelection(false),
 	m_wasEmpty(text.isEmpty())
 {
 	initialize();
 }
 
+TextEditWidget::TextEditWidget(bool isSpellCheckingEnabled, QWidget *parent) : QPlainTextEdit(parent),
+	m_highlighter(nullptr),
+	m_isSpellCheckingEnabled(isSpellCheckingEnabled),
+	m_hadSelection(false),
+	m_wasEmpty(true)
+{
+	initialize();
+}
+
 TextEditWidget::TextEditWidget(QWidget *parent) : QPlainTextEdit(parent),
 	m_highlighter(nullptr),
+	m_isSpellCheckingEnabled(true),
 	m_hadSelection(false),
 	m_wasEmpty(true)
 {
@@ -52,8 +63,11 @@ TextEditWidget::TextEditWidget(QWidget *parent) : QPlainTextEdit(parent),
 void TextEditWidget::initialize()
 {
 #ifdef OTTER_ENABLE_SPELLCHECK
-	m_highlighter = new Sonnet::Highlighter(this);
-	m_highlighter->setCurrentLanguage(SpellCheckManager::getDefaultDictionary());
+	if (m_isSpellCheckingEnabled)
+	{
+		m_highlighter = new Sonnet::Highlighter(this);
+		m_highlighter->setCurrentLanguage(SpellCheckManager::getDefaultDictionary());
+	}
 #endif
 
 	connect(this, &TextEditWidget::selectionChanged, this, &TextEditWidget::handleSelectionChanged);
@@ -194,6 +208,11 @@ void TextEditWidget::triggerAction(int identifier, const QVariantMap &parameters
 			break;
 		case ActionsManager::CheckSpellingAction:
 #ifdef OTTER_ENABLE_SPELLCHECK
+			if (!m_isSpellCheckingEnabled)
+			{
+				return;
+			}
+
 			if (parameters.contains(QLatin1String("dictionary")))
 			{
 				const QString dictionary(parameters[QLatin1String("dictionary")].toString());
@@ -211,7 +230,18 @@ void TextEditWidget::triggerAction(int identifier, const QVariantMap &parameters
 			}
 			else
 			{
-				setSpellCheckingEnabled(parameters.value(QLatin1String("isChecked"), !(m_highlighter && m_highlighter->isActive())).toBool());
+				const bool isEnabled(parameters.value(QLatin1String("isChecked"), !(m_highlighter && m_highlighter->isActive())).toBool());
+
+				if (isEnabled && !m_highlighter)
+				{
+					m_highlighter = new Sonnet::Highlighter(this);
+					m_highlighter->setCurrentLanguage(SpellCheckManager::getDefaultDictionary());
+				}
+				else if (!isEnabled && m_highlighter)
+				{
+					m_highlighter->deleteLater();
+					m_highlighter = nullptr;
+				}
 			}
 #endif
 			break;
@@ -243,24 +273,6 @@ void TextEditWidget::handleTextChanged()
 void TextEditWidget::notifyPasteActionStateChanged()
 {
 	emit arbitraryActionsStateChanged({ActionsManager::PasteAction});
-}
-
-void TextEditWidget::setSpellCheckingEnabled(bool isEnabled)
-{
-#ifdef OTTER_ENABLE_SPELLCHECK
-	if (isEnabled && !m_highlighter)
-	{
-		m_highlighter = new Sonnet::Highlighter(this);
-		m_highlighter->setCurrentLanguage(SpellCheckManager::getDefaultDictionary());
-	}
-	else if (!isEnabled && m_highlighter)
-	{
-		m_highlighter->deleteLater();
-		m_highlighter = nullptr;
-	}
-#else
-	Q_UNUSED(isEnabled)
-#endif
 }
 
 ActionsManager::ActionDefinition::State TextEditWidget::getActionState(int identifier, const QVariantMap &parameters) const
