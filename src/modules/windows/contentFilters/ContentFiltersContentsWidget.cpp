@@ -38,6 +38,11 @@ ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &pa
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->profilesViewWidget->setFilterRoles({Qt::DisplayRole, ContentFiltersViewWidget::UpdateUrlRole});
 
+	if (isSidebarPanel())
+	{
+		m_ui->detailsWidget->hide();
+	}
+
 	const QStringList hosts(SettingsManager::getOverrideHosts(SettingsManager::ContentBlocking_ProfilesOption));
 
 	if (!hosts.isEmpty())
