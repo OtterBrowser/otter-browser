@@ -50,11 +50,13 @@ public:
 protected:
 	void closeEvent(QCloseEvent *event) override;
 	void changeEvent(QEvent *event) override;
+	void initializeSettingsPage();
 
 protected slots:
 	void updateActions();
 
 private:
+	bool m_isSettingsPageInitialized;
 	Ui::ContentFiltersContentsWidget *m_ui;
 };
 

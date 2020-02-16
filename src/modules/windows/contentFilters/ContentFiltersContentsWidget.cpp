@@ -31,6 +31,7 @@ namespace Otter
 {
 
 ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
+	m_isSettingsPageInitialized(false),
 	m_ui(new Ui::ContentFiltersContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -42,6 +43,57 @@ ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &pa
 	{
 		m_ui->detailsWidget->hide();
 	}
+	else
+	{
+		initializeSettingsPage();
+	}
+}
+
+ContentFiltersContentsWidget::~ContentFiltersContentsWidget()
+{
+	delete m_ui;
+}
+
+void ContentFiltersContentsWidget::closeEvent(QCloseEvent *event)
+{
+	if (m_ui->profilesViewWidget->areProfilesModified())
+	{
+		const int result(QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel));
+
+		if (result == QMessageBox::Cancel)
+		{
+			event->ignore();
+
+			return;
+		}
+
+		if (result == QMessageBox::Yes)
+		{
+			m_ui->profilesViewWidget->save();
+		}
+	}
+
+	event->accept();
+}
+
+void ContentFiltersContentsWidget::changeEvent(QEvent *event)
+{
+	ContentsWidget::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		m_ui->retranslateUi(this);
+	}
+}
+
+void ContentFiltersContentsWidget::initializeSettingsPage()
+{
+	if (m_isSettingsPageInitialized)
+	{
+		return;
+	}
+
+	m_isSettingsPageInitialized = true;
 
 	const QStringList hosts(SettingsManager::getOverrideHosts(SettingsManager::ContentBlocking_ProfilesOption));
 
@@ -124,43 +176,6 @@ ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &pa
 	connect(m_ui->profilesViewWidget, &ContentFiltersViewWidget::areProfilesModifiedChanged, m_ui->saveButton, &QPushButton::setEnabled);
 	connect(m_ui->saveButton, &QPushButton::clicked, m_ui->profilesViewWidget, &ContentFiltersViewWidget::save);
 	connect(m_ui->editButton, &QPushButton::clicked, m_ui->profilesViewWidget, &ContentFiltersViewWidget::editProfile);
-}
-
-ContentFiltersContentsWidget::~ContentFiltersContentsWidget()
-{
-	delete m_ui;
-}
-
-void ContentFiltersContentsWidget::closeEvent(QCloseEvent *event)
-{
-	if (m_ui->profilesViewWidget->areProfilesModified())
-	{
-		const int result(QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel));
-
-		if (result == QMessageBox::Cancel)
-		{
-			event->ignore();
-
-			return;
-		}
-
-		if (result == QMessageBox::Yes)
-		{
-			m_ui->profilesViewWidget->save();
-		}
-	}
-
-	event->accept();
-}
-
-void ContentFiltersContentsWidget::changeEvent(QEvent *event)
-{
-	ContentsWidget::changeEvent(event);
-
-	if (event->type() == QEvent::LanguageChange)
-	{
-		m_ui->retranslateUi(this);
-	}
 }
 
 void ContentFiltersContentsWidget::print(QPrinter *printer)
