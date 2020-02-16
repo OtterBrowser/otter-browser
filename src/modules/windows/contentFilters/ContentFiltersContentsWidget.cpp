@@ -20,6 +20,8 @@
 
 #include "ContentFiltersContentsWidget.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../ui/MainWindow.h"
+#include "../../../ui/Window.h"
 
 #include "ui_ContentFiltersContentsWidget.h"
 
@@ -105,6 +107,22 @@ void ContentFiltersContentsWidget::initializeSettingsPage()
 		for (int i = 0; i < hosts.count(); ++i)
 		{
 			m_ui->hostComboBox->addItem(hosts.at(i));
+		}
+	}
+
+	if (isSidebarPanel())
+	{
+		const MainWindow *mainWindow(MainWindow::findMainWindow(parentWidget()));
+
+		if (mainWindow && mainWindow->getActiveWindow())
+		{
+			const QString host(Utils::extractHost(mainWindow->getActiveWindow()->getUrl()));
+
+			if (SettingsManager::hasOverride(host, SettingsManager::ContentBlocking_ProfilesOption))
+			{
+				m_ui->hostComboBox->setCurrentIndex(m_ui->hostComboBox->findText(host));
+				m_ui->profilesViewWidget->setHost(host);
+			}
 		}
 	}
 
