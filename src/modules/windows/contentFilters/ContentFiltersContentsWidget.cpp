@@ -41,6 +41,7 @@ ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &pa
 
 	if (isSidebarPanel())
 	{
+		m_ui->stackedWidget->setCurrentIndex(0);
 		m_ui->detailsWidget->hide();
 	}
 	else
