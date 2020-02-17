@@ -867,7 +867,13 @@ void ContentFiltersViewWidget::save()
 			else
 			{
 				const QString importPath(entryIndex.data(ImportPathRole).toString());
-				QIODevice *device(nullptr);
+
+				if (importPath.isEmpty() && !AdblockContentFiltersProfile::create(profileSummary))
+				{
+					QMessageBox::critical(this, tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
+
+					continue;
+				}
 
 				if (!importPath.isEmpty())
 				{
@@ -878,38 +884,25 @@ void ContentFiltersViewWidget::save()
 						continue;
 					}
 
-					device = new QFile(importPath, this);
+					QFile file(importPath);
 
-					if (!device->open(QIODevice::ReadOnly | QIODevice::Text))
+					if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 					{
-						device->deleteLater();
-						device = nullptr;
-
 						QMessageBox::critical(this, tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
 
 						continue;
 					}
-				}
 
-				if (!AdblockContentFiltersProfile::create(profileSummary, device))
-				{
-					if (device)
+					const bool isSuccess(AdblockContentFiltersProfile::create(profileSummary, &file));
+
+					file.close();
+
+					if (!isSuccess)
 					{
-						device->close();
-						device->deleteLater();
-						device = nullptr;
+						QMessageBox::critical(this, tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
+
+						continue;
 					}
-
-					QMessageBox::critical(this, tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
-
-					continue;
-				}
-
-				if (device)
-				{
-					device->close();
-					device->deleteLater();
-					device = nullptr;
 				}
 			}
 
