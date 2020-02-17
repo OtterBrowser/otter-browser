@@ -895,6 +895,7 @@ void ContentFiltersViewWidget::save()
 				{
 					if (device)
 					{
+						device->close();
 						device->deleteLater();
 						device = nullptr;
 					}
@@ -906,6 +907,7 @@ void ContentFiltersViewWidget::save()
 
 				if (device)
 				{
+					device->close();
 					device->deleteLater();
 					device = nullptr;
 				}
