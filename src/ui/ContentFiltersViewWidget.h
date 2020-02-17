@@ -101,7 +101,7 @@ protected:
 	QHash<AdblockContentFiltersProfile::RuleType, quint32> getRulesInformation(const ContentFiltersProfile::ProfileSummary &profileSummary, const QString &path);
 	QStringList createLanguagesList(const ContentFiltersProfile *profile) const;
 	QStringList getProfileNames() const;
-	QList<QStandardItem*> createEntry(const ContentFiltersProfile::ProfileSummary &profileSummary, const QStringList &profiles = {}) const;
+	QList<QStandardItem*> createEntry(const ContentFiltersProfile::ProfileSummary &profileSummary, const QStringList &profiles = {}, bool isModified = true) const;
 	ContentFiltersProfile::ProfileCategory getCategory(const QModelIndex &index) const;
 
 protected slots:

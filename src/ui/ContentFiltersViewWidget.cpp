@@ -218,7 +218,7 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 	for (int i = 0; i < contentBlockingProfiles.count(); ++i)
 	{
 		const ContentFiltersProfile *profile(contentBlockingProfiles.at(i));
-		QList<QStandardItem*> profileItems(createEntry(profile->getProfileSummary(), profiles));
+		QList<QStandardItem*> profileItems(createEntry(profile->getProfileSummary(), profiles, false));
 		const ContentFiltersProfile::ProfileCategory category(contentBlockingProfiles.at(i)->getCategory());
 
 		if (!profileItems.isEmpty())
@@ -628,7 +628,7 @@ void ContentFiltersViewWidget::handleProfileAdded(const QString &name)
 
 		if (categoryIndex.data(CategoryRole).toInt() == profile->getCategory())
 		{
-			QList<QStandardItem*> profileItems(createEntry(profile->getProfileSummary()));
+			QList<QStandardItem*> profileItems(createEntry(profile->getProfileSummary(), {}, false));
 
 			if (!profileItems.isEmpty())
 			{
@@ -1012,14 +1012,14 @@ QStringList ContentFiltersViewWidget::getProfileNames() const
 	return profiles;
 }
 
-QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFiltersProfile::ProfileSummary &profileSummary, const QStringList &profiles) const
+QList<QStandardItem*> ContentFiltersViewWidget::createEntry(const ContentFiltersProfile::ProfileSummary &profileSummary, const QStringList &profiles, bool isModified) const
 {
 	QList<QStandardItem*> items({new QStandardItem(profileSummary.title), new QStandardItem(QString::number(profileSummary.updateInterval)), new QStandardItem(Utils::formatDateTime(profileSummary.lastUpdate)), new QStandardItem(), new QStandardItem()});
 	items[0]->setData(profileSummary.name, NameRole);
 	items[0]->setData(profileSummary.areWildcardsEnabled, AreWildcardsEnabledRole);
 	items[0]->setData(profileSummary.cosmeticFiltersMode, CosmeticFiltersModeRole);
 	items[0]->setData(false, HasErrorRole);
-	items[0]->setData(true, IsModifiedRole);
+	items[0]->setData(isModified, IsModifiedRole);
 	items[0]->setData(false, IsShowingProgressIndicatorRole);
 	items[0]->setData(false, IsUpdatingRole);
 	items[0]->setData(-1, UpdateProgressValueRole);
