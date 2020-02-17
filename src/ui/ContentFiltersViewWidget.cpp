@@ -817,6 +817,13 @@ void ContentFiltersViewWidget::setHost(const QString &host)
 	}
 
 	connect(m_model, &QStandardItemModel::dataChanged, this, &ContentFiltersViewWidget::handleDataChanged);
+
+	if (m_areProfilesModified && m_profilesToRemove.isEmpty() && m_model->match(m_model->index(0, 0), IsModifiedRole, true, 1, (Qt::MatchExactly | Qt::MatchRecursive | Qt::MatchWrap)).isEmpty())
+	{
+		m_areProfilesModified = false;
+
+		emit areProfilesModifiedChanged(false);
+	}
 }
 
 void ContentFiltersViewWidget::save()
