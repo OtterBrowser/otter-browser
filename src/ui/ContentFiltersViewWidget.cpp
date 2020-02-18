@@ -88,7 +88,7 @@ bool ContentFiltersTitleDelegate::helpEvent(QHelpEvent *event, QAbstractItemView
 	if (event->type() == QEvent::ToolTip)
 	{
 		const QModelIndex entryIndex(index.sibling(index.row(), 0));
-		const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(entryIndex.data(ContentFiltersViewWidget::NameRole).toString()));
+		const ContentFiltersProfile *profile(ContentFiltersViewWidget::getProfile(entryIndex));
 		QStringList toolTip;
 
 		if (profile)
@@ -292,7 +292,7 @@ void ContentFiltersViewWidget::changeEvent(QEvent *event)
 				for (int j = 0; j < getRowCount(categoryIndex); ++j)
 				{
 					const QModelIndex entryIndex(getIndex(j, 0, categoryIndex));
-					ContentFiltersProfile *profile(ContentFiltersManager::getProfile(entryIndex.data(NameRole).toString()));
+					ContentFiltersProfile *profile(getProfile(entryIndex));
 
 					if (profile)
 					{
@@ -528,7 +528,7 @@ void ContentFiltersViewWidget::editProfile()
 void ContentFiltersViewWidget::removeProfile()
 {
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
-	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(NameRole).toString()));
+	ContentFiltersProfile *profile(getProfile(index));
 	QMessageBox messageBox;
 	messageBox.setWindowTitle(tr("Question"));
 	messageBox.setText(tr("Do you really want to remove this profile?"));
@@ -564,7 +564,7 @@ void ContentFiltersViewWidget::removeProfile()
 void ContentFiltersViewWidget::updateProfile()
 {
 	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
-	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(NameRole).toString()));
+	ContentFiltersProfile *profile(getProfile(index));
 
 	if (!profile)
 	{
@@ -929,6 +929,11 @@ void ContentFiltersViewWidget::save()
 	emit areProfilesModifiedChanged(false);
 }
 
+ContentFiltersProfile* ContentFiltersViewWidget::getProfile(const QModelIndex &index)
+{
+	return ContentFiltersManager::getProfile(index.sibling(index.row(), 0).data(NameRole).toString());
+}
+
 Animation* ContentFiltersViewWidget::getUpdateAnimation()
 {
 	return m_updateAnimation;
@@ -936,7 +941,7 @@ Animation* ContentFiltersViewWidget::getUpdateAnimation()
 
 QString ContentFiltersViewWidget::getProfilePath(const QModelIndex &index) const
 {
-	const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(NameRole).toString()));
+	const ContentFiltersProfile *profile(getProfile(index));
 
 	return (profile ? profile->getPath() : index.data(ImportPathRole).toString());
 }

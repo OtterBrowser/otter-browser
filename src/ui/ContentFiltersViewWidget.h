@@ -76,6 +76,7 @@ public:
 
 	explicit ContentFiltersViewWidget(QWidget *parent);
 
+	static ContentFiltersProfile* getProfile(const QModelIndex &index);
 	static Animation* getUpdateAnimation();
 	QString getHost() const;
 	bool areProfilesModified() const;
