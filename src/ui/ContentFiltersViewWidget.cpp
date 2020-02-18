@@ -563,8 +563,7 @@ void ContentFiltersViewWidget::removeProfile()
 
 void ContentFiltersViewWidget::updateProfile()
 {
-	const QModelIndex index(currentIndex().sibling(currentIndex().row(), 0));
-	ContentFiltersProfile *profile(getProfile(index));
+	ContentFiltersProfile *profile(getProfile(currentIndex()));
 
 	if (!profile)
 	{
