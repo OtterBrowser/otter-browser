@@ -120,7 +120,7 @@ void ContentFiltersContentsWidget::initializeSettingsPage()
 
 			if (SettingsManager::hasOverride(host, SettingsManager::ContentBlocking_ProfilesOption))
 			{
-				m_ui->hostComboBox->setCurrentIndex(m_ui->hostComboBox->findText(host));
+				m_ui->hostComboBox->setCurrentIndex(host.isEmpty() ? 0 : m_ui->hostComboBox->findText(host));
 				m_ui->profilesViewWidget->setHost(host);
 			}
 		}
@@ -143,7 +143,7 @@ void ContentFiltersContentsWidget::initializeSettingsPage()
 
 			if (result == QMessageBox::Cancel)
 			{
-				m_ui->hostComboBox->setCurrentIndex(m_ui->hostComboBox->findText(host));
+				m_ui->hostComboBox->setCurrentIndex(host.isEmpty() ? 0 : m_ui->hostComboBox->findText(host));
 
 				return;
 			}
@@ -173,7 +173,7 @@ void ContentFiltersContentsWidget::initializeSettingsPage()
 				m_ui->hostComboBox->addItem(host);
 			}
 
-			m_ui->hostComboBox->setCurrentIndex(m_ui->hostComboBox->findText(host));
+			m_ui->hostComboBox->setCurrentIndex(host.isEmpty() ? 0 : m_ui->hostComboBox->findText(host));
 		}
 	});
 	connect(m_ui->removeHostButton, &QPushButton::clicked, this, [&]()
