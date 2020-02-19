@@ -56,6 +56,7 @@ protected slots:
 	void updateActions();
 
 private:
+	Window *m_window;
 	bool m_isSettingsPageInitialized;
 	Ui::ContentFiltersContentsWidget *m_ui;
 };
