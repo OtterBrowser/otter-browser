@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -667,9 +667,12 @@ void SearchEngineFetchJob::handleSuccessfulReply(QNetworkReply *reply)
 	{
 		IconFetchJob *job(new IconFetchJob(m_searchEngine.iconUrl, this));
 
-		connect(job, &IconFetchJob::jobFinished, this, [=]()
+		connect(job, &IconFetchJob::jobFinished, this, [=](bool isSuccess)
 		{
-			m_searchEngine.icon = job->getIcon();
+			if (isSuccess)
+			{
+				m_searchEngine.icon = job->getIcon();
+			}
 
 			if (m_needsToSaveSearchEngine)
 			{
