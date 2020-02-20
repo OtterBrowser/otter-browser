@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -197,9 +197,9 @@ void Feed::update()
 
 		emit updateProgressChanged(progress);
 	});
-	connect(dataJob, &DataFetchJob::jobFinished, this, [=](bool isFetchSuccess)
+	connect(dataJob, &DataFetchJob::jobFinished, this, [=](bool isDataFetchSuccess)
 	{
-		if (isFetchSuccess)
+		if (isDataFetchSuccess)
 		{
 			m_parser = FeedParser::createParser(this, dataJob);
 
@@ -220,9 +220,12 @@ void Feed::update()
 					{
 						IconFetchJob *iconJob(new IconFetchJob(information.icon, this));
 
-						connect(iconJob, &IconFetchJob::jobFinished, this, [=]()
+						connect(iconJob, &IconFetchJob::jobFinished, this, [=](bool isIconFetchSuccess)
 						{
-							setIcon(iconJob->getIcon());
+							if (isIconFetchSuccess)
+							{
+								setIcon(iconJob->getIcon());
+							}
 						});
 
 						iconJob->start();
