@@ -462,4 +462,48 @@ bool ContentsWidget::isSidebarPanel() const
 	return (m_sidebar >= 0);
 }
 
+CurrentWindowObserverContentsWidget::CurrentWindowObserverContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
+	m_currentWindow(nullptr)
+{
+	if (isSidebarPanel())
+	{
+		MainWindow *mainWindow((window && window->getMainWindow()) ? window->getMainWindow() : MainWindow::findMainWindow(parent));
+
+		if (mainWindow)
+		{
+			Window *window(mainWindow->getActiveWindow());
+
+			if (window != m_currentWindow)
+			{
+				m_currentWindow = window;
+			}
+
+			connect(mainWindow, &MainWindow::currentWindowChanged, this, &CurrentWindowObserverContentsWidget::handleCurrentWindowChanged);
+		}
+	}
+}
+
+void CurrentWindowObserverContentsWidget::handleCurrentWindowChanged()
+{
+	Window *window(getWindow());
+	MainWindow *mainWindow((window && window->getMainWindow()) ? window->getMainWindow() : MainWindow::findMainWindow(parentWidget()));
+
+	if (mainWindow)
+	{
+		Window *currentWindow(mainWindow->getActiveWindow());
+
+		if (currentWindow != m_currentWindow)
+		{
+			m_currentWindow = currentWindow;
+
+			emit currentWindowChanged();
+		}
+	}
+}
+
+Window* CurrentWindowObserverContentsWidget::getCurrentWindow() const
+{
+	return m_currentWindow;
+}
+
 }
