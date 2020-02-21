@@ -121,6 +121,7 @@ public:
 	explicit ActiveWindowObserverContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
 
 protected:
+	void setActiveWindow(Window *window);
 	Window* getActiveWindow() const;
 
 protected slots:
