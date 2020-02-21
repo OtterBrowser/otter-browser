@@ -113,15 +113,15 @@ signals:
 	void canZoomChanged(bool isAllowed);
 };
 
-class CurrentWindowObserverContentsWidget : public ContentsWidget
+class ActiveWindowObserverContentsWidget : public ContentsWidget
 {
 	Q_OBJECT
 
 public:
-	explicit CurrentWindowObserverContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
+	explicit ActiveWindowObserverContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
 
 protected:
-	Window* getCurrentWindow() const;
+	Window* getActiveWindow() const;
 
 protected slots:
 	void handleCurrentWindowChanged();
@@ -129,10 +129,10 @@ protected slots:
 
 private:
 	QPointer<MainWindow> m_mainWindow;
-	QPointer<Window> m_currentWindow;
+	QPointer<Window> m_activeWindow;
 
 signals:
-	void currentWindowChanged();
+	void activeWindowChanged();
 };
 
 }

@@ -462,9 +462,9 @@ bool ContentsWidget::isSidebarPanel() const
 	return (m_sidebar >= 0);
 }
 
-CurrentWindowObserverContentsWidget::CurrentWindowObserverContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
+ActiveWindowObserverContentsWidget::ActiveWindowObserverContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
 	m_mainWindow(nullptr),
-	m_currentWindow(nullptr)
+	m_activeWindow(nullptr)
 {
 	if (isSidebarPanel())
 	{
@@ -474,34 +474,34 @@ CurrentWindowObserverContentsWidget::CurrentWindowObserverContentsWidget(const Q
 		{
 			Window *activetWindow(m_mainWindow->getActiveWindow());
 
-			if (activetWindow != m_currentWindow)
+			if (activetWindow != m_activeWindow)
 			{
-				m_currentWindow = activetWindow;
+				m_activeWindow = activetWindow;
 			}
 
-			connect(m_mainWindow, &MainWindow::currentWindowChanged, this, &CurrentWindowObserverContentsWidget::handleCurrentWindowChanged);
+			connect(m_mainWindow, &MainWindow::currentWindowChanged, this, &ActiveWindowObserverContentsWidget::handleCurrentWindowChanged);
 		}
 
-		connect(this, &CurrentWindowObserverContentsWidget::windowChanged, this, &CurrentWindowObserverContentsWidget::handleParentWindowChanged);
+		connect(this, &ActiveWindowObserverContentsWidget::windowChanged, this, &ActiveWindowObserverContentsWidget::handleParentWindowChanged);
 	}
 }
 
-void CurrentWindowObserverContentsWidget::handleCurrentWindowChanged()
+void ActiveWindowObserverContentsWidget::handleCurrentWindowChanged()
 {
 	if (m_mainWindow)
 	{
 		Window *activetWindow(m_mainWindow->getActiveWindow());
 
-		if (activetWindow != m_currentWindow)
+		if (activetWindow != m_activeWindow)
 		{
-			m_currentWindow = activetWindow;
+			m_activeWindow = activetWindow;
 
-			emit currentWindowChanged();
+			emit activeWindowChanged();
 		}
 	}
 }
 
-void CurrentWindowObserverContentsWidget::handleParentWindowChanged()
+void ActiveWindowObserverContentsWidget::handleParentWindowChanged()
 {
 	Window *window(getWindow());
 	MainWindow *mainWindow((window && window->getMainWindow()) ? window->getMainWindow() : MainWindow::findMainWindow(parentWidget()));
@@ -513,22 +513,22 @@ void CurrentWindowObserverContentsWidget::handleParentWindowChanged()
 
 	if (m_mainWindow)
 	{
-		disconnect(m_mainWindow, &MainWindow::currentWindowChanged, this, &CurrentWindowObserverContentsWidget::handleCurrentWindowChanged);
+		disconnect(m_mainWindow, &MainWindow::currentWindowChanged, this, &ActiveWindowObserverContentsWidget::handleCurrentWindowChanged);
 	}
 
 	m_mainWindow = mainWindow;
 
 	if (m_mainWindow)
 	{
-		connect(m_mainWindow, &MainWindow::currentWindowChanged, this, &CurrentWindowObserverContentsWidget::handleCurrentWindowChanged);
+		connect(m_mainWindow, &MainWindow::currentWindowChanged, this, &ActiveWindowObserverContentsWidget::handleCurrentWindowChanged);
 	}
 
 	handleCurrentWindowChanged();
 }
 
-Window* CurrentWindowObserverContentsWidget::getCurrentWindow() const
+Window* ActiveWindowObserverContentsWidget::getActiveWindow() const
 {
-	return m_currentWindow;
+	return m_activeWindow;
 }
 
 }
