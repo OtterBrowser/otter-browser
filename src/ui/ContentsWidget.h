@@ -125,8 +125,10 @@ protected:
 
 protected slots:
 	void handleCurrentWindowChanged();
+	void handleParentWindowChanged();
 
 private:
+	QPointer<MainWindow> m_mainWindow;
 	QPointer<Window> m_currentWindow;
 
 signals:
