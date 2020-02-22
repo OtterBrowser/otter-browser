@@ -518,9 +518,11 @@ void ActiveWindowObserverContentsWidget::setActiveWindow(Window *window)
 {
 	if (window != m_activeWindow)
 	{
+		Window *previousWindow = m_activeWindow;
+
 		m_activeWindow = window;
 
-		emit activeWindowChanged();
+		emit activeWindowChanged(m_activeWindow, previousWindow);
 	}
 }
 

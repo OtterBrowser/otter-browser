@@ -133,7 +133,7 @@ private:
 	QPointer<Window> m_activeWindow;
 
 signals:
-	void activeWindowChanged();
+	void activeWindowChanged(Window *window, Window *previousWindow);
 };
 
 }
