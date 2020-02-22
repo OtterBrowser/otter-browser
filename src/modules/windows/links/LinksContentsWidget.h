@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ namespace Ui
 
 class Window;
 
-class LinksContentsWidget final : public ContentsWidget
+class LinksContentsWidget final : public ActiveWindowObserverContentsWidget
 {
 	Q_OBJECT
 
@@ -63,7 +63,6 @@ protected slots:
 	void showContextMenu(const QPoint &position);
 
 private:
-	Window *m_window;
 	bool m_isLocked;
 	Ui::LinksContentsWidget *m_ui;
 };

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -35,8 +35,7 @@
 namespace Otter
 {
 
-LinksContentsWidget::LinksContentsWidget(const QVariantMap &parameters, QWidget *parent) : ContentsWidget(parameters, nullptr, parent),
-	m_window(nullptr),
+LinksContentsWidget::LinksContentsWidget(const QVariantMap &parameters, QWidget *parent) : ActiveWindowObserverContentsWidget(parameters, nullptr, parent),
 	m_isLocked(false),
 	m_ui(new Ui::LinksContentsWidget)
 {
@@ -48,50 +47,36 @@ LinksContentsWidget::LinksContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->linksViewWidget->viewport()->installEventFilter(this);
 	m_ui->linksViewWidget->viewport()->setMouseTracking(true);
 
-	const MainWindow *mainWindow(MainWindow::findMainWindow(parentWidget()));
-
-	if (mainWindow)
+	connect(this, &LinksContentsWidget::activeWindowChanged, this, [=](Window *window, Window *previousWindow)
 	{
-		m_window = mainWindow->getActiveWindow();
-
-		connect(mainWindow, &MainWindow::currentWindowChanged, this, [=]()
+		if (previousWindow)
 		{
-			Window *window(mainWindow->getActiveWindow());
+			disconnect(previousWindow, &Window::loadingStateChanged, this, &LinksContentsWidget::updateLinks);
 
-			if (window != m_window)
+			if (previousWindow->getWebWidget())
 			{
-				if (m_window)
-				{
-					disconnect(m_window, &Window::loadingStateChanged, this, &LinksContentsWidget::updateLinks);
+				previousWindow->getWebWidget()->stopWatchingChanges(this, WebWidget::LinksWatcher);
 
-					if (m_window->getWebWidget())
-					{
-						m_window->getWebWidget()->stopWatchingChanges(this, WebWidget::LinksWatcher);
-
-						disconnect(m_window->getWebWidget(), &WebWidget::watchedDataChanged, this, &LinksContentsWidget::handleWatchedDataChanged);
-					}
-				}
-
-				m_window = window;
-
-				if (window)
-				{
-					connect(window, &Window::loadingStateChanged, this, &LinksContentsWidget::updateLinks);
-
-					if (window->getWebWidget())
-					{
-						window->getWebWidget()->startWatchingChanges(this, WebWidget::LinksWatcher);
-
-						connect(window->getWebWidget(), &WebWidget::watchedDataChanged, this, &LinksContentsWidget::handleWatchedDataChanged);
-					}
-				}
+				disconnect(previousWindow->getWebWidget(), &WebWidget::watchedDataChanged, this, &LinksContentsWidget::handleWatchedDataChanged);
 			}
+		}
 
-			updateLinks();
+		if (window)
+		{
+			connect(window, &Window::loadingStateChanged, this, &LinksContentsWidget::updateLinks);
 
-			emit arbitraryActionsStateChanged({ActionsManager::ReloadAction});
-		});
-	}
+			if (window->getWebWidget())
+			{
+				window->getWebWidget()->startWatchingChanges(this, WebWidget::LinksWatcher);
+
+				connect(window->getWebWidget(), &WebWidget::watchedDataChanged, this, &LinksContentsWidget::handleWatchedDataChanged);
+			}
+		}
+
+		updateLinks();
+
+		emit arbitraryActionsStateChanged({ActionsManager::ReloadAction});
+	});
 
 	updateLinks();
 
@@ -214,11 +199,13 @@ void LinksContentsWidget::updateLinks()
 
 	m_ui->linksViewWidget->getSourceModel()->clear();
 
-	if (m_window && m_window->getWebWidget())
-	{
-		const QVector<WebWidget::LinkUrl> links(m_window->getWebWidget()->getLinks());
+	Window *window(getActiveWindow());
 
-		addLink(m_window->getTitle(), m_window->getUrl());
+	if (window && window->getWebWidget())
+	{
+		const QVector<WebWidget::LinkUrl> links(window->getWebWidget()->getLinks());
+
+		addLink(window->getTitle(), window->getUrl());
 
 		if (!links.isEmpty())
 		{
@@ -300,7 +287,7 @@ ActionsManager::ActionDefinition::State LinksContentsWidget::getActionState(int 
 
 			return state;
 		case ActionsManager::ReloadAction:
-			state.isEnabled = (m_window != nullptr);
+			state.isEnabled = (getActiveWindow() != nullptr);
 
 			return state;
 		default:
