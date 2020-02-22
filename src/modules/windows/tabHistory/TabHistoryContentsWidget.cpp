@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -31,8 +31,7 @@
 namespace Otter
 {
 
-TabHistoryContentsWidget::TabHistoryContentsWidget(const QVariantMap &parameters, QWidget *parent) : ContentsWidget(parameters, nullptr, parent),
-	m_window(nullptr),
+TabHistoryContentsWidget::TabHistoryContentsWidget(const QVariantMap &parameters, QWidget *parent) : ActiveWindowObserverContentsWidget(parameters, nullptr, parent),
 	m_ui(new Ui::TabHistoryContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -41,44 +40,31 @@ TabHistoryContentsWidget::TabHistoryContentsWidget(const QVariantMap &parameters
 	m_ui->historyViewWidget->viewport()->installEventFilter(this);
 	m_ui->historyViewWidget->viewport()->setMouseTracking(true);
 
-	const MainWindow *mainWindow(MainWindow::findMainWindow(parentWidget()));
-
-	if (mainWindow)
-	{
-		m_window = mainWindow->getActiveWindow();
-
-		connect(mainWindow, &MainWindow::currentWindowChanged, this, [=]()
-		{
-			Window *window(mainWindow->getActiveWindow());
-
-			if (window != m_window)
-			{
-				if (m_window)
-				{
-					disconnect(m_window, &Window::loadingStateChanged, this, &TabHistoryContentsWidget::updateHistory);
-				}
-
-				m_window = window;
-
-				if (window)
-				{
-					connect(window, &Window::loadingStateChanged, this, &TabHistoryContentsWidget::updateHistory);
-				}
-			}
-
-			updateHistory();
-		});
-	}
-
 	updateHistory();
 
+	connect(this, &TabHistoryContentsWidget::activeWindowChanged, this, [=](Window *window, Window *previousWindow)
+	{
+		if (previousWindow)
+		{
+			disconnect(previousWindow, &Window::loadingStateChanged, this, &TabHistoryContentsWidget::updateHistory);
+		}
+
+		if (window)
+		{
+			connect(window, &Window::loadingStateChanged, this, &TabHistoryContentsWidget::updateHistory);
+		}
+
+		updateHistory();
+	});
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->historyViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->historyViewWidget, &ItemViewWidget::customContextMenuRequested, this, &TabHistoryContentsWidget::showContextMenu);
 	connect(m_ui->historyViewWidget, &ItemViewWidget::clicked, [&](const QModelIndex &index)
 	{
-		if (m_window && m_window->getWebWidget())
+		Window *window(getActiveWindow());
+
+		if (window && window->getWebWidget())
 		{
-			m_window->triggerAction(ActionsManager::GoToHistoryIndexAction, {{QLatin1String("index"), index.row()}});
+			window->triggerAction(ActionsManager::GoToHistoryIndexAction, {{QLatin1String("index"), index.row()}});
 		}
 	});
 }
@@ -100,9 +86,11 @@ void TabHistoryContentsWidget::changeEvent(QEvent *event)
 
 void TabHistoryContentsWidget::updateHistory()
 {
-	if (m_window)
+	Window *window(getActiveWindow());
+
+	if (window)
 	{
-		const Session::Window::History history(m_window->getHistory());
+		const Session::Window::History history(window->getHistory());
 
 		m_ui->historyViewWidget->getSourceModel()->clear();
 
@@ -133,8 +121,9 @@ void TabHistoryContentsWidget::updateHistory()
 
 void TabHistoryContentsWidget::showContextMenu(const QPoint &position)
 {
+	Window *window(getActiveWindow());
 	const QModelIndex index(m_ui->historyViewWidget->indexAt(position));
-	ActionExecutor::Object executor(m_window, m_window);
+	ActionExecutor::Object executor(window, window);
 	QMenu menu(this);
 
 	if (index.isValid())
