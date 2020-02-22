@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,8 +30,7 @@
 namespace Otter
 {
 
-PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &parameters, QWidget *parent) : ContentsWidget(parameters, nullptr, parent),
-	m_window(nullptr),
+PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &parameters, QWidget *parent) : ActiveWindowObserverContentsWidget(parameters, nullptr, parent),
 	m_ui(new Ui::PageInformationContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -53,51 +52,36 @@ PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &
 	m_ui->informationViewWidget->setModel(model);
 	m_ui->informationViewWidget->expandAll();
 
-	const MainWindow *mainWindow(MainWindow::findMainWindow(parentWidget()));
-
-	if (mainWindow)
-	{
-		m_window = mainWindow->getActiveWindow();
-
-		connect(mainWindow, &MainWindow::currentWindowChanged, this, [=]()
-		{
-			Window *window(mainWindow->getActiveWindow());
-
-			if (window != m_window)
-			{
-				if (m_window)
-				{
-					disconnect(m_window, &Window::loadingStateChanged, this, &PageInformationContentsWidget::updateSections);
-
-					if (m_window->getWebWidget())
-					{
-						m_window->getWebWidget()->stopWatchingChanges(this, WebWidget::MetaDataWatcher);
-
-						disconnect(m_window->getWebWidget(), &WebWidget::watchedDataChanged, this, &PageInformationContentsWidget::handleWatchedDataChanged);
-					}
-				}
-
-				m_window = window;
-
-				if (window)
-				{
-					connect(window, &Window::loadingStateChanged, this, &PageInformationContentsWidget::updateSections);
-
-					if (window->getWebWidget())
-					{
-						window->getWebWidget()->stopWatchingChanges(this, WebWidget::MetaDataWatcher);
-
-						connect(window->getWebWidget(), &WebWidget::watchedDataChanged, this, &PageInformationContentsWidget::handleWatchedDataChanged);
-					}
-				}
-			}
-
-			updateSections();
-		});
-	}
-
 	updateSections();
 
+	connect(this, &PageInformationContentsWidget::activeWindowChanged, this, [=](Window *window, Window *previousWindow)
+	{
+		if (previousWindow)
+		{
+			disconnect(previousWindow, &Window::loadingStateChanged, this, &PageInformationContentsWidget::updateSections);
+
+			if (previousWindow->getWebWidget())
+			{
+				previousWindow->getWebWidget()->stopWatchingChanges(this, WebWidget::MetaDataWatcher);
+
+				disconnect(previousWindow->getWebWidget(), &WebWidget::watchedDataChanged, this, &PageInformationContentsWidget::handleWatchedDataChanged);
+			}
+		}
+
+		if (window)
+		{
+			connect(window, &Window::loadingStateChanged, this, &PageInformationContentsWidget::updateSections);
+
+			if (window->getWebWidget())
+			{
+				window->getWebWidget()->stopWatchingChanges(this, WebWidget::MetaDataWatcher);
+
+				connect(window->getWebWidget(), &WebWidget::watchedDataChanged, this, &PageInformationContentsWidget::handleWatchedDataChanged);
+			}
+		}
+
+		updateSections();
+	});
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->informationViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->informationViewWidget, &ItemViewWidget::customContextMenuRequested, this, &PageInformationContentsWidget::showContextMenu);
 	connect(m_ui->informationViewWidget, &ItemViewWidget::needsActionsUpdate, this, [&]()
@@ -159,6 +143,8 @@ void PageInformationContentsWidget::addEntry(QStandardItem *parent, const QStrin
 
 void PageInformationContentsWidget::updateSections()
 {
+	Window *window(getActiveWindow());
+
 	for (int i = 0; i < m_ui->informationViewWidget->getRowCount(); ++i)
 	{
 		const QModelIndex index(m_ui->informationViewWidget->getIndex(i));
@@ -173,26 +159,26 @@ void PageInformationContentsWidget::updateSections()
 
 				if (sectionItem)
 				{
-					const bool canGetPageInformation(m_window && m_window->getWebWidget() && m_window->getLoadingState() == WebWidget::FinishedLoadingState);
+					const bool canGetPageInformation(window && window->getWebWidget() && window->getLoadingState() == WebWidget::FinishedLoadingState);
 
-					addEntry(sectionItem, tr("Title"), (m_window ? m_window->getTitle() : QString()));
+					addEntry(sectionItem, tr("Title"), (window ? window->getTitle() : QString()));
 
-					if (!m_window || m_window->getUrl().scheme() != QLatin1String("about"))
+					if (!window || window->getUrl().scheme() != QLatin1String("about"))
 					{
-						addEntry(sectionItem, tr("MIME type"), (canGetPageInformation ? m_window->getWebWidget()->getPageInformation(WebWidget::DocumentMimeTypeInformation).toString() : QString()));
-						addEntry(sectionItem, tr("Document size"), (canGetPageInformation ? Utils::formatUnit(m_window->getWebWidget()->getPageInformation(WebWidget::DocumentBytesTotalInformation).toLongLong(), false, 1, true) : QString()));
-						addEntry(sectionItem, tr("Total size"), (canGetPageInformation ? Utils::formatUnit(m_window->getWebWidget()->getPageInformation(WebWidget::TotalBytesTotalInformation).toLongLong(), false, 1, true) : QString()));
+						addEntry(sectionItem, tr("MIME type"), (canGetPageInformation ? window->getWebWidget()->getPageInformation(WebWidget::DocumentMimeTypeInformation).toString() : QString()));
+						addEntry(sectionItem, tr("Document size"), (canGetPageInformation ? Utils::formatUnit(window->getWebWidget()->getPageInformation(WebWidget::DocumentBytesTotalInformation).toLongLong(), false, 1, true) : QString()));
+						addEntry(sectionItem, tr("Total size"), (canGetPageInformation ? Utils::formatUnit(window->getWebWidget()->getPageInformation(WebWidget::TotalBytesTotalInformation).toLongLong(), false, 1, true) : QString()));
 
-						if (canGetPageInformation && m_window->getWebWidget()->getPageInformation(WebWidget::RequestsBlockedInformation).toInt() > 0)
+						if (canGetPageInformation && window->getWebWidget()->getPageInformation(WebWidget::RequestsBlockedInformation).toInt() > 0)
 						{
-							addEntry(sectionItem, tr("Number of requests"), tr("%1 (%n blocked)", "", m_window->getWebWidget()->getPageInformation(WebWidget::RequestsBlockedInformation).toInt()).arg(m_window->getWebWidget()->getPageInformation(WebWidget::RequestsFinishedInformation).toInt()));
+							addEntry(sectionItem, tr("Number of requests"), tr("%1 (%n blocked)", "", window->getWebWidget()->getPageInformation(WebWidget::RequestsBlockedInformation).toInt()).arg(window->getWebWidget()->getPageInformation(WebWidget::RequestsFinishedInformation).toInt()));
 						}
 						else
 						{
-							addEntry(sectionItem, tr("Number of requests"), (canGetPageInformation ? QString::number(m_window->getWebWidget()->getPageInformation(WebWidget::RequestsFinishedInformation).toInt()) : QString()));
+							addEntry(sectionItem, tr("Number of requests"), (canGetPageInformation ? QString::number(window->getWebWidget()->getPageInformation(WebWidget::RequestsFinishedInformation).toInt()) : QString()));
 						}
 
-						addEntry(sectionItem, tr("Downloaded"), (canGetPageInformation ? Utils::formatDateTime(m_window->getWebWidget()->getPageInformation(WebWidget::LoadingFinishedInformation).toDateTime(), {}, false) : QString()));
+						addEntry(sectionItem, tr("Downloaded"), (canGetPageInformation ? Utils::formatDateTime(window->getWebWidget()->getPageInformation(WebWidget::LoadingFinishedInformation).toDateTime(), {}, false) : QString()));
 					}
 				}
 
@@ -200,9 +186,9 @@ void PageInformationContentsWidget::updateSections()
 			case HeadersSection:
 				m_ui->informationViewWidget->setData(index, tr("Headers"), Qt::DisplayRole);
 
-				if (sectionItem && m_window && m_window->getWebWidget())
+				if (sectionItem && window && window->getWebWidget())
 				{
-					const QMap<QByteArray, QByteArray> headers(m_window->getWebWidget()->getHeaders());
+					const QMap<QByteArray, QByteArray> headers(window->getWebWidget()->getHeaders());
 					QMap<QByteArray, QByteArray>::const_iterator iterator;
 
 					for (iterator = headers.constBegin(); iterator != headers.constEnd(); ++iterator)
@@ -215,9 +201,9 @@ void PageInformationContentsWidget::updateSections()
 			case MetaSection:
 				m_ui->informationViewWidget->setData(index, tr("Meta"), Qt::DisplayRole);
 
-				if (sectionItem && m_window && m_window->getWebWidget())
+				if (sectionItem && window && window->getWebWidget())
 				{
-					const QMultiMap<QString, QString> metaData(m_window->getWebWidget()->getMetaData());
+					const QMultiMap<QString, QString> metaData(window->getWebWidget()->getMetaData());
 					QMultiMap<QString, QString>::const_iterator iterator;
 
 					for (iterator = metaData.constBegin(); iterator != metaData.constEnd(); ++iterator)
@@ -237,9 +223,9 @@ void PageInformationContentsWidget::updateSections()
 			case SecuritySection:
 				m_ui->informationViewWidget->setData(index, tr("Security"), Qt::DisplayRole);
 
-				if (sectionItem && m_window && m_window->getWebWidget())
+				if (sectionItem && window && window->getWebWidget())
 				{
-					const QSslCipher cipher(m_window->getWebWidget()->getSslInformation().cipher);
+					const QSslCipher cipher(window->getWebWidget()->getSslInformation().cipher);
 
 					if (!cipher.isNull())
 					{
