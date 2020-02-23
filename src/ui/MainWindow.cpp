@@ -70,7 +70,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 	m_tabBar(new TabBarWidget(this)),
 	m_menuBar(nullptr),
 	m_statusBar(nullptr),
-	m_currentWindow(nullptr),
+	m_activeWindow(nullptr),
 	m_identifier(++m_identifierCounter),
 	m_mouseTrackerTimer(0),
 	m_tabSwitchingOrderIndex(-1),
@@ -1954,7 +1954,7 @@ void MainWindow::setActiveWindowByIndex(int index, bool updateLastActivity)
 
 	updateWindowTitle();
 
-	emit currentWindowChanged(window ? window->getIdentifier() : 0);
+	emit activeWindowChanged(window ? window->getIdentifier() : 0);
 	emit actionsStateChanged();
 }
 
@@ -1980,9 +1980,9 @@ void MainWindow::setActiveWindowByIdentifier(quint64 identifier, bool updateLast
 
 void MainWindow::setCurrentWindow(Window *window)
 {
-	const Window *previousWindow((m_currentWindow && m_currentWindow->isAboutToClose()) ? nullptr : m_currentWindow);
+	const Window *previousWindow((m_activeWindow && m_activeWindow->isAboutToClose()) ? nullptr : m_activeWindow);
 
-	m_currentWindow = window;
+	m_activeWindow = window;
 
 	if (previousWindow)
 	{

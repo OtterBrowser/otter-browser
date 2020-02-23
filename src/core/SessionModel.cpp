@@ -100,7 +100,7 @@ MainWindowSessionItem::MainWindowSessionItem(MainWindow *mainWindow) : SessionIt
 	}
 
 	connect(mainWindow, &MainWindow::titleChanged, this, &MainWindowSessionItem::notifyMainWindowModified);
-	connect(mainWindow, &MainWindow::currentWindowChanged, this, &MainWindowSessionItem::notifyMainWindowModified);
+	connect(mainWindow, &MainWindow::activeWindowChanged, this, &MainWindowSessionItem::notifyMainWindowModified);
 	connect(mainWindow, &MainWindow::windowAdded, this, &MainWindowSessionItem::handleWindowAdded);
 	connect(mainWindow, &MainWindow::windowRemoved, this, &MainWindowSessionItem::handleWindowRemoved);
 }
@@ -291,7 +291,7 @@ void SessionModel::handleMainWindowAdded(MainWindow *mainWindow)
 
 	m_mainWindowItems[mainWindow] = item;
 
-	connect(mainWindow, &MainWindow::currentWindowChanged, this, &SessionModel::modelModified);
+	connect(mainWindow, &MainWindow::activeWindowChanged, this, &SessionModel::modelModified);
 }
 
 void SessionModel::handleMainWindowRemoved(MainWindow *mainWindow)

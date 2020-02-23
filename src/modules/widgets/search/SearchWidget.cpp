@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -753,7 +753,7 @@ void SearchWidget::setWindow(Window *window)
 		disconnect(this, &SearchWidget::requestedSearch, m_window.data(), &Window::requestedSearch);
 		disconnect(m_window.data(), &Window::loadingStateChanged, this, &SearchWidget::handleLoadingStateChanged);
 		disconnect(m_window.data(), &Window::optionChanged, this, &SearchWidget::handleWindowOptionChanged);
-		disconnect(m_window->getMainWindow(), &MainWindow::currentWindowChanged, this, &SearchWidget::hidePopup);
+		disconnect(m_window->getMainWindow(), &MainWindow::activeWindowChanged, this, &SearchWidget::hidePopup);
 
 		if (m_window->getWebWidget())
 		{
@@ -777,7 +777,7 @@ void SearchWidget::setWindow(Window *window)
 		connect(this, &SearchWidget::requestedSearch, window, &Window::requestedSearch);
 		connect(window, &Window::loadingStateChanged, this, &SearchWidget::handleLoadingStateChanged);
 		connect(window, &Window::optionChanged, this, &SearchWidget::handleWindowOptionChanged);
-		connect(window->getMainWindow(), &MainWindow::currentWindowChanged, this, &SearchWidget::hidePopup);
+		connect(window->getMainWindow(), &MainWindow::activeWindowChanged, this, &SearchWidget::hidePopup);
 		connect(window, &Window::destroyed, this, [&](QObject *object)
 		{
 			if (qobject_cast<Window*>(object) == m_window)

@@ -474,7 +474,7 @@ ActiveWindowObserverContentsWidget::ActiveWindowObserverContentsWidget(const QVa
 		{
 			setActiveWindow(m_mainWindow ? m_mainWindow->getActiveWindow() : nullptr);
 
-			connect(m_mainWindow, &MainWindow::currentWindowChanged, this, &ActiveWindowObserverContentsWidget::handleCurrentWindowChanged);
+			connect(m_mainWindow, &MainWindow::activeWindowChanged, this, &ActiveWindowObserverContentsWidget::handleCurrentWindowChanged);
 		}
 
 		connect(this, &ActiveWindowObserverContentsWidget::windowChanged, this, &ActiveWindowObserverContentsWidget::handleParentWindowChanged);
@@ -501,14 +501,14 @@ void ActiveWindowObserverContentsWidget::handleParentWindowChanged()
 
 	if (m_mainWindow)
 	{
-		disconnect(m_mainWindow, &MainWindow::currentWindowChanged, this, &ActiveWindowObserverContentsWidget::handleCurrentWindowChanged);
+		disconnect(m_mainWindow, &MainWindow::activeWindowChanged, this, &ActiveWindowObserverContentsWidget::handleCurrentWindowChanged);
 	}
 
 	m_mainWindow = mainWindow;
 
 	if (m_mainWindow)
 	{
-		connect(m_mainWindow, &MainWindow::currentWindowChanged, this, &ActiveWindowObserverContentsWidget::handleCurrentWindowChanged);
+		connect(m_mainWindow, &MainWindow::activeWindowChanged, this, &ActiveWindowObserverContentsWidget::handleCurrentWindowChanged);
 	}
 
 	setActiveWindow(m_mainWindow ? m_mainWindow->getActiveWindow() : nullptr);

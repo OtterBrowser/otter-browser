@@ -135,7 +135,7 @@ private:
 	TabBarWidget *m_tabBar;
 	MenuBarWidget *m_menuBar;
 	StatusBarWidget *m_statusBar;
-	QPointer<Window> m_currentWindow;
+	QPointer<Window> m_activeWindow;
 	QString m_currentBookmark;
 	QString m_windowTitle;
 	ActionExecutor::Object m_editorExecutor;
@@ -167,7 +167,7 @@ signals:
 	void toolBarStateChanged(int identifier, const Session::MainWindow::ToolBarState &state);
 	void windowAdded(quint64 identifier);
 	void windowRemoved(quint64 identifier);
-	void currentWindowChanged(quint64 identifier);
+	void activeWindowChanged(quint64 identifier);
 	void closedWindowsAvailableChanged(bool available);
 	void sessionRestored();
 	void actionsStateChanged();
