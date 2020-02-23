@@ -32,8 +32,7 @@
 namespace Otter
 {
 
-ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
-	m_window(nullptr),
+ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ActiveWindowObserverContentsWidget(parameters, window, parent),
 	m_isSettingsPageInitialized(false),
 	m_ui(new Ui::ContentFiltersContentsWidget)
 {
@@ -46,23 +45,6 @@ ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &pa
 	{
 		m_ui->stackedWidget->setCurrentIndex(0);
 		m_ui->detailsWidget->hide();
-
-		const MainWindow *mainWindow(MainWindow::findMainWindow(parentWidget()));
-
-		if (mainWindow)
-		{
-			m_window = mainWindow->getActiveWindow();
-
-			connect(mainWindow, &MainWindow::currentWindowChanged, this, [=]()
-			{
-				Window *window(mainWindow->getActiveWindow());
-
-				if (window != m_window)
-				{
-					m_window = window;
-				}
-			});
-		}
 	}
 	else
 	{

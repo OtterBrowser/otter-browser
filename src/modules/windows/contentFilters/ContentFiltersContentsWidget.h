@@ -33,7 +33,7 @@ namespace Ui
 
 class Window;
 
-class ContentFiltersContentsWidget final : public ContentsWidget
+class ContentFiltersContentsWidget final : public ActiveWindowObserverContentsWidget
 {
 	Q_OBJECT
 
@@ -56,7 +56,6 @@ protected slots:
 	void updateActions();
 
 private:
-	Window *m_window;
 	bool m_isSettingsPageInitialized;
 	Ui::ContentFiltersContentsWidget *m_ui;
 };
