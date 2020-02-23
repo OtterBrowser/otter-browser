@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -124,7 +124,7 @@ private:
 signals:
 	void windowAdded(MainWindow *mainWindow);
 	void windowRemoved(MainWindow *mainWindow);
-	void currentWindowChanged(MainWindow *mainWindow);
+	void activeWindowChanged(MainWindow *mainWindow);
 	void arbitraryActionsStateChanged(const QVector<int> &identifiers);
 };
 

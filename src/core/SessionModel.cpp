@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -263,7 +263,7 @@ SessionModel::SessionModel(QObject *parent) : QStandardItemModel(parent),
 
 	connect(Application::getInstance(), &Application::windowAdded, this, &SessionModel::handleMainWindowAdded);
 	connect(Application::getInstance(), &Application::windowRemoved, this, &SessionModel::handleMainWindowRemoved);
-	connect(Application::getInstance(), &Application::currentWindowChanged, this, &SessionModel::modelModified);
+	connect(Application::getInstance(), &Application::activeWindowChanged, this, &SessionModel::modelModified);
 	connect(this, &SessionModel::itemChanged, this, &SessionModel::modelModified);
 	connect(this, &SessionModel::rowsInserted, this, &SessionModel::modelModified);
 	connect(this, &SessionModel::rowsRemoved, this, &SessionModel::modelModified);
