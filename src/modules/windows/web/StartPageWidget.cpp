@@ -712,13 +712,13 @@ void StartPageWidget::triggerAction(int identifier, const QVariantMap &parameter
 			return;
 	}
 
-	const QUrl url(m_currentIndex.data(BookmarksModel::UrlRole).toUrl());
+	const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
 
-	if (url.isValid())
+	if (bookmark)
 	{
 		m_urlOpenTime = QTime::currentTime();
 
-		Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}}, parentWidget(), trigger);
+		Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(hints)}}, parentWidget(), trigger);
 	}
 }
 
