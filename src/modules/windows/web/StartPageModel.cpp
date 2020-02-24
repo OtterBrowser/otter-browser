@@ -301,6 +301,11 @@ QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const
 	return mimeData;
 }
 
+BookmarksModel::Bookmark* StartPageModel::getBookmark(const QModelIndex &index)
+{
+	return BookmarksManager::getModel()->getBookmark(index.data(BookmarksModel::IdentifierRole).toULongLong());
+}
+
 QString StartPageModel::getThumbnailPath(quint64 identifier)
 {
 	return SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(identifier) + QLatin1String(".png");

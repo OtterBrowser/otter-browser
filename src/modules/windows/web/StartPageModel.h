@@ -40,6 +40,7 @@ public:
 	explicit StartPageModel(QObject *parent = nullptr);
 
 	QMimeData* mimeData(const QModelIndexList &indexes) const override;
+	static BookmarksModel::Bookmark* getBookmark(const QModelIndex &index);
 	static QString getThumbnailPath(quint64 identifier);
 	QVariant data(const QModelIndex &index, int role) const override;
 	QStringList mimeTypes() const override;
