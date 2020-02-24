@@ -303,7 +303,9 @@ QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const
 
 BookmarksModel::Bookmark* StartPageModel::getBookmark(const QModelIndex &index)
 {
-	return BookmarksManager::getModel()->getBookmark(index.data(BookmarksModel::IdentifierRole).toULongLong());
+	const QVariant data(index.data(BookmarksModel::IdentifierRole));
+
+	return (data.isValid() ? BookmarksManager::getModel()->getBookmark(data.toULongLong()) : nullptr);
 }
 
 QString StartPageModel::getThumbnailPath(quint64 identifier)
