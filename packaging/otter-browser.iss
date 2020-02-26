@@ -22,6 +22,10 @@ OutputBaseFilename=otter-browser-{#OtterVersion}-setup
 Compression=lzma2/ultra64
 SolidCompression=yes
 VersionInfoVersion=0.9.99
+#ifdef OtterWin64
+ArchitecturesAllowed=x64 ia64
+ArchitecturesInstallIn64BitMode=x64 ia64
+#endif
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
