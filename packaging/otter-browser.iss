@@ -1,5 +1,6 @@
 #define OtterName "Otter Browser"
-#define OtterVersion "1.0.81-dev"
+#define OtterVersion "1.0.81"
+#define OtterContext "-dev"
 #define OtterUrl "https://otter-browser.org/"
 #define OtterExeName "otter-browser.exe"
 #define OtterIdentifier "OtterBrowser"
@@ -8,7 +9,7 @@
 [Setup]
 AppId={{A0517512-5271-465D-AE59-D08F487B5CAF}
 AppName={#OtterName}
-AppVersion={#OtterVersion}
+AppVersion={#OtterVersion}{#OtterContext}
 AppPublisher="Otter Browser Team"
 AppPublisherURL={#OtterUrl}
 AppSupportURL={#OtterUrl}
@@ -21,7 +22,7 @@ OutputDir={#OtterWorkingDir}\output\
 OutputBaseFilename=otter-browser-{#OtterVersion}-setup
 Compression=lzma2/ultra64
 SolidCompression=yes
-VersionInfoVersion=0.9.99
+VersionInfoVersion={#OtterVersion}
 #ifdef OtterWin64
 ArchitecturesAllowed=x64 ia64
 ArchitecturesInstallIn64BitMode=x64 ia64
