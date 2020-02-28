@@ -19,7 +19,11 @@ DefaultGroupName={#OtterName}
 AllowNoIcons=yes
 LicenseFile={#OtterWorkingDir}\input\COPYING
 OutputDir={#OtterWorkingDir}\output\
-OutputBaseFilename=otter-browser-{#OtterVersion}-setup
+#ifdef OtterWin64
+OutputBaseFilename=otter-browser-win64-{#OtterVersion}-setup
+#else
+OutputBaseFilename=otter-browser-win32-{#OtterVersion}-setup
+#endif
 Compression=lzma2/ultra64
 SolidCompression=yes
 VersionInfoVersion={#OtterVersion}
