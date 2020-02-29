@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -393,23 +393,20 @@ void Menu::load(const QJsonObject &definition, const QStringList &includeSection
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
-		if (actions.at(i).isObject() && actions.at(i).toObject().value(QLatin1String("type")) == QLatin1String("include"))
-		{
-			const QJsonObject object(actions.at(i).toObject());
+		const QJsonObject object(actions.at(i).toObject());
 
-			if (canInclude(object, includeSections))
-			{
-				const QJsonArray subActions(object.value(QLatin1String("actions")).toArray());
-
-				for (int j = 0; j < subActions.count(); ++j)
-				{
-					appendAction(subActions.at(j), includeSections, executor);
-				}
-			}
-		}
-		else
+		if (!actions.at(i).isObject() || object.value(QLatin1String("type")) != QLatin1String("include"))
 		{
 			appendAction(actions.at(i), includeSections, executor);
+		}
+		else if (canInclude(object, includeSections))
+		{
+			const QJsonArray subActions(object.value(QLatin1String("actions")).toArray());
+
+			for (int j = 0; j < subActions.count(); ++j)
+			{
+				appendAction(subActions.at(j), includeSections, executor);
+			}
 		}
 	}
 }
