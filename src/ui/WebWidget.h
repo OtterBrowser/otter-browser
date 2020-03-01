@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2017 Piktas Zuikis <piktas.zuikis@inbox.lt>
@@ -240,8 +240,8 @@ public:
 	QHash<int, QVariant> getOptions() const;
 	virtual QMap<QByteArray, QByteArray> getHeaders() const;
 	virtual QMultiMap<QString, QString> getMetaData() const;
-	virtual WebWidget::ContentStates getContentState() const;
-	virtual WebWidget::LoadingState getLoadingState() const = 0;
+	virtual ContentStates getContentState() const;
+	virtual LoadingState getLoadingState() const = 0;
 	quint64 getWindowIdentifier() const;
 	virtual int getZoom() const = 0;
 	bool hasOption(int identifier) const;
@@ -302,7 +302,7 @@ protected:
 	virtual bool isScrollBar(const QPoint &position) const;
 
 protected slots:
-	void handleLoadingStateChange(WebWidget::LoadingState state);
+	void handleLoadingStateChange(LoadingState state);
 	void handleWindowCloseRequest();
 	void notifyRedoActionStateChanged();
 	void notifyUndoActionStateChanged();
@@ -333,7 +333,7 @@ signals:
 	void requestedCloseWindow();
 	void requestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints, const QVariantMap &parameters);
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
-	void requestedPermission(WebWidget::FeaturePermission feature, const QUrl &url, bool isCancellation);
+	void requestedPermission(FeaturePermission feature, const QUrl &url, bool isCancellation);
 	void requestedSavePassword(const PasswordsManager::PasswordInformation &password, bool isUpdate);
 	void requestedGeometryChange(const QRect &geometry);
 	void requestedInspectorVisibilityChange(bool isVisible);
@@ -346,9 +346,9 @@ signals:
 	void requestBlocked(const NetworkManager::ResourceInformation &request);
 	void arbitraryActionsStateChanged(const QVector<int> &identifiers);
 	void categorizedActionsStateChanged(const QVector<int> &categories);
-	void contentStateChanged(WebWidget::ContentStates state);
-	void loadingStateChanged(WebWidget::LoadingState state);
-	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
+	void contentStateChanged(ContentStates state);
+	void loadingStateChanged(LoadingState state);
+	void pageInformationChanged(PageInformation, const QVariant &value);
 	void optionChanged(int identifier, const QVariant &value);
 	void watchedDataChanged(ChangeWatcher watcher);
 	void zoomChanged(int zoom);
