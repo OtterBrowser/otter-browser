@@ -603,7 +603,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			{
 				m_isTabPreferencesMenuVisible = true;
 
-				Menu menu(Menu::UnknownMenu, this);
+				Menu menu(this);
 				menu.load(QLatin1String("menu/quickPreferences.json"), {}, ActionExecutor::Object(this, this));
 				menu.exec(QCursor::pos());
 

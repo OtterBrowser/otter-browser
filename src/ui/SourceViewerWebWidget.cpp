@@ -302,7 +302,7 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 
 	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::EditingCategory});
 
-	Menu menu(Menu::UnknownMenu, this);
+	Menu menu(this);
 	menu.load(QLatin1String("menu/webWidget.json"), {QLatin1String("edit"), QLatin1String("source")}, ActionExecutor::Object(this, this));
 	menu.exec(position.isNull() ? QCursor::pos() : mapToGlobal(position));
 }

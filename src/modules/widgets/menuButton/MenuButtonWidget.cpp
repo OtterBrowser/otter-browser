@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ namespace Otter
 {
 
 MenuButtonWidget::MenuButtonWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
-	m_menu(new Menu(Menu::UnknownMenu, this)),
+	m_menu(new Menu(this)),
 	m_isHidden(false)
 {
 	setIcon(ThemesManager::createIcon(QLatin1String("otter-browser"), false));
