@@ -49,6 +49,14 @@ namespace Otter
 
 int Menu::m_menuRoleIdentifierEnumerator(-1);
 
+Menu::Menu(QWidget *parent) : QMenu(parent),
+	m_actionGroup(nullptr),
+	m_clickedAction(nullptr),
+	m_role(UnknownMenu),
+	m_option(-1)
+{
+}
+
 Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 	m_actionGroup(nullptr),
 	m_clickedAction(nullptr),

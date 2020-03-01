@@ -57,7 +57,8 @@ public:
 
 	Q_ENUM(MenuRole)
 
-	explicit Menu(int role = UnknownMenu, QWidget *parent = nullptr);
+	explicit Menu(QWidget *parent = nullptr);
+	explicit Menu(int role, QWidget *parent);
 
 	void load(const QString &path, const QStringList &includeSections = {}, const ActionExecutor::Object &executor = ActionExecutor::Object());
 	void load(const QJsonObject &definition, const QStringList &includeSections = {}, ActionExecutor::Object executor = ActionExecutor::Object());
