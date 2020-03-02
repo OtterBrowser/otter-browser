@@ -1124,7 +1124,7 @@ BookmarksModel::Bookmark* BookmarksModel::getBookmarkByKeyword(const QString &ke
 	return nullptr;
 }
 
-BookmarksModel::Bookmark* BookmarksModel::getBookmarkByPath(const QString &path) const
+BookmarksModel::Bookmark* BookmarksModel::getBookmarkByPath(const QString &path, const bool &createIfNotExists)
 {
 	if (path == QLatin1String("/"))
 	{
@@ -1159,7 +1159,14 @@ BookmarksModel::Bookmark* BookmarksModel::getBookmarkByPath(const QString &path)
 
 		if (!hasMatch)
 		{
-			return nullptr;
+			if (createIfNotExists)
+			{
+				bookmark = addBookmark(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, directories.at(i)}}, bookmark);
+			}
+			else
+			{
+				return nullptr;
+			}
 		}
 	}
 

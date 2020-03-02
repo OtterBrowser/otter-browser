@@ -113,33 +113,7 @@ void StartPageModel::addTile(const QUrl &url)
 		disconnect(BookmarksManager::getModel(), &BookmarksModel::bookmarkAdded, this, &StartPageModel::handleBookmarkModified);
 		disconnect(BookmarksManager::getModel(), &BookmarksModel::bookmarkModified, this, &StartPageModel::handleBookmarkModified);
 
-		const QStringList directories(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString().split(QLatin1Char('/'), QString::SkipEmptyParts));
-
-		m_bookmark = BookmarksManager::getModel()->getRootItem();
-
-		for (int i = 0; i < directories.count(); ++i)
-		{
-			bool hasMatch(false);
-
-			for (int j = 0; j < m_bookmark->rowCount(); ++j)
-			{
-				BookmarksModel::Bookmark *childBookmark(m_bookmark->getChild(j));
-
-				if (childBookmark && childBookmark->getRawData(Qt::DisplayRole).toString() == directories.at(i))
-				{
-					m_bookmark = childBookmark;
-
-					hasMatch = true;
-
-					break;
-				}
-			}
-
-			if (!hasMatch)
-			{
-				m_bookmark = BookmarksManager::getModel()->addBookmark(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, directories.at(i)}}, m_bookmark);
-			}
-		}
+		m_bookmark = BookmarksManager::getModel()->getBookmarkByPath(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString(), true);
 
 		connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkAdded, this, &StartPageModel::handleBookmarkModified);
 		connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkModified, this, &StartPageModel::handleBookmarkModified);
