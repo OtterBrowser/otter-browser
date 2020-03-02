@@ -27,6 +27,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QMimeData>
+#include <QtCore/QTimer>
 #include <QtGui/QPainter>
 
 namespace Otter
@@ -208,7 +209,7 @@ void StartPageModel::handleBookmarkRemoved(BookmarksModel::Bookmark *bookmark, B
 			QFile::remove(path);
 		}
 
-		reloadModel();
+		QTimer::singleShot(100, this, &StartPageModel::reloadModel);
 	}
 }
 
