@@ -753,21 +753,26 @@ void StartPageWidget::addTile()
 
 	if (dialog.exec() == QDialog::Accepted && dialog.getResult().isValid())
 	{
+		QModelIndex index;
+
 		switch (dialog.getResult().type)
 		{
 			case InputInterpreter::InterpreterResult::BookmarkType:
-				m_model->addTile(dialog.getResult().bookmark->getUrl());
+				index = m_model->addTile(dialog.getResult().bookmark->getUrl());
 
 				break;
 			case InputInterpreter::InterpreterResult::UrlType:
-				m_model->addTile(dialog.getResult().url);
+				index = m_model->addTile(dialog.getResult().url);
 
 				break;
 			default:
 				return;
 		}
 
-		startReloadingAnimation();
+		if (index.isValid())
+		{
+			startReloadingAnimation();
+		}
 	}
 }
 

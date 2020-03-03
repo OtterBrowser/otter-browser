@@ -50,7 +50,7 @@ public:
 
 public slots:
 	void reloadModel();
-	void addTile(const QUrl &url);
+	QModelIndex addTile(const QUrl &url);
 
 protected:
 	bool requestThumbnail(const QUrl &url, quint64 identifier, bool needsTitleUpdate = false);

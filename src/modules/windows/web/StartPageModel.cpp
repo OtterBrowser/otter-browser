@@ -107,27 +107,6 @@ void StartPageModel::reloadModel()
 	emit modelModified();
 }
 
-void StartPageModel::addTile(const QUrl &url)
-{
-	if (!m_bookmark)
-	{
-		disconnect(BookmarksManager::getModel(), &BookmarksModel::bookmarkAdded, this, &StartPageModel::handleBookmarkModified);
-		disconnect(BookmarksManager::getModel(), &BookmarksModel::bookmarkModified, this, &StartPageModel::handleBookmarkModified);
-
-		m_bookmark = BookmarksManager::getModel()->getBookmarkByPath(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString(), true);
-
-		connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkAdded, this, &StartPageModel::handleBookmarkModified);
-		connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkModified, this, &StartPageModel::handleBookmarkModified);
-	}
-
-	const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, url}}, m_bookmark));
-
-	if (bookmark)
-	{
-		reloadTile(bookmark->index(), true);
-	}
-}
-
 void StartPageModel::handleOptionChanged(int identifier)
 {
 	switch (identifier)
@@ -296,6 +275,36 @@ QVariant StartPageModel::data(const QModelIndex &index, int role) const
 	}
 
 	return QStandardItemModel::data(index, role);
+}
+
+QModelIndex StartPageModel::addTile(const QUrl &url)
+{
+	if (!m_bookmark)
+	{
+		disconnect(BookmarksManager::getModel(), &BookmarksModel::bookmarkAdded, this, &StartPageModel::handleBookmarkModified);
+		disconnect(BookmarksManager::getModel(), &BookmarksModel::bookmarkModified, this, &StartPageModel::handleBookmarkModified);
+
+		m_bookmark = BookmarksManager::getModel()->getBookmarkByPath(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString(), true);
+
+		connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkAdded, this, &StartPageModel::handleBookmarkModified);
+		connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkModified, this, &StartPageModel::handleBookmarkModified);
+	}
+
+	BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, url}}, m_bookmark));
+
+	if (bookmark)
+	{
+		bookmark = getBookmark(bookmark->index());
+	}
+
+	if (!bookmark)
+	{
+		return {};
+	}
+
+	reloadTile(bookmark->index(), true);
+
+	return bookmark->index();
 }
 
 QStringList StartPageModel::mimeTypes() const
