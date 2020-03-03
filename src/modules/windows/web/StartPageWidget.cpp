@@ -764,8 +764,10 @@ void StartPageWidget::addTile()
 
 				break;
 			default:
-				break;
+				return;
 		}
+
+		startReloadingAnimation();
 	}
 }
 
