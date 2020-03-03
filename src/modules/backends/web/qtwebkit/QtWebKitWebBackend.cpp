@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -30,6 +30,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QPointer>
 #include <QtCore/QRegularExpression>
+#include <QtCore/QTimer>
 #include <QtWebKit/QWebHistoryInterface>
 #include <QtWebKit/QWebSettings>
 #include <QtWebKitWidgets/QWebFrame>
@@ -506,6 +507,8 @@ void QtWebKitWebPageThumbnailJob::handlePageLoadFinished(bool result)
 		return;
 	}
 
+	m_title = m_page->mainFrame()->title();
+
 	QSize contentsSize(m_page->mainFrame()->contentsSize());
 
 	if (contentsSize.isNull())
@@ -528,31 +531,38 @@ void QtWebKitWebPageThumbnailJob::handlePageLoadFinished(bool result)
 
 		contentsSize.setHeight(qRound(m_size.height() * (static_cast<qreal>(contentsSize.width()) / m_size.width())));
 
-		m_page->setViewportSize(contentsSize);
-
-		if (!contentsSize.isNull())
+		if (contentsSize.isNull())
 		{
-			m_pixmap = QPixmap(contentsSize);
-			m_pixmap.fill(Qt::white);
+			deleteLater();
 
-			QPainter painter(&m_pixmap);
+			emit jobFinished(true);
+		}
+		else
+		{
+			m_page->setViewportSize(contentsSize);
 
-			m_page->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion(QRect(QPoint(0, 0), contentsSize)));
-
-			painter.end();
-
-			if (m_pixmap.size() != m_size)
+			QTimer::singleShot(1000, this, [=]()
 			{
-				m_pixmap = m_pixmap.scaled(m_size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-			}
+				m_pixmap = QPixmap(contentsSize);
+				m_pixmap.fill(Qt::white);
+
+				QPainter painter(&m_pixmap);
+
+				m_page->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion(QRect(QPoint(0, 0), contentsSize)));
+
+				painter.end();
+
+				if (m_pixmap.size() != m_size)
+				{
+					m_pixmap = m_pixmap.scaled(m_size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+				}
+
+				deleteLater();
+
+				emit jobFinished(true);
+			});
 		}
 	}
-
-	m_title = m_page->mainFrame()->title();
-
-	deleteLater();
-
-	emit jobFinished(true);
 }
 
 QString QtWebKitWebPageThumbnailJob::getTitle() const
