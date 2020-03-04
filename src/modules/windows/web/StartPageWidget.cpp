@@ -1036,6 +1036,7 @@ void StartPageWidget::updateSize()
 
 	m_tileDelegate->setPixmapCachePrefix(m_contentsWidget->getPixmapCachePrefix());
 
+	m_currentIndex = {};
 	m_thumbnail = {};
 }
 
