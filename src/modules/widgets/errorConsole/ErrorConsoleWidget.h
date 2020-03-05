@@ -63,7 +63,7 @@ protected:
 	void showEvent(QShowEvent *event) override;
 	void applyFilters(const QModelIndex &index, const QString &filter, const QVector<Console::MessageCategory> &categories, quint64 currentWindow);
 	QVector<Console::MessageCategory> getCategories() const;
-	quint64 getCurrentWindow();
+	quint64 getActiveWindow();
 
 protected slots:
 	void addMessage(const Console::Message &message);

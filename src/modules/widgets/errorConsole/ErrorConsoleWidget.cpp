@@ -202,7 +202,7 @@ void ErrorConsoleWidget::addMessage(const Console::Message &message)
 	m_model->appendRow(messageItem);
 	m_model->sort(0, Qt::DescendingOrder);
 
-	applyFilters(messageItem->index(), m_ui->filterLineEditWidget->text(), getCategories(), getCurrentWindow());
+	applyFilters(messageItem->index(), m_ui->filterLineEditWidget->text(), getCategories(), getActiveWindow());
 }
 
 void ErrorConsoleWidget::filterCategories()
@@ -225,11 +225,11 @@ void ErrorConsoleWidget::filterCategories()
 	}
 
 	const QVector<Console::MessageCategory> categories(getCategories());
-	const quint64 currentWindow(getCurrentWindow());
+	const quint64 activeWindow(getActiveWindow());
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		applyFilters(m_model->index(i, 0), m_ui->filterLineEditWidget->text(), categories, currentWindow);
+		applyFilters(m_model->index(i, 0), m_ui->filterLineEditWidget->text(), categories, activeWindow);
 	}
 }
 
@@ -238,16 +238,16 @@ void ErrorConsoleWidget::filterMessages(const QString &filter)
 	if (m_model)
 	{
 		const QVector<Console::MessageCategory> categories(getCategories());
-		const quint64 currentWindow(getCurrentWindow());
+		const quint64 activeWindow(getActiveWindow());
 
 		for (int i = 0; i < m_model->rowCount(); ++i)
 		{
-			applyFilters(m_model->index(i, 0), filter, categories, currentWindow);
+			applyFilters(m_model->index(i, 0), filter, categories, activeWindow);
 		}
 	}
 }
 
-void ErrorConsoleWidget::applyFilters(const QModelIndex &index, const QString &filter, const QVector<Console::MessageCategory> &categories, quint64 currentWindow)
+void ErrorConsoleWidget::applyFilters(const QModelIndex &index, const QString &filter, const QVector<Console::MessageCategory> &categories, quint64 activeWindow)
 {
 	bool hasMatch(true);
 
@@ -259,7 +259,7 @@ void ErrorConsoleWidget::applyFilters(const QModelIndex &index, const QString &f
 	{
 		const quint64 identifier(index.data(WindowRole).toULongLong());
 
-		hasMatch = (((identifier == 0 && m_messageScopes.testFlag(OtherSourcesScope)) || (identifier > 0 && ((identifier == currentWindow && m_messageScopes.testFlag(CurrentTabScope)) || m_messageScopes.testFlag(AllTabsScope)))) && categories.contains(static_cast<Console::MessageCategory>(index.data(CategoryRole).toInt())));
+		hasMatch = (((identifier == 0 && m_messageScopes.testFlag(OtherSourcesScope)) || (identifier > 0 && ((identifier == activeWindow && m_messageScopes.testFlag(CurrentTabScope)) || m_messageScopes.testFlag(AllTabsScope)))) && categories.contains(static_cast<Console::MessageCategory>(index.data(CategoryRole).toInt())));
 	}
 
 	m_ui->consoleView->setRowHidden(index.row(), m_ui->consoleView->rootIndex(), !hasMatch);
@@ -309,12 +309,12 @@ QVector<Console::MessageCategory> ErrorConsoleWidget::getCategories() const
 	return categories;
 }
 
-quint64 ErrorConsoleWidget::getCurrentWindow()
+quint64 ErrorConsoleWidget::getActiveWindow()
 {
 	const MainWindow *mainWindow(MainWindow::findMainWindow(this));
-	const Window *currentWindow(mainWindow ? mainWindow->getActiveWindow() : nullptr);
+	const Window *window(mainWindow ? mainWindow->getActiveWindow() : nullptr);
 
-	return (currentWindow ? currentWindow->getIdentifier() : 0);
+	return (window ? window->getIdentifier() : 0);
 }
 
 }
