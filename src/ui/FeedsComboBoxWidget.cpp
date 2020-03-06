@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -33,7 +33,10 @@ FeedsComboBoxWidget::FeedsComboBoxWidget(QWidget *parent) : ComboBoxWidget(paren
 	setModel(FeedsManager::getModel());
 	updateBranch();
 
-	connect(FeedsManager::getModel(), &FeedsModel::layoutChanged, this, &FeedsComboBoxWidget::handleLayoutChanged);
+	connect(FeedsManager::getModel(), &FeedsModel::layoutChanged, this, [&]()
+	{
+		updateBranch();
+	});
 }
 
 void FeedsComboBoxWidget::createFolder()
@@ -44,11 +47,6 @@ void FeedsComboBoxWidget::createFolder()
 	{
 		setCurrentFolder(FeedsManager::getModel()->addEntry(FeedsModel::FolderEntry, {{FeedsModel::TitleRole, title}}, getCurrentFolder()));
 	}
-}
-
-void FeedsComboBoxWidget::handleLayoutChanged()
-{
-	updateBranch();
 }
 
 void FeedsComboBoxWidget::updateBranch(const QModelIndex &parent)
