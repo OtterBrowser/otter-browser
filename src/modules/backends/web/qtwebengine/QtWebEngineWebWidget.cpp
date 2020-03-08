@@ -1259,7 +1259,7 @@ void QtWebEngineWebWidget::updateWatchedData(ChangeWatcher watcher)
 				{
 					const QVariantHash entry(rawMetaData.at(i).toHash());
 
-					metaData.insertMulti(entry.value(QLatin1String("key")).toString(), entry.value(QLatin1String("value")).toString());
+					metaData.insert(entry.value(QLatin1String("key")).toString(), entry.value(QLatin1String("value")).toString());
 				}
 
 				m_metaData = metaData;
