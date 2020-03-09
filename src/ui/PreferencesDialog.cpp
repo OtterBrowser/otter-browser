@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -44,23 +44,23 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 
 	m_loadedTabs.fill(false, 5);
 
-	int tab(0);
+	int tab(GeneralTab);
 
 	if (section == QLatin1String("content"))
 	{
-		tab = 1;
+		tab = ContentTab;
 	}
 	else if (section == QLatin1String("privacy"))
 	{
-		tab = 2;
+		tab = PrivacyTab;
 	}
 	else if (section == QLatin1String("search"))
 	{
-		tab = 3;
+		tab = SearchTab;
 	}
 	else if (section == QLatin1String("advanced"))
 	{
-		tab = 4;
+		tab = AdvancedTab;
 	}
 
 	showTab(tab);
@@ -109,7 +109,7 @@ void PreferencesDialog::showTab(int tab)
 
 	switch (tab)
 	{
-		case 0:
+		case GeneralTab:
 			{
 				PreferencesGeneralPageWidget *pageWidget(new PreferencesGeneralPageWidget(this));
 
@@ -120,7 +120,7 @@ void PreferencesDialog::showTab(int tab)
 			}
 
 			break;
-		case 1:
+		case ContentTab:
 			{
 				PreferencesContentPageWidget *pageWidget(new PreferencesContentPageWidget(this));
 
@@ -131,7 +131,7 @@ void PreferencesDialog::showTab(int tab)
 			}
 
 			break;
-		case 2:
+		case PrivacyTab:
 			{
 				PreferencesPrivacyPageWidget *pageWidget(new PreferencesPrivacyPageWidget(this));
 
@@ -142,7 +142,7 @@ void PreferencesDialog::showTab(int tab)
 			}
 
 			break;
-		case 3:
+		case SearchTab:
 			{
 				PreferencesSearchPageWidget *pageWidget(new PreferencesSearchPageWidget(this));
 
