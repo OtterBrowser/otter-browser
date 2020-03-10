@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -45,12 +45,6 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event) override;
-
-protected slots:
-	void useCurrentAsHomePage();
-	void useBookmarkAsHomePage(QAction *action);
-	void restoreHomePage();
-	void setupAcceptLanguage();
 
 private:
 	QString m_acceptLanguage;

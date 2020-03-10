@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -82,10 +82,47 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 	columnResizer->addWidgetsFromFormLayout(m_ui->tabsLayout, QFormLayout::LabelRole);
 	columnResizer->addWidgetsFromFormLayout(m_ui->languageLayout, QFormLayout::LabelRole);
 
-	connect(bookmarksMenu, &Menu::triggered, this, &PreferencesGeneralPageWidget::useBookmarkAsHomePage);
-	connect(m_ui->useCurrentAsHomePageButton, &QPushButton::clicked, this, &PreferencesGeneralPageWidget::useCurrentAsHomePage);
-	connect(m_ui->restoreHomePageButton, &QPushButton::clicked, this, &PreferencesGeneralPageWidget::restoreHomePage);
-	connect(m_ui->acceptLanguageButton, &QPushButton::clicked, this, &PreferencesGeneralPageWidget::setupAcceptLanguage);
+	connect(bookmarksMenu, &Menu::triggered, this, [&](QAction *action)
+	{
+		if (action)
+		{
+			const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(action->data().toULongLong()));
+			const QString url(bookmark ? bookmark->getUrl().toDisplayString() : QString());
+
+			if (url.isEmpty())
+			{
+				m_ui->homePageLineEditWidget->setText(QLatin1String("bookmarks:") + QString::number(action->data().toULongLong()));
+			}
+			else
+			{
+				m_ui->homePageLineEditWidget->setText(url);
+			}
+		}
+	});
+	connect(m_ui->useCurrentAsHomePageButton, &QPushButton::clicked, this, [&]()
+	{
+		SessionItem *item(SessionsManager::getModel()->getMainWindowItem(MainWindow::findMainWindow(this)));
+
+		if (item)
+		{
+			m_ui->homePageLineEditWidget->setText(item->data(SessionModel::UrlRole).toUrl().toString(QUrl::RemovePassword));
+		}
+	});
+	connect(m_ui->restoreHomePageButton, &QPushButton::clicked, this, [&]()
+	{
+		m_ui->homePageLineEditWidget->setText(SettingsManager::getOptionDefinition(SettingsManager::Browser_HomePageOption).defaultValue.toString());
+	});
+	connect(m_ui->acceptLanguageButton, &QPushButton::clicked, this, [&]()
+	{
+		AcceptLanguageDialog dialog(m_acceptLanguage, this);
+
+		if (dialog.exec() == QDialog::Accepted)
+		{
+			m_acceptLanguage = dialog.getLanguages();
+
+			emit settingsModified();
+		}
+	});
 }
 
 PreferencesGeneralPageWidget::~PreferencesGeneralPageWidget()
@@ -100,51 +137,6 @@ void PreferencesGeneralPageWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-	}
-}
-
-void PreferencesGeneralPageWidget::useCurrentAsHomePage()
-{
-	SessionItem *item(SessionsManager::getModel()->getMainWindowItem(MainWindow::findMainWindow(this)));
-
-	if (item)
-	{
-		m_ui->homePageLineEditWidget->setText(item->data(SessionModel::UrlRole).toUrl().toString(QUrl::RemovePassword));
-	}
-}
-
-void PreferencesGeneralPageWidget::useBookmarkAsHomePage(QAction *action)
-{
-	if (action)
-	{
-		const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(action->data().toULongLong()));
-		const QString url(bookmark ? bookmark->getUrl().toDisplayString() : QString());
-
-		if (url.isEmpty())
-		{
-			m_ui->homePageLineEditWidget->setText(QLatin1String("bookmarks:") + QString::number(action->data().toULongLong()));
-		}
-		else
-		{
-			m_ui->homePageLineEditWidget->setText(url);
-		}
-	}
-}
-
-void PreferencesGeneralPageWidget::restoreHomePage()
-{
-	m_ui->homePageLineEditWidget->setText(SettingsManager::getOptionDefinition(SettingsManager::Browser_HomePageOption).defaultValue.toString());
-}
-
-void PreferencesGeneralPageWidget::setupAcceptLanguage()
-{
-	AcceptLanguageDialog dialog(m_acceptLanguage, this);
-
-	if (dialog.exec() == QDialog::Accepted)
-	{
-		m_acceptLanguage = dialog.getLanguages();
-
-		emit settingsModified();
 	}
 }
 
