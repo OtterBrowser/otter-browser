@@ -137,6 +137,11 @@ void PreferencesGeneralPageWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+		m_ui->startupBehaviorComboBox->setItemText(0, tr("Show windows and tabs from the last time"));
+		m_ui->startupBehaviorComboBox->setItemText(1, tr("Show startup dialog"));
+		m_ui->startupBehaviorComboBox->setItemText(2, tr("Show home page"));
+		m_ui->startupBehaviorComboBox->setItemText(3, tr("Show start page"));
+		m_ui->startupBehaviorComboBox->setItemText(4, tr("Show empty page"));
 	}
 }
 
