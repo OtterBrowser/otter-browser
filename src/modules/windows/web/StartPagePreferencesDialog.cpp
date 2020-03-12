@@ -82,6 +82,10 @@ void StartPagePreferencesDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+		m_ui->backgroundModeComboBox->setItemText(0, tr("Best fit"));
+		m_ui->backgroundModeComboBox->setItemText(1, tr("Center"));
+		m_ui->backgroundModeComboBox->setItemText(2, tr("Stretch"));
+		m_ui->backgroundModeComboBox->setItemText(3, tr("Tile"));
 	}
 }
 
