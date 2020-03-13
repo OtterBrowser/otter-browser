@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -243,6 +243,18 @@ void ToolBarDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+		m_ui->normalVisibilityComboBox->setItemText(0, tr("Always visible"));
+		m_ui->normalVisibilityComboBox->setItemText(1, tr("Always hidden"));
+		m_ui->normalVisibilityComboBox->setItemText(2, tr("Visible only when needed"));
+		m_ui->fullScreenVisibilityComboBox->setItemText(0, tr("Always visible"));
+		m_ui->fullScreenVisibilityComboBox->setItemText(1, tr("Always hidden"));
+		m_ui->fullScreenVisibilityComboBox->setItemText(2, tr("Visible only when needed"));
+		m_ui->fullScreenVisibilityComboBox->setItemText(3, tr("Visible only when cursor is close to screen edge"));
+		m_ui->buttonStyleComboBox->setItemText(0, tr("Follow style"));
+		m_ui->buttonStyleComboBox->setItemText(1, tr("Icon only"));
+		m_ui->buttonStyleComboBox->setItemText(2, tr("Text only"));
+		m_ui->buttonStyleComboBox->setItemText(3, tr("Text beside icon"));
+		m_ui->buttonStyleComboBox->setItemText(4, tr("Text under icon"));
 	}
 }
 
