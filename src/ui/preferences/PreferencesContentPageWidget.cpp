@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -195,6 +195,10 @@ void PreferencesContentPageWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+		m_ui->popupsComboBox->setItemText(0, tr("Ask"));
+		m_ui->popupsComboBox->setItemText(1, tr("Block all"));
+		m_ui->popupsComboBox->setItemText(2, tr("Open all"));
+		m_ui->popupsComboBox->setItemText(3, tr("Open all in background"));
 	}
 }
 
