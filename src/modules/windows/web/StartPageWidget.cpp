@@ -41,6 +41,7 @@
 #include <QtGui/QGuiApplication>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
+#include <QtGui/QPainterPath>
 #include <QtGui/QPixmapCache>
 #include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QGridLayout>
