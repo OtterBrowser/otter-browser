@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -453,6 +453,15 @@ void PreferencesAdvancedPageWidget::changeEvent(QEvent *event)
 		const QStringList navigationTitles({tr("Browsing"), tr("Notifications"), tr("Appearance"), tr("Content"), {}, tr("Downloads"), tr("Programs"), {}, tr("History"), tr("Network"), tr("Security"), tr("Updates"), {}, tr("Keyboard"), tr("Mouse")});
 
 		m_ui->retranslateUi(this);
+		m_ui->browsingDisplayModeComboBox->setItemText(0, tr("Compact"));
+		m_ui->browsingDisplayModeComboBox->setItemText(1, tr("Columns"));
+		m_ui->appearranceWidgetStyleComboBox->setItemText(0, tr("System Style"));
+		m_ui->enableImagesComboBox->setItemText(0, tr("All images"));
+		m_ui->enableImagesComboBox->setItemText(1, tr("Cached images"));
+		m_ui->enableImagesComboBox->setItemText(2, tr("No images"));
+		m_ui->enablePluginsComboBox->setItemText(0, tr("Enabled"));
+		m_ui->enablePluginsComboBox->setItemText(1, tr("On demand"));
+		m_ui->enablePluginsComboBox->setItemText(2, tr("Disabled"));
 
 		for (int i = 0; i < navigationTitles.count(); ++i)
 		{
