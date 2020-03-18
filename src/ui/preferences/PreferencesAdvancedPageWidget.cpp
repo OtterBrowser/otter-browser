@@ -462,6 +462,9 @@ void PreferencesAdvancedPageWidget::changeEvent(QEvent *event)
 		m_ui->enablePluginsComboBox->setItemText(0, tr("Enabled"));
 		m_ui->enablePluginsComboBox->setItemText(1, tr("On demand"));
 		m_ui->enablePluginsComboBox->setItemText(2, tr("Disabled"));
+		m_ui->notificationsPlaySoundFilePathWidget->setFilters({tr("WAV files (*.wav)")});
+		m_ui->appearranceStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
+		m_ui->userStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
 
 		for (int i = 0; i < navigationTitles.count(); ++i)
 		{
