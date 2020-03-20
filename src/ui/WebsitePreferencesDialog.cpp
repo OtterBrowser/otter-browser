@@ -92,6 +92,8 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QString &host, const QV
 	m_ui->enablePluginsComboBox->addItem(tr("On demand"), QLatin1String("onDemand"));
 	m_ui->enablePluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
 
+	m_ui->userStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
+
 	m_ui->canCloseWindowsComboBox->addItem(tr("Ask"), QLatin1String("ask"));
 	m_ui->canCloseWindowsComboBox->addItem(tr("Always"), QLatin1String("allow"));
 	m_ui->canCloseWindowsComboBox->addItem(tr("Never"), QLatin1String("disallow"));
@@ -195,6 +197,7 @@ void WebsitePreferencesDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+		m_ui->userStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
 		m_ui->cookiesViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Domain"), tr("Name"), tr("Path"), tr("Value"), tr("Expiration Date")});
 	}
 }
@@ -402,7 +405,6 @@ void WebsitePreferencesDialog::updateValues(bool isChecked)
 
 	m_ui->enablePluginsComboBox->setCurrentIndex((enablePluginsIndex < 0) ? 1 : enablePluginsIndex);
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getOption(SettingsManager::Content_UserStyleSheetOption, (m_ui->userStyleSheetOverrideCheckBox->isChecked() ? host : QString())).toString());
-	m_ui->userStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
 	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Permissions_EnableJavaScriptOption, (m_ui->enableJavaScriptOverrideCheckBox->isChecked() ? host : QString())).toBool());
 	m_ui->canChangeWindowGeometryCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption, (m_ui->canChangeWindowGeometryOverrideCheckBox->isChecked() ? host : QString())).toBool());
 	m_ui->canShowStatusMessagesCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, (m_ui->canShowStatusMessagesOverrideCheckBox->isChecked() ? host : QString())).toBool());
