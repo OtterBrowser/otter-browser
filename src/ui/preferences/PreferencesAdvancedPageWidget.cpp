@@ -465,6 +465,7 @@ void PreferencesAdvancedPageWidget::changeEvent(QEvent *event)
 		m_ui->notificationsPlaySoundFilePathWidget->setFilters({tr("WAV files (*.wav)")});
 		m_ui->appearranceStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
 		m_ui->userStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
+		m_ui->notificationsItemView->getSourceModel()->setHorizontalHeaderLabels({tr("Name"), tr("Description")});
 
 		for (int i = 0; i < navigationTitles.count(); ++i)
 		{
