@@ -199,6 +199,8 @@ void PreferencesContentPageWidget::changeEvent(QEvent *event)
 		m_ui->popupsComboBox->setItemText(1, tr("Block all"));
 		m_ui->popupsComboBox->setItemText(2, tr("Open all"));
 		m_ui->popupsComboBox->setItemText(3, tr("Open all in background"));
+		m_ui->fontsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Style"), tr("Font"), tr("Preview")});
+		m_ui->colorsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Type"), tr("Preview")});
 	}
 }
 
