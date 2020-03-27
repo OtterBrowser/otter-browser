@@ -166,7 +166,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Network_EnableReferrerOption, BooleanType, true);
 	registerOption(Network_ProxyOption, EnumerationType, QLatin1String("system"), {QLatin1String("system")});
 	registerOption(Network_ThirdPartyCookiesAcceptedHostsOption, ListType, QStringList());
-	registerOption(Network_ThirdPartyCookiesPolicyOption, EnumerationType, QLatin1String("acceptAll"), QStringList({QLatin1String("acceptAll"), QLatin1String("acceptExisting"), QLatin1String("ignore")}));
+	registerOption(Network_ThirdPartyCookiesPolicyOption, EnumerationType, QLatin1String("ignore"), QStringList({QLatin1String("acceptAll"), QLatin1String("acceptExisting"), QLatin1String("ignore")}));
 	registerOption(Network_ThirdPartyCookiesRejectedHostsOption, ListType, QStringList());
 	registerOption(Network_UserAgentOption, EnumerationType, QLatin1String("default"), QStringList(QLatin1String("default")));
 	registerOption(Network_WorkOfflineOption, BooleanType, false);
