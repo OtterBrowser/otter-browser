@@ -214,7 +214,7 @@ void ToolButtonWidget::setButtonStyle(Qt::ToolButtonStyle buttonStyle)
 
 void ToolButtonWidget::setIconSize(int size)
 {
-	QToolButton::setIconSize(QSize(size, size));
+	QToolButton::setIconSize({size, size});
 }
 
 void ToolButtonWidget::setMaximumButtonSize(int size)
