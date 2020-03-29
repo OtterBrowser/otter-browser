@@ -139,7 +139,7 @@ void ToolBarWidget::changeEvent(QEvent *event)
 			{
 				const int iconSize(getIconSize());
 
-				setIconSize(QSize(iconSize, iconSize));
+				setIconSize({iconSize, iconSize});
 
 				emit iconSizeChanged(iconSize);
 			}
@@ -873,7 +873,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 	const int iconSize(getIconSize());
 
 	setToolButtonStyle(definition.buttonStyle);
-	setIconSize(QSize(iconSize, iconSize));
+	setIconSize({iconSize, iconSize});
 
 	emit buttonStyleChanged(definition.buttonStyle);
 	emit iconSizeChanged(iconSize);
