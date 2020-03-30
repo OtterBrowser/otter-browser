@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -241,12 +241,12 @@ QRect Style::subElementRect(SubElement element, const QStyleOption *option, cons
 				if (QGuiApplication::isLeftToRight())
 				{
 					tabOption.cornerWidgets = QStyleOptionTab::LeftCornerWidget;
-					tabOption.leftButtonSize = QSize(1, 1);
+					tabOption.leftButtonSize = {1, 1};
 				}
 				else
 				{
 					tabOption.cornerWidgets = QStyleOptionTab::RightCornerWidget;
-					tabOption.rightButtonSize = QSize(1, 1);
+					tabOption.rightButtonSize = {1, 1};
 				}
 
 				const int offset(QProxyStyle::subElementRect((QGuiApplication::isLeftToRight() ? SE_TabBarTabLeftButton : SE_TabBarTabRightButton), &tabOption, widget).left() - option->rect.left());
