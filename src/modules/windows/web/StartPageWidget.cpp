@@ -1032,7 +1032,7 @@ void StartPageWidget::updateSize()
 	const int columns((tilesPerRow > 0) ? tilesPerRow : qMax(1, ((width() - 50) / tileWidth)));
 	const int rows(qCeil(amount / static_cast<qreal>(columns)));
 
-	m_listView->setGridSize(QSize(tileWidth, tileHeight));
+	m_listView->setGridSize({tileWidth, tileHeight});
 	m_listView->setFixedSize(((qMin(amount, columns) * tileWidth) + 2), ((rows * tileHeight) + 20));
 
 	m_tileDelegate->setPixmapCachePrefix(m_contentsWidget->getPixmapCachePrefix());
