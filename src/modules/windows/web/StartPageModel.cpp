@@ -319,7 +319,7 @@ bool StartPageModel::requestThumbnail(const QUrl &url, quint64 identifier, bool 
 		return false;
 	}
 
-	WebPageThumbnailJob *job(AddonsManager::getWebBackend()->createPageThumbnailJob(url, QSize(SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt(), SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt())));
+	WebPageThumbnailJob *job(AddonsManager::getWebBackend()->createPageThumbnailJob(url, {SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt(), SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt()}));
 
 	if (job)
 	{
