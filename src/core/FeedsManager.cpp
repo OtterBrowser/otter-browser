@@ -542,7 +542,7 @@ void FeedsManager::timerEvent(QTimerEvent *event)
 
 			if (!feed->getIcon().isNull())
 			{
-				feedObject.insert(QLatin1String("icon"), Utils::savePixmapAsDataUri(feed->getIcon().pixmap(feed->getIcon().availableSizes().value(0, QSize(16, 16)))));
+				feedObject.insert(QLatin1String("icon"), Utils::savePixmapAsDataUri(feed->getIcon().pixmap(feed->getIcon().availableSizes().value(0, {16, 16}))));
 			}
 
 			if (!categories.isEmpty())
