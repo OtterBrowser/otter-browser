@@ -1,10 +1,16 @@
 #define OtterName "Otter Browser"
-#define OtterVersion "1.0.81"
-#define OtterContext "-dev"
 #define OtterUrl "https://otter-browser.org/"
 #define OtterExeName "otter-browser.exe"
 #define OtterIdentifier "OtterBrowser"
+#ifndef OtterVersion
+#define OtterVersion "1.0.81"
+#endif
+#ifndef OtterContext
+#define OtterContext "-dev"
+#endif
+#ifndef OtterWorkingDir
 #define OtterWorkingDir "Z:\otter-browser-inno"
+#endif
 
 [Setup]
 AppId={{A0517512-5271-465D-AE59-D08F487B5CAF}
@@ -18,7 +24,7 @@ DefaultDirName={pf}\{#OtterName}
 DefaultGroupName={#OtterName}
 AllowNoIcons=yes
 LicenseFile={#OtterWorkingDir}\input\COPYING
-OutputDir={#OtterWorkingDir}\output\
+OutputDir={#OtterWorkingDir}
 #ifdef OtterWin64
 OutputBaseFilename=otter-browser-win64-{#OtterVersion}-setup
 #else
