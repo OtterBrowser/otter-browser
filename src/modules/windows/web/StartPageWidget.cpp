@@ -227,7 +227,7 @@ void TileDelegate::drawAnimation(QPainter *painter, const QRect &rectangle) cons
 	if (animation)
 	{
 		const QPixmap pixmap(animation->getCurrentPixmap());
-		QRect pixmapRectangle(QPoint(0, 0), pixmap.size());
+		QRect pixmapRectangle({0, 0}, pixmap.size());
 		pixmapRectangle.moveCenter(rectangle.center());
 
 		painter->drawPixmap(pixmapRectangle, pixmap);
