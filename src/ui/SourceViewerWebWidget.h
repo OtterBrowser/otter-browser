@@ -72,7 +72,7 @@ protected slots:
 	void handleViewSourceReplyFinished();
 	void handleZoomChanged();
 	void notifyEditingActionsStateChanged();
-	void showContextMenu(const QPoint &position = QPoint(-1, -1)) override;
+	void showContextMenu(const QPoint &position = {-1, -1}) override;
 
 private:
 	SourceEditWidget *m_sourceEditWidget;
