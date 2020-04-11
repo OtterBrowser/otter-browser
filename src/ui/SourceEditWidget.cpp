@@ -96,7 +96,7 @@ void MarginWidget::mousePressEvent(QMouseEvent *event)
 {
 	if (event->button() == Qt::LeftButton)
 	{
-		QTextCursor textCursor(m_sourceEditWidget->cursorForPosition(QPoint(1, event->y())));
+		QTextCursor textCursor(m_sourceEditWidget->cursorForPosition({1, event->y()}));
 		textCursor.select(QTextCursor::LineUnderCursor);
 		textCursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
 
@@ -112,7 +112,7 @@ void MarginWidget::mousePressEvent(QMouseEvent *event)
 
 void MarginWidget::mouseMoveEvent(QMouseEvent *event)
 {
-	QTextCursor textCursor(m_sourceEditWidget->cursorForPosition(QPoint(1, event->y())));
+	QTextCursor textCursor(m_sourceEditWidget->cursorForPosition({1, event->y()}));
 	const int currentLine(textCursor.blockNumber());
 
 	if (currentLine != m_lastClickedLine)
