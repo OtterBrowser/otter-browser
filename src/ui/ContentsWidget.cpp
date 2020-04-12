@@ -83,7 +83,7 @@ void ContentsWidget::showEvent(QShowEvent *event)
 			{
 				m_dialogs.at(i)->raise();
 				m_dialogs.at(i)->adjustSize();
-				m_dialogs.at(i)->move(geometry().center() - QRect(QPoint(0, 0), m_dialogs.at(i)->size()).center());
+				m_dialogs.at(i)->move(geometry().center() - QRect({0, 0}, m_dialogs.at(i)->size()).center());
 			}
 		}
 	}
@@ -103,7 +103,7 @@ void ContentsWidget::resizeEvent(QResizeEvent *event)
 			{
 				m_dialogs.at(i)->updateSize();
 				m_dialogs.at(i)->raise();
-				m_dialogs.at(i)->move(geometry().center() - QRect(QPoint(0, 0), m_dialogs.at(i)->size()).center());
+				m_dialogs.at(i)->move(geometry().center() - QRect({0, 0}, m_dialogs.at(i)->size()).center());
 			}
 		}
 	}
