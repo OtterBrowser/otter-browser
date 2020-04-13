@@ -292,7 +292,7 @@ void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 		dialog->setFocus();
 	}
 
-	dialog->move(geometry().center() - QRect(QPoint(0, 0), dialog->size()).center());
+	dialog->move(geometry().center() - QRect({0, 0}, dialog->size()).center());
 
 	emit needsAttention();
 
@@ -412,7 +412,7 @@ Session::Window::History ContentsWidget::getHistory() const
 	Session::Window::History::Entry entry;
 	entry.url = getUrl().toString(QUrl::RemovePassword);
 	entry.title = getTitle();
-	entry.position = QPoint(0, 0);
+	entry.position = {0, 0};
 	entry.zoom = 100;
 
 	Session::Window::History history;
