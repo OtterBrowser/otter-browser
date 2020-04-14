@@ -548,7 +548,7 @@ void QtWebKitWebPageThumbnailJob::handlePageLoadFinished(bool result)
 
 				QPainter painter(&m_pixmap);
 
-				m_page->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion(QRect(QPoint(0, 0), contentsSize)));
+				m_page->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion(QRect({0, 0}, contentsSize)));
 
 				painter.end();
 
