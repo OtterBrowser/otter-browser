@@ -371,7 +371,7 @@ bool StartPageModel::reloadTile(const QModelIndex &index, bool needsTitleUpdate)
 
 		QPainter painter(&thumbnail);
 
-		information.icon.paint(&painter, QRect(QPoint(0, 0), size));
+		information.icon.paint(&painter, QRect({0, 0}, size));
 
 		m_reloads[identifier] = needsTitleUpdate;
 
