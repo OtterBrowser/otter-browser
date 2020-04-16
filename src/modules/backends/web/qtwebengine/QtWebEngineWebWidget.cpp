@@ -1355,7 +1355,7 @@ void QtWebEngineWebWidget::setUrl(const QUrl &url, bool isTyped)
 		{
 			if (result.isValid())
 			{
-				setScrollPosition(QPoint(result.toList().value(0).toInt(), result.toList().value(1).toInt()));
+				setScrollPosition({result.toList().value(0).toInt(), result.toList().value(1).toInt()});
 			}
 		});
 	}
@@ -1602,19 +1602,19 @@ QPixmap QtWebEngineWebWidget::createThumbnail(const QSize &size)
 	const qreal thumbnailAspectRatio(static_cast<qreal>(thumbnailSize.width()) / thumbnailSize.height());
 	const QSize contentsSize(m_webView->size());
 	const qreal contentsAspectRatio(static_cast<qreal>(contentsSize.width()) / contentsSize.height());
-	QPixmap pixmap(m_webView->grab(QRect(QPoint(0, 0), contentsSize)));
+	QPixmap pixmap(m_webView->grab(QRect({0, 0}, contentsSize)));
 
 	if (!qFuzzyCompare(thumbnailAspectRatio, contentsAspectRatio))
 	{
 		if (thumbnailAspectRatio > contentsAspectRatio)
 		{
-			pixmap = pixmap.copy(QRect(QPoint(0, 0), QSize(pixmap.width(), qFloor(pixmap.width() / thumbnailAspectRatio))));
+			pixmap = pixmap.copy(QRect({0, 0}, QSize(pixmap.width(), qFloor(pixmap.width() / thumbnailAspectRatio))));
 		}
 		else
 		{
 			const int offset((pixmap.width() - qFloor(pixmap.height() * thumbnailAspectRatio)) / 2);
 
-			pixmap = pixmap.copy(QRect(QPoint(offset, 0), QSize((pixmap.width() - (offset * 2)), pixmap.height())));
+			pixmap = pixmap.copy(QRect({offset, 0}, QSize((pixmap.width() - (offset * 2)), pixmap.height())));
 		}
 	}
 
