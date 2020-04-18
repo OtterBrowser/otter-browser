@@ -93,7 +93,7 @@ ProxyPropertiesDialog::ProxyPropertiesDialog(const ProxyDefinition &proxy, QWidg
 	updateProxyType();
 	setWindowTitle(proxy.isValid() ? tr ("Edit Proxy") : tr("Add Proxy"));
 
-	connect(m_ui->buttonGroup, static_cast<void(QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &ProxyPropertiesDialog::updateProxyType);
+	connect(m_ui->buttonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*)>(&QButtonGroup::buttonClicked), this, &ProxyPropertiesDialog::updateProxyType);
 	connect(m_ui->allCheckBox, &QCheckBox::clicked, this, &ProxyPropertiesDialog::updateProxyType);
 	connect(m_ui->exceptionsItemViewWidget, &ItemViewWidget::needsActionsUpdate, this, &ProxyPropertiesDialog::updateExceptionsActions);
 	connect(m_ui->addExceptionButton, &QPushButton::clicked, this, &ProxyPropertiesDialog::addException);
