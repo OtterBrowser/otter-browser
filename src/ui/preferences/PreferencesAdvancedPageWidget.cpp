@@ -396,8 +396,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->downloadsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateDownloadsActions);
 	connect(m_ui->downloadsAddMimeTypeButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::addDownloadsMimeType);
 	connect(m_ui->downloadsRemoveMimeTypeButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::removeDownloadsMimeType);
-	connect(m_ui->downloadsButtonGroup, static_cast<void(QButtonGroup::*)(int, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
-	connect(m_ui->downloadsButtonGroup, static_cast<void(QButtonGroup::*)(int, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsMode);
+	connect(m_ui->downloadsButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
+	connect(m_ui->downloadsButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsMode);
 	connect(m_ui->downloadsSaveDirectlyCheckBox, &QCheckBox::toggled, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
 	connect(m_ui->downloadsFilePathWidget, &Otter::FilePathWidget::pathChanged, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
 	connect(m_ui->downloadsApplicationComboBoxWidget, &Otter::ApplicationComboBoxWidget::currentCommandChanged, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
@@ -692,7 +692,7 @@ void PreferencesAdvancedPageWidget::updateDownloadsActions()
 void PreferencesAdvancedPageWidget::updateDownloadsOptions()
 {
 	disconnect(m_ui->downloadsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateDownloadsActions);
-	disconnect(m_ui->downloadsButtonGroup, static_cast<void(QButtonGroup::*)(int, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
+	disconnect(m_ui->downloadsButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
 
 	const QModelIndex index(m_ui->downloadsItemView->getIndex(m_ui->downloadsItemView->getCurrentRow()));
 
@@ -719,7 +719,7 @@ void PreferencesAdvancedPageWidget::updateDownloadsOptions()
 	}
 
 	connect(m_ui->downloadsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateDownloadsActions);
-	connect(m_ui->downloadsButtonGroup, static_cast<void(QButtonGroup::*)(int, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
+	connect(m_ui->downloadsButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
 }
 
 void PreferencesAdvancedPageWidget::updateDownloadsMode()
