@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -1046,7 +1046,19 @@ bool GesturesManager::triggerAction(const MouseProfile::Gesture &gesture)
 	}
 	else if (gesture.action != ActionsManager::ContextMenuAction)
 	{
-		Application::triggerAction(gesture.action, QVariantMap(gesture.parameters).unite(m_parameters), m_trackedObject, ActionsManager::MouseTrigger);
+		QVariantMap parameters(gesture.parameters);
+
+		if (!m_parameters.isEmpty())
+		{
+			QVariantMap::iterator iterator;
+
+			for (iterator = m_parameters.begin(); iterator != m_parameters.end(); ++iterator)
+			{
+				parameters[iterator.key()] = iterator.value();
+			}
+		}
+
+		Application::triggerAction(gesture.action, parameters, m_trackedObject, ActionsManager::MouseTrigger);
 	}
 
 	if (m_trackedObject)
