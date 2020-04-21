@@ -1017,6 +1017,8 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 						break;
 				}
 
+				SessionsManager::markSessionAsModified();
+
 				emit arbitraryActionsStateChanged({ActionsManager::ShowToolBarAction});
 				emit toolBarStateChanged(toolBarIdentifier, getToolBarState(toolBarIdentifier));
 			}
@@ -2389,8 +2391,6 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 				state.text = toolBarDefinition.getTitle();
 				state.isChecked = ToolBarWidget::calculateShouldBeVisible(toolBarDefinition, getToolBarState(toolBarIdentifier), mode);
 				state.isEnabled = true;
-
-				SessionsManager::markSessionAsModified();
 			}
 
 			break;
