@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2014 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -50,7 +50,9 @@ public slots:
 	bool timeRange(const QVariant &arg1, const QVariant &arg2, const QVariant &arg3, const QVariant &arg4, const QVariant &arg5, const QVariant &arg6, const QString &gmt = QLatin1String("gmt")) const;
 
 protected:
-	bool isInRange(const QVariant &valueOne, const QVariant &valueTwo, const QVariant &actualValue) const;
+	bool isDateInRange(const QDate &from, const QDate &to, const QDate &value) const;
+	bool isTimeInRange(const QTime &from, const QTime &to, const QTime &value) const;
+	bool isNumberInRange(int from, int to, int value) const;
 
 private:
 	static QStringList m_months;

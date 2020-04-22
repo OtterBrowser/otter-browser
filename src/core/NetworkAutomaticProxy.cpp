@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2014 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -151,7 +151,7 @@ bool PacUtils::weekdayRange(QString fromDay, QString toDay, const QString &gmt) 
 		toDayNumber = fromDayNumber;
 	}
 
-	return ((fromDayNumber != -1 && toDayNumber != -1) && isInRange(fromDayNumber, toDayNumber, currentDay));
+	return ((fromDayNumber != -1 && toDayNumber != -1) && isNumberInRange(fromDayNumber, toDayNumber, currentDay));
 }
 
 bool PacUtils::dateRange(const QVariant &arg1, const QVariant &arg2, const QVariant &arg3, const QVariant &arg4, const QVariant &arg5, const QVariant &arg6, const QString &gmt) const
@@ -202,39 +202,39 @@ bool PacUtils::dateRange(const QVariant &arg1, const QVariant &arg2, const QVari
 
 	if (arguments.count() == 2 && arguments.at(0) > 1500 && arguments.at(1) > 1500)
 	{
-		return isInRange(arguments.at(0), arguments.at(1), currentDay.year());
+		return isNumberInRange(arguments.at(0), arguments.at(1), currentDay.year());
 	}
 
 	if (arguments.count() == 2 && rawArguments.at(0).type() == QVariant::Int && rawArguments.at(1).type() == QVariant::Int)
 	{
-		return isInRange(arguments.at(0), arguments.at(1), currentDay.day());
+		return isNumberInRange(arguments.at(0), arguments.at(1), currentDay.day());
 	}
 
 	if (arguments.count() == 2)
 	{
-		return isInRange(arguments.at(0), arguments.at(1), currentDay.month());
+		return isNumberInRange(arguments.at(0), arguments.at(1), currentDay.month());
 	}
 
 	if (arguments.count() == 3)
 	{
 		const QDate dateOne(arguments.at(2), arguments.at(1), arguments.at(0));
 
-		return isInRange(dateOne, dateOne, currentDay);
+		return isDateInRange(dateOne, dateOne, currentDay);
 	}
 
 	if (arguments.count() == 4 && arguments.at(1) > 1500 && arguments.at(3) > 1500)
 	{
-		return isInRange(QDate(arguments.at(1), arguments.at(0), currentDay.day()), QDate(arguments.at(3), arguments.at(2), currentDay.day()), currentDay);
+		return isDateInRange(QDate(arguments.at(1), arguments.at(0), currentDay.day()), QDate(arguments.at(3), arguments.at(2), currentDay.day()), currentDay);
 	}
 
 	if (arguments.count() == 4)
 	{
-		return isInRange(QDate(currentDay.year(), arguments.at(1), arguments.at(0)), QDate(currentDay.year(), arguments.at(3), arguments.at(2)), currentDay);
+		return isDateInRange(QDate(currentDay.year(), arguments.at(1), arguments.at(0)), QDate(currentDay.year(), arguments.at(3), arguments.at(2)), currentDay);
 	}
 
 	if (arguments.count() == 6)
 	{
-		return isInRange(QDate(arguments.at(2), arguments.at(1), arguments.at(0)), QDate(arguments.at(5), arguments.at(4), arguments.at(3)), currentDay);
+		return isDateInRange(QDate(arguments.at(2), arguments.at(1), arguments.at(0)), QDate(arguments.at(5), arguments.at(4), arguments.at(3)), currentDay);
 	}
 
 	return false;
@@ -264,30 +264,40 @@ bool PacUtils::timeRange(const QVariant &arg1, const QVariant &arg2, const QVari
 
 	if (arguments.count() == 1)
 	{
-		return isInRange(arguments.at(0), arguments.at(0), currentTime.hour());
+		return isNumberInRange(arguments.at(0), arguments.at(0), currentTime.hour());
 	}
 
 	if (arguments.count() == 2)
 	{
-		return isInRange(arguments.at(0), arguments.at(1), currentTime.hour());
+		return isNumberInRange(arguments.at(0), arguments.at(1), currentTime.hour());
 	}
 
 	if (arguments.count() == 4)
 	{
-		return isInRange(QTime(arguments.at(0), arguments.at(1)), QTime(arguments.at(2), arguments.at(3)), currentTime);
+		return isTimeInRange(QTime(arguments.at(0), arguments.at(1)), QTime(arguments.at(2), arguments.at(3)), currentTime);
 	}
 
 	if (arguments.count() == 6)
 	{
-		return isInRange(QTime(arguments.at(0), arguments.at(1), arguments.at(2)), QTime(arguments.at(3), arguments.at(4), arguments.at(5)), currentTime);
+		return isTimeInRange(QTime(arguments.at(0), arguments.at(1), arguments.at(2)), QTime(arguments.at(3), arguments.at(4), arguments.at(5)), currentTime);
 	}
 
 	return false;
 }
 
-bool PacUtils::isInRange(const QVariant &valueOne, const QVariant &valueTwo, const QVariant &actualValue) const
+bool PacUtils::isDateInRange(const QDate &from, const QDate &to, const QDate &value) const
 {
-	return (actualValue >= valueOne && actualValue <= valueTwo);
+	return (value >= from && value <= to);
+}
+
+bool PacUtils::isTimeInRange(const QTime &from, const QTime &to, const QTime &value) const
+{
+	return (value >= from && value <= to);
+}
+
+bool PacUtils::isNumberInRange(int from, int to, int value) const
+{
+	return (value >= from && value <= to);
 }
 
 NetworkAutomaticProxy::NetworkAutomaticProxy(const QString &path, QObject *parent) : QObject(parent),
