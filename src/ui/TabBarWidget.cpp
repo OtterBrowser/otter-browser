@@ -962,7 +962,7 @@ void TabBarWidget::wheelEvent(QWheelEvent *event)
 
 	if (event->modifiers().testFlag(Qt::ControlModifier) || !SettingsManager::getOption(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption).toBool())
 	{
-		Application::triggerAction(((event->delta() > 0) ? ActionsManager::ActivateTabOnLeftAction : ActionsManager::ActivateTabOnRightAction), {}, parentWidget());
+		Application::triggerAction(((event->angleDelta().y() > 0) ? ActionsManager::ActivateTabOnLeftAction : ActionsManager::ActivateTabOnRightAction), {}, parentWidget());
 	}
 }
 
