@@ -343,7 +343,7 @@ void SearchWidget::wheelEvent(QWheelEvent *event)
 
 	for (int i = 0; i < model->rowCount(); ++i)
 	{
-		if (event->delta() > 0)
+		if (event->angleDelta().y() > 0)
 		{
 			if (row == 0)
 			{
