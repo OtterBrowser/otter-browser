@@ -233,7 +233,7 @@ void SourceEditWidget::wheelEvent(QWheelEvent *event)
 {
 	if (event->modifiers().testFlag(Qt::ControlModifier))
 	{
-		setZoom(getZoom() + (event->delta() / 16));
+		setZoom(getZoom() + (event->angleDelta().y() / 16));
 
 		event->accept();
 
