@@ -172,7 +172,7 @@ void Style::drawPrimitive(PrimitiveElement element, const QStyleOption *option, 
 					const qreal scale(option->rect.width() / static_cast<qreal>(size));
 					QStyleOption indicatorOption;
 					indicatorOption.state = option->state;
-					indicatorOption.rect = QRect(0, 0, size, size);
+					indicatorOption.rect = {0, 0, size, size};
 
 					painter->save();
 					painter->setRenderHint(QPainter::SmoothPixmapTransform);
