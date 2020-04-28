@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2014 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -136,7 +136,7 @@ bool OperaSessionImporter::import(const QString &path)
 		}
 
 		Session::Window window;
-		window.state.geometry = QRect(originalSession.getValue(QLatin1String("x")).toInt(), originalSession.getValue(QLatin1String("y")).toInt(), originalSession.getValue(QLatin1String("w")).toInt(), originalSession.getValue(QLatin1String("h")).toInt());
+		window.state.geometry = {originalSession.getValue(QLatin1String("x")).toInt(), originalSession.getValue(QLatin1String("y")).toInt(), originalSession.getValue(QLatin1String("w")).toInt(), originalSession.getValue(QLatin1String("h")).toInt()};
 
 		switch (originalSession.getValue(QLatin1String("state")).toInt())
 		{
