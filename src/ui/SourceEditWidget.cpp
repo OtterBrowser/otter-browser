@@ -497,7 +497,7 @@ QRect SourceEditWidget::getMarginGeometry() const
 		return {};
 	}
 
-	return QRect((isRightToLeft() ? (contentsRect().right() - m_marginWidget->width()) : contentsRect().left()), contentsRect().top(), m_marginWidget->width(), contentsRect().height());
+	return {(isRightToLeft() ? (contentsRect().right() - m_marginWidget->width()) : contentsRect().left()), contentsRect().top(), m_marginWidget->width(), contentsRect().height()};
 }
 
 int SourceEditWidget::getInitialRevision() const
