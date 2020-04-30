@@ -1163,13 +1163,13 @@ void AddressWidget::updateGeometries()
 			case BookmarkEntry:
 			case LoadPluginsEntry:
 			case FillPasswordEntry:
-				leadingEntries[i].rectangle = QRect(margins.left(), ((height() - 16) / 2), 16, 16);
+				leadingEntries[i].rectangle = {margins.left(), ((height() - 16) / 2), 16, 16};
 
 				margins.setLeft(margins.left() + 20);
 
 				break;
 			case HistoryDropdownEntry:
-				leadingEntries[i].rectangle = QRect(margins.left(), 0, 14, height());
+				leadingEntries[i].rectangle = {margins.left(), 0, 14, height()};
 
 				margins.setLeft(margins.left() + 16);
 
@@ -1191,13 +1191,13 @@ void AddressWidget::updateGeometries()
 			case BookmarkEntry:
 			case LoadPluginsEntry:
 			case FillPasswordEntry:
-				trailingEntries[i].rectangle = QRect((width() - margins.right() - 20), ((height() - 16) / 2), 16, 16);
+				trailingEntries[i].rectangle = {(width() - margins.right() - 20), ((height() - 16) / 2), 16, 16};
 
 				margins.setRight(margins.right() + 20);
 
 				break;
 			case HistoryDropdownEntry:
-				trailingEntries[i].rectangle = QRect((width() - margins.right() - 14), 0, 14, height());
+				trailingEntries[i].rectangle = {(width() - margins.right() - 14), 0, 14, height()};
 
 				margins.setRight(margins.right() + 16);
 
