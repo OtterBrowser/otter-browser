@@ -12,7 +12,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
      <item>
       <layout class="QVBoxLayout" name="searchViewLayout">
        <item>
@@ -96,16 +96,10 @@
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>13</width>
-           <height>13</height>
-          </size>
-         </property>
         </spacer>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="searchMoveButtonsLayout">
+        <layout class="QHBoxLayout" name="searchMoveButtonsLayout" stretch="0,1,0">
          <item>
           <widget class="QToolButton" name="moveUpSearchButton">
            <property name="enabled">
@@ -123,12 +117,6 @@
            </property>
            <property name="sizeType">
             <enum>QSizePolicy::Minimum</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
            </property>
           </spacer>
          </item>
