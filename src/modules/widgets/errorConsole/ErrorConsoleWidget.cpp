@@ -273,7 +273,8 @@ void ErrorConsoleWidget::showContextMenu(const QPoint &position)
 		QApplication::clipboard()->setText(m_ui->consoleView->currentIndex().data(Qt::DisplayRole).toString());
 	});
 	menu.addSeparator();
-	menu.addAction(tr("Expand All"), m_ui->consoleView, &QTreeView::expandAll);	menu.addAction(tr("Collapse All"), m_ui->consoleView, &QTreeView::collapseAll);
+	menu.addAction(tr("Expand All"), m_ui->consoleView, &QTreeView::expandAll);
+	menu.addAction(tr("Collapse All"), m_ui->consoleView, &QTreeView::collapseAll);
 	menu.exec(m_ui->consoleView->mapToGlobal(position));
 }
 
