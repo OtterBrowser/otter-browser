@@ -937,7 +937,7 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="ciphersLayout">
+        <layout class="QHBoxLayout" name="ciphersLayout" stretch="1,0">
          <item>
           <widget class="Otter::ItemViewWidget" name="ciphersViewWidget">
            <property name="editTriggers">
@@ -999,7 +999,7 @@
             </spacer>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="ciphersMoveButtonsLayout">
+            <layout class="QHBoxLayout" name="ciphersMoveButtonsLayout" stretch="0,1,0">
              <item>
               <widget class="QToolButton" name="ciphersMoveUpButton">
                <property name="enabled">
@@ -1017,12 +1017,6 @@
                </property>
                <property name="sizeType">
                 <enum>QSizePolicy::Minimum</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
                </property>
               </spacer>
              </item>
@@ -1154,7 +1148,7 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="keyboardProfilesLayout">
+        <layout class="QHBoxLayout" name="keyboardProfilesLayout" stretch="1,0">
          <item>
           <widget class="Otter::ItemViewWidget" name="keyboardViewWidget">
            <property name="dragEnabled">
@@ -1230,7 +1224,7 @@
             </spacer>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="keyboardMoveButtonsLayout">
+            <layout class="QHBoxLayout" name="keyboardMoveButtonsLayout" stretch="0,1,0">
              <item>
               <widget class="QToolButton" name="keyboardMoveUpButton">
                <property name="enabled">
@@ -1248,12 +1242,6 @@
                </property>
                <property name="sizeType">
                 <enum>QSizePolicy::Minimum</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
                </property>
               </spacer>
              </item>
@@ -1301,7 +1289,7 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="mouseProfilesLayout">
+        <layout class="QHBoxLayout" name="mouseProfilesLayout" stretch="1,0">
          <item>
           <widget class="Otter::ItemViewWidget" name="mouseViewWidget">
            <property name="dragEnabled">
@@ -1377,7 +1365,7 @@
             </spacer>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="mouseMoveButtonsLayout">
+            <layout class="QHBoxLayout" name="mouseMoveButtonsLayout" stretch="0,1,0">
              <item>
               <widget class="QToolButton" name="mouseMoveUpButton">
                <property name="enabled">
@@ -1395,12 +1383,6 @@
                </property>
                <property name="sizeType">
                 <enum>QSizePolicy::Minimum</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
                </property>
               </spacer>
              </item>
