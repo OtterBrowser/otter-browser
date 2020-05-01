@@ -210,6 +210,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->userAgentsViewWidget->setModel(userAgentsModel);
 	m_ui->userAgentsViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->userAgentsViewWidget->setExclusive(true);
+	m_ui->userAgentsViewWidget->setRowsMovable(true);
 	m_ui->userAgentsViewWidget->expandAll();
 
 	QMenu *addUserAgentMenu(new QMenu(m_ui->userAgentsAddButton));
@@ -225,6 +226,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->proxiesViewWidget->setModel(proxiesModel);
 	m_ui->proxiesViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->proxiesViewWidget->setExclusive(true);
+	m_ui->proxiesViewWidget->setRowsMovable(true);
 	m_ui->proxiesViewWidget->expandAll();
 
 	QMenu *addProxyMenu(new QMenu(m_ui->proxiesAddButton));
@@ -282,6 +284,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		m_ui->ciphersViewWidget->setEnabled(false);
 	}
 
+	m_ui->ciphersViewWidget->setRowsMovable(true);
 	m_ui->ciphersMoveDownButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-down")));
 	m_ui->ciphersMoveUpButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-up")));
 
@@ -333,6 +336,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	}
 
 	m_ui->keyboardViewWidget->setModel(keyboardProfilesModel);
+	m_ui->keyboardViewWidget->setRowsMovable(true);
 
 	QMenu *addKeyboardProfileMenu(new QMenu(m_ui->keyboardAddButton));
 	addKeyboardProfileMenu->addAction(tr("New…"), this, &PreferencesAdvancedPageWidget::addKeyboardProfile);
@@ -369,6 +373,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	}
 
 	m_ui->mouseViewWidget->setModel(mouseProfilesModel);
+	m_ui->mouseViewWidget->setRowsMovable(true);
 
 	QMenu *addMouseProfileMenu(new QMenu(m_ui->mouseAddButton));
 	addMouseProfileMenu->addAction(tr("New…"), this, &PreferencesAdvancedPageWidget::addMouseProfile);
