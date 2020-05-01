@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2015 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -313,6 +313,7 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	m_sortOrder(Qt::AscendingOrder),
 	m_sortColumn(-1),
 	m_dragRow(-1),
+	m_areRowsMovable(false),
 	m_canGatherExpanded(false),
 	m_isExclusive(false),
 	m_isModified(false),
@@ -852,6 +853,11 @@ void ItemViewWidget::setFilterRoles(const QSet<int> &roles)
 	m_filterRoles = roles;
 }
 
+void ItemViewWidget::setRowsMovable(bool areMovable)
+{
+	m_areRowsMovable = areMovable;
+}
+
 void ItemViewWidget::setData(const QModelIndex &index, const QVariant &value, int role)
 {
 	if (m_sourceModel)
@@ -1055,6 +1061,11 @@ int ItemViewWidget::getRowCount(const QModelIndex &parent) const
 int ItemViewWidget::getColumnCount(const QModelIndex &parent) const
 {
 	return (model() ? model()->columnCount(parent) : 0);
+}
+
+bool ItemViewWidget::areRowsMovable() const
+{
+	return m_areRowsMovable;
 }
 
 bool ItemViewWidget::canMoveRowUp() const

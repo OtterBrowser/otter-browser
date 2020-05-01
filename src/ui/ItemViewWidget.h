@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -126,6 +126,7 @@ public:
 	int getCurrentRow() const;
 	int getRowCount(const QModelIndex &parent = {}) const;
 	int getColumnCount(const QModelIndex &parent = {}) const;
+	bool areRowsMovable() const;
 	bool canMoveRowUp() const;
 	bool canMoveRowDown() const;
 	bool isExclusive() const;
@@ -142,6 +143,7 @@ public slots:
 	void setExclusive(bool isExclusive);
 	void setFilterString(const QString &filter);
 	void setFilterRoles(const QSet<int> &roles);
+	void setRowsMovable(bool areMovable);
 
 protected:
 	void showEvent(QShowEvent *event) override;
@@ -175,6 +177,7 @@ private:
 	Qt::SortOrder m_sortOrder;
 	int m_sortColumn;
 	int m_dragRow;
+	bool m_areRowsMovable;
 	bool m_canGatherExpanded;
 	bool m_isExclusive;
 	bool m_isModified;
