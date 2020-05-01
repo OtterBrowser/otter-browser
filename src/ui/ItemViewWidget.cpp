@@ -414,6 +414,14 @@ void ItemViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	Menu menu(this);
 	menu.addAction(ThemesManager::createIcon(QLatin1String("arrow-up")), tr("Move Up"), this, &ItemViewWidget::moveUpRow)->setEnabled(m_areRowsMovable && canMoveRowUp());
 	menu.addAction(ThemesManager::createIcon(QLatin1String("arrow-down")), tr("Move Down"), this, &ItemViewWidget::moveDownRow)->setEnabled(m_areRowsMovable && canMoveRowDown());
+
+	if (m_viewMode == TreeView)
+	{
+		menu.addSeparator();
+		menu.addAction(tr("Expand All"), this, &ItemViewWidget::expandAll);
+		menu.addAction(tr("Collapse All"), this, &ItemViewWidget::collapseAll);
+	}
+
 	menu.exec(event->globalPos());
 }
 
