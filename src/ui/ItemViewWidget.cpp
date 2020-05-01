@@ -21,12 +21,13 @@
 
 #include "ItemViewWidget.h"
 #include "ItemDelegate.h"
+#include "Menu.h"
 #include "../core/IniSettings.h"
 #include "../core/SessionsManager.h"
+#include "../core/ThemesManager.h"
 
 #include <QtCore/QTimer>
 #include <QtGui/QDropEvent>
-#include <QtWidgets/QMenu>
 #include <QtWidgets/QToolTip>
 
 namespace Otter
@@ -125,7 +126,7 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	const int sortColumn(view->getSortColumn());
 	const int sortOrder(view->getSortOrder());
-	QMenu menu(this);
+	Menu menu(this);
 	QMenu *sortMenu(menu.addMenu(tr("Sorting")));
 	QAction *sortAscendingAction(sortMenu->addAction(tr("Sort Ascending")));
 	sortAscendingAction->setData(AscendingOrder);
@@ -406,6 +407,14 @@ void ItemViewWidget::keyPressEvent(QKeyEvent *event)
 	}
 
 	QTreeView::keyPressEvent(event);
+}
+
+void ItemViewWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+	Menu menu(this);
+	menu.addAction(ThemesManager::createIcon(QLatin1String("arrow-up")), tr("Move Up"), this, &ItemViewWidget::moveUpRow)->setEnabled(m_areRowsMovable && canMoveRowUp());
+	menu.addAction(ThemesManager::createIcon(QLatin1String("arrow-down")), tr("Move Down"), this, &ItemViewWidget::moveDownRow)->setEnabled(m_areRowsMovable && canMoveRowDown());
+	menu.exec(event->globalPos());
 }
 
 void ItemViewWidget::dropEvent(QDropEvent *event)
