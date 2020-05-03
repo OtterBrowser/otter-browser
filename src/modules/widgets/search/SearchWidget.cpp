@@ -570,13 +570,13 @@ void SearchWidget::updateGeometries()
 
 	if (isRightToLeft)
 	{
-		m_iconRectangle = QRect((width() - margins.right() - 20), ((height() - 16) / 2), 16, 16);
+		m_iconRectangle = {(width() - margins.right() - 20), ((height() - 16) / 2), 16, 16};
 
 		margins.setRight(margins.right() + 20);
 	}
 	else
 	{
-		m_iconRectangle = QRect(margins.left(), ((height() - 16) / 2), 16, 16);
+		m_iconRectangle = {margins.left(), ((height() - 16) / 2), 16, 16};
 
 		margins.setLeft(margins.left() + 20);
 	}
@@ -585,13 +585,13 @@ void SearchWidget::updateGeometries()
 	{
 		if (isRightToLeft)
 		{
-			m_dropdownArrowRectangle = QRect((width() - margins.right() - 14), 0, 14, height());
+			m_dropdownArrowRectangle = {(width() - margins.right() - 14), 0, 14, height()};
 
 			margins.setRight(margins.right() + 12);
 		}
 		else
 		{
-			m_dropdownArrowRectangle = QRect(margins.left(), 0, 14, height());
+			m_dropdownArrowRectangle = {margins.left(), 0, 14, height()};
 
 			margins.setLeft(margins.left() + 12);
 		}
@@ -601,13 +601,13 @@ void SearchWidget::updateGeometries()
 	{
 		if (isRightToLeft)
 		{
-			m_searchButtonRectangle = QRect(margins.left(), ((height() - 16) / 2), 16, 16);
+			m_searchButtonRectangle = {margins.left(), ((height() - 16) / 2), 16, 16};
 
 			margins.setLeft(margins.left() + 20);
 		}
 		else
 		{
-			m_searchButtonRectangle = QRect((width() - margins.right() - 20), ((height() - 16) / 2), 16, 16);
+			m_searchButtonRectangle = {(width() - margins.right() - 20), ((height() - 16) / 2), 16, 16};
 
 			margins.setRight(margins.right() + 20);
 		}
@@ -617,13 +617,13 @@ void SearchWidget::updateGeometries()
 	{
 		if (isRightToLeft)
 		{
-			m_addButtonRectangle = QRect(margins.left(), ((height() - 16) / 2), 16, 16);
+			m_addButtonRectangle = {margins.left(), ((height() - 16) / 2), 16, 16};
 
 			margins.setLeft(margins.left() + 20);
 		}
 		else
 		{
-			m_addButtonRectangle = QRect((width() - margins.right() - 20), ((height() - 16) / 2), 16, 16);
+			m_addButtonRectangle = {(width() - margins.right() - 20), ((height() - 16) / 2), 16, 16};
 
 			margins.setRight(margins.right() + 20);
 		}
