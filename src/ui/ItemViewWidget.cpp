@@ -417,9 +417,22 @@ void ItemViewWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	if (m_viewMode == TreeView)
 	{
+		const int rowCount(getRowCount(rootIndex()));
+		bool canToggleCollapse(false);
+
+		for (int i = 0; i < rowCount; ++i)
+		{
+			if (getRowCount(getIndex(i)) > 0)
+			{
+				canToggleCollapse = true;
+
+				break;
+			}
+		}
+
 		menu.addSeparator();
-		menu.addAction(tr("Expand All"), this, &ItemViewWidget::expandAll);
-		menu.addAction(tr("Collapse All"), this, &ItemViewWidget::collapseAll);
+		menu.addAction(tr("Expand All"), this, &ItemViewWidget::expandAll)->setEnabled(canToggleCollapse);
+		menu.addAction(tr("Collapse All"), this, &ItemViewWidget::collapseAll)->setEnabled(canToggleCollapse);
 	}
 
 	menu.exec(event->globalPos());
