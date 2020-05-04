@@ -123,7 +123,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	pixmapPainter.setPen(QPen(QColor(26, 35, 126, 51), 1));
 	pixmapPainter.setRenderHint(QPainter::HighQualityAntialiasing);
 
-	const QRect textRectangle(QRect(rectangle.x(), (rectangle.y() + rectangle.height()), rectangle.width(), textHeight));
+	const QRect textRectangle(rectangle.x(), (rectangle.y() + rectangle.height()), rectangle.width(), textHeight);
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
 
 	if (type == BookmarksModel::UnknownBookmark && index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
