@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -1608,13 +1608,13 @@ QPixmap QtWebEngineWebWidget::createThumbnail(const QSize &size)
 	{
 		if (thumbnailAspectRatio > contentsAspectRatio)
 		{
-			pixmap = pixmap.copy(QRect({0, 0}, QSize(pixmap.width(), qFloor(pixmap.width() / thumbnailAspectRatio))));
+			pixmap = pixmap.copy({{0, 0}, QSize(pixmap.width(), qFloor(pixmap.width() / thumbnailAspectRatio))});
 		}
 		else
 		{
 			const int offset((pixmap.width() - qFloor(pixmap.height() * thumbnailAspectRatio)) / 2);
 
-			pixmap = pixmap.copy(QRect({offset, 0}, QSize((pixmap.width() - (offset * 2)), pixmap.height())));
+			pixmap = pixmap.copy({{offset, 0}, QSize((pixmap.width() - (offset * 2)), pixmap.height())});
 		}
 	}
 
