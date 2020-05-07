@@ -55,7 +55,7 @@ public:
 			imageUrl = QUrl(map.value(QLatin1String("imageUrl")).toString());
 			linkUrl = QUrl(map.value(QLatin1String("linkUrl")).toString());
 			mediaUrl = QUrl(map.value(QLatin1String("mediaUrl")).toString());
-			elementGeometry = QRect(geometryMap.value(QLatin1String("x")).toInt(), geometryMap.value(QLatin1String("y")).toInt(), geometryMap.value(QLatin1String("w")).toInt(), geometryMap.value(QLatin1String("h")).toInt());
+			elementGeometry = {geometryMap.value(QLatin1String("x")).toInt(), geometryMap.value(QLatin1String("y")).toInt(), geometryMap.value(QLatin1String("w")).toInt(), geometryMap.value(QLatin1String("h")).toInt()};
 			hitPosition = map.value(QLatin1String("position")).toPoint();
 			playbackRate = map.value(QLatin1String("playbackRate")).toReal();
 			flags = static_cast<HitTestFlags>(map.value(QLatin1String("flags")).toInt());
