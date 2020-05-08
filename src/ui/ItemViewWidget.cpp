@@ -546,6 +546,18 @@ void ItemViewWidget::ensureInitialized()
 	m_isInitialized = true;
 }
 
+void ItemViewWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
+{
+	Q_UNUSED(parameters)
+	Q_UNUSED(trigger)
+
+	switch (identifier)
+	{
+		default:
+			break;
+	}
+}
+
 void ItemViewWidget::currentChanged(const QModelIndex &current, const QModelIndex &previous)
 {
 	QTreeView::currentChanged(current, previous);
@@ -1049,6 +1061,17 @@ QModelIndex ItemViewWidget::getCurrentIndex(int column) const
 QModelIndex ItemViewWidget::getIndex(int row, int column, const QModelIndex &parent) const
 {
 	return (model() ? model()->index(row, column, parent) : QModelIndex());
+}
+
+ActionsManager::ActionDefinition::State ItemViewWidget::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	Q_UNUSED(parameters)
+
+	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(identifier));
+	ActionsManager::ActionDefinition::State state(definition.getDefaultState());
+	state.isEnabled = false;
+
+	return state;
 }
 
 QSize ItemViewWidget::sizeHint() const

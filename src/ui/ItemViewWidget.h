@@ -22,6 +22,8 @@
 #ifndef OTTER_ITEMVIEWWIDGET_H
 #define OTTER_ITEMVIEWWIDGET_H
 
+#include "../core/ActionExecutor.h"
+
 #include <QtCore/QSortFilterProxyModel>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QStandardItemModel>
@@ -92,7 +94,7 @@ signals:
 	void columnVisibilityChanged(int column, bool hidden);
 };
 
-class ItemViewWidget : public QTreeView
+class ItemViewWidget : public QTreeView, public ActionExecutor
 {
 	Q_OBJECT
 
@@ -118,7 +120,8 @@ public:
 	QStandardItem* getItem(int row, int column = 0, const QModelIndex &parent = {}) const;
 	QModelIndex getCheckedIndex(const QModelIndex &parent = {}) const;
 	QModelIndex getCurrentIndex(int column = 0) const;
-	QModelIndex getIndex(int row, int column = 0, const QModelIndex &parent = {}) const;
+	QModelIndex getIndex(int row, int column = 0, const QModelIndex &parent = {}) const;\
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	QSize sizeHint() const override;
 	ViewMode getViewMode() const;
 	Qt::SortOrder getSortOrder() const;
@@ -133,6 +136,7 @@ public:
 	bool isModified() const;
 
 public slots:
+	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
 	void insertRow(const QList<QStandardItem*> &items = {});
 	void removeRow();
 	void moveUpRow();
