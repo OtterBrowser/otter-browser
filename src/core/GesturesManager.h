@@ -109,6 +109,7 @@ public:
 		TabHandleContext,
 		ActiveTabHandleContext,
 		NoTabHandleContext,
+		ItemViewContext,
 		OtherContext
 	};
 
