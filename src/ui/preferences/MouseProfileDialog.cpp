@@ -78,7 +78,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	m_ui->setupUi(this);
 
 	QStandardItemModel *gesturesModel(new QStandardItemModel(this));
-	const QVector<QPair<GesturesManager::GesturesContext, QString> > contexts({{GesturesManager::GesturesContext::GenericContext, tr("Generic")}, {GesturesManager::GesturesContext::LinkContext, tr("Link")}, {GesturesManager::GesturesContext::ContentEditableContext, tr("Editable Content")}, {GesturesManager::GesturesContext::TabHandleContext, tr("Tab Handle")}, {GesturesManager::GesturesContext::ActiveTabHandleContext, tr("Tab Handle of Active Tab")}, {GesturesManager::GesturesContext::NoTabHandleContext, tr("Empty Area of Tab Bar")}, {GesturesManager::GesturesContext::ToolBarContext, tr("Any Toolbar")}});
+	const QVector<QPair<GesturesManager::GesturesContext, QString> > contexts({{GesturesManager::GenericContext, tr("Generic")}, {GesturesManager::LinkContext, tr("Link")}, {GesturesManager::ContentEditableContext, tr("Editable Content")}, {GesturesManager::TabHandleContext, tr("Tab Handle")}, {GesturesManager::ActiveTabHandleContext, tr("Tab Handle of Active Tab")}, {GesturesManager::NoTabHandleContext, tr("Empty Area of Tab Bar")}, {GesturesManager::ToolBarContext, tr("Any Toolbar")}});
 
 	for (int i = 0; i < contexts.count(); ++i)
 	{
