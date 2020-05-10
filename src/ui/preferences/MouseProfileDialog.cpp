@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -78,7 +78,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	m_ui->setupUi(this);
 
 	QStandardItemModel *gesturesModel(new QStandardItemModel(this));
-	const QVector<QPair<GesturesManager::GesturesContext, QString> > contexts({{GesturesManager::GenericContext, tr("Generic")}, {GesturesManager::LinkContext, tr("Link")}, {GesturesManager::ContentEditableContext, tr("Editable Content")}, {GesturesManager::TabHandleContext, tr("Tab Handle")}, {GesturesManager::ActiveTabHandleContext, tr("Tab Handle of Active Tab")}, {GesturesManager::NoTabHandleContext, tr("Empty Area of Tab Bar")}, {GesturesManager::ToolBarContext, tr("Any Toolbar")}});
+	const QVector<QPair<GesturesManager::GesturesContext, QString> > contexts({{GesturesManager::GenericContext, tr("Generic")}, {GesturesManager::LinkContext, tr("Link")}, {GesturesManager::ContentEditableContext, tr("Editable Content")}, {GesturesManager::TabHandleContext, tr("Tab Handle")}, {GesturesManager::ActiveTabHandleContext, tr("Tab Handle of Active Tab")}, {GesturesManager::NoTabHandleContext, tr("Empty Area of Tab Bar")}, {GesturesManager::ToolBarContext, tr("Any Toolbar")}, {GesturesManager::ItemViewContext, tr("Item View")}});
 
 	for (int i = 0; i < contexts.count(); ++i)
 	{
