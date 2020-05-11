@@ -97,12 +97,6 @@
              <property name="sizeType">
               <enum>QSizePolicy::MinimumExpanding</enum>
              </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
             </spacer>
            </item>
           </layout>
@@ -156,10 +150,20 @@
             </widget>
            </item>
            <item>
-            <spacer name="stepsSpacer"/>
+            <spacer name="stepsSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+            </spacer>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="stepsMoveButtonsLayout">
+            <layout class="QHBoxLayout" name="stepsMoveButtonsLayout" stretch="0,1,0">
              <item>
               <widget class="QToolButton" name="moveUpStepsButton">
                <property name="enabled">
