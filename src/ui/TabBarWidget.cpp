@@ -1742,6 +1742,7 @@ bool TabBarWidget::event(QEvent *event)
 		case QEvent::MouseButtonPress:
 		case QEvent::MouseButtonDblClick:
 		case QEvent::Wheel:
+			if (!GesturesManager::isTracking())
 			{
 				QVariantMap parameters;
 				int tab(-1);
