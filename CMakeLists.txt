@@ -99,6 +99,7 @@ set(otter_src
 	src/core/FeedParser.cpp
 	src/core/FeedsManager.cpp
 	src/core/FeedsModel.cpp
+	src/core/GesturesController.cpp
 	src/core/GesturesManager.cpp
 	src/core/HandlersManager.cpp
 	src/core/HistoryManager.cpp
