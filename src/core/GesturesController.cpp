@@ -26,9 +26,10 @@ GesturesController::GesturesController() = default;
 
 GesturesController::~GesturesController() = default;
 
-void GesturesController::installGesturesFilter(QObject *object, GesturesController *target, const QVector<GesturesManager::GesturesContext> &gesturesContexts)
+void GesturesController::installGesturesFilter(QObject *object, GesturesController *target, const QVector<GesturesManager::GesturesContext> &gesturesContexts, bool canPropagateEvents)
 {
-	new GesturesFilter(object, target);
+	GesturesFilter *filter(new GesturesFilter(object, target));
+	filter->setPropagateEvents(canPropagateEvents);
 
 	m_gesturesContexts = gesturesContexts;
 }
@@ -40,10 +41,16 @@ GesturesController::GestureContext GesturesController::getGestureContext(const Q
 	return {{}, m_gesturesContexts};
 }
 
-GesturesFilter::GesturesFilter(QObject *object, GesturesController *target) : QObject(object),
-	m_target(target)
+GesturesFilter::GesturesFilter(QObject *object, GesturesController *controller) : QObject(object),
+	m_controller(controller),
+	m_canPropagateEvents(true)
 {
 	object->installEventFilter(this);
+}
+
+void GesturesFilter::setPropagateEvents(bool canPropagateEvents)
+{
+	m_canPropagateEvents = canPropagateEvents;
 }
 
 bool GesturesFilter::eventFilter(QObject *object, QEvent *event)
@@ -72,11 +79,16 @@ bool GesturesFilter::eventFilter(QObject *object, QEvent *event)
 
 	if (!position.isNull())
 	{
-		const GesturesController::GestureContext context(m_target->getGestureContext(position));
+		const GesturesController::GestureContext context(m_controller->getGestureContext(position));
 
 		if (!context.contexts.isEmpty())
 		{
 			GesturesManager::startGesture(parent(), event, context.contexts, context.parameters);
+
+			if (!m_canPropagateEvents)
+			{
+				return true;
+			}
 		}
 	}
 

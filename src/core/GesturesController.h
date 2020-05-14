@@ -40,7 +40,7 @@ public:
 	virtual GestureContext getGestureContext(const QPoint &position = {});
 
 protected:
-	void installGesturesFilter(QObject *object, GesturesController *target, const QVector<GesturesManager::GesturesContext> &gesturesContexts = {});
+	void installGesturesFilter(QObject *object, GesturesController *target, const QVector<GesturesManager::GesturesContext> &gesturesContexts = {}, bool canPropagateEvents = true);
 
 private:
 	QVector<GesturesManager::GesturesContext> m_gesturesContexts;
@@ -49,12 +49,14 @@ private:
 class GesturesFilter : public QObject
 {
 public:
-	explicit GesturesFilter(QObject *object, GesturesController *target);
+	explicit GesturesFilter(QObject *object, GesturesController *controller);
 
+	void setPropagateEvents(bool canPropagateEvents);
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 private:
-	GesturesController *m_target;
+	GesturesController *m_controller;
+	bool m_canPropagateEvents;
 };
 
 }
