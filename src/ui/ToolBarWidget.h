@@ -66,7 +66,6 @@ public:
 	bool canDrop(QDropEvent *event) const;
 	bool isCollapsed() const;
 	virtual bool shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const;
-	bool event(QEvent *event) override;
 
 public slots:
 	void reload();

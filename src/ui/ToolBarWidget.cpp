@@ -1057,16 +1057,6 @@ bool ToolBarWidget::shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const
 	return ((mode == ToolBarsManager::NormalMode && definition.hasToggle) || calculateShouldBeVisible(definition, m_state, mode));
 }
 
-bool ToolBarWidget::event(QEvent *event)
-{
-	if (event->type() == QEvent::MouseButtonPress)
-	{
-		return QWidget::event(event);
-	}
-
-	return QToolBar::event(event);
-}
-
 TabBarToolBarWidget::TabBarToolBarWidget(int identifier, Window *window, QWidget *parent) : ToolBarWidget(identifier, window, parent),
 	m_tabBar(nullptr)
 {
