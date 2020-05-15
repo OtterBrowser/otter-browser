@@ -34,7 +34,7 @@ void GesturesController::installGesturesFilter(QObject *object, GesturesControll
 	m_gesturesContexts = gesturesContexts;
 }
 
-GesturesController::GestureContext GesturesController::getGestureContext(const QPoint &position)
+GesturesController::GestureContext GesturesController::getGestureContext(const QPoint &position) const
 {
 	Q_UNUSED(position)
 

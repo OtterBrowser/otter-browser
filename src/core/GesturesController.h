@@ -37,7 +37,7 @@ public:
 	explicit GesturesController();
 	virtual ~GesturesController();
 
-	virtual GestureContext getGestureContext(const QPoint &position = {});
+	virtual GestureContext getGestureContext(const QPoint &position = {}) const;
 
 protected:
 	void installGesturesFilter(QObject *object, GesturesController *target, const QVector<GesturesManager::GesturesContext> &gesturesContexts = {}, bool canPropagateEvents = true);
