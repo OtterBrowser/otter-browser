@@ -93,8 +93,8 @@ protected:
 	virtual void populateEntries();
 	void updateDropIndex(const QPoint &position);
 	void updateToggleGeometry();
-	void setAddressFields(QVector<QPointer<QWidget> > addressFields);
-	void setSearchFields(QVector<QPointer<QWidget> > searchFields);
+	void setAddressFields(const QVector<QPointer<QWidget> > &addressFields);
+	void setSearchFields(const QVector<QPointer<QWidget> > &searchFields);
 	bool isDragHandle(const QPoint &position) const;
 
 protected slots:

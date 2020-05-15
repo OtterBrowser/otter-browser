@@ -814,12 +814,12 @@ void ToolBarWidget::updateToggleGeometry()
 	}
 }
 
-void ToolBarWidget::setAddressFields(QVector<QPointer<QWidget> > addressFields)
+void ToolBarWidget::setAddressFields(const QVector<QPointer<QWidget> > &addressFields)
 {
 	m_addressFields = addressFields;
 }
 
-void ToolBarWidget::setSearchFields(QVector<QPointer<QWidget> > searchFields)
+void ToolBarWidget::setSearchFields(const QVector<QPointer<QWidget> > &searchFields)
 {
 	m_searchFields = searchFields;
 }
