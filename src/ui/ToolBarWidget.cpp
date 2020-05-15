@@ -30,7 +30,6 @@
 #include "Window.h"
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
-#include "../core/GesturesManager.h"
 #include "../core/ThemesManager.h"
 #include "../modules/widgets/bookmark/BookmarkWidget.h"
 
@@ -58,6 +57,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 	m_isCollapsed(false),
 	m_isInitialized(false)
 {
+	installGesturesFilter(this, this, {GesturesManager::ToolBarContext, GesturesManager::GenericContext});
 	setAcceptDrops(true);
 	setAllowedAreas(Qt::NoToolBarArea);
 	setFloatable(false);
@@ -956,6 +956,23 @@ Session::MainWindow::ToolBarState ToolBarWidget::getState() const
 	return m_state;
 }
 
+GesturesController::GestureContext ToolBarWidget::getGestureContext(const QPoint &position) const
+{
+	GestureContext context;
+
+	if (position.isNull() || !isDragHandle(position))
+	{
+		context.contexts = {GesturesManager::ToolBarContext, GesturesManager::GenericContext};
+
+		if (m_identifier == ToolBarsManager::TabBar)
+		{
+			context.contexts.prepend(GesturesManager::NoTabHandleContext);
+		}
+	}
+
+	return context;
+}
+
 QVector<QPointer<QWidget> > ToolBarWidget::getAddressFields() const
 {
 	return m_addressFields;
@@ -1042,35 +1059,6 @@ bool ToolBarWidget::shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const
 
 bool ToolBarWidget::event(QEvent *event)
 {
-	if (!GesturesManager::isTracking())
-	{
-		switch (event->type())
-		{
-			case QEvent::MouseButtonDblClick:
-			case QEvent::MouseButtonPress:
-			case QEvent::Wheel:
-				{
-					const QPoint position((event->type() == QEvent::Wheel) ? static_cast<QWheelEvent*>(event)->pos() : static_cast<QMouseEvent*>(event)->pos());
-
-					if (position.isNull() || !isDragHandle(position))
-					{
-						QVector<GesturesManager::GesturesContext> contexts({GesturesManager::ToolBarContext, GesturesManager::GenericContext});
-
-						if (m_identifier == ToolBarsManager::TabBar)
-						{
-							contexts.prepend(GesturesManager::NoTabHandleContext);
-						}
-
-						GesturesManager::startGesture(this, event, contexts);
-					}
-				}
-
-				break;
-			default:
-				break;
-		}
-	}
-
 	if (event->type() == QEvent::MouseButtonPress)
 	{
 		return QWidget::event(event);

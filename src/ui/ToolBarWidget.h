@@ -22,6 +22,7 @@
 #define OTTER_TOOLBARWIDGET_H
 
 #include "../core/BookmarksModel.h"
+#include "../core/GesturesController.h"
 #include "../core/SessionsManager.h"
 #include "../core/ToolBarsManager.h"
 
@@ -38,7 +39,7 @@ class SidebarWidget;
 class TabBarWidget;
 class Window;
 
-class ToolBarWidget : public QToolBar
+class ToolBarWidget : public QToolBar, public GesturesController
 {
 	Q_OBJECT
 
@@ -53,6 +54,7 @@ public:
 	QString getTitle() const;
 	ToolBarsManager::ToolBarDefinition getDefinition() const;
 	Session::MainWindow::ToolBarState getState() const;
+	GestureContext getGestureContext(const QPoint &position = {}) const override;
 	QVector<QPointer<QWidget> > getAddressFields() const;
 	QVector<QPointer<QWidget> > getSearchFields() const;
 	Qt::ToolBarArea getArea() const;
