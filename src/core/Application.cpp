@@ -515,7 +515,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	connect(this, &Application::aboutToQuit, this, &Application::handleAboutToQuit);
 	connect(this, &Application::focusObjectChanged, this, [&](QObject *object)
 	{
-		if (!object || (object && !object->inherits("QMenu")))
+		if (!object || !object->inherits("QMenu"))
 		{
 			m_nonMenuFocusObject = object;
 		}
