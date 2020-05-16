@@ -22,6 +22,7 @@
 #define OTTER_TABBARWIDGET_H
 
 #include "WebWidget.h"
+#include "../core/GesturesController.h"
 
 #include <QtWidgets/QTabBar>
 
@@ -78,7 +79,7 @@ private:
 	static QIcon m_lockedIcon;
 };
 
-class TabBarWidget final : public QTabBar
+class TabBarWidget final : public QTabBar, public GesturesController
 {
 	Q_OBJECT
 
@@ -90,6 +91,7 @@ public:
 	void showPreview(int index, int delay = 0);
 	void hidePreview();
 	Window* getWindow(int index) const;
+	GestureContext getGestureContext(const QPoint &position = {}) const override;
 	QSize minimumSizeHint() const override;
 	QSize sizeHint() const override;
 	static bool areThumbnailsEnabled();

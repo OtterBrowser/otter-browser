@@ -28,7 +28,6 @@
 #include "ToolBarWidget.h"
 #include "Window.h"
 #include "../core/Application.h"
-#include "../core/GesturesManager.h"
 #include "../core/InputInterpreter.h"
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
@@ -597,6 +596,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_isCloseButtonEnabled = SettingsManager::getOption(SettingsManager::TabBar_ShowCloseButtonOption).toBool();
 	m_isUrlIconEnabled = SettingsManager::getOption(SettingsManager::TabBar_ShowUrlIconOption).toBool();
 
+	installGesturesFilter(this, this);
 	setAcceptDrops(true);
 	setExpanding(false);
 	setMovable(true);
@@ -1607,6 +1607,45 @@ Window* TabBarWidget::getWindow(int index) const
 	return nullptr;
 }
 
+GesturesController::GestureContext TabBarWidget::getGestureContext(const QPoint &position) const
+{
+	GestureContext context;
+	const int tab(tabAt(position));
+
+	if (tab >= 0)
+	{
+		const Window *window(getWindow(tab));
+
+		if (window)
+		{
+			context.parameters[QLatin1String("tab")] = window->getIdentifier();
+		}
+	}
+
+	if (tab < 0)
+	{
+		context.contexts.append(GesturesManager::NoTabHandleContext);
+	}
+	else if (tab == currentIndex())
+	{
+		context.contexts.append(GesturesManager::ActiveTabHandleContext);
+		context.contexts.append(GesturesManager::TabHandleContext);
+	}
+	else
+	{
+		context.contexts.append(GesturesManager::TabHandleContext);
+	}
+
+	if (qobject_cast<ToolBarWidget*>(parentWidget()))
+	{
+		context.contexts.append(GesturesManager::ToolBarContext);
+	}
+
+	context.contexts.append(GesturesManager::GenericContext);
+
+	return context;
+}
+
 QStyleOptionTab TabBarWidget::createStyleOptionTab(int index) const
 {
 	QStyleOptionTab tabOption;
@@ -1737,60 +1776,6 @@ bool TabBarWidget::event(QEvent *event)
 	{
 		case QEvent::LayoutDirectionChange:
 			emit needsGeometriesUpdate();
-
-			break;
-		case QEvent::MouseButtonPress:
-		case QEvent::MouseButtonDblClick:
-		case QEvent::Wheel:
-			if (!GesturesManager::isTracking())
-			{
-				QVariantMap parameters;
-				int tab(-1);
-
-				if (event->type() == QEvent::Wheel)
-				{
-					tab = tabAt(static_cast<QWheelEvent*>(event)->pos());
-				}
-				else
-				{
-					tab = tabAt(static_cast<QMouseEvent*>(event)->pos());
-				}
-
-				if (tab >= 0)
-				{
-					const Window *window(getWindow(tab));
-
-					if (window)
-					{
-						parameters[QLatin1String("tab")] = window->getIdentifier();
-					}
-				}
-
-				QVector<GesturesManager::GesturesContext> contexts;
-
-				if (tab < 0)
-				{
-					contexts.append(GesturesManager::NoTabHandleContext);
-				}
-				else if (tab == currentIndex())
-				{
-					contexts.append(GesturesManager::ActiveTabHandleContext);
-					contexts.append(GesturesManager::TabHandleContext);
-				}
-				else
-				{
-					contexts.append(GesturesManager::TabHandleContext);
-				}
-
-				if (qobject_cast<ToolBarWidget*>(parentWidget()))
-				{
-					contexts.append(GesturesManager::ToolBarContext);
-				}
-
-				contexts.append(GesturesManager::GenericContext);
-
-				GesturesManager::startGesture(this, event, contexts, parameters);
-			}
 
 			break;
 		case QEvent::ParentChange:
