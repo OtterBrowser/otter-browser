@@ -2153,7 +2153,7 @@ QPixmap QtWebKitWebWidget::createThumbnail(const QSize &size)
 
 	QPainter painter(&pixmap);
 
-	m_page->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion(QRect(QPoint(0, 0), contentsSize)));
+	m_page->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion({{0, 0}, contentsSize}));
 	m_page->mainFrame()->setZoomFactor(zoom);
 	m_page->setView(oldView);
 	m_page->setViewportSize(oldViewportSize);
