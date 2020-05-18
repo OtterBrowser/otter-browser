@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 #define OTTER_ACTIONWIDGET_H
 
 #include "../../../core/ActionsManager.h"
+#include "../../../core/GesturesController.h"
 #include "../../../core/SessionsManager.h"
 #include "../../../ui/ToolButtonWidget.h"
 
@@ -33,7 +34,7 @@ namespace Otter
 class Action;
 class Window;
 
-class ActionWidget : public ToolButtonWidget
+class ActionWidget : public ToolButtonWidget, public GesturesController
 {
 	Q_OBJECT
 

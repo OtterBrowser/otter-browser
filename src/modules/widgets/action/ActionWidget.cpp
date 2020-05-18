@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,6 @@
 
 #include "ActionWidget.h"
 #include "../../../core/Application.h"
-#include "../../../core/GesturesManager.h"
 #include "../../../core/HistoryManager.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/ContentsWidget.h"
@@ -37,6 +36,7 @@ namespace Otter
 ActionWidget::ActionWidget(int identifier, Window *window, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
 	m_action(new Action(identifier, definition.parameters, definition.options, ActionExecutor::Object(window, window), this))
 {
+	installGesturesFilter(this, this, {GesturesManager::ToolBarContext, GesturesManager::GenericContext});
 	setDefaultAction(m_action);
 	setWindow(window);
 
@@ -278,12 +278,6 @@ bool NavigationActionWidget::event(QEvent *event)
 
 				return true;
 			}
-		case QEvent::MouseButtonDblClick:
-		case QEvent::MouseButtonPress:
-		case QEvent::Wheel:
-			GesturesManager::startGesture(this, event, {GesturesManager::ToolBarContext, GesturesManager::GenericContext});
-
-			break;
 		case QEvent::ToolTip:
 			{
 				const QKeySequence shortcut(ActionsManager::getActionShortcut(getIdentifier()));
