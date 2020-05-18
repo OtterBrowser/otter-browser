@@ -40,7 +40,6 @@
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
 #include "../core/FeedsManager.h"
-#include "../core/GesturesManager.h"
 #include "../core/InputInterpreter.h"
 #include "../core/ItemModel.h"
 #include "../core/SessionModel.h"
@@ -82,6 +81,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 {
 	m_ui->setupUi(this);
 
+	installGesturesFilter(this, this);
 	setUnifiedTitleAndToolBarOnMac(true);
 
 	m_tabBar->hide();
@@ -2641,15 +2641,6 @@ bool MainWindow::event(QEvent *event)
 			m_ui->retranslateUi(this);
 
 			updateWindowTitle();
-
-			break;
-		case QEvent::MouseButtonDblClick:
-		case QEvent::MouseButtonPress:
-		case QEvent::Wheel:
-			if (!GesturesManager::isTracking())
-			{
-				GesturesManager::startGesture(this, event);
-			}
 
 			break;
 		case QEvent::Move:

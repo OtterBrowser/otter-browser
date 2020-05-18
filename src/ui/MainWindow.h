@@ -23,6 +23,7 @@
 #define OTTER_MAINWINDOW_H
 
 #include "../core/ActionExecutor.h"
+#include "../core/GesturesController.h"
 #include "../core/SessionsManager.h"
 
 #include <QtWidgets/QMainWindow>
@@ -48,7 +49,7 @@ class ToolBarWidget;
 class Window;
 class WorkspaceWidget;
 
-class MainWindow final : public QMainWindow, public ActionExecutor
+class MainWindow final : public QMainWindow, public ActionExecutor, public GesturesController
 {
 	Q_OBJECT
 
