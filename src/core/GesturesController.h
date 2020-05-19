@@ -32,6 +32,7 @@ public:
 	{
 		QVariantMap parameters;
 		QVector<GesturesManager::GesturesContext> contexts;
+		bool canPropagateEvent = true;
 	};
 
 	explicit GesturesController();
@@ -44,6 +45,7 @@ protected:
 
 private:
 	QVector<GesturesManager::GesturesContext> m_gesturesContexts;
+	bool m_canPropagateEvents;
 };
 
 class GesturesFilter : public QObject
@@ -51,12 +53,10 @@ class GesturesFilter : public QObject
 public:
 	explicit GesturesFilter(QObject *object, GesturesController *controller);
 
-	void setPropagateEvents(bool canPropagateEvents);
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 private:
 	GesturesController *m_controller;
-	bool m_canPropagateEvents;
 };
 
 }

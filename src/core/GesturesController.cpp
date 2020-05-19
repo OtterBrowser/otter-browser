@@ -22,35 +22,35 @@
 namespace Otter
 {
 
-GesturesController::GesturesController() = default;
+GesturesController::GesturesController() : m_canPropagateEvents(true)
+{
+}
 
 GesturesController::~GesturesController() = default;
 
 void GesturesController::installGesturesFilter(QObject *object, GesturesController *target, const QVector<GesturesManager::GesturesContext> &gesturesContexts, bool canPropagateEvents)
 {
-	GesturesFilter *filter(new GesturesFilter(object, target));
-	filter->setPropagateEvents(canPropagateEvents);
+	new GesturesFilter(object, target);
 
 	m_gesturesContexts = gesturesContexts;
+	m_canPropagateEvents = canPropagateEvents;
 }
 
 GesturesController::GestureContext GesturesController::getGestureContext(const QPoint &position) const
 {
 	Q_UNUSED(position)
 
-	return {{}, m_gesturesContexts};
+	GestureContext context;
+	context.contexts = m_gesturesContexts;
+	context.canPropagateEvent = m_canPropagateEvents;
+
+	return context;
 }
 
 GesturesFilter::GesturesFilter(QObject *object, GesturesController *controller) : QObject(object),
-	m_controller(controller),
-	m_canPropagateEvents(true)
+	m_controller(controller)
 {
 	object->installEventFilter(this);
-}
-
-void GesturesFilter::setPropagateEvents(bool canPropagateEvents)
-{
-	m_canPropagateEvents = canPropagateEvents;
 }
 
 bool GesturesFilter::eventFilter(QObject *object, QEvent *event)
@@ -84,11 +84,11 @@ bool GesturesFilter::eventFilter(QObject *object, QEvent *event)
 		if (!context.contexts.isEmpty())
 		{
 			GesturesManager::startGesture(parent(), event, context.contexts, context.parameters);
+		}
 
-			if (!m_canPropagateEvents)
-			{
-				return true;
-			}
+		if (!context.canPropagateEvent)
+		{
+			return true;
 		}
 	}
 
