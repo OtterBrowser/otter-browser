@@ -715,7 +715,11 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 		}
 	}
 
-	if (event->button() == Qt::MiddleButton && text().isEmpty() && !QApplication::clipboard()->text().isEmpty() && SettingsManager::getOption(SettingsManager::AddressField_PasteAndGoOnMiddleClickOption).toBool())
+	if (event->button() == Qt::LeftButton && !isPopupVisible() && SettingsManager::getOption(SettingsManager::AddressField_ShowSuggestionsOnFocusOption).toBool() && HistoryManager::getTypedHistoryModel()->rowCount() > 0)
+	{
+		showCompletion(true);
+	}
+	else if (event->button() == Qt::MiddleButton && text().isEmpty() && !QApplication::clipboard()->text().isEmpty() && SettingsManager::getOption(SettingsManager::AddressField_PasteAndGoOnMiddleClickOption).toBool())
 	{
 		handleUserInput(QApplication::clipboard()->text().trimmed(), SessionsManager::CurrentTabOpen);
 

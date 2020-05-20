@@ -44,6 +44,7 @@ public:
 		AddressField_PasteAndGoOnMiddleClickOption,
 		AddressField_SelectAllOnFocusOption,
 		AddressField_ShowCompletionCategoriesOption,
+		AddressField_ShowSuggestionsOnFocusOption,
 		AddressField_SuggestBookmarksOption,
 		AddressField_SuggestHistoryOption,
 		AddressField_SuggestLocalPathsOption,
