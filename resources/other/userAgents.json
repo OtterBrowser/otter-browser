@@ -6,18 +6,18 @@
 	"separator",
 	{
 		"identifier": "chrome",
-		"name": "Google Chrome 77 (Windows)",
-		"value": "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.75 Safari/537.36"
+		"name": "Google Chrome 83 (Windows)",
+		"value": "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
 	},
 	{
 		"identifier": "chromeMobile",
-		"name": "Google Chrome 77 (Android)",
-		"value": "Mozilla/5.0 (Linux; Android 8.1.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.73 Mobile Safari/537.36"
+		"name": "Google Chrome 83 (Android)",
+		"value": "Mozilla/5.0 (Linux; Android 9.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Mobile Safari/537.36"
 	},
 	{
 		"identifier": "firefox",
-		"name": "Mozilla Firefox 69 (Windows)",
-		"value": "Mozilla/5.0 (Windows NT 10.0; rv:69.0) Gecko/20100101 Firefox/69.0"
+		"name": "Mozilla Firefox 76 (Windows)",
+		"value": "Mozilla/5.0 (Windows NT 10.0; rv:76.0) Gecko/20100101 Firefox/76.0"
 	},
 	{
 		"identifier": "edge",
