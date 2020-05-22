@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -91,7 +91,7 @@ public slots:
 
 protected:
 	explicit Transfer(TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
-	Transfer(const QSettings &settings, QObject *parent = nullptr);
+	explicit Transfer(const QSettings &settings, QObject *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event) override;
 	void start(QNetworkReply *reply, const QString &target);
