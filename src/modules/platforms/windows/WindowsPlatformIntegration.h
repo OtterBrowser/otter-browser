@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -106,7 +106,7 @@ public slots:
 	bool setAsDefaultBrowser() override;
 
 protected:
-	void timerEvent(QTimerEvent *event);
+	void timerEvent(QTimerEvent *event) override;
 	void getApplicationInformation(ApplicationInformation &information);
 	QString getUpdaterBinary() const override;
 	bool registerToSystem();
@@ -126,6 +126,9 @@ private:
 	int m_cleanupTimer;
 
 	static QProcessEnvironment m_environment;
+	static bool m_isVistaOrNewer;
+	static bool m_is7OrNewer;
+	static bool m_is10OrNewer;
 };
 
 }
