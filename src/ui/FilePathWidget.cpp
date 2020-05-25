@@ -24,6 +24,7 @@
 
 #include <QtCore/QEvent>
 #include <QtCore/QStandardPaths>
+#include <QtWidgets/QFileDialog>
 #include <QtWidgets/QHBoxLayout>
 
 namespace Otter

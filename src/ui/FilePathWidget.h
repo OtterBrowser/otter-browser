@@ -22,7 +22,6 @@
 #define OTTER_FILEPATHWIDGET_H
 
 #include <QtWidgets/QCompleter>
-#include <QtWidgets/QFileDialog>
 #include <QtWidgets/QFileSystemModel>
 #include <QtWidgets/QPushButton>
 
