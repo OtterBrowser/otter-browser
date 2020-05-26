@@ -206,16 +206,22 @@ void UserAgentsModel::populateUserAgents(const QStringList &userAgents, QStandar
 
 NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 {
+	QSslConfiguration configuration(QSslConfiguration::defaultConfiguration());
 	const QStringList paths({QDir(QCoreApplication::applicationDirPath()).filePath(QLatin1String("certificates")), SessionsManager::getWritableDataPath(QLatin1String("certificates"))});
 
 	for (int i = 0; i < paths.count(); ++i)
 	{
 		if (QFile::exists(paths.at(i)))
 		{
+#if QT_VERSION >= 0x050F00
+			configuration.addCaCertificates(QDir(paths.at(i)).filePath(QLatin1String("*")), QSsl::Pem, QSslCertificate::PatternSyntax::Wildcard);
+#else
 			QSslSocket::addDefaultCaCertificates(QDir(paths.at(i)).filePath(QLatin1String("*")), QSsl::Pem, QRegExp::Wildcard);
+#endif
 		}
-
 	}
+
+	QSslConfiguration::setDefaultConfiguration(configuration);
 
 	connect(new QNetworkConfigurationManager(this), &QNetworkConfigurationManager::onlineStateChanged, this, &NetworkManagerFactory::onlineStateChanged);
 }
