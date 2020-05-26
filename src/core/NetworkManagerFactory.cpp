@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -206,7 +206,6 @@ void UserAgentsModel::populateUserAgents(const QStringList &userAgents, QStandar
 
 NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 {
-	QNetworkConfigurationManager *networkConfigurationManager(new QNetworkConfigurationManager(this));
 	const QStringList paths({QDir(QCoreApplication::applicationDirPath()).filePath(QLatin1String("certificates")), SessionsManager::getWritableDataPath(QLatin1String("certificates"))});
 
 	for (int i = 0; i < paths.count(); ++i)
@@ -218,7 +217,7 @@ NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 
 	}
 
-	connect(networkConfigurationManager, &QNetworkConfigurationManager::onlineStateChanged, this, &NetworkManagerFactory::onlineStateChanged);
+	connect(new QNetworkConfigurationManager(this), &QNetworkConfigurationManager::onlineStateChanged, this, &NetworkManagerFactory::onlineStateChanged);
 }
 
 void NetworkManagerFactory::createInstance()
