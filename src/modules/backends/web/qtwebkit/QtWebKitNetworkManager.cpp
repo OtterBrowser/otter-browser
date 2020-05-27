@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -99,7 +99,13 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 	connect(this, &QtWebKitNetworkManager::authenticationRequired, this, &QtWebKitNetworkManager::handleAuthenticationRequired);
 	connect(this, &QtWebKitNetworkManager::proxyAuthenticationRequired, this, &QtWebKitNetworkManager::handleProxyAuthenticationRequired);
 	connect(this, &QtWebKitNetworkManager::sslErrors, this, &QtWebKitNetworkManager::handleSslErrors);
-	connect(NetworkManagerFactory::getInstance(), &NetworkManagerFactory::onlineStateChanged, this, &QtWebKitNetworkManager::handleOnlineStateChanged);
+	connect(NetworkManagerFactory::getInstance(), &NetworkManagerFactory::onlineStateChanged, this, [&](bool isOnline)
+	{
+		if (isOnline)
+		{
+			setNetworkAccessible(Accessible);
+		}
+	});
 }
 
 void QtWebKitNetworkManager::timerEvent(QTimerEvent *event)
@@ -395,14 +401,6 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 
 			emit contentStateChanged(m_contentState);
 		}
-	}
-}
-
-void QtWebKitNetworkManager::handleOnlineStateChanged(bool isOnline)
-{
-	if (isOnline)
-	{
-		setNetworkAccessible(Accessible);
 	}
 }
 
