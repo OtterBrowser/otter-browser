@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -66,7 +66,13 @@ NetworkManager::NetworkManager(bool isPrivate, QObject *parent) : QNetworkAccess
 	connect(this, &NetworkManager::authenticationRequired, this, &NetworkManager::handleAuthenticationRequired);
 	connect(this, &NetworkManager::proxyAuthenticationRequired, this, &NetworkManager::handleProxyAuthenticationRequired);
 	connect(this, &NetworkManager::sslErrors, this, &NetworkManager::handleSslErrors);
-	connect(NetworkManagerFactory::getInstance(), &NetworkManagerFactory::onlineStateChanged, this, &NetworkManager::handleOnlineStateChanged);
+	connect(NetworkManagerFactory::getInstance(), &NetworkManagerFactory::onlineStateChanged, this, [&](bool isOnline)
+	{
+		if (isOnline)
+		{
+			setNetworkAccessible(QNetworkAccessManager::Accessible);
+		}
+	});
 }
 
 void NetworkManager::handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator)
@@ -125,14 +131,6 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 	if (!messages.isEmpty() && QMessageBox::warning(Application::getActiveWindow(), tr("Warning"), tr("SSL errors occurred:\n\n%1\n\nDo you want to continue?").arg(messages.join(QLatin1Char('\n'))), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::Yes)
 	{
 		reply->ignoreSslErrors(errors);
-	}
-}
-
-void NetworkManager::handleOnlineStateChanged(bool isOnline)
-{
-	if (isOnline)
-	{
-		setNetworkAccessible(QNetworkAccessManager::Accessible);
 	}
 }
 
