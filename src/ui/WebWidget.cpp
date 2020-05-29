@@ -283,7 +283,7 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 {
 	const HitTestResult hitResult(getHitTestResult(event->pos()));
 	const QString toolTipsMode(SettingsManager::getOption(SettingsManager::Browser_ToolTipsModeOption).toString());
-	const QString link((hitResult.linkUrl.isValid() ? hitResult.linkUrl : hitResult.formUrl).toString());
+	const QUrl link(hitResult.linkUrl.isValid() ? hitResult.linkUrl : hitResult.formUrl);
 	QString text;
 
 	if (toolTipsMode != QLatin1String("disabled"))
@@ -294,7 +294,7 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 		{
 			if (!link.isEmpty())
 			{
-				text = (title.isEmpty() ? QString() : tr("Title: %1").arg(title) + QLatin1String("<br>")) + tr("Address: %1").arg(link);
+				text = (title.isEmpty() ? QString() : tr("Title: %1").arg(title) + QLatin1String("<br>")) + tr("Address: %1").arg(link.toString());
 			}
 			else if (!title.isEmpty())
 			{
@@ -307,7 +307,7 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 		}
 	}
 
-	setStatusMessageOverride(link.isEmpty() ? hitResult.title : link);
+	setStatusMessageOverride(link.isEmpty() ? hitResult.title : link.toString());
 
 	if (!text.isEmpty())
 	{
