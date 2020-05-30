@@ -269,6 +269,13 @@ public slots:
 	void setRequestedUrl(const QUrl &url, bool isTyped = true, bool onlyUpdate = false);
 
 protected:
+	enum ToolTipEntry
+	{
+		UnknownEntry = 0,
+		AddressEntry,
+		TitleEntry
+	};
+
 	explicit WebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event) override;
