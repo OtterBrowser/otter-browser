@@ -288,7 +288,7 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 
 	if (toolTipsMode != QLatin1String("disabled"))
 	{
-		const QString title(QString(hitResult.title).replace(QLatin1Char('&'), QLatin1String("&amp;")).replace(QLatin1Char('<'), QLatin1String("&lt;")).replace(QLatin1Char('>'), QLatin1String("&gt;")));
+		const QString title(hitResult.title.toHtmlEscaped());
 
 		if (toolTipsMode == QLatin1String("extended"))
 		{
