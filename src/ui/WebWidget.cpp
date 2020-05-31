@@ -284,37 +284,61 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 	const HitTestResult hitResult(getHitTestResult(event->pos()));
 	const QString toolTipsMode(SettingsManager::getOption(SettingsManager::Browser_ToolTipsModeOption).toString());
 	const QUrl link(hitResult.linkUrl.isValid() ? hitResult.linkUrl : hitResult.formUrl);
-	QString text;
-
-	if (toolTipsMode != QLatin1String("disabled"))
-	{
-		const QString title(hitResult.title.toHtmlEscaped());
-
-		if (toolTipsMode == QLatin1String("extended"))
-		{
-			if (!link.isEmpty())
-			{
-				text = (title.isEmpty() ? QString() : tr("Title: %1").arg(title) + QLatin1String("<br>")) + tr("Address: %1").arg(link.toString());
-			}
-			else if (!title.isEmpty())
-			{
-				text = title;
-			}
-		}
-		else
-		{
-			text = title;
-		}
-	}
 
 	setStatusMessageOverride(link.isEmpty() ? hitResult.title : link.toString());
 
-	if (!text.isEmpty())
+	event->accept();
+
+	if (toolTipsMode == QLatin1String("disabled"))
 	{
-		QToolTip::showText(event->globalPos(), QStringLiteral("<div style=\"white-space:pre-line;\">%1</div>").arg(text), widget);
+		return;
 	}
 
-	event->accept();
+	QHash<ToolTipEntry, QString> entries;
+	const QVector<ToolTipEntry> layout({TitleEntry, AddressEntry});
+	QStringList toolTip;
+
+	if (!hitResult.title.isEmpty())
+	{
+		entries[TitleEntry] = hitResult.title.toHtmlEscaped();
+	}
+
+	if (!link.isEmpty() && toolTipsMode == QLatin1String("extended"))
+	{
+		entries[AddressEntry] = link.toString();
+	}
+
+	if (entries.count() == 1 && entries.contains(TitleEntry))
+	{
+		toolTip.append(entries[TitleEntry]);
+	}
+	else
+	{
+		for (int i = 0; i < layout.count(); ++i)
+		{
+			if (entries.contains(layout.at(i)))
+			{
+				switch (layout.at(i))
+				{
+					case AddressEntry:
+						toolTip.append(tr("Address: %1").arg(entries[AddressEntry]));
+
+						break;
+					case TitleEntry:
+						toolTip.append(tr("Title: %1").arg(entries[TitleEntry]));
+
+						break;
+					default:
+						break;
+				}
+			}
+		}
+	}
+
+	if (!toolTip.isEmpty())
+	{
+		QToolTip::showText(event->globalPos(), QStringLiteral("<div style=\"white-space:pre-line;\">%1</div>").arg(toolTip.join(QLatin1String("<br>"))), widget);
+	}
 }
 
 void WebWidget::handleWindowCloseRequest()
