@@ -324,6 +324,10 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 						toolTip.append(tr("Address: %1").arg(entries[AddressEntry]));
 
 						break;
+					case LastVisitedEntry:
+						toolTip.append(tr("Last Visited: %1").arg(entries[LastVisitedEntry]));
+
+						break;
 					case TitleEntry:
 						toolTip.append(tr("Title: %1").arg(entries[TitleEntry]));
 

@@ -273,6 +273,7 @@ protected:
 	{
 		UnknownEntry = 0,
 		AddressEntry,
+		LastVisitedEntry,
 		TitleEntry
 	};
 
