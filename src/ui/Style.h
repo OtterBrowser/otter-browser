@@ -59,13 +59,11 @@ public:
 	int styleHint(StyleHint hint, const QStyleOption *option = nullptr, const QWidget *widget = nullptr, QStyleHintReturn *returnData = nullptr) const override;
 	virtual int getExtraStyleHint(ExtraStyleHint hint) const;
 
-protected slots:
-	void handleOptionChanged(int identifier, const QVariant &value);
-
 private:
 	bool m_areToolTipsEnabled;
 	bool m_canAlignTabBarLabel;
 };
+
 }
 
 #endif

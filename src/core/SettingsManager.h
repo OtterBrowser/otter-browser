@@ -123,6 +123,7 @@ public:
 		Interface_ColorSchemeOption,
 		Interface_DateTimeFormatOption,
 		Interface_EnableSmoothScrollingOption,
+		Interface_EnableToolTipsOption,
 		Interface_IconThemePathOption,
 		Interface_LastTabClosingActionOption,
 		Interface_LockToolBarsOption,

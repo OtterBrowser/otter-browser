@@ -147,6 +147,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Interface_ColorSchemeOption, ListType, QStringList(QLatin1String("default")));
 	registerOption(Interface_DateTimeFormatOption, StringType, QString());
 	registerOption(Interface_EnableSmoothScrollingOption, BooleanType, false);
+	registerOption(Interface_EnableToolTipsOption, BooleanType, true);
 	registerOption(Interface_IconThemePathOption, PathType, QString());
 	registerOption(Interface_LastTabClosingActionOption, EnumerationType, QLatin1String("openTab"), {QLatin1String("openTab"), QLatin1String("closeWindow"), QLatin1String("closeWindowIfNotLast"), QLatin1String("doNothing")});
 	registerOption(Interface_LockToolBarsOption, BooleanType, false);

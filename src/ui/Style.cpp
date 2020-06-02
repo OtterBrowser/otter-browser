@@ -32,7 +32,7 @@ namespace Otter
 {
 
 Style::Style(const QString &name) : QProxyStyle(name.isEmpty() ? nullptr : QStyleFactory::create(name)),
-	m_areToolTipsEnabled(SettingsManager::getOption(SettingsManager::Browser_ToolTipsModeOption).toString() != QLatin1String("disabled")),
+	m_areToolTipsEnabled(SettingsManager::getOption(SettingsManager::Interface_EnableToolTipsOption).toBool()),
 	m_canAlignTabBarLabel(false)
 {
 	const QString styleName(Style::getName());
@@ -42,7 +42,14 @@ Style::Style(const QString &name) : QProxyStyle(name.isEmpty() ? nullptr : QStyl
 		m_canAlignTabBarLabel = true;
 	}
 
-	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &Style::handleOptionChanged);
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, [&](int identifier, const QVariant &value)
+	{
+		if (identifier == SettingsManager::Interface_EnableToolTipsOption)
+		{
+			m_areToolTipsEnabled = value.toBool();
+		}
+	}
+);
 }
 
 void Style::drawDropZone(const QLine &line, QPainter *painter) const
@@ -202,14 +209,6 @@ void Style::drawPrimitive(PrimitiveElement element, const QStyleOption *option, 
 	}
 
 	QProxyStyle::drawPrimitive(element, option, painter, widget);
-}
-
-void Style::handleOptionChanged(int identifier, const QVariant &value)
-{
-	if (identifier == SettingsManager::Browser_ToolTipsModeOption)
-	{
-		m_areToolTipsEnabled = (value.toString() != QLatin1String("disabled"));
-	}
 }
 
 QString Style::getName() const

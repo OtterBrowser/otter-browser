@@ -282,18 +282,18 @@ void WebWidget::handleLoadingStateChange(LoadingState state)
 void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 {
 	const HitTestResult hitResult(getHitTestResult(event->pos()));
-	const QString toolTipsMode(SettingsManager::getOption(SettingsManager::Browser_ToolTipsModeOption).toString());
 	const QUrl link(hitResult.linkUrl.isValid() ? hitResult.linkUrl : hitResult.formUrl);
 
 	setStatusMessageOverride(link.isEmpty() ? hitResult.title : link.toString());
 
 	event->accept();
 
-	if (toolTipsMode == QLatin1String("disabled"))
+	if (!SettingsManager::getOption(SettingsManager::Interface_EnableToolTipsOption).toBool())
 	{
 		return;
 	}
 
+	const QString toolTipsMode(SettingsManager::getOption(SettingsManager::Browser_ToolTipsModeOption).toString());
 	QHash<ToolTipEntry, QString> entries;
 	const QVector<ToolTipEntry> layout({TitleEntry, AddressEntry});
 	QStringList toolTip;
