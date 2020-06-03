@@ -115,7 +115,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 #ifdef Q_OS_MAC
 	m_localePath = QFileInfo(applicationDirPath() + QLatin1String("/../Resources/locale/")).absoluteFilePath();
 #else
-	m_localePath = OTTER_INSTALL_PREFIX + QLatin1String("/share/otter-browser/locale/");
+	m_localePath = QFileInfo(applicationDirPath() + QLatin1String("/../share/otter-browser/locale/")).absoluteFilePath();
 #endif
 
 	if (QFile::exists(applicationDirPath() + QLatin1String("/locale/")))
