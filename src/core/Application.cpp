@@ -118,9 +118,11 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	m_localePath = QFileInfo(applicationDirPath() + QLatin1String("/../share/otter-browser/locale/")).absoluteFilePath();
 #endif
 
-	if (QFile::exists(applicationDirPath() + QLatin1String("/locale/")))
+	const QString localLocalePath(applicationDirPath() + QLatin1String("/locale/"));
+
+	if (QFile::exists(localLocalePath))
 	{
-		m_localePath = applicationDirPath() + QLatin1String("/locale/");
+		m_localePath = localLocalePath;
 	}
 
 	setLocale(QLatin1String("system"));
