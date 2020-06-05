@@ -2,7 +2,7 @@
 <!-- Copyright 2014 Martin Gansser <martinkg@fedoraproject.org> -->
 <component>
   <id>org.otter_browser.Otter_Browser</id>
-  <launchable type="desktop-id">org.otter_browser.Otter_Browser.desktop</launchable>
+  <launchable type="desktop-id">otter-browser.desktop</launchable>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <name>Otter Browser</name>
