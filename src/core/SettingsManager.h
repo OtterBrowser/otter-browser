@@ -323,7 +323,7 @@ public:
 protected:
 	explicit SettingsManager(QObject *parent);
 
-	static void registerOption(int identifier, OptionType type, const QVariant &defaultValue = {}, const QStringList &choices = {}, OptionDefinition::OptionFlags flags = static_cast<OptionDefinition::OptionFlags>(OptionDefinition::IsEnabledFlag |OptionDefinition:: IsVisibleFlag | OptionDefinition::IsBuiltInFlag));
+	static void registerOption(int identifier, OptionType type, const QVariant &defaultValue = {}, const QStringList &choices = {}, OptionDefinition::OptionFlags flags = static_cast<OptionDefinition::OptionFlags>(OptionDefinition::IsEnabledFlag | OptionDefinition::IsVisibleFlag | OptionDefinition::IsBuiltInFlag));
 	static void saveOption(const QString &path, const QString &key, const QVariant &value, OptionType type);
 
 private:
