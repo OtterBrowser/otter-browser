@@ -26,7 +26,6 @@
 
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonObject>
-#include <QtCore/QMetaEnum>
 #include <QtCore/QTextStream>
 #include <QtGui/QKeySequence>
 
@@ -664,16 +663,7 @@ QString ActionsManager::createReport()
 
 QString ActionsManager::getActionName(int identifier)
 {
-	QString name(ActionsManager::staticMetaObject.enumerator(m_actionIdentifierEnumerator).valueToKey(identifier));
-
-	if (!name.isEmpty())
-	{
-		name.chop(6);
-
-		return name;
-	}
-
-	return {};
+	return EnumeratorMapper(staticMetaObject.enumerator(m_actionIdentifierEnumerator), QLatin1String("Action")).mapToName(identifier);
 }
 
 QKeySequence ActionsManager::getActionShortcut(int identifier, const QVariantMap &parameters)
@@ -770,12 +760,7 @@ ActionsManager::ActionDefinition ActionsManager::getActionDefinition(int identif
 
 int ActionsManager::getActionIdentifier(const QString &name)
 {
-	if (!name.endsWith(QLatin1String("Action")))
-	{
-		return ActionsManager::staticMetaObject.enumerator(m_actionIdentifierEnumerator).keyToValue((name + QLatin1String("Action")).toLatin1());
-	}
-
-	return ActionsManager::staticMetaObject.enumerator(m_actionIdentifierEnumerator).keyToValue(name.toLatin1());
+	return EnumeratorMapper(staticMetaObject.enumerator(m_actionIdentifierEnumerator), QLatin1String("Action")).mapToValue(name, true);
 }
 
 bool ActionsManager::isShortcutAllowed(const QKeySequence &shortcut, ShortcutCheck check, bool areSingleKeyShortcutsAllowed)

@@ -27,7 +27,6 @@
 
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonObject>
-#include <QtCore/QMetaEnum>
 #include <QtCore/QPointer>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QTextStream>
@@ -791,16 +790,7 @@ QObject* GesturesManager::getTrackedObject()
 
 QString GesturesManager::getContextName(int identifier)
 {
-	QString name(GesturesManager::staticMetaObject.enumerator(m_gesturesContextEnumerator).valueToKey(identifier));
-
-	if (!name.isEmpty())
-	{
-		name.chop(7);
-
-		return name;
-	}
-
-	return {};
+	return EnumeratorMapper(staticMetaObject.enumerator(m_gesturesContextEnumerator), QLatin1String("Context")).mapToName(identifier);
 }
 
 MouseProfile::Gesture GesturesManager::matchGesture()
@@ -859,12 +849,7 @@ MouseProfile::Gesture GesturesManager::matchGesture()
 
 int GesturesManager::getContextIdentifier(const QString &name)
 {
-	if (!name.endsWith(QLatin1String("Context")))
-	{
-		return GesturesManager::staticMetaObject.enumerator(m_gesturesContextEnumerator).keyToValue((name + QLatin1String("Context")).toLatin1());
-	}
-
-	return GesturesManager::staticMetaObject.enumerator(m_gesturesContextEnumerator).keyToValue(name.toLatin1());
+	return EnumeratorMapper(staticMetaObject.enumerator(m_gesturesContextEnumerator), QLatin1String("Context")).mapToValue(name, true);
 }
 
 int GesturesManager::calculateLastMoveDistance(bool measureFinished)

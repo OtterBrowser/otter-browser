@@ -23,7 +23,6 @@
 #include "../ui/MainWindow.h"
 
 #include <QtCore/QFile>
-#include <QtCore/QMetaEnum>
 #include <QtCore/QSettings>
 #include <QtMultimedia/QSoundEffect>
 
@@ -163,16 +162,7 @@ QString NotificationsManager::getEventName(int identifier)
 		return m_identifiers[identifier];
 	}
 
-	QString name(NotificationsManager::staticMetaObject.enumerator(m_eventIdentifierEnumerator).valueToKey(identifier));
-
-	if (!name.isEmpty())
-	{
-		name.chop(5);
-
-		return name;
-	}
-
-	return {};
+	return EnumeratorMapper(staticMetaObject.enumerator(m_eventIdentifierEnumerator), QLatin1String("Event")).mapToName(identifier);
 }
 
 NotificationsManager::EventDefinition NotificationsManager::getEventDefinition(int identifier)

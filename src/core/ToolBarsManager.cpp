@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@
 #include <QtCore/QFile>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonObject>
-#include <QtCore/QMetaEnum>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -499,7 +498,7 @@ QString ToolBarsManager::getToolBarName(int identifier)
 
 	if (identifier < OtherToolBar)
 	{
-		return ToolBarsManager::staticMetaObject.enumerator(m_toolBarIdentifierEnumerator).valueToKey(identifier);
+		return EnumeratorMapper(staticMetaObject.enumerator(m_toolBarIdentifierEnumerator)).mapToName(identifier);
 	}
 
 	return m_identifiers.value(identifier);
@@ -711,7 +710,7 @@ int ToolBarsManager::getToolBarIdentifier(const QString &name)
 		return identifier;
 	}
 
-	return ToolBarsManager::staticMetaObject.enumerator(m_toolBarIdentifierEnumerator).keyToValue(name.toLatin1());
+	return EnumeratorMapper(staticMetaObject.enumerator(m_toolBarIdentifierEnumerator)).mapToValue(name);
 }
 
 bool ToolBarsManager::areToolBarsLocked()

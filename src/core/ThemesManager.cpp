@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -62,6 +62,7 @@ ColorScheme::ColorScheme(const QString &name, QObject *parent) : QObject(parent)
 
 	if (file.open(QIODevice::ReadOnly))
 	{
+		const EnumeratorMapper enumeratorMapper(staticMetaObject.enumerator(m_colorRoleEnumerator), QLatin1String("Role"));
 		const QJsonArray colorsArray(QJsonDocument::fromJson(file.readAll()).array());
 
 		for (int i = 0; i < colorsArray.count(); ++i)
@@ -72,7 +73,7 @@ ColorScheme::ColorScheme(const QString &name, QObject *parent) : QObject(parent)
 			colorRoleInformation.disabled = QColor(colorRoleObject.value(QLatin1String("disabled")).toString());
 			colorRoleInformation.inactive = QColor(colorRoleObject.value(QLatin1String("inactive")).toString());
 
-			m_colors[static_cast<ColorRole>(ColorScheme::staticMetaObject.enumerator(m_colorRoleEnumerator).keyToValue(colorRoleObject.value(QLatin1String("role")).toString().toLatin1()))] = colorRoleInformation;
+			m_colors[static_cast<ColorRole>(enumeratorMapper.mapToValue(colorRoleObject.value(QLatin1String("role")).toString()))] = colorRoleInformation;
 		}
 
 		file.close();
