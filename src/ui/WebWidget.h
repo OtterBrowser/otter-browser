@@ -142,6 +142,16 @@ public:
 		LoadingMessageInformation
 	};
 
+	enum ToolTipEntry
+	{
+		UnknownEntry = 0,
+		LastVisitedEntry,
+		LinkEntry,
+		TitleEntry
+	};
+
+	Q_ENUM(ToolTipEntry)
+
 	struct HitTestResult
 	{
 		enum HitTestFlag
@@ -269,14 +279,6 @@ public slots:
 	void setRequestedUrl(const QUrl &url, bool isTyped = true, bool onlyUpdate = false);
 
 protected:
-	enum ToolTipEntry
-	{
-		UnknownEntry = 0,
-		AddressEntry,
-		LastVisitedEntry,
-		TitleEntry
-	};
-
 	explicit WebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event) override;

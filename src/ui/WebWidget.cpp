@@ -295,7 +295,7 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 
 	const QString toolTipsMode(SettingsManager::getOption(SettingsManager::Browser_ToolTipsModeOption).toString());
 	QHash<ToolTipEntry, QString> entries;
-	const QVector<ToolTipEntry> layout({TitleEntry, AddressEntry});
+	const QVector<ToolTipEntry> layout({TitleEntry, LinkEntry});
 	QStringList toolTip;
 
 	if (!hitResult.title.isEmpty())
@@ -305,7 +305,7 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 
 	if (!link.isEmpty() && toolTipsMode == QLatin1String("extended"))
 	{
-		entries[AddressEntry] = link.toString();
+		entries[LinkEntry] = link.toString();
 	}
 
 	if (entries.count() == 1 && entries.contains(TitleEntry))
@@ -320,12 +320,12 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 			{
 				switch (layout.at(i))
 				{
-					case AddressEntry:
-						toolTip.append(tr("Address: %1").arg(entries[AddressEntry]));
-
-						break;
 					case LastVisitedEntry:
 						toolTip.append(tr("Last Visited: %1").arg(entries[LastVisitedEntry]));
+
+						break;
+					case LinkEntry:
+						toolTip.append(tr("Address: %1").arg(entries[LinkEntry]));
 
 						break;
 					case TitleEntry:
