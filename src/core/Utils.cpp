@@ -746,7 +746,7 @@ int EnumeratorMapper::mapToValue(const QString &name, bool checkSuffix) const
 	QString key(name);
 	key[0] = key.at(0).toUpper();
 
-	if (!checkSuffix || !key.endsWith(m_suffix))
+	if (!checkSuffix || (!m_suffix.isEmpty() && !key.endsWith(m_suffix)))
 	{
 		key += m_suffix;
 	}
