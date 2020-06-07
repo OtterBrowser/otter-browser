@@ -741,19 +741,6 @@ EnumeratorMapper::EnumeratorMapper(const QMetaEnum &enumeration, const QString &
 {
 }
 
-int EnumeratorMapper::mapToValue(const QString &name, bool checkSuffix) const
-{
-	QString key(name);
-	key[0] = key.at(0).toUpper();
-
-	if (!checkSuffix || (!m_suffix.isEmpty() && !key.endsWith(m_suffix)))
-	{
-		key += m_suffix;
-	}
-
-	return m_enumerator.keyToValue(key.toLatin1());
-}
-
 QString EnumeratorMapper::mapToName(int value) const
 {
 	QString name(m_enumerator.valueToKey(value));
@@ -767,6 +754,19 @@ QString EnumeratorMapper::mapToName(int value) const
 	name[0] = name.at(0).toLower();
 
 	return name;
+}
+
+int EnumeratorMapper::mapToValue(const QString &name, bool checkSuffix) const
+{
+	QString key(name);
+	key[0] = key.at(0).toUpper();
+
+	if (!checkSuffix || (!m_suffix.isEmpty() && !key.endsWith(m_suffix)))
+	{
+		key += m_suffix;
+	}
+
+	return m_enumerator.keyToValue(key.toLatin1());
 }
 
 }
