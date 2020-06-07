@@ -37,7 +37,6 @@
 #include "../../../ui/ToolBarWidget.h"
 #include "../../../ui/Window.h"
 
-#include <QtCore/QMetaEnum>
 #include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
@@ -754,13 +753,10 @@ void AddressWidget::removeEntry()
 	if (action)
 	{
 		QStringList layout(SettingsManager::getOption(SettingsManager::AddressField_LayoutOption).toStringList());
-		QString name(metaObject()->enumerator(m_entryIdentifierEnumerator).valueToKey(action->data().toInt()));
+		QString name(EnumeratorMapper(metaObject()->enumerator(m_entryIdentifierEnumerator), QLatin1String("Entry")).mapToName(action->data().toInt()));
 
 		if (!name.isEmpty())
 		{
-			name.chop(5);
-			name[0] = name.at(0).toLower();
-
 			layout.removeAll(name);
 
 			SettingsManager::setOption(SettingsManager::AddressField_LayoutOption, layout);
@@ -879,16 +875,14 @@ void AddressWidget::handleOptionChanged(int identifier, const QVariant &value)
 					m_entryIdentifierEnumerator = metaObject()->indexOfEnumerator("EntryIdentifier");
 				}
 
+				const EnumeratorMapper enumeratorMapper(metaObject()->enumerator(m_entryIdentifierEnumerator), QLatin1String("Entry"));
 				const QStringList rawLayout(value.toStringList());
 				QVector<EntryIdentifier> layout;
 				layout.reserve(rawLayout.count());
 
 				for (int i = 0; i < rawLayout.count(); ++i)
 				{
-					QString name(rawLayout.at(i) + QLatin1String("Entry"));
-					name[0] = name.at(0).toUpper();
-
-					const EntryIdentifier entryIdentifier(static_cast<EntryIdentifier>(metaObject()->enumerator(m_entryIdentifierEnumerator).keyToValue(name.toLatin1())));
+					const EntryIdentifier entryIdentifier(static_cast<EntryIdentifier>(enumeratorMapper.mapToValue(rawLayout.at(i).toLatin1())));
 
 					if (entryIdentifier > UnknownEntry && !layout.contains(entryIdentifier))
 					{
