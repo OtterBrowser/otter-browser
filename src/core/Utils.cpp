@@ -762,6 +762,11 @@ QString EnumeratorMapper::mapToName(int value, bool lowercaseFirst) const
 
 int EnumeratorMapper::mapToValue(const QString &name, bool checkSuffix) const
 {
+	if (name.isEmpty())
+	{
+		return -1;
+	}
+
 	QString key(name);
 	key[0] = key.at(0).toUpper();
 
