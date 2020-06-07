@@ -741,10 +741,15 @@ EnumeratorMapper::EnumeratorMapper(const QMetaEnum &enumeration, const QString &
 {
 }
 
-int EnumeratorMapper::mapToValue(const QString &name) const
+int EnumeratorMapper::mapToValue(const QString &name, bool checkSuffix) const
 {
-	QString key(name + m_suffix);
+	QString key(name);
 	key[0] = key.at(0).toUpper();
+
+	if (!checkSuffix || !key.endsWith(m_suffix))
+	{
+		key += m_suffix;
+	}
 
 	return m_enumerator.keyToValue(key.toLatin1());
 }
