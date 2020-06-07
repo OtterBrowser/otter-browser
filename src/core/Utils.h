@@ -21,6 +21,7 @@
 #ifndef OTTER_UTILS_H
 #define OTTER_UTILS_H
 
+#include <QtCore/QMetaEnum>
 #include <QtCore/QMimeData>
 #include <QtCore/QMimeType>
 #include <QtCore/QUrl>
@@ -86,6 +87,19 @@ struct SaveInformation final
 	QString path;
 	QString filter;
 	bool canSave = false;
+};
+
+class EnumeratorMapper
+{
+public:
+	explicit EnumeratorMapper(const QMetaEnum &enumeration, const QString &suffix);
+
+	int mapToValue(const QString &name) const;
+	QString mapToName(int value) const;
+
+private:
+	QMetaEnum m_enumerator;
+	QString m_suffix;
 };
 
 namespace Utils

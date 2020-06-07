@@ -736,4 +736,32 @@ bool isUrlEmpty(const QUrl &url)
 
 }
 
+EnumeratorMapper::EnumeratorMapper(const QMetaEnum &enumeration, const QString &suffix) : m_enumerator(enumeration),
+	m_suffix(suffix)
+{
+}
+
+int EnumeratorMapper::mapToValue(const QString &name) const
+{
+	QString key(name + m_suffix);
+	key[0] = key.at(0).toUpper();
+
+	return m_enumerator.keyToValue(key.toLatin1());
+}
+
+QString EnumeratorMapper::mapToName(int value) const
+{
+	QString name(m_enumerator.valueToKey(value));
+
+	if (name.isEmpty())
+	{
+		return {};
+	}
+
+	name.chop(m_suffix.count());
+	name[0] = name.at(0).toLower();
+
+	return name;
+}
+
 }
