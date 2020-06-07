@@ -22,7 +22,6 @@
 
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
-#include <QtCore/QMetaEnum>
 
 namespace Otter
 {
@@ -44,16 +43,13 @@ SyntaxHighlighter* SyntaxHighlighter::createHighlighter(HighlightingSyntax synta
 	}
 }
 
-QJsonObject SyntaxHighlighter::loadSyntax(SyntaxHighlighter::HighlightingSyntax syntax) const
+QJsonObject SyntaxHighlighter::loadSyntax(HighlightingSyntax syntax) const
 {
+	QMetaEnum enumerator(metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingSyntax").data())));
 	QFile file(SessionsManager::getReadableDataPath(QLatin1String("syntaxHighlighting.json")));
 	file.open(QIODevice::ReadOnly);
 
-	const QMetaEnum highlightingSyntaxEnum(metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingSyntax").data())));
-	QString syntaxName(highlightingSyntaxEnum.valueToKey(syntax));
-	syntaxName.chop(6);
-
-	return QJsonDocument::fromJson(file.readAll()).object().value(syntaxName).toObject();
+	return QJsonDocument::fromJson(file.readAll()).object().value(EnumeratorMapper(enumerator, QLatin1String("Syntax")).mapToName(syntax, false)).toObject();
 }
 
 QTextCharFormat SyntaxHighlighter::loadFormat(const QJsonObject &definitionObject) const
@@ -96,14 +92,12 @@ AdblockPlusSyntaxHighlighter::AdblockPlusSyntaxHighlighter(QTextDocument *docume
 	}
 
 	const QJsonObject definitionsObject(loadSyntax(AdblockPlusSyntax));
-	const QMetaEnum highlightingStateEnum(metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingState").data())));
+	const QMetaEnum enumerator(metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingState").data())));
+	const EnumeratorMapper enumeratorMapper(enumerator, QLatin1String("State"));
 
-	for (int j = 0; j < highlightingStateEnum.keyCount(); ++j)
+	for (int j = 0; j < enumerator.keyCount(); ++j)
 	{
-		QString state(highlightingStateEnum.valueToKey(j));
-		state.chop(5);
-
-		m_formats[static_cast<HighlightingState>(j)] = loadFormat(definitionsObject.value(state).toObject());
+		m_formats[static_cast<HighlightingState>(j)] = loadFormat(definitionsObject.value(enumeratorMapper.mapToName(j, false)).toObject());
 	}
 }
 
@@ -259,14 +253,12 @@ HtmlSyntaxHighlighter::HtmlSyntaxHighlighter(QTextDocument *document) : SyntaxHi
 	}
 
 	const QJsonObject definitionsObject(loadSyntax(HtmlSyntax));
-	const QMetaEnum highlightingStateEnum(metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingState").data())));
+	const QMetaEnum enumerator(metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingState").data())));
+	const EnumeratorMapper enumeratorMapper(enumerator, QLatin1String("State"));
 
-	for (int j = 0; j < highlightingStateEnum.keyCount(); ++j)
+	for (int j = 0; j < enumerator.keyCount(); ++j)
 	{
-		QString state(highlightingStateEnum.valueToKey(j));
-		state.chop(5);
-
-		m_formats[static_cast<HighlightingState>(j)] = loadFormat(definitionsObject.value(state).toObject());
+		m_formats[static_cast<HighlightingState>(j)] = loadFormat(definitionsObject.value(enumeratorMapper.mapToName(j, false)).toObject());
 	}
 }
 
