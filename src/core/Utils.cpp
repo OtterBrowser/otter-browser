@@ -741,7 +741,7 @@ EnumeratorMapper::EnumeratorMapper(const QMetaEnum &enumeration, const QString &
 {
 }
 
-QString EnumeratorMapper::mapToName(int value) const
+QString EnumeratorMapper::mapToName(int value, bool lowercaseFirst) const
 {
 	QString name(m_enumerator.valueToKey(value));
 
@@ -751,7 +751,11 @@ QString EnumeratorMapper::mapToName(int value) const
 	}
 
 	name.chop(m_suffix.count());
-	name[0] = name.at(0).toLower();
+
+	if (lowercaseFirst)
+	{
+		name[0] = name.at(0).toLower();
+	}
 
 	return name;
 }

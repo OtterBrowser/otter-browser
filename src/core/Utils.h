@@ -94,7 +94,7 @@ class EnumeratorMapper
 public:
 	explicit EnumeratorMapper(const QMetaEnum &enumeration, const QString &suffix = {});
 
-	QString mapToName(int value) const;
+	QString mapToName(int value, bool lowercaseFirst = true) const;
 	int mapToValue(const QString &name, bool checkSuffix = false) const;
 
 private:
