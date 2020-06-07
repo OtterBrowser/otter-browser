@@ -158,6 +158,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Interface_TabCrashingActionOption, EnumerationType, QLatin1String("ask"), {QLatin1String("ask"), QLatin1String("close"), QLatin1String("reload")});
 	registerOption(Interface_UseFancyDateTimeFormatOption, BooleanType, true);
 	registerOption(Interface_UseNativeNotificationsOption, BooleanType, true);
+	registerOption(Interface_ToolTipLayoutOption, ListType, QStringList({QLatin1String("title"), QLatin1String("link")}));
 	registerOption(Interface_UseSystemIconThemeOption, BooleanType, false);
 	registerOption(Interface_WidgetStyleOption, StringType, QString());
 	registerOption(Network_AcceptLanguageOption, StringType, QLatin1String("system,*;q=0.9"));
