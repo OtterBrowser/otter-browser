@@ -55,8 +55,8 @@ void SettingsManager::createInstance(const QString &path)
 	m_instance = new SettingsManager(QCoreApplication::instance());
 	m_globalPath = QDir::toNativeSeparators(path + QLatin1String("/otter.conf"));
 	m_overridePath = QDir::toNativeSeparators(path + QLatin1String("/override.ini"));
-	m_optionIdentifierEnumerator = SettingsManager::staticMetaObject.indexOfEnumerator(QLatin1String("OptionIdentifier").data());
-	m_identifierCounter = SettingsManager::staticMetaObject.enumerator(m_optionIdentifierEnumerator).keyCount();
+	m_optionIdentifierEnumerator = staticMetaObject.indexOfEnumerator(QLatin1String("OptionIdentifier").data());
+	m_identifierCounter = staticMetaObject.enumerator(m_optionIdentifierEnumerator).keyCount();
 
 	m_definitions.reserve(m_identifierCounter);
 
@@ -473,7 +473,7 @@ QString SettingsManager::getOverridePath()
 
 QString SettingsManager::getOptionName(int identifier)
 {
-	QString name(SettingsManager::staticMetaObject.enumerator(m_optionIdentifierEnumerator).valueToKey(identifier));
+	QString name(staticMetaObject.enumerator(m_optionIdentifierEnumerator).valueToKey(identifier));
 
 	if (!name.isEmpty())
 	{
@@ -608,7 +608,7 @@ int SettingsManager::getOptionIdentifier(const QString &name)
 		return m_customOptions[name];
 	}
 
-	return SettingsManager::staticMetaObject.enumerator(m_optionIdentifierEnumerator).keyToValue(mutableName.toLatin1());
+	return staticMetaObject.enumerator(m_optionIdentifierEnumerator).keyToValue(mutableName.toLatin1());
 }
 
 bool SettingsManager::hasOverride(const QString &host, int identifier)
