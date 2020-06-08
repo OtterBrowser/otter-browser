@@ -74,7 +74,6 @@ public:
 		Browser_ShowSelectionContextMenuOnDoubleClickOption,
 		Browser_SpellCheckDictionaryOption,
 		Browser_StartupBehaviorOption,
-		Browser_ToolTipsModeOption,
 		Browser_TransferStartingActionOption,
 		Browser_ValidatorsOrderOption,
 		Cache_DiskCacheLimitOption,

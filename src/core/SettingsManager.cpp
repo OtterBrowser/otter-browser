@@ -98,7 +98,6 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Browser_ShowSelectionContextMenuOnDoubleClickOption, BooleanType, false);
 	registerOption(Browser_SpellCheckDictionaryOption, StringType, QString());
 	registerOption(Browser_StartupBehaviorOption, EnumerationType, QLatin1String("continuePrevious"), {QLatin1String("continuePrevious"), QLatin1String("showDialog"), QLatin1String("startHomePage"), QLatin1String("startStartPage"), QLatin1String("startEmpty")});
-	registerOption(Browser_ToolTipsModeOption, EnumerationType, QLatin1String("extended"), {QLatin1String("disabled"), QLatin1String("standard"), QLatin1String("extended")});
 	registerOption(Browser_TransferStartingActionOption, EnumerationType, QLatin1String("doNothing"), {QLatin1String("openTab"), QLatin1String("openBackgroundTab"), QLatin1String("openPanel"), QLatin1String("doNothing")});
 	registerOption(Browser_ValidatorsOrderOption, ListType, QStringList({QLatin1String("w3c-markup"), QLatin1String("w3c-css")}));
 	registerOption(Cache_DiskCacheLimitOption, IntegerType, 51200);
@@ -156,9 +155,9 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Interface_ShowScrollBarsOption, BooleanType, true);
 	registerOption(Interface_StyleSheetOption, PathType, QString());
 	registerOption(Interface_TabCrashingActionOption, EnumerationType, QLatin1String("ask"), {QLatin1String("ask"), QLatin1String("close"), QLatin1String("reload")});
+	registerOption(Interface_ToolTipLayoutOption, ListType, QStringList({QLatin1String("title"), QLatin1String("link")}));
 	registerOption(Interface_UseFancyDateTimeFormatOption, BooleanType, true);
 	registerOption(Interface_UseNativeNotificationsOption, BooleanType, true);
-	registerOption(Interface_ToolTipLayoutOption, ListType, QStringList({QLatin1String("title"), QLatin1String("link")}));
 	registerOption(Interface_UseSystemIconThemeOption, BooleanType, false);
 	registerOption(Interface_WidgetStyleOption, StringType, QString());
 	registerOption(Network_AcceptLanguageOption, StringType, QLatin1String("system,*;q=0.9"));
