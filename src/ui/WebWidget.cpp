@@ -56,7 +56,8 @@ WebWidget::WebWidget(const QVariantMap &parameters, WebBackend *backend, Content
 	m_windowIdentifier(0),
 	m_loadingTime(0),
 	m_loadingTimer(0),
-	m_reloadTimer(0)
+	m_reloadTimer(0),
+	m_toolTipEntryEnumerator(metaObject()->indexOfEnumerator(QLatin1String("ToolTipEntry").data()))
 {
 	Q_UNUSED(parameters)
 
@@ -293,20 +294,35 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 		return;
 	}
 
-	const QString toolTipsMode(SettingsManager::getOption(SettingsManager::Browser_ToolTipsModeOption).toString());
+	EnumeratorMapper enumeratorMapper(metaObject()->enumerator(m_toolTipEntryEnumerator), QLatin1String("Entry"));
+	const QStringList rawLayout(SettingsManager::getOption(SettingsManager::Interface_ToolTipLayoutOption).toStringList());
 	QHash<ToolTipEntry, QString> entries;
-	const QVector<ToolTipEntry> layout({TitleEntry, LinkEntry});
-	QStringList toolTip;
+	QVector<ToolTipEntry> layout;
+	layout.reserve(rawLayout.count());
+
+	for (int i = 0; i < rawLayout.count(); ++i)
+	{
+		const ToolTipEntry entry(static_cast<ToolTipEntry>(enumeratorMapper.mapToValue(rawLayout.at(i))));
+
+		if (entry > UnknownEntry)
+		{
+			layout.append(entry);
+		}
+	}
+
+	layout.squeeze();
 
 	if (!hitResult.title.isEmpty())
 	{
 		entries[TitleEntry] = hitResult.title.toHtmlEscaped();
 	}
 
-	if (!link.isEmpty() && toolTipsMode == QLatin1String("extended"))
+	if (!link.isEmpty() && layout.contains(LinkEntry))
 	{
 		entries[LinkEntry] = link.toString();
 	}
+
+	QStringList toolTip;
 
 	if (entries.count() == 1 && entries.contains(TitleEntry))
 	{

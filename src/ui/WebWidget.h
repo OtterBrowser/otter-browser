@@ -333,6 +333,7 @@ private:
 	int m_loadingTime;
 	int m_loadingTimer;
 	int m_reloadTimer;
+	int m_toolTipEntryEnumerator;
 
 	static QString m_fastForwardScript;
 
