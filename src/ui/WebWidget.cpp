@@ -312,14 +312,27 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 
 	layout.squeeze();
 
+	if (!link.isEmpty())
+	{
+		if (layout.contains(LastVisitedEntry))
+		{
+			const QDateTime lastVisitTime(HistoryManager::getLastVisitTime(link));
+
+			if (lastVisitTime.isValid())
+			{
+				entries[LastVisitedEntry] = Utils::formatDateTime(lastVisitTime);
+			}
+		}
+
+		if (layout.contains(LinkEntry))
+		{
+			entries[LinkEntry] = link.toString();
+		}
+	}
+
 	if (!hitResult.title.isEmpty())
 	{
 		entries[TitleEntry] = hitResult.title.toHtmlEscaped();
-	}
-
-	if (!link.isEmpty() && layout.contains(LinkEntry))
-	{
-		entries[LinkEntry] = link.toString();
 	}
 
 	QStringList toolTip;
