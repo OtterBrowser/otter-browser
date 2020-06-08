@@ -42,6 +42,7 @@ public:
 	static HistoryManager* getInstance();
 	static HistoryModel* getBrowsingHistoryModel();
 	static HistoryModel* getTypedHistoryModel();
+	static QDateTime getLastVisitTime(const QUrl &url);
 	static QIcon getIcon(const QUrl &url);
 	static HistoryModel::Entry* getEntry(quint64 identifier);
 	static QVector<HistoryModel::HistoryEntryMatch> findEntries(const QString &prefix, bool isTypedInOnly = false);

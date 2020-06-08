@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -79,6 +79,7 @@ public:
 	void removeEntry(quint64 identifier);
 	Entry* addEntry(const QUrl &url, const QString &title, const QIcon &icon, const QDateTime &date = QDateTime::currentDateTimeUtc(), quint64 identifier = 0);
 	Entry* getEntry(quint64 identifier) const;
+	QDateTime getLastVisitTime(const QUrl &url) const;
 	QVector<HistoryEntryMatch> findEntries(const QString &prefix, bool markAsTypedIn = false) const;
 	HistoryType getType() const;
 	bool hasEntry(const QUrl &url) const;

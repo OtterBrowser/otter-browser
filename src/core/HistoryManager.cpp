@@ -276,6 +276,16 @@ HistoryModel* HistoryManager::getTypedHistoryModel()
 	return m_typedHistoryModel;
 }
 
+QDateTime HistoryManager::getLastVisitTime(const QUrl &url)
+{
+	if (!m_browsingHistoryModel)
+	{
+		getBrowsingHistoryModel();
+	}
+
+	return m_browsingHistoryModel->getLastVisitTime(url);
+}
+
 QIcon HistoryManager::getIcon(const QUrl &url)
 {
 	if (Utils::isUrlEmpty(url))
