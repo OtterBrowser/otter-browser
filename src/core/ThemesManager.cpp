@@ -48,7 +48,7 @@ ColorScheme::ColorScheme(const QString &name, QObject *parent) : QObject(parent)
 {
 	if (m_colorRoleEnumerator < 0)
 	{
-		m_colorRoleEnumerator = ColorScheme::staticMetaObject.indexOfEnumerator(QLatin1String("ColorRole").data());
+		m_colorRoleEnumerator = staticMetaObject.indexOfEnumerator(QLatin1String("ColorRole").data());
 	}
 
 	const QString path(SessionsManager::getWritableDataPath(QLatin1String("colors/") + name + QLatin1String(".json")));

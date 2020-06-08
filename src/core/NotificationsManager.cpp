@@ -108,7 +108,7 @@ void NotificationsManager::createInstance()
 	if (!m_instance)
 	{
 		m_instance = new NotificationsManager(QCoreApplication::instance());
-		m_eventIdentifierEnumerator = NotificationsManager::staticMetaObject.indexOfEnumerator(QLatin1String("EventIdentifier").data());
+		m_eventIdentifierEnumerator = staticMetaObject.indexOfEnumerator(QLatin1String("EventIdentifier").data());
 	}
 }
 

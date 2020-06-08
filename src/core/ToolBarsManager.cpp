@@ -59,7 +59,7 @@ void ToolBarsManager::createInstance()
 	if (!m_instance)
 	{
 		m_instance = new ToolBarsManager(QCoreApplication::instance());
-		m_toolBarIdentifierEnumerator = ToolBarsManager::staticMetaObject.indexOfEnumerator(QLatin1String("ToolBarIdentifier").data());
+		m_toolBarIdentifierEnumerator = staticMetaObject.indexOfEnumerator(QLatin1String("ToolBarIdentifier").data());
 		m_areToolBarsLocked = SettingsManager::getOption(SettingsManager::Interface_LockToolBarsOption).toBool();
 	}
 }

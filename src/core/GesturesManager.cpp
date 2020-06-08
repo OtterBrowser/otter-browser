@@ -607,7 +607,7 @@ void GesturesManager::createInstance()
 		m_nativeGestures[GesturesManager::TabHandleContext] = {{{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseMove, MouseGestures::UnknownMouseAction}}};
 
 		m_instance = new GesturesManager(QCoreApplication::instance());
-		m_gesturesContextEnumerator = GesturesManager::staticMetaObject.indexOfEnumerator(QLatin1String("GesturesContext").data());
+		m_gesturesContextEnumerator = staticMetaObject.indexOfEnumerator(QLatin1String("GesturesContext").data());
 
 		loadProfiles();
 	}

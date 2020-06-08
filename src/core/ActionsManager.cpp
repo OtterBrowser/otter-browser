@@ -471,7 +471,7 @@ void ActionsManager::createInstance()
 	if (!m_instance)
 	{
 		m_instance = new ActionsManager(QCoreApplication::instance());
-		m_actionIdentifierEnumerator = ActionsManager::staticMetaObject.indexOfEnumerator(QLatin1String("ActionIdentifier").data());
+		m_actionIdentifierEnumerator = staticMetaObject.indexOfEnumerator(QLatin1String("ActionIdentifier").data());
 
 		loadProfiles();
 	}
