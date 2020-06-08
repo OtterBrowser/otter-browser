@@ -198,10 +198,10 @@ HistoryModel::Entry* HistoryModel::addEntry(const QUrl &url, const QString &titl
 
 	if (m_type == TypedHistory)
 	{
-		const QUrl normalizedUrl(Utils::normalizeUrl(url));
-
-		if (hasEntry(normalizedUrl))
+		if (hasEntry(url))
 		{
+			const QUrl normalizedUrl(Utils::normalizeUrl(url));
+
 			for (int i = 0; i < m_urls[normalizedUrl].count(); ++i)
 			{
 				removeEntry(m_urls[normalizedUrl].at(i)->getIdentifier());
@@ -402,7 +402,7 @@ bool HistoryModel::setData(const QModelIndex &index, const QVariant &value, int 
 
 bool HistoryModel::hasEntry(const QUrl &url) const
 {
-	return m_urls.contains(url);
+	return m_urls.contains(Utils::normalizeUrl(url));
 }
 
 }
