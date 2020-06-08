@@ -1571,15 +1571,10 @@ int Menu::getMenuRoleIdentifier(const QString &name)
 {
 	if (m_menuRoleIdentifierEnumerator < 0)
 	{
-		m_menuRoleIdentifierEnumerator = Menu::staticMetaObject.indexOfEnumerator(QLatin1String("MenuRole").data());
+		m_menuRoleIdentifierEnumerator = staticMetaObject.indexOfEnumerator(QLatin1String("MenuRole").data());
 	}
 
-	if (!name.endsWith(QLatin1String("Menu")))
-	{
-		return Menu::staticMetaObject.enumerator(m_menuRoleIdentifierEnumerator).keyToValue((name + QLatin1String("Menu")).toLatin1());
-	}
-
-	return Menu::staticMetaObject.enumerator(m_menuRoleIdentifierEnumerator).keyToValue(name.toLatin1());
+	return EnumeratorMapper(staticMetaObject.enumerator(m_menuRoleIdentifierEnumerator), QLatin1String("Menu")).mapToValue(name, true);
 }
 
 bool Menu::canInclude(const QJsonObject &definition, const QStringList &sections)
