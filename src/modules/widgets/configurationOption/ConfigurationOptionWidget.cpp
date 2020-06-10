@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -70,12 +70,8 @@ ConfigurationOptionWidget::ConfigurationOptionWidget(Window *window, const ToolB
 	const QVariant value((m_scope == GlobalScope || !m_window) ? SettingsManager::getOption(m_identifier) : m_window->getOption(m_identifier));
 
 	m_optionWidget = new OptionWidget(value, optionDefinition.type, this);
+	m_optionWidget->setChoices(optionDefinition.choices);
 	m_optionWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
-
-	if (optionDefinition.type == SettingsManager::EnumerationType)
-	{
-		m_optionWidget->setChoices(optionDefinition.choices);
-	}
 
 	layout->addWidget(m_optionWidget);
 

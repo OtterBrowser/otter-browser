@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -132,12 +132,8 @@ QWidget* ConfigurationOptionDelegate::createEditor(QWidget *parent, const QStyle
 	const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(index.data(ConfigurationContentsWidget::IdentifierRole).toInt()));
 	OptionWidget *widget(new OptionWidget(index.data(Qt::EditRole), definition.type, parent));
 	widget->setDefaultValue(definition.defaultValue);
+	widget->setChoices(definition.choices);
 	widget->setFocus();
-
-	if (definition.type == SettingsManager::EnumerationType)
-	{
-		widget->setChoices(definition.choices);
-	}
 
 	connect(widget, &OptionWidget::commitData, this, &ConfigurationOptionDelegate::commitData);
 
