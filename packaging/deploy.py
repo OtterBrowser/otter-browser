@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import glob, os, shutil, stat, sys, urllib.request
+import argparse, glob, os, platform, shutil, stat, sys, urllib.request
 from os import path
 
 def make_path(root, directories):
@@ -120,3 +120,17 @@ def deploy_windows(qt_path, source_path, build_path, target_path):
 	os.rename(target_installer_path, target_release_path)
 	os.system('powershell Compress-Archive "{}" "{}"'.format(target_release_path, path.join(target_path, '{}.zip'.format(release_name))))
 	shutil.rmtree(target_release_path)
+
+if __name__ == '__main__':
+	parser = argparse.ArgumentParser(description='Otter Browser deployment tool.')
+	parser.add_argument('--build-path', help='Path to the build directory', nargs=1, default=path.abspath(path.join(path.dirname(sys.argv[0]), '../build')))
+	parser.add_argument('--source-path', help='Path to the source directory', nargs=1, default=path.abspath(path.join(path.dirname(sys.argv[0]), '..')))
+	parser.add_argument('--target-path', help='Path to the output directory', nargs=1, default=path.abspath(path.join(path.dirname(sys.argv[0]), '../output')))
+	parser.add_argument('--qt-path', help='Path to the Qt directory', nargs=1, required=True)
+
+	arguments = parser.parse_args()
+
+	if platform.system() == 'Linux':
+		deploy_linux(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path)
+	elif platform.system() == 'Windows':
+		deploy_windows(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path)
