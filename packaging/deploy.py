@@ -13,15 +13,14 @@ def make_path(root, directories):
 		if not path.exists(root):
 			os.mkdir(root)
 
-def get_executable(url, target_path):
-	executable_name = url.split('/')[-1].split('%2F')[-1]
-	exectable_path = path.join(target_path, executable_name)
+def get_executable(name, url, tools_path):
+	exectable_path = path.join(tools_path, name)
 
 	if path.isfile(exectable_path):
 		return exectable_path
 
 	for directory in os.getenv('PATH', '').split(os.pathsep):
-		possible_exectable_path = path.join(directory, executable_name)
+		possible_exectable_path = path.join(directory, name)
 
 		if path.isfile(possible_exectable_path) and os.access(possible_exectable_path, os.X_OK):
 			return possible_exectable_path
@@ -45,10 +44,10 @@ def deploy_linux(qt_path, source_path, build_path, target_path):
 	if not path.isdir(tools_path):
 		os.mkdir(tools_path)
 
-	appdir_deploy_command = get_executable('https://bintray.com/qtproject/linuxdeploy-mirror/download_file?file_path=2020-06-03%2Flinuxdeploy-x86_64.AppImage', tools_path) + ' --plugin qt'
-	appimage_tool_command = get_executable('https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage', tools_path)
+	appdir_deploy_command = get_executable('linuxdeploy-x86_64.AppImage', 'https://bintray.com/qtproject/linuxdeploy-mirror/download_file?file_path=2020-06-03%2Flinuxdeploy-x86_64.AppImage', tools_path) + ' --plugin qt'
+	appimage_tool_command = get_executable('appimagetool-x86_64.AppImage', 'https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage', tools_path)
 
-	get_executable('https://bintray.com/qtproject/linuxdeploy-mirror/download_file?file_path=2020-06-03%2Flinuxdeploy-plugin-qt-x86_64.AppImage', tools_path)
+	get_executable('linuxdeploy-plugin-qt-x86_64.AppImage', 'https://bintray.com/qtproject/linuxdeploy-mirror/download_file?file_path=2020-06-03%2Flinuxdeploy-plugin-qt-x86_64.AppImage', tools_path)
 
 	appimage_path = path.join(target_path, 'otter-browser')
 
