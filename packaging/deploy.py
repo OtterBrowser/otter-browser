@@ -86,6 +86,10 @@ def deploy_linux(qt_path, source_path, build_path, target_path):
 
 def deploy_windows(qt_path, source_path, build_path, target_path):
 	inno_setup_command = r'C:\"Program Files (x86)"\"Inno Setup 6"\ISCC.exe'
+
+	if not path.isfile(inno_setup_command):
+		sys.exit('error: failed to locate Inno Setup 6')
+
 	target_installer_path = path.join(target_path, 'input')
 
 	os.mkdir(target_installer_path)
