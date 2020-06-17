@@ -13,11 +13,14 @@ def make_path(root, directories):
 		if not path.exists(root):
 			os.mkdir(root)
 
-def get_executable(name, url, tools_path):
-	exectable_path = path.join(tools_path, name)
+def get_executable(name, url=None, tools_path=None):
+	exectable_path = None
 
-	if path.isfile(exectable_path):
-		return exectable_path
+	if tools_path != None:
+		exectable_path = path.join(tools_path, name)
+
+		if path.isfile(exectable_path):
+			return exectable_path
 
 	for directory in os.getenv('PATH', '').split(os.pathsep):
 		possible_exectable_path = path.join(directory, name)
@@ -25,8 +28,12 @@ def get_executable(name, url, tools_path):
 		if path.isfile(possible_exectable_path) and os.access(possible_exectable_path, os.X_OK):
 			return possible_exectable_path
 
-	urllib.request.urlretrieve(url, exectable_path)
-	os.chmod(exectable_path, os.stat(exectable_path).st_mode | stat.S_IEXEC)
+	if tools_path != None and url != None:
+		urllib.request.urlretrieve(url, exectable_path)
+		os.chmod(exectable_path, os.stat(exectable_path).st_mode | stat.S_IEXEC)
+
+	if exectable_path == None:
+		sys.exit('error: failed to locate {}'.format(name))
 
 	return exectable_path
 
@@ -88,7 +95,7 @@ def deploy_windows(qt_path, source_path, build_path, target_path):
 	inno_setup_command = r'C:\"Program Files (x86)"\"Inno Setup 6"\ISCC.exe'
 
 	if not path.isfile(inno_setup_command):
-		sys.exit('error: failed to locate Inno Setup 6')
+		inno_setup_command = get_executable('ISCC.exe')
 
 	target_installer_path = path.join(target_path, 'input')
 
