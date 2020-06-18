@@ -3,6 +3,21 @@
 import argparse, glob, os, platform, shutil, stat, sys, urllib.request
 from os import path
 
+def escape_windows_executable_path(executable_path):
+	if ' ' not in executable_path:
+		return executable_path
+
+	segments = executable_path.split('\\')
+	escaped_segments = []
+
+	for segment in segments:
+		if ' ' in segment:
+			segment = '"{}"'.format(segment)
+
+		escaped_segments.append(segment)
+
+	return '\\'.join(escaped_segments)
+
 def make_path(root, directories):
 	if not path.exists(root):
 		os.mkdir(root)
@@ -92,7 +107,7 @@ def deploy_linux(qt_path, source_path, build_path, target_path):
 	shutil.rmtree(appimage_path)
 
 def deploy_windows(qt_path, source_path, build_path, target_path):
-	inno_setup_command = r'C:\"Program Files (x86)"\"Inno Setup 6"\ISCC.exe'
+	inno_setup_command = r'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
 
 	if not path.isfile(inno_setup_command):
 		inno_setup_command = get_executable('ISCC.exe')
@@ -103,7 +118,7 @@ def deploy_windows(qt_path, source_path, build_path, target_path):
 	shutil.copy(path.join(build_path, 'otter-browser.exe'), target_installer_path)
 	shutil.copy(path.join(source_path, 'COPYING'), target_installer_path)
 	deploy_locale(source_path, path.join(target_path, 'input'))
-	os.system('{} {}'.format(path.join(qt_path, r'bin\windeployqt.exe'), path.join(target_path, r'input\otter-browser.exe')))
+	os.system('{} {}'.format(escape_windows_executable_path(path.join(qt_path, r'bin\windeployqt.exe')), path.join(target_path, r'input\otter-browser.exe')))
 
 	extra_dlls = ['libxml2.dll', 'libxslt.dll']
 
@@ -120,7 +135,7 @@ def deploy_windows(qt_path, source_path, build_path, target_path):
 	if '_64' in qt_path[-5:]:
 		inno_setup_arguments += ' /DOtterWin64=1'
 
-	os.system('{} {} "{}"'.format(inno_setup_command, inno_setup_arguments, path.join(source_path, r'packaging\otter-browser.iss')))
+	os.system('{} {} "{}"'.format(escape_windows_executable_path(inno_setup_command), inno_setup_arguments, path.join(source_path, r'packaging\otter-browser.iss')))
 
 	with open(path.join(target_installer_path, 'arguments.txt'), 'w') as file:
 		file.write('--portable')
