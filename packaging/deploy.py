@@ -44,6 +44,8 @@ def get_executable(name, url=None, tools_path=None):
 			return possible_exectable_path
 
 	if tools_path != None and url != None:
+		print('info: downloading {} from {}').format(name, url)
+
 		urllib.request.urlretrieve(url, exectable_path)
 		os.chmod(exectable_path, os.stat(exectable_path).st_mode | stat.S_IEXEC)
 
