@@ -122,10 +122,12 @@ def deploy_windows(qt_path, source_path, build_path, target_path):
 	deploy_locale(source_path, path.join(target_path, 'input'))
 	os.system('{} {}'.format(escape_windows_executable_path(path.join(qt_path, r'bin\windeployqt.exe')), path.join(target_path, r'input\otter-browser.exe')))
 
-	extra_dlls = ['libxml2.dll', 'libxslt.dll']
+	dlls_path = path.join(qt_path, 'bin')
+	extra_dlls = ['libxml2*.dll', 'libxslt*.dll']
 
-	for file in extra_dlls:
-		shutil.copy(path.join(qt_path, 'bin', file), target_installer_path)
+	for pattern in extra_dlls:
+		for file in glob.glob(path.join(dlls_path, pattern)):
+			shutil.copy(file, target_installer_path)
 
 	redundant_plugins = ['playlistformats', 'position', 'qmltooling', 'scenegraph', 'sensorgestures', 'sensors']
 
