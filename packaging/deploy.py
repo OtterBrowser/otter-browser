@@ -132,7 +132,7 @@ def deploy_windows(qt_path, source_path, build_path, target_path):
 	redundant_plugins = ['playlistformats', 'position', 'qmltooling', 'scenegraph', 'sensorgestures', 'sensors']
 
 	for directory in redundant_plugins:
-		shutil.rmtree(path.join(target_installer_path, directory))
+		shutil.rmtree(path.join(target_installer_path, directory), ignore_errors=True)
 
 	inno_setup_arguments = '/DOtterWorkingDir="{}"'.format(target_path)
 
