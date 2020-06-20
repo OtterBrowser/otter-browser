@@ -62,11 +62,14 @@ def deploy_locale(source_path, target_path):
 	for file in glob.glob(path.join(source_path, 'resources', 'translations', '*.qm')):
 		shutil.copy(file, target_locale_path)
 
-def deploy_linux(qt_path, source_path, build_path, target_path):
-	tools_path = path.join(path.abspath(path.dirname(sys.argv[0])), 'appimage-tools')
+def deploy_linux(qt_path, source_path, build_path, target_path, disable_tools_download):
+	tools_path = None
 
-	if not path.isdir(tools_path):
-		os.mkdir(tools_path)
+	if not disable_tools_download:
+		tools_path = path.join(path.abspath(path.dirname(sys.argv[0])), 'appimage-tools')
+
+		if not path.isdir(tools_path):
+			os.mkdir(tools_path)
 
 	appdir_deploy_command = get_executable('linuxdeploy-x86_64.AppImage', 'https://bintray.com/qtproject/linuxdeploy-mirror/download_file?file_path=2020-06-03%2Flinuxdeploy-x86_64.AppImage', tools_path) + ' --plugin qt'
 	appimage_tool_command = get_executable('appimagetool-x86_64.AppImage', 'https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage', tools_path)
@@ -163,6 +166,7 @@ if __name__ == '__main__':
 	parser.add_argument('--source-path', help='Path to the source directory', default=path.abspath(path.join(path.dirname(sys.argv[0]), '..')))
 	parser.add_argument('--target-path', help='Path to the output directory', default=path.abspath(path.join(path.dirname(sys.argv[0]), '../output')))
 	parser.add_argument('--qt-path', help='Path to the Qt directory', default=os.getenv('QTDIR', ''))
+	parser.add_argument('--disable-tools-download', help='Disable download of missing deployment tools', action='store_true')
 
 	arguments = parser.parse_args()
 
@@ -170,6 +174,6 @@ if __name__ == '__main__':
 		sys.exit('error: the following arguments are required: --qt-path')
 
 	if platform.system() == 'Linux':
-		deploy_linux(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path)
+		deploy_linux(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path, arguments.disable_tools_download)
 	elif platform.system() == 'Windows':
 		deploy_windows(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path)
