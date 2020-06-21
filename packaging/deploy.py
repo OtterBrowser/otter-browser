@@ -1,7 +1,14 @@
 #!/usr/bin/env python3
 
-import argparse, glob, os, platform, shutil, stat, sys, urllib.request
+import argparse, glob, os, platform, shutil, subprocess, stat, sys, urllib.request
 from os import path
+
+def run_command(command):
+	if os.sep in command[0] and not path.isfile(command[0]):
+		sys.exit('error: failed to locate {}'.format(path.basename(command[0])))
+
+	if subprocess.call(command) != 0:
+		sys.exit('error: failed to execute "{}"'.format(' '.join(command)))
 
 def escape_windows_executable_path(executable_path):
 	if ' ' not in executable_path:
@@ -108,7 +115,7 @@ def deploy_linux(qt_path, source_path, build_path, target_path, disable_tools_do
 		if not path.exists(path.join(qt_path, 'lib', path.basename(file))):
 			os.unlink(file)
 
-	os.system('{} {} {}'.format(appimage_tool_command, appimage_path, path.join(target_path, 'otter-browser-x86_64.AppImage')))
+	run_command([appimage_tool_command, appimage_path, path.join(target_path, 'otter-browser-x86_64.AppImage')])
 	shutil.rmtree(appimage_path)
 
 def deploy_windows(qt_path, source_path, build_path, target_path):
