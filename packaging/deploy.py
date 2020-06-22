@@ -78,7 +78,7 @@ def deploy_linux(qt_path, source_path, build_path, target_path, disable_tools_do
 		if not path.isdir(tools_path):
 			os.mkdir(tools_path)
 
-	appdir_deploy_command = get_executable('linuxdeploy-x86_64.AppImage', 'https://bintray.com/qtproject/linuxdeploy-mirror/download_file?file_path=2020-06-03%2Flinuxdeploy-x86_64.AppImage', tools_path) + ' --plugin qt'
+	appdir_deploy_command = get_executable('linuxdeploy-x86_64.AppImage', 'https://bintray.com/qtproject/linuxdeploy-mirror/download_file?file_path=2020-06-03%2Flinuxdeploy-x86_64.AppImage', tools_path)
 	appimage_tool_command = get_executable('appimagetool-x86_64.AppImage', 'https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage', tools_path)
 
 	get_executable('linuxdeploy-plugin-qt-x86_64.AppImage', 'https://bintray.com/qtproject/linuxdeploy-mirror/download_file?file_path=2020-06-03%2Flinuxdeploy-plugin-qt-x86_64.AppImage', tools_path)
@@ -103,7 +103,7 @@ def deploy_linux(qt_path, source_path, build_path, target_path, disable_tools_do
 	deploy_locale(source_path, path.join(appimage_path, 'usr/share/otter-browser'))
 	os.putenv('LD_LIBRARY_PATH', '{}:{}'.format(path.join(qt_path, 'lib'), os.getenv('LD_LIBRARY_PATH')))
 	os.putenv('QMAKE', path.join(qt_path, 'bin/qmake'))
-	os.system('{} --executable={} --appdir={}'.format(appdir_deploy_command, path.join(build_path, 'otter-browser'), appimage_path))
+	run_command([appdir_deploy_command, '--plugin=qt', '--executable={}'.format(path.join(build_path, 'otter-browser')), '--appdir={}'.format(appimage_path)])
 	shutil.rmtree(path.join(appimage_path, 'usr/share/doc/'), ignore_errors=True)
 
 	libs_path = path.join(appimage_path, 'usr/lib')
