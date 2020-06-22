@@ -101,7 +101,9 @@ def deploy_linux(qt_path, source_path, build_path, target_path, disable_tools_do
 		shutil.copy(path.join(source_path, 'resources/icons', 'otter-browser-{}.png'.format(size) if is_raster else 'otter-browser.svg'), path.join(icons_path, icon_directory, 'apps', 'otter-browser.png' if is_raster else 'otter-browser.svg'))
 
 	deploy_locale(source_path, path.join(appimage_path, 'usr/share/otter-browser'))
-	os.system('LD_LIBRARY_PATH={}:$LD_LIBRARY_PATH QMAKE={} {} --executable={} --appdir={}'.format(path.join(qt_path, 'lib'), path.join(qt_path, 'bin/qmake'), appdir_deploy_command, path.join(build_path, 'otter-browser'), appimage_path))
+	os.putenv('LD_LIBRARY_PATH', '{}:{}'.format(path.join(qt_path, 'lib'), os.getenv('LD_LIBRARY_PATH')))
+	os.putenv('QMAKE', path.join(qt_path, 'bin/qmake'))
+	os.system('{} --executable={} --appdir={}'.format(appdir_deploy_command, path.join(build_path, 'otter-browser'), appimage_path))
 	shutil.rmtree(path.join(appimage_path, 'usr/share/doc/'), ignore_errors=True)
 
 	libs_path = path.join(appimage_path, 'usr/lib')
