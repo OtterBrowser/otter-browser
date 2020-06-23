@@ -4,7 +4,7 @@ import argparse, glob, os, platform, shutil, subprocess, stat, sys, urllib.reque
 from os import path
 
 def run_command(command):
-	if os.sep in command[0] and not path.isfile(command[0]):
+	if platform.system() != 'Windows' and os.sep in command[0] and not path.isfile(command[0]):
 		sys.exit('error: failed to locate {}'.format(path.basename(command[0])))
 
 	if subprocess.call(command) != 0:
@@ -132,7 +132,7 @@ def deploy_windows(qt_path, source_path, build_path, target_path):
 	shutil.copy(path.join(build_path, 'otter-browser.exe'), target_installer_path)
 	shutil.copy(path.join(source_path, 'COPYING'), target_installer_path)
 	deploy_locale(source_path, path.join(target_path, 'input'))
-	os.system('{} {}'.format(escape_windows_executable_path(path.join(qt_path, r'bin\windeployqt.exe')), path.join(target_path, r'input\otter-browser.exe')))
+	run_command([escape_windows_executable_path(path.join(qt_path, r'bin\windeployqt.exe')), path.join(target_path, r'input\otter-browser.exe')])
 
 	dlls_path = path.join(qt_path, 'bin')
 	extra_dlls = ['libxml2*.dll', 'libxslt*.dll']
@@ -166,7 +166,7 @@ def deploy_windows(qt_path, source_path, build_path, target_path):
 	target_release_path = path.join(target_path, release_name)
 
 	os.rename(target_installer_path, target_release_path)
-	os.system('powershell Compress-Archive "{}" "{}"'.format(target_release_path, path.join(target_path, '{}.zip'.format(release_name))))
+	run_command(['powershell', 'Compress-Archive', '"{}"'.format(target_release_path), '"{}.zip"'.format(path.join(target_path, release_name))])
 	shutil.rmtree(target_release_path)
 
 if __name__ == '__main__':
