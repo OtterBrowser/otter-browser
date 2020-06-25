@@ -498,7 +498,7 @@ QString ToolBarsManager::getToolBarName(int identifier)
 
 	if (identifier < OtherToolBar)
 	{
-		return EnumeratorMapper(staticMetaObject.enumerator(m_toolBarIdentifierEnumerator)).mapToName(identifier);
+		return EnumeratorMapper(staticMetaObject.enumerator(m_toolBarIdentifierEnumerator)).mapToName(identifier, false);
 	}
 
 	return m_identifiers.value(identifier);
