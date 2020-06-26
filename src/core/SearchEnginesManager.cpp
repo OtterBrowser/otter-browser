@@ -413,12 +413,12 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::getSearchEngi
 			}
 		}
 
-		return SearchEngineDefinition();
+		return {};
 	}
 
 	if (identifier.isEmpty())
 	{
-		return m_searchEngines.value(SettingsManager::getOption(SettingsManager::Search_DefaultSearchEngineOption).toString(), SearchEngineDefinition());
+		return m_searchEngines.value(SettingsManager::getOption(SettingsManager::Search_DefaultSearchEngineOption).toString(), {});
 	}
 
 	if (!m_searchEngines.contains(identifier))
@@ -438,7 +438,7 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::getSearchEngi
 		}
 	}
 
-	return m_searchEngines.value(identifier, SearchEngineDefinition());
+	return m_searchEngines.value(identifier, {});
 }
 
 QStringList SearchEnginesManager::getSearchEngines()
