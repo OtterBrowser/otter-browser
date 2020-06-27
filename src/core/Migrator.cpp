@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -330,37 +330,6 @@ public:
 	}
 };
 
-class SearchEnginesStorageMigration final : public Migration
-{
-public:
-	SearchEnginesStorageMigration() = default;
-
-	void migrate() const override
-	{
-		QDir().rename(SessionsManager::getWritableDataPath(QLatin1String("searches")), SessionsManager::getWritableDataPath(QLatin1String("searchEngines")));
-	}
-
-	QString getName() const override
-	{
-		return QLatin1String("searchEnginesStorage");
-	}
-
-	QString getTitle() const override
-	{
-		return QT_TRANSLATE_NOOP("migrations", "Search Engines");
-	}
-
-	bool needsBackup() const override
-	{
-		return false;
-	}
-
-	bool needsMigration() const override
-	{
-		return QFile::exists(SessionsManager::getWritableDataPath(QLatin1String("searches")));
-	}
-};
-
 class SessionsIniToJsonMigration final : public Migration
 {
 public:
@@ -537,7 +506,7 @@ bool Migration::needsMigration() const
 
 bool Migrator::run()
 {
-	const QVector<Migration*> availableMigrations({new KeyboardAndMouseProfilesIniToJsonMigration(), new OptionsRenameMigration(), new SearchEnginesStorageMigration(), new SessionsIniToJsonMigration()});
+	const QVector<Migration*> availableMigrations({new KeyboardAndMouseProfilesIniToJsonMigration(), new OptionsRenameMigration(), new SessionsIniToJsonMigration()});
 	QVector<Migration*> possibleMigrations;
 	QStringList processedMigrations(SettingsManager::getOption(SettingsManager::Browser_MigrationsOption).toStringList());
 
