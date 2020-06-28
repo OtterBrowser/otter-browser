@@ -323,6 +323,8 @@ SessionInformation SessionsManager::getSession(const QString &path)
 		if (mainWindowObject.contains(QLatin1String("toolBars")))
 		{
 			const QJsonArray toolBarsArray(mainWindowObject.value(QLatin1String("toolBars")).toArray());
+			QStringList toolBarsIdentifiers;
+			toolBarsIdentifiers.reserve(toolBarsArray.count());
 
 			sessionMainWindow.hasToolBarsState = true;
 			sessionMainWindow.toolBars.reserve(toolBarsArray.count());
@@ -330,8 +332,16 @@ SessionInformation SessionsManager::getSession(const QString &path)
 			for (int j = 0; j < toolBarsArray.count(); ++j)
 			{
 				const QJsonObject toolBarObject(toolBarsArray.at(j).toObject());
+				const QString toolBarIdentifier(toolBarObject.value(QLatin1String("identifier")).toString());
 				Session::MainWindow::ToolBarState toolBarState;
-				toolBarState.identifier = ToolBarsManager::getToolBarIdentifier(toolBarObject.value(QLatin1String("identifier")).toString());
+				toolBarState.identifier = ToolBarsManager::getToolBarIdentifier(toolBarIdentifier);
+
+				if (toolBarsIdentifiers.contains(toolBarIdentifier))
+				{
+					continue;
+				}
+
+				toolBarsIdentifiers.append(toolBarIdentifier);
 
 				if (toolBarObject.contains(QLatin1String("location")))
 				{
