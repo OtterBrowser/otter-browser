@@ -770,28 +770,31 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 				}
 
 				QJsonObject toolBarObject({{QLatin1String("identifier"), identifier}});
+				QString location;
 
 				switch (sessionEntry.toolBars.at(j).location)
 				{
 					case Qt::LeftToolBarArea:
-						toolBarObject.insert(QLatin1String("location"), QLatin1String("left"));
+						location = QLatin1String("left");
 
 						break;
 					case Qt::RightToolBarArea:
-						toolBarObject.insert(QLatin1String("location"), QLatin1String("right"));
+						location = QLatin1String("right");
 
 						break;
 					case Qt::TopToolBarArea:
-						toolBarObject.insert(QLatin1String("location"), QLatin1String("top"));
+						location = QLatin1String("top");
 
 						break;
 					case Qt::BottomToolBarArea:
-						toolBarObject.insert(QLatin1String("location"), QLatin1String("bottom"));
+						location = QLatin1String("bottom");
 
 						break;
 					default:
 						break;
 				}
+
+				toolBarObject.insert(QLatin1String("location"), location);
 
 				if (sessionEntry.toolBars.at(j).normalVisibility != Session::MainWindow::ToolBarState::UnspecifiedVisibilityToolBar)
 				{
