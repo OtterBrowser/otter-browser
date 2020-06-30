@@ -794,7 +794,10 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 						break;
 				}
 
-				toolBarObject.insert(QLatin1String("location"), location);
+				if (!location.isEmpty())
+				{
+					toolBarObject.insert(QLatin1String("location"), location);
+				}
 
 				if (sessionEntry.toolBars.at(j).normalVisibility != Session::MainWindow::ToolBarState::UnspecifiedVisibilityToolBar)
 				{
