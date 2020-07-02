@@ -68,7 +68,7 @@ def deploy_locale(source_path, target_path):
 	for file in glob.glob(os.path.join(source_path, 'resources', 'translations', '*.qm')):
 		shutil.copy(file, target_locale_path)
 
-def deploy_linux(qt_path, source_path, build_path, target_path, disable_tools_download):
+def deploy_linux(qt_path, source_path, build_path, target_path, extra_libs, disable_tools_download):
 	tools_path = None
 
 	if not disable_tools_download:
@@ -119,7 +119,7 @@ def deploy_linux(qt_path, source_path, build_path, target_path, disable_tools_do
 	run_command([appimage_tool_command, appimage_path, os.path.join(target_path, 'otter-browser-x86_64.AppImage')])
 	shutil.rmtree(appimage_path)
 
-def deploy_windows(qt_path, source_path, build_path, target_path):
+def deploy_windows(qt_path, source_path, build_path, target_path, extra_libs):
 	inno_setup_command = r'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
 
 	if not os.path.isfile(inno_setup_command):
@@ -174,6 +174,7 @@ if __name__ == '__main__':
 	parser.add_argument('--source-path', help='Path to the source directory', default=os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), '..')))
 	parser.add_argument('--target-path', help='Path to the output directory', default=os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), '../output')))
 	parser.add_argument('--qt-path', help='Path to the Qt directory', default=os.getenv('QTDIR', ''))
+	parser.add_argument('--extra-libs', help='Paths to the extra libraries to include', default=[], nargs='*')
 	parser.add_argument('--disable-tools-download', help='Disable download of missing deployment tools', action='store_true')
 
 	arguments = parser.parse_args()
@@ -182,6 +183,6 @@ if __name__ == '__main__':
 		sys.exit('error: the following arguments are required: --qt-path')
 
 	if platform.system() == 'Linux':
-		deploy_linux(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path, arguments.disable_tools_download)
+		deploy_linux(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path, arguments.extra_libs, arguments.disable_tools_download)
 	elif platform.system() == 'Windows':
-		deploy_windows(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path)
+		deploy_windows(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path, arguments.extra_libs)
