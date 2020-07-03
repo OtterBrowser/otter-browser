@@ -140,6 +140,10 @@ def deploy_windows(qt_path, source_path, build_path, target_path, extra_libs):
 		for file in glob.glob(os.path.join(dlls_path, pattern)):
 			shutil.copy(file, target_installer_path)
 
+	for pattern in extra_libs:
+		for file in glob.glob(pattern):
+			shutil.copy(file, target_installer_path)
+
 	redundant_plugins = ['playlistformats', 'position', 'qmltooling', 'scenegraph', 'sensorgestures', 'sensors']
 
 	for directory in redundant_plugins:
