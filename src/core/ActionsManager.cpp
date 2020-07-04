@@ -752,7 +752,7 @@ ActionsManager::ActionDefinition ActionsManager::getActionDefinition(int identif
 {
 	if (identifier < 0 || identifier >= m_definitions.count())
 	{
-		return ActionsManager::ActionDefinition();
+		return {};
 	}
 
 	return m_definitions[identifier];
