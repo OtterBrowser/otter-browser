@@ -1474,7 +1474,7 @@ WebWidget::LinkUrl WebWidget::getActiveMedia() const
 
 WebWidget::SslInformation WebWidget::getSslInformation() const
 {
-	return SslInformation();
+	return {};
 }
 
 QStringList WebWidget::getStyleSheets() const
