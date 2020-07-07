@@ -44,7 +44,13 @@ ColorWidget::ColorWidget(QWidget *parent) : QWidget(parent),
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	setColor(QColor());
 
-	connect(m_lineEditWidget, &LineEditWidget::textChanged, this, &ColorWidget::updateColor);
+	connect(m_lineEditWidget, &LineEditWidget::textChanged, this, [&](const QString &text)
+	{
+		if (QColor::isValidColor(text))
+		{
+			setColor(QColor(text));
+		}
+	});
 }
 
 void ColorWidget::changeEvent(QEvent *event)
@@ -101,7 +107,17 @@ void ColorWidget::mouseReleaseEvent(QMouseEvent *event)
 	if (event->button() == Qt::LeftButton && m_buttonRectangle.contains(event->pos()))
 	{
 		QMenu menu(this);
-		menu.addAction(tr("Select Color…"), this, &ColorWidget::selectColor);
+		menu.addAction(tr("Select Color…"), this, [&]()
+		{
+			QColorDialog dialog(this);
+			dialog.setOption(QColorDialog::ShowAlphaChannel);
+			dialog.setCurrentColor(m_color);
+
+			if (dialog.exec() == QDialog::Accepted)
+			{
+				setColor(dialog.currentColor());
+			}
+		});
 		menu.addAction(tr("Copy Color"), this, [&]()
 		{
 			QApplication::clipboard()->setText(m_color.name((m_color.alpha() < 255) ? QColor::HexArgb : QColor::HexRgb).toUpper());
@@ -113,18 +129,6 @@ void ColorWidget::mouseReleaseEvent(QMouseEvent *event)
 		});
 
 		menu.exec(mapToGlobal(isLeftToRight() ? m_buttonRectangle.bottomLeft() : m_buttonRectangle.bottomRight()));
-	}
-}
-
-void ColorWidget::selectColor()
-{
-	QColorDialog dialog(this);
-	dialog.setOption(QColorDialog::ShowAlphaChannel);
-	dialog.setCurrentColor(m_color);
-
-	if (dialog.exec() == QDialog::Accepted)
-	{
-		setColor(dialog.currentColor());
 	}
 }
 
@@ -172,14 +176,6 @@ void ColorWidget::setColor(const QColor &color)
 		m_color = color;
 
 		emit colorChanged(color);
-	}
-}
-
-void ColorWidget::updateColor(const QString &text)
-{
-	if (QColor::isValidColor(text))
-	{
-		setColor(QColor(text));
 	}
 }
 

@@ -45,10 +45,6 @@ protected:
 	void focusInEvent(QFocusEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
 
-protected slots:
-	void selectColor();
-	void updateColor(const QString &text);
-
 private:
 	LineEditWidget *m_lineEditWidget;
 	QColor m_color;
