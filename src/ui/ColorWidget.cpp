@@ -42,7 +42,7 @@ ColorWidget::ColorWidget(QWidget *parent) : QWidget(parent),
 	setLayout(layout);
 	setFocusPolicy(Qt::StrongFocus);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-	setColor(QColor());
+	setColor({});
 
 	connect(m_lineEditWidget, &LineEditWidget::textChanged, this, [&](const QString &text)
 	{
@@ -125,7 +125,7 @@ void ColorWidget::mouseReleaseEvent(QMouseEvent *event)
 		menu.addSeparator();
 		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-clear")), tr("Clear"), this, [&]()
 		{
-			setColor(QColor());
+			setColor({});
 		});
 
 		menu.exec(mapToGlobal(isLeftToRight() ? m_buttonRectangle.bottomLeft() : m_buttonRectangle.bottomRight()));
