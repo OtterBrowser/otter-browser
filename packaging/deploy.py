@@ -34,7 +34,7 @@ def make_path(root, directories):
 		if not os.path.exists(root):
 			os.mkdir(root)
 
-def get_executable(name, url=None, tools_path=None):
+def get_executable(name, url=None, tools_path=None, is_optional=False):
 	exectable_path = None
 
 	if tools_path != None:
@@ -55,7 +55,7 @@ def get_executable(name, url=None, tools_path=None):
 		urllib.request.urlretrieve(url, exectable_path)
 		os.chmod(exectable_path, os.stat(exectable_path).st_mode | stat.S_IEXEC)
 
-	if exectable_path == None:
+	if not is_optional and exectable_path == None:
 		sys.exit('error: failed to locate {}'.format(name))
 
 	return exectable_path
