@@ -13,7 +13,7 @@ def escape_windows_executable_path(executable_path):
 	if ' ' not in executable_path:
 		return executable_path
 
-	segments = executable_os.path.split('\\')
+	segments = executable_path.split('\\')
 	escaped_segments = []
 
 	for segment in segments:
