@@ -120,7 +120,11 @@ def deploy_linux(qt_path, source_path, build_path, target_path, extra_libs, disa
 	shutil.rmtree(appimage_path)
 
 def deploy_windows(qt_path, source_path, build_path, target_path, extra_libs):
+	seven_z_command = r'C:\Program Files\7-Zip\7z.exe'
 	inno_setup_command = r'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
+
+	if not os.path.isfile(seven_z_command):
+		seven_z_command = get_executable('7z.exe', is_optional=True)
 
 	if not os.path.isfile(inno_setup_command):
 		inno_setup_command = get_executable('ISCC.exe')
@@ -156,9 +160,6 @@ def deploy_windows(qt_path, source_path, build_path, target_path, extra_libs):
 
 	os.system('{} {} "{}"'.format(escape_windows_executable_path(inno_setup_command), inno_setup_arguments, os.path.join(source_path, r'packaging\otter-browser.iss')))
 
-	with open(os.path.join(target_installer_path, 'arguments.txt'), 'w') as file:
-		file.write('--portable')
-
 	release_name = 'otter-browser'
 
 	for file in glob.glob(os.path.join(target_path, '*.exe')):
@@ -169,6 +170,13 @@ def deploy_windows(qt_path, source_path, build_path, target_path, extra_libs):
 	target_release_path = os.path.join(target_path, release_name)
 
 	os.rename(target_installer_path, target_release_path)
+
+	if seven_z_command != None:
+		run_command([seven_z_command, 'a', '{}.7z'.format(os.path.join(target_path, release_name)), target_release_path])
+
+	with open(os.path.join(target_release_path, 'arguments.txt'), 'w') as file:
+		file.write('--portable')
+
 	run_command(['powershell', 'Compress-Archive', '"{}"'.format(target_release_path), '"{}.zip"'.format(os.path.join(target_path, release_name))])
 	shutil.rmtree(target_release_path)
 
