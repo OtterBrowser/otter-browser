@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -53,6 +53,7 @@ public:
 		TextRole = Qt::DisplayRole,
 		UrlRole = Qt::StatusTipRole,
 		TitleRole = Qt::UserRole,
+		HistoryIdentifierRole,
 		MatchRole,
 		KeywordRole,
 		TypeRole,
@@ -80,9 +81,10 @@ public:
 		QUrl url;
 		QIcon icon;
 		QDateTime timeVisited;
+		quint64 historyIdentifier = 0;
 		EntryType type = UnknownType;
 
-		explicit CompletionEntry(const QUrl &urlValue, const QString &titleValue, const QString &matchValue, const QIcon &iconValue, const QDateTime &timeVisitedValue, EntryType typeValue) : title(titleValue), match(matchValue), url(urlValue), icon(iconValue), timeVisited(timeVisitedValue), type(typeValue)
+		explicit CompletionEntry(const QUrl &urlValue, const QString &titleValue, const QString &matchValue, const QIcon &iconValue, const QDateTime &timeVisitedValue, EntryType typeValue, quint64 historyIdentifierValue = 0) : title(titleValue), match(matchValue), url(urlValue), icon(iconValue), timeVisited(timeVisitedValue), type(typeValue), historyIdentifier(historyIdentifierValue)
 		{
 		}
 
