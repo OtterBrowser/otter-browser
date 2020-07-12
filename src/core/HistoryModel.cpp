@@ -229,6 +229,7 @@ HistoryModel::Entry* HistoryModel::addEntry(const QUrl &url, const QString &titl
 	blockSignals(false);
 
 	emit entryAdded(entry);
+	emit modelModified();
 
 	return entry;
 }
