@@ -185,13 +185,13 @@ void HistoryManager::updateEntry(quint64 identifier, const QUrl &url, const QStr
 		getBrowsingHistoryModel();
 	}
 
-	HistoryModel::Entry *item(m_browsingHistoryModel->getEntry(identifier));
+	HistoryModel::Entry *entry(m_browsingHistoryModel->getEntry(identifier));
 
-	if (item)
+	if (entry)
 	{
-		item->setData(url, HistoryModel::UrlRole);
-		item->setData(title, HistoryModel::TitleRole);
-		item->setIcon(icon);
+		entry->setData(url, HistoryModel::UrlRole);
+		entry->setData(title, HistoryModel::TitleRole);
+		entry->setIcon(icon);
 
 		m_instance->scheduleSave();
 	}
