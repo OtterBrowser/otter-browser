@@ -131,8 +131,6 @@ void HistoryManager::clearHistory(uint period)
 
 	m_browsingHistoryModel->clearRecentEntries(period);
 	m_typedHistoryModel->clearRecentEntries(period);
-
-	m_instance->scheduleSave();
 }
 
 void HistoryManager::removeEntry(quint64 identifier)
@@ -148,8 +146,6 @@ void HistoryManager::removeEntry(quint64 identifier)
 	}
 
 	m_browsingHistoryModel->removeEntry(identifier);
-
-	m_instance->scheduleSave();
 }
 
 void HistoryManager::removeEntries(const QVector<quint64> &identifiers)
@@ -168,8 +164,6 @@ void HistoryManager::removeEntries(const QVector<quint64> &identifiers)
 	{
 		m_browsingHistoryModel->removeEntry(identifiers.at(i));
 	}
-
-	m_instance->scheduleSave();
 }
 
 void HistoryManager::updateEntry(quint64 identifier, const QUrl &url, const QString &title, const QIcon &icon)
@@ -261,6 +255,8 @@ HistoryModel* HistoryManager::getBrowsingHistoryModel()
 	if (!m_browsingHistoryModel)
 	{
 		m_browsingHistoryModel = new HistoryModel(SessionsManager::getWritableDataPath(QLatin1String("browsingHistory.json")), HistoryModel::BrowsingHistory, m_instance);
+
+		connect(m_browsingHistoryModel, &HistoryModel::modelModified, m_instance, &HistoryManager::scheduleSave);
 	}
 
 	return m_browsingHistoryModel;
@@ -271,6 +267,8 @@ HistoryModel* HistoryManager::getTypedHistoryModel()
 	if (!m_typedHistoryModel && m_instance)
 	{
 		m_typedHistoryModel = new HistoryModel(SessionsManager::getWritableDataPath(QLatin1String("typedHistory.json")), HistoryModel::TypedHistory, m_instance);
+
+		connect(m_typedHistoryModel, &HistoryModel::modelModified, m_instance, &HistoryManager::scheduleSave);
 	}
 
 	return m_typedHistoryModel;
@@ -378,8 +376,6 @@ quint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QI
 			m_browsingHistoryModel->removeEntry(m_browsingHistoryModel->index(i, 0).data(HistoryModel::IdentifierRole).toULongLong());
 		}
 	}
-
-	m_instance->scheduleSave();
 
 	return identifier;
 }
