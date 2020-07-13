@@ -793,6 +793,23 @@ void AddressWidget::showCompletion(bool isTypedHistory)
 				}
 			}
 		});
+		connect(popupWidget, &PopupViewWidget::customContextMenuRequested, this, [&](const QPoint &position)
+		{
+			if (isTypedHistory)
+			{
+				const QModelIndex index(getPopup()->indexAt(position));
+
+				if (index.isValid() && index.data(AddressCompletionModel::UrlRole).isValid())
+				{
+					QMenu menu(this);
+					menu.addAction(tr("Remove Entry"), this, [&]()
+					{
+						HistoryManager::getTypedHistoryModel()->removeEntry(index.data(AddressCompletionModel::HistoryIdentifierRole).toULongLong());
+					});
+					menu.exec(getPopup()->mapToGlobal(position));
+				}
+			}
+		});
 		connect(popupWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, [&](const QModelIndex &index)
 		{
 			if (m_isNavigatingCompletion)

@@ -37,7 +37,7 @@ namespace Otter
 PopupViewWidget::PopupViewWidget(LineEditWidget *parent) : ItemViewWidget(nullptr),
 	m_lineEditWidget(parent)
 {
-	setContextMenuPolicy(Qt::NoContextMenu);
+	setContextMenuPolicy(Qt::CustomContextMenu);
 	setEditTriggers(QAbstractItemView::NoEditTriggers);
 	setFocusPolicy(Qt::NoFocus);
 	setWindowFlags(Qt::Popup);
