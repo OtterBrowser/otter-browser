@@ -242,9 +242,9 @@ void AddressCompletionModel::setFilter(const QString &filter)
 	}
 }
 
-void AddressCompletionModel::setTypes(CompletionTypes types)
+void AddressCompletionModel::setTypes(CompletionTypes types, bool force)
 {
-	if (types != m_types)
+	if (force || types != m_types)
 	{
 		m_types = types;
 

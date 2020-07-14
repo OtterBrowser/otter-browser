@@ -805,6 +805,8 @@ void AddressWidget::showCompletion(bool isTypedHistory)
 					menu.addAction(tr("Remove Entry"), this, [&]()
 					{
 						HistoryManager::getTypedHistoryModel()->removeEntry(index.data(AddressCompletionModel::HistoryIdentifierRole).toULongLong());
+
+						updateCompletion(true, true);
 					});
 					menu.exec(getPopup()->mapToGlobal(position));
 				}
@@ -1239,7 +1241,7 @@ void AddressWidget::updateGeometries()
 	setTextMargins(margins);
 }
 
-void AddressWidget::updateCompletion(bool isTypedHistory)
+void AddressWidget::updateCompletion(bool isTypedHistory, bool force)
 {
 	AddressCompletionModel::CompletionTypes types(AddressCompletionModel::NoCompletionType);
 
@@ -1275,7 +1277,7 @@ void AddressWidget::updateCompletion(bool isTypedHistory)
 		}
 	}
 
-	m_completionModel->setTypes(types);
+	m_completionModel->setTypes(types, force);
 }
 
 void AddressWidget::setCompletion(const QString &filter)

@@ -141,7 +141,7 @@ protected slots:
 	void handleWatchedDataChanged(WebWidget::ChangeWatcher watcher);
 	void handleLoadingStateChanged();
 	void updateGeometries();
-	void updateCompletion(bool isTypedHistory);
+	void updateCompletion(bool isTypedHistory, bool force = false);
 	void setCompletion(const QString &filter);
 	void setIcon(const QIcon &icon);
 
