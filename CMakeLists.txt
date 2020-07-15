@@ -89,7 +89,6 @@ set(otter_src
 	src/core/ActionsManager.cpp
 	src/core/AdblockContentFiltersProfile.cpp
 	src/core/AddonsManager.cpp
-	src/core/AddressCompletionModel.cpp
 	src/core/Application.cpp
 	src/core/BookmarksManager.cpp
 	src/core/BookmarksModel.cpp
@@ -234,6 +233,7 @@ set(otter_src
 	src/modules/importers/opml/OpmlImporter.cpp
 	src/modules/importers/opml/OpmlImporterWidget.cpp
 	src/modules/widgets/action/ActionWidget.cpp
+	src/modules/widgets/address/AddressCompletionModel.cpp
 	src/modules/widgets/address/AddressWidget.cpp
 	src/modules/widgets/bookmark/BookmarkWidget.cpp
 	src/modules/widgets/configurationOption/ConfigurationOptionWidget.cpp

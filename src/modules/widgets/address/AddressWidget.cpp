@@ -20,8 +20,8 @@
 **************************************************************************/
 
 #include "AddressWidget.h"
+#include "AddressCompletionModel.h"
 #include "../../../core/ActionsManager.h"
-#include "../../../core/AddressCompletionModel.h"
 #include "../../../core/Application.h"
 #include "../../../core/BookmarksManager.h"
 #include "../../../core/FeedsManager.h"

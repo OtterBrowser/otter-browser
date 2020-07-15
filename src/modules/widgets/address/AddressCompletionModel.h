@@ -22,7 +22,7 @@
 #ifndef OTTER_ADDRESSCOMPLETIONMODEL_H
 #define OTTER_ADDRESSCOMPLETIONMODEL_H
 
-#include "../core/SearchEnginesManager.h"
+#include "../../../core/SearchEnginesManager.h"
 
 #include <QtCore/QAbstractListModel>
 #include <QtCore/QUrl>

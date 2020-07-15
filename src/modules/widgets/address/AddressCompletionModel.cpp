@@ -20,12 +20,12 @@
 **************************************************************************/
 
 #include "AddressCompletionModel.h"
-#include "AddonsManager.h"
-#include "BookmarksManager.h"
-#include "HistoryManager.h"
-#include "SettingsManager.h"
-#include "ThemesManager.h"
-#include "Utils.h"
+#include "../../../core/AddonsManager.h"
+#include "../../../core/BookmarksManager.h"
+#include "../../../core/HistoryManager.h"
+#include "../../../core/SettingsManager.h"
+#include "../../../core/ThemesManager.h"
+#include "../../../core/Utils.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
