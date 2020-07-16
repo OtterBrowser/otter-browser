@@ -68,7 +68,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(AddressField_PasteAndGoOnMiddleClickOption, BooleanType, true);
 	registerOption(AddressField_SelectAllOnFocusOption, BooleanType, false);
 	registerOption(AddressField_ShowCompletionCategoriesOption, BooleanType, true);
-	registerOption(AddressField_ShowSuggestionsOnFocusOption, BooleanType, false);
+	registerOption(AddressField_ShowSuggestionsOnFocusOption, BooleanType, true);
 	registerOption(AddressField_SuggestBookmarksOption, BooleanType, true);
 	registerOption(AddressField_SuggestHistoryOption, BooleanType, true);
 	registerOption(AddressField_SuggestLocalPathsOption, BooleanType, true);
