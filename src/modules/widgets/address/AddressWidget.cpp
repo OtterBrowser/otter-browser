@@ -770,7 +770,7 @@ void AddressWidget::showCompletion(bool isTypedHistory)
 	popupWidget->setModel(m_completionModel);
 	popupWidget->setItemDelegate(new AddressDelegate((isTypedHistory ? QString() : text()), (isTypedHistory ? AddressDelegate::HistoryMode : AddressDelegate::CompletionMode), popupWidget));
 
-	updateCompletion(isTypedHistory);
+	updateCompletion(isTypedHistory, isTypedHistory);
 
 	if (!isPopupVisible())
 	{
