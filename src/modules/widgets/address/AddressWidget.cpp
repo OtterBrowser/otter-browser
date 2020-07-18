@@ -537,7 +537,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 			menu.addSeparator();
 		}
 
-		menu.addAction(tr("Remove this Icon"), this, &AddressWidget::removeEntry)->setData(entry);
+		menu.addAction(tr("Remove Icon"), this, &AddressWidget::removeEntry)->setData(entry);
 	}
 
 	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
