@@ -230,7 +230,7 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 			}
 			else
 			{
-				description.insert(0, QLatin1String("- "));
+				description.prepend(QLatin1String("- "));
 
 				titleRectangle.setLeft(urlLength + 33);
 
