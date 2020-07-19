@@ -222,17 +222,17 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 			if (isRightToLeft)
 			{
-				description.append(QLatin1String(" -"));
+				description.append(QLatin1String(" - "));
 
-				titleRectangle.setRight(option.rect.width() - calculateLength(option, description) - (urlLength + 33));
+				titleRectangle.setRight(option.rect.width() - calculateLength(option, description) - (urlLength + decorationRectangle.width() + 4));
 
 				painter->translate(titleRectangle.right(), topPosition);
 			}
 			else
 			{
-				description.prepend(QLatin1String("- "));
+				description.prepend(QLatin1String(" - "));
 
-				titleRectangle.setLeft(urlLength + 33);
+				titleRectangle.setLeft(urlLength + decorationRectangle.width() + 4);
 
 				painter->translate(titleRectangle.left(), topPosition);
 			}
