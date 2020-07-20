@@ -364,21 +364,22 @@ void AddressWidget::changeEvent(QEvent *event)
 {
 	LineEditWidget::changeEvent(event);
 
-	switch (event->type())
+	if (!m_isSimplified)
 	{
-		case QEvent::LanguageChange:
-			if (!m_isSimplified)
-			{
+		switch (event->type())
+		{
+			case QEvent::LanguageChange:
+				updateGeometries();
 				setPlaceholderText(tr("Enter address or search…"));
-			}
 
-			break;
-		case QEvent::LayoutDirectionChange:
-			updateGeometries();
+				break;
+			case QEvent::LayoutDirectionChange:
+				updateGeometries();
 
-			break;
-		default:
-			break;
+				break;
+			default:
+				break;
+		}
 	}
 }
 
