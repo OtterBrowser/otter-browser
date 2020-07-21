@@ -1007,8 +1007,8 @@ void AddressWidget::updateGeometries()
 	const int offset(qMax(((height() - 16) / 2), 2));
 	QMargins margins(offset, 0, offset, 0);
 	int availableWidth(width() - margins.left() - margins.right());
-	bool isLeading(true);
 	const bool isRightToLeft(layoutDirection() == Qt::RightToLeft);
+	bool isLeading(!isRightToLeft);
 
 	if (m_layout.contains(WebsiteInformationEntry))
 	{
@@ -1018,11 +1018,6 @@ void AddressWidget::updateGeometries()
 	if (m_layout.contains(HistoryDropdownEntry))
 	{
 		availableWidth -= 16;
-	}
-
-	if (isRightToLeft)
-	{
-		isLeading = false;
 	}
 
 	for (int i = 0; i < m_layout.count(); ++i)
