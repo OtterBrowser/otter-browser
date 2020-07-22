@@ -145,7 +145,6 @@ protected slots:
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleActionsStateChanged(const QVector<int> &identifiers);
 	void handleWatchedDataChanged(WebWidget::ChangeWatcher watcher);
-	void handleLoadingStateChanged();
 	void updateEntries(const QVector<EntryIdentifier> &identifiers);
 	void updateGeometries();
 	void updateCompletion(bool isTypedHistory, bool force = false);
@@ -162,7 +161,6 @@ private:
 	EntryIdentifier m_hoveredEntry;
 	CompletionModes m_completionModes;
 	SessionsManager::OpenHints m_hints;
-	bool m_hasFeeds;
 	bool m_isNavigatingCompletion;
 	bool m_isSimplified;
 	bool m_wasEdited;

@@ -315,7 +315,6 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(p
 	m_hoveredEntry(UnknownEntry),
 	m_completionModes(NoCompletionMode),
 	m_hints(SessionsManager::DefaultOpen),
-	m_hasFeeds(false),
 	m_isNavigatingCompletion(false),
 	m_isSimplified(false),
 	m_wasEdited(false)
@@ -938,17 +937,8 @@ void AddressWidget::handleWatchedDataChanged(WebWidget::ChangeWatcher watcher)
 {
 	if (watcher == WebWidget::FeedsWatcher)
 	{
-		m_hasFeeds = (m_window && m_window->getWebWidget() && !m_window->getWebWidget()->getFeeds().isEmpty());
-
 		updateGeometries();
 	}
-}
-
-void AddressWidget::handleLoadingStateChanged()
-{
-	m_hasFeeds = (m_window && m_window->getWebWidget() && !m_window->getWebWidget()->getFeeds().isEmpty());
-
-	updateGeometries();
 }
 
 void AddressWidget::handleUserInput(const QString &text, SessionsManager::OpenHints hints)
@@ -1083,7 +1073,7 @@ void AddressWidget::updateEntries(const QVector<EntryIdentifier> &identifiers)
 
 				break;
 			case ListFeedsEntry:
-				if (m_hasFeeds)
+				if (m_window && m_window->getWebWidget() && !m_window->getWebWidget()->getFeeds().isEmpty())
 				{
 					definition.title = QT_TR_NOOP("Show feed list");
 					definition.iconName = QLatin1String("application-rss+xml");
@@ -1384,7 +1374,7 @@ void AddressWidget::setWindow(Window *window)
 		disconnect(m_window.data(), &Window::iconChanged, this, &AddressWidget::setIcon);
 		disconnect(m_window.data(), &Window::arbitraryActionsStateChanged, this, &AddressWidget::handleActionsStateChanged);
 		disconnect(m_window.data(), &Window::contentStateChanged, this, &AddressWidget::updateGeometries);
-		disconnect(m_window.data(), &Window::loadingStateChanged, this, &AddressWidget::handleLoadingStateChanged);
+		disconnect(m_window.data(), &Window::loadingStateChanged, this, &AddressWidget::updateGeometries);
 		disconnect(m_window->getMainWindow(), &MainWindow::activeWindowChanged, this, &AddressWidget::hidePopup);
 
 		if (m_window->getWebWidget())
@@ -1419,7 +1409,7 @@ void AddressWidget::setWindow(Window *window)
 		connect(window, &Window::iconChanged, this, &AddressWidget::setIcon);
 		connect(window, &Window::arbitraryActionsStateChanged, this, &AddressWidget::handleActionsStateChanged);
 		connect(window, &Window::contentStateChanged, this, &AddressWidget::updateGeometries);
-		connect(window, &Window::loadingStateChanged, this, &AddressWidget::handleLoadingStateChanged);
+		connect(window, &Window::loadingStateChanged, this, &AddressWidget::updateGeometries);
 		connect(window->getMainWindow(), &MainWindow::activeWindowChanged, this, &AddressWidget::hidePopup);
 		connect(window, &Window::destroyed, this, [&](QObject *object)
 		{
