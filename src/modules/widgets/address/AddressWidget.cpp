@@ -999,117 +999,122 @@ void AddressWidget::handleUserInput(const QString &text, SessionsManager::OpenHi
 	}
 }
 
-void AddressWidget::updateEntry(AddressWidget::EntryIdentifier identifier)
+void AddressWidget::updateEntries(const QVector<EntryIdentifier> &identifiers)
 {
-	if (!m_layout.contains(identifier))
-	{
-		m_entries.remove(identifier);
-
-		return;
-	}
-
-	EntryDefinition definition;
-	definition.identifier = identifier;
-
 	const QUrl url(getUrl());
 	const bool hasValidWindow(m_window && !m_window->isAboutToClose() && m_window->getLoadingState() == WebWidget::FinishedLoadingState);
 
-	switch (identifier)
+	for (int i = 0; i < identifiers.count(); ++i)
 	{
-		case WebsiteInformationEntry:
-			{
-				QString icon(QLatin1String("unknown"));
-				const WebWidget::ContentStates state(m_window ? m_window->getContentState() : WebWidget::UnknownContentState);
+		const EntryIdentifier identifier(identifiers.at(i));
 
-				if (state.testFlag(WebWidget::FraudContentState))
+		if (!m_layout.contains(identifier))
+		{
+			m_entries.remove(identifier);
+
+			return;
+		}
+
+		EntryDefinition definition;
+		definition.identifier = identifier;
+
+		switch (identifier)
+		{
+			case WebsiteInformationEntry:
 				{
-					icon = QLatin1String("badge-fraud");
-				}
-				else if (state.testFlag(WebWidget::MixedContentState))
-				{
-					icon = QLatin1String("badge-mixed");
-				}
-				else if (state.testFlag(WebWidget::SecureContentState))
-				{
-					icon = QLatin1String("badge-secure");
-				}
-				else if (state.testFlag(WebWidget::RemoteContentState))
-				{
-					icon = QLatin1String("badge-remote");
-				}
-				else if (state.testFlag(WebWidget::LocalContentState))
-				{
-					icon = QLatin1String("badge-local");
-				}
-				else if (state.testFlag(WebWidget::ApplicationContentState))
-				{
-					icon = QLatin1String("otter-browser");
+					QString icon(QLatin1String("unknown"));
+					const WebWidget::ContentStates state(m_window ? m_window->getContentState() : WebWidget::UnknownContentState);
+
+					if (state.testFlag(WebWidget::FraudContentState))
+					{
+						icon = QLatin1String("badge-fraud");
+					}
+					else if (state.testFlag(WebWidget::MixedContentState))
+					{
+						icon = QLatin1String("badge-mixed");
+					}
+					else if (state.testFlag(WebWidget::SecureContentState))
+					{
+						icon = QLatin1String("badge-secure");
+					}
+					else if (state.testFlag(WebWidget::RemoteContentState))
+					{
+						icon = QLatin1String("badge-remote");
+					}
+					else if (state.testFlag(WebWidget::LocalContentState))
+					{
+						icon = QLatin1String("badge-local");
+					}
+					else if (state.testFlag(WebWidget::ApplicationContentState))
+					{
+						icon = QLatin1String("otter-browser");
+					}
+
+					if (!Utils::isUrlEmpty(url) && url.scheme() != QLatin1String("about"))
+					{
+						definition.title = QT_TR_NOOP("Show website information");
+					}
+
+					definition.icon = ThemesManager::createIcon(icon, false);
 				}
 
+				break;
+			case FaviconEntry:
+				definition.icon = (m_window ? m_window->getIcon() : ThemesManager::createIcon((SessionsManager::isPrivate() ? QLatin1String("tab-private") : QLatin1String("tab")), false));
+
+				break;
+			case ListFeedsEntry:
+				if (m_hasFeeds)
+				{
+					definition.title = QT_TR_NOOP("Show feed list");
+					definition.icon = ThemesManager::createIcon(QLatin1String("application-rss+xml"), false);
+				}
+
+				break;
+			case BookmarkEntry:
 				if (!Utils::isUrlEmpty(url) && url.scheme() != QLatin1String("about"))
 				{
-					definition.title = QT_TR_NOOP("Show website information");
+					if (BookmarksManager::hasBookmark(url))
+					{
+						definition.title = QT_TR_NOOP("Remove bookmark");
+						definition.icon = ThemesManager::createIcon(QLatin1String("bookmark-page-remove"), false);
+					}
+					else
+					{
+						definition.title = QT_TR_NOOP("Add bookmark");
+						definition.icon = ThemesManager::createIcon(QLatin1String("bookmark-page-new"), false);
+					}
 				}
 
-				definition.icon = ThemesManager::createIcon(icon, false);
-			}
-
-			break;
-		case FaviconEntry:
-			definition.icon = (m_window ? m_window->getIcon() : ThemesManager::createIcon((SessionsManager::isPrivate() ? QLatin1String("tab-private") : QLatin1String("tab")), false));
-
-			break;
-		case ListFeedsEntry:
-			if (m_hasFeeds)
-			{
-				definition.title = QT_TR_NOOP("Show feed list");
-				definition.icon = ThemesManager::createIcon(QLatin1String("application-rss+xml"), false);
-			}
-
-			break;
-		case BookmarkEntry:
-			if (!Utils::isUrlEmpty(url) && url.scheme() != QLatin1String("about"))
-			{
-				if (BookmarksManager::hasBookmark(url))
+				break;
+			case LoadPluginsEntry:
+				if (hasValidWindow && m_window->getActionState(ActionsManager::LoadPluginsAction).isEnabled)
 				{
-					definition.title = QT_TR_NOOP("Remove bookmark");
-					definition.icon = ThemesManager::createIcon(QLatin1String("bookmark-page-remove"), false);
+					definition.title = QT_TR_NOOP("Load all plugins on the page");
+					definition.icon = ThemesManager::createIcon(QLatin1String("preferences-plugin"), false);
 				}
-				else
+
+				break;
+			case FillPasswordEntry:
+				if (hasValidWindow && !Utils::isUrlEmpty(url) && url.scheme() != QLatin1String("about") && PasswordsManager::hasPasswords(url, PasswordsManager::FormPassword))
 				{
-					definition.title = QT_TR_NOOP("Add bookmark");
-					definition.icon = ThemesManager::createIcon(QLatin1String("bookmark-page-new"), false);
+					definition.title = QT_TR_NOOP("Log in");
+					definition.icon = ThemesManager::createIcon(QLatin1String("fill-password"), false);
 				}
-			}
 
-			break;
-		case LoadPluginsEntry:
-			if (hasValidWindow && m_window->getActionState(ActionsManager::LoadPluginsAction).isEnabled)
-			{
-				definition.title = QT_TR_NOOP("Load all plugins on the page");
-				definition.icon = ThemesManager::createIcon(QLatin1String("preferences-plugin"), false);
-			}
+				break;
+			default:
+				break;
+		}
 
-			break;
-		case FillPasswordEntry:
-			if (hasValidWindow && !Utils::isUrlEmpty(url) && url.scheme() != QLatin1String("about") && PasswordsManager::hasPasswords(url, PasswordsManager::FormPassword))
-			{
-				definition.title = QT_TR_NOOP("Log in");
-				definition.icon = ThemesManager::createIcon(QLatin1String("fill-password"), false);
-			}
-
-			break;
-		default:
-			break;
-	}
-
-	if (identifier == HistoryDropdownEntry || !definition.icon.isNull())
-	{
-		m_entries[identifier] = definition;
-	}
-	else
-	{
-		m_entries.remove(identifier);
+		if (identifier == HistoryDropdownEntry || !definition.icon.isNull())
+		{
+			m_entries[identifier] = definition;
+		}
+		else
+		{
+			m_entries.remove(identifier);
+		}
 	}
 }
 
@@ -1134,10 +1139,10 @@ void AddressWidget::updateGeometries()
 		availableWidth -= 16;
 	}
 
+	updateEntries(m_layout);
+
 	for (int i = 0; i < m_layout.count(); ++i)
 	{
-		updateEntry(m_layout.at(i));
-
 		const EntryDefinition definition(m_entries.value(m_layout.at(i)));
 
 		if (m_layout.at(i) == AddressEntry)

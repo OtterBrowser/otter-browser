@@ -140,7 +140,7 @@ protected slots:
 	void handleActionsStateChanged(const QVector<int> &identifiers);
 	void handleWatchedDataChanged(WebWidget::ChangeWatcher watcher);
 	void handleLoadingStateChanged();
-	void updateEntry(EntryIdentifier identifier);
+	void updateEntries(const QVector<EntryIdentifier> &identifiers);
 	void updateGeometries();
 	void updateCompletion(bool isTypedHistory, bool force = false);
 	void setCompletion(const QString &filter);
