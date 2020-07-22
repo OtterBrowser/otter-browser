@@ -1001,6 +1001,13 @@ void AddressWidget::handleUserInput(const QString &text, SessionsManager::OpenHi
 
 void AddressWidget::updateEntry(AddressWidget::EntryIdentifier identifier)
 {
+	if (!m_layout.contains(identifier))
+	{
+		m_entries.remove(identifier);
+
+		return;
+	}
+
 	EntryDefinition definition;
 	definition.identifier = identifier;
 
