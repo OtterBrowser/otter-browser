@@ -412,7 +412,7 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 
 	for (iterator = m_entries.constBegin(); iterator != m_entries.constEnd(); ++iterator)
 	{
-		if (!iterator.value().icon.isNull())
+		if (iterator.value().isValid())
 		{
 			iterator.value().icon.paint(&painter, iterator.value().rectangle, Qt::AlignCenter, ((iterator.key() == m_hoveredEntry) ? QIcon::Active : QIcon::Normal));
 		}
@@ -1107,7 +1107,7 @@ void AddressWidget::updateEntries(const QVector<EntryIdentifier> &identifiers)
 				break;
 		}
 
-		if (identifier == HistoryDropdownEntry || !definition.icon.isNull())
+		if (identifier == HistoryDropdownEntry || definition.isValid())
 		{
 			m_entries[identifier] = definition;
 		}
@@ -1150,7 +1150,7 @@ void AddressWidget::updateGeometries()
 			isLeading = !isLeading;
 		}
 
-		if (m_layout.at(i) != HistoryDropdownEntry && definition.icon.isNull())
+		if (m_layout.at(i) != HistoryDropdownEntry && !definition.isValid())
 		{
 			continue;
 		}

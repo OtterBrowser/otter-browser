@@ -107,6 +107,11 @@ public:
 		QIcon icon;
 		QRect rectangle;
 		EntryIdentifier identifier = UnknownEntry;
+
+		bool isValid() const
+		{
+			return (identifier > UnknownEntry && !icon.isNull());
+		}
 	};
 
 	explicit AddressWidget(Window *window, QWidget *parent = nullptr);
