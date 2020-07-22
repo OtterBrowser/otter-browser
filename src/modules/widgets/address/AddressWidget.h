@@ -131,7 +131,6 @@ protected:
 	void mouseMoveEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
 	void dragEnterEvent(QDragEnterEvent *event) override;
-	EntryDefinition getEntryDefinition(EntryIdentifier identifier) const;
 	EntryIdentifier getEntry(const QPoint &position) const;
 
 protected slots:
@@ -141,6 +140,7 @@ protected slots:
 	void handleActionsStateChanged(const QVector<int> &identifiers);
 	void handleWatchedDataChanged(WebWidget::ChangeWatcher watcher);
 	void handleLoadingStateChanged();
+	void updateEntry(EntryIdentifier identifier);
 	void updateGeometries();
 	void updateCompletion(bool isTypedHistory, bool force = false);
 	void setCompletion(const QString &filter);
