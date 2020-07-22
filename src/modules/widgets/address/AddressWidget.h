@@ -104,13 +104,14 @@ public:
 	struct EntryDefinition final
 	{
 		QString title;
+		QString iconName;
 		QIcon icon;
 		QRect rectangle;
 		EntryIdentifier identifier = UnknownEntry;
 
 		bool isValid() const
 		{
-			return (identifier > UnknownEntry && !icon.isNull());
+			return (identifier > UnknownEntry && (!iconName.isEmpty() || !icon.isNull()));
 		}
 	};
 
