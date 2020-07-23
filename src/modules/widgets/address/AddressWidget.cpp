@@ -356,7 +356,10 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(p
 		handleUserInput(text);
 	});
 	connect(m_completionModel, &AddressCompletionModel::completionReady, this, &AddressWidget::setCompletion);
-	connect(BookmarksManager::getModel(), &BookmarksModel::modelModified, this, &AddressWidget::updateGeometries);
+	connect(BookmarksManager::getModel(), &BookmarksModel::modelModified, this, [&]()
+	{
+		updateEntries({BookmarkEntry});
+	});
 }
 
 void AddressWidget::changeEvent(QEvent *event)
@@ -368,7 +371,7 @@ void AddressWidget::changeEvent(QEvent *event)
 		switch (event->type())
 		{
 			case QEvent::LanguageChange:
-				updateGeometries();
+				updateEntries({WebsiteInformationEntry, ListFeedsEntry, BookmarkEntry, LoadPluginsEntry, FillPasswordEntry, HistoryDropdownEntry});
 				setPlaceholderText(tr("Enter address or search…"));
 
 				break;
@@ -681,7 +684,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 							menu.exec(mapToGlobal(m_entries.value(BookmarkEntry).rectangle.bottomLeft()));
 						}
 
-						updateGeometries();
+						updateEntries({BookmarkEntry});
 					}
 
 					event->accept();
@@ -691,7 +694,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 			case LoadPluginsEntry:
 				m_window->triggerAction(ActionsManager::LoadPluginsAction);
 
-				updateGeometries();
+				updateEntries({LoadPluginsEntry});
 
 				event->accept();
 
@@ -886,6 +889,8 @@ void AddressWidget::handleOptionChanged(int identifier, const QVariant &value)
 			if (m_isSimplified)
 			{
 				m_layout = {AddressEntry, HistoryDropdownEntry};
+
+				updateGeometries();
 			}
 			else
 			{
@@ -896,6 +901,7 @@ void AddressWidget::handleOptionChanged(int identifier, const QVariant &value)
 
 				const EnumeratorMapper enumeratorMapper(metaObject()->enumerator(m_entryIdentifierEnumerator), QLatin1String("Entry"));
 				const QStringList rawLayout(value.toStringList());
+				const QVector<EntryIdentifier> previousLayout(m_layout);
 				QVector<EntryIdentifier> layout;
 				layout.reserve(rawLayout.count());
 
@@ -915,9 +921,9 @@ void AddressWidget::handleOptionChanged(int identifier, const QVariant &value)
 				}
 
 				m_layout = layout;
-			}
 
-			updateGeometries();
+				updateEntries(previousLayout + layout);
+			}
 
 			break;
 		default:
@@ -929,15 +935,20 @@ void AddressWidget::handleActionsStateChanged(const QVector<int> &identifiers)
 {
 	if (identifiers.contains(ActionsManager::LoadPluginsAction) && m_layout.contains(LoadPluginsEntry))
 	{
-		updateGeometries();
+		updateEntries({LoadPluginsEntry});
 	}
+}
+
+void AddressWidget::handleIconChanged()
+{
+	updateEntries({FaviconEntry});
 }
 
 void AddressWidget::handleWatchedDataChanged(WebWidget::ChangeWatcher watcher)
 {
 	if (watcher == WebWidget::FeedsWatcher)
 	{
-		updateGeometries();
+		updateEntries({ListFeedsEntry});
 	}
 }
 
@@ -1010,7 +1021,7 @@ void AddressWidget::updateEntries(const QVector<EntryIdentifier> &identifiers)
 				needsUpdate = true;
 			}
 
-			return;
+			continue;
 		}
 
 		const QString previousIconName(m_entries.value(identifier).iconName);
@@ -1118,20 +1129,21 @@ void AddressWidget::updateEntries(const QVector<EntryIdentifier> &identifiers)
 
 		if (identifier == HistoryDropdownEntry || definition.isValid())
 		{
-			if (!definition.iconName.isEmpty())
+			if (definition.icon.isNull() || definition.iconName != previousIconName)
 			{
-				definition.icon = ThemesManager::createIcon(definition.iconName, false);
+				needsRepaint = true;
+
+				if (!definition.iconName.isEmpty())
+				{
+					definition.icon = ThemesManager::createIcon(definition.iconName, false);
+				}
 			}
 
 			m_entries[identifier] = definition;
 
-			if (!isUpdating)
+			if (!isUpdating || definition.rectangle.isNull())
 			{
 				needsUpdate = true;
-			}
-			else if (definition.iconName != previousIconName)
-			{
-				needsRepaint = true;
 			}
 		}
 		else if (isUpdating)
@@ -1141,11 +1153,27 @@ void AddressWidget::updateEntries(const QVector<EntryIdentifier> &identifiers)
 			needsUpdate = true;
 		}
 	}
+
+	if (needsUpdate)
+	{
+		updateGeometries();
+	}
+	else if (needsRepaint)
+	{
+		update();
+	}
+}
+
+void AddressWidget::updateCurrentEntries()
+{
+	updateEntries(m_layout);
 }
 
 void AddressWidget::updateGeometries()
 {
-	QHash<EntryIdentifier, EntryDefinition> entries;
+///TODO custom drawing of completion entries drawCompletionText(QVector<QPair<QString, QColor> > texts, QString highlightedText, QRect rectangle)
+/// "x" as moving widget handled by view, setting role on model, or checking for hover flag in delegate, smaller rectangle
+/// add tooltip for dropdown? needs exception in handleOptionChanged(), or moving of titles to switch as fallback for empty text in definition
 	QVector<EntryDefinition> leadingEntries;
 	QVector<EntryDefinition> trailingEntries;
 	const int offset(qMax(((height() - 16) / 2), 2));
@@ -1164,8 +1192,6 @@ void AddressWidget::updateGeometries()
 		availableWidth -= 16;
 	}
 
-	updateEntries(m_layout);
-
 	for (int i = 0; i < m_layout.count(); ++i)
 	{
 		const EntryDefinition definition(m_entries.value(m_layout.at(i)));
@@ -1173,11 +1199,6 @@ void AddressWidget::updateGeometries()
 		if (m_layout.at(i) == AddressEntry)
 		{
 			isLeading = !isLeading;
-		}
-
-		if (m_layout.at(i) != HistoryDropdownEntry && !definition.isValid())
-		{
-			continue;
 		}
 
 		switch (m_layout.at(i))
@@ -1246,7 +1267,7 @@ void AddressWidget::updateGeometries()
 				break;
 		}
 
-		entries[leadingEntries.at(i).identifier] = leadingEntries.at(i);
+		m_entries[leadingEntries.at(i).identifier].rectangle = leadingEntries.at(i).rectangle;
 	}
 
 	for (int i = 0; i < trailingEntries.count(); ++i)
@@ -1274,10 +1295,8 @@ void AddressWidget::updateGeometries()
 				break;
 		}
 
-		entries[trailingEntries.at(i).identifier] = trailingEntries.at(i);
+		m_entries[trailingEntries.at(i).identifier].rectangle = trailingEntries.at(i).rectangle;
 	}
-
-	m_entries = entries;
 
 	if (margins.left() > offset)
 	{
@@ -1371,10 +1390,10 @@ void AddressWidget::setWindow(Window *window)
 	{
 		disconnect(this, &AddressWidget::requestedSearch, m_window.data(), &Window::requestedSearch);
 		disconnect(m_window.data(), &Window::urlChanged, this, &AddressWidget::setUrl);
-		disconnect(m_window.data(), &Window::iconChanged, this, &AddressWidget::setIcon);
+		disconnect(m_window.data(), &Window::iconChanged, this, &AddressWidget::handleIconChanged);
 		disconnect(m_window.data(), &Window::arbitraryActionsStateChanged, this, &AddressWidget::handleActionsStateChanged);
-		disconnect(m_window.data(), &Window::contentStateChanged, this, &AddressWidget::updateGeometries);
-		disconnect(m_window.data(), &Window::loadingStateChanged, this, &AddressWidget::updateGeometries);
+		disconnect(m_window.data(), &Window::contentStateChanged, this, &AddressWidget::updateCurrentEntries);
+		disconnect(m_window.data(), &Window::loadingStateChanged, this, &AddressWidget::updateCurrentEntries);
 		disconnect(m_window->getMainWindow(), &MainWindow::activeWindowChanged, this, &AddressWidget::hidePopup);
 
 		if (m_window->getWebWidget())
@@ -1406,10 +1425,10 @@ void AddressWidget::setWindow(Window *window)
 
 		connect(this, &AddressWidget::requestedSearch, window, &Window::requestedSearch);
 		connect(window, &Window::urlChanged, this, &AddressWidget::setUrl);
-		connect(window, &Window::iconChanged, this, &AddressWidget::setIcon);
+		connect(window, &Window::iconChanged, this, &AddressWidget::handleIconChanged);
 		connect(window, &Window::arbitraryActionsStateChanged, this, &AddressWidget::handleActionsStateChanged);
-		connect(window, &Window::contentStateChanged, this, &AddressWidget::updateGeometries);
-		connect(window, &Window::loadingStateChanged, this, &AddressWidget::updateGeometries);
+		connect(window, &Window::contentStateChanged, this, &AddressWidget::updateCurrentEntries);
+		connect(window, &Window::loadingStateChanged, this, &AddressWidget::updateCurrentEntries);
 		connect(window->getMainWindow(), &MainWindow::activeWindowChanged, this, &AddressWidget::hidePopup);
 		connect(window, &Window::destroyed, this, [&](QObject *object)
 		{
@@ -1441,9 +1460,8 @@ void AddressWidget::setWindow(Window *window)
 		connect(this, &AddressWidget::requestedSearch, mainWindow, &MainWindow::search);
 	}
 
-	setIcon(window ? window->getIcon() : QIcon());
+	updateEntries({FaviconEntry});
 	setUrl(window ? window->getUrl() : QUrl());
-	update();
 }
 
 void AddressWidget::setUrl(const QUrl &url, bool force)
@@ -1452,7 +1470,7 @@ void AddressWidget::setUrl(const QUrl &url, bool force)
 
 	if (!m_isSimplified)
 	{
-		updateGeometries();
+		updateCurrentEntries();
 	}
 
 	if (m_isSimplified || ((force || !m_wasEdited || !hasFocus()) && url.scheme() != QLatin1String("javascript")))
@@ -1470,16 +1488,6 @@ void AddressWidget::setUrl(const QUrl &url, bool force)
 		setCursorPosition(0);
 
 		m_wasEdited = false;
-	}
-}
-
-void AddressWidget::setIcon(const QIcon &icon)
-{
-	if (m_layout.contains(FaviconEntry))
-	{
-		m_entries[FaviconEntry].icon = (icon.isNull() ? ThemesManager::createIcon((SessionsManager::isPrivate() ? QLatin1String("tab-private") : QLatin1String("tab")), false) : icon);
-
-		update();
 	}
 }
 

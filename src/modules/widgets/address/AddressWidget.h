@@ -144,12 +144,13 @@ protected slots:
 	void removeEntry();
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleActionsStateChanged(const QVector<int> &identifiers);
+	void handleIconChanged();
 	void handleWatchedDataChanged(WebWidget::ChangeWatcher watcher);
 	void updateEntries(const QVector<EntryIdentifier> &identifiers);
+	void updateCurrentEntries();
 	void updateGeometries();
 	void updateCompletion(bool isTypedHistory, bool force = false);
 	void setCompletion(const QString &filter);
-	void setIcon(const QIcon &icon);
 
 private:
 	QPointer<Window> m_window;
