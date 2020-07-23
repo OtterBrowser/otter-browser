@@ -129,9 +129,9 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 	if (m_displayMode == ColumnsMode)
 	{
-		const int maxUrlWidth(textRectangle.width() / 2);
+		const int sectionWidth(textRectangle.width() / 3);
 		QRect urlRectangle(textRectangle);
-		urlRectangle.setRight(textRectangle.right() - 2 - maxUrlWidth);
+		urlRectangle.setRight(textRectangle.right() - 2 - sectionWidth);
 
 		drawCompletionText(painter, option.font, highlightSegments(highlight, {urlSegment}), urlRectangle, isRightToLeft);
 
