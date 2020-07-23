@@ -37,12 +37,9 @@
 #include "../../../ui/ToolBarWidget.h"
 #include "../../../ui/Window.h"
 
-#include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QPainter>
-#include <QtGui/QTextBlock>
-#include <QtGui/QTextDocument>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QToolTip>
@@ -62,13 +59,13 @@ AddressDelegate::AddressDelegate(const QString &highlight, ViewMode mode, QObjec
 
 void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	QRect titleRectangle(option.rect);
+	QRect textRectangle(option.rect);
 	const bool isRightToLeft(option.direction == Qt::RightToLeft);
 
 	if (static_cast<AddressCompletionModel::CompletionEntry::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::CompletionEntry::HeaderType)
 	{
 		QStyleOptionViewItem headerOption(option);
-		headerOption.rect = titleRectangle.marginsRemoved(QMargins(0, 2, (isRightToLeft ? 3 : 0), 2));
+		headerOption.rect = textRectangle.marginsRemoved(QMargins(0, 2, (isRightToLeft ? 3 : 0), 2));
 		headerOption.text = index.data(AddressCompletionModel::TitleRole).toString();
 
 		if (index.row() > 0)
@@ -88,24 +85,14 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 		return;
 	}
 
-	QAbstractTextDocumentLayout::PaintContext paintContext;
-	QTextDocument document;
-	document.setDefaultFont(option.font);
-
-	QString url(index.data(Qt::DisplayRole).toString());
-	QString description((m_viewMode == HistoryMode) ? Utils::formatDateTime(index.data(AddressCompletionModel::TimeVisitedRole).toDateTime()) : index.data(AddressCompletionModel::TitleRole).toString());
-	const int topPosition(titleRectangle.top() - qRound((titleRectangle.height() - painter->clipBoundingRect().united(document.documentLayout()->blockBoundingRect(document.firstBlock())).height()) / 2));
+	const QString url(index.data(Qt::DisplayRole).toString());
+	const QString description((m_viewMode == HistoryMode) ? Utils::formatDateTime(index.data(AddressCompletionModel::TimeVisitedRole).toDateTime()) : index.data(AddressCompletionModel::TitleRole).toString());
 	const bool isSearchSuggestion(static_cast<AddressCompletionModel::CompletionEntry::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::CompletionEntry::SearchSuggestionType);
+	const bool isSelected(option.state.testFlag(QStyle::State_Selected));
 
-	if (option.state.testFlag(QStyle::State_Selected))
+	if (isSelected)
 	{
 		painter->fillRect(option.rect, option.palette.color(QPalette::Highlight));
-
-		paintContext.palette.setColor(QPalette::Text, option.palette.color(QPalette::HighlightedText));
-	}
-	else if (!isSearchSuggestion)
-	{
-		paintContext.palette.setColor(QPalette::Text, option.palette.color(QPalette::Link));
 	}
 
 	QRect decorationRectangle(option.rect);
@@ -114,13 +101,13 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 	{
 		decorationRectangle.setLeft(option.rect.width() - option.rect.height() - 5);
 
-		titleRectangle.setRight(option.rect.width() - option.rect.height() - 10);
+		textRectangle.setRight(option.rect.width() - option.rect.height() - 10);
 	}
 	else
 	{
 		decorationRectangle.setRight(option.rect.height());
 
-		titleRectangle.setLeft(option.rect.height());
+		textRectangle.setLeft(option.rect.height());
 	}
 
 	decorationRectangle = decorationRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
@@ -134,121 +121,79 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 	icon.paint(painter, decorationRectangle, option.decorationAlignment);
 
+	const QString highlight(isSearchSuggestion ? QString() : m_highlight);
+	const TextSegment urlSegment(url, option.palette.color(isSelected ? QPalette::HighlightedText : (isSearchSuggestion ? QPalette::Text : QPalette::Link)));
+	TextSegment descriptionSegment(description, (option.palette.color(isSelected ? QPalette::HighlightedText : QPalette::Text)));
+
+	textRectangle.adjust(2, 0, 2, 0);
+
 	if (m_displayMode == ColumnsMode)
 	{
-		const int maxUrlWidth(option.rect.width() / 2);
+		const int maxUrlWidth(textRectangle.width() / 2);
+		QRect urlRectangle(textRectangle);
+		urlRectangle.setRight(textRectangle.right() - 2 - maxUrlWidth);
 
-		url = option.fontMetrics.elidedText(url, Qt::ElideRight, (maxUrlWidth - 40));
-
-		painter->save();
-
-		if (isRightToLeft)
-		{
-			painter->translate((titleRectangle.right() - calculateLength(option, url)), topPosition);
-		}
-		else
-		{
-			painter->translate(titleRectangle.left(), topPosition);
-		}
-
-		document.setHtml(isSearchSuggestion ? url : highlightText(url));
-		document.documentLayout()->draw(painter, paintContext);
-
-		painter->restore();
+		drawCompletionText(painter, option.font, highlightSegments(highlight, {urlSegment}), urlRectangle, isRightToLeft);
 
 		if (!description.isEmpty())
 		{
-			painter->save();
+			QRect descriptionRectangle(textRectangle);
+			descriptionRectangle.setLeft(urlRectangle.right() + 4);
 
-			description = option.fontMetrics.elidedText(description, (isRightToLeft ? Qt::ElideLeft : Qt::ElideRight), (maxUrlWidth - 10));
-
-			if (isRightToLeft)
-			{
-				titleRectangle.setRight(maxUrlWidth);
-
-				painter->translate((titleRectangle.right() - calculateLength(option, description)), topPosition);
-			}
-			else
-			{
-				titleRectangle.setLeft(maxUrlWidth);
-
-				painter->translate(titleRectangle.left(), topPosition);
-			}
-
-			document.setHtml(highlightText(description));
-
-			if (option.state.testFlag(QStyle::State_Selected))
-			{
-				document.documentLayout()->draw(painter, paintContext);
-			}
-			else
-			{
-				document.drawContents(painter);
-			}
-
-			painter->restore();
+			drawCompletionText(painter, option.font, highlightSegments(highlight, {descriptionSegment}), descriptionRectangle, isRightToLeft);
 		}
-
-		return;
-	}
-
-	painter->save();
-
-	url = option.fontMetrics.elidedText(url, Qt::ElideRight, (option.rect.width() - 40));
-
-	if (isRightToLeft)
-	{
-		painter->translate((titleRectangle.right() - calculateLength(option, url)), topPosition);
 	}
 	else
 	{
-		painter->translate(titleRectangle.left(), topPosition);
-	}
-
-	document.setHtml(isSearchSuggestion ? url : highlightText(url));
-	document.documentLayout()->draw(painter, paintContext);
-
-	painter->restore();
-
-	if (!description.isEmpty())
-	{
-		const int urlLength(calculateLength(option, url + QLatin1Char(' ')));
-
-		if ((urlLength + 40) < titleRectangle.width())
+		if (description.isEmpty())
 		{
-			painter->save();
+			drawCompletionText(painter, option.font, highlightSegments(highlight, {urlSegment}), textRectangle, isRightToLeft);
+		}
+		else
+		{
+			descriptionSegment.text = QLatin1Char(' ') + QChar(8212) + QLatin1Char(' ') + descriptionSegment.text;
 
-			description = option.fontMetrics.elidedText(description, (isRightToLeft ? Qt::ElideLeft : Qt::ElideRight), (option.rect.width() - urlLength - 50));
+			drawCompletionText(painter, option.font, highlightSegments(highlight, {urlSegment, descriptionSegment}), textRectangle, isRightToLeft);
+		}
+	}
+}
 
-			if (isRightToLeft)
-			{
-				description.append(QLatin1String(" - "));
+void AddressDelegate::drawCompletionText(QPainter *painter, const QFont &font, const QVector<TextSegment> &segments, const QRect &rectangle, bool isRightToLeft) const
+{
+	QRect availableRectangle(rectangle);
+	QFont highlightFont(font);
+	highlightFont.setBold(true);
 
-				titleRectangle.setRight(option.rect.width() - calculateLength(option, description) - (urlLength + decorationRectangle.width() + 4));
+	const QFontMetrics fontMetrics(font);
+	const QFontMetrics highlightFontMetrics(highlightFont);
+	const int xLength(Utils::calculateTextWidth(QString(QLatin1Char('X')), highlightFontMetrics));
 
-				painter->translate(titleRectangle.right(), topPosition);
-			}
-			else
-			{
-				description.prepend(QLatin1String(" - "));
+	for (int i = 0; i < segments.count(); ++i)
+	{
+		const TextSegment segment(segments.at(i));
+		const QFontMetrics segmentFontMetrics(segment.isHighlighted ? highlightFontMetrics : fontMetrics);
+		const int maximumLength(availableRectangle.width() - xLength);
+		const int length(Utils::calculateTextWidth(segment.text, segmentFontMetrics));
 
-				titleRectangle.setLeft(urlLength + decorationRectangle.width() + 4);
+		painter->setFont(segment.isHighlighted ? highlightFont : font);
+		painter->setPen(segment.color);
 
-				painter->translate(titleRectangle.left(), topPosition);
-			}
+		if (length >= maximumLength)
+		{
+			painter->drawText(availableRectangle, Qt::AlignVCenter, Utils::elideText(segment.text, segmentFontMetrics, nullptr, maximumLength));
 
-			document.setHtml(highlightText(description));
+			break;
+		}
 
-			if (option.state.testFlag(QStyle::State_Selected))
-			{
-				document.documentLayout()->draw(painter, paintContext);
-			}
-			else
-			{
-				document.drawContents(painter);
-			}
+		painter->drawText(availableRectangle, Qt::AlignVCenter, segment.text);
 
-			painter->restore();
+		if (isRightToLeft)
+		{
+			availableRectangle.setRight(availableRectangle.right() - length);
+		}
+		else
+		{
+			availableRectangle.setLeft(availableRectangle.left() + length);
 		}
 	}
 }
@@ -261,35 +206,49 @@ void AddressDelegate::handleOptionChanged(int identifier, const QVariant &value)
 	}
 }
 
-QString AddressDelegate::highlightText(const QString &text, const QString &html) const
+QVector<AddressDelegate::TextSegment> AddressDelegate::highlightSegments(const QString &highlight, const QVector<TextSegment> &segments) const
 {
-	const int index(text.indexOf(m_highlight, 0, Qt::CaseInsensitive));
-
-	if (m_highlight.isEmpty() || index < 0)
+	if (highlight.isEmpty())
 	{
-		return (html + text);
+		return segments;
 	}
 
-	return highlightText(text.mid(index + m_highlight.length()), html + text.left(index) + QStringLiteral("<b>%1</b>").arg(text.mid(index, m_highlight.length())));
-}
+	QVector<TextSegment> highlightedSegments;
 
-int AddressDelegate::calculateLength(const QStyleOptionViewItem &option, const QString &text, int length) const
-{
-	const int index(text.indexOf(m_highlight, 0, Qt::CaseInsensitive));
-
-	if (m_highlight.isEmpty() || index < 0)
+	for (int i = 0; i < segments.count(); ++i)
 	{
-		return (length + Utils::calculateTextWidth(text, option.fontMetrics));
+		const TextSegment segment(segments.at(i));
+		const QStringList subSegments(segment.text.split(highlight, QString::KeepEmptyParts, Qt::CaseInsensitive));
+		int highlightAmount(0);
+
+		for (int j = 0; j < subSegments.count(); ++j)
+		{
+			if (subSegments.at(j).isEmpty())
+			{
+				if (j > 0)
+				{
+					++highlightAmount;
+				}
+
+				if (j >= (subSegments.count() - 1) || !subSegments.at(j + 1).isEmpty())
+				{
+					highlightedSegments.append(TextSegment(highlight.repeated(highlightAmount), segment.color, true));
+
+					highlightAmount = 0;
+
+					continue;
+				}
+			}
+			else if (j > 0)
+			{
+				highlightedSegments.append(TextSegment(highlight.repeated(highlightAmount + 1), segment.color, true));
+			}
+
+			highlightedSegments.append(TextSegment(subSegments.at(j), segment.color));
+		}
 	}
 
-	length += Utils::calculateTextWidth(text.left(index), option.fontMetrics);
-
-	QStyleOptionViewItem highlightedOption(option);
-	highlightedOption.font.setBold(true);
-
-	length += Utils::calculateTextWidth(text.mid(index, m_highlight.length()), highlightedOption.fontMetrics);
-
-	return calculateLength(option, text.mid(index + m_highlight.length()), length);
+	return highlightedSegments;
 }
 
 QSize AddressDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -1171,9 +1130,6 @@ void AddressWidget::updateCurrentEntries()
 
 void AddressWidget::updateGeometries()
 {
-///TODO custom drawing of completion entries drawCompletionText(QVector<QPair<QString, QColor> > texts, QString highlightedText, QRect rectangle)
-/// "x" as moving widget handled by view, setting role on model, or checking for hover flag in delegate, smaller rectangle
-/// add tooltip for dropdown? needs exception in handleOptionChanged(), or moving of titles to switch as fallback for empty text in definition
 	QVector<EntryDefinition> leadingEntries;
 	QVector<EntryDefinition> trailingEntries;
 	const int offset(qMax(((height() - 16) / 2), 2));

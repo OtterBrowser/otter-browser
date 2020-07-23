@@ -60,8 +60,19 @@ public:
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
 protected:
-	QString highlightText(const QString &text, const QString &html = {}) const;
-	int calculateLength(const QStyleOptionViewItem &option, const QString &text, int length = 0) const;
+	struct TextSegment final
+	{
+		QString text;
+		QColor color;
+		bool isHighlighted = false;
+
+		explicit TextSegment(const QString &textValue, const QColor &colorValue, bool isHighlightedValue = false) : text(textValue), color(colorValue), isHighlighted(isHighlightedValue)
+		{
+		}
+	};
+
+	void drawCompletionText(QPainter *painter, const QFont &font, const QVector<TextSegment> &segments, const QRect &rectangle, bool isRightToLeft) const;
+	QVector<TextSegment> highlightSegments(const QString &highlight, const QVector<TextSegment> &segments) const;
 
 protected slots:
 	void handleOptionChanged(int identifier, const QVariant &value);
