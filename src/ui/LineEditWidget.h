@@ -23,6 +23,7 @@
 
 #include "ItemViewWidget.h"
 #include "../core/ActionExecutor.h"
+#include "../core/Utils.h"
 
 #include <QtWidgets/QCompleter>
 #include <QtWidgets/QLineEdit>
@@ -45,13 +46,17 @@ public slots:
 	void updateHeight();
 
 protected:
+	void changeEvent(QEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
 	void keyPressEvent(QKeyEvent *event) override;
 
 protected slots:
 	void handleIndexEntered(const QModelIndex &index);
+	void updateRemoveButton(const QModelIndex &index, TrileanValue isVisible = UnknownValue);
 
 private:
 	LineEditWidget *m_lineEditWidget;
+	QToolButton *m_removeButton;
 };
 
 class LineEditWidget : public QLineEdit, public ActionExecutor
@@ -75,9 +80,11 @@ public:
 	virtual void hidePopup();
 	void setDropMode(DropMode mode);
 	void setClearOnEscape(bool clear);
+	void setPopupEntryRemovableRole(int role);
 	void setSelectAllOnFocus(bool select);
 	PopupViewWidget* getPopup();
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters) const override;
+	int isPopupEntryRemovableRole() const;
 	bool isPopupVisible() const;
 
 public slots:
@@ -105,6 +112,7 @@ private:
 	QCompleter *m_completer;
 	QString m_completion;
 	DropMode m_dropMode;
+	int m_isPopupEntryRemovableRole;
 	int m_selectionStart;
 	bool m_shouldClearOnEscape;
 	bool m_shouldIgnoreCompletion;
@@ -116,6 +124,7 @@ private:
 signals:
 	void arbitraryActionsStateChanged(const QVector<int> &identifiers);
 	void popupClicked(const QModelIndex &index);
+	void requestedPopupEntryRemoval(const QModelIndex &index);
 	void textDropped(const QString &text);
 };
 

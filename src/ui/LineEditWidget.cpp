@@ -23,6 +23,7 @@
 #include "MainWindow.h"
 #include "ToolBarWidget.h"
 #include "../core/NotesManager.h"
+#include "../core/ThemesManager.h"
 
 #include <QtCore/QMimeData>
 #include <QtCore/QStringListModel>
@@ -30,12 +31,14 @@
 #include <QtGui/QClipboard>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
 
 PopupViewWidget::PopupViewWidget(LineEditWidget *parent) : ItemViewWidget(nullptr),
-	m_lineEditWidget(parent)
+	m_lineEditWidget(parent),
+	m_removeButton(nullptr)
 {
 	setContextMenuPolicy(Qt::CustomContextMenu);
 	setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -47,8 +50,43 @@ PopupViewWidget::PopupViewWidget(LineEditWidget *parent) : ItemViewWidget(nullpt
 	viewport()->setMouseTracking(true);
 	viewport()->installEventFilter(this);
 
+	if (m_lineEditWidget && parent->isPopupEntryRemovableRole() >= 0)
+	{
+		m_removeButton = new QToolButton(this);
+		m_removeButton->setAutoRaise(true);
+		m_removeButton->setIcon(ThemesManager::createIcon(QLatin1String("window-close")));
+		m_removeButton->setToolTip(tr("Remove Entry"));
+		m_removeButton->hide();
+
+		connect(m_removeButton, &QToolButton::clicked, this, [&]()
+		{
+			emit m_lineEditWidget->requestedPopupEntryRemoval(currentIndex());
+		});
+		connect(this, &PopupViewWidget::needsActionsUpdate, this, [&]()
+		{
+			updateRemoveButton(currentIndex());
+		});
+	}
+
 	connect(this, &PopupViewWidget::needsActionsUpdate, this, &PopupViewWidget::updateHeight);
 	connect(this, &PopupViewWidget::entered, this, &PopupViewWidget::handleIndexEntered);
+}
+
+void PopupViewWidget::changeEvent(QEvent *event)
+{
+	ItemViewWidget::changeEvent(event);
+
+	if (m_removeButton && event->type() == QEvent::LanguageChange)
+	{
+		m_removeButton->setToolTip(tr("Remove Entry"));
+	}
+}
+
+void PopupViewWidget::resizeEvent(QResizeEvent *event)
+{
+	ItemViewWidget::changeEvent(event);
+
+	updateRemoveButton(currentIndex());
 }
 
 void PopupViewWidget::keyPressEvent(QKeyEvent *event)
@@ -118,9 +156,36 @@ void PopupViewWidget::handleIndexEntered(const QModelIndex &index)
 		setCurrentIndex(index);
 	}
 
+	updateRemoveButton(index, TrueValue);
+
 	QStatusTipEvent statusTipEvent(index.data(Qt::StatusTipRole).toString());
 
 	QApplication::sendEvent(m_lineEditWidget, &statusTipEvent);
+}
+
+void PopupViewWidget::updateRemoveButton(const QModelIndex &index, TrileanValue isVisible)
+{
+	if (!m_lineEditWidget || !m_removeButton)
+	{
+		return;
+	}
+
+	if (isVisible == UnknownValue)
+	{
+		isVisible = ((index.isValid() && index == indexAt(mapFromGlobal(QCursor::pos()))) ? TrueValue : FalseValue);
+	}
+
+	if (isVisible == TrueValue && index.isValid() && index.data(m_lineEditWidget->isPopupEntryRemovableRole()).toBool())
+	{
+		const QRect rectangle(visualRect(index));
+
+		m_removeButton->move((rectangle.right() - m_removeButton->width()), rectangle.top());
+		m_removeButton->show();
+	}
+	else
+	{
+		m_removeButton->hide();
+	}
 }
 
 void PopupViewWidget::updateHeight()
@@ -147,6 +212,8 @@ bool PopupViewWidget::event(QEvent *event)
 		case QEvent::Leave:
 			if (m_lineEditWidget)
 			{
+				updateRemoveButton({}, FalseValue);
+
 				QString statusTip;
 				QStatusTipEvent statusTipEvent(statusTip);
 
@@ -180,6 +247,7 @@ LineEditWidget::LineEditWidget(const QString &text, QWidget *parent) : QLineEdit
 	m_popupViewWidget(nullptr),
 	m_completer(nullptr),
 	m_dropMode(PasteDropMode),
+	m_isPopupEntryRemovableRole(-1),
 	m_selectionStart(-1),
 	m_shouldClearOnEscape(false),
 	m_shouldIgnoreCompletion(false),
@@ -195,6 +263,7 @@ LineEditWidget::LineEditWidget(QWidget *parent) : QLineEdit(parent),
 	m_popupViewWidget(nullptr),
 	m_completer(nullptr),
 	m_dropMode(PasteDropMode),
+	m_isPopupEntryRemovableRole(-1),
 	m_selectionStart(-1),
 	m_shouldClearOnEscape(false),
 	m_shouldIgnoreCompletion(false),
@@ -583,6 +652,11 @@ void LineEditWidget::setClearOnEscape(bool clear)
 	m_shouldClearOnEscape = clear;
 }
 
+void LineEditWidget::setPopupEntryRemovableRole(int role)
+{
+	m_isPopupEntryRemovableRole = role;
+}
+
 void LineEditWidget::setSelectAllOnFocus(bool select)
 {
 	if (m_shouldSelectAllOnFocus && !select)
@@ -665,6 +739,11 @@ ActionsManager::ActionDefinition::State LineEditWidget::getActionState(int ident
 	}
 
 	return state;
+}
+
+int LineEditWidget::isPopupEntryRemovableRole() const
+{
+	return m_isPopupEntryRemovableRole;
 }
 
 bool LineEditWidget::isPopupVisible() const
