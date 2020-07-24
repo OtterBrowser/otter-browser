@@ -76,9 +76,23 @@ void PopupViewWidget::changeEvent(QEvent *event)
 {
 	ItemViewWidget::changeEvent(event);
 
-	if (m_removeButton && event->type() == QEvent::LanguageChange)
+	if (m_removeButton)
 	{
-		m_removeButton->setToolTip(tr("Remove Entry"));
+		switch (event->type())
+		{
+			case QEvent::LanguageChange:
+				m_removeButton->setToolTip(tr("Remove Entry"));
+
+				updateRemoveButton(currentIndex());
+
+				break;
+			case QEvent::LayoutDirectionChange:
+				updateRemoveButton(currentIndex());
+
+				break;
+			default:
+				break;
+		}
 	}
 }
 
@@ -178,8 +192,10 @@ void PopupViewWidget::updateRemoveButton(const QModelIndex &index, TrileanValue 
 	if (isVisible == TrueValue && index.isValid() && index.data(m_lineEditWidget->isPopupEntryRemovableRole()).toBool())
 	{
 		const QRect rectangle(visualRect(index));
+		const int size(rectangle.height() - 4);
 
-		m_removeButton->move((rectangle.right() - m_removeButton->width()), rectangle.top());
+		m_removeButton->setFixedSize(size, size);
+		m_removeButton->move((isLeftToRight() ? (rectangle.right() - m_removeButton->width()) : rectangle.left()), (rectangle.top() + 2));
 		m_removeButton->show();
 	}
 	else
