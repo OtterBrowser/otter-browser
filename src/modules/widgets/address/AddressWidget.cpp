@@ -93,6 +93,18 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 	if (isSelected)
 	{
 		painter->fillRect(option.rect, option.palette.color(QPalette::Highlight));
+
+		if (index.data(AddressCompletionModel::IsRemovableRole).toBool())
+		{
+			if (isRightToLeft)
+			{
+				textRectangle.setLeft(textRectangle.left() + option.rect.height());
+			}
+			else
+			{
+				textRectangle.setRight(textRectangle.right() - option.rect.height());
+			}
+		}
 	}
 
 	QRect decorationRectangle(option.rect);
