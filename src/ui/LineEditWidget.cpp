@@ -57,6 +57,7 @@ PopupViewWidget::PopupViewWidget(LineEditWidget *parent) : ItemViewWidget(nullpt
 		m_removeButton->setIcon(ThemesManager::createIcon(QLatin1String("window-close")));
 		m_removeButton->setToolTip(tr("Remove Entry"));
 		m_removeButton->hide();
+		m_removeButton->installEventFilter(this);
 
 		connect(m_removeButton, &QToolButton::clicked, this, [&]()
 		{
@@ -217,6 +218,21 @@ void PopupViewWidget::updateHeight()
 	setFixedHeight(completionHeight);
 
 	viewport()->setFixedHeight(completionHeight - 3);
+}
+
+bool PopupViewWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (object == m_removeButton && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonRelease))
+	{
+		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+
+		if (mouseEvent->button() != Qt::LeftButton)
+		{
+			return true;
+		}
+	}
+
+	return ItemViewWidget::eventFilter(object, event);
 }
 
 bool PopupViewWidget::event(QEvent *event)

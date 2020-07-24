@@ -40,6 +40,7 @@ class PopupViewWidget final : public ItemViewWidget
 public:
 	explicit PopupViewWidget(LineEditWidget *parent);
 
+	bool eventFilter(QObject *object, QEvent *event) override;
 	bool event(QEvent *event) override;
 
 public slots:
