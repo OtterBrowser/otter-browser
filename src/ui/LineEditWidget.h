@@ -123,7 +123,7 @@ private:
 
 signals:
 	void arbitraryActionsStateChanged(const QVector<int> &identifiers);
-	void popupClicked(const QModelIndex &index);
+	void popupEntryClicked(const QModelIndex &index);
 	void requestedPopupEntryRemoval(const QModelIndex &index);
 	void textDropped(const QString &text);
 };

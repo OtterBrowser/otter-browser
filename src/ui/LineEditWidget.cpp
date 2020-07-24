@@ -677,7 +677,7 @@ PopupViewWidget* LineEditWidget::getPopup()
 	{
 		m_popupViewWidget = new PopupViewWidget(this);
 
-		connect(m_popupViewWidget, &PopupViewWidget::clicked, this, &LineEditWidget::popupClicked);
+		connect(m_popupViewWidget, &PopupViewWidget::clicked, this, &LineEditWidget::popupEntryClicked);
 	}
 
 	return m_popupViewWidget;

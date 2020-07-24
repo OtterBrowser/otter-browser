@@ -163,7 +163,7 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : LineEditWidget(par
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &SearchWidget::handleOptionChanged);
 	connect(this, &SearchWidget::textChanged, this, &SearchWidget::setQuery);
 	connect(this, &SearchWidget::textDropped, this, &SearchWidget::sendRequest);
-	connect(this, &SearchWidget::popupClicked, this, [&](const QModelIndex &index)
+	connect(this, &SearchWidget::popupEntryClicked, this, [&](const QModelIndex &index)
 	{
 		if (m_suggester && getPopup()->model() == m_suggester->getModel())
 		{
