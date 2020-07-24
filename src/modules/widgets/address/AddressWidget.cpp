@@ -285,6 +285,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(p
 		m_isSimplified = true;
 	}
 
+	setPopupEntryRemovableRole(AddressCompletionModel::IsRemovableRole);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	setMinimumWidth(100);
 	setWindow(window);
@@ -306,6 +307,15 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(p
 		}
 	}
 
+	connect(this, &AddressWidget::requestedPopupEntryRemoval, [&](const QModelIndex &index)
+	{
+		if (index.isValid())
+		{
+			HistoryManager::getTypedHistoryModel()->removeEntry(index.data(AddressCompletionModel::HistoryIdentifierRole).toULongLong());
+
+			updateCompletion(true, true);
+		}
+	});
 	connect(this, &AddressWidget::textEdited, this, [&]()
 	{
 		m_wasEdited = true;
