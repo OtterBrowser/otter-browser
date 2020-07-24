@@ -272,6 +272,8 @@ QVariant AddressCompletionModel::data(const QModelIndex &index, int role) const
 				return m_completions.at(index.row()).icon;
 			case HistoryIdentifierRole:
 				return (m_completions.at(index.row()).historyIdentifier);
+			case IsRemovableRole:
+				return (m_completions.at(index.row()).type == CompletionEntry::TypedInHistoryType);
 			case TextRole:
 				return (m_completions.at(index.row()).text.isEmpty() ? m_completions.at(index.row()).url.toString() : m_completions.at(index.row()).text);
 			case UrlRole:

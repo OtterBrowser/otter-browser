@@ -54,6 +54,7 @@ public:
 		UrlRole = Qt::StatusTipRole,
 		TitleRole = Qt::UserRole,
 		HistoryIdentifierRole,
+		IsRemovableRole,
 		MatchRole,
 		KeywordRole,
 		TypeRole,
