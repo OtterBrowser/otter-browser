@@ -66,6 +66,8 @@ protected:
 		QColor color;
 		bool isHighlighted = false;
 
+		explicit TextSegment() = default;
+
 		explicit TextSegment(const QString &textValue, const QColor &colorValue, bool isHighlightedValue = false) : text(textValue), color(colorValue), isHighlighted(isHighlightedValue)
 		{
 		}
