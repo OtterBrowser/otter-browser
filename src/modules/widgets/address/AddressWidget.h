@@ -152,7 +152,6 @@ protected:
 
 protected slots:
 	void openUrl(const QString &url);
-	void removeEntry();
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleActionsStateChanged(const QVector<int> &identifiers);
 	void handleIconChanged();

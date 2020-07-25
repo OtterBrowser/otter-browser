@@ -521,7 +521,23 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 			menu.addSeparator();
 		}
 
-		menu.addAction(tr("Remove Icon"), this, &AddressWidget::removeEntry)->setData(entry);
+		menu.addAction(tr("Remove Icon"), this, [&]()
+		{
+			const QAction *action(qobject_cast<QAction*>(sender()));
+
+			if (action)
+			{
+				QStringList layout(SettingsManager::getOption(SettingsManager::AddressField_LayoutOption).toStringList());
+				QString name(EnumeratorMapper(metaObject()->enumerator(m_entryIdentifierEnumerator), QLatin1String("Entry")).mapToName(action->data().toInt()));
+
+				if (!name.isEmpty())
+				{
+					layout.removeAll(name);
+
+					SettingsManager::setOption(SettingsManager::AddressField_LayoutOption, layout);
+				}
+			}
+		})->setData(entry);
 	}
 
 	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
@@ -728,24 +744,6 @@ void AddressWidget::openUrl(const QString &url)
 {
 	setUrl(url);
 	handleUserInput(url, SessionsManager::CurrentTabOpen);
-}
-
-void AddressWidget::removeEntry()
-{
-	const QAction *action(qobject_cast<QAction*>(sender()));
-
-	if (action)
-	{
-		QStringList layout(SettingsManager::getOption(SettingsManager::AddressField_LayoutOption).toStringList());
-		QString name(EnumeratorMapper(metaObject()->enumerator(m_entryIdentifierEnumerator), QLatin1String("Entry")).mapToName(action->data().toInt()));
-
-		if (!name.isEmpty())
-		{
-			layout.removeAll(name);
-
-			SettingsManager::setOption(SettingsManager::AddressField_LayoutOption, layout);
-		}
-	}
 }
 
 void AddressWidget::showCompletion(bool isTypedHistory)
