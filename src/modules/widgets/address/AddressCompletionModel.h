@@ -69,7 +69,7 @@ public:
 			HeaderType,
 			BookmarkType,
 			HistoryType,
-			TypedInHistoryType,
+			TypedHistoryType,
 			SearchSuggestionType,
 			SpecialPageType,
 			LocalPathType

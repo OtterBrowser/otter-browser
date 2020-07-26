@@ -163,7 +163,7 @@ void AddressCompletionModel::updateModel()
 
 		for (int i = 0; i < entries.count(); ++i)
 		{
-			completions.append(CompletionEntry(entries.at(i).entry->getUrl(), entries.at(i).entry->getTitle(), entries.at(i).match, entries.at(i).entry->getIcon(), entries.at(i).entry->getTimeVisited(), (entries.at(i).isTypedIn ? CompletionEntry::TypedInHistoryType : CompletionEntry::HistoryType)));
+			completions.append(CompletionEntry(entries.at(i).entry->getUrl(), entries.at(i).entry->getTitle(), entries.at(i).match, entries.at(i).entry->getIcon(), entries.at(i).entry->getTimeVisited(), (entries.at(i).isTypedIn ? CompletionEntry::TypedHistoryType : CompletionEntry::HistoryType)));
 		}
 	}
 
@@ -178,7 +178,7 @@ void AddressCompletionModel::updateModel()
 
 		for (int i = 0; i < entries.count(); ++i)
 		{
-			completions.append(CompletionEntry(entries.at(i).entry->getUrl(), entries.at(i).entry->getTitle(), entries.at(i).match, entries.at(i).entry->getIcon(), entries.at(i).entry->getTimeVisited(), CompletionEntry::TypedInHistoryType, entries.at(i).entry->getIdentifier()));
+			completions.append(CompletionEntry(entries.at(i).entry->getUrl(), entries.at(i).entry->getTitle(), entries.at(i).match, entries.at(i).entry->getIcon(), entries.at(i).entry->getTimeVisited(), CompletionEntry::TypedHistoryType, entries.at(i).entry->getIdentifier()));
 		}
 	}
 
@@ -273,7 +273,7 @@ QVariant AddressCompletionModel::data(const QModelIndex &index, int role) const
 			case HistoryIdentifierRole:
 				return (m_completions.at(index.row()).historyIdentifier);
 			case IsRemovableRole:
-				return (m_completions.at(index.row()).type == CompletionEntry::TypedInHistoryType);
+				return (m_completions.at(index.row()).type == CompletionEntry::TypedHistoryType);
 			case TextRole:
 				return (m_completions.at(index.row()).text.isEmpty() ? m_completions.at(index.row()).url.toString() : m_completions.at(index.row()).text);
 			case UrlRole:
