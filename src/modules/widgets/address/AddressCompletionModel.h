@@ -85,7 +85,7 @@ public:
 		quint64 historyIdentifier = 0;
 		EntryType type = UnknownType;
 
-		explicit CompletionEntry(const QUrl &urlValue, const QString &titleValue, const QString &matchValue, const QIcon &iconValue, const QDateTime &timeVisitedValue, EntryType typeValue, quint64 historyIdentifierValue = 0) : title(titleValue), match(matchValue), url(urlValue), icon(iconValue), timeVisited(timeVisitedValue), type(typeValue), historyIdentifier(historyIdentifierValue)
+		explicit CompletionEntry(const QUrl &urlValue, const QString &titleValue, const QString &matchValue, const QIcon &iconValue, const QDateTime &timeVisitedValue, EntryType typeValue, quint64 historyIdentifierValue = 0) : title(titleValue), match(matchValue), url(urlValue), icon(iconValue), timeVisited(timeVisitedValue), historyIdentifier(historyIdentifierValue), type(typeValue)
 		{
 		}
 
