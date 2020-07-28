@@ -321,7 +321,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(p
 
 	connect(this, &AddressWidget::requestedPopupEntryRemoval, [&](const QModelIndex &index)
 	{
-		if (index.isValid() && index.data(AddressCompletionModel::IsRemovableRole).toBool() && index.data(AddressCompletionModel::TypeRole).toInt() == AddressCompletionModel::CompletionEntry::TypedInHistoryType)
+		if (index.isValid() && index.data(AddressCompletionModel::IsRemovableRole).toBool() && index.data(AddressCompletionModel::TypeRole).toInt() == AddressCompletionModel::CompletionEntry::TypedHistoryType)
 		{
 			HistoryManager::getTypedHistoryModel()->removeEntry(index.data(AddressCompletionModel::HistoryIdentifierRole).toULongLong());
 
@@ -781,7 +781,7 @@ void AddressWidget::showCompletion(bool isTypedHistory)
 			{
 				const QModelIndex index(getPopup()->indexAt(position));
 
-				if (index.isValid() && index.data(AddressCompletionModel::IsRemovableRole).toBool() && index.data(AddressCompletionModel::TypeRole).toInt() == AddressCompletionModel::CompletionEntry::TypedInHistoryType)
+				if (index.isValid() && index.data(AddressCompletionModel::IsRemovableRole).toBool() && index.data(AddressCompletionModel::TypeRole).toInt() == AddressCompletionModel::CompletionEntry::TypedHistoryType)
 				{
 					QMenu menu(this);
 					menu.addAction(tr("Remove Entry"), this, [&]()
