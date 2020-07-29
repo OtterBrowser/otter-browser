@@ -145,7 +145,12 @@ def deploy_windows(qt_path, source_path, build_path, target_path, extra_libs):
 			shutil.copy(file, target_installer_path)
 
 	for pattern in extra_libs:
-		for file in glob.glob(pattern):
+		matches = glob.glob(pattern)
+
+		if len(matches) == 0:
+			sys.exit('error: failed to locate {}'.format(pattern))
+
+		for file in matches:
 			shutil.copy(file, target_installer_path)
 
 	redundant_plugins = ['playlistformats', 'position', 'qmltooling', 'scenegraph', 'sensorgestures', 'sensors']
