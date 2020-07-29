@@ -120,8 +120,12 @@ def deploy_linux(qt_path, source_path, build_path, target_path, extra_libs, disa
 	shutil.rmtree(appimage_path)
 
 def deploy_windows(qt_path, source_path, build_path, target_path, extra_libs):
+	windeployqt_command = os.path.join(qt_path, r'bin\windeployqt.exe')
 	seven_z_command = r'C:\Program Files\7-Zip\7z.exe'
 	inno_setup_command = r'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
+
+	if not os.path.isfile(windeployqt_command):
+		sys.exit('error: failed to locate "{}"'.format(windeployqt_command))
 
 	if not os.path.isfile(seven_z_command):
 		seven_z_command = get_executable('7z.exe', is_optional=True)
@@ -135,7 +139,7 @@ def deploy_windows(qt_path, source_path, build_path, target_path, extra_libs):
 	shutil.copy(os.path.join(build_path, 'otter-browser.exe'), target_installer_path)
 	shutil.copy(os.path.join(source_path, 'COPYING'), target_installer_path)
 	deploy_locale(source_path, os.path.join(target_path, 'input'))
-	run_command([escape_windows_executable_path(os.path.join(qt_path, r'bin\windeployqt.exe')), os.path.join(target_path, r'input\otter-browser.exe')])
+	run_command([escape_windows_executable_path(windeployqt_command), os.path.join(target_path, r'input\otter-browser.exe')])
 
 	dlls_path = os.path.join(qt_path, 'bin')
 	extra_dlls = ['libxml2*.dll', 'libxslt*.dll']
