@@ -1,95 +1,95 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="tr" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="hi_IN" version="2.1">
 <context>
     <name>Otter::AcceptCookieDialog</name>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="14"/>
         <source>Accept Cookie</source>
-        <translation>Çerezi Kabul Et</translation>
+        <translation>कुकीज़ स्वीकारें</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="35"/>
         <source>Name:</source>
-        <translation>Ad:</translation>
+        <translation>नाम :</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="45"/>
         <source>Value:</source>
-        <translation>Değer:</translation>
+        <translation>मान :</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="55"/>
         <source>Expiration date:</source>
-        <translation>Zaman aşımı:</translation>
+        <translation>मान्यता समाप्ति दिनांक :</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="69"/>
         <source>Send for:</source>
-        <translation type="unfinished"/>
+        <translation>हेतु भेजें :</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="83"/>
         <source>Accessible using JavaScript:</source>
-        <translation>JavaScript kullanılarak erişilebilir:</translation>
+        <translation>जावा स्क्रिप्ट द्वारा अभिगम :</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="100"/>
         <source>Domain:</source>
-        <translation>Alan adı:</translation>
+        <translation>डोमेन :</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="47"/>
         <source>Website %1 requested to add new cookie.</source>
-        <translation>%1 web sitesi yeni çerez eklemek istedi.</translation>
+        <translation>वेबसाइट %1 द्वारा नई कुकी जोड़ने हेतु अनुरोध।</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="51"/>
         <source>Website %1 requested to update existing cookie.</source>
-        <translation>%1 web sitesi mevcut çerezin güncellenmesini istedi.</translation>
+        <translation>वेबसाइट %1 द्वारा मौजूदा कुकी अपडेट करने हेतु अनुरोध।</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="55"/>
         <source>Website %1 requested to remove existing cookie.</source>
-        <translation>%1 web sitesi mevcut çerezin kaldırılmasını istedi.</translation>
+        <translation>वेबसाइट %1 द्वारा मौजूदा कुकी हटाने हेतु अनुरोध।</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
         <source>This session only</source>
-        <translation>Sadece bu oturum</translation>
+        <translation>केवल इस सत्र हेतु</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
         <source>Secure connections only</source>
-        <translation>Sadece korumalı bağlantılar</translation>
+        <translation>केवल सुरक्षित कनेक्शन</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
         <source>Any type of connection</source>
-        <translation>Her türlü bağlantı</translation>
+        <translation>किसी भी प्रकार का कनेक्शन</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="63"/>
         <source>Yes</source>
-        <translation>Evet</translation>
+        <translation>हाँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="63"/>
         <source>No</source>
-        <translation>Hayır</translation>
+        <translation>नहीं</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="64"/>
         <source>Accept</source>
-        <translation>Kabul Et</translation>
+        <translation>स्वीकारें</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="68"/>
         <source>Accept For This Session Only</source>
-        <translation>Sadece Bu Oturum için Kabul Et</translation>
+        <translation>केवल इस सत्र हेतु स्वीकारें</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="71"/>
         <source>Discard</source>
-        <translation>Göz Ardı Et</translation>
+        <translation>निरस्त करें</translation>
     </message>
 </context>
 <context>
@@ -97,71 +97,71 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="14"/>
         <source>Preferred Webpage Language</source>
-        <translation>Tercih Edilen Sayfa Dili:</translation>
+        <translation>वेब पृष्ठ हेतु इच्छित भाषा</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="20"/>
         <source>To add language, please choose one from list or type its code.</source>
-        <translation>Dil eklemek için, lütfen listeden bir tane seçin veya kodunu yazın.</translation>
+        <translation>भाषा जोड़ने हेतु, सूची में से इच्छित भाषा चुनें या भाषीय कोड दर्ज करें।</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="39"/>
         <source>Add</source>
-        <translation>Ekle</translation>
+        <translation>जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="82"/>
         <source>Remove</source>
-        <translation>Sil</translation>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="107"/>
         <source>Move Up</source>
-        <translation>Yukarı Taşı</translation>
+        <translation>ऊपर ले जाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="133"/>
         <source>Move Down</source>
-        <translation>Aşağı Taşı</translation>
+        <translation>नीचे लाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="38"/>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="113"/>
         <source>Name</source>
-        <translation>Ad</translation>
+        <translation>नाम</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="38"/>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="113"/>
         <source>Code</source>
-        <translation>Kod</translation>
+        <translation>कोड</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="61"/>
         <source>Unknown [%1]</source>
-        <translation>Bilinmeyen [%1]</translation>
+        <translation>अज्ञात [%1]</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="78"/>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="142"/>
         <source>Any other</source>
-        <translation>Başka</translation>
+        <translation>अन्य</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="79"/>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="146"/>
         <source>System language (%1 - %2)</source>
-        <translation>Sistem dili (%1 - %2)</translation>
+        <translation>सिस्टम भाषा (%1 - %2)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="154"/>
         <source>Custom</source>
-        <translation>Özelleştirme</translation>
+        <translation>अनुकूलित</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="158"/>
         <source>Unknown</source>
-        <translation>Bilinmeyen</translation>
+        <translation>अज्ञात</translation>
     </message>
 </context>
 <context>
@@ -169,7 +169,7 @@
     <message>
         <location filename="../../src/ui/Action.cpp" line="119"/>
         <source>Creating instance of deprecated action: %1</source>
-        <translation>Kaldırılmış eylem örneği oluşturma :%1</translation>
+        <translation>बहिष्कृत कार्य हेतु आवृत्ति बनाई जा रही है : %1</translation>
     </message>
 </context>
 <context>
@@ -177,12 +177,12 @@
     <message>
         <location filename="../../src/ui/ActionComboBoxWidget.cpp" line="84"/>
         <source>Select Action</source>
-        <translation>Eylem Seç</translation>
+        <translation>कार्य चुनें</translation>
     </message>
     <message>
         <location filename="../../src/ui/ActionComboBoxWidget.cpp" line="155"/>
         <source>Search…</source>
-        <translation>Ara...</translation>
+        <translation>खोजें...</translation>
     </message>
 </context>
 <context>
@@ -190,7 +190,7 @@
     <message>
         <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="708"/>
         <source>(Unknown)</source>
-        <translation>(Bilinmeyen)</translation>
+        <translation>(अज्ञात)</translation>
     </message>
 </context>
 <context>
@@ -198,94 +198,94 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Ara...</translation>
+        <translation>खोजें...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="79"/>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="119"/>
         <source>User Scripts</source>
-        <translation>Kullanıcı Betikleri</translation>
+        <translation>उपयोक्ता स्क्रिप्ट</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="147"/>
         <source>Select Files</source>
-        <translation>Dosya Seç</translation>
+        <translation>फाइलें चुनें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="147"/>
         <source>User Script files (*.js)</source>
-        <translation>Kullanıcı Betik dosyaları (*.js)</translation>
+        <translation>उपयोक्ता स्क्रिप्ट फाइलें (*.js)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="183"/>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="365"/>
         <source>Question</source>
-        <translation>Soru</translation>
+        <translation>प्रश्न</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="184"/>
         <source>User Script with this name already exists:
 %1</source>
-        <translation>Bu adla Kullanıcı Betiği zaten var:
+        <translation>इस नाम की उपयोक्ता स्क्रिप्ट पहले से मौजूद है :
 %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="185"/>
         <source>Do you want to replace it?</source>
-        <translation>Değiştirmek ister misiniz?</translation>
+        <translation>क्या आप इसे बदलना चाहते हैं?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="192"/>
         <source>Apply to all</source>
-        <translation>Tümüne uygula</translation>
+        <translation>सभी पर लागू करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="237"/>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation>त्रुटि</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="237"/>
         <source>Failed to import following User Script file(s):
 %1</source>
-        <translation><numerusform>Aşağıdaki Kullanıcı Betik dosyası içe aktarılamadı:
-%1</numerusform><numerusform>Aşağıdaki Kullanıcı Betik dosyaları içe aktarılamadı:
+        <translation><numerusform>निम्नलिखित उपयोक्ता स्क्रिप्ट फाइल आयात करने में विफल :
+%1</numerusform><numerusform>निम्नलिखित उपयोक्ता स्क्रिप्ट फाइलें आयात करने में विफल :
 %1</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="366"/>
         <source>You are about to irreversibly remove %n addon(s).</source>
-        <translation><numerusform>%n eklentisini geri dönüşümsüz biçimde kaldırmak üzeresiniz.</numerusform><numerusform>%n eklentilerini geri dönüşümsüz biçimde kaldırmak üzeresiniz.</numerusform></translation>
+        <translation><numerusform>%n पूरक साधन स्थायी रूप से हटेंगे।</numerusform><numerusform>%n पूरक साधन स्थायी रूप से हटेंगे।</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="367"/>
         <source>Do you want to continue?</source>
-        <translation>Devam etmek istiyor musunuz?</translation>
+        <translation>क्या आप जारी रखना चाहते हैं?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="433"/>
         <source>Add Addon…</source>
-        <translation>Eklenti Ekle...</translation>
+        <translation>पूरक साधन जोड़ें ...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="439"/>
         <source>Open Addon File</source>
-        <translation>Eklenti Dosyası Aç</translation>
+        <translation>पूरक साधन फाइल खोलें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="440"/>
         <source>Reload Addon</source>
-        <translation>Eklentiyi Tekrar yükle</translation>
+        <translation>पूरक साधन पुनः लोड करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="444"/>
         <source>Remove Addon…</source>
-        <translation>Eklentiyi Kaldır...</translation>
+        <translation>पूरक साधन हटाएँ ...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="485"/>
         <source>Addons</source>
-        <translation>Eklentiler</translation>
+        <translation>पूरक साधन</translation>
     </message>
 </context>
 <context>
@@ -293,32 +293,32 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="93"/>
         <source>Search with %1</source>
-        <translation>%1 ile ara</translation>
+        <translation>%1 द्वारा खोजें</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="111"/>
         <source>Bookmarks</source>
-        <translation>Yer imleri</translation>
+        <translation>पृष्ठ स्मृतियाँ</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="145"/>
         <source>Local files</source>
-        <translation>Yerel Dosyalar</translation>
+        <translation>लोकल फाइलें</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="161"/>
         <source>History</source>
-        <translation>Geçmiş</translation>
+        <translation>वृतांत</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="176"/>
         <source>Typed history</source>
-        <translation>Yazılan geçmiş</translation>
+        <translation>टाइप हेतु वृतांत</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="198"/>
         <source>Special pages</source>
-        <translation>Özel sayfalar</translation>
+        <translation>विशिष्ट पृष्ठ</translation>
     </message>
 </context>
 <context>
@@ -327,57 +327,57 @@
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="341"/>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="372"/>
         <source>Enter address or search…</source>
-        <translation>Bir adres girin yada arayın...</translation>
+        <translation>पता दर्ज करें या खोजें ...</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="540"/>
         <source>Remove this Icon</source>
-        <translation>Bu Simgeyi kaldır</translation>
+        <translation>यह आइकन हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="631"/>
         <source>(Untitled)</source>
-        <translation>(Başlıksız)</translation>
+        <translation>(शीर्षक रहित)</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="662"/>
         <source>Add to Bookmarks</source>
-        <translation>Yer imlerine Ekle</translation>
+        <translation>पृष्ठ स्मृतियों में जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="674"/>
         <source>Add to Start Page</source>
-        <translation>Başlangıç Sayfasına Ekle</translation>
+        <translation>आरंभ पृष्ठ पर जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1045"/>
         <source>Show website information</source>
-        <translation>Website bilgilerini göster</translation>
+        <translation>वेबसाइट जानकारी दिखाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1059"/>
         <source>Show feed list</source>
-        <translation>Besleme listesini göster</translation>
+        <translation>समाचार सूची दिखाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1071"/>
         <source>Remove bookmark</source>
-        <translation>Yer imini sil</translation>
+        <translation>पृष्ठ स्मृति हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1076"/>
         <source>Add bookmark</source>
-        <translation>Yer imi ekle</translation>
+        <translation>पृष्ठ स्मृति जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1085"/>
         <source>Load all plugins on the page</source>
-        <translation>Sayfadaki tüm eklentileri yükle</translation>
+        <translation>पृष्ठ पर सभी प्लगिन लोड करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1093"/>
         <source>Log in</source>
-        <translation>Oturum aç</translation>
+        <translation>लॉगिन</translation>
     </message>
 </context>
 <context>
@@ -388,62 +388,61 @@
         <location filename="../../src/core/Application.cpp" line="442"/>
         <location filename="../../src/core/Application.cpp" line="1017"/>
         <source>Warning</source>
-        <translation>Uyarı</translation>
+        <translation>चेतावनी</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="322"/>
         <source>Profile directory (%1) is not writable, application will be running in read-only mode.</source>
-        <translation>Profil dizini (%1) yazılabilir değil, uygulama salt okunur kipte çalışıyor olacak.</translation>
+        <translation>प्रोफाइल डायरेक्टरी (%1) राइट योग्य नहीं है, अनुप्रयोग केवल-रीड मोड में कार्यरत होगा।</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="345"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
-        <translation>Profil dizininizde (%1) boş disk alanı kalmadı.
-Bu, arızalara ve hatta veri kaybına neden olabilir.</translation>
+        <translation>आपकी प्रोफाइल डायरेक्टरी (%1) में उपलब्ध स्पेस अपर्याप्त है।
+इस कारण समस्याएँ या डाटा नष्ट हो सकता है।</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="349"/>
         <source>Your profile directory (%1) is running low on free disk space (%2 remaining).
 This may lead to malfunctions or even data loss.</source>
-        <translation>Profil dizininizde (%1) boş disk alanı azalıyor (%2 kaldı).
-Bu, arızalara ve hatta veri kaybına neden olabilir.</translation>
+        <translation>आपकी प्रोफाइल डायरेक्टरी (%1) में कम स्पेस (%2 शेष) बचा है।
+इस कारण समस्याएँ या डाटा नष्ट हो सकता है।</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="355"/>
         <location filename="../../src/core/Application.cpp" line="1643"/>
         <location filename="../../src/core/Application.cpp" line="1692"/>
         <source>Do you want to continue?</source>
-        <translation>Devam etmek istiyor musunuz?</translation>
+        <translation>क्या आप जारी रखना चाहते हैं?</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="357"/>
         <location filename="../../src/core/Application.cpp" line="1647"/>
         <location filename="../../src/core/Application.cpp" line="1696"/>
         <source>Do not show this message again</source>
-        <translation>Bu mesajı tekrar gösterme</translation>
+        <translation>यह संदेश पुनः न दिखाएँ</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="358"/>
         <source>Continue in Read-only Mode</source>
-        <translation>Salt Okunur Kipte Devam Et</translation>
+        <translation>केवल-रीड मोड में जारी रखें</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="360"/>
         <source>Ignore</source>
-        <translation>Yoksay</translation>
+        <translation>अनदेखा करें</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="361"/>
         <source>Quit</source>
-        <translation>Kapat</translation>
+        <translation>बंद करें</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="442"/>
         <source>SSL support is not available or incomplete.
 Some websites may work incorrectly or do not work at all.</source>
-        <translation>SSL desteği mevcut değil veya eksik.
-Bazı web siteleri hatalı çalışabilir veya hiç çalışmayabilir.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="741"/>
@@ -453,24 +452,24 @@ Bazı web siteleri hatalı çalışabilir veya hiç çalışmayabilir.</translat
     <message>
         <location filename="../../src/core/Application.cpp" line="747"/>
         <source>Web backend: %1 %2.</source>
-        <translation type="unfinished"/>
+        <translation>वेब बैकएंड : %1 %2।</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="751"/>
         <source>SSL library not available.</source>
-        <translation>SSL kütüphanesi mevcut değil.</translation>
+        <translation>एसएसएल लाइब्रेरी अनुपलब्ध।</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="755"/>
         <source>SSL library version: %1.</source>
-        <translation>SSL kütüphane sürümü: %1.</translation>
+        <translation>एसएसएल लाइब्रेरी संस्करण : %1।</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1017"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
-        <translation>Oturum doğru bir şekilde kaydedilemedi.
-Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
+        <translation>यह सत्र उचित रूप से संचित नहीं हुआ।
+क्या आप निश्चित ही इसे पुनः स्थापित करना चाहते हैं?</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1171"/>
@@ -481,7 +480,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
         <location filename="../../src/core/Application.cpp" line="1641"/>
         <location filename="../../src/core/Application.cpp" line="1690"/>
         <source>Question</source>
-        <translation>Soru</translation>
+        <translation>प्रश्न</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/core/Application.cpp" line="1642"/>
@@ -492,12 +491,12 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
         <location filename="../../src/core/Application.cpp" line="1649"/>
         <location filename="../../src/core/Application.cpp" line="1698"/>
         <source>Hide</source>
-        <translation>Gizle</translation>
+        <translation>छुपाएँ</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1691"/>
         <source>You are about to quit the current Otter Browser session.</source>
-        <translation>Geçerli Otter Tarayıcı oturumunu kapatmak üzeresiniz.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -507,24 +506,24 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="47"/>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="122"/>
         <source>Default Application</source>
-        <translation>Öntanımlı Uygulama</translation>
+        <translation>डिफ़ॉल्ट अनुप्रयोग</translation>
     </message>
     <message>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="36"/>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="48"/>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="144"/>
         <source>Other…</source>
-        <translation>Diğer...</translation>
+        <translation>अन्य ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="60"/>
         <source>Select Application</source>
-        <translation>Uygulama Seç</translation>
+        <translation>अनुप्रयोग चुनें</translation>
     </message>
     <message>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="130"/>
         <source>Unknown</source>
-        <translation>(Başlıksız)</translation>
+        <translation>अज्ञात</translation>
     </message>
 </context>
 <context>
@@ -532,12 +531,12 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="215"/>
         <source>Failed to parse feed file: %1</source>
-        <translation type="unfinished"/>
+        <translation>समाचार फाइल प्राप्यता विफल : %1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="226"/>
         <source>Failed to parse feed: no valid entries found</source>
-        <translation type="unfinished"/>
+        <translation>समाचार फाइल प्राप्यता विफल : कोई मान्य प्रविष्टि नहीं मिली</translation>
     </message>
 </context>
 <context>
@@ -545,32 +544,32 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="14"/>
         <source>Authentication Required</source>
-        <translation>Yetkilendirme Gerekli</translation>
+        <translation>पुष्टिकरण आवश्यक</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="22"/>
         <source>Server:</source>
-        <translation>Sunucu</translation>
+        <translation>सर्वर :</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="42"/>
         <source>Message:</source>
-        <translation>Mesaj:</translation>
+        <translation>संदेश :</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="62"/>
         <source>User:</source>
-        <translation>Kullanıcı:</translation>
+        <translation>उपयोक्ता :</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="72"/>
         <source>Password:</source>
-        <translation>Şifre:</translation>
+        <translation>कूटशब्द :</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="101"/>
         <source>Remember password</source>
-        <translation>Parolayı hatırla</translation>
+        <translation>कूटशब्द स्मरण करें</translation>
     </message>
 </context>
 <context>
@@ -578,84 +577,84 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="19"/>
         <source>Title:</source>
-        <translation>Başlık:</translation>
+        <translation>शीर्षक :</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="29"/>
         <source>Description:</source>
-        <translation>Tanım:</translation>
+        <translation>विवरण :</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="39"/>
         <source>Address:</source>
-        <translation>URL:</translation>
+        <translation>पता :</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="49"/>
         <source>Folder:</source>
-        <translation>Klasör:</translation>
+        <translation>फोल्डर :</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="71"/>
         <source>New…</source>
-        <translation>Yeni...</translation>
+        <translation>नया ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="96"/>
         <source>Visits:</source>
-        <translation>Ziyaretler:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="103"/>
         <source>Last visit:</source>
-        <translation>Son ziyaret:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="110"/>
         <source>Created:</source>
-        <translation>Oluşturma:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="138"/>
         <source>Modified:</source>
-        <translation>Düzenlenme:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="152"/>
         <source>Keyword:</source>
-        <translation>Anahtar:</translation>
+        <translation>कमांड अक्षर :</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="50"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="51"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="62"/>
         <source>Unknown</source>
-        <translation>Bilinmiyor</translation>
+        <translation>अज्ञात</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="75"/>
         <source>View Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>पृष्ठ स्मृति देखें</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="87"/>
         <source>Edit Bookmark</source>
-        <translation>Yer İmini Düzenle</translation>
+        <translation>पृष्ठ स्मृति संपादित करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="116"/>
         <source>Add Bookmark</source>
-        <translation>Yer İmi Ekle</translation>
+        <translation>पृष्ठ स्मृति जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="159"/>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="159"/>
         <source>Bookmark with this keyword already exists.</source>
-        <translation>Bu takma adı kullanan bir yer imi bulunuyor.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -663,27 +662,27 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="97"/>
         <source>Title: %1</source>
-        <translation>Başlık: %1</translation>
+        <translation>शीर्षक : %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="101"/>
         <source>Address: %1</source>
-        <translation>Adres: %1</translation>
+        <translation>पता : %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="106"/>
         <source>Description: %1</source>
-        <translation>Açıklama: %1</translation>
+        <translation>विवरण : %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="111"/>
         <source>Created: %1</source>
-        <translation>Oluşturulma: %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="116"/>
         <source>Visited: %1</source>
-        <translation>Ziyaret Edilme: %1</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -691,12 +690,12 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="43"/>
         <source>Folder Name</source>
-        <translation>Klasör Adı</translation>
+        <translation>फोल्डर नाम</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="43"/>
         <source>Select name of new folder:</source>
-        <translation>Yeni klasör adı:</translation>
+        <translation>नए फोल्डर हेतु नाम चुनें :</translation>
     </message>
 </context>
 <context>
@@ -704,124 +703,124 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Ara...</translation>
+        <translation>खोजें...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="85"/>
         <source>Address:</source>
-        <translation>URL:</translation>
+        <translation>पता :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="92"/>
         <source>Title:</source>
-        <translation>Başlık:</translation>
+        <translation>शीर्षक :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="99"/>
         <source>Description:</source>
-        <translation>Tanım:</translation>
+        <translation>विवरण :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="115"/>
         <source>Keyword:</source>
-        <translation>Anahtar:</translation>
+        <translation>कमांड अक्षर :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="130"/>
         <source>Add</source>
-        <translation>Ekle</translation>
+        <translation>जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="140"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="246"/>
         <source>Properties…</source>
-        <translation>Özellikler...</translation>
+        <translation>विशेषताएँ ...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="150"/>
         <source>Delete</source>
-        <translation>Sil</translation>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="50"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="168"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="221"/>
         <source>Add Folder…</source>
-        <translation>Dizin Ekle...</translation>
+        <translation>फोल्डर जोड़ें ...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="169"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="222"/>
         <source>Add Bookmark…</source>
-        <translation>Yer İmi Ekle...</translation>
+        <translation>पृष्ठ स्मृति जोड़ें ...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="52"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="170"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="223"/>
         <source>Add Separator</source>
-        <translation>Ayraç Ekle</translation>
+        <translation>विभाजक जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Title</source>
-        <translation>Başlık</translation>
+        <translation>शीर्षक</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Address</source>
-        <translation>Adres</translation>
+        <translation>पता</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Description</source>
-        <translation>Açıklama</translation>
+        <translation>विवरण</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Keyword</source>
-        <translation>Anahtar Sözcük</translation>
+        <translation>कमांड अक्षर</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Added</source>
-        <translation>Eklendi</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Modified</source>
-        <translation>Değiştirildi</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Visited</source>
-        <translation>Ziyaret Edildi</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Visits</source>
-        <translation>Ziyaretler</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="160"/>
         <source>Empty Trash</source>
-        <translation>Çöpü Boşalt</translation>
+        <translation>ट्रैश खाली करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="219"/>
         <source>Add Bookmark</source>
-        <translation>Yer İmi Ekle</translation>
+        <translation>पृष्ठ स्मृति जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="232"/>
         <source>Restore Bookmark</source>
-        <translation>Yer imini Geri Al</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="337"/>
         <source>Bookmarks</source>
-        <translation>Yer İmleri</translation>
+        <translation>पृष्ठ स्मृतियाँ</translation>
     </message>
 </context>
 <context>
@@ -829,37 +828,37 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="17"/>
         <source>Remove existing bookmarks</source>
-        <translation>Var olan yer imlerini sil</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="51"/>
         <source>Import into folder:</source>
-        <translation>Bu klasöre aktar:</translation>
+        <translation>इस फोल्डर में आयात करें :</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="70"/>
         <source>New…</source>
-        <translation>Yeni...</translation>
+        <translation>नया ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
         <source>Allow to duplicate already existing bookmarks</source>
-        <translation>Var olan yer imlerinin kopyasının oluşturulmasına izin ver</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="107"/>
         <source>Import into subfolder</source>
-        <translation>Alt klasöre aktar</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="120"/>
         <source>Leave empty to import into main folder</source>
-        <translation>Ana klasör içerisine almak için boş bırakın</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="127"/>
         <source>Subfolder name:</source>
-        <translation>Alt klasör adı:</translation>
+        <translation>उप-फोल्डर नाम :</translation>
     </message>
 </context>
 <context>
@@ -867,57 +866,57 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="155"/>
         <source>Notes</source>
-        <translation>Notlar</translation>
+        <translation>नोट्स</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="159"/>
         <source>Bookmarks</source>
-        <translation>Yer İmleri</translation>
+        <translation>पृष्ठ स्मृतियाँ</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="161"/>
         <source>Trash</source>
-        <translation>Çöp Kutusu</translation>
+        <translation>ट्रैश</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="185"/>
         <source>(Untitled)</source>
-        <translation>(Başlıksız)</translation>
+        <translation>(शीर्षक रहित)</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="362"/>
         <source>Failed to open notes file: %1</source>
-        <translation>Not dosyası açılamadı: %1</translation>
+        <translation>नोट्स फाइल खोलने में विफल : %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="362"/>
         <source>Failed to open bookmarks file: %1</source>
-        <translation>Yer imleri dosyası açılamadı: %1</translation>
+        <translation>पृष्ठ स्मृति फाइल खोलने में विफल : %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="386"/>
         <source>Failed to load notes file: %1</source>
-        <translation>Not dosyası yüklenemedi: %1</translation>
+        <translation>नोट्स फाइल लोड करने में विफल : %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="386"/>
         <source>Failed to load bookmarks file: %1</source>
-        <translation>Yer imleri dosyası yüklenemedi: %1</translation>
+        <translation>पृष्ठ स्मृति फाइल लोड करने में विफल : %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Failed to load notes file.</source>
-        <translation>Not dosyası yüklenemedi.</translation>
+        <translation>नोट्स फाइल लोड करने में विफल।</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Failed to load bookmarks file.</source>
-        <translation>Yer imleri dosyası yüklenemedi.</translation>
+        <translation>पृष्ठ स्मृति फाइल लोड करने में विफल।</translation>
     </message>
 </context>
 <context>
@@ -925,102 +924,102 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Ara...</translation>
+        <translation>खोजें...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="97"/>
         <source>Address:</source>
-        <translation>URL:</translation>
+        <translation>पता :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="107"/>
         <source>Type:</source>
-        <translation>Tip:</translation>
+        <translation>प्रकार :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="117"/>
         <source>Size:</source>
-        <translation>Boyut:</translation>
+        <translation>आकार :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="127"/>
         <source>Last Modified:</source>
-        <translation>Son Değişiklik:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="137"/>
         <source>Expires:</source>
-        <translation>Sona Erme:</translation>
+        <translation>मान्यता समाप्ति :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="147"/>
         <source>Location:</source>
-        <translation>Konum:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="168"/>
         <source>Preview</source>
-        <translation>Ön İzleme</translation>
+        <translation>पूर्वावलोकन</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="207"/>
         <source>Delete</source>
-        <translation>Sil</translation>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="79"/>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="115"/>
         <source>Address</source>
-        <translation>URL</translation>
+        <translation>पता</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="79"/>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="115"/>
         <source>Type</source>
-        <translation>Tip</translation>
+        <translation>प्रकार</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="79"/>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="115"/>
         <source>Size</source>
-        <translation>Boyut</translation>
+        <translation>आकार</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="79"/>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="115"/>
         <source>Last Modified</source>
-        <translation>Son Değişiklik</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="79"/>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="115"/>
         <source>Expires</source>
-        <translation>Sona Erme</translation>
+        <translation>मान्यता समाप्ति</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="368"/>
         <source>Copy Link to Clipboard</source>
-        <translation>Bağlantıyı Kopyala</translation>
+        <translation>लिंक क्लिपबोर्ड में कॉपी करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="372"/>
         <source>Remove Entry</source>
-        <translation>Girişi Sil</translation>
+        <translation>प्रविष्टि हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="381"/>
         <source>Remove All Entries from This Domain</source>
-        <translation>Bu Adrese Ait Tüm Girişleri Sil</translation>
+        <translation>इस डोमेन की सभी प्रविष्टियाँ हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="449"/>
         <source>Unknown</source>
-        <translation>(Başlıksız)</translation>
+        <translation>अज्ञात</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="535"/>
         <source>Cache</source>
-        <translation>Geçici Bellek</translation>
+        <translation>कैश</translation>
     </message>
 </context>
 <context>
@@ -1028,27 +1027,27 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="17"/>
         <source>Certificate chain:</source>
-        <translation>Sertifika dizisi:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="34"/>
         <source>Certificate fields:</source>
-        <translation>Sertifika alanları:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="51"/>
         <source>Field value:</source>
-        <translation>Alan değeri:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="44"/>
         <source>Export…</source>
-        <translation>Dışa aktar...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="48"/>
         <source>Invalid Certificate</source>
-        <translation>Geçersiz sertifika</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="53"/>
@@ -1059,12 +1058,12 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
         <location filename="../../src/ui/CertificateDialog.cpp" line="62"/>
         <location filename="../../src/ui/CertificateDialog.cpp" line="456"/>
         <source>Unknown</source>
-        <translation>Bilinmeyen</translation>
+        <translation>अज्ञात</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="116"/>
         <source>Select File</source>
-        <translation>Dosya Seç</translation>
+        <translation>फाइल चुनें</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="116"/>
@@ -1079,17 +1078,17 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="116"/>
         <source>Text files (*.txt)</source>
-        <translation>Metin dosyaları (*.txt)</translation>
+        <translation>टेक्स्ट फाइलें (*.txt)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="124"/>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="124"/>
         <source>Failed to open file for writing.</source>
-        <translation type="unfinished"/>
+        <translation>राइट हेतु फाइल खोलने में विफल।</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="183"/>
@@ -1119,12 +1118,12 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="203"/>
         <source>Subject Alternative Name</source>
-        <translation>Alternatif Konu Adı</translation>
+        <translation>वैकल्पिक विषय नाम</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="207"/>
         <source>Issuer Alternative Name</source>
-        <translation>Alternatif Yayımcı Adı</translation>
+        <translation>वैकल्पिक जारी कर्ता नाम</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="211"/>
@@ -1139,7 +1138,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="219"/>
         <source>Name Constraints</source>
-        <translation>Ad Kısıtlamaları</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="223"/>
@@ -1187,12 +1186,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="349"/>
         <source>Critical</source>
-        <translation>Ciddi</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="349"/>
         <source>Not Critical</source>
-        <translation>Ciddi değil</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="350"/>
@@ -1202,22 +1201,22 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="354"/>
         <source>Value:</source>
-        <translation>Değer:</translation>
+        <translation>मान :</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="408"/>
         <source>Version</source>
-        <translation>Sürüm</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="412"/>
         <source>Serial Number</source>
-        <translation>Seri Numarası</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="416"/>
         <source>Certificate Signature Algorithm</source>
-        <translation>Sertifika İmza Algoritması</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="420"/>
@@ -1227,12 +1226,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="424"/>
         <source>Validity</source>
-        <translation>Geçerlilik</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="428"/>
         <source>Not Before</source>
-        <translation>Öncesinde değil</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="432"/>
@@ -1252,7 +1251,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="444"/>
         <source>Algorithm</source>
-        <translation>Algoritma</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="448"/>
@@ -1262,22 +1261,22 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="452"/>
         <source>Extensions</source>
-        <translation>Eklentiler</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="460"/>
         <source>Fingerprint</source>
-        <translation>Parmakizi</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="464"/>
         <source>SHA-1 Fingerprint</source>
-        <translation>SHA-1 Parmakizi</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="468"/>
         <source>SHA-256 Fingerprint</source>
-        <translation>SHA-256 Parmakizi</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1285,7 +1284,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="14"/>
         <source>Clear History</source>
-        <translation>Geçmişi Sil</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="35"/>
@@ -1295,22 +1294,22 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="42"/>
         <source>All</source>
-        <translation>Tümü</translation>
+        <translation>सभी</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="45"/>
         <source> h</source>
-        <translation>h</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="61"/>
         <source>Clear browsing history</source>
-        <translation>Tarama geçmişini temizle</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="68"/>
         <source>Clear cookies</source>
-        <translation>Çerezleri temizle</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="78"/>
@@ -1320,33 +1319,33 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="85"/>
         <source>Clear downloads history</source>
-        <translation>İndirme geçmişini temizle</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="95"/>
         <source>Clear search history</source>
-        <translation>Arama geçmişini temizle</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="102"/>
         <source>Clear caches</source>
-        <translation>Ön belleği temizle</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="112"/>
         <source>Clear websites storage data</source>
-        <translation>Sayfa verilerini temizle</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="119"/>
         <source>Clear passwords</source>
-        <translation>Parolaları temizle</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.cpp" line="54"/>
         <location filename="../../src/ui/ClearHistoryDialog.cpp" line="85"/>
         <source>Clear Now</source>
-        <translation>Şimdi Temizle</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1355,22 +1354,22 @@ Exponent: %2</source>
         <location filename="../../src/ui/ColorWidget.cpp" line="56"/>
         <location filename="../../src/ui/ColorWidget.cpp" line="177"/>
         <source>Invalid</source>
-        <translation>Geçersiz</translation>
+        <translation>अमान्य</translation>
     </message>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="105"/>
         <source>Select Color…</source>
-        <translation>Renk Seç...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="106"/>
         <source>Copy Color</source>
-        <translation>Renk Kopyala</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="113"/>
         <source>Clear</source>
-        <translation>Temizle</translation>
+        <translation>हटाएँ</translation>
     </message>
 </context>
 <context>
@@ -1378,62 +1377,63 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Ara...</translation>
+        <translation>खोजें...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="69"/>
         <source>Option Name:</source>
-        <translation>Seçenek Adı:</translation>
+        <translation>विकल्प नाम :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="76"/>
         <source>Current Value:</source>
-        <translation>Mevcut Değer:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="83"/>
         <source>Default Value:</source>
-        <translation>Öntanımlı Değer:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="106"/>
         <source>Save All</source>
-        <translation>Tümünü Kaydet</translation>
+        <translation>सभी संचित करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="116"/>
         <source>Restore Defaults</source>
-        <translation>Varsayılana Sıfırla</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="212"/>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="262"/>
         <source>Name</source>
-        <translation>Ad</translation>
+        <translation>नाम</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="212"/>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="262"/>
         <source>Type</source>
-        <translation>Tip</translation>
+        <translation>प्रकार</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="212"/>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="262"/>
         <source>Value</source>
-        <translation>Değer</translation>
+        <translation>मान</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="290"/>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="363"/>
         <source>Question</source>
-        <translation>Soru</translation>
+        <translation>प्रश्न</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="290"/>
         <source>The settings have been changed.
 Do you want to save them?</source>
-        <translation type="unfinished"/>
+        <translation>सेटिंग्स में बदलाव किए गए हैं।
+क्या आप उन्हें संचित करना चाहते हैं?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="363"/>
@@ -1443,37 +1443,37 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="500"/>
         <source>Copy Option Name</source>
-        <translation>Seçenek Adını Kopyala</translation>
+        <translation>विकल्प नाम कॉपी करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="501"/>
         <source>Copy Option Value</source>
-        <translation>Seçenek Değerini Kopyala</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="505"/>
         <source>Save Value</source>
-        <translation>Değeri Kaydet</translation>
+        <translation>मान संचित करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="508"/>
         <source>Restore Default Value</source>
-        <translation>Öntanımlı Değere Sıfırla</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="517"/>
         <source>Expand All</source>
-        <translation type="unfinished"/>
+        <translation>सभी विस्तृत करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="518"/>
         <source>Collapse All</source>
-        <translation type="unfinished"/>
+        <translation>सभी संक्षिप्त करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="544"/>
         <source>Advanced Configuration</source>
-        <translation>Gelişmiş Yapılandırma</translation>
+        <translation>विस्तृत विन्यास</translation>
     </message>
 </context>
 <context>
@@ -1481,7 +1481,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/configurationOption/ConfigurationOptionWidget.cpp" line="46"/>
         <source>Choose option</source>
-        <translation>Seçenek seç</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1489,17 +1489,17 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="14"/>
         <source>Content Blocking</source>
-        <translation>İçerik Engelleme</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="24"/>
         <source>General</source>
-        <translation>Genel</translation>
+        <translation>सामान्य</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="36"/>
         <source>Profiles</source>
-        <translation>Profiller</translation>
+        <translation>प्रोफाइल</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="43"/>
@@ -1509,7 +1509,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="76"/>
         <source>Settings</source>
-        <translation>Ayarlar</translation>
+        <translation>सेटिंग्स</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="85"/>
@@ -1530,35 +1530,35 @@ Do you want to save them?</source>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="115"/>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="190"/>
         <source>Add</source>
-        <translation>Ekle</translation>
+        <translation>जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="125"/>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="197"/>
         <source>Edit</source>
-        <translation>Düzenle</translation>
+        <translation>संपादित करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="135"/>
         <source>Update</source>
-        <translation>Güncelle</translation>
+        <translation>अपडेट</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="145"/>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="204"/>
         <source>Remove</source>
-        <translation>Sil</translation>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="170"/>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="510"/>
         <source>Custom Rules</source>
-        <translation>Özel Kurallar</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="183"/>
         <source>All</source>
-        <translation>Tümü</translation>
+        <translation>सभी</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="184"/>
@@ -1568,7 +1568,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="185"/>
         <source>None</source>
-        <translation>Hiçbiri</translation>
+        <translation>कोई नहीं</translation>
     </message>
 </context>
 <context>
@@ -1576,12 +1576,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="45"/>
         <source>Active Profiles</source>
-        <translation>Etkin Profiller</translation>
+        <translation>सक्रिय प्रोफाइल</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="46"/>
         <source>Blocked Elements</source>
-        <translation>Engellenmiş Ögeler</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="150"/>
@@ -1606,17 +1606,17 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="166"/>
         <source>script</source>
-        <translation>betik</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="170"/>
         <source>image</source>
-        <translation>resim</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="174"/>
         <source>object</source>
-        <translation>nesne</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="178"/>
@@ -1636,7 +1636,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="190"/>
         <source>other</source>
-        <translation>diğer</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="209"/>
@@ -1654,13 +1654,13 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="145"/>
         <source> day(s)</source>
-        <translation>gün(ler)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="146"/>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="166"/>
         <source>Never</source>
-        <translation>asla</translation>
+        <translation>कभी नहीं</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="166"/>
@@ -1673,12 +1673,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="14"/>
         <source>Profile Settings</source>
-        <translation type="unfinished"/>
+        <translation>प्रोफाइल सेटिंग्स</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="22"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>शीर्षक :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="35"/>
@@ -1688,17 +1688,17 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="55"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>पता :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="68"/>
         <source>Update interval:</source>
-        <translation type="unfinished"/>
+        <translation>अपडेट अंतराल :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="78"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>कभी नहीं</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="81"/>
@@ -1714,7 +1714,7 @@ Do you want to save them?</source>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="40"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="77"/>
         <source>Advertisements</source>
-        <translation type="unfinished"/>
+        <translation>विज्ञापन</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="41"/>
@@ -1726,32 +1726,32 @@ Do you want to save them?</source>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="42"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="79"/>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>निजता</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="43"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="80"/>
         <source>Social</source>
-        <translation type="unfinished"/>
+        <translation>सामाजिक</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="44"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="81"/>
         <source>Regional</source>
-        <translation type="unfinished"/>
+        <translation>क्षेत्रीय</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="45"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="82"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>अन्य</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="93"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="114"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="121"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="93"/>
@@ -1761,12 +1761,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="114"/>
         <source>Profile with name %1.txt already exists.</source>
-        <translation>%1.txt adıyla bir profil halihazırda var.</translation>
+        <translation>%1.txt नाम से प्रोफाइल पहले से मौजूद है।</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="121"/>
         <source>Failed to create profile file: %1.</source>
-        <translation type="unfinished"/>
+        <translation>प्रोफाइल फाइल बनाने में विफल : %1।</translation>
     </message>
 </context>
 <context>
@@ -1774,27 +1774,27 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="90"/>
         <source>Failed to read profile file</source>
-        <translation type="unfinished"/>
+        <translation>प्रोफाइल फाइल रीड करने में विफल</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="94"/>
         <source>Failed to download profile rules</source>
-        <translation type="unfinished"/>
+        <translation>प्रोफाइल नियम डाउनलोड करने में विफल</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="98"/>
         <source>Failed to verify profile rules using checksum</source>
-        <translation type="unfinished"/>
+        <translation>चेकसम द्वारा प्रोफाइल नियम प्रमाणित करने में विफल</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="107"/>
         <source>Profile was never updated</source>
-        <translation type="unfinished"/>
+        <translation>प्रोफाइल कभी अपडेट नहीं हुआ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="111"/>
         <source>Profile was last updated more than one week ago</source>
-        <translation type="unfinished"/>
+        <translation>प्रोफाइल अंतिम बार एक सप्ताह से भी पहले अपडेट किया गया था</translation>
     </message>
 </context>
 <context>
@@ -1812,12 +1812,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="318"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>अज्ञात</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="353"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>शीर्षक</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="353"/>
@@ -1832,7 +1832,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Advertisements</source>
-        <translation type="unfinished"/>
+        <translation>विज्ञापन</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
@@ -1842,22 +1842,22 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>निजता</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Social</source>
-        <translation type="unfinished"/>
+        <translation>सामाजिक</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Regional</source>
-        <translation type="unfinished"/>
+        <translation>क्षेत्रीय</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>अन्य</translation>
     </message>
 </context>
 <context>
@@ -1865,7 +1865,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/ContentsDialog.cpp" line="75"/>
         <source>Close</source>
-        <translation>Kapat</translation>
+        <translation>बंद करें</translation>
     </message>
 </context>
 <context>
@@ -1878,7 +1878,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/ContentsWidget.cpp" line="166"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>पूर्वावलोकन प्रिंट करें</translation>
     </message>
 </context>
 <context>
@@ -1886,22 +1886,22 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="22"/>
         <source>Name:</source>
-        <translation>Ad:</translation>
+        <translation>नाम :</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="38"/>
         <source>Value:</source>
-        <translation type="unfinished"/>
+        <translation>मान :</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="51"/>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>मान्यता समाप्ति :</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="64"/>
         <source>this session only</source>
-        <translation type="unfinished"/>
+        <translation>केवल इस सत्र हेतु</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="71"/>
@@ -1912,12 +1912,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="81"/>
         <source>Domain:</source>
-        <translation type="unfinished"/>
+        <translation>डोमेन :</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="97"/>
         <source>Path:</source>
-        <translation type="unfinished"/>
+        <translation>पथ :</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="112"/>
@@ -1945,54 +1945,54 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>खोजें...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="99"/>
         <source>Name:</source>
-        <translation>Ad:</translation>
+        <translation>नाम :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="109"/>
         <source>Value:</source>
-        <translation>Değer:</translation>
+        <translation>मान :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="116"/>
         <source>Expires:</source>
-        <translation>Sone Erme:</translation>
+        <translation>मान्यता समाप्ति :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="126"/>
         <source>Domain:</source>
-        <translation>Alan adı:</translation>
+        <translation>डोमेन :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="151"/>
         <source>Path:</source>
-        <translation type="unfinished"/>
+        <translation>पथ :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="165"/>
         <source>Add…</source>
-        <translation type="unfinished"/>
+        <translation>जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="175"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="359"/>
         <source>Properties…</source>
-        <translation type="unfinished"/>
+        <translation>विशेषताएँ ...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="185"/>
         <source>Delete</source>
-        <translation>Sil</translation>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="201"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="222"/>
         <source>Question</source>
-        <translation>Soru</translation>
+        <translation>प्रश्न</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="202"/>
@@ -2003,7 +2003,7 @@ Do you want to save them?</source>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="203"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="224"/>
         <source>Do you want to continue?</source>
-        <translation>Devam etmek istiyor musunuz?</translation>
+        <translation>क्या आप जारी रखना चाहते हैं?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="223"/>
@@ -2028,12 +2028,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="423"/>
         <source>this session only</source>
-        <translation type="unfinished"/>
+        <translation>केवल इस सत्र हेतु</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="447"/>
         <source>Cookies</source>
-        <translation type="unfinished"/>
+        <translation>कुकीज़ </translation>
     </message>
 </context>
 <context>
@@ -2052,19 +2052,19 @@ Do you want to save them?</source>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="44"/>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="106"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="51"/>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="113"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>संपादित करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="58"/>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="120"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="88"/>
@@ -2083,13 +2083,13 @@ Do you want to save them?</source>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="60"/>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="163"/>
         <source>Network</source>
-        <translation type="unfinished"/>
+        <translation>नेटवर्क</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="76"/>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="167"/>
         <source>Security</source>
-        <translation type="unfinished"/>
+        <translation>सुरक्षा</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="92"/>
@@ -2106,22 +2106,22 @@ Do you want to save them?</source>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="124"/>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="175"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>अन्य</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="156"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="185"/>
         <source>Filter…</source>
-        <translation type="unfinished"/>
+        <translation>निस्पंदन ...</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="195"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>बंद करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="60"/>
@@ -2141,22 +2141,22 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="181"/>
         <source>&lt;empty&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;empty&gt;</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="272"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>कॉपी करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="279"/>
         <source>Expand All</source>
-        <translation type="unfinished"/>
+        <translation>सभी विस्तृत करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="280"/>
         <source>Collapse All</source>
-        <translation type="unfinished"/>
+        <translation>सभी संक्षिप्त करें</translation>
     </message>
 </context>
 <context>
@@ -2188,37 +2188,37 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="22"/>
         <source>Folder:</source>
-        <translation type="unfinished"/>
+        <translation>फोल्डर :</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="44"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>नया ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="53"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>शीर्षक :</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="80"/>
         <source>Change Icon…</source>
-        <translation type="unfinished"/>
+        <translation>आइकन बदलें ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="89"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>पता :</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="102"/>
         <source>Update interval:</source>
-        <translation type="unfinished"/>
+        <translation>अपडेट अंतराल :</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="112"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>कभी नहीं</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="115"/>
@@ -2233,7 +2233,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="80"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="80"/>
@@ -2246,12 +2246,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
         <source>Folder Name</source>
-        <translation>Klasör Adı</translation>
+        <translation>फोल्डर नाम</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
         <source>Select name of new folder:</source>
-        <translation>Yeni klasör adını seçin:</translation>
+        <translation>नए फोल्डर हेतु नाम चुनें :</translation>
     </message>
 </context>
 <context>
@@ -2259,18 +2259,18 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="67"/>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>ठीक है</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="74"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>रद्द करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="107"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="151"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>खोजें...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="161"/>
@@ -2281,7 +2281,7 @@ Do you want to save them?</source>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="148"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="535"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>शीर्षक</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="148"/>
@@ -2298,7 +2298,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="194"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>प्रश्न</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="195"/>
@@ -2308,33 +2308,33 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="196"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>क्या आप जारी रखना चाहते हैं?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="214"/>
         <source>Select Folder Name</source>
-        <translation>Klasör Adını Seç</translation>
+        <translation>फोल्डर नाम चुनें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="214"/>
         <source>Enter folder name:</source>
-        <translation>Klasör adı gir:</translation>
+        <translation>फोल्डर नाम दर्ज करें :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="359"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>खोलें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="378"/>
         <source>Empty Trash</source>
-        <translation type="unfinished"/>
+        <translation>ट्रैश खाली करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="386"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="411"/>
         <source>Add Folder…</source>
-        <translation type="unfinished"/>
+        <translation>फोल्डर जोड़ें ...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="387"/>
@@ -2345,7 +2345,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="409"/>
         <source>Add New</source>
-        <translation type="unfinished"/>
+        <translation>नया जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="421"/>
@@ -2355,7 +2355,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="435"/>
         <source>Properties…</source>
-        <translation type="unfinished"/>
+        <translation>विशेषताएँ ...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="477"/>
@@ -2376,7 +2376,7 @@ Do you want to save them?</source>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="665"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="802"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(शीर्षक रहित)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="733"/>
@@ -2391,19 +2391,19 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="805"/>
         <source>Feeds</source>
-        <translation type="unfinished"/>
+        <translation>समाचार</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="912"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="921"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>शीर्षक : %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="912"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="925"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>पता : %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="916"/>
@@ -2416,37 +2416,37 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="57"/>
         <source>Feeds</source>
-        <translation type="unfinished"/>
+        <translation>समाचार</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="59"/>
         <source>Trash</source>
-        <translation type="unfinished"/>
+        <translation>ट्रैश</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="63"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(शीर्षक रहित)</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="230"/>
         <source>Failed to open feeds file: %1</source>
-        <translation type="unfinished"/>
+        <translation>समाचार फाइल खोलने में विफल : %1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="253"/>
         <source>Failed to load feeds file: %1</source>
-        <translation type="unfinished"/>
+        <translation>समाचार फाइल लोड करने में विफल : %1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="255"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="255"/>
         <source>Failed to load feeds file.</source>
-        <translation type="unfinished"/>
+        <translation>समाचार फाइल लोड करने में विफल।</translation>
     </message>
 </context>
 <context>
@@ -2454,22 +2454,22 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="53"/>
         <source>Failed to open passwords file: %1</source>
-        <translation type="unfinished"/>
+        <translation>कूटशब्द फाइल खोलने में विफल : %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="109"/>
         <source>Failed to save passwords file: %1</source>
-        <translation type="unfinished"/>
+        <translation>कूटशब्द फाइल संचित करने में विफल : %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="196"/>
         <source>Failed to remove passwords file</source>
-        <translation type="unfinished"/>
+        <translation>कूटशब्द फाइल हटाने में विफल</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="325"/>
         <source>Encrypted File</source>
-        <translation type="unfinished"/>
+        <translation>एन्क्रिप्टेड फाइल</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="330"/>
@@ -2488,12 +2488,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="88"/>
         <source>Select File</source>
-        <translation>Dosya seç</translation>
+        <translation>फाइल चुनें</translation>
     </message>
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="88"/>
         <source>Select Directory</source>
-        <translation>Klasör seç</translation>
+        <translation>डायरेक्टरी चुनें</translation>
     </message>
 </context>
 <context>
@@ -2501,17 +2501,17 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="212"/>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="216"/>
         <source>Warning</source>
-        <translation>Uyarı</translation>
+        <translation>चेतावनी</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="220"/>
         <source>Information</source>
-        <translation type="unfinished"/>
+        <translation>जानकारी</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="230"/>
@@ -2524,17 +2524,17 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Profile with this address already exists.</source>
-        <translation type="unfinished"/>
+        <translation>इस पते युक्त प्रोफाइल पहले से मौजूद है।</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>प्रश्न</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
@@ -2577,7 +2577,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="111"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(शीर्षक रहित)</translation>
     </message>
 </context>
 <context>
@@ -2585,60 +2585,60 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>खोजें...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="45"/>
         <source>Today</source>
-        <translation>Bugün</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="45"/>
         <source>Yesterday</source>
-        <translation>Dün</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="45"/>
         <source>Earlier This Week</source>
-        <translation>Hafta başı</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="45"/>
         <source>Previous Week</source>
-        <translation>Önceki hafta</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="45"/>
         <source>Earlier This Month</source>
-        <translation>Bu Ay Başı</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="45"/>
         <source>Earlier This Year</source>
-        <translation>Bu Yıl Başı</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="45"/>
         <source>Older</source>
-        <translation>Daha Eski</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="52"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="93"/>
         <source>Address</source>
-        <translation>Adres</translation>
+        <translation>पता</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="52"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="93"/>
         <source>Title</source>
-        <translation>Başlık</translation>
+        <translation>शीर्षक</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="52"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="93"/>
         <source>Date</source>
-        <translation>Tarih</translation>
+        <translation>दिनांक</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="388"/>
@@ -2648,22 +2648,22 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="389"/>
         <source>Copy Link to Clipboard</source>
-        <translation>Adresi Kopyala</translation>
+        <translation>लिंक क्लिपबोर्ड में कॉपी करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="393"/>
         <source>Remove Entry</source>
-        <translation>Girişi Sil</translation>
+        <translation>प्रविष्टि हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="394"/>
         <source>Remove All Entries from This Domain</source>
-        <translation>Bu Alan Adına Ait Tüm Girişleri Temizle</translation>
+        <translation>इस डोमेन की सभी प्रविष्टियाँ हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="431"/>
         <source>History</source>
-        <translation>Geçmiş</translation>
+        <translation>वृतांत</translation>
     </message>
 </context>
 <context>
@@ -2671,7 +2671,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/HistoryModel.cpp" line="58"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(शीर्षक रहित)</translation>
     </message>
 </context>
 <context>
@@ -2679,7 +2679,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/HistoryModel.cpp" line="90"/>
         <source>Failed to open history file: %1</source>
-        <translation type="unfinished"/>
+        <translation>वृतांत फाइल खोलने में विफल : %1</translation>
     </message>
 </context>
 <context>
@@ -2687,17 +2687,17 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="178"/>
         <source>HTML Bookmarks</source>
-        <translation>HTML Yer İmleri</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="183"/>
         <source>Imports bookmarks from HTML file (Netscape format).</source>
-        <translation>Yer imlerini HTML&apos;den aktar (Netscape formatı)</translation>
+        <translation>एचटीएमएल फाइल (नेटस्केप प्रारूप) से पृष्ठ स्मृतियाँ आयात करें।</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="228"/>
         <source>HTML files (*.htm *.html)</source>
-        <translation type="unfinished"/>
+        <translation>एचटीएमएल फाइलें (*.htm *.html)</translation>
     </message>
 </context>
 <context>
@@ -2718,12 +2718,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="86"/>
         <source>Icon Name:</source>
-        <translation>Simge Adı:</translation>
+        <translation>आइकन नाम :</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="98"/>
         <source>Select From File…</source>
-        <translation type="unfinished"/>
+        <translation>फाइल से चुनें ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="99"/>
@@ -2738,7 +2738,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="113"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>हटाएँ</translation>
     </message>
 </context>
 <context>
@@ -2746,27 +2746,27 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="14"/>
         <source>Image Properties</source>
-        <translation>Resim Özellikleri</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="22"/>
         <source>Size:</source>
-        <translation>Boyut:</translation>
+        <translation>आकार :</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="29"/>
         <source>Type:</source>
-        <translation>Tip:</translation>
+        <translation>प्रकार :</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="36"/>
         <source>File size:</source>
-        <translation type="unfinished"/>
+        <translation>फाइल आकार :</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="43"/>
         <source>Address:</source>
-        <translation>URL:</translation>
+        <translation>पता :</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="50"/>
@@ -2776,14 +2776,14 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="57"/>
         <source>Long description:</source>
-        <translation type="unfinished"/>
+        <translation>संपूर्ण विवरण :</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="38"/>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="39"/>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="40"/>
         <source>Unknown</source>
-        <translation>(Başlıksız)</translation>
+        <translation>अज्ञात</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="70"/>
@@ -2794,7 +2794,7 @@ Do you want to save them?</source>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="74"/>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="81"/>
         <source>%1 x %2 pixels @ %3 bits per pixel</source>
-        <translation>%1 x %2 pixels @ %3 bits per pixel</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="85"/>
@@ -2807,12 +2807,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/ImportDialog.ui" line="42"/>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>विकल्प</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.ui" line="54"/>
         <source>Source:</source>
-        <translation>Kaynak:</translation>
+        <translation>स्रोत :</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.ui" line="98"/>
@@ -2832,12 +2832,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="125"/>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="125"/>
         <source>Unable to import selected type.</source>
-        <translation>Seçili formattan içeri aktırlamıyor</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="158"/>
@@ -2865,7 +2865,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="14"/>
         <source>JavaScript Options</source>
-        <translation>JavaScript Seçenekleri</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="26"/>
@@ -2885,7 +2885,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="56"/>
         <source>Allow access to clipboard</source>
-        <translation>Panoya kopyala</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="63"/>
@@ -2906,19 +2906,19 @@ Do you want to save them?</source>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="37"/>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="40"/>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>पूछें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="38"/>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="41"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>सदैव</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="39"/>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="42"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>कभी नहीं</translation>
     </message>
 </context>
 <context>
@@ -2927,7 +2927,7 @@ Do you want to save them?</source>
         <location filename="../../src/core/ActionsManager.cpp" line="190"/>
         <location filename="../../src/core/ActionsManager.cpp" line="224"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(शीर्षक रहित)</translation>
     </message>
 </context>
 <context>
@@ -2935,58 +2935,58 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="14"/>
         <source>Profile Configuration</source>
-        <translation type="unfinished"/>
+        <translation>प्रोफाइल विन्यास</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="24"/>
         <source>Actions</source>
-        <translation type="unfinished"/>
+        <translation>कार्य</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="32"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>खोजें...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="71"/>
         <source>Add</source>
-        <translation>Ekle</translation>
+        <translation>जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="81"/>
         <source>Remove</source>
-        <translation>Sil</translation>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="107"/>
         <source>Information</source>
-        <translation type="unfinished"/>
+        <translation>जानकारी</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="113"/>
         <source>Title:</source>
-        <translation>Başlık:</translation>
+        <translation>शीर्षक :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="123"/>
         <source>Description:</source>
-        <translation>Tanım:</translation>
+        <translation>विवरण :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="133"/>
         <source>Version:</source>
-        <translation type="unfinished"/>
+        <translation>संस्करण :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="143"/>
         <source>Author:</source>
-        <translation type="unfinished"/>
+        <translation>निर्माता :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="233"/>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="270"/>
         <source>Status</source>
-        <translation type="unfinished"/>
+        <translation>स्थिति</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="233"/>
@@ -2998,7 +2998,7 @@ Do you want to save them?</source>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="233"/>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="270"/>
         <source>Parameters</source>
-        <translation type="unfinished"/>
+        <translation>मापदंड</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="233"/>
@@ -3032,7 +3032,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>खोजें...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="252"/>
@@ -3042,17 +3042,17 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="266"/>
         <source>Links</source>
-        <translation type="unfinished"/>
+        <translation>लिंक</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="318"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>शीर्षक : %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="321"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>पता : %1</translation>
     </message>
 </context>
 <context>
@@ -3075,27 +3075,27 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="109"/>
         <source>Directory Contents</source>
-        <translation>Dizin İçerikleri</translation>
+        <translation>डायरेक्टरी सामग्री</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="112"/>
         <source>Name</source>
-        <translation>Ad</translation>
+        <translation>नाम</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="113"/>
         <source>Type</source>
-        <translation>Tip</translation>
+        <translation>प्रकार</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="114"/>
         <source>Size</source>
-        <translation>Boyut</translation>
+        <translation>आकार</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="115"/>
         <source>Date</source>
-        <translation>Tarih</translation>
+        <translation>दिनांक</translation>
     </message>
 </context>
 <context>
@@ -3103,37 +3103,37 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="14"/>
         <source>Switch Application Language</source>
-        <translation>Uygulama Diline Geç</translation>
+        <translation>अनुप्रयोग भाषा बदलें</translation>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="22"/>
         <source>Language:</source>
-        <translation>Dil:</translation>
+        <translation>भाषा :</translation>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="32"/>
         <source>Custom path:</source>
-        <translation>Özel veri yolu:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="43"/>
         <source>System</source>
-        <translation>Sistem</translation>
+        <translation>सिस्टम</translation>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="48"/>
         <source>Custom</source>
-        <translation>Özelleştirme</translation>
+        <translation>अनुकूलित</translation>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.cpp" line="47"/>
         <source>Unknown [%1]</source>
-        <translation type="unfinished"/>
+        <translation>अज्ञात [%1]</translation>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.cpp" line="72"/>
         <source>Translation files (*.qm)</source>
-        <translation type="unfinished"/>
+        <translation>अनुवादन फाइलें (*qm)</translation>
     </message>
 </context>
 <context>
@@ -3141,17 +3141,17 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/platforms/mac/MacPlatformIntegration.mm" line="370"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/mac/MacPlatformIntegration.mm" line="374"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>चेतावनी</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/mac/MacPlatformIntegration.mm" line="378"/>
         <source>Information</source>
-        <translation type="unfinished"/>
+        <translation>जानकारी</translation>
     </message>
 </context>
 <context>
@@ -3159,7 +3159,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="832"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>प्रश्न</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="833"/>
@@ -3169,12 +3169,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="834"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>क्या आप जारी रखना चाहते हैं?</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="838"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>यह संदेश पुनः न दिखाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="2177"/>
@@ -3222,7 +3222,7 @@ Do you want to save them?</source>
         <location filename="../../src/ui/Menu.cpp" line="1173"/>
         <location filename="../../src/ui/Menu.cpp" line="1188"/>
         <source>(Untitled)</source>
-        <translation>(Başlıksız)</translation>
+        <translation>(शीर्षक रहित)</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/Menu.cpp" line="1188"/>
@@ -3235,7 +3235,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/menuButton/MenuButtonWidget.cpp" line="35"/>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>मेन्यू</translation>
     </message>
 </context>
 <context>
@@ -3263,7 +3263,7 @@ Do you want to migrate it?</source>
         <location filename="../../src/core/GesturesManager.cpp" line="493"/>
         <location filename="../../src/core/GesturesManager.cpp" line="532"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(शीर्षक रहित)</translation>
     </message>
 </context>
 <context>
@@ -3271,64 +3271,64 @@ Do you want to migrate it?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="14"/>
         <source>Profile Configuration</source>
-        <translation type="unfinished"/>
+        <translation>प्रोफाइल विन्यास</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="24"/>
         <source>Actions</source>
-        <translation type="unfinished"/>
+        <translation>कार्य</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="30"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>खोजें...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="78"/>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="144"/>
         <source>Add</source>
-        <translation>Ekle</translation>
+        <translation>जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="88"/>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="154"/>
         <source>Remove</source>
-        <translation>Sil</translation>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="169"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>ऊपर ले जाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="186"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>नीचे लाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="200"/>
         <source>Information</source>
-        <translation type="unfinished"/>
+        <translation>जानकारी</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="206"/>
         <source>Title:</source>
-        <translation>Başlık:</translation>
+        <translation>शीर्षक :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="216"/>
         <source>Description:</source>
-        <translation>Tanım:</translation>
+        <translation>विवरण :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="226"/>
         <source>Version:</source>
-        <translation type="unfinished"/>
+        <translation>संस्करण :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="236"/>
         <source>Author:</source>
-        <translation type="unfinished"/>
+        <translation>निर्माता :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
@@ -3373,7 +3373,7 @@ Do you want to migrate it?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="139"/>
         <source>Parameters</source>
-        <translation type="unfinished"/>
+        <translation>मापदंड</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="139"/>
@@ -3388,7 +3388,7 @@ Do you want to migrate it?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="201"/>
         <source>Select Action</source>
-        <translation type="unfinished"/>
+        <translation>कार्य चुनें</translation>
     </message>
 </context>
 <context>
@@ -3396,7 +3396,7 @@ Do you want to migrate it?</source>
     <message>
         <location filename="../../src/modules/widgets/action/ActionWidget.cpp" line="340"/>
         <source>Remove Entry</source>
-        <translation type="unfinished"/>
+        <translation>प्रविष्टि हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/action/ActionWidget.cpp" line="343"/>
@@ -3423,7 +3423,7 @@ Do you want to migrate it?</source>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="125"/>
         <source>Warning</source>
-        <translation>Uyarı</translation>
+        <translation>चेतावनी</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="125"/>
@@ -3432,7 +3432,11 @@ Do you want to migrate it?</source>
 %1
 
 Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>एसएसएल त्रुटि हुई :
+
+%1
+
+क्या आप जारी रखना चाहते हैं?</translation>
     </message>
 </context>
 <context>
@@ -3440,7 +3444,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="708"/>
         <source>Custom</source>
-        <translation>Özelleştirme</translation>
+        <translation>अनुकूलित</translation>
     </message>
 </context>
 <context>
@@ -3448,12 +3452,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>खोजें...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="98"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>पता :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="105"/>
@@ -3463,19 +3467,19 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="136"/>
         <source>Add</source>
-        <translation>Ekle</translation>
+        <translation>जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="146"/>
         <source>Delete</source>
-        <translation>Sil</translation>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="48"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="164"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="195"/>
         <source>Add Folder…</source>
-        <translation type="unfinished"/>
+        <translation>फोल्डर जोड़ें ...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="49"/>
@@ -3490,7 +3494,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="166"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="197"/>
         <source>Add Separator</source>
-        <translation>Ayraç Ekle</translation>
+        <translation>विभाजक जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="60"/>
@@ -3500,17 +3504,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="106"/>
         <source>Select Folder Name</source>
-        <translation>Klasör Adı Seç</translation>
+        <translation>फोल्डर नाम चुनें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="106"/>
         <source>Enter folder name:</source>
-        <translation>Klasör adı girin:</translation>
+        <translation>फोल्डर नाम दर्ज करें :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="156"/>
         <source>Empty Trash</source>
-        <translation>Çöpü Boşalt</translation>
+        <translation>ट्रैश खाली करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="181"/>
@@ -3525,7 +3529,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="340"/>
         <source>Notes</source>
-        <translation type="unfinished"/>
+        <translation>नोट्स</translation>
     </message>
 </context>
 <context>
@@ -3534,7 +3538,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/NotificationDialog.cpp" line="74"/>
         <location filename="../../src/ui/NotificationDialog.cpp" line="122"/>
         <source>Close</source>
-        <translation>Kapat</translation>
+        <translation>बंद करें</translation>
     </message>
 </context>
 <context>
@@ -3542,12 +3546,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/OpenAddressDialog.ui" line="14"/>
         <source>Go to Page</source>
-        <translation>Sayfaya Git</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/OpenAddressDialog.ui" line="20"/>
         <source>Enter a web address or choose one from the list:</source>
-        <translation>Bir adres girin ya da listeden seçin:</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3555,12 +3559,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/OpenBookmarkDialog.ui" line="14"/>
         <source>Go to Bookmark</source>
-        <translation>Yer İmlerine Git</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/OpenBookmarkDialog.ui" line="20"/>
         <source>Enter the keyword of bookmark:</source>
-        <translation>Yer imi için takma ad girin:</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3568,17 +3572,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="51"/>
         <source>Opera Bookmarks</source>
-        <translation>Opera Yer İmleri</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="56"/>
         <source>Imports bookmarks from Opera Browser version 12 or earlier</source>
-        <translation>Yer İmlerini Opera Tarayıcı 12 ya da daha önceki bir sürümden aktarın</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="101"/>
         <source>Opera bookmarks files (bookmarks.adr)</source>
-        <translation>Yer imleri dosyası aç (bookmarks.adr)</translation>
+        <translation>ओपेरा पृष्ठ स्मृति फाइलें (bookmarks.adr)</translation>
     </message>
 </context>
 <context>
@@ -3586,7 +3590,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="57"/>
         <source>Import into folder:</source>
-        <translation>Bu klasöre aktar:</translation>
+        <translation>इस फोल्डर में आयात करें :</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="65"/>
@@ -3601,7 +3605,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="115"/>
         <source>Opera notes files (notes.adr)</source>
-        <translation type="unfinished"/>
+        <translation>ओपेरा नोट्स फाइलें (notes.adr)</translation>
     </message>
 </context>
 <context>
@@ -3624,7 +3628,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="105"/>
         <source>Opera search engines files (search.ini)</source>
-        <translation type="unfinished"/>
+        <translation>ओपेरा खोज साधन फाइलें (search.ini)</translation>
     </message>
 </context>
 <context>
@@ -3642,7 +3646,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="94"/>
         <source>Opera session files (*.win)</source>
-        <translation type="unfinished"/>
+        <translation>ओपेरा सत्र फाइलें (*.win)</translation>
     </message>
 </context>
 <context>
@@ -3655,12 +3659,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="89"/>
         <source>Imports feeds from OPML file</source>
-        <translation type="unfinished"/>
+        <translation>OPML फाइल से समाचार आयात करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="119"/>
         <source>OPML files (*.opml)</source>
-        <translation type="unfinished"/>
+        <translation>OPML फाइलें (*.opml)</translation>
     </message>
 </context>
 <context>
@@ -3668,12 +3672,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="22"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>इस फोल्डर में आयात करें :</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="41"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>नया ...</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="52"/>
@@ -3686,17 +3690,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/OptionWidget.cpp" line="50"/>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>नहीं</translation>
     </message>
     <message>
         <location filename="../../src/ui/OptionWidget.cpp" line="51"/>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>हाँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/OptionWidget.cpp" line="194"/>
         <source>Defaults</source>
-        <translation>Varsayılanlar</translation>
+        <translation>डिफ़ॉल्ट</translation>
     </message>
 </context>
 <context>
@@ -3704,35 +3708,35 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>खोजें...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="42"/>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="110"/>
         <source>Name</source>
-        <translation>Ad</translation>
+        <translation>नाम</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="42"/>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="110"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>मान</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="136"/>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="137"/>
         <source>&lt;empty&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;empty&gt;</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="158"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>सामान्य</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="164"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>शीर्षक</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="168"/>
@@ -3758,7 +3762,7 @@ Do you want to continue?</source>
     <message numerus="yes">
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="174"/>
         <source>%1 (%n blocked)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n अवरुद्ध)</numerusform><numerusform>%1 (%n अवरुद्ध)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="181"/>
@@ -3778,12 +3782,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="220"/>
         <source>Permissions</source>
-        <translation type="unfinished"/>
+        <translation>अनुमतियाँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="224"/>
         <source>Security</source>
-        <translation type="unfinished"/>
+        <translation>सुरक्षा</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="232"/>
@@ -3808,7 +3812,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="262"/>
         <source>Page Information</source>
-        <translation type="unfinished"/>
+        <translation>पृष्ठ जानकारी</translation>
     </message>
 </context>
 <context>
@@ -3816,12 +3820,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="61"/>
         <source>Save</source>
-        <translation>Kaydet</translation>
+        <translation>संचित करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="68"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>रद्द करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="37"/>
@@ -3833,7 +3837,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="37"/>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="55"/>
         <source>Do you want to save login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>क्या आप %1 हेतु लॉगिन डाटा संचित करना चाहते हैं?</translation>
     </message>
 </context>
 <context>
@@ -3841,31 +3845,31 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>खोजें...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="70"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="77"/>
         <source>Name</source>
-        <translation>Ad</translation>
+        <translation>नाम</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="70"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="77"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>मान</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="91"/>
         <source>Set #%1</source>
-        <translation type="unfinished"/>
+        <translation>#%1 सेट</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="179"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="235"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="254"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>प्रश्न</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="180"/>
@@ -3878,7 +3882,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="237"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="256"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>क्या आप जारी रखना चाहते हैं?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="255"/>
@@ -3903,7 +3907,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="369"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>कूटशब्द</translation>
     </message>
 </context>
 <context>
@@ -3926,12 +3930,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="80"/>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>ठीक है</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="87"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>रद्द करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="66"/>
@@ -3984,7 +3988,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="137"/>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="137"/>
@@ -4002,7 +4006,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.ui" line="71"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>बंद करें</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="62"/>
@@ -4038,7 +4042,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="119"/>
         <source>Open All</source>
-        <translation type="unfinished"/>
+        <translation>सभी खोलें</translation>
     </message>
 </context>
 <context>
@@ -4048,7 +4052,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="374"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="768"/>
         <source>General</source>
-        <translation>Genel</translation>
+        <translation>सामान्य</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="62"/>
@@ -4123,7 +4127,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="263"/>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>विकल्प</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="270"/>
@@ -4133,7 +4137,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="300"/>
         <source>Style</source>
-        <translation type="unfinished"/>
+        <translation>शैली</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="309"/>
@@ -4148,7 +4152,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="343"/>
         <source>Other</source>
-        <translation>Diğer</translation>
+        <translation>अन्य</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="350"/>
@@ -4158,12 +4162,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="383"/>
         <source>Images:</source>
-        <translation type="unfinished"/>
+        <translation>चित्र :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="397"/>
         <source>Enable JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>जावा स्क्रिप्ट सक्रिय करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="404"/>
@@ -4173,22 +4177,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="415"/>
         <source>Plugins:</source>
-        <translation type="unfinished"/>
+        <translation>प्लगिन :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="425"/>
         <source>User style sheet:</source>
-        <translation type="unfinished"/>
+        <translation>उपयोक्ता शैली पत्र :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="443"/>
         <source>Website Preferences</source>
-        <translation type="unfinished"/>
+        <translation>वेबसाइट सेटिंग्स</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="454"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>खोजें...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="481"/>
@@ -4199,7 +4203,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1239"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1392"/>
         <source>Add</source>
-        <translation>Ekle</translation>
+        <translation>जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="491"/>
@@ -4208,7 +4212,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1249"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1402"/>
         <source>Edit…</source>
-        <translation type="unfinished"/>
+        <translation>संपादित करें ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="501"/>
@@ -4219,7 +4223,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1269"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1422"/>
         <source>Remove</source>
-        <translation>Sil</translation>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="535"/>
@@ -4234,12 +4238,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="621"/>
         <source>Save to disk</source>
-        <translation type="unfinished"/>
+        <translation>डिस्क में संचित करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="664"/>
         <source>Do not ask for folder, save directly to</source>
-        <translation type="unfinished"/>
+        <translation>फोल्डर स्थान न पूछें, सीधे यहाँ संचित करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="679"/>
@@ -4264,7 +4268,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="871"/>
         <source>Proxy</source>
-        <translation type="unfinished"/>
+        <translation>प्रॉक्सी</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="971"/>
@@ -4276,14 +4280,14 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1294"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1447"/>
         <source>Move Up</source>
-        <translation>Yukarı Taşı</translation>
+        <translation>ऊपर ले जाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1077"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1320"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1473"/>
         <source>Move Down</source>
-        <translation>Aşağı Taşı</translation>
+        <translation>नीचे लाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1100"/>
@@ -4348,7 +4352,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="453"/>
         <source>Notifications</source>
-        <translation type="unfinished"/>
+        <translation>अधिसूचनाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
@@ -4360,13 +4364,13 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="453"/>
         <source>Content</source>
-        <translation>İçerik</translation>
+        <translation>सामग्री</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="453"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>डाउनलोड</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
@@ -4378,19 +4382,19 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="453"/>
         <source>History</source>
-        <translation>Geçmiş</translation>
+        <translation>वृतांत</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="453"/>
         <source>Network</source>
-        <translation>Ağ</translation>
+        <translation>नेटवर्क</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="453"/>
         <source>Security</source>
-        <translation>Güvenlik</translation>
+        <translation>सुरक्षा</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
@@ -4417,18 +4421,18 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="115"/>
         <source>WAV files (*.wav)</source>
-        <translation type="unfinished"/>
+        <translation>WAV फाइलें (*.wav)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="118"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="186"/>
         <source>Name</source>
-        <translation>Ad</translation>
+        <translation>नाम</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="118"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>विवरण</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="140"/>
@@ -4439,12 +4443,12 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="149"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="169"/>
         <source>Style sheets (*.css)</source>
-        <translation type="unfinished"/>
+        <translation>शैली पत्र (*.css)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="152"/>
         <source>All images</source>
-        <translation type="unfinished"/>
+        <translation>सभी चित्र</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="153"/>
@@ -4454,12 +4458,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="154"/>
         <source>No images</source>
-        <translation type="unfinished"/>
+        <translation>कोई चित्र नहीं</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="161"/>
         <source>Enabled</source>
-        <translation type="unfinished"/>
+        <translation>सक्रिय</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="162"/>
@@ -4469,24 +4473,24 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="163"/>
         <source>Disabled</source>
-        <translation type="unfinished"/>
+        <translation>निष्क्रिय</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="209"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="224"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>शीर्षक</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="209"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>मान</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="217"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="232"/>
         <source>Add Folder…</source>
-        <translation type="unfinished"/>
+        <translation>फोल्डर जोड़ें ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="218"/>
@@ -4497,7 +4501,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="219"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="234"/>
         <source>Add Separator</source>
-        <translation type="unfinished"/>
+        <translation>विभाजक जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="233"/>
@@ -4523,20 +4527,20 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="339"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="375"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>नया ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="340"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="376"/>
         <source>Readd</source>
-        <translation type="unfinished"/>
+        <translation>पुनः जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="576"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1265"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1460"/>
         <source>Question</source>
-        <translation>Soru</translation>
+        <translation>प्रश्न</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="576"/>
@@ -4546,22 +4550,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="594"/>
         <source>MIME Type Name</source>
-        <translation>MIME Türü Adı</translation>
+        <translation>MIME प्रकार नाम</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="594"/>
         <source>Select name of MIME Type:</source>
-        <translation>MIME Türünün adını seçin:</translation>
+        <translation>MIME प्रकार का नाम चुनें :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="614"/>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="614"/>
         <source>Invalid MIME Type name.</source>
-        <translation>Geçersiz MIME Türü adı.</translation>
+        <translation>अमान्य MIME प्रकार नाम।</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="739"/>
@@ -4569,7 +4573,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="905"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="967"/>
         <source>Folder Name</source>
-        <translation>Klasör Adı</translation>
+        <translation>फोल्डर नाम</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="739"/>
@@ -4577,7 +4581,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="905"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="967"/>
         <source>Select folder name:</source>
-        <translation>Klasör adı seçin:</translation>
+        <translation>फोल्डर नाम चुनें :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="743"/>
@@ -4591,25 +4595,25 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1156"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1351"/>
         <source>(Untitled)</source>
-        <translation>(Başlıksız)</translation>
+        <translation>(शीर्षक रहित)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="757"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="923"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>अनुकूलित</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1266"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1461"/>
         <source>Do you really want to remove this profile?</source>
-        <translation type="unfinished"/>
+        <translation>क्या आप निश्चित ही यह प्रोफाइल हटाना चाहते हैं?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1275"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1470"/>
         <source>Delete profile permanently</source>
-        <translation type="unfinished"/>
+        <translation>पूर्ण रूप से प्रोफाइल हटाना</translation>
     </message>
 </context>
 <context>
@@ -4637,7 +4641,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="78"/>
         <source>%</source>
-        <translation type="unfinished"/>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="96"/>
@@ -4659,7 +4663,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="179"/>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="208"/>
         <source> px</source>
-        <translation type="unfinished"/>
+        <translation>पिक्सेल</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="169"/>
@@ -4674,37 +4678,37 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="205"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>कोई नहीं</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="229"/>
         <source>Colors</source>
-        <translation>Renkler</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="119"/>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>पूछें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="120"/>
         <source>Block all</source>
-        <translation type="unfinished"/>
+        <translation>सभी अवरुद्ध करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="121"/>
         <source>Open all</source>
-        <translation type="unfinished"/>
+        <translation>सभी खोलें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="122"/>
         <source>Open all in background</source>
-        <translation type="unfinished"/>
+        <translation>सभी बैकग्राउंड में खोलें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="134"/>
         <source>Style</source>
-        <translation type="unfinished"/>
+        <translation>शैली</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="134"/>
@@ -4715,7 +4719,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="134"/>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="157"/>
         <source>Preview</source>
-        <translation>Ön İzleme</translation>
+        <translation>पूर्वावलोकन</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="138"/>
@@ -4755,27 +4759,27 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="157"/>
         <source>Type</source>
-        <translation>Tip</translation>
+        <translation>प्रकार</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="161"/>
         <source>Background Color</source>
-        <translation>Arka Plan Rengi</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="161"/>
         <source>Text Color</source>
-        <translation>Metin Rengi</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="161"/>
         <source>Link Color</source>
-        <translation>Bağlantı Rengi</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="161"/>
         <source>Visited Link Color</source>
-        <translation>Ziyaret Edilmiş Bağlantı Rengi</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4783,37 +4787,37 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="17"/>
         <source>Preferences</source>
-        <translation>Tercihler</translation>
+        <translation>सेटिंग्स</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="27"/>
         <source>General</source>
-        <translation>Genel</translation>
+        <translation>सामान्य</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="33"/>
         <source>Content</source>
-        <translation>İçerik</translation>
+        <translation>सामग्री</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="39"/>
         <source>Privacy</source>
-        <translation>Güvenlik</translation>
+        <translation>निजता</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="45"/>
         <source>Search</source>
-        <translation>Arama</translation>
+        <translation>खोज</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="51"/>
         <source>Advanced</source>
-        <translation>Gelişmiş</translation>
+        <translation>विस्तृत</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="62"/>
         <source>All Settings</source>
-        <translation type="unfinished"/>
+        <translation>सभी सेटिंग्स</translation>
     </message>
 </context>
 <context>
@@ -4856,17 +4860,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="114"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>डाउनलोड</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="126"/>
         <source>Save files to:</source>
-        <translation type="unfinished"/>
+        <translation>यहाँ फाइलें संचित करें :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="141"/>
         <source>Always ask me where to save files</source>
-        <translation type="unfinished"/>
+        <translation>सदैव फाइलों हेतु संचय स्थान पूछें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="154"/>
@@ -4911,27 +4915,27 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="224"/>
         <source>Language</source>
-        <translation>Dİl</translation>
+        <translation>भाषा</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="233"/>
         <source>Preferred webpage language:</source>
-        <translation type="unfinished"/>
+        <translation>वेब पृष्ठ हेतु इच्छित भाषा :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="258"/>
         <source>Edit…</source>
-        <translation type="unfinished"/>
+        <translation>संपादित करें ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="275"/>
         <source>System Defaults</source>
-        <translation type="unfinished"/>
+        <translation>सिस्टम डिफ़ॉल्ट</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="287"/>
         <source>Set as a default browser</source>
-        <translation type="unfinished"/>
+        <translation>डिफ़ॉल्ट ब्राउज़र के तौर पर सेट करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="45"/>
@@ -4946,17 +4950,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="47"/>
         <source>Show home page</source>
-        <translation type="unfinished"/>
+        <translation>होम पृष्ठ दिखाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="48"/>
         <source>Show start page</source>
-        <translation type="unfinished"/>
+        <translation>आरंभ पृष्ठ दिखाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="49"/>
         <source>Show empty page</source>
-        <translation type="unfinished"/>
+        <translation>रिक्त पृष्ठ दिखाएँ</translation>
     </message>
 </context>
 <context>
@@ -4974,12 +4978,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="57"/>
         <source>History</source>
-        <translation>Geçmiş</translation>
+        <translation>वृतांत</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="64"/>
         <source>Private mode</source>
-        <translation type="unfinished"/>
+        <translation>निजी मोड</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="107"/>
@@ -5039,22 +5043,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="299"/>
         <source>Settings…</source>
-        <translation type="unfinished"/>
+        <translation>सेटिंग्स ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="319"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>कूटशब्द</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="328"/>
         <source>Remember passwords</source>
-        <translation type="unfinished"/>
+        <translation>कूटशब्द स्मरण करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="348"/>
         <source>Manage…</source>
-        <translation type="unfinished"/>
+        <translation>प्रबंधन ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="362"/>
@@ -5064,7 +5068,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="385"/>
         <source>Change…</source>
-        <translation type="unfinished"/>
+        <translation>बदलें ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="40"/>
@@ -5085,7 +5089,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="53"/>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="67"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>सदैव</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="54"/>
@@ -5101,7 +5105,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="60"/>
         <source>Expires</source>
-        <translation>Sona Erme</translation>
+        <translation>मान्यता समाप्ति</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="61"/>
@@ -5111,12 +5115,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="62"/>
         <source>Always ask</source>
-        <translation type="unfinished"/>
+        <translation>सदैव पूछें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="69"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>कभी नहीं</translation>
     </message>
 </context>
 <context>
@@ -5124,37 +5128,37 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="21"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>खोजें...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="60"/>
         <source>Add</source>
-        <translation>Ekle</translation>
+        <translation>जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="70"/>
         <source>Edit…</source>
-        <translation type="unfinished"/>
+        <translation>संपादित करें ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="80"/>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>अपडेट</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="90"/>
         <source>Remove</source>
-        <translation>Sil</translation>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="115"/>
         <source>Move Up</source>
-        <translation>Yukarı Taşı</translation>
+        <translation>ऊपर ले जाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="141"/>
         <source>Move Down</source>
-        <translation>Aşağı Taşı</translation>
+        <translation>नीचे लाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="154"/>
@@ -5165,28 +5169,28 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="98"/>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="163"/>
         <source>Name</source>
-        <translation>Ad</translation>
+        <translation>नाम</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="98"/>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="163"/>
         <source>Keyword</source>
-        <translation type="unfinished"/>
+        <translation>कुंजीपटल</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="127"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>नया ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="128"/>
         <source>File…</source>
-        <translation type="unfinished"/>
+        <translation>फाइल ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="130"/>
         <source>Readd</source>
-        <translation type="unfinished"/>
+        <translation>पुनः जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="178"/>
@@ -5196,18 +5200,18 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="199"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>फाइल चुनें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="199"/>
         <source>Open Search files (*.xml)</source>
-        <translation type="unfinished"/>
+        <translation>ओपेरा खोज फाइलें (*.xml)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="307"/>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="370"/>
         <source>Question</source>
-        <translation>Soru</translation>
+        <translation>प्रश्न</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="308"/>
@@ -5224,13 +5228,13 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="360"/>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="448"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="349"/>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="360"/>
         <source>Failed to open Open Search file.</source>
-        <translation type="unfinished"/>
+        <translation>खोज फाइल खोलने में विफल।</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="371"/>
@@ -5245,7 +5249,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="511"/>
         <source>(Untitled)</source>
-        <translation>(Başlıksız)</translation>
+        <translation>(शीर्षक रहित)</translation>
     </message>
 </context>
 <context>
@@ -5262,7 +5266,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="57"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>अज्ञात</translation>
     </message>
 </context>
 <context>
@@ -5313,12 +5317,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="19"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>शीर्षक :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="38"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>सामान्य</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="44"/>
@@ -5363,17 +5367,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="207"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>सभी</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="229"/>
         <source>Automatic</source>
-        <translation type="unfinished"/>
+        <translation>स्वतः</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="273"/>
         <source>Path to PAC file:</source>
-        <translation type="unfinished"/>
+        <translation>PAC फाइल हेतु पथ :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="286"/>
@@ -5393,17 +5397,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="328"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="338"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>संपादित करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="348"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="372"/>
@@ -5428,7 +5432,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="582"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="622"/>
         <source>JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>जावा स्क्रिप्ट</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="121"/>
@@ -5441,7 +5445,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="476"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="489"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>प्रश्न</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="476"/>
@@ -5459,7 +5463,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="477"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="495"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>यह संदेश पुनः न दिखाएँ</translation>
     </message>
 </context>
 <context>
@@ -5480,22 +5484,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="518"/>
         <source>file</source>
-        <translation type="unfinished"/>
+        <translation>फाइल</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="529"/>
         <source>Failed to save image: %1</source>
-        <translation type="unfinished"/>
+        <translation>चित्र संचित करने में विफल : %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="1420"/>
         <source>Blank Page</source>
-        <translation type="unfinished"/>
+        <translation>रिक्त पृष्ठ</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="1433"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(शीर्षक रहित)</translation>
     </message>
 </context>
 <context>
@@ -5503,7 +5507,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="79"/>
         <source>Network error %1</source>
-        <translation type="unfinished"/>
+        <translation>नेटवर्क त्रुटि %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="96"/>
@@ -5513,27 +5517,27 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="160"/>
         <source>Directory Contents</source>
-        <translation type="unfinished"/>
+        <translation>डायरेक्टरी सामग्री</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="163"/>
         <source>Name</source>
-        <translation>Ad</translation>
+        <translation>नाम</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="164"/>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>प्रकार</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="165"/>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>आकार</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="166"/>
         <source>Date</source>
-        <translation type="unfinished"/>
+        <translation>दिनांक</translation>
     </message>
 </context>
 <context>
@@ -5541,7 +5545,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitInspector.cpp" line="42"/>
         <source>Close</source>
-        <translation>Kapat</translation>
+        <translation>बंद करें</translation>
     </message>
 </context>
 <context>
@@ -5580,7 +5584,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="674"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="714"/>
         <source>JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>जावा स्क्रिप्ट</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="424"/>
@@ -5594,7 +5598,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="627"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="948"/>
         <source>Question</source>
-        <translation>Soru</translation>
+        <translation>प्रश्न</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="614"/>
@@ -5612,12 +5616,12 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="615"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="633"/>
         <source>Do not show this message again</source>
-        <translation>Bu mesajı tekrar gösterme</translation>
+        <translation>यह संदेश पुनः न दिखाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="787"/>
         <source>%1 error #%2: %3</source>
-        <translation type="unfinished"/>
+        <translation>%1 त्रुटि #%2: %3</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="859"/>
@@ -5628,17 +5632,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="859"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(अज्ञात)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="877"/>
         <source>WebKit error %1</source>
-        <translation type="unfinished"/>
+        <translation>वेबकिट त्रुटि %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="881"/>
         <source>Network error %1</source>
-        <translation type="unfinished"/>
+        <translation>नेटवर्क त्रुटि %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="948"/>
@@ -5670,12 +5674,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="198"/>
         <source>WebKit Backend</source>
-        <translation>WebKit Arka Ucu</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="204"/>
         <source>Backend utilizing QtWebKit module</source>
-        <translation>QtWebKit modülü Arka ucu kullanılıyor</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5683,27 +5687,27 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="421"/>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="421"/>
         <source>Failed to open file for writing.</source>
-        <translation>Dosya yazma işlemi için açılamadı.</translation>
+        <translation>राइट हेतु फाइल खोलने में विफल।</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="441"/>
         <source>file</source>
-        <translation type="unfinished"/>
+        <translation>फाइल</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="449"/>
         <source>Failed to save image: %1</source>
-        <translation type="unfinished"/>
+        <translation>चित्र संचित करने में विफल : %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="583"/>
         <source>Print Preview</source>
-        <translation>Yazdırma Ön İzlemesi</translation>
+        <translation>प्रिंट पूर्वावलोकन</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1696"/>
@@ -5718,12 +5722,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2127"/>
         <source>Blank Page</source>
-        <translation>Boş Sayfa</translation>
+        <translation>रिक्त पृष्ठ</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2140"/>
         <source>(Untitled)</source>
-        <translation>(Başlıksız)</translation>
+        <translation>(शीर्षक रहित)</translation>
     </message>
 </context>
 <context>
@@ -5736,12 +5740,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/ReloadTimeDialog.ui" line="29"/>
         <source>minutes</source>
-        <translation type="unfinished"/>
+        <translation>मिनट</translation>
     </message>
     <message>
         <location filename="../../src/ui/ReloadTimeDialog.ui" line="46"/>
         <source>seconds</source>
-        <translation type="unfinished"/>
+        <translation>सेकंड</translation>
     </message>
 </context>
 <context>
@@ -5754,7 +5758,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/ReportDialog.cpp" line="41"/>
         <source>Copy</source>
-        <translation>Kopyala</translation>
+        <translation>कॉपी करें</translation>
     </message>
 </context>
 <context>
@@ -5762,12 +5766,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="376"/>
         <source>Failed to parse feed file: %1</source>
-        <translation type="unfinished"/>
+        <translation>समाचार फाइल प्राप्यता विफल : %1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="387"/>
         <source>Failed to parse feed: no valid entries found</source>
-        <translation type="unfinished"/>
+        <translation>समाचार फाइल प्राप्यता विफल : कोई मान्य प्रविष्टि नहीं मिली</translation>
     </message>
 </context>
 <context>
@@ -5775,44 +5779,43 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="14"/>
         <source>Save Session</source>
-        <translation>Oturumu Kaydet</translation>
+        <translation>सत्र संचित करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="22"/>
         <source>Session title:</source>
-        <translation>Oturum Başlığı:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="32"/>
         <source>Session identifier:</source>
-        <translation>Oturum tanımlayıcı:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="50"/>
         <source>Store only current window</source>
-        <translation>Sadece geçerli pencereyi kaydet</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="68"/>
         <source>Question</source>
-        <translation>Soru</translation>
+        <translation>प्रश्न</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="68"/>
         <source>Session with specified indentifier already exists.
 Do you want to overwrite it?</source>
-        <translation>Oturum için tanımlayıcı zaten var.
-Üzerine kaydetmek istiyor musunuz?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="81"/>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="81"/>
         <source>Failed to save session.</source>
-        <translation>Oturum kaydedilirken hata oluştu.</translation>
+        <translation>सत्र संचित करने में विफल।</translation>
     </message>
 </context>
 <context>
@@ -5825,12 +5828,12 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="45"/>
         <source>Find Next</source>
-        <translation>Sonrakini Bul</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="55"/>
         <source>Find Previous</source>
-        <translation>Öncekini Bul</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="78"/>
@@ -5845,7 +5848,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="107"/>
         <source>Close</source>
-        <translation>Kapat</translation>
+        <translation>बंद करें</translation>
     </message>
 </context>
 <context>
@@ -5858,27 +5861,27 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="22"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>शीर्षक :</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="49"/>
         <source>Change Icon…</source>
-        <translation type="unfinished"/>
+        <translation>आइकन बदलें ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="58"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>विवरण :</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="71"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>कमांड अक्षर :</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="84"/>
         <source>Encoding:</source>
-        <translation type="unfinished"/>
+        <translation>एन्कोडिंग :</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="101"/>
@@ -5899,7 +5902,7 @@ Do you want to overwrite it?</source>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="141"/>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="249"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>पता :</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="154"/>
@@ -5917,7 +5920,7 @@ Do you want to overwrite it?</source>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="210"/>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="318"/>
         <source>Data encoding (enctype):</source>
-        <translation type="unfinished"/>
+        <translation>डाटा एन्कोडिंग (enctype):</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="238"/>
@@ -5937,7 +5940,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.cpp" line="129"/>
         <source>Language</source>
-        <translation type="unfinished"/>
+        <translation>भाषा</translation>
     </message>
 </context>
 <context>
@@ -5950,7 +5953,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/core/SearchEnginesManager.cpp" line="192"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>अज्ञात</translation>
     </message>
 </context>
 <context>
@@ -5971,12 +5974,12 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="311"/>
         <source>(untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(शीर्षक रहित)</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="438"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="438"/>
@@ -5996,7 +5999,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="828"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation>खोज</translation>
     </message>
 </context>
 <context>
@@ -6014,29 +6017,29 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="41"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="38"/>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="79"/>
         <source>Name</source>
-        <translation>Ad</translation>
+        <translation>नाम</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="38"/>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="79"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>मान</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="42"/>
         <source>Set #%1</source>
-        <translation type="unfinished"/>
+        <translation>#%1 सेट</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="87"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>प्रश्न</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="87"/>
@@ -6054,7 +6057,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/core/SessionModel.cpp" line="250"/>
         <source>Trash</source>
-        <translation type="unfinished"/>
+        <translation>ट्रैश</translation>
     </message>
 </context>
 <context>
@@ -6062,23 +6065,23 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/core/SessionsManager.cpp" line="222"/>
         <source>Default</source>
-        <translation>Varsayılan</translation>
+        <translation>डिफ़ॉल्ट</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.cpp" line="222"/>
         <location filename="../../src/core/SessionsManager.cpp" line="368"/>
         <source>(Untitled)</source>
-        <translation>(Başlıksız)</translation>
+        <translation>(शीर्षक रहित)</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="109"/>
         <source>Start Page</source>
-        <translation type="unfinished"/>
+        <translation>आरंभ पृष्ठ</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="112"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(अज्ञात)</translation>
     </message>
 </context>
 <context>
@@ -6086,46 +6089,46 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="14"/>
         <source>Sessions Manager</source>
-        <translation>Oturum Yöneticisi</translation>
+        <translation>सत्र प्रबंधक</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="52"/>
         <source>Open</source>
-        <translation>Aç</translation>
+        <translation>खोलें</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="59"/>
         <source>Delete</source>
-        <translation>Sil</translation>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="77"/>
         <source>Open session in current window</source>
-        <translation>Bağlantıyı geçerli pencere aç</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="45"/>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
         <source>(Untitled)</source>
-        <translation>(Başlıksız)</translation>
+        <translation>(शीर्षक रहित)</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="49"/>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="98"/>
         <source>Title</source>
-        <translation>Başlık</translation>
+        <translation>शीर्षक</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="49"/>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="98"/>
         <source>Identifier</source>
-        <translation>Tanımlayıcı</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="49"/>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="98"/>
         <source>Windows</source>
-        <translation>Pencereler</translation>
+        <translation type="unfinished"/>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
@@ -6140,34 +6143,34 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="106"/>
         <source>Warning</source>
-        <translation>Uyarı</translation>
+        <translation>चेतावनी</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="106"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
-        <translation>Oturum doğru bir şekilde kaydedilemedi.
-Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
+        <translation>यह सत्र उचित रूप से संचित नहीं हुआ।
+क्या आप निश्चित ही इसे पुनः स्थापित करना चाहते हैं?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="123"/>
         <source>Confirm</source>
-        <translation>Onayla</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="123"/>
         <source>Are you sure that you want to delete session %1?</source>
-        <translation>%1 oturumunu silmek istediğinize emin misiniz?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="131"/>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="131"/>
         <source>Failed to delete session.</source>
-        <translation>Oturum silinirken hata oluştu.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6175,17 +6178,17 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/core/SettingsManager.cpp" line="358"/>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>हाँ</translation>
     </message>
     <message>
         <location filename="../../src/core/SettingsManager.cpp" line="358"/>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>नहीं</translation>
     </message>
     <message>
         <location filename="../../src/core/SettingsManager.cpp" line="363"/>
         <source>Invalid</source>
-        <translation type="unfinished"/>
+        <translation>अमान्य</translation>
     </message>
 </context>
 <context>
@@ -6194,7 +6197,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="41"/>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="71"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>हटाएँ</translation>
     </message>
 </context>
 <context>
@@ -6220,28 +6223,29 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="87"/>
         <source>Failed to save file: %1</source>
-        <translation type="unfinished"/>
+        <translation>फाइल संचित करने में विफल : %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="89"/>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="89"/>
         <source>Failed to save file.</source>
-        <translation type="unfinished"/>
+        <translation>फाइल संचित करने में विफल।</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="115"/>
         <source>Warning</source>
-        <translation>Uyarı</translation>
+        <translation>चेतावनी</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="115"/>
         <source>The document has been modified.
 Do you want to save your changes or discard them?</source>
-        <translation type="unfinished"/>
+        <translation>डॉक्यूमेंट में बदलाव किए गए हैं।
+आप उन्हें संचित करना चाहते हैं या निरस्त?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="300"/>
@@ -6293,7 +6297,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="89"/>
         <source>Color:</source>
-        <translation>Renk:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="109"/>
@@ -6303,7 +6307,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="119"/>
         <source>Automatic</source>
-        <translation type="unfinished"/>
+        <translation>स्वतः</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="126"/>
@@ -6313,7 +6317,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="136"/>
         <source>%</source>
-        <translation type="unfinished"/>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="154"/>
@@ -6361,22 +6365,22 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="847"/>
         <source>Edit…</source>
-        <translation type="unfinished"/>
+        <translation>संपादित करें ...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="851"/>
         <source>Reload</source>
-        <translation>Yeniden Yükle</translation>
+        <translation>पुनः लोड</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="859"/>
         <source>Delete</source>
-        <translation>Sil</translation>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="863"/>
         <source>Configure…</source>
-        <translation type="unfinished"/>
+        <translation>विन्यास ...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="867"/>
@@ -6390,17 +6394,17 @@ Do you want to save your changes or discard them?</source>
         <location filename="../../src/ui/StartupDialog.ui" line="14"/>
         <location filename="../../src/ui/StartupDialog.ui" line="27"/>
         <source>Welcome to Otter</source>
-        <translation>Otter&apos;e Hoş geldiniz </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="34"/>
         <source>Continue session</source>
-        <translation>Oturuma devam et</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="104"/>
         <source>Begin with home page</source>
-        <translation>Ana sayfa ile başla</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
@@ -6410,7 +6414,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="124"/>
         <source>Begin with blank page</source>
-        <translation>Boş sayfayla başla</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="134"/>
@@ -6421,12 +6425,12 @@ Do you want to save your changes or discard them?</source>
         <location filename="../../src/ui/StartupDialog.cpp" line="55"/>
         <location filename="../../src/ui/StartupDialog.cpp" line="62"/>
         <source>(Untitled)</source>
-        <translation>(Başlıksız)</translation>
+        <translation>(शीर्षक रहित)</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="122"/>
         <source>Window %1</source>
-        <translation>Pencere %1</translation>
+        <translation>विंडो %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="132"/>
@@ -6437,7 +6441,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="225"/>
         <source>Default</source>
-        <translation>Varsayılan</translation>
+        <translation>डिफ़ॉल्ट</translation>
     </message>
 </context>
 <context>
@@ -6478,12 +6482,12 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="843"/>
         <source>Customize</source>
-        <translation type="unfinished"/>
+        <translation>अनुकूलित</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="1086"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>प्रश्न</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/TabBarWidget.cpp" line="1087"/>
@@ -6493,12 +6497,12 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="1088"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>क्या आप जारी रखना चाहते हैं?</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="1092"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>यह संदेश पुनः न दिखाएँ</translation>
     </message>
 </context>
 <context>
@@ -6506,7 +6510,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="269"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>टैब बंद करें</translation>
     </message>
 </context>
 <context>
@@ -6514,7 +6518,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>खोजें...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="156"/>
@@ -6524,12 +6528,12 @@ Address: %2</source>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="184"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>शीर्षक : %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="184"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>पता : %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="188"/>
@@ -6545,12 +6549,12 @@ Address: %2</source>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="138"/>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="182"/>
         <source>&lt;empty&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;empty&gt;</translation>
     </message>
     <message>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="70"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>कॉपी करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="76"/>
@@ -6560,7 +6564,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="81"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>सभी चुनें</translation>
     </message>
 </context>
 <context>
@@ -6574,7 +6578,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="22"/>
         <source>Name:</source>
-        <translation>Ad:</translation>
+        <translation>नाम :</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="45"/>
@@ -6584,7 +6588,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="106"/>
         <source>Edit…</source>
-        <translation type="unfinished"/>
+        <translation>संपादित करें ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="115"/>
@@ -6600,12 +6604,12 @@ Address: %2</source>
         <location filename="../../src/ui/ToolBarDialog.ui" line="209"/>
         <location filename="../../src/ui/ToolBarDialog.ui" line="219"/>
         <source>Filter…</source>
-        <translation type="unfinished"/>
+        <translation>निस्पंदन ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="256"/>
         <source>Add Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>पृष्ठ स्मृति जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="269"/>
@@ -6615,12 +6619,12 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="291"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>नया ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="331"/>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>विकल्प</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="339"/>
@@ -6651,7 +6655,7 @@ Address: %2</source>
         <location filename="../../src/ui/ToolBarDialog.ui" line="391"/>
         <location filename="../../src/ui/ToolBarDialog.ui" line="417"/>
         <source> px</source>
-        <translation type="unfinished"/>
+        <translation>पिक्सेल</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="404"/>
@@ -6749,13 +6753,13 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="356"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>सभी</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="363"/>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="629"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>अज्ञात</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="373"/>
@@ -6801,12 +6805,12 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="429"/>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>मेन्यू</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="434"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>डाउनलोड</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="462"/>
@@ -6856,7 +6860,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="577"/>
         <source>Error Console</source>
-        <translation type="unfinished"/>
+        <translation>त्रुटि कंसोल</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="581"/>
@@ -6971,12 +6975,12 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="907"/>
         <source>(Untitled)</source>
-        <translation>(Başlıksız)</translation>
+        <translation>(शीर्षक रहित)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="908"/>
         <source>Configure…</source>
-        <translation type="unfinished"/>
+        <translation>विन्यास ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="911"/>
@@ -7027,7 +7031,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolButtonWidget.cpp" line="130"/>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>मेन्यू</translation>
     </message>
 </context>
 <context>
@@ -7036,12 +7040,12 @@ Address: %2</source>
         <location filename="../../src/core/TransfersManager.cpp" line="670"/>
         <location filename="../../src/core/TransfersManager.cpp" line="703"/>
         <source>file</source>
-        <translation type="unfinished"/>
+        <translation>फाइल</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="888"/>
         <source>Question</source>
-        <translation>Soru</translation>
+        <translation>प्रश्न</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="888"/>
@@ -7049,8 +7053,8 @@ Address: %2</source>
 Do you want to overwrite it?
 
 %1</source>
-        <translation>Aynı adlı bir dosya halihazırda var.
-Üzerine yazmak istiyor musunuz?
+        <translation>समान नाम से फाइल पहले से मौजूद है।
+क्या आप उसे अधिलेखित करना चाहते हैं?
 
 %1</translation>
     </message>
@@ -7066,7 +7070,7 @@ Do you want to overwrite it?
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="240"/>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="244"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>आकार :</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="240"/>
@@ -7082,7 +7086,7 @@ Do you want to overwrite it?
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="263"/>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="297"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>अज्ञात</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="270"/>
@@ -7097,7 +7101,7 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="280"/>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>रोकें</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="297"/>
@@ -7114,22 +7118,22 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="14"/>
         <source>Opening unknown file</source>
-        <translation type="unfinished"/>
+        <translation>अज्ञात फाइल खोली जा रही है</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="22"/>
         <source>Name:</source>
-        <translation>Ad:</translation>
+        <translation>नाम :</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="29"/>
         <source>Type:</source>
-        <translation>Tip:</translation>
+        <translation>प्रकार :</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="36"/>
         <source>Size:</source>
-        <translation>Boyut:</translation>
+        <translation>आकार :</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="43"/>
@@ -7144,12 +7148,12 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="104"/>
         <source>Remember choice for this file type</source>
-        <translation type="unfinished"/>
+        <translation>इस फाइल प्रकार हेतु चयन स्मरण करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="45"/>
         <source>unknown file</source>
-        <translation type="unfinished"/>
+        <translation>अज्ञात फाइल</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="65"/>
@@ -7159,7 +7163,7 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="171"/>
         <source>unknown</source>
-        <translation type="unfinished"/>
+        <translation>अज्ञात</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="175"/>
@@ -7182,99 +7186,100 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="120"/>
         <source>Source:</source>
-        <translation>Kaynak:</translation>
+        <translation>स्रोत :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="130"/>
         <source>Target:</source>
-        <translation>Hedef:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="140"/>
         <source>Size:</source>
-        <translation>Boyut:</translation>
+        <translation>आकार :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="150"/>
         <source>Downloaded:</source>
-        <translation>İndirilen:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="157"/>
         <source>Progress:</source>
-        <translation>İşlemde:</translation>
+        <translation>प्रगति :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="190"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="405"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="452"/>
         <source>Stop</source>
-        <translation>Durdur</translation>
+        <translation>रोकें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="200"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="408"/>
         <source>Redownload</source>
-        <translation>Tekrar İndir</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="80"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="133"/>
         <source>Status</source>
-        <translation type="unfinished"/>
+        <translation>स्थिति</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="80"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="133"/>
         <source>Filename</source>
-        <translation>Dosya Adı</translation>
+        <translation>फाइल नाम</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="80"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="133"/>
         <source>Size</source>
-        <translation>Boyut</translation>
+        <translation>आकार</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="80"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="133"/>
         <source>Progress</source>
-        <translation>İşlem</translation>
+        <translation>प्रगति</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="80"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="133"/>
         <source>Time</source>
-        <translation>Zaman</translation>
+        <translation>समय</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="80"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="133"/>
         <source>Speed</source>
-        <translation>Hız</translation>
+        <translation>गति</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="80"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="133"/>
         <source>Started</source>
-        <translation>Başladı</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="80"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="133"/>
         <source>Finished</source>
-        <translation>Bitti</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="145"/>
         <source>Warning</source>
-        <translation>Uyarı</translation>
+        <translation>चेतावनी</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="145"/>
         <source>This file is still being downloaded.
 Do you really want to remove it?</source>
-        <translation type="unfinished"/>
+        <translation>इस फाइल का डाउनलोड जारी है।
+क्या आप निश्चित ही इसे हटाना चाहते हैं?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="277"/>
@@ -7290,38 +7295,38 @@ Progress: %5&lt;/div&gt;</source>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="467"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="469"/>
         <source>Unknown</source>
-        <translation>(Başlıksız)</translation>
+        <translation>अज्ञात</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="400"/>
         <source>Open Folder</source>
-        <translation>Klasör Aç</translation>
+        <translation>फोल्डर खोलें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="405"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="447"/>
         <source>Resume</source>
-        <translation>Duraklat</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="412"/>
         <source>Copy Transfer Information</source>
-        <translation>İndirme Bilgilerini Kopyala</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="416"/>
         <source>Remove</source>
-        <translation>Si</translation>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="433"/>
         <source>Clear Finished Transfers</source>
-        <translation>Tamamlanan İndirmeleri Temizle</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="546"/>
         <source>Downloads</source>
-        <translation>İndirmeler</translation>
+        <translation>डाउनलोड</translation>
     </message>
 </context>
 <context>
@@ -7330,8 +7335,7 @@ Progress: %5&lt;/div&gt;</source>
         <location filename="../../src/core/TransfersManager.cpp" line="1126"/>
         <source>Download completed:
 %1</source>
-        <translation>İndirme tamamlandı:
-%1</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7340,12 +7344,12 @@ Progress: %5&lt;/div&gt;</source>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="47"/>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="101"/>
         <source>Downloads</source>
-        <translation>İndirmeler</translation>
+        <translation>डाउनलोड</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="123"/>
         <source>Show all Downloads</source>
-        <translation>Tüm İndirmeleri Göster</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7354,18 +7358,18 @@ Progress: %5&lt;/div&gt;</source>
         <location filename="../../src/ui/TrayIcon.cpp" line="41"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="148"/>
         <source>Show Windows</source>
-        <translation>Pencereleri Göster</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="79"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="176"/>
         <source>Otter Browser</source>
-        <translation>Otter Tarayıcı</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="148"/>
         <source>Hide Windows</source>
-        <translation>Pencereleri Gizle</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7373,37 +7377,37 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="14"/>
         <source>Check for Updates</source>
-        <translation>Güncellemeleri Denetle</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="20"/>
         <source>Checking for update…</source>
-        <translation>Güncelleme denetleniyor...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="50"/>
         <source>Checking for updates…</source>
-        <translation>Güncellemeler denetleniyor...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="91"/>
         <source>There are no new updates.</source>
-        <translation>Kullanılabilir güncelleme yok.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="97"/>
         <source>Available updates:</source>
-        <translation>Kullanılabilir güncellemeler:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="101"/>
         <source>Details…</source>
-        <translation>Ayrıntılar...</translation>
+        <translation>विवरण ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="104"/>
         <source>Download</source>
-        <translation>İndir</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="117"/>
@@ -7444,7 +7448,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="193"/>
         <source>Check Error Console for more information.</source>
-        <translation type="unfinished"/>
+        <translation>अधिक जानकारी हेतु त्रुटि कंसोल देखें।</translation>
     </message>
 </context>
 <context>
@@ -7452,17 +7456,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.ui" line="19"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>शीर्षक :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.ui" line="29"/>
         <source>Value:</source>
-        <translation type="unfinished"/>
+        <translation>मान :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.ui" line="47"/>
         <source>Preview</source>
-        <translation type="unfinished"/>
+        <translation>पूर्वावलोकन</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.cpp" line="52"/>
@@ -7500,7 +7504,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="993"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>प्रश्न</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="993"/>
@@ -7515,7 +7519,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="994"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>यह संदेश पुनः न दिखाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1160"/>
@@ -7535,7 +7539,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1399"/>
         <source>Start Page</source>
-        <translation type="unfinished"/>
+        <translation>आरंभ पृष्ठ</translation>
     </message>
 </context>
 <context>
@@ -7543,17 +7547,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="267"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>शीर्षक : %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="267"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>पता : %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="313"/>
         <source>JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>जावा स्क्रिप्ट</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="313"/>
@@ -7563,12 +7567,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="314"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>यह संदेश पुनः न दिखाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="729"/>
         <source>HTML file (*.html *.htm)</source>
-        <translation type="unfinished"/>
+        <translation>एचटीएमएल फाइल (*.html *.htm)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="729"/>
@@ -7621,27 +7625,27 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="57"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>सामान्य</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="69"/>
         <source>Information</source>
-        <translation type="unfinished"/>
+        <translation>जानकारी</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="76"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>पता :</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="83"/>
         <source>Encoding:</source>
-        <translation type="unfinished"/>
+        <translation>एन्कोडिंग :</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="90"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>आकार :</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="97"/>
@@ -7656,23 +7660,23 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="126"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>शीर्षक :</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="137"/>
         <source>Permissions</source>
-        <translation type="unfinished"/>
+        <translation>अनुमतियाँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="149"/>
         <source>Preferences</source>
-        <translation type="unfinished"/>
+        <translation>सेटिंग्स</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="171"/>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="307"/>
         <source>Details…</source>
-        <translation type="unfinished"/>
+        <translation>विवरण ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="180"/>
@@ -7722,7 +7726,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="271"/>
         <source>Security</source>
-        <translation type="unfinished"/>
+        <translation>सुरक्षा</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="285"/>
@@ -7777,7 +7781,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="417"/>
         <source>SSL Errors</source>
-        <translation type="unfinished"/>
+        <translation>एसएसएल त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="43"/>
@@ -7818,12 +7822,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="85"/>
         <source>unknown</source>
-        <translation type="unfinished"/>
+        <translation>अज्ञात</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="87"/>
         <source>%1 (%n blocked)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n अवरुद्ध)</numerusform><numerusform>%1 (%n अवरुद्ध)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="94"/>
@@ -7847,7 +7851,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="194"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="213"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>कभी नहीं</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="106"/>
@@ -7860,7 +7864,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="190"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="205"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>सदैव</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="136"/>
@@ -7877,7 +7881,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="183"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="198"/>
         <source>Always ask</source>
-        <translation type="unfinished"/>
+        <translation>सदैव पूछें</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="209"/>
@@ -7887,13 +7891,13 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="217"/>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>पूछें</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="246"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="291"/>
         <source>Error Message</source>
-        <translation type="unfinished"/>
+        <translation>त्रुटि संदेश</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="246"/>
@@ -7912,17 +7916,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="14"/>
         <source>Website Preferences</source>
-        <translation type="unfinished"/>
+        <translation>वेबसाइट सेटिंग्स</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="25"/>
         <source>Website:</source>
-        <translation type="unfinished"/>
+        <translation>वेबसाइट</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="44"/>
         <source>Content</source>
-        <translation>İçerik</translation>
+        <translation>सामग्री</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="56"/>
@@ -7936,22 +7940,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="73"/>
         <source>Plugins:</source>
-        <translation type="unfinished"/>
+        <translation>प्लगिन :</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="90"/>
         <source>Encoding:</source>
-        <translation type="unfinished"/>
+        <translation>एन्कोडिंग :</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="110"/>
         <source>User style sheet:</source>
-        <translation type="unfinished"/>
+        <translation>उपयोक्ता शैली पत्र :</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="153"/>
         <source>Images:</source>
-        <translation type="unfinished"/>
+        <translation>चित्र :</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="170"/>
@@ -7961,7 +7965,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="181"/>
         <source>Privacy</source>
-        <translation>Güvenlik</translation>
+        <translation>निजता</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="205"/>
@@ -7996,17 +8000,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="350"/>
         <source>Add…</source>
-        <translation type="unfinished"/>
+        <translation>जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="360"/>
         <source>Properties…</source>
-        <translation type="unfinished"/>
+        <translation>विशेषताएँ ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="370"/>
         <source>Delete</source>
-        <translation>Sil</translation>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="412"/>
@@ -8046,12 +8050,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="660"/>
         <source>Enable JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>जावा स्क्रिप्ट सक्रिय करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="698"/>
         <source>Allow access to clipboard</source>
-        <translation>Panoya kopyala</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="745"/>
@@ -8061,7 +8065,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="758"/>
         <source>Network</source>
-        <translation>Ağ</translation>
+        <translation>नेटवर्क</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="787"/>
@@ -8081,12 +8085,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="852"/>
         <source>Content Blocking</source>
-        <translation>İçerik Engelleme</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="865"/>
         <source>Profiles:</source>
-        <translation type="unfinished"/>
+        <translation>प्रोफाइल :</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="895"/>
@@ -8096,34 +8100,34 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="66"/>
         <source>Auto Detect</source>
-        <translation type="unfinished"/>
+        <translation>स्वतः पहचान</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="99"/>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>पूछें</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
         <source>Block all</source>
-        <translation type="unfinished"/>
+        <translation>सभी अवरुद्ध करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="84"/>
         <source>Open all</source>
-        <translation type="unfinished"/>
+        <translation>सभी खोलें</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="85"/>
         <source>Open all in background</source>
-        <translation type="unfinished"/>
+        <translation>सभी बैकग्राउंड में खोलें</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="87"/>
         <source>All images</source>
-        <translation type="unfinished"/>
+        <translation>सभी चित्र</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="88"/>
@@ -8133,12 +8137,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="89"/>
         <source>No images</source>
-        <translation type="unfinished"/>
+        <translation>कोई चित्र नहीं</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="91"/>
         <source>Enabled</source>
-        <translation type="unfinished"/>
+        <translation>सक्रिय</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="92"/>
@@ -8148,7 +8152,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="93"/>
         <source>Disabled</source>
-        <translation type="unfinished"/>
+        <translation>निष्क्रिय</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="96"/>
@@ -8156,14 +8160,14 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="107"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>सदैव</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="97"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="101"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="117"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>कभी नहीं</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
@@ -8194,7 +8198,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="111"/>
         <source>Expires</source>
-        <translation>Sona Erme</translation>
+        <translation>मान्यता समाप्ति</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
@@ -8204,47 +8208,47 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="113"/>
         <source>Always ask</source>
-        <translation type="unfinished"/>
+        <translation>सदैव पूछें</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Domain</source>
-        <translation type="unfinished"/>
+        <translation>डोमेन</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Name</source>
-        <translation>Ad</translation>
+        <translation>नाम</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>पथ</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Value</source>
-        <translation>Değer</translation>
+        <translation>मान</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Expiration Date</source>
-        <translation type="unfinished"/>
+        <translation>मान्यता समाप्ति दिनांक</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="206"/>
         <source>this session only</source>
-        <translation type="unfinished"/>
+        <translation>केवल इस सत्र हेतु</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="453"/>
         <source>Style sheets (*.css)</source>
-        <translation type="unfinished"/>
+        <translation>शैली पत्र (*.css)</translation>
     </message>
 </context>
 <context>
@@ -8252,12 +8256,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>खोजें...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.cpp" line="267"/>
         <source>Windows and Tabs</source>
-        <translation type="unfinished"/>
+        <translation>विंडो व टैब</translation>
     </message>
 </context>
 <context>
@@ -8330,31 +8334,31 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <source>1 Minute</source>
-        <translation type="unfinished"/>
+        <translation>1 मिनट</translation>
     </message>
     <message>
         <source>30 Minutes</source>
-        <translation type="unfinished"/>
+        <translation>30 मिनट</translation>
     </message>
     <message>
         <source>1 Hour</source>
-        <translation type="unfinished"/>
+        <translation>1 घंटा</translation>
     </message>
     <message>
         <source>2 Hours</source>
-        <translation type="unfinished"/>
+        <translation>2 घंटे</translation>
     </message>
     <message>
         <source>6 Hours</source>
-        <translation type="unfinished"/>
+        <translation>6 घंटे</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>कभी नहीं</translation>
     </message>
     <message>
         <source>Custom…</source>
-        <translation type="unfinished"/>
+        <translation>अनुकूलित ...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="286"/>
@@ -8379,32 +8383,32 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="288"/>
         <source>New Tab</source>
-        <translation>Yeni Sekme</translation>
+        <translation>नया टैब</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="289"/>
         <source>New Private Tab</source>
-        <translation>Yeni Özel Sekme</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="290"/>
         <source>New Window</source>
-        <translation>Yeni Pancere</translation>
+        <translation>नई विंडो</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="291"/>
         <source>New Private Window</source>
-        <translation>Yeni Özel Pencere</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="292"/>
         <source>Open…</source>
-        <translation type="unfinished"/>
+        <translation>खोलें</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="293"/>
         <source>Save…</source>
-        <translation type="unfinished"/>
+        <translation>संचित करें ...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="294"/>
@@ -8499,7 +8503,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="306"/>
         <source>Close Tab</source>
-        <translation>Sekmeyi Kapat</translation>
+        <translation>टैब बंद करें</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="307"/>
@@ -8524,7 +8528,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="310"/>
         <source>Reopen Previously Closed Tab</source>
-        <translation>Son Kapatılan Sekmeyi Aç</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="311"/>
@@ -8554,7 +8558,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="316"/>
         <source>Close Window</source>
-        <translation>Pencereyi Kapat</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="317"/>
@@ -8569,7 +8573,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="319"/>
         <source>Save Current Session…</source>
-        <translation type="unfinished"/>
+        <translation>वर्तमान सत्र संचित करें ...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="320"/>
@@ -8590,13 +8594,13 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/Menu.cpp" line="326"/>
         <location filename="../../src/ui/WebWidget.cpp" line="797"/>
         <source>Open</source>
-        <translation>Aç</translation>
+        <translation>खोलें</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="322"/>
         <location filename="../../src/ui/WebWidget.cpp" line="754"/>
         <source>Open in This Tab</source>
-        <translation>Geçerli Sekmede Aç</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="323"/>
@@ -8608,7 +8612,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/Menu.cpp" line="327"/>
         <location filename="../../src/ui/WebWidget.cpp" line="759"/>
         <source>Open in New Tab</source>
-        <translation>Yeni Sekmede Aç</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="324"/>
@@ -8620,7 +8624,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/Menu.cpp" line="328"/>
         <location filename="../../src/ui/WebWidget.cpp" line="764"/>
         <source>Open in New Background Tab</source>
-        <translation>Arka Planda Aç</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="325"/>
@@ -8631,7 +8635,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/Menu.cpp" line="330"/>
         <location filename="../../src/ui/WebWidget.cpp" line="769"/>
         <source>Open in New Window</source>
-        <translation>Yeni Pencerede Aç</translation>
+        <translation>नई विंडो में खोलें</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="326"/>
@@ -8642,7 +8646,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/Menu.cpp" line="331"/>
         <location filename="../../src/ui/WebWidget.cpp" line="774"/>
         <source>Open in New Background Window</source>
-        <translation>Arka Plandaki Pencerede Aç</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="327"/>
@@ -8671,7 +8675,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="331"/>
         <source>Copy Link to Clipboard</source>
-        <translation>Bağlantıyı Kopyala</translation>
+        <translation>लिंक क्लिपबोर्ड में कॉपी करें</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="332"/>
@@ -8682,17 +8686,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="333"/>
         <source>Save Link Target As…</source>
-        <translation type="unfinished"/>
+        <translation>लक्षित लिंक इस रूप में संचित करें ...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="334"/>
         <source>Save to Downloads</source>
-        <translation>İndirmelere Kaydet</translation>
+        <translation>डाउनलोड में संचित करें</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="335"/>
         <source>Go to This Address</source>
-        <translation>Adrese Git</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="336"/>
@@ -8702,34 +8706,34 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="337"/>
         <source>Open Frame in This Tab</source>
-        <translation>Çerçeveyi Bu Sekmede Aç</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="338"/>
         <source>Open Frame in New Tab</source>
-        <translation>Çerçeveyi Yeni Sekmede Aç</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="339"/>
         <source>Open Frame in New Background Tab</source>
-        <translation>Çerçeveyi Arka Planda Aç</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="340"/>
         <source>Copy Frame Link to Clipboard</source>
-        <translation>Çerçeve Bağlantısını Kopyala</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="341"/>
         <location filename="../../src/core/ActionsManager.cpp" line="372"/>
         <location filename="../../src/core/ActionsManager.cpp" line="373"/>
         <source>Reload</source>
-        <translation>Yeniden Yükle</translation>
+        <translation>पुनः लोड करें</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="341"/>
         <source>Reload Frame</source>
-        <translation>Çeçeveyi yeniden Yükle</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="342"/>
@@ -8755,22 +8759,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="346"/>
         <source>Save Image…</source>
-        <translation type="unfinished"/>
+        <translation>चित्र संचित करें ...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="347"/>
         <source>Copy Image to Clipboard</source>
-        <translation>Resmi Kopyala</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="348"/>
         <source>Copy Image Link to Clipboard</source>
-        <translation>Resmin Adresini Kopyala</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="349"/>
         <source>Reload Image</source>
-        <translation>Resmi Yeniden Yükle</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="350"/>
@@ -8780,17 +8784,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="351"/>
         <source>Save Media…</source>
-        <translation type="unfinished"/>
+        <translation>मीडिया संचित करें ...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="352"/>
         <source>Copy Media Link to Clipboard</source>
-        <translation>Medya Bağlantısını Kopyala...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="353"/>
         <source>Show Controls</source>
-        <translation>Kontrolleri Göster</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="353"/>
@@ -8800,7 +8804,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="354"/>
         <source>Looping</source>
-        <translation>Otomatik oynat</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="354"/>
@@ -8811,7 +8815,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/ActionsManager.cpp" line="355"/>
         <location filename="../../src/ui/WebWidget.cpp" line="1076"/>
         <source>Play</source>
-        <translation>Oynat</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="355"/>
@@ -8822,7 +8826,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/ActionsManager.cpp" line="356"/>
         <location filename="../../src/ui/WebWidget.cpp" line="1082"/>
         <source>Mute</source>
-        <translation>Sessiz</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="356"/>
@@ -8852,17 +8856,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="360"/>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>वापस</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="360"/>
         <source>Go Back</source>
-        <translation type="unfinished"/>
+        <translation>वापस जाएँ</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="361"/>
         <source>Forward</source>
-        <translation>İleri</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="361"/>
@@ -8893,7 +8897,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="366"/>
         <source>Rewind</source>
-        <translation>Yenile</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="366"/>
@@ -8903,7 +8907,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="367"/>
         <source>Fast Forward</source>
-        <translation>Hızlı İleri</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="368"/>
@@ -8913,7 +8917,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="369"/>
         <source>Stop</source>
-        <translation>Dur</translation>
+        <translation>रोकें</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="370"/>
@@ -8953,32 +8957,32 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="378"/>
         <source>Undo</source>
-        <translation>Geri</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="379"/>
         <source>Redo</source>
-        <translation>İleri</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="380"/>
         <source>Cut</source>
-        <translation>Kes</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="381"/>
         <source>Copy</source>
-        <translation>Kopyala</translation>
+        <translation>कॉपी करें</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="382"/>
         <source>Copy as Plain Text</source>
-        <translation>Düz Metin Olarak Kopyala</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="383"/>
         <source>Copy Address</source>
-        <translation>Adresi Kopyala</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="384"/>
@@ -8988,22 +8992,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="385"/>
         <source>Paste</source>
-        <translation>Yapıştır</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="386"/>
         <source>Paste and Go</source>
-        <translation>Yapıştır ve Git</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="387"/>
         <source>Delete</source>
-        <translation>Sİl</translation>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="388"/>
         <source>Select All</source>
-        <translation>Tümünü Seç</translation>
+        <translation>सभी चुनें</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="389"/>
@@ -9013,12 +9017,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="390"/>
         <source>Clear All</source>
-        <translation>Tümünü Temizle</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="391"/>
         <source>Check Spelling</source>
-        <translation>Yazım Denetimi</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="392"/>
@@ -9028,23 +9032,23 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="393"/>
         <source>Find Next</source>
-        <translation>Sonrakini Bul</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="394"/>
         <source>Find Previous</source>
-        <translation>Öncekini Bul</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="395"/>
         <source>Quick Find</source>
-        <translation>Hızlı Bul</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <location filename="../../src/ui/WebWidget.cpp" line="1266"/>
         <source>Search</source>
-        <translation>Ara</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="397"/>
@@ -9054,17 +9058,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="398"/>
         <source>Zoom In</source>
-        <translation>Yaklaş</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="399"/>
         <source>Zoom Out</source>
-        <translation>Uzaklaş</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="400"/>
         <source>Zoom Original</source>
-        <translation>Normal Boyut</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="401"/>
@@ -9119,7 +9123,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="411"/>
         <source>Print Preview</source>
-        <translation>Yazdırma Ön İzlemesi</translation>
+        <translation>प्रिंट पूर्वावलोकन</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="412"/>
@@ -9129,7 +9133,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="413"/>
         <source>Activate Address Field</source>
-        <translation>Adres Alanını Aktifleştir</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="414"/>
@@ -9159,12 +9163,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="419"/>
         <source>Go to Tab on Left</source>
-        <translation>Soldaki Sekmeye Git</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="420"/>
         <source>Go to Tab on Right</source>
-        <translation>Sağdaki Sekmeye Git</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="421"/>
@@ -9194,12 +9198,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="426"/>
         <source>Quick Bookmark Access</source>
-        <translation>Hızlı Yer İmleri Erişimi</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="427"/>
         <source>Cookies</source>
-        <translation>Çerezler</translation>
+        <translation>कुकीज़ </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="428"/>
@@ -9209,7 +9213,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="429"/>
         <source>Enable JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>जावा स्क्रिप्ट सक्रिय करें</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="430"/>
@@ -9219,12 +9223,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="431"/>
         <source>View Source</source>
-        <translation>Kaynağı Göster</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="432"/>
         <source>Inspect Page</source>
-        <translation>Sayfayı Denetle</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="433"/>
@@ -9234,13 +9238,13 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="434"/>
         <source>Work Offline</source>
-        <translation>Çevrimdışı Çalış</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="435"/>
         <location filename="../../src/ui/Menu.cpp" line="416"/>
         <source>Full Screen</source>
-        <translation>Tam Ekran</translation>
+        <translation>पूर्ण स्क्रीन</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="436"/>
@@ -9255,7 +9259,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="438"/>
         <source>Show Menubar</source>
-        <translation>Menü Çubuğunu Göster</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="439"/>
@@ -9265,12 +9269,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="440"/>
         <source>Show Sidebar</source>
-        <translation>Yan Paneli Göster</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="441"/>
         <source>Show Error Console</source>
-        <translation type="unfinished"/>
+        <translation>त्रुटि कंसोल दिखाएँ</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="442"/>
@@ -9290,7 +9294,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="444"/>
         <source>Show Panel</source>
-        <translation type="unfinished"/>
+        <translation>पैनल दिखाएँ</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="444"/>
@@ -9315,7 +9319,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="447"/>
         <source>View History</source>
-        <translation>Geçmişi Göster</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="448"/>
@@ -9325,29 +9329,29 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="449"/>
         <source>Addons</source>
-        <translation type="unfinished"/>
+        <translation>पूरक साधन</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="450"/>
         <location filename="../../src/modules/platforms/mac/MacPlatformIntegration.mm" line="210"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="66"/>
         <source>Notes</source>
-        <translation type="unfinished"/>
+        <translation>नोट्स</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="451"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>कूटशब्द</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="452"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>डाउनलोड</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="453"/>
         <source>Preferences…</source>
-        <translation type="unfinished"/>
+        <translation>सेटिंग्स ...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="454"/>
@@ -9377,7 +9381,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="459"/>
         <source>Switch Application Language…</source>
-        <translation type="unfinished"/>
+        <translation>अनुप्रयोग भाषा बदलें ...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="460"/>
@@ -9392,7 +9396,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="462"/>
         <source>About Otter…</source>
-        <translation type="unfinished"/>
+        <translation>औटर के बारे में ...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="463"/>
@@ -9402,7 +9406,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="464"/>
         <source>Exit</source>
-        <translation>Çıkış</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1532"/>
@@ -9477,32 +9481,32 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="54"/>
         <source>Error Console</source>
-        <translation type="unfinished"/>
+        <translation>त्रुटि कंसोल</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/mac/MacPlatformIntegration.mm" line="198"/>
         <location filename="../../src/ui/Menu.cpp" line="73"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="54"/>
         <source>Bookmarks</source>
-        <translation>Yer İmleri</translation>
+        <translation>पृष्ठ स्मृतियाँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/mac/MacPlatformIntegration.mm" line="202"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="58"/>
         <source>Transfers</source>
-        <translation>Transferler</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/platforms/mac/MacPlatformIntegration.mm" line="206"/>
         <location filename="../../src/ui/Menu.cpp" line="60"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="62"/>
         <source>History</source>
-        <translation>Geçmiş</translation>
+        <translation>वृतांत</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="366"/>
         <source>Remove Bookmark</source>
-        <translation>Yer İmini Sil</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="479"/>
@@ -9512,7 +9516,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="400"/>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>अपडेट</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="365"/>
@@ -9522,37 +9526,37 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="2338"/>
         <source>Close Panel</source>
-        <translation type="unfinished"/>
+        <translation>पैनल बंद करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="57"/>
         <source>File</source>
-        <translation>Dosya</translation>
+        <translation>फाइल</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="58"/>
         <source>Edit</source>
-        <translation>Düzenle</translation>
+        <translation>संपादित करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="59"/>
         <source>View</source>
-        <translation>Görünüm</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="61"/>
         <source>Tools</source>
-        <translation>Araçlar</translation>
+        <translation>साधन</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="62"/>
         <source>Help</source>
-        <translation>Yardım</translation>
+        <translation>सहायता</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="63"/>
         <source>Page</source>
-        <translation type="unfinished"/>
+        <translation>पृष्ठ</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="64"/>
@@ -9562,7 +9566,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="65"/>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>सेटिंग्स</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="66"/>
@@ -9572,7 +9576,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="95"/>
         <source>Character Encoding</source>
-        <translation>Karakter Kodlaması</translation>
+        <translation>अक्षर एन्कोडिंग</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="105"/>
@@ -9587,7 +9591,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="129"/>
         <source>Import and Export</source>
-        <translation>Al ve Ver</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="130"/>
@@ -9632,22 +9636,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="172"/>
         <source>Proxy</source>
-        <translation type="unfinished"/>
+        <translation>प्रॉक्सी</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="181"/>
         <source>Search Using</source>
-        <translation>Bununla Ara</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="187"/>
         <source>Sessions</source>
-        <translation>Oturumlar</translation>
+        <translation>सत्र</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="200"/>
         <source>Style</source>
-        <translation type="unfinished"/>
+        <translation>शैली</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="220"/>
@@ -9657,7 +9661,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="226"/>
         <source>User Agent</source>
-        <translation>Kullanıcı Ajanı</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="235"/>
@@ -9692,7 +9696,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="424"/>
         <source>Images</source>
-        <translation type="unfinished"/>
+        <translation>चित्र</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="428"/>
@@ -9712,12 +9716,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="440"/>
         <source>Notifications</source>
-        <translation type="unfinished"/>
+        <translation>अधिसूचनाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="444"/>
         <source>Plugins</source>
-        <translation type="unfinished"/>
+        <translation>प्लगिन</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="448"/>
@@ -9738,7 +9742,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/Menu.cpp" line="624"/>
         <location filename="../../src/ui/Menu.cpp" line="791"/>
         <source>Open All</source>
-        <translation type="unfinished"/>
+        <translation>सभी खोलें</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="677"/>
@@ -9763,7 +9767,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="767"/>
         <source>Expires</source>
-        <translation type="unfinished"/>
+        <translation>मान्यता समाप्ति</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="771"/>
@@ -9773,7 +9777,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="775"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>सदैव</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="779"/>
@@ -9788,17 +9792,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="787"/>
         <source>Ignore</source>
-        <translation type="unfinished"/>
+        <translation>अनदेखा करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="795"/>
         <source>Open in Background</source>
-        <translation type="unfinished"/>
+        <translation>बैकग्राउंड में खोलें</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="799"/>
         <source>Block All</source>
-        <translation type="unfinished"/>
+        <translation>सभी अवरुद्ध करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="803"/>
@@ -9808,7 +9812,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="807"/>
         <source>Enabled</source>
-        <translation type="unfinished"/>
+        <translation>सक्रिय</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="811"/>
@@ -9818,27 +9822,27 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="815"/>
         <source>Disabled</source>
-        <translation type="unfinished"/>
+        <translation>निष्क्रिय</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="842"/>
         <source>Auto Detect</source>
-        <translation type="unfinished"/>
+        <translation>स्वतः पहचान</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="895"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1053"/>
         <source>Default Application</source>
-        <translation type="unfinished"/>
+        <translation>डिफ़ॉल्ट अनुप्रयोग</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1061"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>अज्ञात</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1202"/>
@@ -9848,7 +9852,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1256"/>
         <source>Add New</source>
-        <translation type="unfinished"/>
+        <translation>नया जोड़ें</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1259"/>
@@ -9873,7 +9877,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1387"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(शीर्षक रहित)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="955"/>
@@ -9923,17 +9927,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1056"/>
         <source>Save Video…</source>
-        <translation type="unfinished"/>
+        <translation>वीडियो संचित करें ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1056"/>
         <source>Save Audio…</source>
-        <translation type="unfinished"/>
+        <translation>ऑडियो संचित करें ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1061"/>
         <source>Copy Video Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>वीडियो लिंक क्लिपबोर्ड में कॉपी करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1061"/>
@@ -9968,7 +9972,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1281"/>
         <source>Add Bookmark…</source>
-        <translation type="unfinished"/>
+        <translation>पृष्ठ स्मृति जोड़ें ...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Window.cpp" line="656"/>
@@ -9978,7 +9982,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WorkspaceWidget.cpp" line="543"/>
         <source>Close</source>
-        <translation>Kapat</translation>
+        <translation>बंद करें</translation>
     </message>
 </context>
 <context>
@@ -9986,72 +9990,72 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="123"/>
         <source>Addons</source>
-        <translation type="unfinished"/>
+        <translation>पूरक साधन</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="124"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>पृष्ठ स्मृतियाँ</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="125"/>
         <source>Cache</source>
-        <translation type="unfinished"/>
+        <translation>कैश</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="126"/>
         <source>Advanced Configuration</source>
-        <translation type="unfinished"/>
+        <translation>विस्तृत विन्यास</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="127"/>
         <source>Cookies</source>
-        <translation type="unfinished"/>
+        <translation>कुकीज़ </translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="128"/>
         <source>Feeds</source>
-        <translation type="unfinished"/>
+        <translation>समाचार</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="129"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>वृतांत</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="130"/>
         <source>Links</source>
-        <translation type="unfinished"/>
+        <translation>लिंक</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="131"/>
         <source>Notes</source>
-        <translation type="unfinished"/>
+        <translation>नोट्स</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="132"/>
         <source>Page Information</source>
-        <translation type="unfinished"/>
+        <translation>पृष्ठ जानकारी</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="133"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>कूटशब्द</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="134"/>
         <source>Tab History</source>
-        <translation type="unfinished"/>
+        <translation>टैब वृतांत</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="135"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>डाउनलोड</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="136"/>
         <source>Windows and Tabs</source>
-        <translation type="unfinished"/>
+        <translation>विंडो व टैब</translation>
     </message>
 </context>
 <context>
@@ -10091,27 +10095,27 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/Application.cpp" line="125"/>
         <source>URL to open</source>
-        <translation>Hedef URL</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="126"/>
         <source>Uses &lt;path&gt; as cache directory</source>
-        <translation>Önbellek için &lt;path&gt; klasörü kullanılıyor</translation>
+        <translation>&lt;path&gt; का कैश डायरेक्टरी हेतु उपयोग</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="127"/>
         <source>Uses &lt;path&gt; as profile directory</source>
-        <translation>Profil dosyaları için &lt;path&gt; klasörü kullanılıyor.</translation>
+        <translation>&lt;path&gt; का प्रोफाइल डायरेक्टरी हेतु उपयोग</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="128"/>
         <source>Restores session &lt;session&gt; if it exists</source>
-        <translation>&lt;session&gt; oturumunu geri getir</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="129"/>
         <source>Starts private session</source>
-        <translation>Özel oturumu başlat</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="130"/>
@@ -10121,7 +10125,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/Application.cpp" line="131"/>
         <source>Sets profile and cache paths to directories inside the same directory as that of application binary</source>
-        <translation>Uygulama kütüphanesi amacıyla profil ve ön bellek veri yolunu aynı klasör içerisinde oluştur.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="132"/>
@@ -10168,12 +10172,12 @@ Script: %2</source>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="161"/>
         <source>Start Page</source>
-        <translation type="unfinished"/>
+        <translation>आरंभ पृष्ठ</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="165"/>
         <source>(Untitled)</source>
-        <translation>(Başlıksız)</translation>
+        <translation>(शीर्षक रहित)</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="44"/>
@@ -10218,7 +10222,7 @@ Script: %2</source>
     <message>
         <location filename="../../src/main.cpp" line="163"/>
         <source>Default</source>
-        <translation>Varsayılan</translation>
+        <translation>डिफ़ॉल्ट</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="80"/>
@@ -10233,7 +10237,7 @@ Script: %2</source>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineUrlRequestInterceptor.cpp" line="157"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="691"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(अज्ञात)</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="503"/>
@@ -10267,12 +10271,12 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="193"/>
         <source>Keyboard and Mouse Configuration Profiles</source>
-        <translation type="unfinished"/>
+        <translation>कुंजीपटल व माउस विन्यास प्रोफाइल</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="327"/>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>विकल्प</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="363"/>
@@ -10282,7 +10286,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="486"/>
         <source>Sessions</source>
-        <translation type="unfinished"/>
+        <translation>सत्र</translation>
     </message>
 </context>
 <context>
@@ -10305,12 +10309,12 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
         <source>File download was completed</source>
-        <translation type="unfinished"/>
+        <translation>फाइल डाउनलोड पूर्ण</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="89"/>
         <source>Update Available</source>
-        <translation type="unfinished"/>
+        <translation>अपडेट उपलब्ध</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="89"/>
@@ -10324,17 +10328,17 @@ Application ID: %2</source>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="693"/>
         <location filename="../../src/core/NetworkManagerFactory.h" line="90"/>
         <source>System Configuration</source>
-        <translation type="unfinished"/>
+        <translation>सिस्टम विन्यास</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.h" line="85"/>
         <source>No Proxy</source>
-        <translation type="unfinished"/>
+        <translation>कोई प्रॉक्सी नहीं</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.h" line="94"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(शीर्षक रहित)</translation>
     </message>
 </context>
 <context>
@@ -10349,12 +10353,12 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.h" line="123"/>
         <source>Mask as {name}</source>
-        <translation>{name} olarak maskele</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.h" line="127"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(शीर्षक रहित)</translation>
     </message>
 </context>
 <context>
@@ -10364,7 +10368,7 @@ Application ID: %2</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="61"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="922"/>
         <source>Try Again</source>
-        <translation type="unfinished"/>
+        <translation>पुनः प्रयास करें</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="185"/>
@@ -10389,12 +10393,12 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="201"/>
         <source>Check the file name for capitalization or other typing errors.</source>
-        <translation>Dosya adını BÜYÜK/küçük harf veya diğer yazım hataları için denetle</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="201"/>
         <source>Check to see if the file was moved, renamed or deleted.</source>
-        <translation>Dosya taşınmış, yeniden adlandırılmış veya silinmiş mi diye denetle</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="205"/>
@@ -10434,7 +10438,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="228"/>
         <source>File not found</source>
-        <translation type="unfinished"/>
+        <translation>फाइल नहीं मिली</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="232"/>
@@ -10454,17 +10458,17 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="244"/>
         <source>Network error</source>
-        <translation type="unfinished"/>
+        <translation>नेटवर्क त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="279"/>
         <source>Advanced</source>
-        <translation type="unfinished"/>
+        <translation>विस्तृत</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="322"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="423"/>
@@ -10479,7 +10483,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="434"/>
         <source>%1 at %2</source>
-        <translation type="unfinished"/>
+        <translation>%2 पर %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="474"/>
@@ -10487,33 +10491,33 @@ Application ID: %2</source>
         <location filename="../../src/core/Utils.cpp" line="551"/>
         <location filename="../../src/core/Utils.cpp" line="617"/>
         <source>All files (*)</source>
-        <translation type="unfinished"/>
+        <translation>सभी फाइलें (*)</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="555"/>
         <source>Open Files</source>
-        <translation type="unfinished"/>
+        <translation>फाइलें खोलें</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="559"/>
         <source>Open File</source>
-        <translation type="unfinished"/>
+        <translation>फाइल खोलें</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="613"/>
         <source>%1 files (*.%2)</source>
-        <translation type="unfinished"/>
+        <translation>%1 फाइलें (*.%2)</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="623"/>
         <source>Save File</source>
-        <translation type="unfinished"/>
+        <translation>फाइल संचित करें</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="645"/>
         <location filename="../../src/core/Utils.cpp" line="654"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>चेतावनी</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="645"/>
@@ -10524,23 +10528,24 @@ Application ID: %2</source>
         <location filename="../../src/core/Utils.cpp" line="654"/>
         <source>Target path is not writable.
 Select another one.</source>
-        <translation type="unfinished"/>
+        <translation>लक्षित पथ राइट योग्य नहीं है।
+कोई अन्य चुनें।</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="890"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="906"/>
         <source>Go Back</source>
-        <translation type="unfinished"/>
+        <translation>वापस जाएँ</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="895"/>
         <source>Load Blocked Page</source>
-        <translation type="unfinished"/>
+        <translation>अवरोधित पृष्ठ लोड करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="911"/>
         <source>Load Insecure Page</source>
-        <translation type="unfinished"/>
+        <translation>असुरक्षित पृष्ठ लोड करें</translation>
     </message>
 </context>
 </TS>
