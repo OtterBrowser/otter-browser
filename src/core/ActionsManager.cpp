@@ -668,25 +668,7 @@ QString ActionsManager::getActionName(int identifier)
 
 QKeySequence ActionsManager::getActionShortcut(int identifier, const QVariantMap &parameters)
 {
-	if (parameters.isEmpty() && m_shortcuts.contains(identifier))
-	{
-		return m_shortcuts[identifier].value(0);
-	}
-
-	if (!parameters.isEmpty() && m_extraShortcuts.contains(identifier))
-	{
-		const QList<QPair<QVariantMap, QVector<QKeySequence> > > definitions(m_extraShortcuts.values(identifier));
-
-		for (int i = 0; i < definitions.count(); ++i)
-		{
-			if (definitions.at(i).first == parameters)
-			{
-				return definitions.at(i).second.value(0);
-			}
-		}
-	}
-
-	return {};
+	return getActionShortcuts(identifier, parameters).value(0, {});
 }
 
 QVector<QKeySequence> ActionsManager::getActionShortcuts(int identifier, const QVariantMap &parameters)
