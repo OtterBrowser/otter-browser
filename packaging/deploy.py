@@ -119,6 +119,9 @@ def deploy_linux(qt_path, source_path, build_path, target_path, extra_libs, disa
 	run_command([appimage_tool_command, appimage_path, os.path.join(target_path, 'otter-browser-x86_64.AppImage')])
 	shutil.rmtree(appimage_path)
 
+def deploy_macos(qt_path, source_path, build_path, target_path, extra_libs):
+	pass
+
 def deploy_windows(qt_path, source_path, build_path, target_path, extra_libs):
 	windeployqt_command = os.path.join(qt_path, r'bin\windeployqt.exe')
 	seven_z_command = r'C:\Program Files\7-Zip\7z.exe'
@@ -205,5 +208,7 @@ if __name__ == '__main__':
 
 	if platform.system() == 'Linux':
 		deploy_linux(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path, arguments.extra_libs, arguments.disable_tools_download)
+	elif platform.system() == 'Darwin':
+		deploy_macos(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path, arguments.extra_libs)
 	elif platform.system() == 'Windows':
 		deploy_windows(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path, arguments.extra_libs)
