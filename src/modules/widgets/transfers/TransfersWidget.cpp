@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -130,7 +130,7 @@ void TransfersWidget::updateState()
 	const QVector<Transfer*> transfers(TransfersManager::getTransfers());
 	qint64 bytesTotal(0);
 	qint64 bytesReceived(0);
-	qint64 transferAmount(0);
+	qint64 transfersAmount(0);
 
 	for (int i = 0; i < transfers.count(); ++i)
 	{
@@ -138,7 +138,7 @@ void TransfersWidget::updateState()
 
 		if (transfer->getState() == Transfer::RunningState && transfer->getBytesTotal() > 0)
 		{
-			++transferAmount;
+			++transfersAmount;
 
 			bytesTotal += transfer->getBytesTotal();
 			bytesReceived += transfer->getBytesReceived();
@@ -147,7 +147,7 @@ void TransfersWidget::updateState()
 
 	m_icon = ThemesManager::createIcon(QLatin1String("transfers"));
 
-	if (transferAmount > 0)
+	if (transfersAmount > 0)
 	{
 		const int iconSize(this->iconSize().width());
 		QPixmap pixmap(m_icon.pixmap(iconSize, iconSize));

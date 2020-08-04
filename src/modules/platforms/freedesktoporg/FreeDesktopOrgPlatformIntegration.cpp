@@ -266,7 +266,7 @@ void FreeDesktopOrgPlatformIntegration::updateTransfersProgress()
 {
 	qint64 bytesTotal(0);
 	qint64 bytesReceived(0);
-	qint64 transferAmount(0);
+	qint64 transfersAmount(0);
 
 	if (TransfersManager::hasRunningTransfers())
 	{
@@ -278,7 +278,7 @@ void FreeDesktopOrgPlatformIntegration::updateTransfersProgress()
 
 			if (transfer->getState() == Transfer::RunningState && transfer->getBytesTotal() > 0)
 			{
-				++transferAmount;
+				++transfersAmount;
 
 				bytesTotal += transfer->getBytesTotal();
 				bytesReceived += transfer->getBytesReceived();
@@ -286,14 +286,14 @@ void FreeDesktopOrgPlatformIntegration::updateTransfersProgress()
 		}
 	}
 
-	setTransfersProgress(bytesTotal, bytesReceived, transferAmount);
+	setTransfersProgress(bytesTotal, bytesReceived, transfersAmount);
 }
 
-void FreeDesktopOrgPlatformIntegration::setTransfersProgress(qint64 bytesTotal, qint64 bytesReceived, qint64 transferAmount)
+void FreeDesktopOrgPlatformIntegration::setTransfersProgress(qint64 bytesTotal, qint64 bytesReceived, qint64 transfersAmount)
 {
-	const bool hasActiveTransfers(transferAmount > 0);
+	const bool hasActiveTransfers(transfersAmount > 0);
 	QVariantMap properties;
-	properties[QLatin1String("count")] = transferAmount;
+	properties[QLatin1String("count")] = transfersAmount;
 	properties[QLatin1String("count-visible")] = hasActiveTransfers;
 	properties[QLatin1String("progress")] = ((bytesReceived > 0) ? Utils::calculatePercent(bytesReceived, bytesTotal, 1) : 0.0);
 	properties[QLatin1String("progress-visible")] = hasActiveTransfers;

@@ -336,7 +336,7 @@ void MacPlatformIntegration::updateTransfersProgress()
 {
 	qint64 bytesTotal(0);
 	qint64 bytesReceived(0);
-	int transferAmount(0);
+	int transfersAmount(0);
 
 	if (TransfersManager::hasRunningTransfers())
 	{
@@ -348,7 +348,7 @@ void MacPlatformIntegration::updateTransfersProgress()
 
 			if (transfer->getState() == Transfer::RunningState && transfer->getBytesTotal() > 0)
 			{
-				++transferAmount;
+				++transfersAmount;
 
 				bytesTotal += transfer->getBytesTotal();
 				bytesReceived += transfer->getBytesReceived();
@@ -356,8 +356,8 @@ void MacPlatformIntegration::updateTransfersProgress()
 		}
 	}
 
-	[[MacPlatformIntegrationDockIconView getSharedDockIconView] setProgress:((transferAmount > 0 && bytesTotal > 0) ? Utils::calculatePercent(bytesReceived, bytesTotal) : -1)];
-	[[[NSApplication sharedApplication] dockTile] setBadgeLabel:((transferAmount > 0) ? [NSString stringWithFormat:@"%d", transferAmount] : @"")];
+	[[MacPlatformIntegrationDockIconView getSharedDockIconView] setProgress:((transfersAmount > 0 && bytesTotal > 0) ? Utils::calculatePercent(bytesReceived, bytesTotal) : -1)];
+	[[[NSApplication sharedApplication] dockTile] setBadgeLabel:((transfersAmount > 0) ? [NSString stringWithFormat:@"%d", transfersAmount] : @"")];
 }
 
 void MacPlatformIntegration::showNotification(Notification *notification)

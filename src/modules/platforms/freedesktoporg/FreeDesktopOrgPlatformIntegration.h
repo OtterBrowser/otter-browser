@@ -56,7 +56,7 @@ public slots:
 	void showNotification(Notification *notification) override;
 
 protected:
-	void setTransfersProgress(qint64 bytesTotal, qint64 bytesReceived, qint64 transferAmount);
+	void setTransfersProgress(qint64 bytesTotal, qint64 bytesReceived, qint64 transfersAmount);
 
 protected slots:
 	void handleNotificationCallFinished(QDBusPendingCallWatcher *watcher);
