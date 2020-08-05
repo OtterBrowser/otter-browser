@@ -815,7 +815,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="232"/>
         <source>Restore Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>पृष्ठ स्मृति पुनः स्थापित करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="337"/>
@@ -828,7 +828,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="17"/>
         <source>Remove existing bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>मौजूदा पृष्ठ स्मृति हटाएँ</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="51"/>
@@ -1047,12 +1047,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="48"/>
         <source>Invalid Certificate</source>
-        <translation type="unfinished"/>
+        <translation>अमान्य प्रमाणपत्र</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="53"/>
         <source>View Certificate for %1</source>
-        <translation type="unfinished"/>
+        <translation>%1 हेतु प्रमाणपत्र देखें</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="62"/>
@@ -1103,7 +1103,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="191"/>
         <source>Key Usage</source>
-        <translation type="unfinished"/>
+        <translation>कुंजी उपयोग</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="195"/>
@@ -1206,7 +1206,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="408"/>
         <source>Version</source>
-        <translation type="unfinished"/>
+        <translation>संस्करण</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="412"/>
@@ -1226,7 +1226,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="424"/>
         <source>Validity</source>
-        <translation type="unfinished"/>
+        <translation>मान्यता</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="428"/>
@@ -1256,7 +1256,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="448"/>
         <source>Public Key</source>
-        <translation type="unfinished"/>
+        <translation>सार्वजनिक कुंजी</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="452"/>
