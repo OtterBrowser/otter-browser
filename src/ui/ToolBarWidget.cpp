@@ -131,7 +131,7 @@ void ToolBarWidget::changeEvent(QEvent *event)
 			{
 				const QKeySequence shortcut(ActionsManager::getActionShortcut(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::getToolBarName(m_identifier)}}));
 
-				m_toggleButton->setToolTip(tr("Toggle Visibility") + (shortcut.isEmpty() ? QString() : QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')')));
+				m_toggleButton->setToolTip(Utils::appendShortcut(tr("Toggle Visibility"), shortcut.isEmpty()));
 			}
 
 			break;
@@ -851,7 +851,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 			const QKeySequence shortcut(ActionsManager::getActionShortcut(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::getToolBarName(m_identifier)}}));
 
 			m_toggleButton = new QPushButton(this);
-			m_toggleButton->setToolTip(tr("Toggle Visibility") + (shortcut.isEmpty() ? QString() : QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')')));
+			m_toggleButton->setToolTip(Utils::appendShortcut(tr("Toggle Visibility"), shortcut));
 			m_toggleButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 			connect(m_toggleButton, &QPushButton::clicked, this, &ToolBarWidget::toggleVisibility);

@@ -361,6 +361,16 @@ QString createErrorPage(const ErrorPageInformation &information)
 	return mainTemplate;
 }
 
+QString appendShortcut(const QString &text, const QKeySequence &shortcut)
+{
+	if (shortcut.isEmpty())
+	{
+		return text;
+	}
+
+	return text + QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')');
+}
+
 QString elideText(const QString &text, const QFontMetrics &fontMetrics, QWidget *widget, int maximumWidth, int minimumWidth)
 {
 	if (widget && maximumWidth < 0)

@@ -265,7 +265,7 @@ void TabHandleWidget::mouseMoveEvent(QMouseEvent *event)
 
 			const QKeySequence shortcut(ActionsManager::getActionShortcut(ActionsManager::CloseTabAction));
 
-			setToolTip(tr("Close Tab") + (shortcut.isEmpty() ? QString() : QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')')));
+			setToolTip(Utils::appendShortcut(tr("Close Tab"), shortcut));
 		}
 	}
 
