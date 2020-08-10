@@ -1321,7 +1321,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 				{
 					const QKeySequence shortcut(ActionsManager::getActionShortcut(ActionsManager::OpenBookmarkAction, {{QLatin1String("startPageTile"), (index.row() + 1)}}));
 
-					toolTip = bookmark->getTitle() + (shortcut.isEmpty() ? QString() : QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')'));
+					toolTip = Utils::appendShortcut(bookmark->getTitle(), shortcut);
 				}
 			}
 		}

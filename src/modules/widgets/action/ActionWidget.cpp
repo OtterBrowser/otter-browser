@@ -177,7 +177,7 @@ bool ActionWidget::event(QEvent *event)
 {
 	if (event->type() == QEvent::ToolTip)
 	{
-		QToolTip::showText(static_cast<QHelpEvent*>(event)->globalPos(), text() + (m_action->shortcut().isEmpty() ? QString() : QLatin1String(" (") + m_action->shortcut().toString(QKeySequence::NativeText) + QLatin1Char(')')));
+		QToolTip::showText(static_cast<QHelpEvent*>(event)->globalPos(), Utils::appendShortcut(text(), m_action->shortcut()));
 
 		return true;
 	}
@@ -281,7 +281,7 @@ bool NavigationActionWidget::event(QEvent *event)
 		case QEvent::ToolTip:
 			{
 				const QKeySequence shortcut(ActionsManager::getActionShortcut(getIdentifier()));
-				QString toolTip(text() + (shortcut.isEmpty() ? QString() : QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')')));
+				QString toolTip(Utils::appendShortcut(text(), shortcut));
 
 				if (m_window)
 				{
