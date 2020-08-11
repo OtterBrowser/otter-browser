@@ -279,6 +279,11 @@ QVariant StartPageModel::data(const QModelIndex &index, int role) const
 
 QModelIndex StartPageModel::addTile(const QUrl &url)
 {
+	if (url.isEmpty())
+	{
+		return {};
+	}
+
 	if (!m_bookmark)
 	{
 		disconnect(BookmarksManager::getModel(), &BookmarksModel::bookmarkAdded, this, &StartPageModel::handleBookmarkModified);
