@@ -393,28 +393,30 @@ bool StartPageModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 	Q_UNUSED(action)
 	Q_UNUSED(column)
 
+	if (!m_bookmark)
+	{
+		return false;
+	}
+
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(parent.data(BookmarksModel::TypeRole).toInt()));
 	const QModelIndex index(data->property("x-item-index").toModelIndex());
 
-	if (m_bookmark)
+	if (index.isValid())
 	{
-		if (index.isValid())
+		if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark)
 		{
-			if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark)
-			{
-				return BookmarksManager::getModel()->moveBookmark(BookmarksManager::getModel()->getBookmark(index), BookmarksManager::getModel()->getBookmark(parent), row);
-			}
-
-			return BookmarksManager::getModel()->moveBookmark(BookmarksManager::getModel()->getBookmark(index), m_bookmark, (parent.row() + ((index.row() < parent.row()) ? 1 : 0)));
+			return BookmarksManager::getModel()->moveBookmark(BookmarksManager::getModel()->getBookmark(index), BookmarksManager::getModel()->getBookmark(parent), row);
 		}
-		else if (data->hasUrls())
-		{
-			const QVector<QUrl> urls(Utils::extractUrls(data));
 
-			for (int i = 0; i < urls.count(); ++i)
-			{
-				addTile(urls.at(i));
-			}
+		return BookmarksManager::getModel()->moveBookmark(BookmarksManager::getModel()->getBookmark(index), m_bookmark, (parent.row() + ((index.row() < parent.row()) ? 1 : 0)));
+	}
+	else if (data->hasUrls())
+	{
+		const QVector<QUrl> urls(Utils::extractUrls(data));
+
+		for (int i = 0; i < urls.count(); ++i)
+		{
+			addTile(urls.at(i));
 		}
 	}
 
