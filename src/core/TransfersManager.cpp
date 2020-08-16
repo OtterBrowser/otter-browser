@@ -905,14 +905,14 @@ bool Transfer::setTarget(const QString &target, bool canOverwriteExisting)
 			return false;
 		}
 
-		const bool success(QFile::rename(m_target, mutableTarget));
+		const bool isSuccess(QFile::rename(m_target, mutableTarget));
 
-		if (success)
+		if (isSuccess)
 		{
 			m_target = mutableTarget;
 		}
 
-		return success;
+		return isSuccess;
 	}
 
 	QFile *file(new QFile(mutableTarget, this));
