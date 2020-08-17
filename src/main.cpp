@@ -58,13 +58,13 @@ void otterMessageHander(QtMsgType type, const QMessageLogContext &context, const
 
 #ifdef OTTER_ENABLE_CRASHREPORTS
 #ifdef Q_OS_WIN32
-bool otterCrashDumpHandler(const wchar_t *dumpDirectory, const wchar_t *dumpIdentifier, void *context, EXCEPTION_POINTERS *exceptionInformation, MDRawAssertionInfo *assertionInformation, bool succeeded)
+bool otterCrashDumpHandler(const wchar_t *dumpDirectory, const wchar_t *dumpIdentifier, void *context, EXCEPTION_POINTERS *exceptionInformation, MDRawAssertionInfo *assertionInformation, bool hasDumpFile)
 {
 	Q_UNUSED(context)
 	Q_UNUSED(exceptionInformation)
 	Q_UNUSED(assertionInformation)
 
-	if (succeeded)
+	if (hasDumpFile)
 	{
 		const QString dumpPath(QDir::toNativeSeparators(QString::fromWCharArray(dumpDirectory) + QDir::separator() + QString::fromWCharArray(dumpIdentifier) + QLatin1String(".dmp")));
 
@@ -75,14 +75,14 @@ bool otterCrashDumpHandler(const wchar_t *dumpDirectory, const wchar_t *dumpIden
 		QProcess::startDetached(QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + QLatin1String("crash-reporter.exe")), {dumpPath, (mainWindow ? mainWindow->getUrl().toDisplayString() : QString())});
 	}
 
-	return succeeded;
+	return hasDumpFile;
 }
 #elif defined(Q_OS_LINUX)
-bool otterCrashDumpHandler(const google_breakpad::MinidumpDescriptor &descriptor, void *context, bool succeeded)
+bool otterCrashDumpHandler(const google_breakpad::MinidumpDescriptor &descriptor, void *context, bool hasDumpFile)
 {
 	Q_UNUSED(context)
 
-	if (succeeded)
+	if (hasDumpFile)
 	{
 		qDebug("Crash dump saved to: %s", descriptor.path());
 
@@ -91,7 +91,7 @@ bool otterCrashDumpHandler(const google_breakpad::MinidumpDescriptor &descriptor
 		QProcess::startDetached(QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + QLatin1String("crash-reporter")), {descriptor.path(), (mainWindow ? mainWindow->getUrl().toDisplayString() : QString())});
 	}
 
-	return succeeded;
+	return hasDumpFile;
 }
 #endif
 #endif
