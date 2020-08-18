@@ -670,7 +670,7 @@ SaveInformation getSavePath(const QString &fileName, const QString &directory, Q
 			path = dialog.selectedFiles().value(0);
 		}
 
-		const bool isExisting(QFile::exists(path));
+		const bool fileExists(QFile::exists(path));
 
 		if (TransfersManager::isDownloading({}, path))
 		{
@@ -681,7 +681,7 @@ SaveInformation getSavePath(const QString &fileName, const QString &directory, Q
 				break;
 			}
 		}
-		else if ((isExisting && !QFileInfo(path).isWritable()) || (!isExisting && !QFileInfo(QFileInfo(path).dir().path()).isWritable()))
+		else if ((fileExists && !QFileInfo(path).isWritable()) || (!fileExists && !QFileInfo(QFileInfo(path).dir().path()).isWritable()))
 		{
 			path.clear();
 
