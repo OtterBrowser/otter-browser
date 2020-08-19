@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -256,22 +256,20 @@ void TransfersContentsWidget::handleTransferChanged(Transfer *transfer)
 		return;
 	}
 
-	QIcon icon;
+	QString iconName(QLatin1String("task-reject"));
 	const bool isIndeterminate(transfer->getBytesTotal() <= 0);
 
 	switch (transfer->getState())
 	{
 		case Transfer::RunningState:
-			icon = ThemesManager::createIcon(QLatin1String("task-ongoing"));
+			iconName = QLatin1String("task-ongoing");
 
 			break;
 		case Transfer::FinishedState:
-			icon = ThemesManager::createIcon(QLatin1String("task-complete"));
+			iconName = QLatin1String("task-complete");
 
 			break;
 		default:
-			icon = ThemesManager::createIcon(QLatin1String("task-reject"));
-
 			break;
 	}
 
@@ -286,7 +284,7 @@ void TransfersContentsWidget::handleTransferChanged(Transfer *transfer)
 		switch (i)
 		{
 			case 0:
-				m_model->setData(index, icon, Qt::DecorationRole);
+				m_model->setData(index, ThemesManager::createIcon(iconName), Qt::DecorationRole);
 				m_model->setData(index, transfer->getState(), StateRole);
 
 				break;
