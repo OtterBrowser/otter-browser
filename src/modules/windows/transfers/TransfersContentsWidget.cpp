@@ -345,19 +345,19 @@ void TransfersContentsWidget::handleTransferChanged(Transfer *transfer)
 		else
 		{
 			const QVector<Transfer*> transfers(TransfersManager::getTransfers());
-			bool hasRunning(false);
+			bool hasRunningTransfers(false);
 
 			for (int i = 0; i < transfers.count(); ++i)
 			{
 				if (transfers.at(i) && transfers.at(i)->getState() == Transfer::RunningState)
 				{
-					hasRunning = true;
+					hasRunningTransfers = true;
 
 					break;
 				}
 			}
 
-			if (!hasRunning)
+			if (!hasRunningTransfers)
 			{
 				m_isLoading = false;
 
