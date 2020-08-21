@@ -342,27 +342,11 @@ void TransfersContentsWidget::handleTransferChanged(Transfer *transfer)
 
 			emit loadingStateChanged(WebWidget::OngoingLoadingState);
 		}
-		else
+		else if (!TransfersManager::hasRunningTransfers())
 		{
-			const QVector<Transfer*> transfers(TransfersManager::getTransfers());
-			bool hasRunningTransfers(false);
+			m_isLoading = false;
 
-			for (int i = 0; i < transfers.count(); ++i)
-			{
-				if (transfers.at(i) && transfers.at(i)->getState() == Transfer::RunningState)
-				{
-					hasRunningTransfers = true;
-
-					break;
-				}
-			}
-
-			if (!hasRunningTransfers)
-			{
-				m_isLoading = false;
-
-				emit loadingStateChanged(WebWidget::FinishedLoadingState);
-			}
+			emit loadingStateChanged(WebWidget::FinishedLoadingState);
 		}
 	}
 }
