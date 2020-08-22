@@ -144,6 +144,14 @@ class TransfersManager final : public QObject
 	Q_OBJECT
 
 public:
+	struct ActiveTransfersInformation final
+	{
+		quint64 bytesTotal = 0;
+		quint64 bytesReceived = 0;
+		uint activeTransfersAmount = 0;
+		uint unknownProgressTransfersAmount = 0;
+	};
+
 	static void createInstance();
 	static void addTransfer(Transfer *transfer);
 	static void clearTransfers(int period = 0);
@@ -152,6 +160,7 @@ public:
 	static Transfer* startTransfer(const QNetworkRequest &request, const QString &target = {}, Transfer::TransferOptions options = Transfer::CanAskForPathOption);
 	static Transfer* startTransfer(QNetworkReply *reply, const QString &target = {}, Transfer::TransferOptions options = Transfer::CanAskForPathOption);
 	static QVector<Transfer*> getTransfers();
+	static ActiveTransfersInformation getActiveTransfersInformation();
 	static bool removeTransfer(Transfer *transfer, bool keepFile = true);
 	static bool isDownloading(const QString &source, const QString &target = {});
 	static bool hasRunningTransfers();

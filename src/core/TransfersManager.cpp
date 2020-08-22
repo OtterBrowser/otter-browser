@@ -1266,6 +1266,38 @@ QVector<Transfer*> TransfersManager::getTransfers()
 	return m_transfers;
 }
 
+TransfersManager::ActiveTransfersInformation TransfersManager::getActiveTransfersInformation()
+{
+	ActiveTransfersInformation information;
+
+	if (!m_hasRunningTransfers)
+	{
+		return information;
+	}
+
+	for (int i = 0; i < m_transfers.count(); ++i)
+	{
+		const Transfer *transfer(m_transfers.at(i));
+
+		if (transfer->getState() == Transfer::RunningState)
+		{
+			if (transfer->getBytesTotal() > 0)
+			{
+				++information.activeTransfersAmount;
+
+				information.bytesTotal += transfer->getBytesTotal();
+				information.bytesReceived += transfer->getBytesReceived();
+			}
+			else
+			{
+				++information.unknownProgressTransfersAmount;
+			}
+		}
+	}
+
+	return information;
+}
+
 bool TransfersManager::removeTransfer(Transfer *transfer, bool keepFile)
 {
 	if (!transfer || !m_transfers.contains(transfer))
