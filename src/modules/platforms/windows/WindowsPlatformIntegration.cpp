@@ -75,11 +75,7 @@ WindowsPlatformIntegration::WindowsPlatformIntegration(QObject *parent) : Platfo
 	if (m_is7OrNewer)
 	{
 		connect(Application::getInstance(), &Application::windowRemoved, this, &WindowsPlatformIntegration::removeWindow);
-		connect(TransfersManager::getInstance(), &TransfersManager::transferChanged, this, &WindowsPlatformIntegration::updateTaskbarButtons);
-		connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, &WindowsPlatformIntegration::updateTaskbarButtons);
-		connect(TransfersManager::getInstance(), &TransfersManager::transferFinished, this, &WindowsPlatformIntegration::updateTaskbarButtons);
-		connect(TransfersManager::getInstance(), &TransfersManager::transferRemoved, this, &WindowsPlatformIntegration::updateTaskbarButtons);
-		connect(TransfersManager::getInstance(), &TransfersManager::transferStopped, this, &WindowsPlatformIntegration::updateTaskbarButtons);
+		connect(TransfersManager::getInstance(), &TransfersManager::transfersChanged, this, &WindowsPlatformIntegration::updateTaskbarButtons);
 	}
 
 	if (m_isVistaOrNewer)

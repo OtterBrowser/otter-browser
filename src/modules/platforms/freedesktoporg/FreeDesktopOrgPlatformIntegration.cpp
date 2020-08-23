@@ -135,11 +135,7 @@ FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(QObject *pa
 	});
 
 #ifdef OTTER_ENABLE_DBUS
-	connect(TransfersManager::getInstance(), &TransfersManager::transferChanged, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
-	connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
-	connect(TransfersManager::getInstance(), &TransfersManager::transferFinished, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
-	connect(TransfersManager::getInstance(), &TransfersManager::transferRemoved, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
-	connect(TransfersManager::getInstance(), &TransfersManager::transferStopped, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
+	connect(TransfersManager::getInstance(), &TransfersManager::transfersChanged, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
 #endif
 }
 

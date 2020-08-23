@@ -1033,6 +1033,7 @@ void TransfersManager::addTransfer(Transfer *transfer)
 	if (transfer->getOptions().testFlag(Transfer::CanNotifyOption) && transfer->getState() != Transfer::CancelledState)
 	{
 		emit m_instance->transferStarted(transfer);
+		emit m_instance->transfersChanged();
 
 		if (transfer->getState() == Transfer::RunningState)
 		{
@@ -1111,6 +1112,7 @@ void TransfersManager::handleTransferStarted()
 		}
 
 		emit transferStarted(transfer);
+		emit transfersChanged();
 
 		scheduleSave();
 	}
@@ -1140,6 +1142,7 @@ void TransfersManager::handleTransferFinished()
 		}
 
 		emit transferFinished(transfer);
+		emit transfersChanged();
 
 		if (!m_privateTransfers.contains(transfer))
 		{
@@ -1158,6 +1161,7 @@ void TransfersManager::handleTransferChanged()
 		updateRunningTransfersState();
 
 		emit transferChanged(transfer);
+		emit transfersChanged();
 	}
 }
 
@@ -1170,6 +1174,7 @@ void TransfersManager::handleTransferStopped()
 	if (transfer)
 	{
 		emit transferStopped(transfer);
+		emit transfersChanged();
 
 		scheduleSave();
 	}
@@ -1320,6 +1325,7 @@ bool TransfersManager::removeTransfer(Transfer *transfer, bool keepFile)
 	}
 
 	emit m_instance->transferRemoved(transfer);
+	emit m_instance->transfersChanged();
 
 	transfer->deleteLater();
 

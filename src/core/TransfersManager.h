@@ -194,6 +194,7 @@ signals:
 	void transferChanged(Transfer *transfer);
 	void transferStopped(Transfer *transfer);
 	void transferRemoved(Transfer *transfer);
+	void transfersChanged();
 };
 
 }
