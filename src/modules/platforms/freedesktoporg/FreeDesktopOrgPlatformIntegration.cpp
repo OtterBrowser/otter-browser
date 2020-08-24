@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2010 David Sansome <me@davidsansome.com>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -122,8 +122,6 @@ FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(QObject *pa
 
 	m_notificationsInterface->connection().connect(m_notificationsInterface->service(), m_notificationsInterface->path(), m_notificationsInterface->interface(), QLatin1String("NotificationClosed"), this, SLOT(handleNotificationIgnored(quint32,quint32)));
 	m_notificationsInterface->connection().connect(m_notificationsInterface->service(), m_notificationsInterface->path(), m_notificationsInterface->interface(), QLatin1String("ActionInvoked"), this, SLOT(handleNotificationClicked(quint32,QString)));
-
-	updateTransfersProgress();
 #endif
 
 	QTimer::singleShot(250, this, [&]()
@@ -135,7 +133,12 @@ FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(QObject *pa
 	});
 
 #ifdef OTTER_ENABLE_DBUS
-	connect(TransfersManager::getInstance(), &TransfersManager::transfersChanged, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
+	connect(TransfersManager::getInstance(), &TransfersManager::transfersChanged, this, [&]()
+	{
+		const TransfersManager::ActiveTransfersInformation information(TransfersManager::getActiveTransfersInformation());
+
+		setTransfersProgress(information.bytesTotal, information.bytesReceived, information.activeTransfersAmount);
+	});
 #endif
 }
 
@@ -256,33 +259,6 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 	}
 
 	connect(watcher, &QDBusPendingCallWatcher::finished, this, &FreeDesktopOrgPlatformIntegration::handleNotificationCallFinished);
-}
-
-void FreeDesktopOrgPlatformIntegration::updateTransfersProgress()
-{
-	qint64 bytesTotal(0);
-	qint64 bytesReceived(0);
-	qint64 transfersAmount(0);
-
-	if (TransfersManager::hasRunningTransfers())
-	{
-		const QVector<Transfer*> transfers(TransfersManager::getTransfers());
-
-		for (int i = 0; i < transfers.count(); ++i)
-		{
-			const Transfer *transfer(transfers.at(i));
-
-			if (transfer->getState() == Transfer::RunningState && transfer->getBytesTotal() > 0)
-			{
-				++transfersAmount;
-
-				bytesTotal += transfer->getBytesTotal();
-				bytesReceived += transfer->getBytesReceived();
-			}
-		}
-	}
-
-	setTransfersProgress(bytesTotal, bytesReceived, transfersAmount);
 }
 
 void FreeDesktopOrgPlatformIntegration::setTransfersProgress(qint64 bytesTotal, qint64 bytesReceived, qint64 transfersAmount)

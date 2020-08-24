@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2010 David Sansome <me@davidsansome.com>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -62,7 +62,6 @@ protected slots:
 	void handleNotificationCallFinished(QDBusPendingCallWatcher *watcher);
 	void handleNotificationIgnored(quint32 identifier, quint32 reason);
 	void handleNotificationClicked(quint32 identifier, const QString &action);
-	void updateTransfersProgress();
 #endif
 
 private:
