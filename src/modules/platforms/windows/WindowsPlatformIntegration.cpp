@@ -133,6 +133,7 @@ void WindowsPlatformIntegration::updateTaskbarButtons()
 	}
 
 	const QVector<MainWindow*> mainWindows(Application::getWindows());
+	const int progress((bytesReceived > 0) ? qFloor(Utils::calculatePercent(bytesReceived, bytesTotal)) : 0);
 
 	for (int i = 0; i < mainWindows.count(); ++i)
 	{
@@ -147,7 +148,7 @@ void WindowsPlatformIntegration::updateTaskbarButtons()
 				m_taskbarButtons[mainWindow]->progress()->show();
 			}
 
-			m_taskbarButtons[mainWindow]->progress()->setValue((bytesReceived > 0) ? qFloor(Utils::calculatePercent(bytesReceived, bytesTotal)) : 0);
+			m_taskbarButtons[mainWindow]->progress()->setValue(progress);
 		}
 		else if (m_taskbarButtons.contains(mainWindow))
 		{
