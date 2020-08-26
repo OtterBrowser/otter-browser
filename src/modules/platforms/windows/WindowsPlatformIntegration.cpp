@@ -112,34 +112,15 @@ void WindowsPlatformIntegration::removeWindow(MainWindow *mainWindow)
 
 void WindowsPlatformIntegration::updateTaskbarButtons()
 {
-	qint64 bytesTotal(0);
-	qint64 bytesReceived(0);
-	const bool hasRunningTransfers(TransfersManager::hasRunningTransfers());
-
-	if (hasRunningTransfers)
-	{
-		const QVector<Transfer*> transfers(TransfersManager::getTransfers());
-
-		for (int i = 0; i < transfers.count(); ++i)
-		{
-			const Transfer *transfer(transfers.at(i));
-
-			if (transfer->getState() == Transfer::RunningState && transfer->getBytesTotal() > 0)
-			{
-				bytesTotal += transfer->getBytesTotal();
-				bytesReceived += transfer->getBytesReceived();
-			}
-		}
-	}
-
 	const QVector<MainWindow*> mainWindows(Application::getWindows());
-	const int progress((bytesReceived > 0) ? qFloor(Utils::calculatePercent(bytesReceived, bytesTotal)) : 0);
+	const TransfersManager::ActiveTransfersInformation information(TransfersManager::getActiveTransfersInformation());
+	const int progress((information.bytesReceived > 0) ? qFloor(Utils::calculatePercent(information.bytesReceived, information.bytesTotal)) : 0);
 
 	for (int i = 0; i < mainWindows.count(); ++i)
 	{
 		MainWindow *mainWindow(mainWindows.at(i));
 
-		if (hasRunningTransfers)
+		if (information.activeTransfersAmount > 0)
 		{
 			if (!m_taskbarButtons.contains(mainWindow))
 			{
