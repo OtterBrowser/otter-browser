@@ -330,30 +330,10 @@ void MacPlatformIntegration::startLinkDrag(const QUrl &url, const QString &title
 
 void MacPlatformIntegration::updateTransfersProgress()
 {
-	qint64 bytesTotal(0);
-	qint64 bytesReceived(0);
-	int transfersAmount(0);
+	const TransfersManager::ActiveTransfersInformation information(TransfersManager::getActiveTransfersInformation());
 
-	if (TransfersManager::hasRunningTransfers())
-	{
-		const QVector<Transfer*> transfers(TransfersManager::getTransfers());
-
-		for (int i = 0; i < transfers.count(); ++i)
-		{
-			const Transfer *transfer(transfers.at(i));
-
-			if (transfer->getState() == Transfer::RunningState && transfer->getBytesTotal() > 0)
-			{
-				++transfersAmount;
-
-				bytesTotal += transfer->getBytesTotal();
-				bytesReceived += transfer->getBytesReceived();
-			}
-		}
-	}
-
-	[[MacPlatformIntegrationDockIconView getSharedDockIconView] setProgress:((transfersAmount > 0 && bytesTotal > 0) ? Utils::calculatePercent(bytesReceived, bytesTotal) : -1)];
-	[[[NSApplication sharedApplication] dockTile] setBadgeLabel:((transfersAmount > 0) ? [NSString stringWithFormat:@"%d", transfersAmount] : @"")];
+	[[MacPlatformIntegrationDockIconView getSharedDockIconView] setProgress:((information.activeTransfersAmount > 0 && information.bytesTotal > 0) ? Utils::calculatePercent(information.bytesReceived, information.bytesTotal) : -1)];
+	[[[NSApplication sharedApplication] dockTile] setBadgeLabel:((information.activeTransfersAmount > 0) ? [NSString stringWithFormat:@"%d", information.activeTransfersAmount] : @"")];
 }
 
 void MacPlatformIntegration::showNotification(Notification *notification)
