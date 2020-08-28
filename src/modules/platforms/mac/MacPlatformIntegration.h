@@ -60,9 +60,6 @@ public slots:
 protected:
 	void timerEvent(QTimerEvent *event) override;
 
-protected slots:
-	void updateTransfersProgress();
-
 private:
 	QHash<quint64, Notification*> m_notifications;
 	quint64 m_notificationIdentifier;

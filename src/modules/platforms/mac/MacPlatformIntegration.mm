@@ -220,7 +220,13 @@ MacPlatformIntegration::MacPlatformIntegration(QObject *parent) : PlatformIntegr
 
 	menu->setAsDockMenu();
 
-	connect(TransfersManager::getInstance(), &TransfersManager::transfersChanged, this, &MacPlatformIntegration::updateTransfersProgress);
+	connect(TransfersManager::getInstance(), &TransfersManager::transfersChanged, this, [&]()
+	{
+		const TransfersManager::ActiveTransfersInformation information(TransfersManager::getActiveTransfersInformation());
+
+		[[MacPlatformIntegrationDockIconView getSharedDockIconView] setProgress:((information.activeTransfersAmount > 0 && information.bytesTotal > 0) ? Utils::calculatePercent(information.bytesReceived, information.bytesTotal) : -1)];
+		[[[NSApplication sharedApplication] dockTile] setBadgeLabel:((information.activeTransfersAmount > 0) ? [NSString stringWithFormat:@"%d", information.activeTransfersAmount] : @"")];
+	});
 }
 
 void MacPlatformIntegration::timerEvent(QTimerEvent *event)
@@ -326,14 +332,6 @@ void MacPlatformIntegration::startLinkDrag(const QUrl &url, const QString &title
 	drag->setMimeData(mimeData);
 	drag->setPixmap(pixmap);
 	drag->exec(Qt::MoveAction);
-}
-
-void MacPlatformIntegration::updateTransfersProgress()
-{
-	const TransfersManager::ActiveTransfersInformation information(TransfersManager::getActiveTransfersInformation());
-
-	[[MacPlatformIntegrationDockIconView getSharedDockIconView] setProgress:((information.activeTransfersAmount > 0 && information.bytesTotal > 0) ? Utils::calculatePercent(information.bytesReceived, information.bytesTotal) : -1)];
-	[[[NSApplication sharedApplication] dockTile] setBadgeLabel:((information.activeTransfersAmount > 0) ? [NSString stringWithFormat:@"%d", information.activeTransfersAmount] : @"")];
 }
 
 void MacPlatformIntegration::showNotification(Notification *notification)
