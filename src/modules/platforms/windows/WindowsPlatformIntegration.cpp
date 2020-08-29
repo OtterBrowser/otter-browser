@@ -75,7 +75,36 @@ WindowsPlatformIntegration::WindowsPlatformIntegration(QObject *parent) : Platfo
 	if (m_is7OrNewer)
 	{
 		connect(Application::getInstance(), &Application::windowRemoved, this, &WindowsPlatformIntegration::removeWindow);
-		connect(TransfersManager::getInstance(), &TransfersManager::transfersChanged, this, &WindowsPlatformIntegration::updateTaskbarButtons);
+		connect(TransfersManager::getInstance(), &TransfersManager::transfersChanged, this, [&]()
+		{
+			const QVector<MainWindow*> mainWindows(Application::getWindows());
+			const TransfersManager::ActiveTransfersInformation information(TransfersManager::getActiveTransfersInformation());
+			const int progress((information.bytesReceived > 0) ? qFloor(Utils::calculatePercent(information.bytesReceived, information.bytesTotal)) : 0);
+
+			for (int i = 0; i < mainWindows.count(); ++i)
+			{
+				MainWindow *mainWindow(mainWindows.at(i));
+
+				if (information.activeTransfersAmount > 0)
+				{
+					if (!m_taskbarButtons.contains(mainWindow))
+					{
+						m_taskbarButtons[mainWindow] = new QWinTaskbarButton(mainWindow);
+						m_taskbarButtons[mainWindow]->setWindow(mainWindow->windowHandle());
+						m_taskbarButtons[mainWindow]->progress()->show();
+					}
+
+					m_taskbarButtons[mainWindow]->progress()->setValue(progress);
+				}
+				else if (m_taskbarButtons.contains(mainWindow))
+				{
+					m_taskbarButtons[mainWindow]->progress()->reset();
+					m_taskbarButtons[mainWindow]->progress()->hide();
+					m_taskbarButtons[mainWindow]->deleteLater();
+					m_taskbarButtons.remove(mainWindow);
+				}
+			}
+		});
 	}
 
 	if (m_isVistaOrNewer)
@@ -107,37 +136,6 @@ void WindowsPlatformIntegration::removeWindow(MainWindow *mainWindow)
 	if (m_taskbarButtons.contains(mainWindow))
 	{
 		m_taskbarButtons.remove(mainWindow);
-	}
-}
-
-void WindowsPlatformIntegration::updateTaskbarButtons()
-{
-	const QVector<MainWindow*> mainWindows(Application::getWindows());
-	const TransfersManager::ActiveTransfersInformation information(TransfersManager::getActiveTransfersInformation());
-	const int progress((information.bytesReceived > 0) ? qFloor(Utils::calculatePercent(information.bytesReceived, information.bytesTotal)) : 0);
-
-	for (int i = 0; i < mainWindows.count(); ++i)
-	{
-		MainWindow *mainWindow(mainWindows.at(i));
-
-		if (information.activeTransfersAmount > 0)
-		{
-			if (!m_taskbarButtons.contains(mainWindow))
-			{
-				m_taskbarButtons[mainWindow] = new QWinTaskbarButton(mainWindow);
-				m_taskbarButtons[mainWindow]->setWindow(mainWindow->windowHandle());
-				m_taskbarButtons[mainWindow]->progress()->show();
-			}
-
-			m_taskbarButtons[mainWindow]->progress()->setValue(progress);
-		}
-		else if (m_taskbarButtons.contains(mainWindow))
-		{
-			m_taskbarButtons[mainWindow]->progress()->reset();
-			m_taskbarButtons[mainWindow]->progress()->hide();
-			m_taskbarButtons[mainWindow]->deleteLater();
-			m_taskbarButtons.remove(mainWindow);
-		}
 	}
 }
 

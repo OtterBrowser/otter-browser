@@ -114,7 +114,6 @@ protected:
 
 protected slots:
 	void removeWindow(MainWindow *mainWindow);
-	void updateTaskbarButtons();
 
 private:
 	QString m_registrationIdentifier;
