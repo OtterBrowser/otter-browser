@@ -40,6 +40,8 @@
 #endif
 #include <QtWidgets/QApplication>
 
+#define DESKTOP_FILE_NAME "otter-browser.desktop"
+
 #ifdef OTTER_ENABLE_DBUS
 QDBusArgument& operator<<(QDBusArgument &argument, const QImage &image)
 {
@@ -114,7 +116,7 @@ FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(QObject *pa
 #endif
 {
 #if QT_VERSION >= 0x050700
-	QGuiApplication::setDesktopFileName(QLatin1String("otter-browser.desktop"));
+	QGuiApplication::setDesktopFileName(QLatin1String(DESKTOP_FILE_NAME));
 #endif
 
 #ifdef OTTER_ENABLE_DBUS
@@ -271,7 +273,7 @@ void FreeDesktopOrgPlatformIntegration::setTransfersProgress(qint64 bytesTotal, 
 	properties[QLatin1String("progress-visible")] = hasActiveTransfers;
 
 	QDBusMessage message(QDBusMessage::createSignal(QLatin1String("/com/canonical/unity/launcherentry/9ddcf02c30a33cd63e9762f06957263f"), QLatin1String("com.canonical.Unity.LauncherEntry"), QLatin1String("Update")));
-	message.setArguments({QLatin1String("application://otter-browser.desktop"), properties});
+	message.setArguments({QLatin1String("application://") + QLatin1String(DESKTOP_FILE_NAME), properties});
 
 	QDBusConnection::sessionBus().send(message);
 }
