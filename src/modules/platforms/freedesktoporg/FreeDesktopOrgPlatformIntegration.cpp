@@ -40,7 +40,7 @@
 #endif
 #include <QtWidgets/QApplication>
 
-#define DESKTOP_FILE_NAME "otter-browser.desktop"
+#define DESKTOP_ENTRY_NAME "otter-browser"
 
 #ifdef OTTER_ENABLE_DBUS
 QDBusArgument& operator<<(QDBusArgument &argument, const QImage &image)
@@ -116,7 +116,7 @@ FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(QObject *pa
 #endif
 {
 #if QT_VERSION >= 0x050700
-	QGuiApplication::setDesktopFileName(QLatin1String(DESKTOP_FILE_NAME));
+	QGuiApplication::setDesktopFileName(QLatin1String(DESKTOP_ENTRY_NAME) + QLatin1String(".desktop"));
 #endif
 
 #ifdef OTTER_ENABLE_DBUS
@@ -234,7 +234,7 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 	arguments << message.getTitle();
 	arguments << message.message;
 	arguments << QStringList({QLatin1String("default"), QString()});
-	arguments << QVariantMap({{QLatin1String("desktop-entry"), QLatin1String("otter-browser")}, {QLatin1String("image-data"), (message.image.isNull() ? message.getIcon().pixmap(128, 128).toImage() : message.image)}});
+	arguments << QVariantMap({{QLatin1String("desktop-entry"), QLatin1String(DESKTOP_ENTRY_NAME)}, {QLatin1String("image-data"), (message.image.isNull() ? message.getIcon().pixmap(128, 128).toImage() : message.image)}});
 	arguments << ((visibilityDuration < 0) ? -1 : (visibilityDuration * 1000));
 
 	QDBusPendingCallWatcher *watcher(new QDBusPendingCallWatcher(m_notificationsInterface->asyncCallWithArgumentList(QLatin1String("Notify"), arguments), this));
@@ -273,7 +273,7 @@ void FreeDesktopOrgPlatformIntegration::setTransfersProgress(qint64 bytesTotal, 
 	properties[QLatin1String("progress-visible")] = hasActiveTransfers;
 
 	QDBusMessage message(QDBusMessage::createSignal(QLatin1String("/com/canonical/unity/launcherentry/9ddcf02c30a33cd63e9762f06957263f"), QLatin1String("com.canonical.Unity.LauncherEntry"), QLatin1String("Update")));
-	message.setArguments({QLatin1String("application://") + QLatin1String(DESKTOP_FILE_NAME), properties});
+	message.setArguments({QLatin1String("application://") + QLatin1String(DESKTOP_ENTRY_NAME) + QLatin1String(".desktop"), properties});
 
 	QDBusConnection::sessionBus().send(message);
 }
