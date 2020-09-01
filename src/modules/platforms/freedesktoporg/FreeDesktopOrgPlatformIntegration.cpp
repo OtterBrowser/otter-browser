@@ -297,23 +297,18 @@ QVector<ApplicationInformation> FreeDesktopOrgPlatformIntegration::getApplicatio
 	}
 
 	const LibMimeApps::Index index(QLocale().bcp47Name().toStdString());
-	const std::vector<LibMimeApps::DesktopEntry> applications(index.appsForMime(mimeType.name().toStdString()));
-	QVector<ApplicationInformation> result;
-	result.reserve(static_cast<int>(applications.size()));
+	const std::vector<LibMimeApps::DesktopEntry> entries(index.appsForMime(mimeType.name().toStdString()));
+	QVector<ApplicationInformation> applications;
+	applications.reserve(static_cast<int>(entries.size()));
 
-	for (std::vector<LibMimeApps::DesktopEntry>::size_type i = 0; i < applications.size(); ++i)
+	for (std::vector<LibMimeApps::DesktopEntry>::size_type i = 0; i < entries.size(); ++i)
 	{
-		ApplicationInformation application;
-		application.command = QString::fromStdString(applications.at(i).executable());
-		application.name = QString::fromStdString(applications.at(i).name());
-		application.icon = QIcon::fromTheme(QString::fromStdString(applications.at(i).icon()));
-
-		result.append(application);
+		applications.append({QString::fromStdString(entries.at(i).executable()), QString::fromStdString(entries.at(i).name()), QIcon::fromTheme(QString::fromStdString(entries.at(i).icon()))});
 	}
 
-	m_applicationsCache[mimeType.name()] = result;
+	m_applicationsCache[mimeType.name()] = applications;
 
-	return result;
+	return applications;
 }
 
 #ifdef OTTER_ENABLE_DBUS
