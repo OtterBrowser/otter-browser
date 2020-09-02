@@ -112,9 +112,6 @@ protected:
 	bool registerToSystem();
 	bool isBrowserRegistered() const;
 
-protected slots:
-	void removeWindow(MainWindow *mainWindow);
-
 private:
 	QString m_registrationIdentifier;
 	QString m_applicationFilePath;

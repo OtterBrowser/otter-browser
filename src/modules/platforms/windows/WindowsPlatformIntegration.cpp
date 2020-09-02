@@ -74,7 +74,13 @@ WindowsPlatformIntegration::WindowsPlatformIntegration(QObject *parent) : Platfo
 
 	if (m_is7OrNewer)
 	{
-		connect(Application::getInstance(), &Application::windowRemoved, this, &WindowsPlatformIntegration::removeWindow);
+		connect(Application::getInstance(), &Application::windowRemoved, this, [&](MainWindow *mainWindow)
+		{
+			if (m_taskbarButtons.contains(mainWindow))
+			{
+				m_taskbarButtons.remove(mainWindow);
+			}
+		});
 		connect(TransfersManager::getInstance(), &TransfersManager::transfersChanged, this, [&]()
 		{
 			const QVector<MainWindow*> mainWindows(Application::getWindows());
@@ -128,14 +134,6 @@ void WindowsPlatformIntegration::timerEvent(QTimerEvent *event)
 
 		m_cleanupTimer = 0;
 		m_environment.clear();
-	}
-}
-
-void WindowsPlatformIntegration::removeWindow(MainWindow *mainWindow)
-{
-	if (m_taskbarButtons.contains(mainWindow))
-	{
-		m_taskbarButtons.remove(mainWindow);
 	}
 }
 
