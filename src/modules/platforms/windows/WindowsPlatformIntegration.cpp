@@ -196,7 +196,7 @@ void WindowsPlatformIntegration::runApplication(const QString &command, const QU
 	}
 }
 
-void WindowsPlatformIntegration::getApplicationInformation(ApplicationInformation &information)
+void WindowsPlatformIntegration::getApplicationInformation(ApplicationInformation &information) const
 {
 	const QString rootPath(information.command.left(information.command.indexOf(QLatin1String("\\"))).remove(QLatin1Char('%')));
 
