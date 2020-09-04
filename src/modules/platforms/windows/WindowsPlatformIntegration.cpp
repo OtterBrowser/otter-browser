@@ -408,19 +408,19 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 
 		getApplicationInformation(information);
 
-		bool exclude(false);
+		bool shouldExclude(false);
 
 		for (int j = 0; j < applications.count(); ++j)
 		{
 			if (applications.at(j).name == information.name)
 			{
-				exclude = true;
+				shouldExclude = true;
 
 				break;
 			}
 		}
 
-		if (!exclude)
+		if (!shouldExclude)
 		{
 			applications.append(information);
 		}
