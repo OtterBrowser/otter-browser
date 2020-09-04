@@ -350,8 +350,7 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 
 		if (information.command.contains(QLatin1String("explorer.exe"), Qt::CaseInsensitive))
 		{
-			information.command = information.command.left(information.command.indexOf(QLatin1String(".exe"), 0, Qt::CaseInsensitive) + 4);
-			information.command += " %1";
+			information.command = information.command.left(information.command.indexOf(QLatin1String(".exe"), 0, Qt::CaseInsensitive) + 4) + QLatin1String(" %1");
 		}
 
 		if (information.command.isEmpty())
