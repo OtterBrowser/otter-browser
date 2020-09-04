@@ -272,6 +272,21 @@ Style* WindowsPlatformIntegration::createStyle(const QString &name) const
 	return nullptr;
 }
 
+QString WindowsPlatformIntegration::getUpdaterBinary() const
+{
+	return QLatin1String("updater.exe");
+}
+
+QString WindowsPlatformIntegration::getPlatformName() const
+{
+	if (QSysInfo::buildCpuArchitecture() == QLatin1String("x86_64"))
+	{
+		return QLatin1String("win64");
+	}
+
+	return QLatin1String("win32");
+}
+
 QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
 {
 	QVector<ApplicationInformation> applications;
@@ -415,21 +430,6 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 	m_cleanupTimer = startTimer(5 * 60000);
 
 	return applications;
-}
-
-QString WindowsPlatformIntegration::getUpdaterBinary() const
-{
-	return QLatin1String("updater.exe");
-}
-
-QString WindowsPlatformIntegration::getPlatformName() const
-{
-	if (QSysInfo::buildCpuArchitecture() == QLatin1String("x86_64"))
-	{
-		return QLatin1String("win64");
-	}
-
-	return QLatin1String("win32");
 }
 
 bool WindowsPlatformIntegration::canShowNotifications() const
