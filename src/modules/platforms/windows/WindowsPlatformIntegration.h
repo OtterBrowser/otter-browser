@@ -107,7 +107,7 @@ public slots:
 
 protected:
 	void timerEvent(QTimerEvent *event) override;
-	void getApplicationInformation(ApplicationInformation &information) const;
+	ApplicationInformation getApplicationInformation(const QString &command) const;
 	QString getUpdaterBinary() const override;
 	bool registerToSystem();
 	bool isBrowserRegistered() const;

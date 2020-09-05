@@ -196,39 +196,6 @@ void WindowsPlatformIntegration::runApplication(const QString &command, const QU
 	}
 }
 
-void WindowsPlatformIntegration::getApplicationInformation(ApplicationInformation &information) const
-{
-	const QString rootPath(information.command.left(information.command.indexOf(QLatin1String("\\"))).remove(QLatin1Char('%')));
-
-	if (m_environment.contains(rootPath))
-	{
-		information.command.replace(QLatin1Char('%') + rootPath + QLatin1Char('%'), m_environment.value(rootPath));
-	}
-
-	const QString fullApplicationPath(information.command.left(information.command.indexOf(QLatin1String(".exe"), 0, Qt::CaseInsensitive) + 4));
-	const QFileInfo fileInformation(fullApplicationPath);
-	HKEY key(nullptr);
-	TCHAR readBuffer[128];
-	DWORD bufferSize(sizeof(readBuffer));
-
-	if (RegOpenKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\MuiCache"), 0, KEY_QUERY_VALUE, &key) == ERROR_SUCCESS)
-	{
-		if (RegQueryValueEx(key, fullApplicationPath.toStdWString().c_str(), nullptr, nullptr, (LPBYTE)readBuffer, &bufferSize) == ERROR_SUCCESS)
-		{
-			information.name = QString::fromWCharArray(readBuffer);
-		}
-
-		RegCloseKey(key);
-	}
-
-	if (information.name.isEmpty())
-	{
-		information.name = fileInformation.baseName();
-	}
-
-	information.icon = QFileIconProvider().icon(fileInformation);
-}
-
 void WindowsPlatformIntegration::startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent) const
 {
 	QDrag *drag(new QDrag(parent));
@@ -285,6 +252,44 @@ QString WindowsPlatformIntegration::getPlatformName() const
 	}
 
 	return QLatin1String("win32");
+}
+
+ApplicationInformation WindowsPlatformIntegration::getApplicationInformation(const QString &command) const
+{
+	const QString rootPath(command.left(command.indexOf(QLatin1String("\\"))).remove(QLatin1Char('%')));
+	ApplicationInformation information;
+	information.command = command;
+
+	if (m_environment.contains(rootPath))
+	{
+		information.command.replace(QLatin1Char('%') + rootPath + QLatin1Char('%'), m_environment.value(rootPath));
+	}
+
+	const QString fullApplicationPath(information.command.left(information.command.indexOf(QLatin1String(".exe"), 0, Qt::CaseInsensitive) + 4));
+	const QFileInfo fileInformation(fullApplicationPath);
+	HKEY key(nullptr);
+	TCHAR readBuffer[128];
+	DWORD bufferSize(sizeof(readBuffer));
+
+	if (RegOpenKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\MuiCache"), 0, KEY_QUERY_VALUE, &key) == ERROR_SUCCESS)
+	{
+		if (RegQueryValueEx(key, fullApplicationPath.toStdWString().c_str(), nullptr, nullptr, (LPBYTE)readBuffer, &bufferSize) == ERROR_SUCCESS)
+		{
+			information.name = QString::fromWCharArray(readBuffer);
+		}
+
+		RegCloseKey(key);
+	}
+
+	if (information.name.isEmpty())
+	{
+		information.name = fileInformation.baseName();
+	}
+
+	information.name = fileInformation.baseName();
+	information.icon = QFileIconProvider().icon(fileInformation);
+
+	return information;
 }
 
 QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
@@ -345,24 +350,21 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 			continue;
 		}
 
-		ApplicationInformation information;
-		information.command = QSettings(QLatin1String("HKEY_LOCAL_MACHINE\\Software\\Classes\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat).value(QLatin1String("."), {}).toString().remove(QLatin1Char('"'));
+		QString command(QSettings(QLatin1String("HKEY_LOCAL_MACHINE\\Software\\Classes\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat).value(QLatin1String("."), {}).toString().remove(QLatin1Char('"')));
 
-		if (information.command.contains(QLatin1String("explorer.exe"), Qt::CaseInsensitive))
+		if (command.contains(QLatin1String("explorer.exe"), Qt::CaseInsensitive))
 		{
-			information.command = information.command.left(information.command.indexOf(QLatin1String(".exe"), 0, Qt::CaseInsensitive) + 4) + QLatin1String(" %1");
+			command = command.left(command.indexOf(QLatin1String(".exe"), 0, Qt::CaseInsensitive) + 4) + QLatin1String(" %1");
 		}
 
-		if (information.command.isEmpty())
+		if (command.isEmpty())
 		{
 			Console::addMessage(tr("Failed to load a valid application path for MIME type %1: %2").arg(suffix).arg(value), Console::OtherCategory, Console::ErrorLevel);
 
 			continue;
 		}
 
-		getApplicationInformation(information);
-
-		applications.append(information);
+		applications.append(getApplicationInformation(command));
 	}
 
 	// Win XP applications
@@ -375,7 +377,6 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 
 	for (int i = 0; i < associations.count(); ++i)
 	{
-		ApplicationInformation information;
 		const QString value(legacyAssociations.value(order.at(i)).toString());
 
 		if (applicationFileName == value)
@@ -383,31 +384,28 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 			continue;
 		}
 
-		information.command = QSettings(QLatin1String("HKEY_CURRENT_USER\\SOFTWARE\\Classes\\Applications\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat).value(QLatin1String("."), {}).toString().remove(QLatin1Char('"'));
+		QString command(QSettings(QLatin1String("HKEY_CURRENT_USER\\SOFTWARE\\Classes\\Applications\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat).value(QLatin1String("."), {}).toString().remove(QLatin1Char('"')));
 
-		if (information.command.isEmpty())
+		if (command.isEmpty())
 		{
-			information.command = QSettings(QLatin1String("HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Applications\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat).value(QLatin1String("."), {}).toString().remove(QLatin1Char('"'));
+			command = QSettings(QLatin1String("HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Applications\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat).value(QLatin1String("."), {}).toString().remove(QLatin1Char('"'));
 
-			if (information.command.isEmpty())
+			if (command.isEmpty())
 			{
-				information.command = QSettings(QLatin1String("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\") + value, QSettings::NativeFormat).value(QLatin1String("."), {}).toString();
+				command = QSettings(QLatin1String("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\") + value, QSettings::NativeFormat).value(QLatin1String("."), {}).toString();
 
-				if (!information.command.isEmpty())
-				{
-					information.command.append(QLatin1String(" %1"));
-				}
-				else
+				if (command.isEmpty())
 				{
 					Console::addMessage(tr("Failed to load a valid application path for MIME type %1: %2").arg(suffix).arg(value), Console::OtherCategory, Console::ErrorLevel);
 
 					continue;
 				}
+
+				command.append(QLatin1String(" %1"));
 			}
 		}
 
-		getApplicationInformation(information);
-
+		const ApplicationInformation information(getApplicationInformation(command));
 		bool shouldExclude(false);
 
 		for (int j = 0; j < applications.count(); ++j)
