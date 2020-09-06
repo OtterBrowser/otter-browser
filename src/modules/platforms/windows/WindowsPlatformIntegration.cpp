@@ -576,14 +576,13 @@ bool WindowsPlatformIntegration::canSetAsDefaultBrowser() const
 
 bool WindowsPlatformIntegration::isDefaultBrowser() const
 {
-	bool isDefault(true);
-
 	if (m_applicationRegistration.value(m_registrationIdentifier).isNull())
 	{
 		return false;
 	}
 
 	const QSettings registry(QLatin1String("HKEY_CURRENT_USER\\Software"), QSettings::NativeFormat);
+	bool isDefault(true);
 
 	for (int i = 0; i < m_registrationPairs.count(); ++i)
 	{
