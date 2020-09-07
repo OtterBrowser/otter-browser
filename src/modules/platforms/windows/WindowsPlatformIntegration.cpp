@@ -561,12 +561,7 @@ bool WindowsPlatformIntegration::registerToSystem()
 
 bool WindowsPlatformIntegration::isBrowserRegistered() const
 {
-	if (m_applicationRegistration.value(m_registrationIdentifier).isNull() || !m_propertiesRegistration.value(QLatin1String("/shell/open/command/."), {}).toString().contains(m_applicationFilePath))
-	{
-		return false;
-	}
-
-	return true;
+	return !(m_applicationRegistration.value(m_registrationIdentifier).isNull() || !m_propertiesRegistration.value(QLatin1String("/shell/open/command/."), {}).toString().contains(m_applicationFilePath));
 }
 
 bool WindowsPlatformIntegration::canSetAsDefaultBrowser() const
