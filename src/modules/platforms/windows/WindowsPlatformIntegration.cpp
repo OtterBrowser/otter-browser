@@ -481,14 +481,14 @@ bool WindowsPlatformIntegration::setAsDefaultBrowser()
 	}
 	else if (m_isVistaOrNewer)
 	{
-		IApplicationAssociationRegistrationUI *applicationAssociationRegistrationUI(nullptr);
-		HRESULT result(CoCreateInstance(CLSID_ApplicationAssociationRegistrationUI, nullptr, CLSCTX_INPROC_SERVER, IID_IApplicationAssociationRegistrationUI, (LPVOID*)&applicationAssociationRegistrationUI));
+		IApplicationAssociationRegistrationUI *applicationAssociationRegistrationUi(nullptr);
+		HRESULT result(CoCreateInstance(CLSID_ApplicationAssociationRegistrationUI, nullptr, CLSCTX_INPROC_SERVER, IID_IApplicationAssociationRegistrationUI, (LPVOID*)&applicationAssociationRegistrationUi));
 
-		if (result == S_OK && applicationAssociationRegistrationUI)
+		if (result == S_OK && applicationAssociationRegistrationUi)
 		{
-			result = applicationAssociationRegistrationUI->LaunchAdvancedAssociationUI(m_registrationIdentifier.toStdWString().c_str());
+			result = applicationAssociationRegistrationUi->LaunchAdvancedAssociationUI(m_registrationIdentifier.toStdWString().c_str());
 
-			applicationAssociationRegistrationUI->Release();
+			applicationAssociationRegistrationUi->Release();
 
 			if (result == S_OK)
 			{
