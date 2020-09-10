@@ -281,11 +281,6 @@ ApplicationInformation WindowsPlatformIntegration::getApplicationInformation(con
 		RegCloseKey(key);
 	}
 
-	if (information.name.isEmpty())
-	{
-		information.name = fileInformation.baseName();
-	}
-
 	information.name = fileInformation.baseName();
 	information.icon = QFileIconProvider().icon(fileInformation);
 
@@ -341,6 +336,8 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 	associations.removeAt(associations.indexOf(QLatin1String(".")));
 	associations.removeDuplicates();
 
+	applications.reserve(associations.count());
+
 	for (int i = 0; i < associations.count(); ++i)
 	{
 		const QString value(associations.at(i));
@@ -374,6 +371,8 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 
 	associations = legacyAssociations.childKeys();
 	associations.removeAt(associations.indexOf(QLatin1String("MRUList")));
+
+	applications.reserve(applications.count() + associations.count());
 
 	for (int i = 0; i < associations.count(); ++i)
 	{
@@ -425,6 +424,8 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 	}
 
 	m_cleanupTimer = startTimer(5 * 60000);
+
+	applications.squeeze();
 
 	return applications;
 }
