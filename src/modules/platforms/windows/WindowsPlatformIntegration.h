@@ -113,7 +113,6 @@ protected:
 	bool isBrowserRegistered() const;
 
 private:
-	QString m_registrationIdentifier;
 	QString m_applicationFilePath;
 	QSettings m_applicationRegistration;
 	QSettings m_propertiesRegistration;

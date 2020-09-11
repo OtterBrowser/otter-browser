@@ -45,6 +45,8 @@
 #include <QtWinExtras/QWinJumpList>
 #include <QtWinExtras/QWinJumpListCategory>
 
+#define REGISTRATION_IDENTIFIER "OtterBrowser"
+
 namespace Otter
 {
 
@@ -54,10 +56,9 @@ bool WindowsPlatformIntegration::m_is7OrNewer = false;
 bool WindowsPlatformIntegration::m_is10OrNewer = false;
 
 WindowsPlatformIntegration::WindowsPlatformIntegration(QObject *parent) : PlatformIntegration(parent),
-	m_registrationIdentifier(QLatin1String("OtterBrowser")),
 	m_applicationFilePath(QDir::toNativeSeparators(QCoreApplication::applicationFilePath())),
 	m_applicationRegistration(QLatin1String("HKEY_CURRENT_USER\\Software\\RegisteredApplications"), QSettings::NativeFormat),
-	m_propertiesRegistration(QLatin1String("HKEY_CURRENT_USER\\Software\\Classes\\") + m_registrationIdentifier, QSettings::NativeFormat),
+	m_propertiesRegistration(QLatin1String("HKEY_CURRENT_USER\\Software\\Classes\\") + QLatin1String(REGISTRATION_IDENTIFIER), QSettings::NativeFormat),
 	m_registrationPairs({{QLatin1String("http"), ProtocolType}, {QLatin1String("https"), ProtocolType}, {QLatin1String("ftp"), ProtocolType}, {QLatin1String(".htm"), ExtensionType}, {QLatin1String(".html"), ExtensionType}, {QLatin1String(".xhtml"), ExtensionType}}),
 	m_cleanupTimer(0)
 {
@@ -342,7 +343,7 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 	{
 		const QString value(associations.at(i));
 
-		if (m_registrationIdentifier == value)
+		if (value == QLatin1String(REGISTRATION_IDENTIFIER))
 		{
 			continue;
 		}
@@ -453,11 +454,11 @@ bool WindowsPlatformIntegration::setAsDefaultBrowser()
 		}
 		else
 		{
-			registry.setValue(QLatin1String("Classes/") + m_registrationPairs.at(i).first + QLatin1String("/."), m_registrationIdentifier);
+			registry.setValue(QLatin1String("Classes/") + m_registrationPairs.at(i).first + QLatin1String("/."), QLatin1String(REGISTRATION_IDENTIFIER));
 		}
 	}
 
-	registry.setValue(QLatin1String("Clients/StartmenuInternet/."), m_registrationIdentifier);
+	registry.setValue(QLatin1String("Clients/StartmenuInternet/."), QLatin1String(REGISTRATION_IDENTIFIER));
 	registry.sync();
 
 	if (m_is10OrNewer)
@@ -487,7 +488,7 @@ bool WindowsPlatformIntegration::setAsDefaultBrowser()
 
 		if (result == S_OK && applicationAssociationRegistrationUi)
 		{
-			result = applicationAssociationRegistrationUi->LaunchAdvancedAssociationUI(m_registrationIdentifier.toStdWString().c_str());
+			result = applicationAssociationRegistrationUi->LaunchAdvancedAssociationUI(QString(REGISTRATION_IDENTIFIER).toStdWString().c_str());
 
 			applicationAssociationRegistrationUi->Release();
 
@@ -510,7 +511,7 @@ bool WindowsPlatformIntegration::setAsDefaultBrowser()
 
 bool WindowsPlatformIntegration::registerToSystem()
 {
-	m_applicationRegistration.setValue(m_registrationIdentifier, QLatin1String("Software\\Clients\\StartMenuInternet\\OtterBrowser\\Capabilities"));
+	m_applicationRegistration.setValue(QLatin1String(REGISTRATION_IDENTIFIER), QLatin1String("Software\\Clients\\StartMenuInternet\\OtterBrowser\\Capabilities"));
 	m_applicationRegistration.sync();
 
 	m_propertiesRegistration.setValue(QLatin1String("/."), QLatin1String("Otter Browser Document"));
@@ -521,7 +522,7 @@ bool WindowsPlatformIntegration::registerToSystem()
 	m_propertiesRegistration.setValue(QLatin1String("shell/open/command/."), QLatin1String("\"") + m_applicationFilePath + QLatin1String("\" \"%1\""));
 	m_propertiesRegistration.sync();
 
-	QSettings capabilities(QLatin1String("HKEY_CURRENT_USER\\Software\\Clients\\StartMenuInternet\\") + m_registrationIdentifier, QSettings::NativeFormat);
+	QSettings capabilities(QLatin1String("HKEY_CURRENT_USER\\Software\\Clients\\StartMenuInternet\\") + QLatin1String(REGISTRATION_IDENTIFIER), QSettings::NativeFormat);
 	capabilities.setValue(QLatin1String("./"), QLatin1String("Otter Browser"));
 	capabilities.setValue(QLatin1String("Capabilities/ApplicationDescription"), QLatin1String("Web browser controlled by the user, not vice-versa"));
 	capabilities.setValue(QLatin1String("Capabilities/ApplicationIcon"), m_applicationFilePath + QLatin1String(",0"));
@@ -531,15 +532,15 @@ bool WindowsPlatformIntegration::registerToSystem()
 	{
 		if (m_registrationPairs.at(i).second == ProtocolType)
 		{
-			capabilities.setValue(QLatin1String("Capabilities/UrlAssociations/") + m_registrationPairs.at(i).first, m_registrationIdentifier);
+			capabilities.setValue(QLatin1String("Capabilities/UrlAssociations/") + m_registrationPairs.at(i).first, QLatin1String(REGISTRATION_IDENTIFIER));
 		}
 		else
 		{
-			capabilities.setValue(QLatin1String("Capabilities/FileAssociations/") + m_registrationPairs.at(i).first, m_registrationIdentifier);
+			capabilities.setValue(QLatin1String("Capabilities/FileAssociations/") + m_registrationPairs.at(i).first, QLatin1String(REGISTRATION_IDENTIFIER));
 		}
 	}
 
-	capabilities.setValue(QLatin1String("Capabilities/Startmenu/StartMenuInternet"), m_registrationIdentifier);
+	capabilities.setValue(QLatin1String("Capabilities/Startmenu/StartMenuInternet"), QLatin1String(REGISTRATION_IDENTIFIER));
 	capabilities.setValue(QLatin1String("DefaultIcon/."), m_applicationFilePath + QLatin1String(",0"));
 	capabilities.setValue(QLatin1String("InstallInfo/IconsVisible"), 1);
 	// TODO ----------------------------------------------------------------
@@ -562,7 +563,7 @@ bool WindowsPlatformIntegration::registerToSystem()
 
 bool WindowsPlatformIntegration::isBrowserRegistered() const
 {
-	return !(m_applicationRegistration.value(m_registrationIdentifier).isNull() || !m_propertiesRegistration.value(QLatin1String("/shell/open/command/."), {}).toString().contains(m_applicationFilePath));
+	return !(m_applicationRegistration.value(QLatin1String(REGISTRATION_IDENTIFIER)).isNull() || !m_propertiesRegistration.value(QLatin1String("/shell/open/command/."), {}).toString().contains(m_applicationFilePath));
 }
 
 bool WindowsPlatformIntegration::canSetAsDefaultBrowser() const
@@ -572,7 +573,7 @@ bool WindowsPlatformIntegration::canSetAsDefaultBrowser() const
 
 bool WindowsPlatformIntegration::isDefaultBrowser() const
 {
-	if (m_applicationRegistration.value(m_registrationIdentifier).isNull())
+	if (m_applicationRegistration.value(QLatin1String(REGISTRATION_IDENTIFIER)).isNull())
 	{
 		return false;
 	}
@@ -588,16 +589,16 @@ bool WindowsPlatformIntegration::isDefaultBrowser() const
 		}
 		else
 		{
-			isDefault &= (registry.value(QLatin1String("Classes/") + m_registrationPairs.at(i).first + QLatin1String("/."), {}).toString() == m_registrationIdentifier);
+			isDefault &= (registry.value(QLatin1String("Classes/") + m_registrationPairs.at(i).first + QLatin1String("/."), {}).toString() == QLatin1String(REGISTRATION_IDENTIFIER));
 
 			if (m_isVistaOrNewer)
 			{
-				isDefault &= (registry.value(QLatin1String("Microsoft/Windows/CurrentVersion/Explorer/FileExts/") + m_registrationPairs.at(i).first + QLatin1String("/UserChoice/Progid")).toString() == m_registrationIdentifier);
+				isDefault &= (registry.value(QLatin1String("Microsoft/Windows/CurrentVersion/Explorer/FileExts/") + m_registrationPairs.at(i).first + QLatin1String("/UserChoice/Progid")).toString() == QLatin1String(REGISTRATION_IDENTIFIER));
 			}
 		}
 	}
 
-	isDefault &= (registry.value(QLatin1String("Clients/StartmenuInternet/."), {}).toString() == m_registrationIdentifier);
+	isDefault &= (registry.value(QLatin1String("Clients/StartmenuInternet/."), {}).toString() == QLatin1String(REGISTRATION_IDENTIFIER));
 
 	return isDefault;
 }
