@@ -77,12 +77,6 @@ const GUID IID_IApplicationActivationManager = {0x2e941141,0x7f97,0x4756, {0xba,
 const CLSID CLSID_ApplicationActivationManager = {0x45BA127D,0x10A8,0x46EA, {0x8A,0xB7,0x56,0xEA,0x90,0x78,0x94,0x3C}};
 #endif
 
-enum RegistrationType
-{
-	ExtensionType = 0,
-	ProtocolType
-};
-
 class MainWindow;
 
 class WindowsPlatformIntegration final : public PlatformIntegration
@@ -106,6 +100,12 @@ public slots:
 	bool setAsDefaultBrowser() override;
 
 protected:
+	enum RegistrationType
+	{
+		ExtensionType = 0,
+		ProtocolType
+	};
+
 	void timerEvent(QTimerEvent *event) override;
 	ApplicationInformation getApplicationInformation(const QString &command) const;
 	QString getUpdaterBinary() const override;
