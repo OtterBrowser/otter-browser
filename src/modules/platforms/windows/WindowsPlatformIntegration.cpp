@@ -357,7 +357,7 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 
 		if (command.isEmpty())
 		{
-			Console::addMessage(tr("Failed to load a valid application path for MIME type %1: %2").arg(suffix).arg(value), Console::OtherCategory, Console::ErrorLevel);
+			Console::addMessage(tr("Failed to load a valid application path for MIME type %1: %2").arg(mimeType.name()).arg(value), Console::OtherCategory, Console::ErrorLevel);
 
 			continue;
 		}
@@ -396,7 +396,7 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 
 				if (command.isEmpty())
 				{
-					Console::addMessage(tr("Failed to load a valid application path for MIME type %1: %2").arg(suffix).arg(value), Console::OtherCategory, Console::ErrorLevel);
+					Console::addMessage(tr("Failed to load a valid application path for MIME type %1: %2").arg(mimeType.name()).arg(value), Console::OtherCategory, Console::ErrorLevel);
 
 					continue;
 				}
