@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -135,30 +135,29 @@ void UpdateCheckerDialog::handleUpdateCheckFinished(const QVector<UpdateChecker:
 void UpdateCheckerDialog::downloadUpdate()
 {
 	const QPushButton *button(qobject_cast<QPushButton*>(sender()));
+	const QVariant updateInformation(button ? button->property("updateInformation") : QVariant());
 
-	if (button)
+	if (updateInformation.isNull())
 	{
-		const QVariant updateInformation(button->property("updateInformation"));
-
-		if (!updateInformation.isNull())
-		{
-			for (int i = 0; i < m_ui->gridLayout->count(); ++i)
-			{
-				m_ui->gridLayout->itemAt(i)->widget()->setVisible(false);
-				m_ui->gridLayout->itemAt(i)->widget()->deleteLater();
-			}
-
-			m_ui->label->setText(tr("Downloading:"));
-			m_ui->progressBar->setRange(0, 100);
-			m_ui->progressBar->show();
-			m_ui->buttonBox->setDisabled(true);
-
-			Updater *updater(new Updater(updateInformation.value<UpdateChecker::UpdateInformation>(), this));
-
-			connect(updater, &Updater::progress, this, &UpdateCheckerDialog::handleUpdateProgress);
-			connect(updater, &Updater::finished, this, &UpdateCheckerDialog::handleTransferFinished);
-		}
+		return;
 	}
+
+
+	for (int i = 0; i < m_ui->gridLayout->count(); ++i)
+	{
+		m_ui->gridLayout->itemAt(i)->widget()->setVisible(false);
+		m_ui->gridLayout->itemAt(i)->widget()->deleteLater();
+	}
+
+	m_ui->label->setText(tr("Downloading:"));
+	m_ui->progressBar->setRange(0, 100);
+	m_ui->progressBar->show();
+	m_ui->buttonBox->setDisabled(true);
+
+	Updater *updater(new Updater(updateInformation.value<UpdateChecker::UpdateInformation>(), this));
+
+	connect(updater, &Updater::progress, this, &UpdateCheckerDialog::handleUpdateProgress);
+	connect(updater, &Updater::finished, this, &UpdateCheckerDialog::handleTransferFinished);
 }
 
 void UpdateCheckerDialog::handleReadyToInstall()
