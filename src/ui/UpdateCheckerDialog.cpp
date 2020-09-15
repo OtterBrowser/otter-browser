@@ -89,46 +89,46 @@ void UpdateCheckerDialog::handleUpdateCheckFinished(const QVector<UpdateChecker:
 	if (availableUpdates.isEmpty())
 	{
 		m_ui->label->setText(tr("There are no new updates."));
+
+		return;
 	}
-	else
+
+	bool hasMissingPackages(false);
+
+	m_ui->label->setText(tr("Available updates:"));
+
+	for (int i = 0; i < availableUpdates.count(); ++i)
 	{
-		bool hasMissingPackages(false);
+		QPushButton *detailsButton(new QPushButton(tr("Details…"), this));
+		detailsButton->setProperty("detailsUrl", availableUpdates.at(i).detailsUrl);
 
-		m_ui->label->setText(tr("Available updates:"));
+		QPushButton *updateButton(new QPushButton(tr("Download"), this));
 
-		for (int i = 0; i < availableUpdates.count(); ++i)
+		if (availableUpdates.at(i).isAvailable)
 		{
-			QPushButton *detailsButton(new QPushButton(tr("Details…"), this));
-			detailsButton->setProperty("detailsUrl", availableUpdates.at(i).detailsUrl);
+			updateButton->setProperty("updateInformation", QVariant::fromValue<UpdateChecker::UpdateInformation>(availableUpdates.at(i)));
+		}
+		else
+		{
+			hasMissingPackages = true;
 
-			QPushButton *updateButton(new QPushButton(tr("Download"), this));
-
-			if (availableUpdates.at(i).isAvailable)
-			{
-				updateButton->setProperty("updateInformation", QVariant::fromValue<UpdateChecker::UpdateInformation>(availableUpdates.at(i)));
-			}
-			else
-			{
-				hasMissingPackages = true;
-
-				updateButton->setDisabled(true);
-			}
-
-			m_ui->gridLayout->addWidget(new QLabel(tr("Version %1 from %2 channel").arg(availableUpdates.at(i).version, availableUpdates.at(i).channel), this), i, 0);
-			m_ui->gridLayout->addWidget(detailsButton, i, 1);
-			m_ui->gridLayout->addWidget(updateButton, i, 2);
-
-			connect(detailsButton, &QPushButton::clicked, this, &UpdateCheckerDialog::showDetails);
-			connect(updateButton, &QPushButton::clicked, this, &UpdateCheckerDialog::downloadUpdate);
+			updateButton->setDisabled(true);
 		}
 
-		if (hasMissingPackages)
-		{
-			QLabel *packageWarning(new QLabel(tr("Some of the updates do not contain packages for your platform. Try to check for updates later or visit details page for more info."), this));
-			packageWarning->setWordWrap(true);
+		m_ui->gridLayout->addWidget(new QLabel(tr("Version %1 from %2 channel").arg(availableUpdates.at(i).version, availableUpdates.at(i).channel), this), i, 0);
+		m_ui->gridLayout->addWidget(detailsButton, i, 1);
+		m_ui->gridLayout->addWidget(updateButton, i, 2);
 
-			m_ui->gridLayout->addWidget(packageWarning, m_ui->gridLayout->rowCount(), 0, m_ui->gridLayout->columnCount(), 0);
-		}
+		connect(detailsButton, &QPushButton::clicked, this, &UpdateCheckerDialog::showDetails);
+		connect(updateButton, &QPushButton::clicked, this, &UpdateCheckerDialog::downloadUpdate);
+	}
+
+	if (hasMissingPackages)
+	{
+		QLabel *packageWarning(new QLabel(tr("Some of the updates do not contain packages for your platform. Try to check for updates later or visit details page for more info."), this));
+		packageWarning->setWordWrap(true);
+
+		m_ui->gridLayout->addWidget(packageWarning, m_ui->gridLayout->rowCount(), 0, m_ui->gridLayout->columnCount(), 0);
 	}
 }
 
