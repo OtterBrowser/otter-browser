@@ -68,7 +68,7 @@ def deploy_locale(source_path, target_path):
 	for file in glob.glob(os.path.join(source_path, 'resources', 'translations', '*.qm')):
 		shutil.copy(file, target_locale_path)
 
-def deploy_linux(qt_path, source_path, build_path, target_path, extra_libs, disable_tools_download):
+def deploy_linux(qt_path, source_path, build_path, target_path, extra_libs, preserve_deployment_directory, disable_tools_download):
 	tools_path = None
 
 	if not disable_tools_download:
@@ -117,12 +117,14 @@ def deploy_linux(qt_path, source_path, build_path, target_path, extra_libs, disa
 			os.unlink(file)
 
 	run_command([appimage_tool_command, appimage_path, os.path.join(target_path, 'otter-browser-x86_64.AppImage')])
-	shutil.rmtree(appimage_path)
 
-def deploy_macos(qt_path, source_path, build_path, target_path, extra_libs):
+	if not preserve_deployment_directory:
+		shutil.rmtree(appimage_path)
+
+def deploy_macos(qt_path, source_path, build_path, target_path, extra_libs, preserve_deployment_directory):
 	pass
 
-def deploy_windows(qt_path, source_path, build_path, target_path, extra_libs):
+def deploy_windows(qt_path, source_path, build_path, target_path, extra_libs, preserve_deployment_directory):
 	windeployqt_command = os.path.join(qt_path, r'bin\windeployqt.exe')
 	seven_z_command = r'C:\Program Files\7-Zip\7z.exe'
 	inno_setup_command = r'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
@@ -190,7 +192,9 @@ def deploy_windows(qt_path, source_path, build_path, target_path, extra_libs):
 		file.write('--portable')
 
 	run_command(['powershell', 'Compress-Archive', '"{}"'.format(target_release_path), '"{}.zip"'.format(os.path.join(target_path, release_name))])
-	shutil.rmtree(target_release_path)
+
+	if not preserve_deployment_directory:
+		shutil.rmtree(target_release_path)
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Otter Browser deployment tool.')
@@ -200,6 +204,7 @@ if __name__ == '__main__':
 	parser.add_argument('--qt-path', help='Path to the Qt directory', default=os.getenv('QTDIR', ''))
 	parser.add_argument('--extra-libs', help='Paths to the extra libraries to include', default=[], nargs='*')
 	parser.add_argument('--disable-tools-download', help='Disable download of missing deployment tools', action='store_true')
+	parser.add_argument('--preserve-deployment-directory', help='Preserve deployment directory after creating packages', action='store_true')
 
 	arguments = parser.parse_args()
 
@@ -207,8 +212,8 @@ if __name__ == '__main__':
 		sys.exit('error: the following arguments are required: --qt-path')
 
 	if platform.system() == 'Linux':
-		deploy_linux(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path, arguments.extra_libs, arguments.disable_tools_download)
+		deploy_linux(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path, arguments.extra_libs, arguments.preserve_deployment_directory, arguments.disable_tools_download)
 	elif platform.system() == 'Darwin':
-		deploy_macos(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path, arguments.extra_libs)
+		deploy_macos(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path, arguments.extra_libs, arguments.preserve_deployment_directory)
 	elif platform.system() == 'Windows':
-		deploy_windows(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path, arguments.extra_libs)
+		deploy_windows(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path, arguments.extra_libs, arguments.preserve_deployment_directory)
