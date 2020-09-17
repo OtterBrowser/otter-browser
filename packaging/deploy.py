@@ -68,10 +68,10 @@ def deploy_locale(source_path, target_path):
 	for file in glob.glob(os.path.join(source_path, 'resources', 'translations', '*.qm')):
 		shutil.copy(file, target_locale_path)
 
-def deploy_linux(qt_path, source_path, build_path, target_path, extra_libs, preserve_deployment_directory, disable_tools_download):
+def deploy_linux(arguments):
 	tools_path = None
 
-	if not disable_tools_download:
+	if not arguments.disable_tools_download:
 		tools_path = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'appimage-tools')
 
 		if not os.path.isdir(tools_path):
@@ -82,12 +82,12 @@ def deploy_linux(qt_path, source_path, build_path, target_path, extra_libs, pres
 
 	get_executable('linuxdeploy-plugin-qt-x86_64.AppImage', 'https://bintray.com/qtproject/linuxdeploy-mirror/download_file?file_path=2020-06-03%2Flinuxdeploy-plugin-qt-x86_64.AppImage', tools_path)
 
-	appimage_path = os.path.join(target_path, 'otter-browser')
+	appimage_path = os.path.join(arguments.target_path, 'otter-browser')
 
 	make_path(appimage_path, ['usr', 'share', 'applications'])
 	make_path(appimage_path, ['usr', 'share', 'icons', 'hicolor'])
 	make_path(appimage_path, ['usr', 'share', 'otter-browser'])
-	shutil.copy(os.path.join(source_path, 'otter-browser.desktop'), os.path.join(appimage_path, 'usr/share/applications/otter-browser.desktop'))
+	shutil.copy(os.path.join(arguments.source_path, 'otter-browser.desktop'), os.path.join(appimage_path, 'usr/share/applications/otter-browser.desktop'))
 
 	icons_path = os.path.join(appimage_path, 'usr/share/icons/hicolor')
 	icons = [16, 32, 48, 64, 128, 256, 'scalable']
@@ -97,12 +97,12 @@ def deploy_linux(qt_path, source_path, build_path, target_path, extra_libs, pres
 		icon_directory = '{}x{}'.format(size, size) if is_raster else size
 
 		make_path(icons_path, [icon_directory, 'apps'])
-		shutil.copy(os.path.join(source_path, 'resources/icons', 'otter-browser-{}.png'.format(size) if is_raster else 'otter-browser.svg'), os.path.join(icons_path, icon_directory, 'apps', 'otter-browser.png' if is_raster else 'otter-browser.svg'))
+		shutil.copy(os.path.join(arguments.source_path, 'resources/icons', 'otter-browser-{}.png'.format(size) if is_raster else 'otter-browser.svg'), os.path.join(icons_path, icon_directory, 'apps', 'otter-browser.png' if is_raster else 'otter-browser.svg'))
 
-	deploy_locale(source_path, os.path.join(appimage_path, 'usr/share/otter-browser'))
-	os.putenv('LD_LIBRARY_PATH', '{}:{}'.format(os.path.join(qt_path, 'lib'), os.getenv('LD_LIBRARY_PATH')))
-	os.putenv('QMAKE', os.path.join(qt_path, 'bin/qmake'))
-	run_command([appdir_deploy_command, '--plugin=qt', '--executable={}'.format(os.path.join(build_path, 'otter-browser')), '--appdir={}'.format(appimage_path)])
+	deploy_locale(arguments.source_path, os.path.join(appimage_path, 'usr/share/otter-browser'))
+	os.putenv('LD_LIBRARY_PATH', '{}:{}'.format(os.path.join(arguments.qt_path, 'lib'), os.getenv('LD_LIBRARY_PATH')))
+	os.putenv('QMAKE', os.path.join(arguments.qt_path, 'bin/qmake'))
+	run_command([appdir_deploy_command, '--plugin=qt', '--executable={}'.format(os.path.join(arguments.build_path, 'otter-browser')), '--appdir={}'.format(appimage_path)])
 	shutil.rmtree(os.path.join(appimage_path, 'usr/share/doc/'), ignore_errors=True)
 
 	libs_path = os.path.join(appimage_path, 'usr/lib')
@@ -113,19 +113,19 @@ def deploy_linux(qt_path, source_path, build_path, target_path, extra_libs, pres
 			os.unlink(file)
 
 	for file in glob.glob(os.path.join(libs_path, 'libicu*.*')):
-		if not os.path.exists(os.path.join(qt_path, 'lib', os.path.basename(file))):
+		if not os.path.exists(os.path.join(arguments.qt_path, 'lib', os.path.basename(file))):
 			os.unlink(file)
 
-	run_command([appimage_tool_command, appimage_path, os.path.join(target_path, 'otter-browser-x86_64.AppImage')])
+	run_command([appimage_tool_command, appimage_path, os.path.join(arguments.target_path, 'otter-browser-x86_64.AppImage')])
 
-	if not preserve_deployment_directory:
+	if not arguments.preserve_deployment_directory:
 		shutil.rmtree(appimage_path)
 
-def deploy_macos(qt_path, source_path, build_path, target_path, extra_libs, preserve_deployment_directory):
+def deploy_macos(arguments):
 	pass
 
-def deploy_windows(qt_path, source_path, build_path, target_path, extra_libs, preserve_deployment_directory):
-	windeployqt_command = os.path.join(qt_path, r'bin\windeployqt.exe')
+def deploy_windows(arguments):
+	windeployqt_command = os.path.join(arguments.qt_path, r'bin\windeployqt.exe')
 	seven_z_command = r'C:\Program Files\7-Zip\7z.exe'
 	inno_setup_command = r'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
 
@@ -138,22 +138,22 @@ def deploy_windows(qt_path, source_path, build_path, target_path, extra_libs, pr
 	if not os.path.isfile(inno_setup_command):
 		inno_setup_command = get_executable('ISCC.exe')
 
-	target_installer_path = os.path.join(target_path, 'input')
+	target_installer_path = os.path.join(arguments.target_path, 'input')
 
 	os.mkdir(target_installer_path)
-	shutil.copy(os.path.join(build_path, 'otter-browser.exe'), target_installer_path)
-	shutil.copy(os.path.join(source_path, 'COPYING'), target_installer_path)
-	deploy_locale(source_path, os.path.join(target_path, 'input'))
-	run_command([escape_windows_executable_path(windeployqt_command), os.path.join(target_path, r'input\otter-browser.exe')])
+	shutil.copy(os.path.join(arguments.build_path, 'otter-browser.exe'), target_installer_path)
+	shutil.copy(os.path.join(arguments.source_path, 'COPYING'), target_installer_path)
+	deploy_locale(arguments.source_path, os.path.join(arguments.target_path, 'input'))
+	run_command([escape_windows_executable_path(windeployqt_command), os.path.join(arguments.target_path, r'input\otter-browser.exe')])
 
-	dlls_path = os.path.join(qt_path, 'bin')
+	dlls_path = os.path.join(arguments.qt_path, 'bin')
 	extra_dlls = ['libxml2*.dll', 'libxslt*.dll']
 
 	for pattern in extra_dlls:
 		for file in glob.glob(os.path.join(dlls_path, pattern)):
 			shutil.copy(file, target_installer_path)
 
-	for pattern in extra_libs:
+	for pattern in arguments.extra_libs:
 		matches = glob.glob(pattern)
 
 		if len(matches) == 0:
@@ -167,33 +167,33 @@ def deploy_windows(qt_path, source_path, build_path, target_path, extra_libs, pr
 	for directory in redundant_plugins:
 		shutil.rmtree(os.path.join(target_installer_path, directory), ignore_errors=True)
 
-	inno_setup_arguments = '/DOtterWorkingDir="{}"'.format(target_path)
+	inno_setup_arguments = '/DOtterWorkingDir="{}"'.format(arguments.target_path)
 
-	if '_64' in qt_path[-5:]:
+	if '_64' in arguments.qt_path[-5:]:
 		inno_setup_arguments += ' /DOtterWin64=1'
 
-	os.system('{} {} "{}"'.format(escape_windows_executable_path(inno_setup_command), inno_setup_arguments, os.path.join(source_path, r'packaging\otter-browser.iss')))
+	os.system('{} {} "{}"'.format(escape_windows_executable_path(inno_setup_command), inno_setup_arguments, os.path.join(arguments.source_path, r'packaging\otter-browser.iss')))
 
 	release_name = 'otter-browser'
 
-	for file in glob.glob(os.path.join(target_path, '*.exe')):
+	for file in glob.glob(os.path.join(arguments.target_path, '*.exe')):
 		release_name = os.path.splitext(os.path.basename(file))[0].replace('-setup', '')
 
 		break
 
-	target_release_path = os.path.join(target_path, release_name)
+	target_release_path = os.path.join(arguments.target_path, release_name)
 
 	os.rename(target_installer_path, target_release_path)
 
 	if seven_z_command != None:
-		run_command([seven_z_command, 'a', '{}.7z'.format(os.path.join(target_path, release_name)), target_release_path])
+		run_command([seven_z_command, 'a', '{}.7z'.format(os.path.join(arguments.target_path, release_name)), target_release_path])
 
 	with open(os.path.join(target_release_path, 'arguments.txt'), 'w') as file:
 		file.write('--portable')
 
-	run_command(['powershell', 'Compress-Archive', '"{}"'.format(target_release_path), '"{}.zip"'.format(os.path.join(target_path, release_name))])
+	run_command(['powershell', 'Compress-Archive', '"{}"'.format(target_release_path), '"{}.zip"'.format(os.path.join(arguments.target_path, release_name))])
 
-	if not preserve_deployment_directory:
+	if not arguments.preserve_deployment_directory:
 		shutil.rmtree(target_release_path)
 
 if __name__ == '__main__':
@@ -212,8 +212,8 @@ if __name__ == '__main__':
 		sys.exit('error: the following arguments are required: --qt-path')
 
 	if platform.system() == 'Linux':
-		deploy_linux(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path, arguments.extra_libs, arguments.preserve_deployment_directory, arguments.disable_tools_download)
+		deploy_linux(arguments)
 	elif platform.system() == 'Darwin':
-		deploy_macos(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path, arguments.extra_libs, arguments.preserve_deployment_directory)
+		deploy_macos(arguments)
 	elif platform.system() == 'Windows':
-		deploy_windows(arguments.qt_path, arguments.source_path, arguments.build_path, arguments.target_path, arguments.extra_libs, arguments.preserve_deployment_directory)
+		deploy_windows(arguments)
