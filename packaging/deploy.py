@@ -185,11 +185,12 @@ def deploy_windows(arguments):
 
 	os.rename(target_installer_path, target_release_path)
 
+	if arguments.enable_portable:
+		with open(os.path.join(target_release_path, 'arguments.txt'), 'w') as file:
+			file.write('--portable')
+
 	if seven_z_command != None:
 		run_command([seven_z_command, 'a', '{}.7z'.format(os.path.join(arguments.target_path, release_name)), target_release_path])
-
-	with open(os.path.join(target_release_path, 'arguments.txt'), 'w') as file:
-		file.write('--portable')
 
 	run_command(['powershell', 'Compress-Archive', '"{}"'.format(target_release_path), '"{}.zip"'.format(os.path.join(arguments.target_path, release_name))])
 
@@ -203,6 +204,7 @@ if __name__ == '__main__':
 	parser.add_argument('--target-path', help='Path to the output directory', default=os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), '../output')))
 	parser.add_argument('--qt-path', help='Path to the Qt directory', default=os.getenv('QTDIR', ''))
 	parser.add_argument('--extra-libs', help='Paths to the extra libraries to include', default=[], nargs='*')
+	parser.add_argument('--enable-portable', help='Force portable mode', action='store_true')
 	parser.add_argument('--disable-tools-download', help='Disable download of missing deployment tools', action='store_true')
 	parser.add_argument('--preserve-deployment-directory', help='Preserve deployment directory after creating packages', action='store_true')
 
