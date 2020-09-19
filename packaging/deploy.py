@@ -122,7 +122,15 @@ def deploy_linux(arguments):
 		shutil.rmtree(appimage_path)
 
 def deploy_macos(arguments):
-	pass
+	macdeployqt_command = os.path.join(arguments.qt_path, 'bin/macdeployqt')
+
+	if not os.path.isfile(macdeployqt_command):
+		sys.exit('error: failed to locate "{}"'.format(macdeployqt_command))
+
+	app_path = os.path.join(arguments.target_path, 'OtterBrowser.app')
+
+	shutil.copytree(os.path.join(arguments.build_path, 'Otter Browser.app'), app_path)
+	run_command([macdeployqt_command, app_path])
 
 def deploy_windows(arguments):
 	windeployqt_command = os.path.join(arguments.qt_path, r'bin\windeployqt.exe')
