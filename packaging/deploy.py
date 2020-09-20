@@ -131,6 +131,7 @@ def deploy_macos(arguments):
 
 	shutil.copytree(os.path.join(arguments.build_path, 'Otter Browser.app'), app_path)
 	run_command([macdeployqt_command, app_path])
+	run_command(['zip', '-r', 'OtterBrowser.zip', app_path])
 
 def deploy_windows(arguments):
 	windeployqt_command = os.path.join(arguments.qt_path, r'bin\windeployqt.exe')
