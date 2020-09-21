@@ -206,6 +206,8 @@ def deploy_windows(arguments):
 	if not arguments.preserve_deployment_directory:
 		shutil.rmtree(target_release_path)
 
+	shutil.copy(os.path.join(arguments.build_path, 'otter-browser.pdb'), os.path.join(arguments.target_path, release_name + '.pdb'))
+
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Otter Browser deployment tool.')
 	parser.add_argument('--build-path', help='Path to the build directory', default=os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), '../build')))
