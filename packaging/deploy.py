@@ -206,13 +206,19 @@ def deploy_windows(arguments):
 	if not arguments.preserve_deployment_directory:
 		shutil.rmtree(target_release_path)
 
-	shutil.copy(os.path.join(arguments.build_path, 'otter-browser.pdb'), os.path.join(arguments.target_path, release_name + '.pdb'))
+	debug_files_path = arguments.debug_path
+
+	if debug_files_path == '':
+		debug_files_path = arguments.target_path
+
+	shutil.copy(os.path.join(arguments.build_path, 'otter-browser.pdb'), os.path.join(debug_files_path, release_name + '.pdb'))
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Otter Browser deployment tool.')
 	parser.add_argument('--build-path', help='Path to the build directory', default=os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), '../build')))
 	parser.add_argument('--source-path', help='Path to the source directory', default=os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), '..')))
 	parser.add_argument('--target-path', help='Path to the output directory', default=os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), '../output')))
+	parser.add_argument('--debug-path', help='Path to the debug files directory', default='')
 	parser.add_argument('--qt-path', help='Path to the Qt directory', default=os.getenv('QTDIR', ''))
 	parser.add_argument('--extra-libs', help='Paths to the extra libraries to include', default=[], nargs='*')
 	parser.add_argument('--enable-portable', help='Force portable mode', action='store_true')
