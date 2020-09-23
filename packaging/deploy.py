@@ -141,11 +141,11 @@ def deploy_windows(arguments):
 	if not os.path.isfile(windeployqt_command):
 		sys.exit('error: failed to locate "{}"'.format(windeployqt_command))
 
-	if not os.path.isfile(seven_z_command):
-		seven_z_command = get_executable('7z.exe', is_optional=True)
+	release_name = 'otter-browser'
+	package_formats = ['iss', 'zip', '7z']
 
-	if not os.path.isfile(inno_setup_command):
-		inno_setup_command = get_executable('ISCC.exe')
+	if arguments.package_formats != 'default':
+		package_formats = arguments.package_formats.split(',')
 
 	target_installer_path = os.path.join(arguments.target_path, 'input')
 
@@ -176,19 +176,21 @@ def deploy_windows(arguments):
 	for directory in redundant_plugins:
 		shutil.rmtree(os.path.join(target_installer_path, directory), ignore_errors=True)
 
-	inno_setup_arguments = '/DOtterWorkingDir="{}"'.format(arguments.target_path)
+	if 'iss' in package_formats:
+		if not os.path.isfile(inno_setup_command):
+			inno_setup_command = get_executable('ISCC.exe')
 
-	if '_64' in arguments.qt_path[-5:]:
-		inno_setup_arguments += ' /DOtterWin64=1'
+		inno_setup_arguments = '/DOtterWorkingDir="{}"'.format(arguments.target_path)
 
-	os.system('{} {} "{}"'.format(escape_windows_executable_path(inno_setup_command), inno_setup_arguments, os.path.join(arguments.source_path, r'packaging\otter-browser.iss')))
+		if '_64' in arguments.qt_path[-5:]:
+			inno_setup_arguments += ' /DOtterWin64=1'
 
-	release_name = 'otter-browser'
+		os.system('{} {} "{}"'.format(escape_windows_executable_path(inno_setup_command), inno_setup_arguments, os.path.join(arguments.source_path, r'packaging\otter-browser.iss')))
 
-	for file in glob.glob(os.path.join(arguments.target_path, '*.exe')):
-		release_name = os.path.splitext(os.path.basename(file))[0].replace('-setup', '')
+		for file in glob.glob(os.path.join(arguments.target_path, '*.exe')):
+			release_name = os.path.splitext(os.path.basename(file))[0].replace('-setup', '')
 
-		break
+			break
 
 	target_release_path = os.path.join(arguments.target_path, release_name)
 
@@ -198,10 +200,15 @@ def deploy_windows(arguments):
 		with open(os.path.join(target_release_path, 'arguments.txt'), 'w') as file:
 			file.write('--portable')
 
-	if seven_z_command != None:
-		run_command([seven_z_command, 'a', '{}.7z'.format(os.path.join(arguments.target_path, release_name)), target_release_path])
+	if '7z' in package_formats:
+		if not os.path.isfile(seven_z_command):
+			seven_z_command = get_executable('7z.exe', is_optional=True)
 
-	run_command(['powershell', 'Compress-Archive', '"{}"'.format(target_release_path), '"{}.zip"'.format(os.path.join(arguments.target_path, release_name))])
+		if seven_z_command != None:
+			run_command([seven_z_command, 'a', '{}.7z'.format(os.path.join(arguments.target_path, release_name)), target_release_path])
+
+	if 'zip' in package_formats:
+		run_command(['powershell', 'Compress-Archive', '"{}"'.format(target_release_path), '"{}.zip"'.format(os.path.join(arguments.target_path, release_name))])
 
 	if not arguments.preserve_deployment_directory:
 		shutil.rmtree(target_release_path)
@@ -220,6 +227,7 @@ if __name__ == '__main__':
 	parser.add_argument('--target-path', help='Path to the output directory', default=os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), '../output')))
 	parser.add_argument('--debug-path', help='Path to the debug files directory', default='')
 	parser.add_argument('--qt-path', help='Path to the Qt directory', default=os.getenv('QTDIR', ''))
+	parser.add_argument('--package-formats', help='Comma separated list of package formats to create', default='default')
 	parser.add_argument('--extra-libs', help='Paths to the extra libraries to include', default=[], nargs='*')
 	parser.add_argument('--enable-portable', help='Force portable mode', action='store_true')
 	parser.add_argument('--disable-tools-download', help='Disable download of missing deployment tools', action='store_true')
