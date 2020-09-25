@@ -206,10 +206,10 @@ def deploy_windows(arguments):
 			seven_z_command = get_executable('7z.exe', is_optional=True)
 
 		if seven_z_command != None:
-			run_command([seven_z_command, 'a', '{}.7z'.format(os.path.join(arguments.target_path, release_name)), target_release_path])
+			run_command([seven_z_command, 'a', '{}.7z'.format(target_release_path), target_release_path])
 
 	if 'zip' in package_formats:
-		run_command(['powershell', 'Compress-Archive', '"{}"'.format(target_release_path), '"{}.zip"'.format(os.path.join(arguments.target_path, release_name))])
+		run_command(['powershell', 'Compress-Archive', '"{}"'.format(target_release_path), '"{}.zip"'.format(target_release_path)])
 
 	if not arguments.preserve_deployment_directory:
 		shutil.rmtree(target_release_path)
