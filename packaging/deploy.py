@@ -193,11 +193,6 @@ def deploy_windows(arguments):
 
 		os.system('{} {} "{}"'.format(escape_windows_executable_path(inno_setup_command), inno_setup_arguments, os.path.join(arguments.source_path, r'packaging\otter-browser.iss')))
 
-		for file in glob.glob(os.path.join(arguments.target_path, '*.exe')):
-			release_name = os.path.splitext(os.path.basename(file))[0].replace('-setup', '')
-
-			break
-
 	target_release_path = os.path.join(arguments.target_path, release_name)
 
 	os.rename(target_installer_path, target_release_path)
