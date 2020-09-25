@@ -219,7 +219,10 @@ def deploy_windows(arguments):
 	if debug_files_path == '':
 		debug_files_path = arguments.target_path
 
-	shutil.copy(os.path.join(arguments.build_path, 'otter-browser.pdb'), os.path.join(debug_files_path, release_name + '.pdb'))
+	debug_file_path = os.path.join(arguments.build_path, 'otter-browser.pdb')
+
+	if os.path.isfile(debug_file_path):
+		shutil.copy(debug_file_path, os.path.join(debug_files_path, release_name + '.pdb'))
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Otter Browser deployment tool.')
