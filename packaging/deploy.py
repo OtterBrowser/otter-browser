@@ -150,6 +150,9 @@ def deploy_windows(arguments):
 	release_name = 'otter-browser'
 	package_formats = ['iss', 'zip', '7z']
 
+	if arguments.release_name != '':
+		release_name = release_name + '-' + arguments.release_name
+
 	if arguments.package_formats != 'default':
 		package_formats = arguments.package_formats.split(',')
 
@@ -231,6 +234,7 @@ if __name__ == '__main__':
 	parser.add_argument('--target-path', help='Path to the output directory', default=os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), '../output')))
 	parser.add_argument('--debug-path', help='Path to the debug files directory', default='')
 	parser.add_argument('--qt-path', help='Path to the Qt directory', default=os.getenv('QTDIR', ''))
+	parser.add_argument('--release-name', help='Release name', default='')
 	parser.add_argument('--package-formats', help='Comma separated list of package formats to create', default='default')
 	parser.add_argument('--extra-libs', help='Paths to the extra libraries to include', default=[], nargs='*')
 	parser.add_argument('--enable-portable', help='Force portable mode', action='store_true')
