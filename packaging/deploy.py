@@ -147,7 +147,8 @@ def deploy_windows(arguments):
 	if not os.path.isfile(windeployqt_command):
 		sys.exit('error: failed to locate "{}"'.format(windeployqt_command))
 
-	release_name = 'otter-browser'
+	is_64bit = '_64' in arguments.qt_path[-5:]
+	release_name = 'otter-browser-win' + ('64' if is_64bit else '32')
 	package_formats = ['iss', 'zip', '7z']
 
 	if arguments.release_name != '':
@@ -191,7 +192,7 @@ def deploy_windows(arguments):
 
 		inno_setup_arguments = '/DOtterWorkingDir="{}"'.format(arguments.target_path)
 
-		if '_64' in arguments.qt_path[-5:]:
+		if is_64bit:
 			inno_setup_arguments += ' /DOtterWin64=1'
 
 		os.system('{} {} "{}"'.format(escape_windows_executable_path(inno_setup_command), inno_setup_arguments, os.path.join(arguments.source_path, r'packaging\otter-browser.iss')))
