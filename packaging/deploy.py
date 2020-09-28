@@ -133,11 +133,21 @@ def deploy_macos(arguments):
 	if not os.path.isfile(macdeployqt_command):
 		sys.exit('error: failed to locate "{}"'.format(macdeployqt_command))
 
+	package_formats = ['zip']
+
+	if arguments.package_formats != 'default':
+		package_formats = arguments.package_formats.split(',')
+
 	app_path = os.path.join(arguments.target_path, 'OtterBrowser.app')
 
 	shutil.copytree(os.path.join(arguments.build_path, 'Otter Browser.app'), app_path)
 	run_command([macdeployqt_command, app_path])
-	run_command(['zip', '-r', 'OtterBrowser.zip', app_path])
+
+	if 'zip' in package_formats:
+		run_command(['zip', '-r', 'OtterBrowser.zip', app_path])
+
+	if not arguments.preserve_deployment_directory:
+		shutil.rmtree(app_path)
 
 def deploy_windows(arguments):
 	windeployqt_command = os.path.join(arguments.qt_path, r'bin\windeployqt.exe')
