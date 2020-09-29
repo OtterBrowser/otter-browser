@@ -122,7 +122,7 @@ def deploy_linux(arguments):
 			if not os.path.exists(os.path.join(arguments.qt_path, 'lib', os.path.basename(file))):
 				os.unlink(file)
 
-		run_command([appimage_tool_command, appimage_path, os.path.join(arguments.target_path, 'otter-browser-x86_64.AppImage')])
+		run_command([appimage_tool_command, appimage_path, os.path.join(arguments.target_path, 'otter-browser' + ('' if (arguments.release_name == '') else '-' + arguments.release_name) + '-x86_64.AppImage')])
 
 	if not arguments.preserve_deployment_directory:
 		shutil.rmtree(appimage_path)
@@ -158,11 +158,8 @@ def deploy_windows(arguments):
 		sys.exit('error: failed to locate "{}"'.format(windeployqt_command))
 
 	is_64bit = '_64' in arguments.qt_path[-5:]
-	release_name = 'otter-browser-win' + ('64' if is_64bit else '32')
+	release_name = 'otter-browser-win' + ('64' if is_64bit else '32') + ('' if (arguments.release_name == '') else '-' + arguments.release_name)
 	package_formats = ['iss', 'zip', '7z']
-
-	if arguments.release_name != '':
-		release_name = release_name + '-' + arguments.release_name
 
 	if arguments.package_formats != 'default':
 		package_formats = arguments.package_formats.split(',')
