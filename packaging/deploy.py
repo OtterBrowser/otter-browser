@@ -144,7 +144,7 @@ def deploy_macos(arguments):
 	run_command([macdeployqt_command, app_path])
 
 	if 'zip' in package_formats:
-		run_command(['zip', '-r', 'OtterBrowser.zip', app_path])
+		run_command(['zip', '-r', 'otter-browser' + ('' if (arguments.release_name == '') else '-' + arguments.release_name) + '.zip', app_path])
 
 	if not arguments.preserve_deployment_directory:
 		shutil.rmtree(app_path)
