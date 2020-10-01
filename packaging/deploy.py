@@ -82,45 +82,46 @@ def deploy_linux(arguments):
 	if arguments.package_formats != 'default':
 		package_formats = arguments.package_formats.split(',')
 
+	appdir_deploy_command = get_executable('linuxdeploy-x86_64.AppImage', 'https://bintray.com/qtproject/linuxdeploy-mirror/download_file?file_path=2020-06-03%2Flinuxdeploy-x86_64.AppImage', tools_path)
+
+	get_executable('linuxdeploy-plugin-qt-x86_64.AppImage', 'https://bintray.com/qtproject/linuxdeploy-mirror/download_file?file_path=2020-06-03%2Flinuxdeploy-plugin-qt-x86_64.AppImage', tools_path)
+
+	appimage_path = os.path.join(arguments.target_path, 'otter-browser')
+
+	make_path(appimage_path, ['usr', 'share', 'applications'])
+	make_path(appimage_path, ['usr', 'share', 'icons', 'hicolor'])
+	make_path(appimage_path, ['usr', 'share', 'otter-browser'])
+	shutil.copy(os.path.join(arguments.source_path, 'otter-browser.desktop'), os.path.join(appimage_path, 'usr/share/applications/otter-browser.desktop'))
+
+	icons_path = os.path.join(appimage_path, 'usr/share/icons/hicolor')
+	icons = [16, 32, 48, 64, 128, 256, 'scalable']
+
+	for size in icons:
+		is_raster = isinstance(size, int)
+		icon_directory = '{}x{}'.format(size, size) if is_raster else size
+
+		make_path(icons_path, [icon_directory, 'apps'])
+		shutil.copy(os.path.join(arguments.source_path, 'resources/icons', 'otter-browser-{}.png'.format(size) if is_raster else 'otter-browser.svg'), os.path.join(icons_path, icon_directory, 'apps', 'otter-browser.png' if is_raster else 'otter-browser.svg'))
+
+	deploy_locale(arguments.source_path, os.path.join(appimage_path, 'usr/share/otter-browser'))
+	os.putenv('LD_LIBRARY_PATH', '{}:{}'.format(os.path.join(arguments.qt_path, 'lib'), os.getenv('LD_LIBRARY_PATH')))
+	os.putenv('QMAKE', os.path.join(arguments.qt_path, 'bin/qmake'))
+	run_command([appdir_deploy_command, '--plugin=qt', '--executable={}'.format(os.path.join(arguments.build_path, 'otter-browser')), '--appdir={}'.format(appimage_path)])
+	shutil.rmtree(os.path.join(appimage_path, 'usr/share/doc/'), ignore_errors=True)
+
+	libs_path = os.path.join(appimage_path, 'usr/lib')
+	redundant_libs = ['libgst*-1.0.*', 'libFLAC.*', 'libogg.*', 'libvorbis*.*', 'libmount.*', 'libpulse*.*', 'libsystemd.*', 'libxml2.*']
+
+	for pattern in redundant_libs:
+		for file in glob.glob(os.path.join(libs_path, pattern)):
+			os.unlink(file)
+
+	for file in glob.glob(os.path.join(libs_path, 'libicu*.*')):
+		if not os.path.exists(os.path.join(arguments.qt_path, 'lib', os.path.basename(file))):
+			os.unlink(file)
+
 	if 'appimage' in package_formats:
-		appdir_deploy_command = get_executable('linuxdeploy-x86_64.AppImage', 'https://bintray.com/qtproject/linuxdeploy-mirror/download_file?file_path=2020-06-03%2Flinuxdeploy-x86_64.AppImage', tools_path)
 		appimage_tool_command = get_executable('appimagetool-x86_64.AppImage', 'https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage', tools_path)
-
-		get_executable('linuxdeploy-plugin-qt-x86_64.AppImage', 'https://bintray.com/qtproject/linuxdeploy-mirror/download_file?file_path=2020-06-03%2Flinuxdeploy-plugin-qt-x86_64.AppImage', tools_path)
-
-		appimage_path = os.path.join(arguments.target_path, 'otter-browser')
-
-		make_path(appimage_path, ['usr', 'share', 'applications'])
-		make_path(appimage_path, ['usr', 'share', 'icons', 'hicolor'])
-		make_path(appimage_path, ['usr', 'share', 'otter-browser'])
-		shutil.copy(os.path.join(arguments.source_path, 'otter-browser.desktop'), os.path.join(appimage_path, 'usr/share/applications/otter-browser.desktop'))
-
-		icons_path = os.path.join(appimage_path, 'usr/share/icons/hicolor')
-		icons = [16, 32, 48, 64, 128, 256, 'scalable']
-
-		for size in icons:
-			is_raster = isinstance(size, int)
-			icon_directory = '{}x{}'.format(size, size) if is_raster else size
-
-			make_path(icons_path, [icon_directory, 'apps'])
-			shutil.copy(os.path.join(arguments.source_path, 'resources/icons', 'otter-browser-{}.png'.format(size) if is_raster else 'otter-browser.svg'), os.path.join(icons_path, icon_directory, 'apps', 'otter-browser.png' if is_raster else 'otter-browser.svg'))
-
-		deploy_locale(arguments.source_path, os.path.join(appimage_path, 'usr/share/otter-browser'))
-		os.putenv('LD_LIBRARY_PATH', '{}:{}'.format(os.path.join(arguments.qt_path, 'lib'), os.getenv('LD_LIBRARY_PATH')))
-		os.putenv('QMAKE', os.path.join(arguments.qt_path, 'bin/qmake'))
-		run_command([appdir_deploy_command, '--plugin=qt', '--executable={}'.format(os.path.join(arguments.build_path, 'otter-browser')), '--appdir={}'.format(appimage_path)])
-		shutil.rmtree(os.path.join(appimage_path, 'usr/share/doc/'), ignore_errors=True)
-
-		libs_path = os.path.join(appimage_path, 'usr/lib')
-		redundant_libs = ['libgst*-1.0.*', 'libFLAC.*', 'libogg.*', 'libvorbis*.*', 'libmount.*', 'libpulse*.*', 'libsystemd.*', 'libxml2.*']
-
-		for pattern in redundant_libs:
-			for file in glob.glob(os.path.join(libs_path, pattern)):
-				os.unlink(file)
-
-		for file in glob.glob(os.path.join(libs_path, 'libicu*.*')):
-			if not os.path.exists(os.path.join(arguments.qt_path, 'lib', os.path.basename(file))):
-				os.unlink(file)
 
 		run_command([appimage_tool_command, appimage_path, os.path.join(arguments.target_path, 'otter-browser' + ('' if (arguments.release_name == '') else '-' + arguments.release_name) + '-x86_64.AppImage')])
 
