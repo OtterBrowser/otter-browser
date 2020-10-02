@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -260,7 +260,7 @@ void OptionWidget::setValue(const QVariant &value)
 
 void OptionWidget::setChoices(const QStringList &choices)
 {
-	if (!m_comboBox)
+	if (!m_comboBox || m_type != SettingsManager::EnumerationType)
 	{
 		return;
 	}
@@ -286,7 +286,7 @@ void OptionWidget::setChoices(const QStringList &choices)
 
 void OptionWidget::setChoices(const QVector<SettingsManager::OptionDefinition::Choice> &choices)
 {
-	if (!m_comboBox)
+	if (!m_comboBox || m_type != SettingsManager::EnumerationType)
 	{
 		return;
 	}
