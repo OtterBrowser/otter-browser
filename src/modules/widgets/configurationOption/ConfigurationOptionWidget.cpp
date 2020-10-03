@@ -70,8 +70,12 @@ ConfigurationOptionWidget::ConfigurationOptionWidget(Window *window, const ToolB
 	const QVariant value((m_scope == GlobalScope || !m_window) ? SettingsManager::getOption(m_identifier) : m_window->getOption(m_identifier));
 
 	m_optionWidget = new OptionWidget(value, optionDefinition.type, this);
-	m_optionWidget->setChoices(optionDefinition.choices);
 	m_optionWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
+
+	if (optionDefinition.type == SettingsManager::EnumerationType)
+	{
+		m_optionWidget->setChoices(optionDefinition.choices);
+	}
 
 	layout->addWidget(m_optionWidget);
 
