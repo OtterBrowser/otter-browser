@@ -132,7 +132,12 @@ QWidget* ConfigurationOptionDelegate::createEditor(QWidget *parent, const QStyle
 	const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(index.data(ConfigurationContentsWidget::IdentifierRole).toInt()));
 	OptionWidget *widget(new OptionWidget(index.data(Qt::EditRole), definition.type, parent));
 	widget->setDefaultValue(definition.defaultValue);
-	widget->setChoices(definition.choices);
+
+	if (definition.type == SettingsManager::EnumerationType)
+	{
+		widget->setChoices(definition.choices);
+	}
+
 	widget->setFocus();
 
 	connect(widget, &OptionWidget::commitData, this, &ConfigurationOptionDelegate::commitData);
