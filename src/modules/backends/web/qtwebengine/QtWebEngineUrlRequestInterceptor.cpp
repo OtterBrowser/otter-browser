@@ -23,6 +23,7 @@
 #include "../../../../core/ContentFiltersManager.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/Utils.h"
+#include "../../../../core/WebBackend.h"
 
 #include <QtCore/QCoreApplication>
 
@@ -30,6 +31,8 @@ namespace Otter
 {
 
 #if QTWEBENGINECORE_VERSION >= 0x050D00
+WebBackend* QtWebEngineUrlRequestInterceptor::m_backend(nullptr);
+
 QtWebEngineUrlRequestInterceptor::QtWebEngineUrlRequestInterceptor(QtWebEngineWebWidget *parent) : QWebEngineUrlRequestInterceptor(parent),
 	m_widget(parent),
 	m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy),
@@ -126,6 +129,8 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 
 	++m_startedRequestsAmount;
 
+	request.setHttpHeader(QByteArrayLiteral("User-Agent"), m_userAgent.toUtf8());
+
 	if (m_doNotTrackPolicy != NetworkManagerFactory::SkipTrackPolicy)
 	{
 		request.setHttpHeader(QByteArrayLiteral("DNT"), ((m_doNotTrackPolicy == NetworkManagerFactory::DoNotAllowToTrackPolicy) ? QByteArrayLiteral("1") : QByteArrayLiteral("0")));
@@ -148,6 +153,11 @@ void QtWebEngineUrlRequestInterceptor::resetStatistics()
 
 void QtWebEngineUrlRequestInterceptor::updateOptions(const QUrl &url)
 {
+	if (!m_backend)
+	{
+		m_backend = AddonsManager::getWebBackend(QLatin1String("qtwebengine"));
+	}
+
 	if (getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, url).toBool())
 	{
 		m_contentBlockingProfiles = ContentFiltersManager::getProfileIdentifiers(getOption(SettingsManager::ContentBlocking_ProfilesOption, url).toStringList());
@@ -157,6 +167,7 @@ void QtWebEngineUrlRequestInterceptor::updateOptions(const QUrl &url)
 		m_contentBlockingProfiles.clear();
 	}
 
+	m_userAgent = m_backend->getUserAgent(NetworkManagerFactory::getUserAgent(getOption(SettingsManager::Network_UserAgentOption, url).toString()).value);
 	m_unblockedHosts = getOption(SettingsManager::ContentBlocking_IgnoreHostsOption, url).toStringList();
 
 	const QString doNotTrackPolicyValue(getOption(SettingsManager::Network_DoNotTrackPolicyOption, url).toString());

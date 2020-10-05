@@ -1213,7 +1213,9 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 	settings->setAttribute(QWebEngineSettings::WebGLEnabled, getOption(SettingsManager::Permissions_EnableWebglOption, url).toBool());
 	settings->setDefaultTextEncoding((encoding == QLatin1String("auto")) ? QString() : encoding);
 
+#if QTWEBENGINECORE_VERSION < 0x050D00
 	m_page->profile()->setHttpUserAgent(getBackend()->getUserAgent(NetworkManagerFactory::getUserAgent(getOption(SettingsManager::Network_UserAgentOption, url).toString()).value));
+#endif
 
 	disconnect(m_page, &QtWebEnginePage::geometryChangeRequested, this, &QtWebEngineWebWidget::requestedGeometryChange);
 

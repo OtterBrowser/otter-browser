@@ -57,6 +57,7 @@ protected slots:
 
 private:
 	QtWebEngineWebWidget *m_widget;
+	QString m_userAgent;
 	QStringList m_blockedElements;
 	QStringList m_unblockedHosts;
 	QVector<NetworkManager::ResourceInformation> m_blockedRequests;
@@ -65,6 +66,8 @@ private:
 	quint64 m_startedRequestsAmount;
 	bool m_areImagesEnabled;
 	bool m_canSendReferrer;
+
+	static WebBackend *m_backend;
 
 signals:
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
