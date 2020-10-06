@@ -129,6 +129,7 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 
 	++m_startedRequestsAmount;
 
+	request.setHttpHeader(QByteArrayLiteral("Accept-Language"), (m_acceptLanguage.isEmpty() ? NetworkManagerFactory::getAcceptLanguage().toLatin1() : m_acceptLanguage.toLatin1()));
 	request.setHttpHeader(QByteArrayLiteral("User-Agent"), m_userAgent.toUtf8());
 
 	if (m_doNotTrackPolicy != NetworkManagerFactory::SkipTrackPolicy)
@@ -167,6 +168,10 @@ void QtWebEngineUrlRequestInterceptor::updateOptions(const QUrl &url)
 		m_contentBlockingProfiles.clear();
 	}
 
+	QString acceptLanguage(getOption(SettingsManager::Network_AcceptLanguageOption, url).toString());
+	acceptLanguage = ((acceptLanguage.isEmpty()) ? QLatin1String(" ") : acceptLanguage.replace(QLatin1String("system"), QLocale::system().bcp47Name()));
+
+	m_acceptLanguage = ((acceptLanguage == NetworkManagerFactory::getAcceptLanguage()) ? QString() : acceptLanguage);
 	m_userAgent = m_backend->getUserAgent(NetworkManagerFactory::getUserAgent(getOption(SettingsManager::Network_UserAgentOption, url).toString()).value);
 	m_unblockedHosts = getOption(SettingsManager::ContentBlocking_IgnoreHostsOption, url).toStringList();
 

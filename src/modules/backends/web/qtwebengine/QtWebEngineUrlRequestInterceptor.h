@@ -57,6 +57,7 @@ protected slots:
 
 private:
 	QtWebEngineWebWidget *m_widget;
+	QString m_acceptLanguage;
 	QString m_userAgent;
 	QStringList m_blockedElements;
 	QStringList m_unblockedHosts;
