@@ -77,6 +77,7 @@ def deploy_linux(arguments):
 		if not os.path.isdir(tools_path):
 			os.mkdir(tools_path)
 
+	release_name = 'otter-browser' + ('' if (arguments.release_name == '') else '-' + arguments.release_name)
 	package_formats = ['appimage']
 
 	if arguments.package_formats != 'default':
@@ -123,7 +124,7 @@ def deploy_linux(arguments):
 	if 'appimage' in package_formats:
 		appimage_tool_command = get_executable('appimagetool-x86_64.AppImage', 'https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage', tools_path)
 
-		run_command([appimage_tool_command, appimage_path, os.path.join(arguments.target_path, 'otter-browser' + ('' if (arguments.release_name == '') else '-' + arguments.release_name) + '-x86_64.AppImage')])
+		run_command([appimage_tool_command, appimage_path, os.path.join(arguments.target_path, release_name + '-x86_64.AppImage')])
 
 	if not arguments.preserve_deployment_directory:
 		shutil.rmtree(appimage_path)
@@ -145,7 +146,7 @@ def deploy_macos(arguments):
 	run_command([macdeployqt_command, app_path])
 
 	if 'zip' in package_formats:
-		run_command(['zip', '-r', 'otter-browser' + ('' if (arguments.release_name == '') else '-' + arguments.release_name) + '.zip', app_path])
+		run_command(['zip', '-r', release_name + '.zip', app_path])
 
 	if not arguments.preserve_deployment_directory:
 		shutil.rmtree(app_path)
