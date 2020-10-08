@@ -126,6 +126,9 @@ def deploy_linux(arguments):
 
 		run_command([appimage_tool_command, appimage_path, os.path.join(arguments.target_path, release_name + '-x86_64.AppImage')])
 
+	if 'zip' in package_formats:
+		run_command(['zip', '-r', release_name + '.zip', appimage_path])
+
 	if not arguments.preserve_deployment_directory:
 		shutil.rmtree(appimage_path)
 
