@@ -98,11 +98,17 @@ def deploy_linux(arguments):
 	icons = [16, 32, 48, 64, 128, 256, 'scalable']
 
 	for size in icons:
-		is_raster = isinstance(size, int)
-		icon_directory = '{}x{}'.format(size, size) if is_raster else size
+		icon_directory = 'scalable'
+		source_name = 'otter-browser.svg'
+		target_name = 'otter-browser.svg'
+
+		if isinstance(size, int):
+			icon_directory = '{}x{}'.format(size, size)
+			source_name = 'otter-browser-{}.png'.format(size)
+			target_name = 'otter-browser.png'
 
 		make_path(icons_path, [icon_directory, 'apps'])
-		shutil.copy(os.path.join(arguments.source_path, 'resources/icons', 'otter-browser-{}.png'.format(size) if is_raster else 'otter-browser.svg'), os.path.join(icons_path, icon_directory, 'apps', 'otter-browser.png' if is_raster else 'otter-browser.svg'))
+		shutil.copy(os.path.join(arguments.source_path, 'resources/icons', source_name), os.path.join(icons_path, icon_directory, 'apps', target_name))
 
 	deploy_locale(arguments.source_path, os.path.join(appimage_path, 'usr/share/otter-browser'))
 	os.putenv('LD_LIBRARY_PATH', '{}:{}'.format(os.path.join(arguments.qt_path, 'lib'), os.getenv('LD_LIBRARY_PATH')))
