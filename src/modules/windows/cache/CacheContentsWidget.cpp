@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -265,7 +265,7 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &entry)
 		}
 	}
 
-	const QMimeType mimeType((type.isEmpty() && device) ? QMimeDatabase().mimeTypeForData(device) : QMimeDatabase().mimeTypeForName(type));
+	const QMimeType mimeType((device && type.isEmpty()) ? QMimeDatabase().mimeTypeForData(device) : QMimeDatabase().mimeTypeForName(type));
 	QList<QStandardItem*> entryItems({new QStandardItem(entry.path()), new QStandardItem(mimeType.name()), new QStandardItem(device ? Utils::formatUnit(device->size()) : QString()), new QStandardItem(Utils::formatDateTime(metaData.lastModified())), new QStandardItem(Utils::formatDateTime(metaData.expirationDate()))});
 	entryItems[0]->setData(entry, Qt::UserRole);
 	entryItems[0]->setFlags(entryItems[0]->flags() | Qt::ItemNeverHasChildren);
@@ -399,11 +399,11 @@ void CacheContentsWidget::updateActions()
 			}
 		}
 
-		const QMimeType mimeType((type.isEmpty() && device) ? QMimeDatabase().mimeTypeForData(device) : QMimeDatabase().mimeTypeForName(type));
+		const QMimeType mimeType((device && type.isEmpty()) ? QMimeDatabase().mimeTypeForData(device) : QMimeDatabase().mimeTypeForName(type));
 		QPixmap preview;
 		const int size(m_ui->formWidget->contentsRect().height() - 10);
 
-		if (mimeType.name().startsWith(QLatin1String("image")) && device)
+		if (device && mimeType.name().startsWith(QLatin1String("image")))
 		{
 			QImage image;
 			image.load(device, "");
