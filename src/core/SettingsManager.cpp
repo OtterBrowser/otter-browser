@@ -201,7 +201,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Search_EnableFindInPageAsYouTypeOption, BooleanType, true);
 	registerOption(Search_EnableFindInPageHighlightAllOption, BooleanType, false);
 	registerOption(Search_ReuseLastQuickFindQueryOption, BooleanType, false);
-	registerOption(Search_SearchEnginesOrderOption, ListType, QStringList({QLatin1String("duckduckgo"), QLatin1String("wikipedia"), QLatin1String("startpage"), QLatin1String("google"), QLatin1String("yahoo"), QLatin1String("bing"), QLatin1String("youtube")}));
+	registerOption(Search_SearchEnginesOrderOption, ListType, QStringList({QLatin1String("duckduckgo"), QLatin1String("yandex"), QLatin1String("wikipedia"), QLatin1String("startpage"), QLatin1String("google"), QLatin1String("yahoo"), QLatin1String("bing"), QLatin1String("youtube")}));
 	registerOption(Search_SearchEnginesSuggestionsOption, BooleanType, false);
 	registerOption(Security_AllowMixedContentOption, BooleanType, false);
 	registerOption(Security_CiphersOption, ListType, QStringList(QLatin1String("default")));
