@@ -386,20 +386,33 @@ void CacheContentsWidget::updateActions()
 		NetworkCache *cache(NetworkManagerFactory::getCache());
 		QIODevice *device(cache->data(url));
 		const QNetworkCacheMetaData metaData(cache->metaData(url));
-		const QList<QPair<QByteArray, QByteArray> > headers(metaData.rawHeaders());
-		QString type;
+		QMimeType mimeType;
 
-		for (int i = 0; i < headers.count(); ++i)
+		if (device)
 		{
-			if (headers.at(i).first == QByteArrayLiteral("Content-Type"))
-			{
-				type = QString::fromLatin1(headers.at(i).second);
+			mimeType = QMimeDatabase().mimeTypeForData(device);
+		}
 
-				break;
+		if (!mimeType.isValid())
+		{
+			const QList<QPair<QByteArray, QByteArray> > headers(metaData.rawHeaders());
+
+			for (int i = 0; i < headers.count(); ++i)
+			{
+				if (headers.at(i).first == QByteArrayLiteral("Content-Type"))
+				{
+					mimeType = QMimeDatabase().mimeTypeForName(QString::fromLatin1(headers.at(i).second));
+
+					break;
+				}
+			}
+
+			if (!mimeType.isValid())
+			{
+				mimeType = QMimeDatabase().mimeTypeForUrl(url);
 			}
 		}
 
-		const QMimeType mimeType((device && type.isEmpty()) ? QMimeDatabase().mimeTypeForData(device) : QMimeDatabase().mimeTypeForName(type));
 		QPixmap preview;
 		const int size(m_ui->formWidget->contentsRect().height() - 10);
 
