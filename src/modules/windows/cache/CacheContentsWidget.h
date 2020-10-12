@@ -56,7 +56,7 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event) override;
-	QStandardItem* findDomain(const QString &domain);
+	QStandardItem* findDomainItem(const QString &domain);
 	QUrl getEntry(const QModelIndex &index) const;
 
 protected slots:

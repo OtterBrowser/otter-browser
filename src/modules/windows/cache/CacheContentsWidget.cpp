@@ -158,7 +158,7 @@ void CacheContentsWidget::removeEntry()
 void CacheContentsWidget::removeDomainEntries()
 {
 	const QModelIndex index(m_ui->cacheViewWidget->currentIndex());
-	const QStandardItem *domainItem(findDomain((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString() : Utils::extractHost(getEntry(index))));
+	const QStandardItem *domainItem(findDomainItem((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString() : Utils::extractHost(getEntry(index))));
 
 	if (!domainItem)
 	{
@@ -223,7 +223,7 @@ void CacheContentsWidget::copyEntryLink()
 void CacheContentsWidget::handleEntryAdded(const QUrl &entry)
 {
 	const QString domain(entry.host());
-	QStandardItem *domainItem(findDomain(domain));
+	QStandardItem *domainItem(findDomainItem(domain));
 
 	if (domainItem)
 	{
@@ -299,7 +299,7 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &entry)
 
 void CacheContentsWidget::handleEntryRemoved(const QUrl &entry)
 {
-	QStandardItem *domainItem(findDomain(Utils::extractHost(entry)));
+	QStandardItem *domainItem(findDomainItem(Utils::extractHost(entry)));
 
 	if (!domainItem)
 	{
@@ -510,7 +510,7 @@ void CacheContentsWidget::updateActions()
 	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::EditingCategory});
 }
 
-QStandardItem* CacheContentsWidget::findDomain(const QString &domain)
+QStandardItem* CacheContentsWidget::findDomainItem(const QString &domain)
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
