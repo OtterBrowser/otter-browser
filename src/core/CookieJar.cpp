@@ -30,19 +30,19 @@
 namespace Otter
 {
 
-CookieJar::CookieJar(bool isPrivate, QObject *parent) : QNetworkCookieJar(parent),
+CookieJar::CookieJar(const QString &path, QObject *parent) : QNetworkCookieJar(parent),
+	m_path(path),
 	m_generalCookiesPolicy(AcceptAllCookies),
 	m_thirdPartyCookiesPolicy(AcceptAllCookies),
 	m_keepMode(KeepUntilExpiresMode),
-	m_saveTimer(0),
-	m_isPrivate(isPrivate)
+	m_saveTimer(0)
 {
-	if (isPrivate)
+	if (path.isEmpty())
 	{
 		return;
 	}
 
-	QFile file(SessionsManager::getWritableDataPath(QLatin1String("cookies.dat")));
+	QFile file(path);
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
@@ -114,7 +114,7 @@ void CookieJar::clearCookies(int period)
 
 void CookieJar::scheduleSave()
 {
-	if (!m_isPrivate)
+	if (!m_path.isEmpty())
 	{
 		if (Application::isAboutToQuit())
 		{
@@ -164,12 +164,12 @@ void CookieJar::handleOptionChanged(int identifier, const QVariant &value)
 
 void CookieJar::save()
 {
-	if (m_isPrivate || SessionsManager::isReadOnly())
+	if (m_path.isEmpty() || SessionsManager::isReadOnly())
 	{
 		return;
 	}
 
-	QSaveFile file(SessionsManager::getWritableDataPath(QLatin1String("cookies.dat")));
+	QSaveFile file(m_path);
 
 	if (!file.open(QIODevice::WriteOnly))
 	{
@@ -193,7 +193,7 @@ void CookieJar::save()
 
 CookieJar* CookieJar::clone(QObject *parent) const
 {
-	CookieJar *cookieJar(new CookieJar(m_isPrivate, parent));
+	CookieJar *cookieJar(new CookieJar({}, parent));
 	cookieJar->setAllCookies(allCookies());
 
 	return cookieJar;

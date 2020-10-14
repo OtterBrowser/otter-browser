@@ -58,7 +58,7 @@ NetworkManager::NetworkManager(bool isPrivate, QObject *parent) : QNetworkAccess
 	}
 	else
 	{
-		m_cookieJar = new CookieJar(true, this);
+		m_cookieJar = new CookieJar({}, this);
 
 		setCookieJar(m_cookieJar);
 	}

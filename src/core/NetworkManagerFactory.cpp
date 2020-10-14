@@ -274,7 +274,7 @@ void NetworkManagerFactory::clearCookies(int period)
 {
 	if (!m_cookieJar)
 	{
-		m_cookieJar = new CookieJar(QCoreApplication::instance());
+		m_cookieJar = new CookieJar(SessionsManager::getWritableDataPath(QLatin1String("cookies.dat")), QCoreApplication::instance());
 	}
 
 	m_cookieJar->clearCookies(period);
@@ -643,7 +643,7 @@ CookieJar* NetworkManagerFactory::getCookieJar()
 {
 	if (!m_cookieJar)
 	{
-		m_cookieJar = new CookieJar(false, QCoreApplication::instance());
+		m_cookieJar = new CookieJar(SessionsManager::getWritableDataPath(QLatin1String("cookies.dat")), QCoreApplication::instance());
 	}
 
 	return m_cookieJar;

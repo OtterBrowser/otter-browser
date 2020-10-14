@@ -53,7 +53,7 @@ public:
 		RemoveCookie
 	};
 
-	explicit CookieJar(bool isPrivate, QObject *parent = nullptr);
+	explicit CookieJar(const QString &path, QObject *parent = nullptr);
 
 	void clearCookies(int period = 0);
 	CookieJar* clone(QObject *parent = nullptr) const;
@@ -78,11 +78,11 @@ protected slots:
 	void handleOptionChanged(int identifier, const QVariant &value);
 
 private:
+	QString m_path;
 	CookiesPolicy m_generalCookiesPolicy;
 	CookiesPolicy m_thirdPartyCookiesPolicy;
 	KeepMode m_keepMode;
 	int m_saveTimer;
-	bool m_isPrivate;
 
 signals:
 	void cookieAdded(QNetworkCookie cookie);

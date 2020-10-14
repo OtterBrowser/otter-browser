@@ -81,7 +81,7 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 	}
 	else
 	{
-		m_cookieJar = new CookieJar(true, this);
+		m_cookieJar = new CookieJar({}, this);
 	}
 
 	if (m_cookieJarProxy)
