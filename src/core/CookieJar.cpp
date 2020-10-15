@@ -199,6 +199,11 @@ CookieJar* CookieJar::clone(QObject *parent) const
 	return cookieJar;
 }
 
+QString CookieJar::getPath() const
+{
+	return m_path;
+}
+
 QList<QNetworkCookie> CookieJar::cookiesForUrl(const QUrl &url) const
 {
 	if (m_generalCookiesPolicy == IgnoreCookies)
