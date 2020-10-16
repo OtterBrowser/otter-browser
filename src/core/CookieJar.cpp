@@ -191,14 +191,6 @@ void CookieJar::save()
 	file.commit();
 }
 
-CookieJar* CookieJar::clone(QObject *parent) const
-{
-	CookieJar *cookieJar(new CookieJar({}, parent));
-	cookieJar->setAllCookies(allCookies());
-
-	return cookieJar;
-}
-
 QString CookieJar::getPath() const
 {
 	return m_path;

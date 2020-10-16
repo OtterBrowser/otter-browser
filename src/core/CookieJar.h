@@ -56,7 +56,6 @@ public:
 	explicit CookieJar(const QString &path, QObject *parent = nullptr);
 
 	void clearCookies(int period = 0);
-	CookieJar* clone(QObject *parent = nullptr) const;
 	QString getPath() const;
 	QList<QNetworkCookie> cookiesForUrl(const QUrl &url) const override;
 	QList<QNetworkCookie> getCookiesForUrl(const QUrl &url) const;
