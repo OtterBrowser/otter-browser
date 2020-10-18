@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -92,7 +92,6 @@ protected:
 	QtWebKitWebWidget* createWidget(SessionsManager::OpenHints hints);
 	QString chooseFile(QWebFrame *frame, const QString &suggestedFile) override;
 	QString userAgentForUrl(const QUrl &url) const override;
-	QString getDefaultUserAgent() const;
 	QVariant getOption(int identifier) const;
 	bool acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, NavigationType type) override;
 	bool javaScriptConfirm(QWebFrame *frame, const QString &message) override;
