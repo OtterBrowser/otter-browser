@@ -145,10 +145,11 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	QStringList arguments(Application::arguments());
 	QString argumentsPath(QDir::current().filePath(QLatin1String("arguments.txt")));
+	const QString applicationDirectoryPath(getApplicationDirectoryPath());
 
 	if (!QFile::exists(argumentsPath))
 	{
-		argumentsPath = QDir(applicationDirPath()).filePath(QLatin1String("arguments.txt"));
+		argumentsPath = QDir(applicationDirectoryPath).filePath(QLatin1String("arguments.txt"));
 	}
 
 	if (QFile::exists(argumentsPath))
@@ -190,8 +191,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	if (isPortable)
 	{
-		profilePath = applicationDirPath() + QLatin1String("/profile");
-		cachePath = applicationDirPath() + QLatin1String("/cache");
+		profilePath = applicationDirectoryPath + QLatin1String("/profile");
+		cachePath = applicationDirectoryPath + QLatin1String("/cache");
 	}
 
 	if (m_commandLineParser.isSet(QLatin1String("profile")))
@@ -1479,6 +1480,11 @@ QString Application::getFullVersion()
 QString Application::getLocalePath()
 {
 	return m_localePath;
+}
+
+QString Application::getApplicationDirectoryPath()
+{
+	return applicationDirPath();
 }
 
 ActionsManager::ActionDefinition::State Application::getActionState(int identifier, const QVariantMap &parameters) const

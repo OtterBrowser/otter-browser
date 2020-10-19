@@ -22,11 +22,11 @@
 #include "QtWebKitHistoryInterface.h"
 #include "QtWebKitPage.h"
 #include "QtWebKitWebWidget.h"
+#include "../../../../core/Application.h"
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
 
-#include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 #include <QtCore/QPointer>
 #include <QtCore/QRegularExpression>
@@ -156,7 +156,7 @@ WebWidget* QtWebKitWebBackend::createWidget(const QVariantMap &parameters, Conte
 		QWebHistoryInterface::setDefaultInterface(new QtWebKitHistoryInterface(this));
 
 		QStringList pluginSearchPaths(QWebSettings::pluginSearchPaths());
-		pluginSearchPaths.append(QDir::toNativeSeparators(QCoreApplication::applicationDirPath()));
+		pluginSearchPaths.append(QDir::toNativeSeparators(Application::getApplicationDirectoryPath()));
 
 		QWebSettings::setPluginSearchPaths(pluginSearchPaths);
 		QWebSettings::setMaximumPagesInCache(SettingsManager::getOption(SettingsManager::Cache_PagesInMemoryLimitOption).toInt());

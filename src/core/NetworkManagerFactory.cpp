@@ -20,6 +20,7 @@
 
 #include "NetworkManagerFactory.h"
 #include "AddonsManager.h"
+#include "Application.h"
 #include "ContentFiltersManager.h"
 #include "CookieJar.h"
 #include "NetworkCache.h"
@@ -207,7 +208,7 @@ void UserAgentsModel::populateUserAgents(const QStringList &userAgents, QStandar
 NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 {
 	QSslConfiguration configuration(QSslConfiguration::defaultConfiguration());
-	const QStringList paths({QDir(QCoreApplication::applicationDirPath()).filePath(QLatin1String("certificates")), SessionsManager::getWritableDataPath(QLatin1String("certificates"))});
+	const QStringList paths({QDir(Application::getApplicationDirectoryPath()).filePath(QLatin1String("certificates")), SessionsManager::getWritableDataPath(QLatin1String("certificates"))});
 
 	for (int i = 0; i < paths.count(); ++i)
 	{
