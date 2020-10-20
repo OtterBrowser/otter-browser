@@ -70,7 +70,7 @@ QString OperaSessionImporter::getSuggestedPath(const QString &path) const
 
 		return path;
 	}
-#if !defined(Q_OS_MAC) && defined(Q_OS_UNIX)
+#if !defined(Q_OS_DARWIN) && defined(Q_OS_UNIX)
 	const QString homePath(QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0));
 
 	if (!homePath.isEmpty())

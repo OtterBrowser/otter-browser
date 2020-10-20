@@ -45,7 +45,7 @@
 #include "WebBackend.h"
 #ifdef Q_OS_WIN
 #include "../modules/platforms/windows/WindowsPlatformIntegration.h"
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_DARWIN)
 #include "../modules/platforms/mac/MacPlatformIntegration.h"
 #elif defined(Q_OS_UNIX)
 #include "../modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.h"
@@ -112,7 +112,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	QString profilePath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/otter"));
 	QString cachePath(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_DARWIN
 	m_localePath = QFileInfo(applicationDirPath() + QLatin1String("/../Resources/locale/")).absoluteFilePath();
 #else
 	m_localePath = QFileInfo(applicationDirPath() + QLatin1String("/../share/otter-browser/locale/")).absoluteFilePath();
@@ -459,7 +459,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 #ifdef Q_OS_WIN
 	m_platformIntegration = new WindowsPlatformIntegration(this);
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_DARWIN)
 	m_platformIntegration = new MacPlatformIntegration(this);
 #elif defined(Q_OS_UNIX)
 	m_platformIntegration = new FreeDesktopOrgPlatformIntegration(this);
