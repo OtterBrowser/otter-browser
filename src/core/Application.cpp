@@ -1156,23 +1156,23 @@ void Application::handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInf
 	if (SettingsManager::getOption(SettingsManager::Updates_AutomaticInstallOption).toBool())
 	{
 		new Updater(availableUpdates.at(latestVersionIndex), this);
+
+		return;
 	}
-	else
+
+	Notification::Message message;
+	message.message = tr("New update %1 from %2 channel is available!").arg(availableUpdates.at(latestVersionIndex).version, availableUpdates.at(latestVersionIndex).channel);
+	message.icon = windowIcon();
+	message.event = NotificationsManager::UpdateAvailableEvent;
+
+	Notification *notification(NotificationsManager::createNotification(message));
+	notification->setData(QVariant::fromValue<QVector<UpdateChecker::UpdateInformation> >(availableUpdates));
+
+	connect(notification, &Notification::clicked, notification, [&]()
 	{
-		Notification::Message message;
-		message.message = tr("New update %1 from %2 channel is available!").arg(availableUpdates.at(latestVersionIndex).version, availableUpdates.at(latestVersionIndex).channel);
-		message.icon = windowIcon();
-		message.event = NotificationsManager::UpdateAvailableEvent;
-
-		Notification *notification(NotificationsManager::createNotification(message));
-		notification->setData(QVariant::fromValue<QVector<UpdateChecker::UpdateInformation> >(availableUpdates));
-
-		connect(notification, &Notification::clicked, notification, [&]()
-		{
-			UpdateCheckerDialog *dialog(new UpdateCheckerDialog(nullptr, notification->getData().value<QVector<UpdateChecker::UpdateInformation> >()));
-			dialog->show();
-		});
-	}
+		UpdateCheckerDialog *dialog(new UpdateCheckerDialog(nullptr, notification->getData().value<QVector<UpdateChecker::UpdateInformation> >()));
+		dialog->show();
+	});
 }
 
 void Application::showNotification(Notification *notification)
