@@ -27,6 +27,7 @@
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonObject>
 #include <QtCore/QTextStream>
+#include <QtGui/QGuiApplication>
 #include <QtGui/QKeySequence>
 
 namespace Otter
@@ -459,7 +460,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(SwitchApplicationLanguageAction, QT_TRANSLATE_NOOP("actions", "Switch Application Language…"), {}, ThemesManager::createIcon(QLatin1String("preferences-desktop-locale")), ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(CheckForUpdatesAction, QT_TRANSLATE_NOOP("actions", "Check for Updates…"), {}, {}, ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(DiagnosticReportAction, QT_TRANSLATE_NOOP("actions", "Diagnostic Report…"), {}, {}, ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
-	registerAction(AboutApplicationAction, QT_TRANSLATE_NOOP("actions", "About Otter…"), {}, ThemesManager::createIcon(QLatin1String("otter-browser"), false), ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
+	registerAction(AboutApplicationAction, QT_TRANSLATE_NOOP("actions", "About Otter…"), {}, QGuiApplication::windowIcon(), ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(AboutQtAction, QT_TRANSLATE_NOOP("actions", "About Qt…"), {}, ThemesManager::createIcon(QLatin1String("qt")), ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(ExitAction, QT_TRANSLATE_NOOP("actions", "Exit"), {}, ThemesManager::createIcon(QLatin1String("application-exit")), ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 
