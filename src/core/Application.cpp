@@ -1484,7 +1484,11 @@ QString Application::getLocalePath()
 
 QString Application::getApplicationDirectoryPath()
 {
+#if defined(Q_OS_DARWIN)
+	return QDir::cleanPath(applicationDirPath() + QLatin1String("/../../../"));
+#else
 	return applicationDirPath();
+#endif
 }
 
 ActionsManager::ActionDefinition::State Application::getActionState(int identifier, const QVariantMap &parameters) const
