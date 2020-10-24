@@ -24,6 +24,8 @@
 #include "../../../ui/Menu.h"
 #include "../../../ui/ToolBarWidget.h"
 
+#include <QtGui/QGuiApplication>
+
 namespace Otter
 {
 
@@ -31,7 +33,7 @@ MenuButtonWidget::MenuButtonWidget(const ToolBarsManager::ToolBarDefinition::Ent
 	m_menu(new Menu(this)),
 	m_isHidden(false)
 {
-	setIcon(ThemesManager::createIcon(QLatin1String("otter-browser"), false));
+	setIcon(QGuiApplication::windowIcon());
 	setText(definition.options.value(QLatin1String("text"), tr("Menu")).toString());
 	setMenu(m_menu);
 	setPopupMode(QToolButton::InstantPopup);

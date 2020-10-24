@@ -428,7 +428,7 @@ void ToolBarDialog::editEntry()
 		}
 		else if (identifier == QLatin1String("MenuButtonWidget"))
 		{
-			iconWidget->setDefaultValue(ThemesManager::createIcon(QLatin1String("otter-browser"), false));
+			iconWidget->setDefaultValue(QGuiApplication::windowIcon());
 			textWidget->setDefaultValue(tr("Menu"));
 		}
 		else if (identifier == QLatin1String("PrivateWindowIndicatorWidget"))
