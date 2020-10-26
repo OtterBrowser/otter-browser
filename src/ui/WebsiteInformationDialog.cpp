@@ -43,6 +43,8 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		host = (widget->getUrl().scheme() == QLatin1String("file") ? QLatin1String("localhost") : tr("(unknown)"));
 	}
 
+	setWindowTitle(tr("Information for %1").arg(host));
+
 	if (state.testFlag(WebWidget::FraudContentState))
 	{
 		m_ui->stateLabel->setText(tr("This website was marked as fraud."));
@@ -217,23 +219,28 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->popupsValueLabel->setText(tr("Ask"));
 	}
 
+	connect(m_ui->preferencesDetailsButton, &QPushButton::clicked, [&]()
+	{
+		Application::triggerAction(ActionsManager::WebsitePreferencesAction, {}, this);
+	});
+
 	if (m_sslInformation.certificates.isEmpty())
 	{
 		m_ui->tabWidget->setTabEnabled(2, false);
-	}
-	else
-	{
-		const QSslCertificate certificate(m_sslInformation.certificates.value(0));
 
-		m_ui->certificateIssuedToLabelWidget->setText(certificate.subjectInfo(QSslCertificate::CommonName).join(QLatin1String(", ")));
-		m_ui->certificateIssuedByLabelWidget->setText(certificate.issuerInfo(QSslCertificate::CommonName).join(QLatin1String(", ")));
-		m_ui->certificateIssuedOnLabelWidget->setText(Utils::formatDateTime(certificate.effectiveDate(), {}, false));
-		m_ui->certificateExpiresOnLabelWidget->setText(Utils::formatDateTime(certificate.expiryDate(), {}, false));
-		m_ui->cipherProtocolLabelWidget->setText(m_sslInformation.cipher.protocolString());
-		m_ui->cipherAuthenticationMethodLabelWidget->setText(m_sslInformation.cipher.authenticationMethod());
-		m_ui->cipherEncryptionMethodLabelWidget->setText(m_sslInformation.cipher.encryptionMethod());
-		m_ui->cipherKeyExchangeMethodLabelWidget->setText(m_sslInformation.cipher.keyExchangeMethod());
+		return;
 	}
+
+	const QSslCertificate certificate(m_sslInformation.certificates.value(0));
+
+	m_ui->certificateIssuedToLabelWidget->setText(certificate.subjectInfo(QSslCertificate::CommonName).join(QLatin1String(", ")));
+	m_ui->certificateIssuedByLabelWidget->setText(certificate.issuerInfo(QSslCertificate::CommonName).join(QLatin1String(", ")));
+	m_ui->certificateIssuedOnLabelWidget->setText(Utils::formatDateTime(certificate.effectiveDate(), {}, false));
+	m_ui->certificateExpiresOnLabelWidget->setText(Utils::formatDateTime(certificate.expiryDate(), {}, false));
+	m_ui->cipherProtocolLabelWidget->setText(m_sslInformation.cipher.protocolString());
+	m_ui->cipherAuthenticationMethodLabelWidget->setText(m_sslInformation.cipher.authenticationMethod());
+	m_ui->cipherEncryptionMethodLabelWidget->setText(m_sslInformation.cipher.encryptionMethod());
+	m_ui->cipherKeyExchangeMethodLabelWidget->setText(m_sslInformation.cipher.keyExchangeMethod());
 
 	if (m_sslInformation.errors.isEmpty())
 	{
@@ -259,12 +266,6 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->sslErrorsViewWidget->setModel(sslErrorsModel);
 	}
 
-	setWindowTitle(tr("Information for %1").arg(host));
-
-	connect(m_ui->preferencesDetailsButton, &QPushButton::clicked, [&]()
-	{
-		Application::triggerAction(ActionsManager::WebsitePreferencesAction, {}, this);
-	});
 	connect(m_ui->certificateDetailsButton, &QPushButton::clicked, [&]()
 	{
 		CertificateDialog *dialog(new CertificateDialog(m_sslInformation.certificates));
