@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,11 +18,14 @@
 **************************************************************************/
 
 #include "SpellCheckManager.h"
+#include "Application.h"
 #include "SessionsManager.h"
 #ifdef OTTER_ENABLE_SPELLCHECK
 #include "../../3rdparty/sonnet/src/core/speller.h"
 #endif
 
+#include <QtCore/QDir>
+#include <QtCore/QFile>
 #include <QtCore/QLocale>
 
 namespace Otter
@@ -35,7 +38,14 @@ QMap<QString, QString> SpellCheckManager::m_dictionaries;
 SpellCheckManager::SpellCheckManager(QObject *parent) : QObject(parent)
 {
 #ifdef OTTER_ENABLE_SPELLCHECK
-	qputenv("OTTER_DICTIONARIES", SessionsManager::getWritableDataPath(QLatin1String("dictionaries")).toLatin1());
+	QString dictionariesPath(SessionsManager::getWritableDataPath(QLatin1String("dictionaries")));
+
+	if (!QFile::exists(dictionariesPath))
+	{
+		dictionariesPath = QDir::toNativeSeparators(Application::getApplicationDirectoryPath() + QDir::separator() + QLatin1String("dictionaries"));;
+	}
+
+	qputenv("OTTER_DICTIONARIES", dictionariesPath.toLatin1());
 
 	m_dictionaries = Sonnet::Speller().availableDictionaries();
 #endif
