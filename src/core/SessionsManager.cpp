@@ -182,30 +182,30 @@ QString SessionsManager::getWritableDataPath(const QString &path)
 
 QString SessionsManager::getSessionPath(const QString &path, bool isBound)
 {
-	QString cleanPath(path);
+	QString normalizedPath(path);
 
-	if (cleanPath.isEmpty())
+	if (normalizedPath.isEmpty())
 	{
-		cleanPath = QLatin1String("default.json");
+		normalizedPath = QLatin1String("default.json");
 	}
 	else
 	{
-		if (!cleanPath.endsWith(QLatin1String(".json")))
+		if (!normalizedPath.endsWith(QLatin1String(".json")))
 		{
-			cleanPath += QLatin1String(".json");
+			normalizedPath += QLatin1String(".json");
 		}
 
 		if (isBound)
 		{
-			cleanPath = cleanPath.replace(QLatin1Char('/'), QString()).replace(QLatin1Char('\\'), QString());
+			normalizedPath = normalizedPath.replace(QLatin1Char('/'), QString()).replace(QLatin1Char('\\'), QString());
 		}
-		else if (QFileInfo(cleanPath).isAbsolute())
+		else if (QFileInfo(normalizedPath).isAbsolute())
 		{
-			return cleanPath;
+			return normalizedPath;
 		}
 	}
 
-	return QDir::toNativeSeparators(m_profilePath + QLatin1String("/sessions/") + cleanPath);
+	return QDir::toNativeSeparators(m_profilePath + QLatin1String("/sessions/") + normalizedPath);
 }
 
 Session::Identity SessionsManager::getIdentity(const QString &name)
@@ -854,11 +854,11 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 bool SessionsManager::deleteSession(const QString &path)
 {
-	const QString cleanPath(getSessionPath(path, true));
+	const QString normalizedPath(getSessionPath(path, true));
 
-	if (QFile::exists(cleanPath))
+	if (QFile::exists(normalizedPath))
 	{
-		return QFile::remove(cleanPath);
+		return QFile::remove(normalizedPath);
 	}
 
 	return false;
