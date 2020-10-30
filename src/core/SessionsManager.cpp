@@ -104,8 +104,7 @@ void SessionsManager::storeClosedWindow(MainWindow *mainWindow)
 		return;
 	}
 
-	Session::MainWindow session(mainWindow->getSession());
-	session.geometry = mainWindow->saveGeometry();
+	const Session::MainWindow session(mainWindow->getSession());
 
 	if (!session.windows.isEmpty())
 	{
