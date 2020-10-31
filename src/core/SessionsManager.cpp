@@ -106,20 +106,22 @@ void SessionsManager::storeClosedWindow(MainWindow *mainWindow)
 
 	const Session::MainWindow session(mainWindow->getSession());
 
-	if (!session.windows.isEmpty())
+	if (session.windows.isEmpty())
 	{
-		const int limit(SettingsManager::getOption(SettingsManager::History_ClosedTabsLimitAmountOption).toInt());
-
-		m_closedWindows.prepend(session);
-
-		if (m_closedWindows.count() > limit)
-		{
-			m_closedWindows.resize(limit);
-			m_closedWindows.squeeze();
-		}
-
-		emit m_instance->closedWindowsChanged();
+		return;
 	}
+
+	const int limit(SettingsManager::getOption(SettingsManager::History_ClosedTabsLimitAmountOption).toInt());
+
+	m_closedWindows.prepend(session);
+
+	if (m_closedWindows.count() > limit)
+	{
+		m_closedWindows.resize(limit);
+		m_closedWindows.squeeze();
+	}
+
+	emit m_instance->closedWindowsChanged();
 }
 
 void SessionsManager::markSessionAsModified()
