@@ -49,12 +49,12 @@ void ActionExecutor::Object::connectSignals(const QObject *receiver, const QMeta
 		QObject::connect(m_object.data(), actionsStateChangedSignal, receiver, *(actionsStateChangedMethod));
 	}
 
-	if (arbitraryActionsStateChangedSignal.isValid() && arbitraryActionsStateChangedMethod)
+	if (arbitraryActionsStateChangedMethod && arbitraryActionsStateChangedSignal.isValid())
 	{
 		QObject::connect(m_object.data(), arbitraryActionsStateChangedSignal, receiver, *(arbitraryActionsStateChangedMethod));
 	}
 
-	if (categorizedActionsStateChangedSignal.isValid() && categorizedActionsStateChangedMethod)
+	if (categorizedActionsStateChangedMethod && categorizedActionsStateChangedSignal.isValid())
 	{
 		QObject::connect(m_object.data(), categorizedActionsStateChangedSignal, receiver, *(categorizedActionsStateChangedMethod));
 	}
@@ -77,12 +77,12 @@ void ActionExecutor::Object::disconnectSignals(const QObject *receiver, const QM
 		QObject::disconnect(m_object.data(), actionsStateChangedSignal, receiver, *(actionsStateChangedMethod));
 	}
 
-	if (arbitraryActionsStateChangedSignal.isValid() && arbitraryActionsStateChangedMethod)
+	if (arbitraryActionsStateChangedMethod && arbitraryActionsStateChangedSignal.isValid())
 	{
 		QObject::disconnect(m_object.data(), arbitraryActionsStateChangedSignal, receiver, *(arbitraryActionsStateChangedMethod));
 	}
 
-	if (categorizedActionsStateChangedSignal.isValid() && categorizedActionsStateChangedMethod)
+	if (categorizedActionsStateChangedMethod && categorizedActionsStateChangedSignal.isValid())
 	{
 		QObject::disconnect(m_object.data(), categorizedActionsStateChangedSignal, receiver, *(categorizedActionsStateChangedMethod));
 	}
