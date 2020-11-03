@@ -164,29 +164,31 @@ void Action::handleCategorizedActionsStateChanged(const QVector<int> &categories
 
 void Action::updateIcon()
 {
-	if (!m_flags.testFlag(IsOverridingIconFlag))
+	if (m_flags.testFlag(IsOverridingIconFlag))
 	{
-		switch (m_identifier)
-		{
-			case ActionsManager::GoBackAction:
-				setIcon(ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-previous") : QLatin1String("go-next")));
+		return;
+	}
 
-				break;
-			case ActionsManager::GoForwardAction:
-				setIcon(ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-next") : QLatin1String("go-previous")));
+	switch (m_identifier)
+	{
+		case ActionsManager::GoBackAction:
+			setIcon(ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-previous") : QLatin1String("go-next")));
 
-				break;
-			case ActionsManager::RewindAction:
-				setIcon(ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-first") : QLatin1String("go-last")));
+			break;
+		case ActionsManager::GoForwardAction:
+			setIcon(ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-next") : QLatin1String("go-previous")));
 
-				break;
-			case ActionsManager::FastForwardAction:
-				setIcon(ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-last") : QLatin1String("go-first")));
+			break;
+		case ActionsManager::RewindAction:
+			setIcon(ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-first") : QLatin1String("go-last")));
 
-				break;
-			default:
-				break;
-		}
+			break;
+		case ActionsManager::FastForwardAction:
+			setIcon(ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-last") : QLatin1String("go-first")));
+
+			break;
+		default:
+			break;
 	}
 }
 
