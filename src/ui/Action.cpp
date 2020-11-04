@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -66,14 +66,14 @@ Action::Action(int identifier, const QVariantMap &parameters, const QVariantMap 
 			setIcon(ThemesManager::createIcon(data.toString()));
 		}
 
-		m_flags |= IsOverridingIconFlag;
+		m_flags |= HasCustomIconFlag;
 	}
 
 	if (options.contains(QLatin1String("text")))
 	{
 		m_overrideText = options[QLatin1String("text")].toString();
 
-		m_flags |= IsOverridingTextFlag;
+		m_flags |= HasCustomTextFlag;
 
 		setState(getState());
 	}
@@ -164,7 +164,7 @@ void Action::handleCategorizedActionsStateChanged(const QVector<int> &categories
 
 void Action::updateIcon()
 {
-	if (m_flags.testFlag(IsOverridingIconFlag))
+	if (m_flags.testFlag(HasCustomIconFlag))
 	{
 		return;
 	}
@@ -212,7 +212,7 @@ void Action::updateState()
 		state.isEnabled = false;
 	}
 
-	if (m_flags.testFlag(IsOverridingTextFlag))
+	if (m_flags.testFlag(HasCustomTextFlag))
 	{
 		state.text = QCoreApplication::translate("actions", m_overrideText.toUtf8().constData());
 	}
@@ -288,7 +288,7 @@ void Action::setState(const ActionsManager::ActionDefinition::State &state)
 	setEnabled(state.isEnabled);
 	setChecked(state.isChecked);
 
-	if (!m_flags.testFlag(IsOverridingIconFlag))
+	if (!m_flags.testFlag(HasCustomIconFlag))
 	{
 		setIcon(state.icon);
 	}
@@ -304,7 +304,7 @@ ActionsManager::ActionDefinition::State Action::getState() const
 	ActionsManager::ActionDefinition::State state;
 	state.statusTip = statusTip();
 	state.toolTip = toolTip();
-	state.text = (m_flags.testFlag(IsOverridingTextFlag) ? QCoreApplication::translate("actions", m_overrideText.toUtf8().constData()) : getDefinition().getText());
+	state.text = (m_flags.testFlag(HasCustomTextFlag) ? QCoreApplication::translate("actions", m_overrideText.toUtf8().constData()) : getDefinition().getText());
 	state.icon = icon();
 	state.isEnabled = isEnabled();
 	state.isChecked = isChecked();
