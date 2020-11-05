@@ -291,7 +291,7 @@ void ContentBlockingProfileDialog::handleJobFinished(bool isSuccess)
 
 	file.close();
 
-	if (information.error != ContentFiltersProfile::NoError)
+	if (information.hasError())
 	{
 		Console::addMessage(information.errorString, Console::OtherCategory, Console::ErrorLevel, file.fileName());
 

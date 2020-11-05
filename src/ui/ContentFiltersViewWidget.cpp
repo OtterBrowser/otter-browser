@@ -420,7 +420,7 @@ void ContentFiltersViewWidget::importProfileFromFile()
 
 	file.close();
 
-	if (information.error != ContentFiltersProfile::NoError)
+	if (information.hasError())
 	{
 		QMessageBox::critical(this, tr("Error"), information.errorString);
 

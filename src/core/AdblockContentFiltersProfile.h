@@ -50,6 +50,11 @@ public:
 		QString errorString;
 		QUrl updateUrl;
 		ProfileError error = NoError;
+
+		bool hasError() const
+		{
+			return (error != NoError);
+		}
 	};
 
 	explicit AdblockContentFiltersProfile(const ProfileSummary &profileSummary, const QStringList &languages, ProfileFlags flags, QObject *parent = nullptr);

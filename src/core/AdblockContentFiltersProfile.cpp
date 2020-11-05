@@ -104,7 +104,7 @@ void AdblockContentFiltersProfile::loadHeader()
 
 	file.close();
 
-	if (information.error != NoError)
+	if (information.hasError())
 	{
 		raiseError(information.errorString, information.error);
 
@@ -597,7 +597,7 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 
 	buffer.reset();
 
-	if (information.error != NoError)
+	if (information.hasError())
 	{
 		raiseError(information.errorString, information.error);
 
