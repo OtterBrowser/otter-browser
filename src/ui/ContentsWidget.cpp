@@ -188,14 +188,14 @@ void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters
 					BookmarkPropertiesDialog dialog(BookmarksManager::getBookmark(url), this);
 					dialog.exec();
 				}
-				else if (!parameters.value(QLatin1String("showDialog"), true).toBool())
-				{
-					BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, url}, {BookmarksModel::TitleRole, parameters.value(QLatin1String("title"), getTitle()).toString()}, {BookmarksModel::DescriptionRole, parameters.value(QLatin1String("description"), getDescription()).toString()}}, BookmarksManager::getLastUsedFolder());
-				}
-				else
+				else if (parameters.value(QLatin1String("showDialog"), true).toBool())
 				{
 					BookmarkPropertiesDialog dialog(url, parameters.value(QLatin1String("title"), getTitle()).toString(), parameters.value(QLatin1String("description"), getDescription()).toString(), nullptr, -1, true, this);
 					dialog.exec();
+				}
+				else
+				{
+					BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, url}, {BookmarksModel::TitleRole, parameters.value(QLatin1String("title"), getTitle()).toString()}, {BookmarksModel::DescriptionRole, parameters.value(QLatin1String("description"), getDescription()).toString()}}, BookmarksManager::getLastUsedFolder());
 				}
 			}
 
