@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,8 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksModel::Bookmark *boo
 	m_ui(new Ui::BookmarkPropertiesDialog)
 {
 	const BookmarksModel::BookmarkType type(bookmark->getType());
-	const bool isUrl(type == BookmarksModel::FeedBookmark || type == BookmarksModel::UrlBookmark);
+	const bool isFeed(type == BookmarksModel::FeedBookmark);
+	const bool isUrl(isFeed || type == BookmarksModel::UrlBookmark);
 
 	m_ui->setupUi(this);
 	m_ui->folderComboBox->setCurrentFolder(bookmark->getParent());
@@ -50,7 +51,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksModel::Bookmark *boo
 	m_ui->addedLabelWidget->setText(m_bookmark->getTimeAdded().isValid() ? Utils::formatDateTime(m_bookmark->getTimeAdded()) : tr("Unknown"));
 	m_ui->modifiedLabelWidget->setText(m_bookmark->getTimeModified().isValid() ? Utils::formatDateTime(m_bookmark->getTimeModified()) : tr("Unknown"));
 
-	if (type == BookmarksModel::FeedBookmark)
+	if (isFeed)
 	{
 		m_ui->lastVisitLabel->hide();
 		m_ui->lastVisitLabelWidget->hide();
