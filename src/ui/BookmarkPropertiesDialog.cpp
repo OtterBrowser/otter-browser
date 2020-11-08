@@ -133,6 +133,15 @@ void BookmarkPropertiesDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+
+		if (m_bookmark)
+		{
+			setWindowTitle(m_bookmark->data(BookmarksModel::IsTrashedRole).toBool() ? tr("View Bookmark") : tr("Edit Bookmark"));
+		}
+		else
+		{
+			setWindowTitle(tr("Add Bookmark"));
+		}
 	}
 }
 
