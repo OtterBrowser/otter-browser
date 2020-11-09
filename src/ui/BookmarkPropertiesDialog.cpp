@@ -21,7 +21,6 @@
 #include "BookmarkPropertiesDialog.h"
 #include "BookmarksComboBoxWidget.h"
 #include "../core/BookmarksManager.h"
-#include "../core/Utils.h"
 
 #include "ui_BookmarkPropertiesDialog.h"
 
@@ -48,8 +47,8 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksModel::Bookmark *boo
 	m_ui->addressLabel->setVisible(isUrl);
 	m_ui->descriptionTextEditWidget->setPlainText(m_bookmark->getDescription());
 	m_ui->keywordLineEditWidget->setText(m_bookmark->getKeyword());
-	m_ui->addedLabelWidget->setText(m_bookmark->getTimeAdded().isValid() ? Utils::formatDateTime(m_bookmark->getTimeAdded()) : tr("Unknown"));
-	m_ui->modifiedLabelWidget->setText(m_bookmark->getTimeModified().isValid() ? Utils::formatDateTime(m_bookmark->getTimeModified()) : tr("Unknown"));
+	m_ui->addedLabelWidget->setDateTime(m_bookmark->getTimeAdded());
+	m_ui->modifiedLabelWidget->setDateTime(m_bookmark->getTimeModified());
 
 	if (isFeed)
 	{
@@ -60,7 +59,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksModel::Bookmark *boo
 	}
 	else if (isUrl)
 	{
-		m_ui->lastVisitLabelWidget->setText(m_bookmark->getTimeVisited().isValid() ? Utils::formatDateTime(m_bookmark->getTimeVisited()) : tr("Unknown"));
+		m_ui->lastVisitLabelWidget->setDateTime(m_bookmark->getTimeVisited());
 		m_ui->visitsLabelWidget->setText(QString::number(m_bookmark->getVisits()));
 	}
 	else

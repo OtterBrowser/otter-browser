@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,43 +17,29 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_TEXTLABELWIDGET_H
-#define OTTER_TEXTLABELWIDGET_H
+#ifndef OTTER_DATETIMETEXTLABELWIDGET_H
+#define OTTER_DATETIMETEXTLABELWIDGET_H
 
-#include <QtCore/QUrl>
-#include <QtWidgets/QLineEdit>
+#include "TextLabelWidget.h"
+
+#include <QtCore/QDateTime>
 
 namespace Otter
 {
 
-class TextLabelWidget : public QLineEdit
+class DateTimeTextLabelWidget final : public TextLabelWidget
 {
 	Q_OBJECT
 
 public:
-	explicit TextLabelWidget(QWidget *parent = nullptr);
-
-	QSize sizeHint() const override;
-	bool event(QEvent *event) override;
+	explicit DateTimeTextLabelWidget(QWidget *parent = nullptr);
 
 public slots:
 	void clear();
-	void setText(const QString &text);
-	void setUrl(const QUrl &url);
-
-protected:
-	void mousePressEvent(QMouseEvent *event) override;
-	void mouseReleaseEvent(QMouseEvent *event) override;
-	void contextMenuEvent(QContextMenuEvent *event) override;
-	void updateStyle();
-
-protected slots:
-	void copyUrl();
+	void setDateTime(const QDateTime &dateTime);
 
 private:
-	QUrl m_url;
-	QPoint m_dragStartPosition;
-	bool m_isEmpty;
+	QDateTime m_dateTime;
 };
 
 }

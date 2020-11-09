@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,45 +17,28 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_TEXTLABELWIDGET_H
-#define OTTER_TEXTLABELWIDGET_H
-
-#include <QtCore/QUrl>
-#include <QtWidgets/QLineEdit>
+#include "DateTimeTextLabelWidget.h"
+#include "../core/Utils.h"
 
 namespace Otter
 {
 
-class TextLabelWidget : public QLineEdit
+DateTimeTextLabelWidget::DateTimeTextLabelWidget(QWidget *parent) : TextLabelWidget(parent)
 {
-	Q_OBJECT
-
-public:
-	explicit TextLabelWidget(QWidget *parent = nullptr);
-
-	QSize sizeHint() const override;
-	bool event(QEvent *event) override;
-
-public slots:
-	void clear();
-	void setText(const QString &text);
-	void setUrl(const QUrl &url);
-
-protected:
-	void mousePressEvent(QMouseEvent *event) override;
-	void mouseReleaseEvent(QMouseEvent *event) override;
-	void contextMenuEvent(QContextMenuEvent *event) override;
-	void updateStyle();
-
-protected slots:
-	void copyUrl();
-
-private:
-	QUrl m_url;
-	QPoint m_dragStartPosition;
-	bool m_isEmpty;
-};
-
 }
 
-#endif
+void DateTimeTextLabelWidget::clear()
+{
+	m_dateTime = {};
+
+	TextLabelWidget::clear();
+}
+
+void DateTimeTextLabelWidget::setDateTime(const QDateTime &dateTime)
+{
+	m_dateTime = dateTime;
+
+	setText(dateTime.isValid() ? Utils::formatDateTime(dateTime) : tr("Unknown"));
+}
+
+}

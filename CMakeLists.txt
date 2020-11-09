@@ -158,6 +158,7 @@ set(otter_src
 	src/ui/ContentsDialog.cpp
 	src/ui/ContentsWidget.cpp
 	src/ui/CookiePropertiesDialog.cpp
+	src/ui/DateTimeTextLabelWidget.cpp
 	src/ui/Dialog.cpp
 	src/ui/FeedPropertiesDialog.cpp
 	src/ui/FeedsComboBoxWidget.cpp
