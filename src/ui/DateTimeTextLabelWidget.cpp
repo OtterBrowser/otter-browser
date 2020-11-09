@@ -20,11 +20,23 @@
 #include "DateTimeTextLabelWidget.h"
 #include "../core/Utils.h"
 
+#include <QtCore/QEvent>
+
 namespace Otter
 {
 
 DateTimeTextLabelWidget::DateTimeTextLabelWidget(QWidget *parent) : TextLabelWidget(parent)
 {
+}
+
+void DateTimeTextLabelWidget::changeEvent(QEvent *event)
+{
+	TextLabelWidget::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		setDateTime(m_dateTime);
+	}
 }
 
 void DateTimeTextLabelWidget::clear()

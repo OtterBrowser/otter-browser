@@ -38,6 +38,9 @@ public slots:
 	void clear();
 	void setDateTime(const QDateTime &dateTime);
 
+protected:
+	void changeEvent(QEvent *event) override;
+
 private:
 	QDateTime m_dateTime;
 };
