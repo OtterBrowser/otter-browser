@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "DateTimeTextLabelWidget.h"
+#include "../core/HistoryManager.h"
 #include "../core/Utils.h"
 
 #include <QtCore/QEvent>
@@ -27,6 +28,10 @@ namespace Otter
 
 DateTimeTextLabelWidget::DateTimeTextLabelWidget(QWidget *parent) : TextLabelWidget(parent)
 {
+	connect(HistoryManager::getInstance(), &HistoryManager::dayChanged, [&]()
+	{
+		setDateTime(m_dateTime);
+	});
 }
 
 void DateTimeTextLabelWidget::changeEvent(QEvent *event)
