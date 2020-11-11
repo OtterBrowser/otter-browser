@@ -55,7 +55,16 @@ void DateTimeTextLabelWidget::setDateTime(const QDateTime &dateTime)
 {
 	m_dateTime = dateTime;
 
-	setText(dateTime.isValid() ? Utils::formatDateTime(dateTime) : tr("Unknown"));
+	if (dateTime.isValid())
+	{
+		setText(Utils::formatDateTime(dateTime));
+		setToolTip(Utils::formatDateTime(dateTime, {}, false));
+	}
+	else
+	{
+		setText(tr("Unknown"));
+		setToolTip({});
+	}
 }
 
 }
