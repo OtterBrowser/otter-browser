@@ -19,6 +19,7 @@
 
 #include "DateTimeTextLabelWidget.h"
 #include "../core/HistoryManager.h"
+#include "../core/SettingsManager.h"
 #include "../core/Utils.h"
 
 #include <QtCore/QEvent>
@@ -31,6 +32,13 @@ DateTimeTextLabelWidget::DateTimeTextLabelWidget(QWidget *parent) : TextLabelWid
 	connect(HistoryManager::getInstance(), &HistoryManager::dayChanged, [&]()
 	{
 		setDateTime(m_dateTime);
+	});
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, [&](int identifier)
+	{
+		if (identifier == SettingsManager::Interface_UseFancyDateTimeFormatOption && m_dateTime.isValid())
+		{
+			setDateTime(m_dateTime);
+		}
 	});
 }
 
