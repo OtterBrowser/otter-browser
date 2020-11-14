@@ -531,6 +531,7 @@ void ActionsManager::loadProfiles()
 				}
 
 				shortcuts.reserve(shortcuts.count() + definition.shortcuts.count());
+				allShortcuts.reserve(allShortcuts.count() + definition.shortcuts.count());
 
 				for (int k = 0; k < definition.shortcuts.count(); ++k)
 				{
