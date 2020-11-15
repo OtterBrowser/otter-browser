@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@
 
 #include "../../../../core/TransfersManager.h"
 
-#include <QtWebEngineCore/QtWebEngineCoreVersion>
 #include <QtWebEngineWidgets/QWebEngineDownloadItem>
 
 namespace Otter
@@ -49,9 +48,6 @@ public slots:
 
 private:
 	QPointer<QWebEngineDownloadItem> m_item;
-#if QTWEBENGINECORE_VERSION < 0x050E00
-	QString m_suggestedFileName;
-#endif
 };
 
 }

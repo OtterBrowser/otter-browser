@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -21,14 +21,11 @@
 #include "QtWebEngineWebBackend.h"
 #include "QtWebEnginePage.h"
 #include "QtWebEngineTransfer.h"
-#include "QtWebEngineUrlRequestInterceptor.h"
 #include "QtWebEngineWebWidget.h"
 #include "../../../../core/ContentFiltersManager.h"
 #include "../../../../core/HandlersManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 #include "../../../../core/NotificationsManager.h"
-#endif
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/TransfersManager.h"
 #include "../../../../core/Utils.h"
@@ -48,9 +45,6 @@ QHash<QString, QString> QtWebEngineWebBackend::m_userAgentComponents;
 QMap<QString, QString> QtWebEngineWebBackend::m_userAgents;
 
 QtWebEngineWebBackend::QtWebEngineWebBackend(QObject *parent) : WebBackend(parent),
-#if QTWEBENGINECORE_VERSION < 0x050D00
-	m_requestInterceptor(nullptr),
-#endif
 	m_isInitialized(false)
 {
 	const QString userAgent(QWebEngineProfile::defaultProfile()->httpUserAgent());
@@ -195,7 +189,6 @@ void QtWebEngineWebBackend::handleOptionChanged(int identifier)
 	}
 }
 
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 void QtWebEngineWebBackend::showNotification(std::unique_ptr<QWebEngineNotification> nativeNotification)
 {
 	Notification::Message message;
@@ -220,7 +213,6 @@ void QtWebEngineWebBackend::showNotification(std::unique_ptr<QWebEngineNotificat
 	connect(notification, &Notification::ignored, nativeNotification.get(), &QWebEngineNotification::close);
 	connect(nativeNotification.get(), &QWebEngineNotification::closed, notification, &Notification::requestClose);
 }
-#endif
 
 WebWidget* QtWebEngineWebBackend::createWidget(const QVariantMap &parameters, ContentsWidget *parent)
 {
@@ -230,18 +222,10 @@ WebWidget* QtWebEngineWebBackend::createWidget(const QVariantMap &parameters, Co
 
 		ContentFiltersManager::initialize();
 
-#if QTWEBENGINECORE_VERSION < 0x050D00
-		m_requestInterceptor = new QtWebEngineUrlRequestInterceptor(this);
-#endif
-
 		QWebEngineProfile::defaultProfile()->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
 		QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 		QWebEngineProfile::defaultProfile()->setDownloadPath(SettingsManager::getOption(SettingsManager::Paths_DownloadsOption).toString());
 		QWebEngineProfile::defaultProfile()->setNotificationPresenter(&QtWebEngineWebBackend::showNotification);
-#else
-		QWebEngineProfile::defaultProfile()->setRequestInterceptor(m_requestInterceptor);
-#endif
 
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::DnsPrefetchEnabled, SettingsManager::getOption(SettingsManager::Network_EnableDnsPrefetchOption).toBool());
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
@@ -326,13 +310,6 @@ QString QtWebEngineWebBackend::getUserAgent(const QString &pattern) const
 
 	return ((userAgent.isEmpty()) ? QString() : getUserAgent(userAgent));
 }
-
-#if QTWEBENGINECORE_VERSION < 0x050D00
-QStringList QtWebEngineWebBackend::getBlockedElements(const QString &domain) const
-{
-	return (m_requestInterceptor ? m_requestInterceptor->getBlockedElements(domain) : QStringList());
-}
-#endif
 
 QUrl QtWebEngineWebBackend::getHomePage() const
 {

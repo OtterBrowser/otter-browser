@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,9 +19,7 @@
 
 #include "QtWebEngineTransfer.h"
 
-#if QTWEBENGINECORE_VERSION >= 0x050E00
 #include <QtCore/QDir>
-#endif
 #include <QtCore/QFileInfo>
 #include <QtCore/QMimeDatabase>
 
@@ -30,9 +28,6 @@ namespace Otter
 
 QtWebEngineTransfer::QtWebEngineTransfer(QWebEngineDownloadItem *item, TransferOptions options, QObject *parent) : Transfer(options, parent),
 	m_item(item)
-#if QTWEBENGINECORE_VERSION < 0x050E00
-	, m_suggestedFileName(QFileInfo(item->path()).fileName())
-#endif
 {
 	m_item->accept();
 	m_item->setParent(this);
@@ -84,16 +79,12 @@ QUrl QtWebEngineTransfer::getSource() const
 
 QString QtWebEngineTransfer::getSuggestedFileName()
 {
-#if QTWEBENGINECORE_VERSION >= 0x050E00
 	if (!m_item)
 	{
 		return {};
 	}
 
 	return m_item->suggestedFileName();
-#else
-	return m_suggestedFileName;
-#endif
 }
 
 QString QtWebEngineTransfer::getTarget() const
@@ -103,11 +94,7 @@ QString QtWebEngineTransfer::getTarget() const
 		return Transfer::getTarget();
 	}
 
-#if QTWEBENGINECORE_VERSION >= 0x050E00
 	return QDir(m_item->downloadDirectory()).absoluteFilePath(m_item->downloadFileName());
-#else
-	return m_item->path();
-#endif
 }
 
 QMimeType QtWebEngineTransfer::getMimeType() const
@@ -170,14 +157,10 @@ bool QtWebEngineTransfer::setTarget(const QString &target, bool canOverwriteExis
 		return Transfer::setTarget(target, canOverwriteExisting);
 	}
 
-#if QTWEBENGINECORE_VERSION >= 0x050E00
 	QFileInfo fileInformation(target);
 
 	m_item->setDownloadDirectory(fileInformation.path());
 	m_item->setDownloadFileName(fileInformation.fileName());
-#else
-	m_item->setPath(target);
-#endif
 
 	return true;
 }

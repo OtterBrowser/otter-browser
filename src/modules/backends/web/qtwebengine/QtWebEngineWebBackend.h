@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -23,10 +23,7 @@
 
 #include "../../../../core/WebBackend.h"
 
-#include <QtWebEngineCore/QtWebEngineCoreVersion>
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 #include <QtWebEngineCore/QWebEngineNotification>
-#endif
 #include <QtWebEngineWidgets/QWebEngineDownloadItem>
 
 #include <memory>
@@ -52,26 +49,18 @@ public:
 	QString getEngineVersion() const override;
 	QString getSslVersion() const override;
 	QString getUserAgent(const QString &pattern = {}) const override;
-#if QTWEBENGINECORE_VERSION < 0x050D00
-	QStringList getBlockedElements(const QString &domain) const;
-#endif
 	QUrl getHomePage() const override;
 	WebBackend::BackendCapabilities getCapabilities() const override;
 	bool hasSslSupport() const override;
 
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 protected:
 	static void showNotification(std::unique_ptr<QWebEngineNotification> nativeNotification);
-#endif
 
 protected slots:
 	void handleDownloadRequested(QWebEngineDownloadItem *item);
 	void handleOptionChanged(int identifier);
 
 private:
-#if QTWEBENGINECORE_VERSION < 0x050D00
-	QtWebEngineUrlRequestInterceptor *m_requestInterceptor;
-#endif
 	bool m_isInitialized;
 
 	static QString m_engineVersion;

@@ -23,7 +23,6 @@
 #include "../../../../ui/WebWidget.h"
 
 #include <QtNetwork/QNetworkReply>
-#include <QtWebEngineCore/QtWebEngineCoreVersion>
 #include <QtWebEngineWidgets/QWebEngineFullScreenRequest>
 #include <QtWebEngineWidgets/QWebEngineView>
 
@@ -80,18 +79,14 @@ public:
 	LinkUrl getActiveImage() const override;
 	LinkUrl getActiveLink() const override;
 	LinkUrl getActiveMedia() const override;
-#if QTWEBENGINECORE_VERSION >= 0x050E00
 	SslInformation getSslInformation() const override;
-#endif
 	Session::Window::History getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;
 	QStringList getStyleSheets() const override;
 	QVector<LinkUrl> getFeeds() const override;
 	QVector<LinkUrl> getLinks() const override;
 	QVector<LinkUrl> getSearchEngines() const override;
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 	QVector<NetworkManager::ResourceInformation> getBlockedRequests() const override;
-#endif
 	QMultiMap<QString, QString> getMetaData() const override;
 	LoadingState getLoadingState() const override;
 	int getZoom() const override;
@@ -131,9 +126,7 @@ protected:
 	QWebEnginePage* getPage() const;
 	QString parsePosition(const QString &script, const QPoint &position) const;
 	QDateTime getLastUrlClickTime() const;
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 	QStringList getBlockedElements() const;
-#endif
 	QVector<LinkUrl> processLinks(const QVariantList &rawLinks) const;
 	bool canGoBack() const override;
 	bool canGoForward() const override;
@@ -167,12 +160,8 @@ private:
 	QWebEngineView *m_webView;
 	QWebEngineView *m_inspectorView;
 	QtWebEnginePage *m_page;
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 	QtWebEngineUrlRequestInterceptor *m_requestInterceptor;
-#endif
-#if QTWEBENGINECORE_VERSION >= 0x050E00
 	QString m_findInPageText;
-#endif
 	QDateTime m_lastUrlClickTime;
 	QPixmap m_thumbnail;
 	HitTestResult m_hitResult;

@@ -19,9 +19,7 @@
 
 #include "QtWebEngineWebWidget.h"
 #include "QtWebEnginePage.h"
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 #include "QtWebEngineUrlRequestInterceptor.h"
-#endif
 #include "../../../../core/Application.h"
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
@@ -54,9 +52,7 @@
 #include <QtGui/QImageWriter>
 #include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtWebEngineCore/QWebEngineCookieStore>
-#if QTWEBENGINECORE_VERSION >= 0x050E00
 #include <QtWebEngineCore/QWebEngineFindTextResult>
-#endif
 #include <QtWebEngineWidgets/QWebEngineHistory>
 #include <QtWebEngineWidgets/QWebEngineProfile>
 #include <QtWebEngineWidgets/QWebEngineScript>
@@ -71,9 +67,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	m_webView(nullptr),
 	m_inspectorView(nullptr),
 	m_page(new QtWebEnginePage(SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen), this)),
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 	m_requestInterceptor(new QtWebEngineUrlRequestInterceptor(this)),
-#endif
 	m_loadingState(FinishedLoadingState),
 	m_canGoForwardValue(UnknownValue),
 	m_documentLoadingProgress(0),
@@ -85,9 +79,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 {
 	setFocusPolicy(Qt::StrongFocus);
 
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 	m_page->setUrlRequestInterceptor(m_requestInterceptor);
-#endif
 
 	connect(m_page, &QtWebEnginePage::loadProgress, [&](int progress)
 	{
@@ -115,12 +107,10 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	{
 		notifyPermissionRequested(url, feature, true);
 	});
-#if QTWEBENGINECORE_VERSION >= 0x050E00
 	connect(m_page, &QtWebEnginePage::findTextFinished, [&](const QWebEngineFindTextResult &result)
 	{
 		emit findInPageResultsChanged(m_findInPageText, result.numberOfMatches(), result.activeMatch());
 	});
-#endif
 	connect(m_page, &QtWebEnginePage::recentlyAudibleChanged, this, &QtWebEngineWebWidget::isAudibleChanged);
 	connect(m_page, &QtWebEnginePage::viewingMediaChanged, this, &QtWebEngineWebWidget::notifyNavigationActionsChanged);
 	connect(m_page, &QtWebEnginePage::titleChanged, this, &QtWebEngineWebWidget::notifyTitleChanged);
@@ -128,11 +118,9 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	connect(m_page, &QtWebEnginePage::renderProcessTerminated, this, &QtWebEngineWebWidget::notifyRenderProcessTerminated);
 	connect(m_page->action(QWebEnginePage::Redo), &QAction::changed, this, &QtWebEngineWebWidget::notifyRedoActionStateChanged);
 	connect(m_page->action(QWebEnginePage::Undo), &QAction::changed, this, &QtWebEngineWebWidget::notifyUndoActionStateChanged);
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 	connect(m_page, &QtWebEnginePage::aboutToNavigate, m_requestInterceptor, &QtWebEngineUrlRequestInterceptor::resetStatistics);
 	connect(m_requestInterceptor, &QtWebEngineUrlRequestInterceptor::pageInformationChanged, this, &QtWebEngineWebWidget::pageInformationChanged);
 	connect(m_requestInterceptor, &QtWebEngineUrlRequestInterceptor::requestBlocked, this, &QtWebEngineWebWidget::requestBlocked);
-#endif
 }
 
 void QtWebEngineWebWidget::timerEvent(QTimerEvent *event)
@@ -853,17 +841,11 @@ void QtWebEngineWebWidget::clearOptions()
 
 void QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
 {
-#if QTWEBENGINECORE_VERSION >= 0x050E00
 	m_findInPageText = text;
-#endif
 
 	if (text.isEmpty())
 	{
 		m_page->findText(text);
-
-#if QTWEBENGINECORE_VERSION <= 0x050E00
-		emit findInPageResultsChanged(text, 0, 0);
-#endif
 
 		return;
 	}
@@ -880,14 +862,7 @@ void QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
 		nativeFlags |= QWebEnginePage::FindCaseSensitively;
 	}
 
-#if QTWEBENGINECORE_VERSION >= 0x050E00
 	m_page->findText(text, nativeFlags);
-#else
-	m_page->findText(text, nativeFlags, [&](bool hasMatches)
-	{
-		emit findInPageResultsChanged(text, (hasMatches ? -1 : 0), (hasMatches ? -1 : 0));
-	});
-#endif
 }
 
 void QtWebEngineWebWidget::search(const QString &query, const QString &searchEngine)
@@ -1213,10 +1188,6 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 	settings->setAttribute(QWebEngineSettings::WebGLEnabled, getOption(SettingsManager::Permissions_EnableWebglOption, url).toBool());
 	settings->setDefaultTextEncoding((encoding == QLatin1String("auto")) ? QString() : encoding);
 
-#if QTWEBENGINECORE_VERSION < 0x050D00
-	m_page->profile()->setHttpUserAgent(getBackend()->getUserAgent(NetworkManagerFactory::getUserAgent(getOption(SettingsManager::Network_UserAgentOption, url).toString()).value));
-#endif
-
 	disconnect(m_page, &QtWebEnginePage::geometryChangeRequested, this, &QtWebEngineWebWidget::requestedGeometryChange);
 
 	if (getOption(SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption, url).toBool())
@@ -1224,9 +1195,7 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 		connect(m_page, &QtWebEnginePage::geometryChangeRequested, this, &QtWebEngineWebWidget::requestedGeometryChange);
 	}
 
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 	m_requestInterceptor->updateOptions(url);
-#endif
 }
 
 void QtWebEngineWebWidget::updateWatchedData(ChangeWatcher watcher)
@@ -1557,9 +1526,7 @@ QVariant QtWebEngineWebWidget::getPageInformation(PageInformation key) const
 			return m_documentLoadingProgress;
 		case RequestsBlockedInformation:
 		case RequestsStartedInformation:
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 			return m_requestInterceptor->getPageInformation(key);
-#endif
 		case RequestsFinishedInformation:
 			return -1;
 		default:
@@ -1636,12 +1603,10 @@ QDateTime QtWebEngineWebWidget::getLastUrlClickTime() const
 	return m_lastUrlClickTime;
 }
 
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 QStringList QtWebEngineWebWidget::getBlockedElements() const
 {
 	return m_requestInterceptor->getBlockedElements();
 }
-#endif
 
 QPoint QtWebEngineWebWidget::getScrollPosition() const
 {
@@ -1701,12 +1666,10 @@ WebWidget::LinkUrl QtWebEngineWebWidget::getActiveMedia() const
 	return link;
 }
 
-#if QTWEBENGINECORE_VERSION >= 0x050E00
 WebWidget::SslInformation QtWebEngineWebWidget::getSslInformation() const
 {
 	return m_page->getSslInformation();
 }
-#endif
 
 Session::Window::History QtWebEngineWebWidget::getHistory() const
 {
@@ -1765,12 +1728,10 @@ QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getSearchEngines() const
 	return m_searchEngines;
 }
 
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 QVector<NetworkManager::ResourceInformation> QtWebEngineWebWidget::getBlockedRequests() const
 {
 	return m_requestInterceptor->getBlockedRequests();
 }
-#endif
 
 QMultiMap<QString, QString> QtWebEngineWebWidget::getMetaData() const
 {

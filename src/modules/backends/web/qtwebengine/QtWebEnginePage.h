@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -24,10 +24,7 @@
 #include "../../../../core/SessionsManager.h"
 #include "../../../../ui/WebWidget.h"
 
-#include <QtWebEngineCore/QtWebEngineCoreVersion>
-#if QTWEBENGINECORE_VERSION >= 0x050E00
 #include <QtWebEngineWidgets/QWebEngineCertificateError>
-#endif
 #include <QtWebEngineWidgets/QWebEnginePage>
 
 namespace Otter
@@ -58,9 +55,7 @@ public:
 	QString createScriptSource(const QString &path, const QStringList &parameters = {}) const;
 	QVariant runScriptSource(const QString &script);
 	QVariant runScriptFile(const QString &path, const QStringList &parameters = {});
-#if QTWEBENGINECORE_VERSION >= 0x050E00
 	WebWidget::SslInformation getSslInformation() const;
-#endif
 	Session::Window::History getHistory() const;
 	bool isPopup() const;
 	bool isViewingMedia() const;
@@ -74,9 +69,7 @@ protected:
 	QString createJavaScriptList(const QStringList &rules) const;
 	QStringList chooseFiles(FileSelectionMode mode, const QStringList &oldFiles, const QStringList &acceptedMimeTypes) override;
 	bool acceptNavigationRequest(const QUrl &url, NavigationType type, bool isMainFrame) override;
-#if QTWEBENGINECORE_VERSION >= 0x050E00
 	bool certificateError(const QWebEngineCertificateError &error) override;
-#endif
 	bool javaScriptConfirm(const QUrl &url, const QString &message) override;
 	bool javaScriptPrompt(const QUrl &url, const QString &message, const QString &defaultValue, QString *result) override;
 
@@ -86,9 +79,7 @@ protected slots:
 
 private:
 	QtWebEngineWebWidget *m_widget;
-#if QTWEBENGINECORE_VERSION >= 0x050E00
 	WebWidget::SslInformation m_sslInformation;
-#endif
 	QVector<QtWebEnginePage*> m_popups;
 	QVector<HistoryEntryInformation> m_history;
 	NavigationType m_previousNavigationType;

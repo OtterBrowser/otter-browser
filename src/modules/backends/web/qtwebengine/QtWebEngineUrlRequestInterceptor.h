@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -25,17 +25,11 @@
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 
-#if QTWEBENGINECORE_VERSION < 0x050D00
-#include <QtCore/QMap>
-#include <QtCore/QVector>
-#endif
-#include <QtWebEngineCore/QtWebEngineCoreVersion>
 #include <QtWebEngineCore/QWebEngineUrlRequestInterceptor>
 
 namespace Otter
 {
 
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 class QtWebEngineUrlRequestInterceptor final : public QWebEngineUrlRequestInterceptor
 {
 	Q_OBJECT
@@ -76,31 +70,7 @@ signals:
 
 friend class QtWebEngineWebWidget;
 };
-#else
-class QtWebEngineUrlRequestInterceptor final : public QWebEngineUrlRequestInterceptor
-{
-	Q_OBJECT
 
-public:
-	explicit QtWebEngineUrlRequestInterceptor(QObject *parent = nullptr);
-
-	void interceptRequest(QWebEngineUrlRequestInfo &request) override;
-	QStringList getBlockedElements(const QString &domain) const;
-
-protected:
-	void timerEvent(QTimerEvent *event) override;
-	void clearContentBlockingInformation();
-
-protected slots:
-	void handleOptionChanged(int identifier);
-
-private:
-	QMap<QString, QStringList> m_blockedElements;
-	QMap<QString, QVector<int> > m_contentBlockingProfiles;
-	int m_clearTimer;
-	bool m_areImagesEnabled;
-};
-#endif
 }
 
 #endif

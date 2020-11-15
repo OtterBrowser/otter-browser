@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -184,11 +184,7 @@ void QtWebEnginePage::handleLoadFinished()
 				}
 			}
 
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 			const QStringList blockedRequests(m_widget->getBlockedElements());
-#else
-			const QStringList blockedRequests(qobject_cast<QtWebEngineWebBackend*>(m_widget->getBackend())->getBlockedElements(url.host()));
-#endif
 
 			if (!blockedRequests.isEmpty())
 			{
@@ -404,12 +400,10 @@ QVariant QtWebEnginePage::runScriptFile(const QString &path, const QStringList &
 	return runScriptSource(createScriptSource(path, parameters));
 }
 
-#if QTWEBENGINECORE_VERSION >= 0x050E00
 WebWidget::SslInformation QtWebEnginePage::getSslInformation() const
 {
 	return m_sslInformation;
 }
-#endif
 
 Session::Window::History QtWebEnginePage::getHistory() const
 {
@@ -535,9 +529,7 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType ty
 		}
 	}
 
-#if QTWEBENGINECORE_VERSION >= 0x050E00
 	m_sslInformation = {};
-#endif
 
 	if (type != NavigationTypeReload)
 	{
@@ -597,7 +589,6 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType ty
 	return true;
 }
 
-#if QTWEBENGINECORE_VERSION >= 0x050E00
 bool QtWebEnginePage::certificateError(const QWebEngineCertificateError &error)
 {
 	if (!m_widget || error.certificateChain().isEmpty())
@@ -628,7 +619,6 @@ bool QtWebEnginePage::certificateError(const QWebEngineCertificateError &error)
 
 	return false;
 }
-#endif
 
 bool QtWebEnginePage::javaScriptConfirm(const QUrl &url, const QString &message)
 {
