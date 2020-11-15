@@ -405,7 +405,7 @@ if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 		src/modules/backends/web/qtwebkit/3rdparty/qtftp/qurlinfo.cpp
 	)
 
-	if (HUNSPELL_FOUND AND ENABLE_SPELLCHECK)
+	if (Hunspell_FOUND AND ENABLE_SPELLCHECK)
 		set(otter_src
 			${otter_src}
 			src/modules/backends/web/qtwebkit/QtWebKitSpellChecker.cpp
@@ -457,9 +457,9 @@ if (ENABLE_CRASHREPORTS)
 	endif ()
 endif ()
 
-if (HUNSPELL_FOUND AND ENABLE_SPELLCHECK)
+if (Hunspell_FOUND AND ENABLE_SPELLCHECK)
 	add_definitions(-DOTTER_ENABLE_SPELLCHECK)
-	include_directories(${HUNSPELL_INCLUDE_DIR})
+	include_directories(${Hunspell_INCLUDE_DIR})
 
 	set(otter_src
 		${otter_src}
@@ -552,8 +552,8 @@ if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 	target_link_libraries(otter-browser Qt5::WebKit Qt5::WebKitWidgets)
 endif ()
 
-if (HUNSPELL_FOUND AND ENABLE_SPELLCHECK)
-	target_link_libraries(otter-browser ${HUNSPELL_LIBRARIES})
+if (Hunspell_FOUND AND ENABLE_SPELLCHECK)
+	target_link_libraries(otter-browser ${Hunspell_LIBRARIES})
 endif ()
 
 if (WIN32)

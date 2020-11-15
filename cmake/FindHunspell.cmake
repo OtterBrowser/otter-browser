@@ -1,22 +1,22 @@
 # - Try to find Hunspell
 # Once done this will define
 #
-#  HUNSPELL_FOUND - system has HUNSPELL
-#  HUNSPELL_INCLUDE_DIR - the HUNSPELL include directory
-#  HUNSPELL_LIBRARIES - The libraries needed to use HUNSPELL
-#  HUNSPELL_DEFINITIONS - Compiler switches required for using HUNSPELL
+#  Hunspell_FOUND - system has Hunspell
+#  Hunspell_INCLUDE_DIR - the Hunspell include directory
+#  Hunspell_LIBRARIES - The libraries needed to use Hunspell
+#  Hunspell_DEFINITIONS - Compiler switches required for using Hunspell
 
-IF (HUNSPELL_INCLUDE_DIR AND HUNSPELL_LIBRARIES)
+IF (Hunspell_INCLUDE_DIR AND Hunspell_LIBRARIES)
   # Already in cache, be silent
-  SET(HUNSPELL_FIND_QUIETLY TRUE)
-ENDIF (HUNSPELL_INCLUDE_DIR AND HUNSPELL_LIBRARIES)
+  SET(Hunspell_FIND_QUIETLY TRUE)
+ENDIF (Hunspell_INCLUDE_DIR AND Hunspell_LIBRARIES)
 
-FIND_PATH(HUNSPELL_INCLUDE_DIR hunspell/hunspell.hxx)
-FIND_LIBRARY(HUNSPELL_LIBRARIES NAMES hunspell-1.7 hunspell-1.6 hunspell-1.5 hunspell)
+FIND_PATH(Hunspell_INCLUDE_DIR hunspell/hunspell.hxx)
+FIND_LIBRARY(Hunspell_LIBRARIES NAMES hunspell-1.7 hunspell-1.6 hunspell-1.5 hunspell)
 
-# handle the QUIETLY and REQUIRED arguments and set HUNSPELL_FOUND to TRUE if
+# handle the QUIETLY and REQUIRED arguments and set Hunspell_FOUND to TRUE if
 # all listed variables are TRUE
 INCLUDE(FindPackageHandleStandardArgs)
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(HUNSPELL DEFAULT_MSG HUNSPELL_LIBRARIES HUNSPELL_INCLUDE_DIR)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(Hunspell DEFAULT_MSG Hunspell_LIBRARIES Hunspell_INCLUDE_DIR)
 
-MARK_AS_ADVANCED(HUNSPELL_INCLUDE_DIR HUNSPELL_LIBRARIES)
+MARK_AS_ADVANCED(Hunspell_INCLUDE_DIR Hunspell_LIBRARIES)
