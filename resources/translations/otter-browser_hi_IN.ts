@@ -1304,48 +1304,48 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="61"/>
         <source>Clear browsing history</source>
-        <translation type="unfinished"/>
+        <translation>खोज वृतांत रिक्त करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="68"/>
         <source>Clear cookies</source>
-        <translation type="unfinished"/>
+        <translation>कुकीज़ रिक्त करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="78"/>
         <source>Clear forms history</source>
-        <translation type="unfinished"/>
+        <translation>प्रपत्र वृतांत रिक्त करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="85"/>
         <source>Clear downloads history</source>
-        <translation type="unfinished"/>
+        <translation>डाउनलोड वृतांत रिक्त करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="95"/>
         <source>Clear search history</source>
-        <translation type="unfinished"/>
+        <translation>खोज वृतांत रिक्त करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="102"/>
         <source>Clear caches</source>
-        <translation type="unfinished"/>
+        <translation>कैश रिक्त करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="112"/>
         <source>Clear websites storage data</source>
-        <translation type="unfinished"/>
+        <translation>वेबसाइट संचय डेटा रिक्त करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="119"/>
         <source>Clear passwords</source>
-        <translation type="unfinished"/>
+        <translation>कूटशब्द रिक्त करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.cpp" line="54"/>
         <location filename="../../src/ui/ClearHistoryDialog.cpp" line="85"/>
         <source>Clear Now</source>
-        <translation type="unfinished"/>
+        <translation>अभी रिक्त करें</translation>
     </message>
 </context>
 <context>
@@ -1359,12 +1359,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="105"/>
         <source>Select Color…</source>
-        <translation type="unfinished"/>
+        <translation>रंग चुनें...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="106"/>
         <source>Copy Color</source>
-        <translation type="unfinished"/>
+        <translation>रंग कॉपी करें</translation>
     </message>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="113"/>
@@ -1387,12 +1387,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="76"/>
         <source>Current Value:</source>
-        <translation type="unfinished"/>
+        <translation>वर्तमान मान :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="83"/>
         <source>Default Value:</source>
-        <translation type="unfinished"/>
+        <translation>डिफ़ॉल्ट मान :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="106"/>
@@ -1402,7 +1402,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="116"/>
         <source>Restore Defaults</source>
-        <translation type="unfinished"/>
+        <translation>डिफ़ॉल्ट पुनः स्थापित करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="212"/>
@@ -1438,7 +1438,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="363"/>
         <source>Do you really want to restore default values of all options?</source>
-        <translation type="unfinished"/>
+        <translation>क्या आप निश्चित ही सभी विकल्पों के डिफ़ॉल्ट मान पुनः स्थापित करना चाहते हैं?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="500"/>
@@ -1448,7 +1448,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="501"/>
         <source>Copy Option Value</source>
-        <translation type="unfinished"/>
+        <translation>विकल्प मान कॉपी करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="505"/>
@@ -1458,7 +1458,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="508"/>
         <source>Restore Default Value</source>
-        <translation type="unfinished"/>
+        <translation>डिफ़ॉल्ट मान पुनः स्थापित करें</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="517"/>
@@ -1481,7 +1481,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/configurationOption/ConfigurationOptionWidget.cpp" line="46"/>
         <source>Choose option</source>
-        <translation type="unfinished"/>
+        <translation>विकल्प चुनें</translation>
     </message>
 </context>
 <context>
@@ -1489,7 +1489,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="14"/>
         <source>Content Blocking</source>
-        <translation type="unfinished"/>
+        <translation>सामग्री अवरोध</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="24"/>
@@ -1524,7 +1524,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="102"/>
         <source>Enable custom rules</source>
-        <translation type="unfinished"/>
+        <translation>अनुकूलिय नियम सक्रिय</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="115"/>
@@ -1553,7 +1553,7 @@ Do you want to save them?</source>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="170"/>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="510"/>
         <source>Custom Rules</source>
-        <translation type="unfinished"/>
+        <translation>अनुकूलिय नियम</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="183"/>
@@ -1563,7 +1563,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="184"/>
         <source>Domain specific only</source>
-        <translation type="unfinished"/>
+        <translation>केवल डोमेन विशिष्ट</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="185"/>
