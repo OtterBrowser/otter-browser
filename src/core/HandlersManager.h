@@ -32,7 +32,7 @@ class HandlersManager final : public QObject
 	Q_OBJECT
 
 public:
-	struct HandlerDefinition final
+	struct MimeTypeHandlerDefinition final
 	{
 		enum TransferMode
 		{
@@ -51,10 +51,10 @@ public:
 	};
 
 	static void createInstance();
-	static void setHandler(const QMimeType &mimeType, const HandlerDefinition &definition);
+	static void setHandler(const QMimeType &mimeType, const MimeTypeHandlerDefinition &definition);
 	static HandlersManager* getInstance();
-	static HandlerDefinition getHandler(const QMimeType &mimeType);
-	static QVector<HandlerDefinition> getHandlers();
+	static MimeTypeHandlerDefinition getHandler(const QMimeType &mimeType);
+	static QVector<MimeTypeHandlerDefinition> getHandlers();
 	static bool handleUrl(const QUrl &url);
 	static bool canHandleUrl(const QUrl &url);
 

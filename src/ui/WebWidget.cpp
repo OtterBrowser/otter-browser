@@ -161,16 +161,16 @@ void WebWidget::startTransfer(Transfer *transfer)
 		return;
 	}
 
-	const HandlersManager::HandlerDefinition handler(HandlersManager::getHandler(transfer->getMimeType()));
+	const HandlersManager::MimeTypeHandlerDefinition handler(HandlersManager::getHandler(transfer->getMimeType()));
 
 	switch (handler.transferMode)
 	{
-		case HandlersManager::HandlerDefinition::IgnoreTransfer:
+		case HandlersManager::MimeTypeHandlerDefinition::IgnoreTransfer:
 			transfer->cancel();
 			transfer->deleteLater();
 
 			break;
-		case HandlersManager::HandlerDefinition::AskTransfer:
+		case HandlersManager::MimeTypeHandlerDefinition::AskTransfer:
 			{
 				TransferDialog *transferDialog(new TransferDialog(transfer, this));
 				ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("download")), transferDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, transferDialog, this));
@@ -181,13 +181,13 @@ void WebWidget::startTransfer(Transfer *transfer)
 			}
 
 			break;
-		case HandlersManager::HandlerDefinition::OpenTransfer:
+		case HandlersManager::MimeTypeHandlerDefinition::OpenTransfer:
 			transfer->setOpenCommand(handler.openCommand);
 
 			TransfersManager::addTransfer(transfer);
 
 			break;
-		case HandlersManager::HandlerDefinition::SaveTransfer:
+		case HandlersManager::MimeTypeHandlerDefinition::SaveTransfer:
 			transfer->setTarget(handler.downloadsPath + QDir::separator() + transfer->getSuggestedFileName());
 
 			if (transfer->getState() == Transfer::CancelledState)
@@ -200,7 +200,7 @@ void WebWidget::startTransfer(Transfer *transfer)
 			}
 
 			break;
-		case HandlersManager::HandlerDefinition::SaveAsTransfer:
+		case HandlersManager::MimeTypeHandlerDefinition::SaveAsTransfer:
 			{
 				const QString path(Utils::getSavePath(transfer->getSuggestedFileName(), handler.downloadsPath, {}, true).path);
 

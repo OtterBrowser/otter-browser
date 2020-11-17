@@ -50,7 +50,7 @@ void HandlersManager::createInstance()
 	}
 }
 
-void HandlersManager::setHandler(const QMimeType &mimeType, const HandlerDefinition &definition)
+void HandlersManager::setHandler(const QMimeType &mimeType, const MimeTypeHandlerDefinition &definition)
 {
 	if (SessionsManager::isReadOnly())
 	{
@@ -63,19 +63,19 @@ void HandlersManager::setHandler(const QMimeType &mimeType, const HandlerDefinit
 
 	switch (definition.transferMode)
 	{
-		case HandlerDefinition::IgnoreTransfer:
+		case MimeTypeHandlerDefinition::IgnoreTransfer:
 			transferMode = QLatin1String("ignore");
 
 			break;
-		case HandlerDefinition::OpenTransfer:
+		case MimeTypeHandlerDefinition::OpenTransfer:
 			transferMode = QLatin1String("open");
 
 			break;
-		case HandlerDefinition::SaveTransfer:
+		case MimeTypeHandlerDefinition::SaveTransfer:
 			transferMode = QLatin1String("save");
 
 			break;
-		case HandlerDefinition::SaveAsTransfer:
+		case MimeTypeHandlerDefinition::SaveAsTransfer:
 			transferMode = QLatin1String("saveAs");
 
 			break;
@@ -97,11 +97,11 @@ HandlersManager* HandlersManager::getInstance()
 	return m_instance;
 }
 
-HandlersManager::HandlerDefinition HandlersManager::getHandler(const QMimeType &mimeType)
+HandlersManager::MimeTypeHandlerDefinition HandlersManager::getHandler(const QMimeType &mimeType)
 {
 	IniSettings settings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 	const QString name(mimeType.isValid() ? mimeType.name() : QLatin1String("*"));
-	HandlerDefinition definition;
+	MimeTypeHandlerDefinition definition;
 	definition.mimeType = mimeType;
 	definition.isExplicit = settings.getGroups().contains(name);
 
@@ -122,33 +122,33 @@ HandlersManager::HandlerDefinition HandlersManager::getHandler(const QMimeType &
 
 	if (transferMode == QLatin1String("ignore"))
 	{
-		definition.transferMode = HandlerDefinition::IgnoreTransfer;
+		definition.transferMode = MimeTypeHandlerDefinition::IgnoreTransfer;
 	}
 	else if (transferMode == QLatin1String("open"))
 	{
-		definition.transferMode = HandlerDefinition::OpenTransfer;
+		definition.transferMode = MimeTypeHandlerDefinition::OpenTransfer;
 	}
 	else if (transferMode == QLatin1String("save"))
 	{
-		definition.transferMode = HandlerDefinition::SaveTransfer;
+		definition.transferMode = MimeTypeHandlerDefinition::SaveTransfer;
 	}
 	else if (transferMode == QLatin1String("saveAs"))
 	{
-		definition.transferMode = HandlerDefinition::SaveAsTransfer;
+		definition.transferMode = MimeTypeHandlerDefinition::SaveAsTransfer;
 	}
 	else
 	{
-		definition.transferMode = HandlerDefinition::AskTransfer;
+		definition.transferMode = MimeTypeHandlerDefinition::AskTransfer;
 	}
 
 	return definition;
 }
 
-QVector<HandlersManager::HandlerDefinition> HandlersManager::getHandlers()
+QVector<HandlersManager::MimeTypeHandlerDefinition> HandlersManager::getHandlers()
 {
 	const QMimeDatabase mimeDatabase;
 	const QStringList mimeTypes(IniSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini"))).getGroups());
-	QVector<HandlersManager::HandlerDefinition> handlers;
+	QVector<HandlersManager::MimeTypeHandlerDefinition> handlers;
 	handlers.reserve(mimeTypes.count());
 
 	for (int i = 0; i < mimeTypes.count(); ++i)

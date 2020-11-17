@@ -93,8 +93,8 @@ void TransferDialog::handleButtonClicked(QAbstractButton *button)
 
 			if (m_ui->rememberChoiceCheckBox->isChecked())
 			{
-				HandlersManager::HandlerDefinition definition;
-				definition.transferMode = HandlersManager::HandlerDefinition::IgnoreTransfer;
+				HandlersManager::MimeTypeHandlerDefinition definition;
+				definition.transferMode = HandlersManager::MimeTypeHandlerDefinition::IgnoreTransfer;
 
 				HandlersManager::setHandler(m_transfer->getMimeType(), definition);
 			}
@@ -111,8 +111,8 @@ void TransferDialog::handleButtonClicked(QAbstractButton *button)
 
 		if (m_ui->rememberChoiceCheckBox->isChecked())
 		{
-			HandlersManager::HandlerDefinition definition;
-			definition.transferMode = HandlersManager::HandlerDefinition::OpenTransfer;
+			HandlersManager::MimeTypeHandlerDefinition definition;
+			definition.transferMode = HandlersManager::MimeTypeHandlerDefinition::OpenTransfer;
 			definition.openCommand = m_ui->openWithComboBoxWidget->getCommand();
 
 			HandlersManager::setHandler(m_transfer->getMimeType(), definition);
@@ -149,8 +149,8 @@ void TransferDialog::handleButtonClicked(QAbstractButton *button)
 
 		if (m_ui->rememberChoiceCheckBox->isChecked())
 		{
-			HandlersManager::HandlerDefinition definition;
-			definition.transferMode = HandlersManager::HandlerDefinition::SaveTransfer;
+			HandlersManager::MimeTypeHandlerDefinition definition;
+			definition.transferMode = HandlersManager::MimeTypeHandlerDefinition::SaveTransfer;
 			definition.downloadsPath = QFileInfo(path).canonicalPath();
 
 			HandlersManager::setHandler(m_transfer->getMimeType(), definition);

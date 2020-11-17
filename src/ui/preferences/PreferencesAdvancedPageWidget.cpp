@@ -184,7 +184,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	QStandardItemModel *downloadsModel(new QStandardItemModel(this));
 	downloadsModel->setHorizontalHeaderLabels({tr("Name")});
 
-	const QVector<HandlersManager::HandlerDefinition> handlers(HandlersManager::getHandlers());
+	const QVector<HandlersManager::MimeTypeHandlerDefinition> handlers(HandlersManager::getHandlers());
 
 	for (int i = 0; i < handlers.count(); ++i)
 	{
@@ -656,16 +656,16 @@ void PreferencesAdvancedPageWidget::updateDownloadsActions()
 	m_ui->downloadsApplicationComboBoxWidget->blockSignals(true);
 
 	const QModelIndex index(m_ui->downloadsItemView->getIndex(m_ui->downloadsItemView->getCurrentRow()));
-	const HandlersManager::HandlerDefinition::TransferMode mode(static_cast<HandlersManager::HandlerDefinition::TransferMode>(index.data(TransferModeRole).toInt()));
+	const HandlersManager::MimeTypeHandlerDefinition::TransferMode mode(static_cast<HandlersManager::MimeTypeHandlerDefinition::TransferMode>(index.data(TransferModeRole).toInt()));
 
 	switch (mode)
 	{
-		case HandlersManager::HandlerDefinition::SaveTransfer:
-		case HandlersManager::HandlerDefinition::SaveAsTransfer:
+		case HandlersManager::MimeTypeHandlerDefinition::SaveTransfer:
+		case HandlersManager::MimeTypeHandlerDefinition::SaveAsTransfer:
 			m_ui->downloadsSaveButton->setChecked(true);
 
 			break;
-		case HandlersManager::HandlerDefinition::OpenTransfer:
+		case HandlersManager::MimeTypeHandlerDefinition::OpenTransfer:
 			m_ui->downloadsOpenButton->setChecked(true);
 
 			break;
@@ -677,7 +677,7 @@ void PreferencesAdvancedPageWidget::updateDownloadsActions()
 
 	m_ui->downloadsRemoveMimeTypeButton->setEnabled(index.isValid() && index.data(Qt::DisplayRole).toString() != QLatin1String("*"));
 	m_ui->downloadsOptionsWidget->setEnabled(index.isValid());
-	m_ui->downloadsSaveDirectlyCheckBox->setChecked(mode == HandlersManager::HandlerDefinition::SaveTransfer);
+	m_ui->downloadsSaveDirectlyCheckBox->setChecked(mode == HandlersManager::MimeTypeHandlerDefinition::SaveTransfer);
 	m_ui->downloadsFilePathWidget->setPath(index.data(DownloadsPathRole).toString());
 	m_ui->downloadsApplicationComboBoxWidget->setMimeType(QMimeDatabase().mimeTypeForName(index.data(Qt::DisplayRole).toString()));
 	m_ui->downloadsApplicationComboBoxWidget->setCurrentCommand(index.data(OpenCommandRole).toString());
@@ -703,24 +703,24 @@ void PreferencesAdvancedPageWidget::updateDownloadsOptions()
 
 	if (index.isValid())
 	{
-		HandlersManager::HandlerDefinition::TransferMode mode(HandlersManager::HandlerDefinition::IgnoreTransfer);
+		HandlersManager::MimeTypeHandlerDefinition::TransferMode mode(HandlersManager::MimeTypeHandlerDefinition::IgnoreTransfer);
 
 		if (m_ui->downloadsSaveButton->isChecked())
 		{
-			mode = (m_ui->downloadsSaveDirectlyCheckBox->isChecked() ? HandlersManager::HandlerDefinition::SaveTransfer : HandlersManager::HandlerDefinition::SaveAsTransfer);
+			mode = (m_ui->downloadsSaveDirectlyCheckBox->isChecked() ? HandlersManager::MimeTypeHandlerDefinition::SaveTransfer : HandlersManager::MimeTypeHandlerDefinition::SaveAsTransfer);
 		}
 		else if (m_ui->downloadsOpenButton->isChecked())
 		{
-			mode = HandlersManager::HandlerDefinition::OpenTransfer;
+			mode = HandlersManager::MimeTypeHandlerDefinition::OpenTransfer;
 		}
 		else
 		{
-			mode = HandlersManager::HandlerDefinition::AskTransfer;
+			mode = HandlersManager::MimeTypeHandlerDefinition::AskTransfer;
 		}
 
 		m_ui->downloadsItemView->setData(index, mode, TransferModeRole);
-		m_ui->downloadsItemView->setData(index, ((mode == HandlersManager::HandlerDefinition::SaveTransfer || mode == HandlersManager::HandlerDefinition::SaveAsTransfer) ? m_ui->downloadsFilePathWidget->getPath() : QString()), DownloadsPathRole);
-		m_ui->downloadsItemView->setData(index, ((mode == HandlersManager::HandlerDefinition::OpenTransfer) ? m_ui->downloadsApplicationComboBoxWidget->getCommand() : QString()), OpenCommandRole);
+		m_ui->downloadsItemView->setData(index, ((mode == HandlersManager::MimeTypeHandlerDefinition::SaveTransfer || mode == HandlersManager::MimeTypeHandlerDefinition::SaveAsTransfer) ? m_ui->downloadsFilePathWidget->getPath() : QString()), DownloadsPathRole);
+		m_ui->downloadsItemView->setData(index, ((mode == HandlersManager::MimeTypeHandlerDefinition::OpenTransfer) ? m_ui->downloadsApplicationComboBoxWidget->getCommand() : QString()), OpenCommandRole);
 	}
 
 	connect(m_ui->downloadsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateDownloadsActions);
@@ -1704,7 +1704,7 @@ void PreferencesAdvancedPageWidget::save()
 			continue;
 		}
 
-		HandlersManager::HandlerDefinition definition;
+		HandlersManager::MimeTypeHandlerDefinition definition;
 
 		if (index.data(Qt::DisplayRole).toString() != QLatin1String("*"))
 		{
@@ -1713,7 +1713,7 @@ void PreferencesAdvancedPageWidget::save()
 
 		definition.openCommand = index.data(OpenCommandRole).toString();
 		definition.downloadsPath = index.data(DownloadsPathRole).toString();
-		definition.transferMode = static_cast<HandlersManager::HandlerDefinition::TransferMode>(index.data(TransferModeRole).toInt());
+		definition.transferMode = static_cast<HandlersManager::MimeTypeHandlerDefinition::TransferMode>(index.data(TransferModeRole).toInt());
 
 		HandlersManager::setHandler(definition.mimeType, definition);
 	}
