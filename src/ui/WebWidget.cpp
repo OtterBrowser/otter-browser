@@ -161,7 +161,7 @@ void WebWidget::startTransfer(Transfer *transfer)
 		return;
 	}
 
-	const HandlersManager::MimeTypeHandlerDefinition handler(HandlersManager::getHandler(transfer->getMimeType()));
+	const HandlersManager::MimeTypeHandlerDefinition handler(HandlersManager::getMimeTypeHandler(transfer->getMimeType()));
 
 	switch (handler.transferMode)
 	{

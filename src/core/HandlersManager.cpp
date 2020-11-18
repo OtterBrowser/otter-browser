@@ -50,7 +50,7 @@ void HandlersManager::createInstance()
 	}
 }
 
-void HandlersManager::setHandler(const QMimeType &mimeType, const MimeTypeHandlerDefinition &definition)
+void HandlersManager::setMimeTypeHandler(const QMimeType &mimeType, const MimeTypeHandlerDefinition &definition)
 {
 	if (SessionsManager::isReadOnly())
 	{
@@ -97,7 +97,7 @@ HandlersManager* HandlersManager::getInstance()
 	return m_instance;
 }
 
-HandlersManager::MimeTypeHandlerDefinition HandlersManager::getHandler(const QMimeType &mimeType)
+HandlersManager::MimeTypeHandlerDefinition HandlersManager::getMimeTypeHandler(const QMimeType &mimeType)
 {
 	IniSettings settings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 	const QString name(mimeType.isValid() ? mimeType.name() : QLatin1String("*"));
@@ -144,7 +144,7 @@ HandlersManager::MimeTypeHandlerDefinition HandlersManager::getHandler(const QMi
 	return definition;
 }
 
-QVector<HandlersManager::MimeTypeHandlerDefinition> HandlersManager::getHandlers()
+QVector<HandlersManager::MimeTypeHandlerDefinition> HandlersManager::getMimeTypeHandlers()
 {
 	const QMimeDatabase mimeDatabase;
 	const QStringList mimeTypes(IniSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini"))).getGroups());
@@ -153,7 +153,7 @@ QVector<HandlersManager::MimeTypeHandlerDefinition> HandlersManager::getHandlers
 
 	for (int i = 0; i < mimeTypes.count(); ++i)
 	{
-		handlers.append(getHandler(mimeDatabase.mimeTypeForName(mimeTypes.at(i))));
+		handlers.append(getMimeTypeHandler(mimeDatabase.mimeTypeForName(mimeTypes.at(i))));
 	}
 
 	return handlers;

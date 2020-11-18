@@ -184,7 +184,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	QStandardItemModel *downloadsModel(new QStandardItemModel(this));
 	downloadsModel->setHorizontalHeaderLabels({tr("Name")});
 
-	const QVector<HandlersManager::MimeTypeHandlerDefinition> handlers(HandlersManager::getHandlers());
+	const QVector<HandlersManager::MimeTypeHandlerDefinition> handlers(HandlersManager::getMimeTypeHandlers());
 
 	for (int i = 0; i < handlers.count(); ++i)
 	{
@@ -1715,7 +1715,7 @@ void PreferencesAdvancedPageWidget::save()
 		definition.downloadsPath = index.data(DownloadsPathRole).toString();
 		definition.transferMode = static_cast<HandlersManager::MimeTypeHandlerDefinition::TransferMode>(index.data(TransferModeRole).toInt());
 
-		HandlersManager::setHandler(definition.mimeType, definition);
+		HandlersManager::setMimeTypeHandler(definition.mimeType, definition);
 	}
 
 	SettingsManager::setOption(SettingsManager::Network_EnableReferrerOption, m_ui->sendReferrerCheckBox->isChecked());

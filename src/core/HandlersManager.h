@@ -51,10 +51,10 @@ public:
 	};
 
 	static void createInstance();
-	static void setHandler(const QMimeType &mimeType, const MimeTypeHandlerDefinition &definition);
+	static void setMimeTypeHandler(const QMimeType &mimeType, const MimeTypeHandlerDefinition &definition);
 	static HandlersManager* getInstance();
-	static MimeTypeHandlerDefinition getHandler(const QMimeType &mimeType);
-	static QVector<MimeTypeHandlerDefinition> getHandlers();
+	static MimeTypeHandlerDefinition getMimeTypeHandler(const QMimeType &mimeType);
+	static QVector<MimeTypeHandlerDefinition> getMimeTypeHandlers();
 	static bool handleUrl(const QUrl &url);
 	static bool canHandleUrl(const QUrl &url);
 
