@@ -390,7 +390,7 @@ void SearchWidget::showSearchEngines()
 
 void SearchWidget::showSearchSuggestions()
 {
-	if (m_suggester->getModel()->rowCount() > 0)
+	if (m_suggester && m_suggester->getModel()->rowCount() > 0)
 	{
 		getPopup()->setModel(m_suggester->getModel());
 
