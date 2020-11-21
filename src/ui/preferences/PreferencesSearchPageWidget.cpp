@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -121,7 +121,7 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	m_ui->searchViewWidget->setItemDelegateForColumn(1, new SearchEngineKeywordDelegate(this));
 	m_ui->searchViewWidget->setExclusive(true);
 	m_ui->searchViewWidget->setRowsMovable(true);
-	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Search_SearchEnginesSuggestionsOption).toBool());
+	m_ui->enableSearchSuggestionsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Search_SearchEnginesSuggestionsOption).toBool());
 
 	QMenu *addSearchEngineMenu(new QMenu(m_ui->addSearchButton));
 	addSearchEngineMenu->addAction(tr("New…"), this, &PreferencesSearchPageWidget::createSearchEngine);
@@ -541,7 +541,7 @@ void PreferencesSearchPageWidget::save()
 	}
 
 	SettingsManager::setOption(SettingsManager::Search_DefaultSearchEngineOption, defaultSearchEngine);
-	SettingsManager::setOption(SettingsManager::Search_SearchEnginesSuggestionsOption, m_ui->searchSuggestionsCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Search_SearchEnginesSuggestionsOption, m_ui->enableSearchSuggestionsCheckBox->isChecked());
 
 	updateReaddSearchEngineMenu();
 }

@@ -137,11 +137,44 @@
     </layout>
    </item>
    <item>
-    <widget class="QCheckBox" name="searchSuggestionsCheckBox">
+    <widget class="QCheckBox" name="enableSearchSuggestionsCheckBox">
      <property name="text">
       <string>Enable search suggestions</string>
      </property>
     </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="enableSearchSuggestionsInPrivateTabsLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <spacer name="enableSearchSuggestionsInPrivateTabsSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>0</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="enableSearchSuggestionsInPrivateTabsCheckBox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Enable search suggestions in private tabs</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
@@ -166,7 +199,7 @@
   <tabstop>removeSearchButton</tabstop>
   <tabstop>moveUpSearchButton</tabstop>
   <tabstop>moveDownSearchButton</tabstop>
-  <tabstop>searchSuggestionsCheckBox</tabstop>
+  <tabstop>enableSearchSuggestionsCheckBox</tabstop>
  </tabstops>
  <resources/>
  <connections/>
