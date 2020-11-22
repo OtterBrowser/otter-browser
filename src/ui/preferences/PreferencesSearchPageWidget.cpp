@@ -121,7 +121,7 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	m_ui->searchViewWidget->setItemDelegateForColumn(1, new SearchEngineKeywordDelegate(this));
 	m_ui->searchViewWidget->setExclusive(true);
 	m_ui->searchViewWidget->setRowsMovable(true);
-	m_ui->enableSearchSuggestionsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Search_SearchEnginesSuggestionsOption).toBool());
+	m_ui->enableSearchSuggestionsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Search_SearchEnginesSuggestionsModeOption).toString() != QLatin1String("disabled"));
 
 	QMenu *addSearchEngineMenu(new QMenu(m_ui->addSearchButton));
 	addSearchEngineMenu->addAction(tr("New…"), this, &PreferencesSearchPageWidget::createSearchEngine);
@@ -541,7 +541,7 @@ void PreferencesSearchPageWidget::save()
 	}
 
 	SettingsManager::setOption(SettingsManager::Search_DefaultSearchEngineOption, defaultSearchEngine);
-	SettingsManager::setOption(SettingsManager::Search_SearchEnginesSuggestionsOption, m_ui->enableSearchSuggestionsCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Search_SearchEnginesSuggestionsModeOption, (m_ui->enableSearchSuggestionsCheckBox->isChecked() ? QLatin1String("enabled") : QLatin1String("disabled")));
 
 	updateReaddSearchEngineMenu();
 }

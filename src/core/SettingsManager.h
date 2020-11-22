@@ -178,7 +178,7 @@ public:
 		Search_EnableFindInPageHighlightAllOption,
 		Search_ReuseLastQuickFindQueryOption,
 		Search_SearchEnginesOrderOption,
-		Search_SearchEnginesSuggestionsOption,
+		Search_SearchEnginesSuggestionsModeOption,
 		Security_AllowMixedContentOption,
 		Security_CiphersOption,
 		Security_EnableFraudCheckingOption,

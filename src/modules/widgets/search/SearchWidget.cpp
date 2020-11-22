@@ -149,7 +149,7 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : LineEditWidget(par
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 	handleOptionChanged(SettingsManager::AddressField_DropActionOption, SettingsManager::getOption(SettingsManager::AddressField_DropActionOption));
 	handleOptionChanged(SettingsManager::AddressField_SelectAllOnFocusOption, SettingsManager::getOption(SettingsManager::AddressField_SelectAllOnFocusOption));
-	handleOptionChanged(SettingsManager::Search_SearchEnginesSuggestionsOption, SettingsManager::getOption(SettingsManager::Search_SearchEnginesSuggestionsOption));
+	handleOptionChanged(SettingsManager::Search_SearchEnginesSuggestionsModeOption, SettingsManager::getOption(SettingsManager::Search_SearchEnginesSuggestionsModeOption));
 
 	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
@@ -493,15 +493,15 @@ void SearchWidget::handleOptionChanged(int identifier, const QVariant &value)
 			setSelectAllOnFocus(value.toBool());
 
 			break;
-		case SettingsManager::Search_SearchEnginesSuggestionsOption:
-			if (value.toBool() && !m_suggester)
+		case SettingsManager::Search_SearchEnginesSuggestionsModeOption:
+			if (value.toString() != QLatin1String("disabled") && !m_suggester)
 			{
 				m_suggester = new SearchSuggester(m_searchEngine, this);
 
 				connect(this, &SearchWidget::textEdited, m_suggester, &SearchSuggester::setQuery);
 				connect(m_suggester, &SearchSuggester::suggestionsChanged, this, &SearchWidget::showSearchSuggestions);
 			}
-			else if (!value.toBool() && m_suggester)
+			else if (value.toString() == QLatin1String("disabled") && m_suggester)
 			{
 				m_suggester->deleteLater();
 				m_suggester = nullptr;
