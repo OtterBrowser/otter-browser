@@ -143,7 +143,9 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : LineEditWidget(par
 	m_window(nullptr),
 	m_suggester(nullptr),
 	m_hasAllWindowSearchEngines(true),
-	m_isSearchEngineLocked(false)
+	m_isPrivate(false),
+	m_isSearchEngineLocked(false),
+	m_isSearchInPrivateTabsEnabled(false)
 {
 	setMinimumWidth(100);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -494,19 +496,24 @@ void SearchWidget::handleOptionChanged(int identifier, const QVariant &value)
 
 			break;
 		case SettingsManager::Search_SearchEnginesSuggestionsModeOption:
-			if (value.toString() != QLatin1String("disabled") && !m_suggester)
 			{
-				m_suggester = new SearchSuggester(m_searchEngine, this);
+				const QString suggestionsMode(value.toString());
 
-				connect(this, &SearchWidget::textEdited, m_suggester, &SearchSuggester::setQuery);
-				connect(m_suggester, &SearchSuggester::suggestionsChanged, this, &SearchWidget::showSearchSuggestions);
-			}
-			else if (value.toString() == QLatin1String("disabled") && m_suggester)
-			{
-				m_suggester->deleteLater();
-				m_suggester = nullptr;
+				m_isSearchInPrivateTabsEnabled = (suggestionsMode == QLatin1String("enabled"));
 
-				disconnect(m_suggester, &SearchSuggester::suggestionsChanged, this, &SearchWidget::showSearchSuggestions);
+				if (m_suggester && suggestionsMode == QLatin1String("disabled"))
+				{
+					m_suggester->deleteLater();
+					m_suggester = nullptr;
+
+					disconnect(m_suggester, &SearchSuggester::suggestionsChanged, this, &SearchWidget::showSearchSuggestions);
+				}
+				else if (!m_suggester && suggestionsMode != QLatin1String("disabled"))
+				{
+					m_suggester = new SearchSuggester(m_searchEngine, this);
+
+					connect(m_suggester, &SearchSuggester::suggestionsChanged, this, &SearchWidget::showSearchSuggestions);
+				}
 			}
 
 			break;
@@ -736,6 +743,11 @@ void SearchWidget::setOptions(const QVariantMap &options)
 
 void SearchWidget::setQuery(const QString &query)
 {
+	if (m_suggester && (m_isSearchInPrivateTabsEnabled || !m_isPrivate))
+	{
+		m_suggester->setQuery(query);
+	}
+
 	m_query = query;
 
 	if (m_query.isEmpty() || getPopup()->model() == SearchEnginesManager::getSearchEnginesModel())
@@ -812,6 +824,8 @@ void SearchWidget::setWindow(Window *window)
 
 		setSearchEngine(SettingsManager::getOption(SettingsManager::Search_DefaultSearchEngineOption).toString());
 	}
+
+	m_isPrivate = (SessionsManager::isPrivate() || (mainWindow && mainWindow->isPrivate()) || (window && window->isPrivate()));
 
 	updateGeometries();
 }

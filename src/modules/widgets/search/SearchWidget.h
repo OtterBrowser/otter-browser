@@ -95,7 +95,9 @@ private:
 	QRect m_searchButtonRectangle;
 	QVariantMap m_options;
 	bool m_hasAllWindowSearchEngines;
+	bool m_isPrivate;
 	bool m_isSearchEngineLocked;
+	bool m_isSearchInPrivateTabsEnabled;
 
 signals:
 	void requestedSearch(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints);
