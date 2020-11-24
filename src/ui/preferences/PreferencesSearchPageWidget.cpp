@@ -116,12 +116,16 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 		searchEnginesModel->appendRow(createRow(searchEngine, (searchEngine.identifier == defaultSearchEngine)));
 	}
 
+	const QString suggestionsMode(SettingsManager::getOption(SettingsManager::Search_SearchEnginesSuggestionsModeOption).toString());
+
 	m_ui->searchViewWidget->setModel(searchEnginesModel);
 	m_ui->searchViewWidget->setItemDelegateForColumn(0, new SearchEngineTitleDelegate(this));
 	m_ui->searchViewWidget->setItemDelegateForColumn(1, new SearchEngineKeywordDelegate(this));
 	m_ui->searchViewWidget->setExclusive(true);
 	m_ui->searchViewWidget->setRowsMovable(true);
-	m_ui->enableSearchSuggestionsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Search_SearchEnginesSuggestionsModeOption).toString() != QLatin1String("disabled"));
+	m_ui->enableSearchSuggestionsCheckBox->setChecked(suggestionsMode != QLatin1String("disabled"));
+	m_ui->enableSearchSuggestionsInPrivateTabsCheckBox->setChecked(suggestionsMode == QLatin1String("enabled"));
+	m_ui->enableSearchSuggestionsInPrivateTabsCheckBox->setEnabled(m_ui->enableSearchSuggestionsCheckBox->isChecked());
 
 	QMenu *addSearchEngineMenu(new QMenu(m_ui->addSearchButton));
 	addSearchEngineMenu->addAction(tr("New…"), this, &PreferencesSearchPageWidget::createSearchEngine);
@@ -145,6 +149,7 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	connect(m_ui->removeSearchButton, &QPushButton::clicked, this, &PreferencesSearchPageWidget::removeSearchEngine);
 	connect(m_ui->moveDownSearchButton, &QToolButton::clicked, m_ui->searchViewWidget, &ItemViewWidget::moveDownRow);
 	connect(m_ui->moveUpSearchButton, &QToolButton::clicked, m_ui->searchViewWidget, &ItemViewWidget::moveUpRow);
+	connect(m_ui->enableSearchSuggestionsCheckBox, &QCheckBox::toggled, m_ui->enableSearchSuggestionsInPrivateTabsCheckBox, &QCheckBox::setEnabled);
 }
 
 PreferencesSearchPageWidget::~PreferencesSearchPageWidget()
@@ -540,8 +545,19 @@ void PreferencesSearchPageWidget::save()
 		SettingsManager::setOption(SettingsManager::Search_SearchEnginesOrderOption, searchEnginesOrder);
 	}
 
+	QString suggestionsMode;
+
+	if (m_ui->enableSearchSuggestionsCheckBox->isChecked())
+	{
+		suggestionsMode = (m_ui->enableSearchSuggestionsInPrivateTabsCheckBox->isChecked() ? QLatin1String("enabled") : QLatin1String("nonPrivateTabsOnly"));
+	}
+	else
+	{
+		suggestionsMode = QLatin1String("disabled");
+	}
+
 	SettingsManager::setOption(SettingsManager::Search_DefaultSearchEngineOption, defaultSearchEngine);
-	SettingsManager::setOption(SettingsManager::Search_SearchEnginesSuggestionsModeOption, (m_ui->enableSearchSuggestionsCheckBox->isChecked() ? QLatin1String("enabled") : QLatin1String("disabled")));
+	SettingsManager::setOption(SettingsManager::Search_SearchEnginesSuggestionsModeOption, suggestionsMode);
 
 	updateReaddSearchEngineMenu();
 }

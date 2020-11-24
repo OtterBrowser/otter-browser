@@ -166,9 +166,6 @@
      </item>
      <item>
       <widget class="QCheckBox" name="enableSearchSuggestionsInPrivateTabsCheckBox">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <property name="text">
         <string>Enable search suggestions in private tabs</string>
        </property>
