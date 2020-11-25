@@ -50,6 +50,21 @@ public:
 		bool isExplicit = true;
 	};
 
+	struct ProtocolHandlerDefinition final
+	{
+		enum HandlerMode
+		{
+			NoHandler = 0,
+			InternalHandler,
+			ExternalHandler
+		};
+
+		QString protocol;
+		QString openCommand;
+		HandlerMode handlerMode = InternalHandler;
+		bool isExplicit = true;
+	};
+
 	static void createInstance();
 	static void setMimeTypeHandler(const QMimeType &mimeType, const MimeTypeHandlerDefinition &definition);
 	static HandlersManager* getInstance();
