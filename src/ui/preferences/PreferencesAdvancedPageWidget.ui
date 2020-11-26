@@ -728,7 +728,68 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="programsPage"/>
+     <widget class="QWidget" name="programsPage">
+      <layout class="QVBoxLayout" name="programsLayout">
+       <item>
+        <widget class="QLabel" name="programsProtocolsHeader">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Protocols</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="protocolsLayout">
+         <item>
+          <widget class="Otter::ItemViewWidget" name="protocolsItemView">
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <attribute name="headerDefaultSectionSize">
+            <number>250</number>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="protocolsButtonsLayout" stretch="0,0,1">
+           <item>
+            <widget class="QPushButton" name="protocolsAddProtocolButton">
+             <property name="text">
+              <string>Add</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="protocolsRemoveProtocolButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Remove</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="protocolsButtonsSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="historyPage"/>
      <widget class="QWidget" name="networkPage">
       <layout class="QVBoxLayout" name="networkPageLayout" stretch="0,0,0,1,0,1,0">
