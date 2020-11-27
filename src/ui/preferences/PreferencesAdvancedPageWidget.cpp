@@ -79,7 +79,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		{
 			item->setData(navigationIndex, Qt::UserRole);
 
-			if (i == 6 || i == 8)
+			if (i == 8)
 			{
 				item->setEnabled(false);
 			}
