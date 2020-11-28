@@ -202,6 +202,12 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->downloadsFilePathWidget->setOpenMode(FilePathWidget::DirectoryMode);
 	m_ui->downloadsApplicationComboBoxWidget->setAlwaysShowDefaultApplication(true);
 
+	QStandardItemModel *protocolsModel(new QStandardItemModel(this));
+	protocolsModel->setHorizontalHeaderLabels({tr("Name")});
+
+	m_ui->protocolsItemView->setModel(protocolsModel);
+	m_ui->protocolsItemView->sortByColumn(0, Qt::AscendingOrder);
+
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Network_EnableReferrerOption).toBool());
 
 	ItemModel *userAgentsModel(new UserAgentsModel(SettingsManager::getOption(SettingsManager::Network_UserAgentOption).toString(), true, this));
