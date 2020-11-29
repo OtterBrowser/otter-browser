@@ -509,10 +509,10 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="downloadsPage">
-      <layout class="QVBoxLayout" name="downloadsLayout" stretch="0,0,0,1">
+     <widget class="QWidget" name="mimeTypesPage">
+      <layout class="QVBoxLayout" name="mimeTypesLayout" stretch="0,0,0,1">
        <item>
-        <widget class="QLabel" name="downloadsMimeTypesHeader">
+        <widget class="QLabel" name="mimeTypesMimeTypesHeader">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -525,9 +525,9 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="downloadsMimeTypesLayout">
+        <layout class="QHBoxLayout" name="mimeTypesLayout">
          <item>
-          <widget class="Otter::ItemViewWidget" name="downloadsItemView">
+          <widget class="Otter::ItemViewWidget" name="mimeTypesItemView">
            <property name="editTriggers">
             <set>QAbstractItemView::NoEditTriggers</set>
            </property>
@@ -540,16 +540,16 @@
           </widget>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="downloadsMimeTypesButtonsLayout" stretch="0,0,1">
+          <layout class="QVBoxLayout" name="mimeTypesButtonsLayout" stretch="0,0,1">
            <item>
-            <widget class="QPushButton" name="downloadsAddMimeTypeButton">
+            <widget class="QPushButton" name="mimeTypesAddMimeTypeButton">
              <property name="text">
               <string>Add</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="downloadsRemoveMimeTypeButton">
+            <widget class="QPushButton" name="mimeTypesRemoveMimeTypeButton">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -559,7 +559,7 @@
             </widget>
            </item>
            <item>
-            <spacer name="downloadsButtonsSpacer">
+            <spacer name="mimeTypesButtonsSpacer">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
@@ -570,11 +570,11 @@
         </layout>
        </item>
        <item>
-        <widget class="QWidget" name="downloadsOptionsWidget" native="true">
+        <widget class="QWidget" name="mimeTypesOptionsWidget" native="true">
          <property name="enabled">
           <bool>false</bool>
          </property>
-         <layout class="QVBoxLayout" name="downloadsOptionsLayout">
+         <layout class="QVBoxLayout" name="mimeTypesOptionsLayout">
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -588,29 +588,29 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QRadioButton" name="downloadsAskButton">
+           <widget class="QRadioButton" name="mimeTypesAskButton">
             <property name="text">
              <string>Show download dialog</string>
             </property>
             <attribute name="buttonGroup">
-             <string notr="true">downloadsButtonGroup</string>
+             <string notr="true">mimeTypesButtonGroup</string>
             </attribute>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="downloadsSaveButton">
+           <widget class="QRadioButton" name="mimeTypesSaveButton">
             <property name="text">
              <string>Save to disk</string>
             </property>
             <attribute name="buttonGroup">
-             <string notr="true">downloadsButtonGroup</string>
+             <string notr="true">mimeTypesButtonGroup</string>
             </attribute>
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="downloadsSaveHorizontalLayout">
+           <layout class="QHBoxLayout" name="mimeTypesSaveHorizontalLayout">
             <item>
-             <spacer name="downloadsSaveSpacer">
+             <spacer name="mimeTypesSaveSpacer">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -626,8 +626,8 @@
              </spacer>
             </item>
             <item>
-             <widget class="QWidget" name="downloadsSaveOptionsWidget" native="true">
-              <layout class="QVBoxLayout" name="downloadsSaveVerticalLayout">
+             <widget class="QWidget" name="mimeTypesSaveOptionsWidget" native="true">
+              <layout class="QVBoxLayout" name="mimeTypesSaveVerticalLayout">
                <property name="leftMargin">
                 <number>0</number>
                </property>
@@ -641,14 +641,14 @@
                 <number>0</number>
                </property>
                <item>
-                <widget class="QCheckBox" name="downloadsSaveDirectlyCheckBox">
+                <widget class="QCheckBox" name="mimeTypesSaveDirectlyCheckBox">
                  <property name="text">
                   <string>Do not ask for folder, save directly to</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="Otter::FilePathWidget" name="downloadsFilePathWidget" native="true"/>
+                <widget class="Otter::FilePathWidget" name="mimeTypesFilePathWidget" native="true"/>
                </item>
               </layout>
              </widget>
@@ -656,19 +656,19 @@
            </layout>
           </item>
           <item>
-           <widget class="QRadioButton" name="downloadsOpenButton">
+           <widget class="QRadioButton" name="mimeTypesOpenButton">
             <property name="text">
              <string>Open with application</string>
             </property>
             <attribute name="buttonGroup">
-             <string notr="true">downloadsButtonGroup</string>
+             <string notr="true">mimeTypesButtonGroup</string>
             </attribute>
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="downloadsOpenHorizontalLayout">
+           <layout class="QHBoxLayout" name="mimeTypesOpenHorizontalLayout">
             <item>
-             <spacer name="downloadsOpenSpacer">
+             <spacer name="mimeTypesOpenSpacer">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -684,8 +684,8 @@
              </spacer>
             </item>
             <item>
-             <widget class="QWidget" name="downloadsOpenOptionsWidget" native="true">
-              <layout class="QVBoxLayout" name="downloadsOpenVerticalLayout">
+             <widget class="QWidget" name="mimeTypesOpenOptionsWidget" native="true">
+              <layout class="QVBoxLayout" name="mimeTypesOpenVerticalLayout">
                <property name="leftMargin">
                 <number>0</number>
                </property>
@@ -699,7 +699,7 @@
                 <number>0</number>
                </property>
                <item>
-                <widget class="QCheckBox" name="downloadsPassUrlCheckBox">
+                <widget class="QCheckBox" name="mimeTypesPassUrlCheckBox">
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
@@ -709,7 +709,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="Otter::ApplicationComboBoxWidget" name="downloadsApplicationComboBoxWidget"/>
+                <widget class="Otter::ApplicationComboBoxWidget" name="mimeTypesApplicationComboBoxWidget"/>
                </item>
               </layout>
              </widget>
@@ -720,7 +720,7 @@
         </widget>
        </item>
        <item>
-        <spacer name="downloadsSpacer">
+        <spacer name="mimeTypesSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -1505,6 +1505,6 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="downloadsButtonGroup"/>
+  <buttongroup name="mimeTypesButtonGroup"/>
  </buttongroups>
 </ui>
