@@ -33,19 +33,19 @@ StartPagePreferencesDialog::StartPagePreferencesDialog(QWidget *parent) : Dialog
 {
 	m_ui->setupUi(this);
 
-	const QString backgroundModeString(SettingsManager::getOption(SettingsManager::StartPage_BackgroundModeOption).toString());
+	const QString backgroundMode(SettingsManager::getOption(SettingsManager::StartPage_BackgroundModeOption).toString());
 
-	if (backgroundModeString == QLatin1String("standard"))
+	if (backgroundMode == QLatin1String("standard"))
 	{
 		m_ui->defaultBackgroundRadioButton->setChecked(true);
 	}
-	else if (backgroundModeString == QLatin1String("none"))
+	else if (backgroundMode == QLatin1String("none"))
 	{
 		m_ui->noBackgroundRadioButton->setChecked(true);
 	}
 	else
 	{
-		m_ui->customBackgroundRadioButton->setChecked(backgroundModeString != QLatin1String("standard"));
+		m_ui->customBackgroundRadioButton->setChecked(backgroundMode != QLatin1String("standard"));
 	}
 
 	m_ui->backgroundFilePathWidget->setPath(SettingsManager::getOption(SettingsManager::StartPage_BackgroundPathOption).toString());
@@ -56,7 +56,7 @@ StartPagePreferencesDialog::StartPagePreferencesDialog(QWidget *parent) : Dialog
 	m_ui->backgroundModeComboBox->addItem(tr("Tile"), QLatin1String("tile"));
 	m_ui->backgroundColorWidget->setColor(SettingsManager::getOption(SettingsManager::StartPage_BackgroundColorOption).toString());
 
-	const int backgroundModeIndex(m_ui->backgroundModeComboBox->findData(backgroundModeString));
+	const int backgroundModeIndex(m_ui->backgroundModeComboBox->findData(backgroundMode));
 
 	m_ui->backgroundModeComboBox->setCurrentIndex((backgroundModeIndex < 0) ? 0 : backgroundModeIndex);
 	m_ui->backgroundWidget->setEnabled(m_ui->customBackgroundRadioButton->isChecked());
