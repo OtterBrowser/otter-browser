@@ -2470,18 +2470,29 @@ Session::MainWindow MainWindow::getSession() const
 
 	session.toolBars.squeeze();
 
-	for (int i = 0; i < m_windows.count(); ++i)
+	if (isPrivate())
 	{
-		const Window *window(getWindowByIndex(i));
+		session.index = -1;
+	}
+	else
+	{
+		session.windows.reserve(m_windows.count());
 
-		if (window && !window->isPrivate())
+		for (int i = 0; i < m_windows.count(); ++i)
 		{
-			session.windows.append(window->getSession());
+			const Window *window(getWindowByIndex(i));
+
+			if (window && !window->isPrivate())
+			{
+				session.windows.append(window->getSession());
+			}
+			else if (i < session.index)
+			{
+				--session.index;
+			}
 		}
-		else if (i < session.index)
-		{
-			--session.index;
-		}
+
+		session.windows.squeeze();
 	}
 
 	return session;
