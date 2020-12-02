@@ -2486,7 +2486,7 @@ Session::MainWindow MainWindow::getSession() const
 			{
 				session.windows.append(window->getSession());
 			}
-			else if (i < session.index)
+			else if (i <= session.index)
 			{
 				--session.index;
 			}
