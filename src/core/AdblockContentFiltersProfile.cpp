@@ -215,19 +215,19 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 
 	for (int i = 0; i < options.count(); ++i)
 	{
-		const bool optionException(options.at(i).startsWith(QLatin1Char('~')));
-		const QString optionName(optionException ? options.at(i).mid(1) : options.at(i));
+		const bool isOptionException(options.at(i).startsWith(QLatin1Char('~')));
+		const QString optionName(isOptionException ? options.at(i).mid(1) : options.at(i));
 
 		if (m_options.contains(optionName))
 		{
 			const RuleOption option(m_options.value(optionName));
 
-			if ((!definition->isException || optionException) && (option == ElementHideOption || option == GenericHideOption))
+			if ((!definition->isException || isOptionException) && (option == ElementHideOption || option == GenericHideOption))
 			{
 				continue;
 			}
 
-			if (!optionException)
+			if (!isOptionException)
 			{
 				definition->ruleOptions |= option;
 			}
