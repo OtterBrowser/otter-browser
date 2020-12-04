@@ -175,7 +175,6 @@ private:
 	ProfileFlags m_flags;
 	bool m_wasLoaded;
 
-	static QVector<QChar> m_separators;
 	static QHash<QString, RuleOption> m_options;
 	static QHash<NetworkManager::ResourceType, RuleOption> m_resourceTypes;
 };
