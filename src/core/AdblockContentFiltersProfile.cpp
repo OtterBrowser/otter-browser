@@ -682,6 +682,86 @@ QUrl AdblockContentFiltersProfile::getUpdateUrl() const
 	return m_profileSummary.updateUrl;
 }
 
+ContentFiltersProfile::ProfileSummary AdblockContentFiltersProfile::getProfileSummary() const
+{
+	return m_profileSummary;
+}
+
+ContentFiltersManager::CosmeticFiltersResult AdblockContentFiltersProfile::getCosmeticFilters(const QStringList &domains, bool isDomainOnly)
+{
+	if (!m_wasLoaded)
+	{
+		loadRules();
+	}
+
+	ContentFiltersManager::CosmeticFiltersResult result;
+
+	if (!isDomainOnly)
+	{
+		result.rules = m_cosmeticFiltersRules;
+	}
+
+	for (int i = 0; i < domains.count(); ++i)
+	{
+		result.rules.append(m_cosmeticFiltersDomainRules.values(domains.at(i)));
+		result.exceptions.append(m_cosmeticFiltersDomainExceptions.values(domains.at(i)));
+	}
+
+	return result;
+}
+
+ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType)
+{
+	ContentFiltersManager::CheckResult result;
+
+	if (!m_wasLoaded && !loadRules())
+	{
+		return result;
+	}
+
+	const Request request(baseUrl, requestUrl, resourceType);
+
+	for (int i = 0; i < request.requestUrl.length(); ++i)
+	{
+		const ContentFiltersManager::CheckResult currentResult(checkUrlSubstring(m_root, request.requestUrl.right(request.requestUrl.length() - i), {}, request));
+
+		if (currentResult.isBlocked)
+		{
+			result = currentResult;
+		}
+		else if (currentResult.isException)
+		{
+			return currentResult;
+		}
+	}
+
+	return result;
+}
+
+ContentFiltersManager::CheckResult AdblockContentFiltersProfile::evaluateNodeRules(const Node *node, const QString &currentRule, const Request &request) const
+{
+	ContentFiltersManager::CheckResult result;
+
+	for (int i = 0; i < node->rules.count(); ++i)
+	{
+		if (node->rules.at(i))
+		{
+			ContentFiltersManager::CheckResult currentResult(checkRuleMatch(node->rules.at(i), currentRule, request));
+
+			if (currentResult.isBlocked)
+			{
+				result = currentResult;
+			}
+			else if (currentResult.isException)
+			{
+				return currentResult;
+			}
+		}
+	}
+
+	return result;
+}
+
 AdblockContentFiltersProfile::HeaderInformation AdblockContentFiltersProfile::loadHeader(QIODevice *rulesDevice)
 {
 	HeaderInformation information;
@@ -720,86 +800,6 @@ AdblockContentFiltersProfile::HeaderInformation AdblockContentFiltersProfile::lo
 	}
 
 	return information;
-}
-
-ContentFiltersProfile::ProfileSummary AdblockContentFiltersProfile::getProfileSummary() const
-{
-	return m_profileSummary;
-}
-
-ContentFiltersManager::CheckResult AdblockContentFiltersProfile::evaluateNodeRules(const Node *node, const QString &currentRule, const Request &request) const
-{
-	ContentFiltersManager::CheckResult result;
-
-	for (int i = 0; i < node->rules.count(); ++i)
-	{
-		if (node->rules.at(i))
-		{
-			ContentFiltersManager::CheckResult currentResult(checkRuleMatch(node->rules.at(i), currentRule, request));
-
-			if (currentResult.isBlocked)
-			{
-				result = currentResult;
-			}
-			else if (currentResult.isException)
-			{
-				return currentResult;
-			}
-		}
-	}
-
-	return result;
-}
-
-ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType)
-{
-	ContentFiltersManager::CheckResult result;
-
-	if (!m_wasLoaded && !loadRules())
-	{
-		return result;
-	}
-
-	const Request request(baseUrl, requestUrl, resourceType);
-
-	for (int i = 0; i < request.requestUrl.length(); ++i)
-	{
-		const ContentFiltersManager::CheckResult currentResult(checkUrlSubstring(m_root, request.requestUrl.right(request.requestUrl.length() - i), {}, request));
-
-		if (currentResult.isBlocked)
-		{
-			result = currentResult;
-		}
-		else if (currentResult.isException)
-		{
-			return currentResult;
-		}
-	}
-
-	return result;
-}
-
-ContentFiltersManager::CosmeticFiltersResult AdblockContentFiltersProfile::getCosmeticFilters(const QStringList &domains, bool isDomainOnly)
-{
-	if (!m_wasLoaded)
-	{
-		loadRules();
-	}
-
-	ContentFiltersManager::CosmeticFiltersResult result;
-
-	if (!isDomainOnly)
-	{
-		result.rules = m_cosmeticFiltersRules;
-	}
-
-	for (int i = 0; i < domains.count(); ++i)
-	{
-		result.rules.append(m_cosmeticFiltersDomainRules.values(domains.at(i)));
-		result.exceptions.append(m_cosmeticFiltersDomainExceptions.values(domains.at(i)));
-	}
-
-	return result;
 }
 
 QHash<AdblockContentFiltersProfile::RuleType, quint32> AdblockContentFiltersProfile::loadRulesInformation(const ContentFiltersProfile::ProfileSummary &profileSummary, QIODevice *rulesDevice)

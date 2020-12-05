@@ -66,10 +66,10 @@ public:
 	QString getPath() const override;
 	QUrl getUpdateUrl() const override;
 	QDateTime getLastUpdate() const override;
-	static HeaderInformation loadHeader(QIODevice *rulesDevice);
 	ProfileSummary getProfileSummary() const override;
-	ContentFiltersManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType) override;
 	ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly) override;
+	ContentFiltersManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType) override;
+	static HeaderInformation loadHeader(QIODevice *rulesDevice);
 	static QHash<RuleType, quint32> loadRulesInformation(const ProfileSummary &profileSummary, QIODevice *rulesDevice);
 	QVector<QLocale::Language> getLanguages() const override;
 	ProfileCategory getCategory() const override;
