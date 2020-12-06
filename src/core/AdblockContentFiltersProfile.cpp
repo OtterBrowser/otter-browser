@@ -45,18 +45,24 @@ AdblockContentFiltersProfile::AdblockContentFiltersProfile(const ContentFiltersP
 	m_flags(flags),
 	m_wasLoaded(false)
 {
-	if (languages.isEmpty())
-	{
-		m_languages = {QLocale::AnyLanguage};
-	}
-	else
+	if (!languages.isEmpty())
 	{
 		m_languages.reserve(languages.count());
 
 		for (int i = 0; i < languages.count(); ++i)
 		{
-			m_languages.append(QLocale(languages.at(i)).language());
+			const QLocale::Language language(QLocale(languages.at(i)).language());
+
+			if (language != QLocale::AnyLanguage)
+			{
+				m_languages.append(language);
+			}
 		}
+	}
+
+	if (m_languages.isEmpty())
+	{
+		m_languages = {QLocale::AnyLanguage};
 	}
 
 	loadHeader();
