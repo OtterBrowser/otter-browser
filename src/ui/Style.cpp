@@ -103,10 +103,10 @@ void Style::drawToolBarEdge(const QStyleOption *option, QPainter *painter) const
 
 void Style::drawThinProgressBar(const QStyleOptionProgressBar *option, QPainter *painter) const
 {
-	QColor background(option->palette.highlight().color());
-	background.setAlpha(50);
+	QColor color(option->palette.highlight().color());
+	color.setAlpha(50);
 
-	painter->setBrush(background);
+	painter->setBrush(color);
 	painter->setPen(Qt::transparent);
 	painter->drawRoundedRect(option->rect, 2, 2);
 	painter->setBrush(option->palette.highlight());
