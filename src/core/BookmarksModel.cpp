@@ -915,7 +915,7 @@ void BookmarksModel::readdBookmarkUrl(Bookmark *bookmark)
 	}
 }
 
-void BookmarksModel::setupFeed(BookmarksModel::Bookmark *bookmark)
+void BookmarksModel::setupFeed(Bookmark *bookmark)
 {
 	const QUrl normalizedUrl(Utils::normalizeUrl(bookmark->getUrl()));
 	Feed *feed(FeedsManager::createFeed(bookmark->getUrl(), bookmark->getTitle()));
