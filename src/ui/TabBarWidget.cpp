@@ -420,25 +420,22 @@ void TabHandleWidget::updateGeometries()
 	}
 	else if (controlsWidth <= 34 && isActive && (isCloseButtonEnabled && !m_window->isPinned()) && isUrlIconEnabled)
 	{
-		if (isUrlIconEnabled)
+		const int buttonWidth((controlsRectangle.width() / 2) - 2);
+
+		m_closeButtonRectangle = controlsRectangle;
+		m_urlIconRectangle = controlsRectangle;
+
+		if (TabBarWidget::isLayoutReversed())
 		{
-			const int buttonWidth((controlsRectangle.width() / 2) - 2);
+			m_closeButtonRectangle.setWidth(buttonWidth);
 
-			m_closeButtonRectangle = controlsRectangle;
-			m_urlIconRectangle = controlsRectangle;
+			m_urlIconRectangle.setLeft(m_urlIconRectangle.right() - buttonWidth);
+		}
+		else
+		{
+			m_urlIconRectangle.setWidth(buttonWidth);
 
-			if (TabBarWidget::isLayoutReversed())
-			{
-				m_closeButtonRectangle.setWidth(buttonWidth);
-
-				m_urlIconRectangle.setLeft(m_urlIconRectangle.right() - buttonWidth);
-			}
-			else
-			{
-				m_urlIconRectangle.setWidth(buttonWidth);
-
-				m_closeButtonRectangle.setLeft(m_closeButtonRectangle.right() - buttonWidth);
-			}
+			m_closeButtonRectangle.setLeft(m_closeButtonRectangle.right() - buttonWidth);
 		}
 	}
 	else
