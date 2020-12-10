@@ -272,6 +272,9 @@ ApplicationInformation WindowsPlatformIntegration::getApplicationInformation(con
 	TCHAR readBuffer[128];
 	DWORD bufferSize(sizeof(readBuffer));
 
+	information.name = fileInformation.baseName();
+	information.icon = QFileIconProvider().icon(fileInformation);
+
 	if (RegOpenKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\MuiCache"), 0, KEY_QUERY_VALUE, &key) == ERROR_SUCCESS)
 	{
 		if (RegQueryValueEx(key, fullApplicationPath.toStdWString().c_str(), nullptr, nullptr, (LPBYTE)readBuffer, &bufferSize) == ERROR_SUCCESS)
@@ -281,9 +284,6 @@ ApplicationInformation WindowsPlatformIntegration::getApplicationInformation(con
 
 		RegCloseKey(key);
 	}
-
-	information.name = fileInformation.baseName();
-	information.icon = QFileIconProvider().icon(fileInformation);
 
 	return information;
 }
