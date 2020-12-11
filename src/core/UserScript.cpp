@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -96,26 +96,27 @@ void UserScript::reload()
 		line = line.mid(1);
 
 		const QString keyword(line.section(QLatin1Char(' '), 0, 0));
+		const QString value(line.section(QLatin1Char(' '), 1, -1));
 
 		if (keyword == QLatin1String("description"))
 		{
-			m_description = line.section(QLatin1Char(' '), 1, -1);
+			m_description = value;
 		}
 		else if (keyword == QLatin1String("downloadURL") && m_downloadUrl.isEmpty())
 		{
-			m_downloadUrl = QUrl(line.section(QLatin1Char(' '), 1, -1));
+			m_downloadUrl = QUrl(value);
 		}
 		else if (keyword == QLatin1String("exclude"))
 		{
-			m_excludeRules.append(line.section(QLatin1Char(' '), 1, -1));
+			m_excludeRules.append(value);
 		}
 		else if (keyword == QLatin1String("homepage"))
 		{
-			m_homePage = QUrl(line.section(QLatin1Char(' '), 1, -1));
+			m_homePage = QUrl(value);
 		}
 		else if (keyword == QLatin1String("icon"))
 		{
-			m_iconUrl = line.section(QLatin1Char(' '), 1, -1);
+			m_iconUrl = value;
 
 			if (m_iconUrl.isRelative())
 			{
@@ -124,11 +125,11 @@ void UserScript::reload()
 		}
 		else if (keyword == QLatin1String("include"))
 		{
-			m_includeRules.append(line.section(QLatin1Char(' '), 1, -1));
+			m_includeRules.append(value);
 		}
 		else if (keyword == QLatin1String("match"))
 		{
-			line = line.section(QLatin1Char(' '), 1, -1);
+			line = value;
 
 			if (QRegularExpression(QLatin1String("^.+://.*/.*")).match(line).hasMatch() && (!line.startsWith(QLatin1Char('*')) || line.at(1) == QLatin1Char(':')))
 			{
@@ -152,7 +153,7 @@ void UserScript::reload()
 		}
 		else if (keyword == QLatin1String("name"))
 		{
-			m_title = line.section(QLatin1Char(' '), 1, -1);
+			m_title = value;
 		}
 		else if (keyword == QLatin1String("noframes"))
 		{
@@ -160,7 +161,7 @@ void UserScript::reload()
 		}
 		else if (keyword == QLatin1String("run-at"))
 		{
-			const QString injectionTime(line.section(QLatin1Char(' '), 1, -1));
+			const QString injectionTime(value);
 
 			if (injectionTime == QLatin1String("document-start"))
 			{
@@ -177,7 +178,7 @@ void UserScript::reload()
 		}
 		else if (keyword == QLatin1String("updateURL"))
 		{
-			m_updateUrl = QUrl(line.section(QLatin1Char(' '), 1, -1));
+			m_updateUrl = QUrl(value);
 
 			if (m_updateUrl.isRelative())
 			{
@@ -186,7 +187,7 @@ void UserScript::reload()
 		}
 		else if (keyword == QLatin1String("version"))
 		{
-			m_version = line.section(QLatin1Char(' '), 1, -1);
+			m_version = value;
 		}
 	}
 
