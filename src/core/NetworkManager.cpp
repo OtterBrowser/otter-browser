@@ -42,7 +42,13 @@ NetworkManager::NetworkManager(bool isPrivate, QObject *parent) : QNetworkAccess
 {
 	NetworkManagerFactory::initialize();
 
-	if (!isPrivate)
+	if (isPrivate)
+	{
+		m_cookieJar = new CookieJar({}, this);
+
+		setCookieJar(m_cookieJar);
+	}
+	else
 	{
 		m_cookieJar = NetworkManagerFactory::getCookieJar();
 
@@ -55,12 +61,6 @@ NetworkManager::NetworkManager(bool isPrivate, QObject *parent) : QNetworkAccess
 		setCache(cache);
 
 		cache->setParent(QCoreApplication::instance());
-	}
-	else
-	{
-		m_cookieJar = new CookieJar({}, this);
-
-		setCookieJar(m_cookieJar);
 	}
 
 	connect(this, &NetworkManager::authenticationRequired, this, &NetworkManager::handleAuthenticationRequired);
