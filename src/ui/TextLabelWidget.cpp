@@ -71,17 +71,15 @@ void TextLabelWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	if (m_url.isValid())
 	{
-		menu.addAction(tr("Copy Link Location"), this, &TextLabelWidget::copyUrl);
+		menu.addAction(tr("Copy Link Location"), this, [&]()
+		{
+			QGuiApplication::clipboard()->setText(m_url.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
+		});
 	}
 
 	menu.addSeparator();
 	menu.addAction(ThemesManager::createIcon(QLatin1String("edit-select-all")), tr("Select All"), this, &TextLabelWidget::selectAll, QKeySequence(QKeySequence::SelectAll))->setEnabled(!text().isEmpty());
 	menu.exec(event->globalPos());
-}
-
-void TextLabelWidget::copyUrl()
-{
-	QGuiApplication::clipboard()->setText(m_url.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 }
 
 void TextLabelWidget::clear()

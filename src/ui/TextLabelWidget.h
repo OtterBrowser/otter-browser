@@ -47,9 +47,6 @@ protected:
 	void contextMenuEvent(QContextMenuEvent *event) override;
 	void updateStyle();
 
-protected slots:
-	void copyUrl();
-
 private:
 	QUrl m_url;
 	QPoint m_dragStartPosition;
