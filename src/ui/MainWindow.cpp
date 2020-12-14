@@ -1295,15 +1295,14 @@ void MainWindow::restoreClosedWindow(int index)
 	}
 
 	const Session::ClosedWindow closedWindow(m_closedWindows.takeAt(index));
-	int windowIndex(-1);
 
 	if (closedWindow.previousWindow == 0)
 	{
-		windowIndex = 0;
+		index = 0;
 	}
 	else if (closedWindow.nextWindow == 0)
 	{
-		windowIndex = m_windows.count();
+		index = m_windows.count();
 	}
 	else
 	{
@@ -1311,7 +1310,7 @@ void MainWindow::restoreClosedWindow(int index)
 
 		if (previousIndex >= 0)
 		{
-			windowIndex = (previousIndex + 1);
+			index = (previousIndex + 1);
 		}
 		else
 		{
@@ -1319,7 +1318,11 @@ void MainWindow::restoreClosedWindow(int index)
 
 			if (nextIndex >= 0)
 			{
-				windowIndex = qMax(0, (nextIndex - 1));
+				index = qMax(0, (nextIndex - 1));
+			}
+			else
+			{
+				index = -1;
 			}
 		}
 	}
@@ -1339,7 +1342,7 @@ void MainWindow::restoreClosedWindow(int index)
 		emit closedWindowsAvailableChanged(false);
 	}
 
-	addWindow(window, SessionsManager::DefaultOpen, windowIndex, closedWindow.window.state, closedWindow.window.isAlwaysOnTop);
+	addWindow(window, SessionsManager::DefaultOpen, index, closedWindow.window.state, closedWindow.window.isAlwaysOnTop);
 }
 
 void MainWindow::clearClosedWindows()
