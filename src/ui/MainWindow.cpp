@@ -189,7 +189,13 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 
 	connect(ActionsManager::getInstance(), &ActionsManager::shortcutsChanged, this, &MainWindow::updateShortcuts);
 	connect(SessionsManager::getInstance(), &SessionsManager::requestedRemoveStoredUrl, this, &MainWindow::removeStoredUrl);
-	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &MainWindow::handleOptionChanged);
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, [&](int identifier)
+	{
+		if (identifier == SettingsManager::Browser_HomePageOption)
+		{
+			emit arbitraryActionsStateChanged({ActionsManager::GoToHomePageAction});
+		}
+	});
 	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarAdded, this, &MainWindow::handleToolBarAdded);
 	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarRemoved, this, &MainWindow::handleToolBarRemoved);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, &MainWindow::handleTransferStarted);
@@ -1613,14 +1619,6 @@ void MainWindow::openSpecialPage(const QUrl &url, ActionsManager::TriggerType tr
 	if (!SessionsManager::hasUrl(url, true))
 	{
 		triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, trigger);
-	}
-}
-
-void MainWindow::handleOptionChanged(int identifier)
-{
-	if (identifier == SettingsManager::Browser_HomePageOption)
-	{
-		emit arbitraryActionsStateChanged({ActionsManager::GoToHomePageAction});
 	}
 }
 
