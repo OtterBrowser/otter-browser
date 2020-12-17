@@ -1177,7 +1177,7 @@ void Application::handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInf
 
 void Application::showNotification(Notification *notification)
 {
-	if (SettingsManager::getOption(SettingsManager::Interface_UseNativeNotificationsOption).toBool() && m_platformIntegration && m_platformIntegration->canShowNotifications())
+	if (m_platformIntegration && m_platformIntegration->canShowNotifications() && SettingsManager::getOption(SettingsManager::Interface_UseNativeNotificationsOption).toBool())
 	{
 		m_platformIntegration->showNotification(notification);
 	}
