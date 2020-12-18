@@ -953,34 +953,36 @@ void Application::handleAboutToQuit()
 	QStringList clearSettings(SettingsManager::getOption(SettingsManager::History_ClearOnCloseOption).toStringList());
 	clearSettings.removeAll({});
 
-	if (!clearSettings.isEmpty())
+	if (clearSettings.isEmpty())
 	{
-		const bool shouldClearAll(clearSettings.contains(QLatin1String("all")));
+		return;
+	}
 
-		if (shouldClearAll || clearSettings.contains(QLatin1String("browsing")))
-		{
-			HistoryManager::clearHistory();
-		}
+	const bool shouldClearAll(clearSettings.contains(QLatin1String("all")));
 
-		if (shouldClearAll || clearSettings.contains(QLatin1String("cookies")))
-		{
-			NetworkManagerFactory::clearCookies();
-		}
+	if (shouldClearAll || clearSettings.contains(QLatin1String("browsing")))
+	{
+		HistoryManager::clearHistory();
+	}
 
-		if (shouldClearAll || clearSettings.contains(QLatin1String("downloads")))
-		{
-			TransfersManager::clearTransfers();
-		}
+	if (shouldClearAll || clearSettings.contains(QLatin1String("cookies")))
+	{
+		NetworkManagerFactory::clearCookies();
+	}
 
-		if (shouldClearAll || clearSettings.contains(QLatin1String("caches")))
-		{
-			NetworkManagerFactory::clearCache();
-		}
+	if (shouldClearAll || clearSettings.contains(QLatin1String("downloads")))
+	{
+		TransfersManager::clearTransfers();
+	}
 
-		if (shouldClearAll || clearSettings.contains(QLatin1String("passwords")))
-		{
-			PasswordsManager::clearPasswords();
-		}
+	if (shouldClearAll || clearSettings.contains(QLatin1String("caches")))
+	{
+		NetworkManagerFactory::clearCache();
+	}
+
+	if (shouldClearAll || clearSettings.contains(QLatin1String("passwords")))
+	{
+		PasswordsManager::clearPasswords();
 	}
 }
 
