@@ -185,11 +185,10 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	m_commandLineParser.process(arguments);
 
-	const bool isPortable(m_commandLineParser.isSet(QLatin1String("portable")));
 	const bool isPrivate(m_commandLineParser.isSet(QLatin1String("private-session")));
 	bool isReadOnly(m_commandLineParser.isSet(QLatin1String("readonly")));
 
-	if (isPortable)
+	if (m_commandLineParser.isSet(QLatin1String("portable")))
 	{
 		profilePath = applicationDirectoryPath + QLatin1String("/profile");
 		cachePath = applicationDirectoryPath + QLatin1String("/cache");
