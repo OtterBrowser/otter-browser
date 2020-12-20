@@ -523,21 +523,16 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 
 		menu.addAction(tr("Remove Icon"), this, [&]()
 		{
-			const QAction *action(qobject_cast<QAction*>(sender()));
+			const QString entryName(EnumeratorMapper(metaObject()->enumerator(m_entryIdentifierEnumerator), QLatin1String("Entry")).mapToName(entry));
 
-			if (action)
+			if (!entryName.isEmpty())
 			{
 				QStringList layout(SettingsManager::getOption(SettingsManager::AddressField_LayoutOption).toStringList());
-				QString name(EnumeratorMapper(metaObject()->enumerator(m_entryIdentifierEnumerator), QLatin1String("Entry")).mapToName(action->data().toInt()));
+				layout.removeAll(entryName);
 
-				if (!name.isEmpty())
-				{
-					layout.removeAll(name);
-
-					SettingsManager::setOption(SettingsManager::AddressField_LayoutOption, layout);
-				}
+				SettingsManager::setOption(SettingsManager::AddressField_LayoutOption, layout);
 			}
-		})->setData(entry);
+		});
 	}
 
 	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
