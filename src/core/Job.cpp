@@ -30,11 +30,6 @@ Job::Job(QObject *parent) : QObject(parent),
 {
 }
 
-int Job::getProgress() const
-{
-	return m_progress;
-}
-
 void Job::setProgress(int progress)
 {
 	if (progress != m_progress)
@@ -43,6 +38,11 @@ void Job::setProgress(int progress)
 
 		emit progressChanged(progress);
 	}
+}
+
+int Job::getProgress() const
+{
+	return m_progress;
 }
 
 FetchJob::FetchJob(const QUrl &url, QObject *parent) : Job(parent),
