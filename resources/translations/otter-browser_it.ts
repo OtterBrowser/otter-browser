@@ -190,7 +190,7 @@
     <message>
         <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="708"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(Sconosciuto)</translation>
     </message>
 </context>
 <context>
@@ -532,12 +532,12 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="215"/>
         <source>Failed to parse feed file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile analizzare il file di feed: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="226"/>
         <source>Failed to parse feed: no valid entries found</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile analizzare il feed: non sono state trovate voci valide</translation>
     </message>
 </context>
 <context>
@@ -1788,17 +1788,17 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="98"/>
         <source>Failed to verify profile rules using checksum</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile verificare le regole del profilo utilizzando il checksum</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="107"/>
         <source>Profile was never updated</source>
-        <translation type="unfinished"/>
+        <translation>Il profilo non è mai stato aggiornato</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="111"/>
         <source>Profile was last updated more than one week ago</source>
-        <translation type="unfinished"/>
+        <translation>Il profilo è stato aggiornato l&apos;ultima volta più di una settimana fa</translation>
     </message>
 </context>
 <context>
@@ -1806,62 +1806,62 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="197"/>
         <source>Custom Rules</source>
-        <translation type="unfinished"/>
+        <translation>Regole personalizzate</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="318"/>
         <source>Failed to remove content blocking profile file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile rimuovere il file profilo del blocco del contenuti: 1%</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="318"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Sconosciuto</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="353"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Titolo </translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="353"/>
         <source>Update Interval</source>
-        <translation type="unfinished"/>
+        <translation>Intervallo degli Aggiornamenti</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="353"/>
         <source>Last Update</source>
-        <translation type="unfinished"/>
+        <translation>Ultimo aggiornamento</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Advertisements</source>
-        <translation type="unfinished"/>
+        <translation>Pubblicità</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Annoyance</source>
-        <translation type="unfinished"/>
+        <translation>Fastidio</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>Privacy</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Social</source>
-        <translation type="unfinished"/>
+        <translation>Social</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Regional</source>
-        <translation type="unfinished"/>
+        <translation>Regionale</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Altro</translation>
     </message>
 </context>
 <context>
@@ -2175,12 +2175,12 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/core/FeedsManager.cpp" line="322"/>
         <source>Failed to parse feed: invalid feed type</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile analizzare il feed: tipo di feed non valido</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsManager.cpp" line="332"/>
         <source>Failed to download feed</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile scaricare il feed</translation>
     </message>
 </context>
 <context>
@@ -2188,17 +2188,17 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="14"/>
         <source>Edit Feed</source>
-        <translation type="unfinished"/>
+        <translation>Modificare il feed</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="22"/>
         <source>Folder:</source>
-        <translation type="unfinished"/>
+        <translation>Cartella:</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="44"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Nuovo...</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="53"/>
@@ -2233,7 +2233,7 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="50"/>
         <source>Add Feed</source>
-        <translation type="unfinished"/>
+        <translation>Aggiungi feed</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="80"/>
@@ -2251,12 +2251,12 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
         <source>Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Nome della cartella</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
         <source>Select name of new folder:</source>
-        <translation type="unfinished"/>
+        <translation>Seleziona nome della nuova cartella:</translation>
     </message>
 </context>
 <context>
@@ -2303,17 +2303,17 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="194"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Domanda</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="195"/>
         <source>You already subscribed this feed.</source>
-        <translation type="unfinished"/>
+        <translation>Ce già una sottoscrizione  questo feed.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="196"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Vuoi continuare?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="214"/>
@@ -2350,7 +2350,7 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="409"/>
         <source>Add New</source>
-        <translation type="unfinished"/>
+        <translation>Aggiungi Nuova</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="421"/>
@@ -2370,12 +2370,12 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="479"/>
         <source>Go to %1</source>
-        <translation type="unfinished"/>
+        <translation>Vai a %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="615"/>
         <source>All (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Tutto (%1)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="665"/>
@@ -2386,7 +2386,7 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="733"/>
         <source>Subscribe to this feed using:</source>
-        <translation type="unfinished"/>
+        <translation>Iscriviti a questo feed utilizzando:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="802"/>
@@ -2529,22 +2529,22 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Errore</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Profile with this address already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Il profilo con questo indirizzo esiste già.</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Domanda</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
         <source>Do you want to add this content blocking profile?</source>
-        <translation type="unfinished"/>
+        <translation>Vuoi aggiungere questo profilo al blocco dei contenuti?</translation>
     </message>
 </context>
 <context>
@@ -3304,12 +3304,12 @@ Si desidera migrarla?</translation>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="169"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>Sposta verso l&apos;alto</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="186"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>Sposta verso giù</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="200"/>
@@ -3660,17 +3660,17 @@ Vuoi continuare comunque?</translation>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="84"/>
         <source>OPML Feeds</source>
-        <translation type="unfinished"/>
+        <translation>OPML Feed</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="89"/>
         <source>Imports feeds from OPML file</source>
-        <translation type="unfinished"/>
+        <translation>Importa i feed dal file OPML</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="119"/>
         <source>OPML files (*.opml)</source>
-        <translation type="unfinished"/>
+        <translation>OPML files (*.opml)</translation>
     </message>
 </context>
 <context>
@@ -3678,17 +3678,17 @@ Vuoi continuare comunque?</translation>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="22"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>Importare nella cartella: </translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="41"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Nuovo...</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="52"/>
         <source>Allow to duplicate already existing feeds</source>
-        <translation type="unfinished"/>
+        <translation>Consentire di duplicare i feed già esistenti</translation>
     </message>
 </context>
 <context>
@@ -5773,12 +5773,12 @@ Vuoi continuare comunque?</translation>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="376"/>
         <source>Failed to parse feed file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile analizzare il file di feed: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="387"/>
         <source>Failed to parse feed: no valid entries found</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile analizzare il feed: non sono state trovate voci valide</translation>
     </message>
 </context>
 <context>
@@ -7084,12 +7084,12 @@ Vuoi sovrascriverlo?
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="240"/>
         <source>%1 (download completed)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (download completato)</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="244"/>
         <source>%1 (%2% downloaded)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (%2% scaricato)</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="263"/>
@@ -7110,7 +7110,7 @@ Vuoi sovrascriverlo?
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="280"/>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>Stop</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="297"/>
@@ -7119,7 +7119,12 @@ Target: %2
 Size: %3
 Downloaded: %4
 Progress: %5&lt;/div&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Sorgente: %1
+Obbiettivo: %2
+Peso: %3
+Scaricato: %4
+Avanzamento: %51
+</translation>
     </message>
 </context>
 <context>
@@ -9143,7 +9148,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="412"/>
         <source>Take Screenshot</source>
-        <translation type="unfinished"/>
+        <translation>Fai uno screenshot</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="413"/>
@@ -9531,7 +9536,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="400"/>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>Aggiorna</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="365"/>
@@ -9621,7 +9626,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/ui/Menu.cpp" line="133"/>
         <source>Import OPML Feeds…</source>
-        <translation type="unfinished"/>
+        <translation>Importa OPML Feed…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="135"/>
@@ -10318,7 +10323,7 @@ ID Applicazione: %2</translation>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
         <source>Feed update was completed</source>
-        <translation type="unfinished"/>
+        <translation>L&apos;aggiornamento del feed è stato completato</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="88"/>

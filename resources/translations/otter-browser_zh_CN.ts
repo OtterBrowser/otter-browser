@@ -190,7 +190,7 @@
     <message>
         <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="708"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(未知)</translation>
     </message>
 </context>
 <context>
@@ -531,12 +531,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="215"/>
         <source>Failed to parse feed file: %1</source>
-        <translation type="unfinished"/>
+        <translation>无法解析Feed文件：%1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="226"/>
         <source>Failed to parse feed: no valid entries found</source>
-        <translation type="unfinished"/>
+        <translation>无法解析Feed：找不到有效的条目</translation>
     </message>
 </context>
 <context>
@@ -1691,7 +1691,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="55"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>地址:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="68"/>
@@ -1701,12 +1701,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="78"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>从不</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="81"/>
         <source> days</source>
-        <translation type="unfinished"/>
+        <translation>天</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="91"/>
@@ -1777,27 +1777,27 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="90"/>
         <source>Failed to read profile file</source>
-        <translation type="unfinished"/>
+        <translation>无法读取配置文件</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="94"/>
         <source>Failed to download profile rules</source>
-        <translation type="unfinished"/>
+        <translation>无法下载配置文件规则</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="98"/>
         <source>Failed to verify profile rules using checksum</source>
-        <translation type="unfinished"/>
+        <translation>无法使用校验和验证配置文件规则</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="107"/>
         <source>Profile was never updated</source>
-        <translation type="unfinished"/>
+        <translation>配置从未更新</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="111"/>
         <source>Profile was last updated more than one week ago</source>
-        <translation type="unfinished"/>
+        <translation>配置上次更新超过一周</translation>
     </message>
 </context>
 <context>
@@ -1805,62 +1805,62 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="197"/>
         <source>Custom Rules</source>
-        <translation type="unfinished"/>
+        <translation>自定义规则</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="318"/>
         <source>Failed to remove content blocking profile file: %1</source>
-        <translation type="unfinished"/>
+        <translation>无法删除内容阻止配置文件：％1</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="318"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>未知</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="353"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>标题</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="353"/>
         <source>Update Interval</source>
-        <translation type="unfinished"/>
+        <translation>更新间隔</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="353"/>
         <source>Last Update</source>
-        <translation type="unfinished"/>
+        <translation>最近更新</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Advertisements</source>
-        <translation type="unfinished"/>
+        <translation>广告</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Annoyance</source>
-        <translation type="unfinished"/>
+        <translation>恼人的内容</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>隐私</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Social</source>
-        <translation type="unfinished"/>
+        <translation>社交</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Regional</source>
-        <translation type="unfinished"/>
+        <translation>区域</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>其他</translation>
     </message>
 </context>
 <context>
@@ -2168,17 +2168,18 @@ Do you want to save them?</source>
         <location filename="../../src/core/FeedsManager.cpp" line="289"/>
         <source>Feed updated:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Feed已更新：
+%1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsManager.cpp" line="322"/>
         <source>Failed to parse feed: invalid feed type</source>
-        <translation type="unfinished"/>
+        <translation>无法解析Feed：无效的Feed类型</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsManager.cpp" line="332"/>
         <source>Failed to download feed</source>
-        <translation type="unfinished"/>
+        <translation>无法下载Feed</translation>
     </message>
 </context>
 <context>
@@ -2186,62 +2187,62 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="14"/>
         <source>Edit Feed</source>
-        <translation type="unfinished"/>
+        <translation>编辑Feed</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="22"/>
         <source>Folder:</source>
-        <translation type="unfinished"/>
+        <translation>文件夹：</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="44"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>新建...</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="53"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>标题：</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="80"/>
         <source>Change Icon…</source>
-        <translation type="unfinished"/>
+        <translation>更改图标...</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="89"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>地址：</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="102"/>
         <source>Update interval:</source>
-        <translation type="unfinished"/>
+        <translation>更新间隔:</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="112"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>从不</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="115"/>
         <source> minutes</source>
-        <translation type="unfinished"/>
+        <translation>分钟</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="50"/>
         <source>Add Feed</source>
-        <translation type="unfinished"/>
+        <translation>添加Feed</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="80"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="80"/>
         <source>Valid address is required.</source>
-        <translation type="unfinished"/>
+        <translation>需要有效的地址</translation>
     </message>
 </context>
 <context>
@@ -2249,12 +2250,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
         <source>Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>文件夹名</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
         <source>Select name of new folder:</source>
-        <translation type="unfinished"/>
+        <translation>选择新文件夹的名称：</translation>
     </message>
 </context>
 <context>
@@ -2262,156 +2263,156 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="67"/>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>好</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="74"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="107"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="151"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>搜索…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="161"/>
         <source>Categories</source>
-        <translation type="unfinished"/>
+        <translation>分类</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="148"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="535"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>标题</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="148"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="535"/>
         <source>From</source>
-        <translation type="unfinished"/>
+        <translation>从</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="148"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="535"/>
         <source>Published</source>
-        <translation type="unfinished"/>
+        <translation>已发布</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="194"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>问题</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="195"/>
         <source>You already subscribed this feed.</source>
-        <translation type="unfinished"/>
+        <translation>你已经订阅此Feed</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="196"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>是否继续?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="214"/>
         <source>Select Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>选择文件夹名称</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="214"/>
         <source>Enter folder name:</source>
-        <translation type="unfinished"/>
+        <translation>输入文件夹名称：</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="359"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>打开</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="378"/>
         <source>Empty Trash</source>
-        <translation type="unfinished"/>
+        <translation>清空回收站</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="386"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="411"/>
         <source>Add Folder…</source>
-        <translation type="unfinished"/>
+        <translation>添加文件夹…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="387"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="412"/>
         <source>Add Feed…</source>
-        <translation type="unfinished"/>
+        <translation>添加Feed</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="409"/>
         <source>Add New</source>
-        <translation type="unfinished"/>
+        <translation>新增</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="421"/>
         <source>Restore Feed</source>
-        <translation type="unfinished"/>
+        <translation>恢复Feed</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="435"/>
         <source>Properties…</source>
-        <translation type="unfinished"/>
+        <translation>属性...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="477"/>
         <source>Send email to %1</source>
-        <translation type="unfinished"/>
+        <translation>发送邮件至 %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="479"/>
         <source>Go to %1</source>
-        <translation type="unfinished"/>
+        <translation>前往%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="615"/>
         <source>All (%1)</source>
-        <translation type="unfinished"/>
+        <translation>全部 (%1)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="665"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="802"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>（无标题）</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="733"/>
         <source>Subscribe to this feed using:</source>
-        <translation type="unfinished"/>
+        <translation>使用以下方式订阅此Feed：</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="802"/>
         <source>Feed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Feed: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="805"/>
         <source>Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Feeds</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="912"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="921"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>标题： %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="912"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="925"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>地址：%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="916"/>
         <source>Last update: %1</source>
-        <translation type="unfinished"/>
+        <translation>最近更新：%1</translation>
     </message>
 </context>
 <context>
@@ -2419,37 +2420,37 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="57"/>
         <source>Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Feeds</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="59"/>
         <source>Trash</source>
-        <translation type="unfinished"/>
+        <translation>回收站</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="63"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>（无标题）</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="230"/>
         <source>Failed to open feeds file: %1</source>
-        <translation type="unfinished"/>
+        <translation>无法打开笔记文件：%1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="253"/>
         <source>Failed to load feeds file: %1</source>
-        <translation type="unfinished"/>
+        <translation>无法载入Feeds文件：%1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="255"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="255"/>
         <source>Failed to load feeds file.</source>
-        <translation type="unfinished"/>
+        <translation>无法载入Feeds文件.</translation>
     </message>
 </context>
 <context>
@@ -2527,22 +2528,22 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Profile with this address already exists.</source>
-        <translation type="unfinished"/>
+        <translation>具有此地址的配置已存在.</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>问题</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
         <source>Do you want to add this content blocking profile?</source>
-        <translation type="unfinished"/>
+        <translation>要添加此内容阻止配置文件吗？</translation>
     </message>
 </context>
 <context>
@@ -3302,12 +3303,12 @@ Do you want to migrate it?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="169"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>上移</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="186"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>下移</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="200"/>
@@ -3658,17 +3659,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="84"/>
         <source>OPML Feeds</source>
-        <translation type="unfinished"/>
+        <translation>OPML Feeds</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="89"/>
         <source>Imports feeds from OPML file</source>
-        <translation type="unfinished"/>
+        <translation>从OPML文件导入Feeds</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="119"/>
         <source>OPML files (*.opml)</source>
-        <translation type="unfinished"/>
+        <translation>OPML 文件 (*.opml)</translation>
     </message>
 </context>
 <context>
@@ -3676,17 +3677,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="22"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>导入到文件夹：</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="41"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>新建…</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="52"/>
         <source>Allow to duplicate already existing feeds</source>
-        <translation type="unfinished"/>
+        <translation>允许复制已存在的Feed</translation>
     </message>
 </context>
 <context>
@@ -5717,12 +5718,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1696"/>
         <source>PNG image (*.png)</source>
-        <translation type="unfinished"/>
+        <translation>PNG图像 (*.png)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1696"/>
         <source>JPEG image (*.jpg *.jpeg)</source>
-        <translation type="unfinished"/>
+        <translation>JPEG 图像 (*.jpg *.jpeg)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2127"/>
@@ -5771,12 +5772,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="376"/>
         <source>Failed to parse feed file: %1</source>
-        <translation type="unfinished"/>
+        <translation>无法解析Feed文件：%1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="387"/>
         <source>Failed to parse feed: no valid entries found</source>
-        <translation type="unfinished"/>
+        <translation>无法解析Feed：找不到有效的条目</translation>
     </message>
 </context>
 <context>
@@ -6535,17 +6536,17 @@ Address: %2</source>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="184"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>标题： %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="184"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>地址：%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="188"/>
         <source>Date: %1</source>
-        <translation type="unfinished"/>
+        <translation>日期：%1</translation>
     </message>
 </context>
 <context>
@@ -7071,23 +7072,23 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="234"/>
         <source>From:</source>
-        <translation type="unfinished"/>
+        <translation>从：</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="240"/>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="244"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>大小：</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="240"/>
         <source>%1 (download completed)</source>
-        <translation type="unfinished"/>
+        <translation>%1（已下载完成）</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="244"/>
         <source>%1 (%2% downloaded)</source>
-        <translation type="unfinished"/>
+        <translation>%1（%2% 已下载）</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="263"/>
@@ -7108,7 +7109,7 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="280"/>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>暂停</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="297"/>
@@ -7117,7 +7118,11 @@ Target: %2
 Size: %3
 Downloaded: %4
 Progress: %5&lt;/div&gt;</source>
-        <translation type="unfinished"/>
+        <translation>来源：%1
+目标：%2
+大小：%3
+已下载：%4
+进度：%5</translation>
     </message>
 </context>
 <context>
@@ -8269,7 +8274,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>搜索…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.cpp" line="267"/>
@@ -9141,7 +9146,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="412"/>
         <source>Take Screenshot</source>
-        <translation type="unfinished"/>
+        <translation>截图</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="413"/>
@@ -9529,7 +9534,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="400"/>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>更新</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="365"/>
@@ -9619,7 +9624,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="133"/>
         <source>Import OPML Feeds…</source>
-        <translation type="unfinished"/>
+        <translation>导入 OPML Feeds…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="135"/>
@@ -10028,7 +10033,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="128"/>
         <source>Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Feeds</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="129"/>
@@ -10311,12 +10316,12 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
         <source>Feed Updated</source>
-        <translation type="unfinished"/>
+        <translation>Feed已更新</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
         <source>Feed update was completed</source>
-        <translation type="unfinished"/>
+        <translation>Feed更新完成</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
