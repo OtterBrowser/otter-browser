@@ -1,3 +1,9 @@
+1.0.02 (2020-12-21):
+- optimized handling of large images for Start Page backgrounds;
+- improved validation of content blocking profile checksum;
+- updated translations;
+- some other fixes.
+
 1.0.01 (2019-01-01):
 - some enhancements in experimental backend for QtWebEngine (Blink):
 -- download dialog is now shown for tab that initiated it;
