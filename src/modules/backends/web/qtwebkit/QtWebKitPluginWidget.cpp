@@ -22,6 +22,7 @@
 
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
+#include <QtGui/QPainterPath>
 
 namespace Otter
 {
