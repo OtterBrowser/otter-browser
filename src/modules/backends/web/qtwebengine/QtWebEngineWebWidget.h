@@ -66,6 +66,7 @@ public:
 	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = {}) const override;
 #if QTWEBENGINECORE_VERSION >= 0x050B00
 	QWidget* getInspector() override;
+#endif
 	QWidget* getViewport() override;
 	QString getTitle() const override;
 	QString getDescription() const override;
