@@ -12,7 +12,7 @@ project(otter-browser)
 
 set(MAJOR_VERSION "1")
 set(MINOR_VERSION "0")
-set(PATCH_VERSION "01")
+set(PATCH_VERSION "02")
 set(WEEKLY_VERSION "" CACHE STRING "")
 
 add_definitions(-DOTTER_VERSION_MAIN="${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}" -DOTTER_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}" -DOTTER_VERSION_CONTEXT=" " -DOTTER_VERSION_WEEKLY=" ")
@@ -495,7 +495,7 @@ elseif (APPLE)
 	set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${MAJOR_VERSION}.${MINOR_VERSION})
 	set(MACOSX_BUNDLE_ICON_FILE otter-browser.icns)
 	set(MACOSX_BUNDLE_GUI_IDENTIFIER "org.otter-browser.otter-browser")
-	set(MACOSX_BUNDLE_COPYRIGHT "Copyright (C) 2013-2019 Otter Browser Team. All rights reserved.")
+	set(MACOSX_BUNDLE_COPYRIGHT "Copyright (C) 2013-2020 Otter Browser Team. All rights reserved.")
 	set(otter_src
 		${otter_src}
 		src/modules/platforms/mac/MacPlatformIntegration.mm

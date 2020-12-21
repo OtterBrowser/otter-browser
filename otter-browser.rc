@@ -4,8 +4,8 @@ IDI_ICON1 ICON DISCARDABLE "resources/icons/otter-browser.ico"
 IDI_ICON2 ICON DISCARDABLE "resources/icons/otter-browser-file-type.ico"
 
 VS_VERSION_INFO VERSIONINFO
-	FILEVERSION 1,0,0,1
-	PRODUCTVERSION 1,0,0,1
+	FILEVERSION 1,0,0,2
+	PRODUCTVERSION 1,0,0,2
 BEGIN
 	BLOCK "StringFileInfo"
 	BEGIN
@@ -13,12 +13,12 @@ BEGIN
 		BEGIN
 			VALUE "CompanyName", "Otter Browser Team"
 			VALUE "FileDescription", "Otter Browser"
-			VALUE "FileVersion", "1.0.01"
+			VALUE "FileVersion", "1.0.02"
 			VALUE "InternalName", "otter-browser"
-			VALUE "LegalCopyright", "Copyright (C) 2013-2019 Otter Browser Team"
+			VALUE "LegalCopyright", "Copyright (C) 2013-2020 Otter Browser Team"
 			VALUE "OriginalFilename", "otter-browser.exe"
 			VALUE "ProductName", "Otter Browser"
-			VALUE "ProductVersion", "1.0.01"
+			VALUE "ProductVersion", "1.0.02"
 		END
 	END
 	BLOCK "VarFileInfo"
