@@ -40,6 +40,11 @@ void Job::setProgress(int progress)
 	}
 }
 
+int Job::getProgress() const
+{
+	return m_progress;
+}
+
 FetchJob::FetchJob(const QUrl &url, QObject *parent) : Job(parent),
 	m_reply(nullptr),
 	m_url(url),
