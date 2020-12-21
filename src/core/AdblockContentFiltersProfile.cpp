@@ -915,7 +915,7 @@ bool AdblockContentFiltersProfile::update()
 
 	m_dataFetchJob->start();
 
-	emit profileModified();
+	emit profileModified(m_name);
 
 	return true;
 }
