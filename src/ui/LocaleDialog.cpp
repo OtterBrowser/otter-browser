@@ -78,7 +78,10 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 	}
 
 	connect(this, &LocaleDialog::accepted, this, &LocaleDialog::save);
-	connect(m_ui->languageComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &LocaleDialog::handleCurrentIndexChanged);
+	connect(m_ui->languageComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [&](int index)
+	{
+		m_ui->customFilePathWidget->setEnabled(index == 1);
+	});
 }
 
 LocaleDialog::~LocaleDialog()
@@ -95,11 +98,6 @@ void LocaleDialog::changeEvent(QEvent *event)
 		m_ui->retranslateUi(this);
 		m_ui->customFilePathWidget->setFilters({tr("Translation files (*.qm)")});
 	}
-}
-
-void LocaleDialog::handleCurrentIndexChanged(int index)
-{
-	m_ui->customFilePathWidget->setEnabled(index == 1);
 }
 
 void LocaleDialog::save()
