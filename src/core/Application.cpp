@@ -1243,12 +1243,13 @@ MainWindow* Application::createWindow(const QVariantMap &parameters, const Sessi
 	if (m_windows.isEmpty() && !QString(MESSAGE_IDENTIFIER).isEmpty())
 	{
 		QStringList identifiers(SettingsManager::getOption(SettingsManager::Browser_MessagesOption).toStringList());
+		const QString messageIdentifier(MESSAGE_IDENTIFIER);
 
-		if (!identifiers.contains(QString(MESSAGE_IDENTIFIER)))
+		if (!identifiers.contains(messageIdentifier))
 		{
 			mainWindow->triggerAction(ActionsManager::NewTabAction, {{QLatin1String("url"), QString(MESSAGE_URL)}});
 
-			identifiers.append(QString(MESSAGE_IDENTIFIER));
+			identifiers.append(messageIdentifier);
 
 			SettingsManager::setOption(SettingsManager::Browser_MessagesOption, identifiers);
 		}
