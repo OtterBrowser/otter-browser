@@ -1239,11 +1239,11 @@ void Application::setLocale(const QString &locale)
 MainWindow* Application::createWindow(const QVariantMap &parameters, const Session::MainWindow &session)
 {
 	MainWindow *mainWindow(new MainWindow(parameters, session));
+	const QString messageIdentifier(MESSAGE_IDENTIFIER);
 
-	if (m_windows.isEmpty() && !QString(MESSAGE_IDENTIFIER).isEmpty())
+	if (m_windows.isEmpty() && !messageIdentifier.isEmpty())
 	{
 		QStringList identifiers(SettingsManager::getOption(SettingsManager::Browser_MessagesOption).toStringList());
-		const QString messageIdentifier(MESSAGE_IDENTIFIER);
 
 		if (!identifiers.contains(messageIdentifier))
 		{
