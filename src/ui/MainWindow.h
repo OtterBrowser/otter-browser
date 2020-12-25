@@ -122,7 +122,7 @@ protected slots:
 	void handleToolBarAdded(int identifier);
 	void handleToolBarRemoved(int identifier);
 	void handleTransferStarted();
-	void setCurrentWindow(Window *window);
+	void setActiveWindow(Window *window);
 	void setStatusMessage(const QString &message);
 	void updateWindowTitle();
 	void updateShortcuts();

@@ -1259,7 +1259,7 @@ void MainWindow::restoreSession(const Session::MainWindow &session)
 		}
 		else
 		{
-			setCurrentWindow(nullptr);
+			setActiveWindow(nullptr);
 		}
 	}
 	else
@@ -1696,7 +1696,7 @@ void MainWindow::handleRequestedCloseWindow(Window *window)
 		}
 		else
 		{
-			setCurrentWindow(nullptr);
+			setActiveWindow(nullptr);
 
 			m_workspace->setActiveWindow(nullptr);
 
@@ -1942,7 +1942,7 @@ void MainWindow::setActiveWindowByIndex(int index, bool updateLastActivity)
 	}
 
 	setStatusMessage({});
-	setCurrentWindow(window);
+	setActiveWindow(window);
 
 	if (window)
 	{
@@ -1984,7 +1984,7 @@ void MainWindow::setActiveWindowByIdentifier(quint64 identifier, bool updateLast
 	}
 }
 
-void MainWindow::setCurrentWindow(Window *window)
+void MainWindow::setActiveWindow(Window *window)
 {
 	const Window *previousWindow((m_activeWindow && m_activeWindow->isAboutToClose()) ? nullptr : m_activeWindow);
 
