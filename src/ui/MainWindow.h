@@ -136,7 +136,6 @@ private:
 	MenuBarWidget *m_menuBar;
 	StatusBarWidget *m_statusBar;
 	QPointer<Window> m_activeWindow;
-	QString m_currentBookmark;
 	QString m_windowTitle;
 	ActionExecutor::Object m_editorExecutor;
 	QVector<Shortcut*> m_shortcuts;
