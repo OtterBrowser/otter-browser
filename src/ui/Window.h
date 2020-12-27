@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -104,6 +104,8 @@ protected slots:
 	void handleToolBarStateChanged(int identifier, const Session::MainWindow::ToolBarState &state);
 
 private:
+	Q_DISABLE_COPY(Window)
+
 	MainWindow *m_mainWindow;
 	WindowToolBarWidget *m_addressBarWidget;
 	QPointer<ContentsWidget> m_contentsWidget;
