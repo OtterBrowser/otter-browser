@@ -673,7 +673,6 @@ Session::Window Window::getSession() const
 	if (m_contentsWidget)
 	{
 		session.history = m_contentsWidget->getHistory();
-		session.parentGroup = 0;
 		session.isPinned = isPinned();
 
 		if (m_contentsWidget->getType() == QLatin1String("web"))
