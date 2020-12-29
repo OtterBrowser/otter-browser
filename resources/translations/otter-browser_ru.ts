@@ -9875,7 +9875,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1256"/>
         <source>Add New</source>
-        <translation>Добавить новый</translation>
+        <translation>Добавить</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1259"/>
