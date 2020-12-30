@@ -61,7 +61,6 @@ public:
 	~Application();
 
 	static void triggerAction(int identifier, const QVariantMap &parameters, QObject *target, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger);
-	static void close();
 	static void removeWindow(MainWindow *mainWindow);
 	static void showNotification(Notification *notification);
 	static void handlePositionalArguments(QCommandLineParser *parser, bool forceOpen = false);
