@@ -144,7 +144,12 @@ Notification* NotificationsManager::createNotification(const Notification::Messa
 
 	if (definition.showAlert)
 	{
-		Application::alert(MainWindow::findMainWindow(parent));
+		MainWindow *mainWindow(MainWindow::findMainWindow(parent));
+
+		if (mainWindow)
+		{
+			Application::alert(mainWindow);
+		}
 	}
 
 	if (definition.showNotification)
