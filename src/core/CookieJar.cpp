@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -118,6 +118,13 @@ void CookieJar::scheduleSave()
 	{
 		if (Application::isAboutToQuit())
 		{
+			if (m_saveTimer != 0)
+			{
+				killTimer(m_saveTimer);
+
+				m_saveTimer = 0;
+			}
+
 			save();
 		}
 		else if (m_saveTimer == 0)
