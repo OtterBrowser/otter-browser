@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "NotesManager.h"
+#include "Application.h"
 #include "SessionsManager.h"
 
 #include <QtCore/QDateTime>
@@ -58,7 +59,21 @@ void NotesManager::timerEvent(QTimerEvent *event)
 
 void NotesManager::scheduleSave()
 {
-	if (m_saveTimer == 0)
+	if (Application::isAboutToQuit())
+	{
+		if (m_saveTimer != 0)
+		{
+			killTimer(m_saveTimer);
+
+			m_saveTimer = 0;
+		}
+
+		if (m_model)
+		{
+			m_model->save(SessionsManager::getWritableDataPath(QLatin1String("notes.xbel")));
+		}
+	}
+	else if (m_saveTimer == 0)
 	{
 		m_saveTimer = startTimer(1000);
 	}

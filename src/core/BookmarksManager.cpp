@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "BookmarksManager.h"
+#include "Application.h"
 #include "SessionsManager.h"
 #include "Utils.h"
 
@@ -76,7 +77,21 @@ void BookmarksManager::ensureInitialized()
 
 void BookmarksManager::scheduleSave()
 {
-	if (m_saveTimer == 0)
+	if (Application::isAboutToQuit())
+	{
+		if (m_saveTimer != 0)
+		{
+			killTimer(m_saveTimer);
+
+			m_saveTimer = 0;
+		}
+
+		if (m_model)
+		{
+			m_model->save(SessionsManager::getWritableDataPath(QLatin1String("bookmarks.xbel")));
+		}
+	}
+	else if (m_saveTimer == 0)
 	{
 		m_saveTimer = startTimer(1000);
 	}
