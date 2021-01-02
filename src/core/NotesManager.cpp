@@ -21,8 +21,6 @@
 #include "Application.h"
 #include "SessionsManager.h"
 
-#include <QtCore/QDateTime>
-
 namespace Otter
 {
 
