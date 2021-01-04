@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -504,131 +504,7 @@ void FeedsManager::timerEvent(QTimerEvent *event)
 
 		m_saveTimer = 0;
 
-		if (m_model)
-		{
-			m_model->save(SessionsManager::getWritableDataPath(QLatin1String("feeds.opml")));
-		}
-
-		if (SessionsManager::isReadOnly())
-		{
-			return;
-		}
-
-		QSaveFile file(SessionsManager::getWritableDataPath(QLatin1String("feeds.json")));
-
-		if (!file.open(QIODevice::WriteOnly))
-		{
-			return;
-		}
-
-		QJsonArray feedsArray;
-
-		for (int i = 0; i < m_feeds.count(); ++i)
-		{
-			const Feed *feed(m_feeds.at(i));
-
-			if (!FeedsManager::getModel()->hasFeed(feed->getUrl()) && !BookmarksManager::getModel()->hasFeed(feed->getUrl()))
-			{
-				continue;
-			}
-
-			const QMap<QString, QString> categories(feed->getCategories());
-			QJsonObject feedObject({{QLatin1String("title"), feed->getTitle()}, {QLatin1String("url"), feed->getUrl().toString()}, {QLatin1String("updateInterval"), QString::number(feed->getUpdateInterval())}, {QLatin1String("lastSynchronizationTime"), feed->getLastUpdateTime().toString(Qt::ISODate)}, {QLatin1String("lastUpdateTime"), feed->getLastSynchronizationTime().toString(Qt::ISODate)}});
-
-			if (!feed->getDescription().isEmpty())
-			{
-				feedObject.insert(QLatin1String("description"), feed->getDescription());
-			}
-
-			if (!feed->getIcon().isNull())
-			{
-				feedObject.insert(QLatin1String("icon"), Utils::savePixmapAsDataUri(feed->getIcon().pixmap(feed->getIcon().availableSizes().value(0, {16, 16}))));
-			}
-
-			if (!categories.isEmpty())
-			{
-				QMap<QString, QString>::const_iterator iterator;
-				QJsonObject categoriesObject;
-
-				for (iterator = categories.begin(); iterator != categories.end(); ++iterator)
-				{
-					categoriesObject.insert(iterator.key(), iterator.value());
-				}
-
-				feedObject.insert(QLatin1String("categories"), categoriesObject);
-			}
-
-			if (!feed->getRemovedEntries().isEmpty())
-			{
-				feedObject.insert(QLatin1String("removedEntries"), QJsonArray::fromStringList(feed->getRemovedEntries()));
-			}
-
-			const QVector<Feed::Entry> entries(feed->getEntries());
-			QJsonArray entriesArray;
-
-			for (int j = 0; j < entries.count(); ++j)
-			{
-				const Feed::Entry &entry(entries.at(j));
-				QJsonObject entryObject({{QLatin1String("identifier"), entry.identifier}, {QLatin1String("title"), entry.title}});
-
-				if (!entry.summary.isEmpty())
-				{
-					entryObject.insert(QLatin1String("summary"), entry.summary);
-				}
-
-				if (!entry.content.isEmpty())
-				{
-					entryObject.insert(QLatin1String("content"), entry.content);
-				}
-
-				if (!entry.author.isEmpty())
-				{
-					entryObject.insert(QLatin1String("author"), entry.author);
-				}
-
-				if (!entry.email.isEmpty())
-				{
-					entryObject.insert(QLatin1String("email"), entry.email);
-				}
-
-				if (!entry.url.isEmpty())
-				{
-					entryObject.insert(QLatin1String("url"), entry.url.toString());
-				}
-
-				if (entry.lastReadTime.isValid())
-				{
-					entryObject.insert(QLatin1String("lastReadTime"), entry.lastReadTime.toString(Qt::ISODate));
-				}
-
-				if (entry.publicationTime.isValid())
-				{
-					entryObject.insert(QLatin1String("publicationTime"), entry.publicationTime.toString(Qt::ISODate));
-				}
-
-				if (entry.updateTime.isValid())
-				{
-					entryObject.insert(QLatin1String("updateTime"), entry.updateTime.toString(Qt::ISODate));
-				}
-
-				if (!entry.categories.isEmpty())
-				{
-					entryObject.insert(QLatin1String("categories"), QJsonArray::fromStringList(entry.categories));
-				}
-
-				entriesArray.append(entryObject);
-			}
-
-			feedObject.insert(QLatin1String("entries"), entriesArray);
-
-			feedsArray.append(feedObject);
-		}
-
-		QJsonDocument document;
-		document.setArray(feedsArray);
-
-		file.write(document.toJson());
-		file.commit();
+		save();
 	}
 }
 
@@ -715,10 +591,150 @@ void FeedsManager::ensureInitialized()
 
 void FeedsManager::scheduleSave()
 {
-	if (m_saveTimer == 0)
+	if (Application::isAboutToQuit())
+	{
+		if (m_saveTimer != 0)
+		{
+			killTimer(m_saveTimer);
+
+			m_saveTimer = 0;
+		}
+
+		save();
+	}
+	else if (m_saveTimer == 0)
 	{
 		m_saveTimer = startTimer(1000);
 	}
+}
+
+void FeedsManager::save()
+{
+	if (m_model)
+	{
+		m_model->save(SessionsManager::getWritableDataPath(QLatin1String("feeds.opml")));
+	}
+
+	if (SessionsManager::isReadOnly())
+	{
+		return;
+	}
+
+	QSaveFile file(SessionsManager::getWritableDataPath(QLatin1String("feeds.json")));
+
+	if (!file.open(QIODevice::WriteOnly))
+	{
+		return;
+	}
+
+	QJsonArray feedsArray;
+
+	for (int i = 0; i < m_feeds.count(); ++i)
+	{
+		const Feed *feed(m_feeds.at(i));
+
+		if (!FeedsManager::getModel()->hasFeed(feed->getUrl()) && !BookmarksManager::getModel()->hasFeed(feed->getUrl()))
+		{
+			continue;
+		}
+
+		const QMap<QString, QString> categories(feed->getCategories());
+		QJsonObject feedObject({{QLatin1String("title"), feed->getTitle()}, {QLatin1String("url"), feed->getUrl().toString()}, {QLatin1String("updateInterval"), QString::number(feed->getUpdateInterval())}, {QLatin1String("lastSynchronizationTime"), feed->getLastUpdateTime().toString(Qt::ISODate)}, {QLatin1String("lastUpdateTime"), feed->getLastSynchronizationTime().toString(Qt::ISODate)}});
+
+		if (!feed->getDescription().isEmpty())
+		{
+			feedObject.insert(QLatin1String("description"), feed->getDescription());
+		}
+
+		if (!feed->getIcon().isNull())
+		{
+			feedObject.insert(QLatin1String("icon"), Utils::savePixmapAsDataUri(feed->getIcon().pixmap(feed->getIcon().availableSizes().value(0, {16, 16}))));
+		}
+
+		if (!categories.isEmpty())
+		{
+			QMap<QString, QString>::const_iterator iterator;
+			QJsonObject categoriesObject;
+
+			for (iterator = categories.begin(); iterator != categories.end(); ++iterator)
+			{
+				categoriesObject.insert(iterator.key(), iterator.value());
+			}
+
+			feedObject.insert(QLatin1String("categories"), categoriesObject);
+		}
+
+		if (!feed->getRemovedEntries().isEmpty())
+		{
+			feedObject.insert(QLatin1String("removedEntries"), QJsonArray::fromStringList(feed->getRemovedEntries()));
+		}
+
+		const QVector<Feed::Entry> entries(feed->getEntries());
+		QJsonArray entriesArray;
+
+		for (int j = 0; j < entries.count(); ++j)
+		{
+			const Feed::Entry &entry(entries.at(j));
+			QJsonObject entryObject({{QLatin1String("identifier"), entry.identifier}, {QLatin1String("title"), entry.title}});
+
+			if (!entry.summary.isEmpty())
+			{
+				entryObject.insert(QLatin1String("summary"), entry.summary);
+			}
+
+			if (!entry.content.isEmpty())
+			{
+				entryObject.insert(QLatin1String("content"), entry.content);
+			}
+
+			if (!entry.author.isEmpty())
+			{
+				entryObject.insert(QLatin1String("author"), entry.author);
+			}
+
+			if (!entry.email.isEmpty())
+			{
+				entryObject.insert(QLatin1String("email"), entry.email);
+			}
+
+			if (!entry.url.isEmpty())
+			{
+				entryObject.insert(QLatin1String("url"), entry.url.toString());
+			}
+
+			if (entry.lastReadTime.isValid())
+			{
+				entryObject.insert(QLatin1String("lastReadTime"), entry.lastReadTime.toString(Qt::ISODate));
+			}
+
+			if (entry.publicationTime.isValid())
+			{
+				entryObject.insert(QLatin1String("publicationTime"), entry.publicationTime.toString(Qt::ISODate));
+			}
+
+			if (entry.updateTime.isValid())
+			{
+				entryObject.insert(QLatin1String("updateTime"), entry.updateTime.toString(Qt::ISODate));
+			}
+
+			if (!entry.categories.isEmpty())
+			{
+				entryObject.insert(QLatin1String("categories"), QJsonArray::fromStringList(entry.categories));
+			}
+
+			entriesArray.append(entryObject);
+		}
+
+		feedObject.insert(QLatin1String("entries"), entriesArray);
+
+		feedsArray.append(feedObject);
+	}
+
+	QJsonDocument document;
+	document.setArray(feedsArray);
+
+	file.write(document.toJson());
+	file.commit();
 }
 
 void FeedsManager::handleFeedModified(Feed *feed)
