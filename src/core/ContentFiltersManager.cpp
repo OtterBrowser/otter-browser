@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 
 #include "ContentFiltersManager.h"
 #include "AdblockContentFiltersProfile.h"
+#include "Application.h"
 #include "Console.h"
 #include "JsonSettings.h"
 #include "SettingsManager.h"
@@ -188,88 +189,104 @@ void ContentFiltersManager::timerEvent(QTimerEvent *event)
 
 		m_saveTimer = 0;
 
-		const QHash<ContentFiltersProfile::ProfileCategory, QString> categories({{ContentFiltersProfile::AdvertisementsCategory, QLatin1String("advertisements")}, {ContentFiltersProfile::AnnoyanceCategory, QLatin1String("annoyance")}, {ContentFiltersProfile::PrivacyCategory, QLatin1String("privacy")}, {ContentFiltersProfile::SocialCategory, QLatin1String("social")}, {ContentFiltersProfile::RegionalCategory, QLatin1String("regional")}, {ContentFiltersProfile::OtherCategory, QLatin1String("other")}});
-		const QHash<CosmeticFiltersMode, QString> cosmeticFiltersModes({{AllFilters, QLatin1String("all")}, {DomainOnlyFilters, QLatin1String("domainOnly")}, {NoFilters, QLatin1String("none")}});
-		JsonSettings settings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.json")));
-		QJsonObject mainObject(settings.object());
-		QJsonObject::iterator iterator(mainObject.begin());
-
-		while (iterator != mainObject.end())
-		{
-			const QJsonObject profileObject(mainObject.value(iterator.key()).toObject());
-
-			if (profileObject.value(QLatin1String("isHidden")).toBool())
-			{
-				++iterator;
-			}
-			else
-			{
-				iterator = mainObject.erase(iterator);
-			}
-		}
-
-		for (int i = 0; i < m_contentBlockingProfiles.count(); ++i)
-		{
-			const ContentFiltersProfile *profile(m_contentBlockingProfiles.at(i));
-
-			if (!profile)
-			{
-				continue;
-			}
-
-			QJsonObject profileObject;
-			const int updateInterval(profile->getUpdateInterval());
-
-			if (updateInterval > 0)
-			{
-				profileObject.insert(QLatin1String("updateInterval"), updateInterval);
-			}
-
-			const QDateTime lastUpdate(profile->getLastUpdate());
-
-			if (lastUpdate.isValid())
-			{
-				profileObject.insert(QLatin1String("lastUpdate"), lastUpdate.toString(Qt::ISODate));
-			}
-
-			if (profile->getFlags().testFlag(ContentFiltersProfile::HasCustomTitleFlag))
-			{
-				profileObject.insert(QLatin1String("title"), profile->getTitle());
-			}
-
-			profileObject.insert(QLatin1String("updateUrl"), profile->getUpdateUrl().url());
-			profileObject.insert(QLatin1String("category"), categories.value(profile->getCategory()));
-			profileObject.insert(QLatin1String("cosmeticFiltersMode"), cosmeticFiltersModes.value(profile->getCosmeticFiltersMode()));
-			profileObject.insert(QLatin1String("areWildcardsEnabled"), profile->areWildcardsEnabled());
-
-			const QVector<QLocale::Language> languages(m_contentBlockingProfiles.at(i)->getLanguages());
-
-			if (!languages.contains(QLocale::AnyLanguage))
-			{
-				QJsonArray languagesArray;
-
-				for (int j = 0; j < languages.count(); ++j)
-				{
-					languagesArray.append(QLocale(languages.at(j)).name());
-				}
-
-				profileObject.insert(QLatin1String("languages"), languagesArray);
-			}
-
-			mainObject.insert(profile->getName(), profileObject);
-		}
-
-		settings.setObject(mainObject);
-		settings.save();
+		save();
 	}
 }
 
 void ContentFiltersManager::scheduleSave()
 {
-	if (m_saveTimer == 0)
+	if (Application::isAboutToQuit())
+	{
+		if (m_saveTimer != 0)
+		{
+			killTimer(m_saveTimer);
+
+			m_saveTimer = 0;
+		}
+
+		save();
+	}
+	else if (m_saveTimer == 0)
 	{
 		m_saveTimer = startTimer(1000);
 	}
+}
+
+void ContentFiltersManager::save()
+{
+	const QHash<ContentFiltersProfile::ProfileCategory, QString> categories({{ContentFiltersProfile::AdvertisementsCategory, QLatin1String("advertisements")}, {ContentFiltersProfile::AnnoyanceCategory, QLatin1String("annoyance")}, {ContentFiltersProfile::PrivacyCategory, QLatin1String("privacy")}, {ContentFiltersProfile::SocialCategory, QLatin1String("social")}, {ContentFiltersProfile::RegionalCategory, QLatin1String("regional")}, {ContentFiltersProfile::OtherCategory, QLatin1String("other")}});
+	const QHash<CosmeticFiltersMode, QString> cosmeticFiltersModes({{AllFilters, QLatin1String("all")}, {DomainOnlyFilters, QLatin1String("domainOnly")}, {NoFilters, QLatin1String("none")}});
+	JsonSettings settings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.json")));
+	QJsonObject mainObject(settings.object());
+	QJsonObject::iterator iterator(mainObject.begin());
+
+	while (iterator != mainObject.end())
+	{
+		const QJsonObject profileObject(mainObject.value(iterator.key()).toObject());
+
+		if (profileObject.value(QLatin1String("isHidden")).toBool())
+		{
+			++iterator;
+		}
+		else
+		{
+			iterator = mainObject.erase(iterator);
+		}
+	}
+
+	for (int i = 0; i < m_contentBlockingProfiles.count(); ++i)
+	{
+		const ContentFiltersProfile *profile(m_contentBlockingProfiles.at(i));
+
+		if (!profile)
+		{
+			continue;
+		}
+
+		QJsonObject profileObject;
+		const int updateInterval(profile->getUpdateInterval());
+
+		if (updateInterval > 0)
+		{
+			profileObject.insert(QLatin1String("updateInterval"), updateInterval);
+		}
+
+		const QDateTime lastUpdate(profile->getLastUpdate());
+
+		if (lastUpdate.isValid())
+		{
+			profileObject.insert(QLatin1String("lastUpdate"), lastUpdate.toString(Qt::ISODate));
+		}
+
+		if (profile->getFlags().testFlag(ContentFiltersProfile::HasCustomTitleFlag))
+		{
+			profileObject.insert(QLatin1String("title"), profile->getTitle());
+		}
+
+		profileObject.insert(QLatin1String("updateUrl"), profile->getUpdateUrl().url());
+		profileObject.insert(QLatin1String("category"), categories.value(profile->getCategory()));
+		profileObject.insert(QLatin1String("cosmeticFiltersMode"), cosmeticFiltersModes.value(profile->getCosmeticFiltersMode()));
+		profileObject.insert(QLatin1String("areWildcardsEnabled"), profile->areWildcardsEnabled());
+
+		const QVector<QLocale::Language> languages(m_contentBlockingProfiles.at(i)->getLanguages());
+
+		if (!languages.contains(QLocale::AnyLanguage))
+		{
+			QJsonArray languagesArray;
+
+			for (int j = 0; j < languages.count(); ++j)
+			{
+				languagesArray.append(QLocale(languages.at(j)).name());
+			}
+
+			profileObject.insert(QLatin1String("languages"), languagesArray);
+		}
+
+		mainObject.insert(profile->getName(), profileObject);
+	}
+
+	settings.setObject(mainObject);
+	settings.save();
 }
 
 void ContentFiltersManager::addProfile(ContentFiltersProfile *profile)
