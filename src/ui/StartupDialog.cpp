@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -214,7 +214,7 @@ SessionInformation StartupDialog::getSession() const
 		window.history = history;
 
 		Session::MainWindow mainWindow;
-		mainWindow.windows.append(window);
+		mainWindow.windows = {window};
 
 		if (!originalSession.windows.isEmpty())
 		{
@@ -226,7 +226,7 @@ SessionInformation StartupDialog::getSession() const
 
 		session.path = QLatin1String("default");
 		session.title = tr("Default");
-		session.windows.append(mainWindow);
+		session.windows = {mainWindow};
 		session.index = 0;
 	}
 
