@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -76,24 +76,28 @@ void BookmarkWidget::updateBookmark(BookmarksModel::Bookmark *bookmark)
 		return;
 	}
 
-	const BookmarksModel::BookmarkType type(m_bookmark->getType());
-
-	if (type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark || type == BookmarksModel::FeedBookmark || type == BookmarksModel::FolderBookmark)
+	switch (m_bookmark->getType())
 	{
-		if (!menu())
-		{
-			Menu *menu(new Menu(Menu::BookmarksMenu, this));
-			menu->setMenuOptions({{QLatin1String("bookmark"), m_bookmark->getIdentifier()}});
+		case BookmarksModel::RootBookmark:
+		case BookmarksModel::TrashBookmark:
+		case BookmarksModel::FeedBookmark:
+		case BookmarksModel::FolderBookmark:
+			if (!menu())
+			{
+				Menu *menu(new Menu(Menu::BookmarksMenu, this));
+				menu->setMenuOptions({{QLatin1String("bookmark"), m_bookmark->getIdentifier()}});
 
-			setMenu(menu);
-		}
+				setMenu(menu);
+			}
 
-		setPopupMode(QToolButton::InstantPopup);
-		setEnabled(m_bookmark->rowCount() > 0);
-	}
-	else
-	{
-		setMenu(nullptr);
+			setPopupMode(QToolButton::InstantPopup);
+			setEnabled(m_bookmark->rowCount() > 0);
+
+			break;
+		default:
+			setMenu(nullptr);
+
+			break;
 	}
 
 	setIcon(getIcon());
@@ -111,11 +115,15 @@ QString BookmarkWidget::getText() const
 
 QString BookmarkWidget::getToolTip() const
 {
-	const BookmarksModel::BookmarkType type(m_bookmark->getType());
-
-	if (type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark || type == BookmarksModel::FeedBookmark || type == BookmarksModel::FolderBookmark)
+	switch (m_bookmark->getType())
 	{
-		return m_bookmark->getTitle();
+		case BookmarksModel::RootBookmark:
+		case BookmarksModel::TrashBookmark:
+		case BookmarksModel::FeedBookmark:
+		case BookmarksModel::FolderBookmark:
+			return m_bookmark->getTitle();
+		default:
+			break;
 	}
 
 	QStringList toolTip;
@@ -136,7 +144,7 @@ QString BookmarkWidget::getToolTip() const
 		toolTip.append(tr("Created: %1").arg(Utils::formatDateTime(m_bookmark->getTimeAdded())));
 	}
 
-	if (m_bookmark->getTimeVisited().isValid() && type != BookmarksModel::FeedBookmark)
+	if (m_bookmark->getTimeVisited().isValid() && m_bookmark->getType() != BookmarksModel::FeedBookmark)
 	{
 		toolTip.append(tr("Visited: %1").arg(Utils::formatDateTime(m_bookmark->getTimeVisited())));
 	}
