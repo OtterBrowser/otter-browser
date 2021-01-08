@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -661,30 +661,38 @@ void Menu::populateBookmarksMenu()
 
 		const BookmarksModel::BookmarkType type(bookmark->getType());
 
-		if (type == BookmarksModel::FeedBookmark || type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark || type == BookmarksModel::RootBookmark)
+		switch (type)
 		{
-			Action *action(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}}, {{QLatin1String("text"), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, executor, this));
-
-			if (type != BookmarksModel::UrlBookmark)
-			{
-				if (bookmark->rowCount() > 0)
+			case BookmarksModel::FeedBookmark:
+			case BookmarksModel::FolderBookmark:
+			case BookmarksModel::UrlBookmark:
+			case BookmarksModel::RootBookmark:
 				{
-					Menu *menu(new Menu(BookmarksMenu, this));
-					menu->setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
+					Action *action(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}}, {{QLatin1String("text"), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, executor, this));
 
-					action->setMenu(menu);
-				}
-				else
-				{
-					action->setEnabled(false);
-				}
-			}
+					if (type != BookmarksModel::UrlBookmark)
+					{
+						if (bookmark->rowCount() > 0)
+						{
+							Menu *menu(new Menu(BookmarksMenu, this));
+							menu->setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
 
-			addAction(action);
-		}
-		else
-		{
-			addSeparator();
+							action->setMenu(menu);
+						}
+						else
+						{
+							action->setEnabled(false);
+						}
+					}
+
+					addAction(action);
+				}
+
+				break;
+			default:
+				addSeparator();
+
+				break;
 		}
 	}
 }
@@ -714,25 +722,32 @@ void Menu::populateBookmarkSelectorMenu()
 
 		const BookmarksModel::BookmarkType type(bookmark->getType());
 
-		if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark || type == BookmarksModel::RootBookmark)
+		switch (type)
 		{
-			QAction *action(new QAction(bookmark->getIcon(), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this), this));
-			action->setStatusTip(bookmark->getUrl().toString());
-			action->setData(bookmark->getIdentifier());
+			case BookmarksModel::FolderBookmark:
+			case BookmarksModel::UrlBookmark:
+			case BookmarksModel::RootBookmark:
+				{
+					QAction *action(new QAction(bookmark->getIcon(), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this), this));
+					action->setStatusTip(bookmark->getUrl().toString());
+					action->setData(bookmark->getIdentifier());
 
-			if (type != BookmarksModel::UrlBookmark)
-			{
-				Menu *menu(new Menu(BookmarkSelectorMenu, this));
-				menu->setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
+					if (type != BookmarksModel::UrlBookmark)
+					{
+						Menu *menu(new Menu(BookmarkSelectorMenu, this));
+						menu->setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
 
-				action->setMenu(menu);
-			}
+						action->setMenu(menu);
+					}
 
-			addAction(action);
-		}
-		else
-		{
-			addSeparator();
+					addAction(action);
+				}
+
+				break;
+			default:
+				addSeparator();
+
+				break;
 		}
 	}
 }
@@ -1088,30 +1103,37 @@ void Menu::populateNotesMenu()
 
 		const BookmarksModel::BookmarkType type(bookmark->getType());
 
-		if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark || type == BookmarksModel::RootBookmark)
+		switch (type)
 		{
-			Action *action(new Action(ActionsManager::PasteAction, {{QLatin1String("note"), bookmark->getIdentifier()}}, {{QLatin1String("text"), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, getExecutor(), this));
-
-			if (type == BookmarksModel::FolderBookmark)
-			{
-				if (bookmark->rowCount() > 0)
+			case BookmarksModel::FolderBookmark:
+			case BookmarksModel::UrlBookmark:
+			case BookmarksModel::RootBookmark:
 				{
-					Menu *menu(new Menu(NotesMenu, this));
-					menu->setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
+					Action *action(new Action(ActionsManager::PasteAction, {{QLatin1String("note"), bookmark->getIdentifier()}}, {{QLatin1String("text"), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, getExecutor(), this));
 
-					action->setMenu(menu);
-				}
-				else
-				{
-					action->setEnabled(false);
-				}
-			}
+					if (type == BookmarksModel::FolderBookmark)
+					{
+						if (bookmark->rowCount() > 0)
+						{
+							Menu *menu(new Menu(NotesMenu, this));
+							menu->setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
 
-			addAction(action);
-		}
-		else
-		{
-			addSeparator();
+							action->setMenu(menu);
+						}
+						else
+						{
+							action->setEnabled(false);
+						}
+					}
+
+					addAction(action);
+				}
+
+				break;
+			default:
+				addSeparator();
+
+				break;
 		}
 	}
 }
