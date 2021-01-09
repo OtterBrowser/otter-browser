@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -398,19 +398,31 @@ bool StartPageModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 		return false;
 	}
 
-	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(parent.data(BookmarksModel::TypeRole).toInt()));
 	const QModelIndex index(data->property("x-item-index").toModelIndex());
 
 	if (index.isValid())
 	{
-		if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark)
+		BookmarksModel::Bookmark *newParent(nullptr);
+
+		switch (static_cast<BookmarksModel::BookmarkType>(parent.data(BookmarksModel::TypeRole).toInt()))
 		{
-			return BookmarksManager::getModel()->moveBookmark(BookmarksManager::getModel()->getBookmark(index), BookmarksManager::getModel()->getBookmark(parent), row);
+			case BookmarksModel::FolderBookmark:
+			case BookmarksModel::RootBookmark:
+			case BookmarksModel::TrashBookmark:
+				newParent = BookmarksManager::getModel()->getBookmark(parent);
+
+				break;
+			default:
+				newParent = m_bookmark;
+				row = (parent.row() + ((index.row() < parent.row()) ? 1 : 0));
+
+				break;
 		}
 
-		return BookmarksManager::getModel()->moveBookmark(BookmarksManager::getModel()->getBookmark(index), m_bookmark, (parent.row() + ((index.row() < parent.row()) ? 1 : 0)));
+		return BookmarksManager::getModel()->moveBookmark(BookmarksManager::getModel()->getBookmark(index), newParent, row);
 	}
-	else if (data->hasUrls())
+
+	if (data->hasUrls())
 	{
 		const QVector<QUrl> urls(Utils::extractUrls(data));
 
