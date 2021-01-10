@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -218,9 +218,9 @@ void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &param
 	switch (identifier)
 	{
 		case ActionsManager::CopyLinkToClipboardAction:
-			if (static_cast<BookmarksModel::BookmarkType>(m_ui->notesViewWidget->currentIndex().data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
+			if (static_cast<BookmarksModel::BookmarkType>(getCurrentIndexData(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
 			{
-				QGuiApplication::clipboard()->setText(m_ui->notesViewWidget->currentIndex().data(BookmarksModel::UrlRole).toString());
+				QGuiApplication::clipboard()->setText(getCurrentIndexData(BookmarksModel::UrlRole).toString());
 			}
 
 			break;
@@ -230,9 +230,9 @@ void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &param
 
 			break;
 		case ActionsManager::CopyAction:
-			if (static_cast<BookmarksModel::BookmarkType>(m_ui->notesViewWidget->currentIndex().data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
+			if (static_cast<BookmarksModel::BookmarkType>(getCurrentIndexData(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
 			{
-				QGuiApplication::clipboard()->setText(m_ui->notesViewWidget->currentIndex().data(BookmarksModel::DescriptionRole).toString());
+				QGuiApplication::clipboard()->setText(getCurrentIndexData(BookmarksModel::DescriptionRole).toString());
 			}
 
 			break;
@@ -345,6 +345,11 @@ QIcon NotesContentsWidget::getIcon() const
 	return ThemesManager::createIcon(QLatin1String("notes"), false);
 }
 
+QVariant NotesContentsWidget::getCurrentIndexData(int role) const
+{
+	return m_ui->notesViewWidget->currentIndex().data(role);
+}
+
 ActionsManager::ActionDefinition::State NotesContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
 {
 	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
@@ -353,7 +358,7 @@ ActionsManager::ActionDefinition::State NotesContentsWidget::getActionState(int 
 	{
 		case ActionsManager::CopyLinkToClipboardAction:
 			state.text = QCoreApplication::translate("actions", "Copy Address of Source Page");
-			state.isEnabled = (static_cast<BookmarksModel::BookmarkType>(m_ui->notesViewWidget->currentIndex().data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark && !m_ui->notesViewWidget->currentIndex().data(BookmarksModel::UrlRole).toString().isEmpty());
+			state.isEnabled = (static_cast<BookmarksModel::BookmarkType>(getCurrentIndexData(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark && !getCurrentIndexData(BookmarksModel::UrlRole).toString().isEmpty());
 
 			return state;
 		case ActionsManager::CutAction:
