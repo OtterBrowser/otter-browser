@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -148,6 +148,15 @@ void BookmarkPropertiesDialog::saveBookmark()
 {
 	if (m_ui->folderComboBox->isEnabled())
 	{
+		const QString keyword(m_ui->keywordLineEditWidget->text());
+
+		if (!keyword.isEmpty() && (!m_bookmark || m_bookmark->getKeyword() != keyword) && BookmarksManager::getModel()->getBookmarkByKeyword(keyword))
+		{
+			QMessageBox::critical(this, tr("Error"), tr("Bookmark with this keyword already exists."), QMessageBox::Close);
+
+			return;
+		}
+
 		if (!m_bookmark)
 		{
 			QMap<int, QVariant> metaData({{BookmarksModel::TitleRole, m_ui->titleLineEditWidget->text()}});
@@ -159,15 +168,6 @@ void BookmarkPropertiesDialog::saveBookmark()
 			}
 
 			m_bookmark = BookmarksManager::addBookmark((isUrl ? BookmarksModel::UrlBookmark : BookmarksModel::FolderBookmark), metaData, m_ui->folderComboBox->getCurrentFolder(), m_index);
-		}
-
-		const QString keyword(m_ui->keywordLineEditWidget->text());
-
-		if (m_bookmark->getKeyword() != keyword && BookmarksManager::getBookmark(keyword))
-		{
-			QMessageBox::critical(this, tr("Error"), tr("Bookmark with this keyword already exists."), QMessageBox::Close);
-
-			return;
 		}
 
 		m_bookmark->setData(m_ui->addressLineEditWidget->text(), BookmarksModel::UrlRole);
