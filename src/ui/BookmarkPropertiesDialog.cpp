@@ -157,6 +157,8 @@ void BookmarkPropertiesDialog::saveBookmark()
 			return;
 		}
 
+		BookmarksModel::Bookmark *folderBookmark(m_ui->folderComboBox->getCurrentFolder());
+
 		if (!m_bookmark)
 		{
 			QMap<int, QVariant> metaData({{BookmarksModel::TitleRole, m_ui->titleLineEditWidget->text()}});
@@ -167,7 +169,7 @@ void BookmarkPropertiesDialog::saveBookmark()
 				metaData[BookmarksModel::UrlRole] = QUrl(m_ui->addressLineEditWidget->text());
 			}
 
-			m_bookmark = BookmarksManager::addBookmark((isUrl ? BookmarksModel::UrlBookmark : BookmarksModel::FolderBookmark), metaData, m_ui->folderComboBox->getCurrentFolder(), m_index);
+			m_bookmark = BookmarksManager::addBookmark((isUrl ? BookmarksModel::UrlBookmark : BookmarksModel::FolderBookmark), metaData, folderBookmark, m_index);
 		}
 
 		m_bookmark->setData(m_ui->addressLineEditWidget->text(), BookmarksModel::UrlRole);
@@ -175,12 +177,12 @@ void BookmarkPropertiesDialog::saveBookmark()
 		m_bookmark->setData(m_ui->descriptionTextEditWidget->toPlainText(), BookmarksModel::DescriptionRole);
 		m_bookmark->setData(keyword, BookmarksModel::KeywordRole);
 
-		if (m_bookmark->parent() != m_ui->folderComboBox->getCurrentFolder())
+		if (m_bookmark->parent() != folderBookmark)
 		{
-			BookmarksManager::getModel()->moveBookmark(m_bookmark, m_ui->folderComboBox->getCurrentFolder());
+			BookmarksManager::getModel()->moveBookmark(m_bookmark, folderBookmark);
 		}
 
-		BookmarksManager::setLastUsedFolder(m_ui->folderComboBox->getCurrentFolder());
+		BookmarksManager::setLastUsedFolder(folderBookmark);
 	}
 
 	accept();
