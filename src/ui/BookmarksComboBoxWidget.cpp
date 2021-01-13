@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -30,12 +30,19 @@ namespace Otter
 {
 
 BookmarksComboBoxWidget::BookmarksComboBoxWidget(QWidget *parent) : ComboBoxWidget(parent),
-	m_model(BookmarksManager::getModel())
+	m_model(BookmarksManager::getModel()),
+	m_isIgnoringChanges(false)
 {
 	setModel(m_model);
 	updateBranch();
 
-	connect(m_model, &BookmarksModel::layoutChanged, this, &BookmarksComboBoxWidget::handleLayoutChanged);
+	connect(m_model, &BookmarksModel::layoutChanged, this, [&]()
+	{
+		if (!m_isIgnoringChanges)
+		{
+			updateBranch();
+		}
+	});
 }
 
 void BookmarksComboBoxWidget::createFolder()
@@ -58,11 +65,6 @@ void BookmarksComboBoxWidget::createFolder()
 				break;
 		}
 	}
-}
-
-void BookmarksComboBoxWidget::handleLayoutChanged()
-{
-	updateBranch();
 }
 
 void BookmarksComboBoxWidget::updateBranch(const QModelIndex &parent)
@@ -104,14 +106,13 @@ void BookmarksComboBoxWidget::setCurrentFolder(BookmarksModel::Bookmark *folder)
 
 void BookmarksComboBoxWidget::setMode(BookmarksModel::FormatMode mode)
 {
-	disconnect(m_model, &BookmarksModel::layoutChanged, this, &BookmarksComboBoxWidget::handleLayoutChanged);
-
+	m_isIgnoringChanges = true;
 	m_model = ((mode == BookmarksModel::NotesMode) ? NotesManager::getModel() : BookmarksManager::getModel());
 
 	setModel(m_model);
 	updateBranch();
 
-	connect(m_model, &BookmarksModel::layoutChanged, this, &BookmarksComboBoxWidget::handleLayoutChanged);
+	m_isIgnoringChanges = false;
 }
 
 BookmarksModel::Bookmark* BookmarksComboBoxWidget::getCurrentFolder() const
