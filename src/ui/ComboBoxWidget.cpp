@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -38,17 +38,17 @@ ComboBoxWidget::ComboBoxWidget(QWidget *parent) : QComboBox(parent),
 
 void ComboBoxWidget::setCurrentIndex(const QModelIndex &index)
 {
-	if (!index.isValid())
+	if (index.isValid())
+	{
+		setRootModelIndex(index.parent());
+		setModelColumn(0);
+		setCurrentIndex(index.row());
+		setRootModelIndex({});
+	}
+	else
 	{
 		QComboBox::setCurrentIndex(-1);
-
-		return;
 	}
-
-	setRootModelIndex(index.parent());
-	setModelColumn(0);
-	setCurrentIndex(index.row());
-	setRootModelIndex({});
 }
 
 void ComboBoxWidget::setCurrentIndex(int index)
