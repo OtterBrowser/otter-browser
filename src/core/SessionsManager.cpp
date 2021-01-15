@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -272,8 +272,6 @@ SessionInformation SessionsManager::getSession(const QString &path)
 				}
 			}
 
-			Session::Window::History history;
-
 			for (int k = 0; k < windowHistoryArray.count(); ++k)
 			{
 				const QJsonObject historyEntryObject(windowHistoryArray.at(k).toObject());
@@ -284,15 +282,14 @@ SessionInformation SessionsManager::getSession(const QString &path)
 				historyEntry.position = ((position.count() == 2) ? QPoint(position.at(0).simplified().toInt(), position.at(1).simplified().toInt()) : QPoint(0, 0));
 				historyEntry.zoom = historyEntryObject.value(QLatin1String("zoom")).toInt(defaultZoom);
 
-				history.entries.append(historyEntry);
+				sessionWindow.history.entries.append(historyEntry);
 			}
 
-			if (history.index < 0 || history.index >= history.entries.count())
+			if (sessionWindow.history.index < 0 || sessionWindow.history.index >= sessionWindow.history.entries.count())
 			{
-				history.index = (history.entries.count() - 1);
+				sessionWindow.history.index = (sessionWindow.history.entries.count() - 1);
 			}
 
-			sessionWindow.history = history;
 			sessionMainWindow.windows.append(sessionWindow);
 		}
 
