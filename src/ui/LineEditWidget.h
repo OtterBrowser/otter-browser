@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -52,7 +52,6 @@ protected:
 	void keyPressEvent(QKeyEvent *event) override;
 
 protected slots:
-	void handleIndexEntered(const QModelIndex &index);
 	void updateRemoveButton(const QModelIndex &index, TrileanValue isVisible = UnknownValue);
 
 private:

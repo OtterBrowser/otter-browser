@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -70,7 +70,19 @@ PopupViewWidget::PopupViewWidget(LineEditWidget *parent) : ItemViewWidget(nullpt
 	}
 
 	connect(this, &PopupViewWidget::needsActionsUpdate, this, &PopupViewWidget::updateHeight);
-	connect(this, &PopupViewWidget::entered, this, &PopupViewWidget::handleIndexEntered);
+	connect(this, &PopupViewWidget::entered, this, [&](const QModelIndex &index)
+	{
+		if (index.isValid())
+		{
+			setCurrentIndex(index);
+		}
+
+		updateRemoveButton(index, TrueValue);
+
+		QStatusTipEvent statusTipEvent(index.data(Qt::StatusTipRole).toString());
+
+		QApplication::sendEvent(m_lineEditWidget, &statusTipEvent);
+	});
 }
 
 void PopupViewWidget::changeEvent(QEvent *event)
@@ -162,20 +174,6 @@ void PopupViewWidget::keyPressEvent(QKeyEvent *event)
 		default:
 			break;
 	}
-}
-
-void PopupViewWidget::handleIndexEntered(const QModelIndex &index)
-{
-	if (index.isValid())
-	{
-		setCurrentIndex(index);
-	}
-
-	updateRemoveButton(index, TrueValue);
-
-	QStatusTipEvent statusTipEvent(index.data(Qt::StatusTipRole).toString());
-
-	QApplication::sendEvent(m_lineEditWidget, &statusTipEvent);
 }
 
 void PopupViewWidget::updateRemoveButton(const QModelIndex &index, TrileanValue isVisible)
