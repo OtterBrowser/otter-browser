@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -81,7 +81,13 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 	connect(this, &TrayIcon::destroyed, menu, &Menu::deleteLater);
 	connect(parent, &TrayIcon::destroyed, this, &TrayIcon::deleteLater);
 	connect(menu, &Menu::aboutToShow, this, &TrayIcon::updateMenu);
-	connect(m_trayIcon, &QSystemTrayIcon::activated, this, &TrayIcon::handleTrayIconActivated);
+	connect(m_trayIcon, &QSystemTrayIcon::activated, this, [&](QSystemTrayIcon::ActivationReason reason)
+	{
+		if (reason == QSystemTrayIcon::Trigger)
+		{
+			toggleWindowsVisibility();
+		}
+	});
 }
 
 void TrayIcon::timerEvent(QTimerEvent *event)
@@ -106,14 +112,6 @@ void TrayIcon::hide()
 void TrayIcon::toggleWindowsVisibility()
 {
 	Application::setHidden(!Application::isHidden());
-}
-
-void TrayIcon::handleTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
-{
-	if (reason == QSystemTrayIcon::Trigger)
-	{
-		toggleWindowsVisibility();
-	}
 }
 
 void TrayIcon::handleMessageClicked()
