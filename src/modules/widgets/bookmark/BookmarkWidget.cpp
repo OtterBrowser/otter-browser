@@ -20,6 +20,7 @@
 #include "BookmarkWidget.h"
 #include "../../../core/Application.h"
 #include "../../../core/BookmarksManager.h"
+#include "../../../core/FeedsManager.h"
 #include "../../../core/SessionsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
@@ -115,11 +116,12 @@ QString BookmarkWidget::getText() const
 
 QString BookmarkWidget::getToolTip() const
 {
-	switch (m_bookmark->getType())
+	const BookmarksModel::BookmarkType type(m_bookmark->getType());
+
+	switch (type)
 	{
 		case BookmarksModel::RootBookmark:
 		case BookmarksModel::TrashBookmark:
-		case BookmarksModel::FeedBookmark:
 		case BookmarksModel::FolderBookmark:
 			return m_bookmark->getTitle();
 		default:
@@ -139,14 +141,26 @@ QString BookmarkWidget::getToolTip() const
 		toolTip.append(tr("Description: %1").arg(m_bookmark->getDescription()));
 	}
 
-	if (m_bookmark->getTimeAdded().isValid())
+	if (type == BookmarksModel::FeedBookmark)
 	{
-		toolTip.append(tr("Created: %1").arg(Utils::formatDateTime(m_bookmark->getTimeAdded())));
-	}
+		Feed *feed(FeedsManager::getFeed(m_bookmark->getUrl()));
 
-	if (m_bookmark->getTimeVisited().isValid() && m_bookmark->getType() != BookmarksModel::FeedBookmark)
+		if (feed)
+		{
+			toolTip.append(tr("Updated: %1").arg(Utils::formatDateTime(feed->getLastUpdateTime())));
+		}
+	}
+	else
 	{
-		toolTip.append(tr("Visited: %1").arg(Utils::formatDateTime(m_bookmark->getTimeVisited())));
+		if (m_bookmark->getTimeAdded().isValid())
+		{
+			toolTip.append(tr("Created: %1").arg(Utils::formatDateTime(m_bookmark->getTimeAdded())));
+		}
+
+		if (m_bookmark->getTimeVisited().isValid() && m_bookmark->getType() != BookmarksModel::FeedBookmark)
+		{
+			toolTip.append(tr("Visited: %1").arg(Utils::formatDateTime(m_bookmark->getTimeVisited())));
+		}
 	}
 
 	return QLatin1String("<div style=\"white-space:pre;\">") + toolTip.join(QLatin1Char('\n')) + QLatin1String("</div>");
