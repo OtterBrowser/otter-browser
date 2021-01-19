@@ -145,9 +145,9 @@ QString BookmarkWidget::getToolTip() const
 	{
 		Feed *feed(FeedsManager::getFeed(m_bookmark->getUrl()));
 
-		if (feed)
+		if (feed && feed->getLastSynchronizationTime().isValid())
 		{
-			toolTip.append(tr("Updated: %1").arg(Utils::formatDateTime(feed->getLastUpdateTime())));
+			toolTip.append(tr("Last update: %1").arg(Utils::formatDateTime(feed->getLastSynchronizationTime())));
 		}
 	}
 	else
