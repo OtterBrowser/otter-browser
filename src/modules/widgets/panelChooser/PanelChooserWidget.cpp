@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,13 @@ PanelChooserWidget::PanelChooserWidget(const ToolBarsManager::ToolBarDefinition:
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	updateText();
 
-	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarModified, this, &PanelChooserWidget::handleToolBarModified);
+	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarModified, this, [&](int identifier)
+	{
+		if (identifier == getSideBarIdentifier())
+		{
+			updateText();
+		}
+	});
 	connect(menu(), &QMenu::aboutToShow, this, &PanelChooserWidget::populateMenu);
 	connect(menu(), &QMenu::triggered, this, &PanelChooserWidget::selectPanel);
 }
@@ -75,14 +81,6 @@ void PanelChooserWidget::selectPanel(QAction *action)
 		definition.currentPanel = action->data().toString();
 
 		ToolBarsManager::setToolBar(definition);
-	}
-}
-
-void PanelChooserWidget::handleToolBarModified(int identifier)
-{
-	if (identifier == getSideBarIdentifier())
-	{
-		updateText();
 	}
 }
 
