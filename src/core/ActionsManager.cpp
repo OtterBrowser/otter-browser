@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -464,7 +464,22 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(AboutQtAction, QT_TRANSLATE_NOOP("actions", "About Qt…"), {}, ThemesManager::createIcon(QLatin1String("qt")), ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(ExitAction, QT_TRANSLATE_NOOP("actions", "Exit"), {}, ThemesManager::createIcon(QLatin1String("application-exit")), ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 
-	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &ActionsManager::handleOptionChanged);
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, [&](int identifier)
+	{
+		switch (identifier)
+		{
+			case SettingsManager::Browser_EnableSingleKeyShortcutsOption:
+			case SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption:
+				if (m_reloadTimer == 0)
+				{
+					m_reloadTimer = startTimer(250);
+				}
+
+				break;
+			default:
+				break;
+		}
+	});
 }
 
 void ActionsManager::createInstance()
@@ -575,23 +590,6 @@ void ActionsManager::registerAction(int identifier, const QString &text, const Q
 	action.scope = scope;
 
 	m_definitions.append(action);
-}
-
-void ActionsManager::handleOptionChanged(int identifier)
-{
-	switch (identifier)
-	{
-		case SettingsManager::Browser_EnableSingleKeyShortcutsOption:
-		case SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption:
-			if (m_reloadTimer == 0)
-			{
-				m_reloadTimer = startTimer(250);
-			}
-
-			break;
-		default:
-			break;
-	}
 }
 
 ActionsManager* ActionsManager::getInstance()
