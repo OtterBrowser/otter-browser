@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2020 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,8 @@
 namespace Otter
 {
 
-GesturesController::GesturesController() : m_canPropagateEvents(true)
+GesturesController::GesturesController() :
+	m_canPropagateEvents(true)
 {
 }
 

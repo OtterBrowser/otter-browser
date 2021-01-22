@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,11 +22,14 @@
 namespace Otter
 {
 
-ActionExecutor::Object::Object() : m_executor(nullptr)
+ActionExecutor::Object::Object() :
+	m_executor(nullptr)
 {
 }
 
-ActionExecutor::Object::Object(QObject *object, ActionExecutor *executor) : m_object(object), m_executor(executor)
+ActionExecutor::Object::Object(QObject *object, ActionExecutor *executor) :
+	m_object(object),
+	m_executor(executor)
 {
 }
 

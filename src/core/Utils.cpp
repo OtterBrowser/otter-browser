@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -746,7 +746,8 @@ bool isUrlEmpty(const QUrl &url)
 
 }
 
-EnumeratorMapper::EnumeratorMapper(const QMetaEnum &enumeration, const QString &suffix) : m_enumerator(enumeration),
+EnumeratorMapper::EnumeratorMapper(const QMetaEnum &enumeration, const QString &suffix) :
+	m_enumerator(enumeration),
 	m_suffix(suffix)
 {
 }
