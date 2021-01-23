@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -59,7 +59,13 @@ void SearchEnginesManager::ensureInitialized()
 
 		loadSearchEngines();
 
-		connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, m_instance, &SearchEnginesManager::handleOptionChanged);
+		connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, m_instance, [&](int identifier)
+		{
+			if (identifier == SettingsManager::Search_SearchEnginesOrderOption)
+			{
+				loadSearchEngines();
+			}
+		});
 	}
 }
 
@@ -106,14 +112,6 @@ void SearchEnginesManager::loadSearchEngines()
 
 	updateSearchEnginesModel();
 	updateSearchEnginesOptions();
-}
-
-void SearchEnginesManager::handleOptionChanged(int identifier)
-{
-	if (identifier == SettingsManager::Search_SearchEnginesOrderOption)
-	{
-		loadSearchEngines();
-	}
 }
 
 void SearchEnginesManager::updateSearchEnginesModel()
