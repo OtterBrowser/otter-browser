@@ -236,7 +236,11 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 					}
 				}
 
-				body->append(QLatin1String("--AaB03x\r\ncontent-disposition: form-data; name=\"") + parameters.at(i).first + QLatin1String("\"\r\ncontent-type: text/plain;charset=UTF-8\r\ncontent-transfer-encoding: quoted-printable\r\n") + encodedValue + QLatin1String("\r\n--AaB03x\r\n"));
+				body->append(QByteArrayLiteral("--AaB03x\r\ncontent-disposition: form-data; name=\""));
+				body->append(parameters.at(i).first.toUtf8());
+				body->append(QByteArrayLiteral("\"\r\ncontent-type: text/plain;charset=UTF-8\r\ncontent-transfer-encoding: quoted-printable\r\n"));
+				body->append(encodedValue.toUtf8());
+				body->append(QByteArrayLiteral("\r\n--AaB03x\r\n"));
 			}
 		}
 	}
