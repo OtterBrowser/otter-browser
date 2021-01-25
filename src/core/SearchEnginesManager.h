@@ -43,6 +43,13 @@ public:
 		KeywordRole
 	};
 
+	struct SearchQuery final
+	{
+		QByteArray body;
+		QNetworkRequest request;
+		QNetworkAccessManager::Operation method = QNetworkAccessManager::PostOperation;
+	};
+
 	struct SearchUrl final
 	{
 		QString url;
