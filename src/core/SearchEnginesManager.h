@@ -48,6 +48,11 @@ public:
 		QByteArray body;
 		QNetworkRequest request;
 		QNetworkAccessManager::Operation method = QNetworkAccessManager::PostOperation;
+
+		bool isValid() const
+		{
+			return (!body.isEmpty() || !request.url().isEmpty());
+		}
 	};
 
 	struct SearchUrl final
