@@ -177,11 +177,11 @@ void SearchEnginesManager::updateSearchEnginesOptions()
 	SettingsManager::updateOptionDefinition(SettingsManager::Search_DefaultSearchEngineOption, defaultSearchEngineOption);
 }
 
-void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &searchUrl, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
+SearchEnginesManager::SearchQuery SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &searchUrl)
 {
 	if (searchUrl.url.isEmpty())
 	{
-		return;
+		return {};
 	}
 
 	QString urlString(searchUrl.url);
@@ -193,7 +193,8 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 		urlString = urlString.replace(QLatin1Char('{') + iterator.key() + QLatin1Char('}'), QString::fromLatin1(QUrl::toPercentEncoding(iterator.value())));
 	}
 
-	*method = ((searchUrl.method == QLatin1String("post")) ? QNetworkAccessManager::PostOperation : QNetworkAccessManager::GetOperation);
+	SearchQuery searchQuery;
+	searchQuery.method = ((searchUrl.method == QLatin1String("post")) ? QNetworkAccessManager::PostOperation : QNetworkAccessManager::GetOperation);
 
 	QUrl url(urlString);
 	QUrlQuery getQuery(url);
@@ -204,7 +205,7 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 	{
 		const QString value(Utils::substitutePlaceholders(parameters.at(i).second, values));
 
-		if (*method == QNetworkAccessManager::GetOperation)
+		if (searchQuery.method == QNetworkAccessManager::GetOperation)
 		{
 			getQuery.addQueryItem(parameters.at(i).first, QString::fromLatin1(QUrl::toPercentEncoding(value)));
 		}
@@ -236,35 +237,49 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 					}
 				}
 
-				body->append(QByteArrayLiteral("--AaB03x\r\ncontent-disposition: form-data; name=\""));
-				body->append(parameters.at(i).first.toUtf8());
-				body->append(QByteArrayLiteral("\"\r\ncontent-type: text/plain;charset=UTF-8\r\ncontent-transfer-encoding: quoted-printable\r\n"));
-				body->append(encodedValue.toUtf8());
-				body->append(QByteArrayLiteral("\r\n--AaB03x\r\n"));
+				searchQuery.body += QByteArrayLiteral("--AaB03x\r\ncontent-disposition: form-data; name=\"");
+				searchQuery.body += parameters.at(i).first.toUtf8();
+				searchQuery.body += QByteArrayLiteral("\"\r\ncontent-type: text/plain;charset=UTF-8\r\ncontent-transfer-encoding: quoted-printable\r\n");
+				searchQuery.body += encodedValue.toUtf8();
+				searchQuery.body += QByteArrayLiteral("\r\n--AaB03x\r\n");
 			}
 		}
 	}
 
-	if (*method == QNetworkAccessManager::PostOperation)
+	if (searchQuery.method == QNetworkAccessManager::PostOperation)
 	{
 		if (searchUrl.enctype == QLatin1String("application/x-www-form-urlencoded"))
 		{
 			QUrl postUrl;
 			postUrl.setQuery(postQuery);
 
-			*body = postUrl.toString().mid(1).toUtf8();
+			searchQuery.body = postUrl.toString().mid(1).toUtf8();
 		}
 		else if (searchUrl.enctype == QLatin1String("multipart/form-data"))
 		{
-			request->setRawHeader(QByteArrayLiteral("Content-Type"), QByteArrayLiteral("multipart/form-data; boundary=AaB03x"));
-			request->setRawHeader(QByteArrayLiteral("Content-Length"), QString::number(body->length()).toUtf8());
+			searchQuery.request.setRawHeader(QByteArrayLiteral("Content-Type"), QByteArrayLiteral("multipart/form-data; boundary=AaB03x"));
+			searchQuery.request.setRawHeader(QByteArrayLiteral("Content-Length"), QString::number(searchQuery.body.length()).toUtf8());
 		}
 	}
 
 	url.setQuery(getQuery);
 
-	request->setUrl(url);
-	request->setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
+	searchQuery.request.setUrl(url);
+	searchQuery.request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
+
+	return searchQuery;
+}
+
+SearchEnginesManager::SearchQuery SearchEnginesManager::setupSearchQuery(const QString &query, const QString &identifier)
+{
+	const SearchEngineDefinition searchEngine(getSearchEngine(identifier));
+
+	if (searchEngine.isValid())
+	{
+		return setupQuery(query, searchEngine.resultsUrl);
+	}
+
+	return {};
 }
 
 SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEngine(QIODevice *device, const QString &identifier, bool checkKeyword)
@@ -617,20 +632,6 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 	writer.writeEndDocument();
 
 	return true;
-}
-
-bool SearchEnginesManager::setupSearchQuery(const QString &query, const QString &identifier, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
-{
-	const SearchEngineDefinition searchEngine(getSearchEngine(identifier));
-
-	if (searchEngine.isValid())
-	{
-		setupQuery(query, searchEngine.resultsUrl, request, method, body);
-
-		return true;
-	}
-
-	return false;
 }
 
 SearchEngineFetchJob::SearchEngineFetchJob(const QUrl &url, const QString &identifier, bool saveSearchEngine, QObject *parent) : FetchJob(url, parent),

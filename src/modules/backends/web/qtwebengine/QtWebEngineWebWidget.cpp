@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -867,25 +867,23 @@ void QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
 
 void QtWebEngineWebWidget::search(const QString &query, const QString &searchEngine)
 {
-	QNetworkRequest request;
-	QNetworkAccessManager::Operation method;
-	QByteArray body;
+	const SearchEnginesManager::SearchQuery searchQuery(SearchEnginesManager::setupSearchQuery(query, searchEngine));
 
-	if (SearchEnginesManager::setupSearchQuery(query, searchEngine, &request, &method, &body))
+	if (searchQuery.isValid())
 	{
-		setRequestedUrl(request.url(), false, true);
-		updateOptions(request.url());
+		setRequestedUrl(searchQuery.request.url(), false, true);
+		updateOptions(searchQuery.request.url());
 
-		if (method == QNetworkAccessManager::PostOperation)
+		if (searchQuery.method == QNetworkAccessManager::PostOperation)
 		{
-			QWebEngineHttpRequest httpRequest(request.url(), QWebEngineHttpRequest::Post);
-			httpRequest.setPostData(body);
+			QWebEngineHttpRequest httpRequest(searchQuery.request.url(), QWebEngineHttpRequest::Post);
+			httpRequest.setPostData(searchQuery.body);
 
 			m_page->load(httpRequest);
 		}
 		else
 		{
-			setUrl(request.url(), false);
+			setUrl(searchQuery.request.url(), false);
 		}
 	}
 }

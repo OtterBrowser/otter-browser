@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -1142,16 +1142,14 @@ void QtWebKitWebWidget::findInPage(const QString &text, FindFlags flags)
 
 void QtWebKitWebWidget::search(const QString &query, const QString &searchEngine)
 {
-	QNetworkRequest request;
-	QNetworkAccessManager::Operation method;
-	QByteArray body;
+	const SearchEnginesManager::SearchQuery searchQuery(SearchEnginesManager::setupSearchQuery(query, searchEngine));
 
-	if (SearchEnginesManager::setupSearchQuery(query, searchEngine, &request, &method, &body))
+	if (searchQuery.isValid())
 	{
-		setRequestedUrl(request.url(), false, true);
-		updateOptions(request.url());
+		setRequestedUrl(searchQuery.request.url(), false, true);
+		updateOptions(searchQuery.request.url());
 
-		m_page->mainFrame()->load(request, method, body);
+		m_page->mainFrame()->load(searchQuery.request, searchQuery.method, searchQuery.body);
 	}
 }
 

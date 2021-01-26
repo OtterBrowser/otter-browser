@@ -90,7 +90,8 @@ public:
 
 	static void createInstance();
 	static void loadSearchEngines();
-	static void setupQuery(const QString &query, const SearchUrl &searchUrl, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
+	static SearchQuery setupQuery(const QString &query, const SearchUrl &searchUrl);
+	static SearchQuery setupSearchQuery(const QString &query, const QString &identifier);
 	static SearchEngineDefinition loadSearchEngine(QIODevice *device, const QString &identifier, bool checkKeyword = true);
 	static SearchEnginesManager* getInstance();
 	static QStandardItemModel* getSearchEnginesModel();
@@ -100,7 +101,6 @@ public:
 	static bool hasSearchEngine(const QUrl &url);
 	static bool addSearchEngine(const SearchEngineDefinition &searchEngine);
 	static bool saveSearchEngine(const SearchEngineDefinition &searchEngine);
-	static bool setupSearchQuery(const QString &query, const QString &identifier, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
 
 protected:
 	explicit SearchEnginesManager(QObject *parent);

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -70,21 +70,16 @@ void SearchSuggester::setQuery(const QString &query)
 		return;
 	}
 
-	QNetworkRequest request;
-	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
+	SearchEnginesManager::SearchQuery searchQuery(SearchEnginesManager::setupQuery(query, searchEngine.suggestionsUrl));
+	searchQuery.request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
 
-	QNetworkAccessManager::Operation method;
-	QByteArray body;
-
-	SearchEnginesManager::setupQuery(query, searchEngine.suggestionsUrl, &request, &method, &body);
-
-	if (method == QNetworkAccessManager::PostOperation)
+	if (searchQuery.method == QNetworkAccessManager::PostOperation)
 	{
-		m_networkReply = NetworkManagerFactory::getNetworkManager()->post(request, body);
+		m_networkReply = NetworkManagerFactory::getNetworkManager()->post(searchQuery.request, searchQuery.body);
 	}
 	else
 	{
-		m_networkReply = NetworkManagerFactory::getNetworkManager()->get(request);
+		m_networkReply = NetworkManagerFactory::getNetworkManager()->get(searchQuery.request);
 	}
 
 	connect(m_networkReply, &QNetworkReply::finished, this, [&]()
