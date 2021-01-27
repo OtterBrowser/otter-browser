@@ -209,40 +209,37 @@ SearchEnginesManager::SearchQuery SearchEnginesManager::setupQuery(const QString
 		{
 			getQuery.addQueryItem(parameters.at(i).first, QString::fromLatin1(QUrl::toPercentEncoding(value)));
 		}
-		else
+		else if (searchUrl.enctype == QLatin1String("application/x-www-form-urlencoded"))
 		{
-			if (searchUrl.enctype == QLatin1String("application/x-www-form-urlencoded"))
-			{
-				postQuery.addQueryItem(parameters.at(i).first, QString::fromLatin1(QUrl::toPercentEncoding(value)));
-			}
-			else if (searchUrl.enctype == QLatin1String("multipart/form-data"))
-			{
-				QString encodedValue;
-				QByteArray plainValue(value.toUtf8());
-				const QVector<QChar> hex({QLatin1Char('0'), QLatin1Char('1'), QLatin1Char('2'), QLatin1Char('3'), QLatin1Char('4'), QLatin1Char('5'), QLatin1Char('6'), QLatin1Char('7'), QLatin1Char('8'), QLatin1Char('9'), QLatin1Char('A'), QLatin1Char('B'), QLatin1Char('C'), QLatin1Char('D'), QLatin1Char('E'), QLatin1Char('F')});
+			postQuery.addQueryItem(parameters.at(i).first, QString::fromLatin1(QUrl::toPercentEncoding(value)));
+		}
+		else if (searchUrl.enctype == QLatin1String("multipart/form-data"))
+		{
+			QString encodedValue;
+			QByteArray plainValue(value.toUtf8());
+			const QVector<QChar> hex({QLatin1Char('0'), QLatin1Char('1'), QLatin1Char('2'), QLatin1Char('3'), QLatin1Char('4'), QLatin1Char('5'), QLatin1Char('6'), QLatin1Char('7'), QLatin1Char('8'), QLatin1Char('9'), QLatin1Char('A'), QLatin1Char('B'), QLatin1Char('C'), QLatin1Char('D'), QLatin1Char('E'), QLatin1Char('F')});
 
-				for (int j = 0; j < plainValue.length(); ++j)
+			for (int j = 0; j < plainValue.length(); ++j)
+			{
+				const char character(plainValue.at(j));
+
+				if (character >= 32 && character <= 126 && character != 61)
 				{
-					const char character(plainValue.at(j));
-
-					if (character >= 32 && character <= 126 && character != 61)
-					{
-						encodedValue.append(character);
-					}
-					else
-					{
-						encodedValue.append(QLatin1Char('='));
-						encodedValue.append(hex[(character >> 4) & 0x0F]);
-						encodedValue.append(hex[character & 0x0F]);
-					}
+					encodedValue.append(character);
 				}
-
-				searchQuery.body += QByteArrayLiteral("--AaB03x\r\ncontent-disposition: form-data; name=\"");
-				searchQuery.body += parameters.at(i).first.toUtf8();
-				searchQuery.body += QByteArrayLiteral("\"\r\ncontent-type: text/plain;charset=UTF-8\r\ncontent-transfer-encoding: quoted-printable\r\n");
-				searchQuery.body += encodedValue.toUtf8();
-				searchQuery.body += QByteArrayLiteral("\r\n--AaB03x\r\n");
+				else
+				{
+					encodedValue.append(QLatin1Char('='));
+					encodedValue.append(hex[(character >> 4) & 0x0F]);
+					encodedValue.append(hex[character & 0x0F]);
+				}
 			}
+
+			searchQuery.body += QByteArrayLiteral("--AaB03x\r\ncontent-disposition: form-data; name=\"");
+			searchQuery.body += parameters.at(i).first.toUtf8();
+			searchQuery.body += QByteArrayLiteral("\"\r\ncontent-type: text/plain;charset=UTF-8\r\ncontent-transfer-encoding: quoted-printable\r\n");
+			searchQuery.body += encodedValue.toUtf8();
+			searchQuery.body += QByteArrayLiteral("\r\n--AaB03x\r\n");
 		}
 	}
 
