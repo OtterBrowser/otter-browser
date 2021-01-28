@@ -200,6 +200,8 @@ SearchEnginesManager::SearchQuery SearchEnginesManager::setupQuery(const QString
 	QUrlQuery getQuery(url);
 	QUrlQuery postQuery;
 	const QList<QPair<QString, QString> > parameters(searchUrl.parameters.queryItems(QUrl::FullyDecoded));
+	const bool isUrlEncoded(searchUrl.enctype == QLatin1String("application/x-www-form-urlencoded"));
+	const bool isFormData(searchUrl.enctype == QLatin1String("multipart/form-data"));
 
 	for (int i = 0; i < parameters.count(); ++i)
 	{
@@ -209,11 +211,11 @@ SearchEnginesManager::SearchQuery SearchEnginesManager::setupQuery(const QString
 		{
 			getQuery.addQueryItem(parameters.at(i).first, QString::fromLatin1(QUrl::toPercentEncoding(value)));
 		}
-		else if (searchUrl.enctype == QLatin1String("application/x-www-form-urlencoded"))
+		else if (isUrlEncoded)
 		{
 			postQuery.addQueryItem(parameters.at(i).first, QString::fromLatin1(QUrl::toPercentEncoding(value)));
 		}
-		else if (searchUrl.enctype == QLatin1String("multipart/form-data"))
+		else if (isFormData)
 		{
 			QString encodedValue;
 			QByteArray plainValue(value.toUtf8());
