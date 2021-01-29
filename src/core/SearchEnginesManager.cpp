@@ -247,14 +247,14 @@ SearchEnginesManager::SearchQuery SearchEnginesManager::setupQuery(const QString
 
 	if (searchQuery.method == QNetworkAccessManager::PostOperation)
 	{
-		if (searchUrl.enctype == QLatin1String("application/x-www-form-urlencoded"))
+		if (isUrlEncoded)
 		{
 			QUrl postUrl;
 			postUrl.setQuery(postQuery);
 
 			searchQuery.body = postUrl.toString().mid(1).toUtf8();
 		}
-		else if (searchUrl.enctype == QLatin1String("multipart/form-data"))
+		else if (isFormData)
 		{
 			searchQuery.request.setRawHeader(QByteArrayLiteral("Content-Type"), QByteArrayLiteral("multipart/form-data; boundary=AaB03x"));
 			searchQuery.request.setRawHeader(QByteArrayLiteral("Content-Length"), QString::number(searchQuery.body.length()).toUtf8());
