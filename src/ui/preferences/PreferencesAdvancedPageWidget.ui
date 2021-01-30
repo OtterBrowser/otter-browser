@@ -42,7 +42,7 @@
       <number>0</number>
      </property>
      <widget class="QWidget" name="browsingPage">
-      <layout class="QVBoxLayout" name="browsingLayout">
+      <layout class="QVBoxLayout" name="browsingPageLayout">
        <item>
         <widget class="QLabel" name="browsingGeneralHeaderLabel">
          <property name="font">
@@ -166,7 +166,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="notificationsPage">
-      <layout class="QVBoxLayout" name="notificationsLayout" stretch="0,0,0,0,0,1">
+      <layout class="QVBoxLayout" name="notificationsPageLayout" stretch="0,0,0,0,0,1">
        <item>
         <widget class="QLabel" name="notificationsEventsHeader">
          <property name="font">
@@ -278,7 +278,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="appearancePage">
-      <layout class="QVBoxLayout" name="appearanceLayout" stretch="0,0,0,0,1">
+      <layout class="QVBoxLayout" name="appearancePageLayout" stretch="0,0,0,0,1">
        <item>
         <widget class="QLabel" name="appearranceStyleHader">
          <property name="font">
@@ -352,7 +352,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="contentPage">
-      <layout class="QVBoxLayout" name="contentLayout">
+      <layout class="QVBoxLayout" name="contentPageLayout">
        <item>
         <widget class="QLabel" name="contentGeneralHeader">
          <property name="font">
@@ -510,7 +510,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="mimeTypesPage">
-      <layout class="QVBoxLayout" name="mimeTypesLayout" stretch="0,0,0,1">
+      <layout class="QVBoxLayout" name="mimeTypesPageLayout" stretch="0,0,0,1">
        <item>
         <widget class="QLabel" name="mimeTypesMimeTypesHeader">
          <property name="font">
@@ -729,7 +729,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="programsPage">
-      <layout class="QVBoxLayout" name="programsLayout">
+      <layout class="QVBoxLayout" name="programsPageLayout">
        <item>
         <widget class="QLabel" name="programsProtocolsHeader">
          <property name="font">
@@ -792,7 +792,7 @@
      </widget>
      <widget class="QWidget" name="historyPage"/>
      <widget class="QWidget" name="networkPage">
-      <layout class="QVBoxLayout" name="networkPageLayout" stretch="0,0,0,1,0,1,0">
+      <layout class="QVBoxLayout" name="networkPagePageLayout" stretch="0,0,0,1,0,1,0">
        <item>
         <widget class="QLabel" name="advancedGeneralHeader">
          <property name="font">
@@ -972,18 +972,12 @@
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
         </spacer>
        </item>
       </layout>
      </widget>
      <widget class="QWidget" name="securityPage">
-      <layout class="QVBoxLayout" name="securityLayout">
+      <layout class="QVBoxLayout" name="securityPageLayout">
        <item>
         <widget class="QLabel" name="ciphersHeader">
          <property name="font">
@@ -1100,7 +1094,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="updatesPage">
-      <layout class="QVBoxLayout" name="updatesPageVerticalLayout" stretch="0,0,0,0,1">
+      <layout class="QVBoxLayout" name="updatesPageLayout" stretch="0,0,0,0,1">
        <item>
         <widget class="QLabel" name="updatesHeader">
          <property name="font">
@@ -1194,7 +1188,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="keyboardPage">
-      <layout class="QVBoxLayout" name="keyboardLayout">
+      <layout class="QVBoxLayout" name="keyboardPageLayout">
        <item>
         <widget class="QLabel" name="keyboardHeader">
          <property name="font">
@@ -1335,7 +1329,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="mousePage">
-      <layout class="QVBoxLayout" name="mouselLayout">
+      <layout class="QVBoxLayout" name="mousePageLayout">
        <item>
         <widget class="QLabel" name="mouseHeader">
          <property name="font">
