@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -1170,8 +1170,10 @@ void PreferencesAdvancedPageWidget::updateCiphersActions()
 
 void PreferencesAdvancedPageWidget::updateUpdateChannelsActions()
 {
-	m_ui->intervalSpinBox->setEnabled(!getSelectedUpdateChannels().isEmpty());
-	m_ui->autoInstallCheckBox->setEnabled(!getSelectedUpdateChannels().isEmpty());
+	const bool hasSelectedUpdateChannels(!getSelectedUpdateChannels().isEmpty());
+
+	m_ui->intervalSpinBox->setEnabled(hasSelectedUpdateChannels);
+	m_ui->autoInstallCheckBox->setEnabled(hasSelectedUpdateChannels);
 }
 
 void PreferencesAdvancedPageWidget::addKeyboardProfile()
