@@ -747,6 +747,12 @@ void PreferencesAdvancedPageWidget::addUserAgent(QAction *action)
 	}
 
 	ItemModel *model(qobject_cast<ItemModel*>(m_ui->userAgentsViewWidget->getSourceModel()));
+
+	if (!model)
+	{
+		return;
+	}
+
 	QStandardItem *parent(model->itemFromIndex(m_ui->userAgentsViewWidget->getCurrentIndex()));
 
 	if (!parent)
@@ -913,6 +919,12 @@ void PreferencesAdvancedPageWidget::addProxy(QAction *action)
 	}
 
 	ItemModel *model(qobject_cast<ItemModel*>(m_ui->proxiesViewWidget->getSourceModel()));
+
+	if (!model)
+	{
+		return;
+	}
+
 	QStandardItem *parent(model->itemFromIndex(m_ui->proxiesViewWidget->getCurrentIndex()));
 
 	if (!parent)
