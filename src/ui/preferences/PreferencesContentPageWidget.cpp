@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -179,8 +179,24 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	columnResizer->addWidgetsFromFormLayout(m_ui->zoomLayout, QFormLayout::LabelRole);
 	columnResizer->addWidgetsFromFormLayout(m_ui->fontsLayout, QFormLayout::LabelRole);
 
-	connect(m_ui->fontsViewWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, &PreferencesContentPageWidget::handleCurrentFontChanged);
-	connect(m_ui->colorsViewWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, &PreferencesContentPageWidget::handleCurrentColorChanged);
+	connect(m_ui->fontsViewWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, [&](const QModelIndex &currentIndex, const QModelIndex &previousIndex)
+	{
+		m_ui->fontsViewWidget->closePersistentEditor(previousIndex.sibling(previousIndex.row(), 1));
+
+		if (currentIndex.isValid())
+		{
+			m_ui->fontsViewWidget->openPersistentEditor(currentIndex.sibling(currentIndex.row(), 1));
+		}
+	});
+	connect(m_ui->colorsViewWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, [&](const QModelIndex &currentIndex, const QModelIndex &previousIndex)
+	{
+		m_ui->colorsViewWidget->closePersistentEditor(previousIndex.sibling(previousIndex.row(), 1));
+
+		if (currentIndex.isValid())
+		{
+			m_ui->colorsViewWidget->openPersistentEditor(currentIndex.sibling(currentIndex.row(), 1));
+		}
+	});
 }
 
 PreferencesContentPageWidget::~PreferencesContentPageWidget()
@@ -201,26 +217,6 @@ void PreferencesContentPageWidget::changeEvent(QEvent *event)
 		m_ui->popupsComboBox->setItemText(3, tr("Open all in background"));
 		m_ui->fontsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Style"), tr("Font"), tr("Preview")});
 		m_ui->colorsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Type"), tr("Preview")});
-	}
-}
-
-void PreferencesContentPageWidget::handleCurrentFontChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex)
-{
-	m_ui->fontsViewWidget->closePersistentEditor(previousIndex.sibling(previousIndex.row(), 1));
-
-	if (currentIndex.isValid())
-	{
-		m_ui->fontsViewWidget->openPersistentEditor(currentIndex.sibling(currentIndex.row(), 1));
-	}
-}
-
-void PreferencesContentPageWidget::handleCurrentColorChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex)
-{
-	m_ui->colorsViewWidget->closePersistentEditor(previousIndex.sibling(previousIndex.row(), 1));
-
-	if (currentIndex.isValid())
-	{
-		m_ui->colorsViewWidget->openPersistentEditor(currentIndex.sibling(currentIndex.row(), 1));
 	}
 }
 
