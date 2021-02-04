@@ -109,17 +109,6 @@ void PreferencesDialog::showTab(int tab)
 
 	switch (tab)
 	{
-		case GeneralTab:
-			{
-				PreferencesGeneralPageWidget *pageWidget(new PreferencesGeneralPageWidget(this));
-
-				m_ui->generalLayout->addWidget(pageWidget);
-
-				connect(this, &PreferencesDialog::requestedSave, pageWidget, &PreferencesGeneralPageWidget::save);
-				connect(pageWidget, &PreferencesGeneralPageWidget::settingsModified, this, &PreferencesDialog::markAsModified);
-			}
-
-			break;
 		case ContentTab:
 			{
 				PreferencesContentPageWidget *pageWidget(new PreferencesContentPageWidget(this));
@@ -153,7 +142,7 @@ void PreferencesDialog::showTab(int tab)
 			}
 
 			break;
-		default:
+		case AdvancedTab:
 			{
 				PreferencesAdvancedPageWidget *pageWidget(new PreferencesAdvancedPageWidget(this));
 
@@ -161,6 +150,17 @@ void PreferencesDialog::showTab(int tab)
 
 				connect(this, &PreferencesDialog::requestedSave, pageWidget, &PreferencesAdvancedPageWidget::save);
 				connect(pageWidget, &PreferencesAdvancedPageWidget::settingsModified, this, &PreferencesDialog::markAsModified);
+			}
+
+			break;
+		default:
+			{
+				PreferencesGeneralPageWidget *pageWidget(new PreferencesGeneralPageWidget(this));
+
+				m_ui->generalLayout->addWidget(pageWidget);
+
+				connect(this, &PreferencesDialog::requestedSave, pageWidget, &PreferencesGeneralPageWidget::save);
+				connect(pageWidget, &PreferencesGeneralPageWidget::settingsModified, this, &PreferencesDialog::markAsModified);
 			}
 
 			break;
