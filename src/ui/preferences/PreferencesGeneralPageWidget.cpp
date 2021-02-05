@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -42,6 +42,10 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 	m_ui(new Ui::PreferencesGeneralPageWidget)
 {
 	m_ui->setupUi(this);
+
+	PlatformIntegration *platformIntegration(Application::getPlatformIntegration());
+	const bool canSetAsDefaultBrowser(platformIntegration && platformIntegration->canSetAsDefaultBrowser());
+
 	m_ui->startupBehaviorComboBox->addItem(tr("Show windows and tabs from the last time"), QLatin1String("continuePrevious"));
 	m_ui->startupBehaviorComboBox->addItem(tr("Show startup dialog"), QLatin1String("showDialog"));
 	m_ui->startupBehaviorComboBox->addItem(tr("Show home page"), QLatin1String("startHomePage"));
@@ -64,23 +68,18 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 	m_ui->delayTabsLoadingCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Sessions_DeferTabsLoadingOption).toBool());
 	m_ui->reuseCurrentTabCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool());
 	m_ui->openNextToActiveheckBox->setChecked(SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool());
-
-	PlatformIntegration *platformIntegration(Application::getPlatformIntegration());
-
-	if (!platformIntegration || !platformIntegration->canSetAsDefaultBrowser())
-	{
-		m_ui->setDefaultButton->setEnabled(false);
-	}
-	else
-	{
-		connect(m_ui->setDefaultButton, &QPushButton::clicked, platformIntegration, &PlatformIntegration::setAsDefaultBrowser);
-	}
+	m_ui->setDefaultButton->setEnabled(canSetAsDefaultBrowser);
 
 	ColumnResizer *columnResizer(new ColumnResizer(this));
 	columnResizer->addWidgetsFromFormLayout(m_ui->startupLayout, QFormLayout::LabelRole);
 	columnResizer->addWidgetsFromFormLayout(m_ui->downloadsLayout, QFormLayout::LabelRole);
 	columnResizer->addWidgetsFromFormLayout(m_ui->tabsLayout, QFormLayout::LabelRole);
 	columnResizer->addWidgetsFromFormLayout(m_ui->languageLayout, QFormLayout::LabelRole);
+
+	if (canSetAsDefaultBrowser)
+	{
+		connect(m_ui->setDefaultButton, &QPushButton::clicked, platformIntegration, &PlatformIntegration::setAsDefaultBrowser);
+	}
 
 	connect(bookmarksMenu, &Menu::triggered, this, [&](QAction *action)
 	{
