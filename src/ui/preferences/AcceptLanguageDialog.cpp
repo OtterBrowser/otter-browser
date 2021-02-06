@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -46,43 +46,7 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 		addLanguage(chosenLanguages.at(i).section(QLatin1Char(';'), 0, 0));
 	}
 
-	const QList<QLocale> locales(QLocale::matchingLocales(QLocale::AnyLanguage, QLocale::AnyScript, QLocale::AnyCountry));
-	QVector<QPair<QString, QString> > entries;
-	entries.reserve(locales.count() + 2);
-
-	for (int i = 0; i < locales.count(); ++i)
-	{
-		const QLocale &locale(locales.at(i));
-
-		if (locale != QLocale::c())
-		{
-			if (locale.nativeCountryName().isEmpty() || locale.nativeLanguageName().isEmpty())
-			{
-				entries.append({tr("Unknown [%1]").arg(locale.bcp47Name()), locale.bcp47Name()});
-			}
-			else
-			{
-				entries.append({QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName(), locale.nativeCountryName(), locale.bcp47Name()), locale.bcp47Name()});
-			}
-		}
-	}
-
-	QCollator collator;
-	collator.setCaseSensitivity(Qt::CaseInsensitive);
-
-	std::sort(entries.begin(), entries.end(), [&](const QPair<QString, QString> &first, const QPair<QString, QString> &second)
-	{
-		return (collator.compare(first.first, second.first) < 0);
-	});
-
-	entries.prepend({tr("Any other"), QLatin1String("*")});
-	entries.prepend({tr("System language (%1 - %2)").arg(QLocale::system().nativeLanguageName(), QLocale::system().nativeCountryName()), QLatin1String("system")});
-	entries.squeeze();
-
-	for (int i = 0; i < entries.count(); ++i)
-	{
-		m_ui->languagesComboBox->addItem(entries.at(i).first, entries.at(i).second);
-	}
+	updateLanguages();
 
 	m_ui->moveDownButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-down")));
 	m_ui->moveUpButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-up")));
@@ -111,6 +75,8 @@ void AcceptLanguageDialog::changeEvent(QEvent *event)
 		m_ui->retranslateUi(this);
 
 		m_model->setHorizontalHeaderLabels({tr("Name"), tr("Code")});
+
+		updateLanguages();
 	}
 }
 
@@ -169,6 +135,53 @@ void AcceptLanguageDialog::addLanguage(const QString &language)
 	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
 	m_model->appendRow(items);
+}
+
+void AcceptLanguageDialog::updateLanguages()
+{
+	const QList<QLocale> locales(QLocale::matchingLocales(QLocale::AnyLanguage, QLocale::AnyScript, QLocale::AnyCountry));
+	QVector<QPair<QString, QString> > entries;
+	entries.reserve(locales.count() + 2);
+
+	for (int i = 0; i < locales.count(); ++i)
+	{
+		const QLocale &locale(locales.at(i));
+
+		if (locale != QLocale::c())
+		{
+			if (locale.nativeCountryName().isEmpty() || locale.nativeLanguageName().isEmpty())
+			{
+				entries.append({tr("Unknown [%1]").arg(locale.bcp47Name()), locale.bcp47Name()});
+			}
+			else
+			{
+				entries.append({QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName(), locale.nativeCountryName(), locale.bcp47Name()), locale.bcp47Name()});
+			}
+		}
+	}
+
+	QCollator collator;
+	collator.setCaseSensitivity(Qt::CaseInsensitive);
+
+	std::sort(entries.begin(), entries.end(), [&](const QPair<QString, QString> &first, const QPair<QString, QString> &second)
+	{
+		return (collator.compare(first.first, second.first) < 0);
+	});
+
+	entries.prepend({tr("Any other"), QLatin1String("*")});
+	entries.prepend({tr("System language (%1 - %2)").arg(QLocale::system().nativeLanguageName(), QLocale::system().nativeCountryName()), QLatin1String("system")});
+	entries.squeeze();
+
+	const int index(m_ui->languagesComboBox->currentIndex());
+
+	m_ui->languagesComboBox->clear();
+
+	for (int i = 0; i < entries.count(); ++i)
+	{
+		m_ui->languagesComboBox->addItem(entries.at(i).first, entries.at(i).second);
+	}
+
+	m_ui->languagesComboBox->setCurrentIndex(index);
 }
 
 void AcceptLanguageDialog::updateActions()
