@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -19,14 +19,14 @@
 **************************************************************************/
 
 #include "PreferencesSearchPageWidget.h"
-#include "../Animation.h"
-#include "../LineEditWidget.h"
-#include "../SearchEnginePropertiesDialog.h"
-#include "../../core/ItemModel.h"
-#include "../../core/SessionsManager.h"
-#include "../../core/SettingsManager.h"
-#include "../../core/ThemesManager.h"
-#include "../../core/Utils.h"
+#include "../../../ui/Animation.h"
+#include "../../../ui/LineEditWidget.h"
+#include "../../../ui/SearchEnginePropertiesDialog.h"
+#include "../../../core/ItemModel.h"
+#include "../../../core/SessionsManager.h"
+#include "../../../core/SettingsManager.h"
+#include "../../../core/ThemesManager.h"
+#include "../../../core/Utils.h"
 
 #include "ui_PreferencesSearchPageWidget.h"
 

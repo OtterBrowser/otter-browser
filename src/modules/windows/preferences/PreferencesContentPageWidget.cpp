@@ -19,10 +19,10 @@
 **************************************************************************/
 
 #include "PreferencesContentPageWidget.h"
-#include "../../../3rdparty/columnresizer/ColumnResizer.h"
-#include "../../core/SettingsManager.h"
-#include "../../ui/ColorWidget.h"
-#include "../../ui/OptionWidget.h"
+#include "../../../core/SettingsManager.h"
+#include "../../../ui/ColorWidget.h"
+#include "../../../ui/OptionWidget.h"
+#include "../../../../3rdparty/columnresizer/ColumnResizer.h"
 
 #include "ui_PreferencesContentPageWidget.h"
 

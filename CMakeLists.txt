@@ -220,11 +220,6 @@ set(otter_src
 	src/ui/preferences/JavaScriptPreferencesDialog.cpp
 	src/ui/preferences/KeyboardProfileDialog.cpp
 	src/ui/preferences/MouseProfileDialog.cpp
-	src/ui/preferences/PreferencesAdvancedPageWidget.cpp
-	src/ui/preferences/PreferencesContentPageWidget.cpp
-	src/ui/preferences/PreferencesGeneralPageWidget.cpp
-	src/ui/preferences/PreferencesPrivacyPageWidget.cpp
-	src/ui/preferences/PreferencesSearchPageWidget.cpp
 	src/ui/preferences/ProxyPropertiesDialog.cpp
 	src/ui/preferences/UserAgentPropertiesDialog.cpp
 	src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp
@@ -263,7 +258,12 @@ set(otter_src
 	src/modules/windows/notes/NotesContentsWidget.cpp
 	src/modules/windows/pageInformation/PageInformationContentsWidget.cpp
 	src/modules/windows/passwords/PasswordsContentsWidget.cpp
+	src/modules/windows/preferences/PreferencesAdvancedPageWidget.cpp
+	src/modules/windows/preferences/PreferencesContentPageWidget.cpp
 	src/modules/windows/preferences/PreferencesContentsWidget.cpp
+	src/modules/windows/preferences/PreferencesGeneralPageWidget.cpp
+	src/modules/windows/preferences/PreferencesPrivacyPageWidget.cpp
+	src/modules/windows/preferences/PreferencesSearchPageWidget.cpp
 	src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp
 	src/modules/windows/transfers/TransfersContentsWidget.cpp
 	src/modules/windows/web/PasswordBarWidget.cpp
@@ -320,11 +320,6 @@ qt5_wrap_ui(otter_ui
 	src/ui/preferences/JavaScriptPreferencesDialog.ui
 	src/ui/preferences/KeyboardProfileDialog.ui
 	src/ui/preferences/MouseProfileDialog.ui
-	src/ui/preferences/PreferencesAdvancedPageWidget.ui
-	src/ui/preferences/PreferencesContentPageWidget.ui
-	src/ui/preferences/PreferencesGeneralPageWidget.ui
-	src/ui/preferences/PreferencesPrivacyPageWidget.ui
-	src/ui/preferences/PreferencesSearchPageWidget.ui
 	src/ui/preferences/ProxyPropertiesDialog.ui
 	src/ui/preferences/UserAgentPropertiesDialog.ui
 	src/modules/importers/opml/OpmlImporterWidget.ui
@@ -342,7 +337,12 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/notes/NotesContentsWidget.ui
 	src/modules/windows/pageInformation/PageInformationContentsWidget.ui
 	src/modules/windows/passwords/PasswordsContentsWidget.ui
+	src/modules/windows/preferences/PreferencesAdvancedPageWidget.ui
+	src/modules/windows/preferences/PreferencesContentPageWidget.ui
 	src/modules/windows/preferences/PreferencesContentsWidget.ui
+	src/modules/windows/preferences/PreferencesGeneralPageWidget.ui
+	src/modules/windows/preferences/PreferencesPrivacyPageWidget.ui
+	src/modules/windows/preferences/PreferencesSearchPageWidget.ui
 	src/modules/windows/tabHistory/TabHistoryContentsWidget.ui
 	src/modules/windows/transfers/TransfersContentsWidget.ui
 	src/modules/windows/web/PasswordBarWidget.ui

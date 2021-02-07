@@ -20,17 +20,17 @@
 **************************************************************************/
 
 #include "PreferencesGeneralPageWidget.h"
-#include "AcceptLanguageDialog.h"
-#include "../MainWindow.h"
-#include "../Menu.h"
-#include "../../../3rdparty/columnresizer/ColumnResizer.h"
-#include "../../core/Application.h"
-#include "../../core/BookmarksManager.h"
-#include "../../core/BookmarksModel.h"
-#include "../../core/PlatformIntegration.h"
-#include "../../core/SessionModel.h"
-#include "../../core/SessionsManager.h"
-#include "../../core/SettingsManager.h"
+#include "../../../core/Application.h"
+#include "../../../core/BookmarksManager.h"
+#include "../../../core/BookmarksModel.h"
+#include "../../../core/PlatformIntegration.h"
+#include "../../../core/SessionModel.h"
+#include "../../../core/SessionsManager.h"
+#include "../../../core/SettingsManager.h"
+#include "../../../ui/MainWindow.h"
+#include "../../../ui/Menu.h"
+#include "../../../ui/preferences/AcceptLanguageDialog.h"
+#include "../../../../3rdparty/columnresizer/ColumnResizer.h"
 
 #include "ui_PreferencesGeneralPageWidget.h"
 

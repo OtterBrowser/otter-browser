@@ -22,7 +22,7 @@
 #ifndef OTTER_PREFERENCESADVANCEDPAGEWIDGET_H
 #define OTTER_PREFERENCESADVANCEDPAGEWIDGET_H
 
-#include "../../core/NetworkManagerFactory.h"
+#include "../../../core/NetworkManagerFactory.h"
 
 #include <QtGui/QStandardItem>
 #include <QtWidgets/QWidget>

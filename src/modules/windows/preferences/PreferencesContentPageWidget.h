@@ -21,7 +21,7 @@
 #ifndef OTTER_PREFERENCESCONTENTPAGEWIDGET_H
 #define OTTER_PREFERENCESCONTENTPAGEWIDGET_H
 
-#include "../ItemDelegate.h"
+#include "../../../ui/ItemDelegate.h"
 
 #include <QtWidgets/QWidget>
 

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@
 #ifndef OTTER_PREFERENCESSEARCHPAGEWIDGET_H
 #define OTTER_PREFERENCESSEARCHPAGEWIDGET_H
 
-#include "../ItemDelegate.h"
-#include "../../core/SearchEnginesManager.h"
+#include "../../../ui/ItemDelegate.h"
+#include "../../../core/SearchEnginesManager.h"
 
 #include <QtWidgets/QWidget>
 

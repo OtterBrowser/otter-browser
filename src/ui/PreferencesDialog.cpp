@@ -20,11 +20,11 @@
 
 #include "PreferencesDialog.h"
 #include "ItemViewWidget.h"
-#include "preferences/PreferencesAdvancedPageWidget.h"
-#include "preferences/PreferencesContentPageWidget.h"
-#include "preferences/PreferencesGeneralPageWidget.h"
-#include "preferences/PreferencesPrivacyPageWidget.h"
-#include "preferences/PreferencesSearchPageWidget.h"
+#include "../modules/windows/preferences/PreferencesAdvancedPageWidget.h"
+#include "../modules/windows/preferences/PreferencesContentPageWidget.h"
+#include "../modules/windows/preferences/PreferencesGeneralPageWidget.h"
+#include "../modules/windows/preferences/PreferencesPrivacyPageWidget.h"
+#include "../modules/windows/preferences/PreferencesSearchPageWidget.h"
 #include "../core/Application.h"
 #include "../core/SessionsManager.h"
 
