@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -249,7 +249,7 @@ void TransfersContentsWidget::handleTransferAdded(Transfer *transfer)
 
 void TransfersContentsWidget::handleTransferChanged(Transfer *transfer)
 {
-	const int row(findTransfer(transfer));
+	const int row(findTransferRow(transfer));
 
 	if (row < 0)
 	{
@@ -353,7 +353,7 @@ void TransfersContentsWidget::handleTransferChanged(Transfer *transfer)
 
 void TransfersContentsWidget::handleTransferRemoved(Transfer *transfer)
 {
-	const int row(findTransfer(transfer));
+	const int row(findTransferRow(transfer));
 
 	if (row >= 0)
 	{
@@ -552,7 +552,7 @@ WebWidget::LoadingState TransfersContentsWidget::getLoadingState() const
 	return (m_isLoading ? WebWidget::OngoingLoadingState : WebWidget::FinishedLoadingState);
 }
 
-int TransfersContentsWidget::findTransfer(Transfer *transfer) const
+int TransfersContentsWidget::findTransferRow(Transfer *transfer) const
 {
 	if (!transfer)
 	{
