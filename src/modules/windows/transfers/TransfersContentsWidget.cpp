@@ -189,13 +189,18 @@ void TransfersContentsWidget::stopResumeTransfer()
 
 	if (transfer)
 	{
-		if (transfer->getState() == Transfer::RunningState)
+		switch (transfer->getState())
 		{
-			transfer->stop();
-		}
-		else if (transfer->getState() == Transfer::ErrorState)
-		{
-			transfer->resume();
+			case Transfer::RunningState:
+				transfer->stop();
+
+				break;
+			case Transfer::ErrorState:
+				transfer->resume();
+
+				break;
+			default:
+				break;
 		}
 
 		updateActions();
