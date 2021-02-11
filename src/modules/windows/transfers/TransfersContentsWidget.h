@@ -92,7 +92,6 @@ protected slots:
 	void clearFinishedTransfers();
 	void handleTransferAdded(Transfer *transfer);
 	void handleTransferChanged(Transfer *transfer);
-	void handleTransferRemoved(Transfer *transfer);
 	void showContextMenu(const QPoint &position);
 	void updateActions();
 

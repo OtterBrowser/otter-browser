@@ -106,7 +106,15 @@ TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, 
 	}
 
 	connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, &TransfersContentsWidget::handleTransferAdded);
-	connect(TransfersManager::getInstance(), &TransfersManager::transferRemoved, this, &TransfersContentsWidget::handleTransferRemoved);
+	connect(TransfersManager::getInstance(), &TransfersManager::transferRemoved, this, [&](Transfer *transfer)
+	{
+		const int row(findTransferRow(transfer));
+
+		if (row >= 0)
+		{
+			m_model->removeRow(row);
+		}
+	});
 	connect(TransfersManager::getInstance(), &TransfersManager::transferChanged, this, &TransfersContentsWidget::handleTransferChanged);
 	connect(m_model, &QStandardItemModel::modelReset, this, &TransfersContentsWidget::updateActions);
 	connect(m_ui->transfersViewWidget, &ItemViewWidget::doubleClicked, this, &TransfersContentsWidget::openTransfer);
@@ -353,16 +361,6 @@ void TransfersContentsWidget::handleTransferChanged(Transfer *transfer)
 
 			emit loadingStateChanged(WebWidget::FinishedLoadingState);
 		}
-	}
-}
-
-void TransfersContentsWidget::handleTransferRemoved(Transfer *transfer)
-{
-	const int row(findTransferRow(transfer));
-
-	if (row >= 0)
-	{
-		m_model->removeRow(row);
 	}
 }
 
