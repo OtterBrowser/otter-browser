@@ -120,7 +120,12 @@ TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, 
 	connect(m_ui->transfersViewWidget, &ItemViewWidget::doubleClicked, this, &TransfersContentsWidget::openTransfer);
 	connect(m_ui->transfersViewWidget, &ItemViewWidget::customContextMenuRequested, this, &TransfersContentsWidget::showContextMenu);
 	connect(m_ui->transfersViewWidget, &ItemViewWidget::needsActionsUpdate, this, &TransfersContentsWidget::updateActions);
-	connect(m_ui->downloadLineEditWidget, &LineEditWidget::returnPressed, this, &TransfersContentsWidget::startQuickTransfer);
+	connect(m_ui->downloadLineEditWidget, &LineEditWidget::returnPressed, this, [&]()
+	{
+		TransfersManager::startTransfer(m_ui->downloadLineEditWidget->text(), {}, (Transfer::CanNotifyOption | Transfer::IsQuickTransferOption | (SessionsManager::isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption)));
+
+		m_ui->downloadLineEditWidget->clear();
+	});
 	connect(m_ui->stopResumeButton, &QPushButton::clicked, this, &TransfersContentsWidget::stopResumeTransfer);
 	connect(m_ui->redownloadButton, &QPushButton::clicked, this, &TransfersContentsWidget::redownloadTransfer);
 }
@@ -223,18 +228,6 @@ void TransfersContentsWidget::redownloadTransfer()
 	{
 		transfer->restart();
 	}
-}
-
-void TransfersContentsWidget::startQuickTransfer()
-{
-	TransfersManager::startTransfer(m_ui->downloadLineEditWidget->text(), {}, (Transfer::CanNotifyOption | Transfer::IsQuickTransferOption | (SessionsManager::isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption)));
-
-	m_ui->downloadLineEditWidget->clear();
-}
-
-void TransfersContentsWidget::clearFinishedTransfers()
-{
-	TransfersManager::clearTransfers();
 }
 
 void TransfersContentsWidget::handleTransferAdded(Transfer *transfer)
@@ -404,7 +397,10 @@ void TransfersContentsWidget::showContextMenu(const QPoint &position)
 		}
 	}
 
-	menu.addAction(ThemesManager::createIcon(QLatin1String("edit-clear-history")), tr("Clear Finished Transfers"), this, &TransfersContentsWidget::clearFinishedTransfers)->setEnabled(finishedTransfers > 0);
+	menu.addAction(ThemesManager::createIcon(QLatin1String("edit-clear-history")), tr("Clear Finished Transfers"), this, [&]()
+	{
+		TransfersManager::clearTransfers();
+	})->setEnabled(finishedTransfers > 0);
 	menu.exec(m_ui->transfersViewWidget->mapToGlobal(position));
 }
 

@@ -88,8 +88,6 @@ protected slots:
 	void copyTransferInformation();
 	void stopResumeTransfer();
 	void redownloadTransfer();
-	void startQuickTransfer();
-	void clearFinishedTransfers();
 	void handleTransferAdded(Transfer *transfer);
 	void handleTransferChanged(Transfer *transfer);
 	void showContextMenu(const QPoint &position);
