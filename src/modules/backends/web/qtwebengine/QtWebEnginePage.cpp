@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -271,7 +271,14 @@ void QtWebEnginePage::setHistory(const Session::Window::History &history)
 	stream.device()->reset();
 	stream >> *(this->history());
 
-	this->history()->goToItem(this->history()->itemAt(history.index));
+	if (this->history()->count() == history.entries.count() && !Utils::isUrlEmpty(this->history()->currentItem().url()))
+	{
+		this->history()->goToItem(this->history()->itemAt(history.index));
+	}
+	else
+	{
+		setUrl(history.entries.value(history.index).url);
+	}
 }
 
 QtWebEngineWebWidget* QtWebEnginePage::getWebWidget() const
