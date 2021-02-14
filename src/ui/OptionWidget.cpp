@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -179,16 +179,6 @@ void OptionWidget::markAsModified()
 	emit commitData(this);
 }
 
-void OptionWidget::reset()
-{
-	setValue(getDefaultValue());
-
-	if (m_resetButton)
-	{
-		m_resetButton->setEnabled(false);
-	}
-}
-
 void OptionWidget::setDefaultValue(const QVariant &value)
 {
 	m_defaultValue = value;
@@ -214,7 +204,15 @@ void OptionWidget::setDefaultValue(const QVariant &value)
 
 		layout()->addWidget(m_resetButton);
 
-		connect(m_resetButton, &QPushButton::clicked, this, &OptionWidget::reset);
+		connect(m_resetButton, &QPushButton::clicked, this, [&]()
+		{
+			setValue(getDefaultValue());
+
+			if (m_resetButton)
+			{
+				m_resetButton->setEnabled(false);
+			}
+		});
 	}
 }
 
