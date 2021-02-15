@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -61,50 +61,42 @@ void IconWidget::resizeEvent(QResizeEvent *event)
 	setIconSize({iconSize, iconSize});
 }
 
-void IconWidget::clear()
-{
-	setIcon(QString());
-}
-
-void IconWidget::reset()
-{
-	setIcon(m_defaultIcon);
-}
-
-void IconWidget::selectFromFile()
-{
-	const QString path(QFileDialog::getOpenFileName(this, tr("Select Icon"), {}, Utils::formatFileTypes({tr("Images (*.png *.jpg *.bmp *.gif *.svg *.svgz *.ico)")})));
-
-	if (!path.isEmpty())
-	{
-		setIcon(QIcon(QPixmap(path)));
-	}
-}
-
-void IconWidget::selectFromTheme()
-{
-	const QString name(QInputDialog::getText(this, tr("Select Icon"), tr("Icon Name:")));
-
-	if (!name.isEmpty())
-	{
-		setIcon(name);
-	}
-}
-
 void IconWidget::populateMenu()
 {
 	menu()->clear();
-	menu()->addAction(tr("Select From File…"), this, &IconWidget::selectFromFile);
-	menu()->addAction(tr("Select From Theme…"), this, &IconWidget::selectFromTheme);
+	menu()->addAction(tr("Select From File…"), this, [&]()
+	{
+		const QString path(QFileDialog::getOpenFileName(this, tr("Select Icon"), {}, Utils::formatFileTypes({tr("Images (*.png *.jpg *.bmp *.gif *.svg *.svgz *.ico)")})));
+
+		if (!path.isEmpty())
+		{
+			setIcon(QIcon(QPixmap(path)));
+		}
+	});
+	menu()->addAction(tr("Select From Theme…"), this, [&]()
+	{
+		const QString name(QInputDialog::getText(this, tr("Select Icon"), tr("Icon Name:")));
+
+		if (!name.isEmpty())
+		{
+			setIcon(name);
+		}
+	});
 
 	if (!m_defaultIcon.isEmpty())
 	{
 		menu()->addSeparator();
-		menu()->addAction(tr("Reset"), this, &IconWidget::reset)->setEnabled(Utils::savePixmapAsDataUri(icon().pixmap(16, 16)) != m_defaultIcon);
+		menu()->addAction(tr("Reset"), this, [&]()
+		{
+			setIcon(m_defaultIcon);
+		})->setEnabled(Utils::savePixmapAsDataUri(icon().pixmap(16, 16)) != m_defaultIcon);
 	}
 
 	menu()->addSeparator();
-	menu()->addAction(ThemesManager::createIcon(QLatin1String("edit-clear")), tr("Clear"), this, &IconWidget::clear)->setEnabled(!icon().isNull());
+	menu()->addAction(ThemesManager::createIcon(QLatin1String("edit-clear")), tr("Clear"), this, [&]()
+	{
+		setIcon(QString());
+	})->setEnabled(!icon().isNull());
 }
 
 void IconWidget::setIcon(const QString &icon)
