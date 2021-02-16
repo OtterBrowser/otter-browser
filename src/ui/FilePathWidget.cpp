@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -63,7 +63,16 @@ FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 
 	connect(m_lineEditWidget, &LineEditWidget::textEdited, this, &FilePathWidget::updateCompleter);
 	connect(m_lineEditWidget, &LineEditWidget::textChanged, this, &FilePathWidget::pathChanged);
-	connect(m_browseButton, &QPushButton::clicked, this, &FilePathWidget::selectPath);
+	connect(m_browseButton, &QPushButton::clicked, this, [&]()
+	{
+		QString path(m_lineEditWidget->text().isEmpty() ? QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0) : m_lineEditWidget->text());
+		path = ((m_openMode == FileMode) ? QFileDialog::getOpenFileName(this, tr("Select File"), path, m_filter) : QFileDialog::getExistingDirectory(this, tr("Select Directory"), path));
+
+		if (!path.isEmpty())
+		{
+			m_lineEditWidget->setText(QDir::toNativeSeparators(path));
+		}
+	});
 }
 
 void FilePathWidget::changeEvent(QEvent *event)
@@ -91,17 +100,6 @@ void FilePathWidget::focusOutEvent(QFocusEvent *event)
 	if (m_initialPath != getPath())
 	{
 		emit pathChanged(getPath());
-	}
-}
-
-void FilePathWidget::selectPath()
-{
-	QString path(m_lineEditWidget->text().isEmpty() ? QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0) : m_lineEditWidget->text());
-	path = ((m_openMode == FileMode) ? QFileDialog::getOpenFileName(this, tr("Select File"), path, m_filter) : QFileDialog::getExistingDirectory(this, tr("Select Directory"), path));
-
-	if (!path.isEmpty())
-	{
-		m_lineEditWidget->setText(QDir::toNativeSeparators(path));
 	}
 }
 
