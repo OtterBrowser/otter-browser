@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -77,7 +77,25 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 		m_ui->customFilePathWidget->setPath(currentLocale);
 	}
 
-	connect(this, &LocaleDialog::accepted, this, &LocaleDialog::save);
+	connect(this, &LocaleDialog::accepted, this, [&]()
+	{
+		QString locale;
+
+		if (m_ui->languageComboBox->currentIndex() == 0)
+		{
+			locale = QLatin1String("system");
+		}
+		else if (m_ui->languageComboBox->currentIndex() == 1)
+		{
+			locale = m_ui->customFilePathWidget->getPath();
+		}
+		else
+		{
+			locale = m_ui->languageComboBox->currentData(Qt::UserRole).toString();
+		}
+
+		SettingsManager::setOption(SettingsManager::Browser_LocaleOption, locale);
+	});
 	connect(m_ui->languageComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [&](int index)
 	{
 		m_ui->customFilePathWidget->setEnabled(index == 1);
@@ -98,26 +116,6 @@ void LocaleDialog::changeEvent(QEvent *event)
 		m_ui->retranslateUi(this);
 		m_ui->customFilePathWidget->setFilters({tr("Translation files (*.qm)")});
 	}
-}
-
-void LocaleDialog::save()
-{
-	QString locale;
-
-	if (m_ui->languageComboBox->currentIndex() == 0)
-	{
-		locale = QLatin1String("system");
-	}
-	else if (m_ui->languageComboBox->currentIndex() == 1)
-	{
-		locale = m_ui->customFilePathWidget->getPath();
-	}
-	else
-	{
-		locale = m_ui->languageComboBox->currentData(Qt::UserRole).toString();
-	}
-
-	SettingsManager::setOption(SettingsManager::Browser_LocaleOption, locale);
 }
 
 }
