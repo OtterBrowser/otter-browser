@@ -42,7 +42,7 @@ class SourceViewerWebWidget;
 class QtWebKitInspectorWidget final : public QWebInspector
 {
 public:
-	explicit QtWebKitInspectorWidget(QWidget *parent);
+	explicit QtWebKitInspectorWidget(QWebPage *inspectedPage, QWidget *parent);
 
 protected:
 	void childEvent(QChildEvent *event) override;

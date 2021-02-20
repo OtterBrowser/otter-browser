@@ -73,9 +73,10 @@
 namespace Otter
 {
 
-QtWebKitInspectorWidget::QtWebKitInspectorWidget(QWidget *parent) : QWebInspector(parent)
+QtWebKitInspectorWidget::QtWebKitInspectorWidget(QWebPage *inspectedPage, QWidget *parent) : QWebInspector(parent)
 {
 	setMinimumHeight(200);
+	setPage(inspectedPage);
 }
 
 void QtWebKitInspectorWidget::childEvent(QChildEvent *event)
@@ -2001,8 +2002,7 @@ QWidget* QtWebKitWebWidget::getInspector()
 	{
 		m_page->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
 
-		m_inspectorWidget = new QtWebKitInspectorWidget(this);
-		m_inspectorWidget->setPage(m_page);
+		m_inspectorWidget = new QtWebKitInspectorWidget(m_page, this);
 	}
 
 	return m_inspectorWidget;
