@@ -36,13 +36,13 @@ class SourceViewerWebWidget;
 class QtWebEngineInspectorWidget final : public QWebEngineView
 {
 public:
-	explicit QtWebEngineInspectorWidget(QWebEnginePage *page, QWidget *parent);
+	explicit QtWebEngineInspectorWidget(QWebEnginePage *inspectedPage, QWidget *parent);
 
 protected:
 	void showEvent(QShowEvent *event) override;
 
 private:
-	QWebEnginePage *m_page;
+	QWebEnginePage *m_inspectedPage;
 };
 
 class QtWebEngineWebWidget final : public WebWidget
