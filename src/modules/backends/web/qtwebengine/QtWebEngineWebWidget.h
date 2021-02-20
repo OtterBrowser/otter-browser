@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,20 @@ namespace Otter
 class QtWebEnginePage;
 class QtWebEngineUrlRequestInterceptor;
 class SourceViewerWebWidget;
+
+#if QTWEBENGINECORE_VERSION >= 0x050B00
+class QtWebEngineInspectorWidget final : public QWebEngineView
+{
+public:
+	explicit QtWebEngineInspectorWidget(QWebEnginePage *page, QWidget *parent);
+
+protected:
+	void showEvent(QShowEvent *event) override;
+
+private:
+	QWebEnginePage *m_page;
+};
+#endif
 
 class QtWebEngineWebWidget final : public WebWidget
 {
@@ -170,7 +184,7 @@ protected slots:
 private:
 	QWebEngineView *m_webView;
 #if QTWEBENGINECORE_VERSION >= 0x050B00
-	QWebEngineView *m_inspectorView;
+	QWebEngineView *m_inspectorWidget;
 #endif
 	QtWebEnginePage *m_page;
 #if QTWEBENGINECORE_VERSION >= 0x050D00

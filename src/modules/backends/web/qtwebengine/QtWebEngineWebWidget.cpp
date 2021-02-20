@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -65,10 +65,28 @@
 namespace Otter
 {
 
+#if QTWEBENGINECORE_VERSION >= 0x050B00
+QtWebEngineInspectorWidget::QtWebEngineInspectorWidget(QWebEnginePage *page, QWidget *parent) : QWebEngineView(parent),
+	m_page(page)
+{
+	setMinimumHeight(200);
+}
+
+void QtWebEngineInspectorWidget::showEvent(QShowEvent *event)
+{
+	if (!page()->inspectedPage())
+	{
+		page()->setInspectedPage(m_page);
+	}
+
+	QWebEngineView::showEvent(event);
+}
+#endif
+
 QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent) : WebWidget(parameters, backend, parent),
 	m_webView(nullptr),
 #if QTWEBENGINECORE_VERSION >= 0x050B00
-	m_inspectorView(nullptr),
+	m_inspectorWidget(nullptr),
 #endif
 	m_page(new QtWebEnginePage(SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen), this)),
 #if QTWEBENGINECORE_VERSION >= 0x050D00
@@ -909,7 +927,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			{
 				const bool showInspector(parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
 
-				if (showInspector && !m_inspectorView)
+				if (showInspector && !m_inspectorWidget)
 				{
 					getInspector();
 				}
@@ -1518,18 +1536,12 @@ WebWidget* QtWebEngineWebWidget::clone(bool cloneHistory, bool isPrivate, const 
 #if QTWEBENGINECORE_VERSION >= 0x050B00
 QWidget* QtWebEngineWebWidget::getInspector()
 {
-	if (!m_inspectorView)
+	if (!m_inspectorWidget)
 	{
-		m_inspectorView = new QWebEngineView(this);
-		m_inspectorView->setMinimumHeight(200);
-
-		QTimer::singleShot(100, this, [&]()
-		{
-			m_inspectorView->page()->setInspectedPage(m_page);
-		});
+		m_inspectorWidget = new QtWebEngineInspectorWidget(m_page, this);
 	}
 
-	return m_inspectorView;
+	return m_inspectorWidget;
 }
 #endif
 
@@ -1881,7 +1893,7 @@ bool QtWebEngineWebWidget::isFullScreen() const
 #if QTWEBENGINECORE_VERSION >= 0x050B00
 bool QtWebEngineWebWidget::isInspecting() const
 {
-	return (m_inspectorView && m_inspectorView->isVisible());
+	return (m_inspectorWidget && m_inspectorWidget->isVisible());
 }
 #endif
 
