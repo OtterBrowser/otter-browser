@@ -63,9 +63,25 @@
 namespace Otter
 {
 
+QtWebEngineInspectorWidget::QtWebEngineInspectorWidget(QWebEnginePage *page, QWidget *parent) : QWebEngineView(parent),
+	m_page(page)
+{
+	setMinimumHeight(200);
+}
+
+void QtWebEngineInspectorWidget::showEvent(QShowEvent *event)
+{
+	if (!page()->inspectedPage())
+	{
+		page()->setInspectedPage(m_page);
+	}
+
+	QWebEngineView::showEvent(event);
+}
+
 QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent) : WebWidget(parameters, backend, parent),
 	m_webView(nullptr),
-	m_inspectorView(nullptr),
+	m_inspectorWidget(nullptr),
 	m_page(new QtWebEnginePage(SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen), this)),
 	m_requestInterceptor(new QtWebEngineUrlRequestInterceptor(this)),
 	m_loadingState(FinishedLoadingState),
@@ -774,7 +790,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			{
 				const bool showInspector(parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
 
-				if (showInspector && !m_inspectorView)
+				if (showInspector && !m_inspectorWidget)
 				{
 					getInspector();
 				}
@@ -1442,18 +1458,12 @@ WebWidget* QtWebEngineWebWidget::clone(bool cloneHistory, bool isPrivate, const 
 
 QWidget* QtWebEngineWebWidget::getInspector()
 {
-	if (!m_inspectorView)
+	if (!m_inspectorWidget)
 	{
-		m_inspectorView = new QWebEngineView(this);
-		m_inspectorView->setMinimumHeight(200);
-
-		QTimer::singleShot(100, this, [&]()
-		{
-			m_inspectorView->page()->setInspectedPage(m_page);
-		});
+		m_inspectorWidget = new QtWebEngineInspectorWidget(m_page, this);
 	}
 
-	return m_inspectorView;
+	return m_inspectorWidget;
 }
 
 QWidget* QtWebEngineWebWidget::getViewport()
@@ -1815,7 +1825,7 @@ bool QtWebEngineWebWidget::isFullScreen() const
 
 bool QtWebEngineWebWidget::isInspecting() const
 {
-	return (m_inspectorView && m_inspectorView->isVisible());
+	return (m_inspectorWidget && m_inspectorWidget->isVisible());
 }
 
 bool QtWebEngineWebWidget::isPopup() const

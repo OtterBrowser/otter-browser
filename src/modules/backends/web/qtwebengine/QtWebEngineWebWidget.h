@@ -33,6 +33,18 @@ class QtWebEnginePage;
 class QtWebEngineUrlRequestInterceptor;
 class SourceViewerWebWidget;
 
+class QtWebEngineInspectorWidget final : public QWebEngineView
+{
+public:
+	explicit QtWebEngineInspectorWidget(QWebEnginePage *page, QWidget *parent);
+
+protected:
+	void showEvent(QShowEvent *event) override;
+
+private:
+	QWebEnginePage *m_page;
+};
+
 class QtWebEngineWebWidget final : public WebWidget
 {
 	Q_OBJECT
@@ -158,7 +170,7 @@ protected slots:
 
 private:
 	QWebEngineView *m_webView;
-	QWebEngineView *m_inspectorView;
+	QtWebEngineInspectorWidget *m_inspectorWidget;
 	QtWebEnginePage *m_page;
 	QtWebEngineUrlRequestInterceptor *m_requestInterceptor;
 	QString m_findInPageText;
