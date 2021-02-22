@@ -317,9 +317,28 @@ void LineEditWidget::initialize()
 {
 	setDragEnabled(true);
 
-	connect(this, &LineEditWidget::selectionChanged, this, &LineEditWidget::handleSelectionChanged);
-	connect(this, &LineEditWidget::textChanged, this, &LineEditWidget::handleTextChanged);
-	connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, this, &LineEditWidget::notifyPasteActionStateChanged);
+	connect(this, &LineEditWidget::selectionChanged, this, [&]()
+	{
+		if (hasSelectedText() != m_hadSelection)
+		{
+			m_hadSelection = hasSelectedText();
+
+			emit arbitraryActionsStateChanged({ActionsManager::CutAction, ActionsManager::CopyAction, ActionsManager::CopyToNoteAction, ActionsManager::PasteAction, ActionsManager::DeleteAction, ActionsManager::UnselectAction});
+		}
+	});
+	connect(this, &LineEditWidget::textChanged, this, [&](const QString &text)
+	{
+		if (text.isEmpty() != m_wasEmpty)
+		{
+			m_wasEmpty = text.isEmpty();
+
+			emit arbitraryActionsStateChanged({ActionsManager::UndoAction, ActionsManager::RedoAction, ActionsManager::SelectAllAction, ActionsManager::ClearAllAction});
+		}
+	});
+	connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, this, [&]()
+	{
+		emit arbitraryActionsStateChanged({ActionsManager::PasteAction});
+	});
 }
 
 void LineEditWidget::resizeEvent(QResizeEvent *event)
@@ -619,31 +638,6 @@ void LineEditWidget::hidePopup()
 
 		QApplication::sendEvent(this, &statusTipEvent);
 	}
-}
-
-void LineEditWidget::handleSelectionChanged()
-{
-	if (hasSelectedText() != m_hadSelection)
-	{
-		m_hadSelection = hasSelectedText();
-
-		emit arbitraryActionsStateChanged({ActionsManager::CutAction, ActionsManager::CopyAction, ActionsManager::CopyToNoteAction, ActionsManager::PasteAction, ActionsManager::DeleteAction, ActionsManager::UnselectAction});
-	}
-}
-
-void LineEditWidget::handleTextChanged(const QString &text)
-{
-	if (text.isEmpty() != m_wasEmpty)
-	{
-		m_wasEmpty = text.isEmpty();
-
-		emit arbitraryActionsStateChanged({ActionsManager::UndoAction, ActionsManager::RedoAction, ActionsManager::SelectAllAction, ActionsManager::ClearAllAction});
-	}
-}
-
-void LineEditWidget::notifyPasteActionStateChanged()
-{
-	emit arbitraryActionsStateChanged({ActionsManager::PasteAction});
 }
 
 void LineEditWidget::setCompletion(const QString &completion)
