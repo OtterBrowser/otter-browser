@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -70,9 +70,28 @@ void TextEditWidget::initialize()
 	}
 #endif
 
-	connect(this, &TextEditWidget::selectionChanged, this, &TextEditWidget::handleSelectionChanged);
-	connect(this, &TextEditWidget::textChanged, this, &TextEditWidget::handleTextChanged);
-	connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, this, &TextEditWidget::notifyPasteActionStateChanged);
+	connect(this, &TextEditWidget::selectionChanged, this, [&]()
+	{
+		if (hasSelection() != m_hadSelection)
+		{
+			m_hadSelection = hasSelection();
+
+			emit arbitraryActionsStateChanged({ActionsManager::CutAction, ActionsManager::CopyAction, ActionsManager::CopyToNoteAction, ActionsManager::PasteAction, ActionsManager::DeleteAction, ActionsManager::UnselectAction});
+		}
+	});
+	connect(this, &TextEditWidget::textChanged, this, [&]()
+	{
+		if (document() && document()->isEmpty() != m_wasEmpty)
+		{
+			m_wasEmpty = document()->isEmpty();
+
+			emit arbitraryActionsStateChanged({ActionsManager::UndoAction, ActionsManager::RedoAction, ActionsManager::SelectAllAction, ActionsManager::ClearAllAction});
+		}
+	});
+	connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, this, [&]()
+	{
+		emit arbitraryActionsStateChanged({ActionsManager::PasteAction});
+	});
 }
 
 void TextEditWidget::focusInEvent(QFocusEvent *event)
@@ -248,31 +267,6 @@ void TextEditWidget::triggerAction(int identifier, const QVariantMap &parameters
 		default:
 			break;
 	}
-}
-
-void TextEditWidget::handleSelectionChanged()
-{
-	if (hasSelection() != m_hadSelection)
-	{
-		m_hadSelection = hasSelection();
-
-		emit arbitraryActionsStateChanged({ActionsManager::CutAction, ActionsManager::CopyAction, ActionsManager::CopyToNoteAction, ActionsManager::PasteAction, ActionsManager::DeleteAction, ActionsManager::UnselectAction});
-	}
-}
-
-void TextEditWidget::handleTextChanged()
-{
-	if (document() && document()->isEmpty() != m_wasEmpty)
-	{
-		m_wasEmpty = document()->isEmpty();
-
-		emit arbitraryActionsStateChanged({ActionsManager::UndoAction, ActionsManager::RedoAction, ActionsManager::SelectAllAction, ActionsManager::ClearAllAction});
-	}
-}
-
-void TextEditWidget::notifyPasteActionStateChanged()
-{
-	emit arbitraryActionsStateChanged({ActionsManager::PasteAction});
 }
 
 ActionsManager::ActionDefinition::State TextEditWidget::getActionState(int identifier, const QVariantMap &parameters) const
