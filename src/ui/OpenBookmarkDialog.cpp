@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -41,8 +41,31 @@ OpenBookmarkDialog::OpenBookmarkDialog(const ActionExecutor::Object &executor, Q
 	m_completer->setCompletionMode(QCompleter::InlineCompletion);
 	m_completer->setFilterMode(Qt::MatchStartsWith);
 
-	connect(this, &OpenBookmarkDialog::accepted, this, &OpenBookmarkDialog::openBookmark);
-	connect(m_ui->lineEditWidget, &LineEditWidget::textEdited, this, &OpenBookmarkDialog::setCompletion);
+	connect(this, &OpenBookmarkDialog::accepted, this, [&]()
+	{
+		const BookmarksModel::Bookmark *bookmark(BookmarksManager::getBookmark(m_ui->lineEditWidget->text()));
+
+		if (bookmark && m_executor.isValid())
+		{
+			m_executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen))}});
+		}
+	});
+	connect(m_ui->lineEditWidget, &LineEditWidget::textEdited, this, [&](const QString &text)
+	{
+		m_completer->setCompletionPrefix(text);
+
+		if (m_completer->completionCount() == 1)
+		{
+			const BookmarksModel::Bookmark *bookmark(BookmarksManager::getBookmark(m_completer->currentCompletion()));
+
+			if (bookmark && m_executor.isValid())
+			{
+				m_executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen))}});
+			}
+
+			close();
+		}
+	});
 }
 
 OpenBookmarkDialog::~OpenBookmarkDialog()
@@ -57,33 +80,6 @@ void OpenBookmarkDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-	}
-}
-
-void OpenBookmarkDialog::openBookmark()
-{
-	const BookmarksModel::Bookmark *bookmark(BookmarksManager::getBookmark(m_ui->lineEditWidget->text()));
-
-	if (bookmark && m_executor.isValid())
-	{
-		m_executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen))}});
-	}
-}
-
-void OpenBookmarkDialog::setCompletion(const QString &text)
-{
-	m_completer->setCompletionPrefix(text);
-
-	if (m_completer->completionCount() == 1)
-	{
-		const BookmarksModel::Bookmark *bookmark(BookmarksManager::getBookmark(m_completer->currentCompletion()));
-
-		if (bookmark && m_executor.isValid())
-		{
-			m_executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen))}});
-		}
-
-		close();
 	}
 }
 
