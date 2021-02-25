@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -221,24 +221,6 @@ void ContentsWidget::handleAboutToClose()
 	}
 }
 
-void ContentsWidget::handleDialogFinished()
-{
-	ContentsDialog *dialog(qobject_cast<ContentsDialog*>(sender()));
-
-	if (dialog)
-	{
-		m_dialogs.removeAll(dialog);
-
-		dialog->hide();
-		dialog->deleteLater();
-	}
-
-	if (m_dialogs.isEmpty() && m_layer && m_layerTimer == 0)
-	{
-		m_layerTimer = startTimer(100);
-	}
-}
-
 void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 {
 	if (!dialog)
@@ -277,7 +259,23 @@ void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 		m_layer->raise();
 	}
 
-	connect(dialog, &ContentsDialog::finished, this, &ContentsWidget::handleDialogFinished);
+	connect(dialog, &ContentsDialog::finished, this, [&]()
+	{
+		ContentsDialog *dialog(qobject_cast<ContentsDialog*>(sender()));
+
+		if (dialog)
+		{
+			m_dialogs.removeAll(dialog);
+
+			dialog->hide();
+			dialog->deleteLater();
+		}
+
+		if (m_dialogs.isEmpty() && m_layer && m_layerTimer == 0)
+		{
+			m_layerTimer = startTimer(100);
+		}
+	});
 
 	dialog->setParent(m_layer);
 	dialog->show();
