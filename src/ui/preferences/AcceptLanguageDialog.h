@@ -51,7 +51,6 @@ protected:
 protected slots:
 	void addNewLanguage();
 	void updateLanguages();
-	void updateActions();
 
 private:
 	QStandardItemModel *m_model;
