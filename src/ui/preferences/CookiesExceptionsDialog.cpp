@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -57,13 +57,35 @@ CookiesExceptionsDialog::CookiesExceptionsDialog(const QStringList &acceptedHost
 	updateRejectedHostsActions();
 
 	connect(m_ui->acceptedHostsItemView, &ItemViewWidget::needsActionsUpdate, this, &CookiesExceptionsDialog::updateAcceptedHostsActions);
-	connect(m_ui->addAcceptedHostsButton, &QPushButton::clicked, this, &CookiesExceptionsDialog::addAcceptedHost);
+	connect(m_ui->addAcceptedHostsButton, &QPushButton::clicked, this, [&]()
+	{
+		m_ui->acceptedHostsItemView->insertRow();
+
+		editAcceptedHost();
+	});
 	connect(m_ui->editAcceptedHostsButton, &QPushButton::clicked, this, &CookiesExceptionsDialog::editAcceptedHost);
-	connect(m_ui->removeAcceptedHostsButton, &QPushButton::clicked, this, &CookiesExceptionsDialog::removeAcceptedHost);
+	connect(m_ui->removeAcceptedHostsButton, &QPushButton::clicked, this, [&]()
+	{
+		m_ui->acceptedHostsItemView->removeRow();
+		m_ui->acceptedHostsItemView->setFocus();
+
+		updateAcceptedHostsActions();
+	});
 	connect(m_ui->rejectedHostsItemView, &ItemViewWidget::needsActionsUpdate, this, &CookiesExceptionsDialog::updateRejectedHostsActions);
-	connect(m_ui->addRejectedHostsButton, &QPushButton::clicked, this, &CookiesExceptionsDialog::addRejectedHost);
+	connect(m_ui->addRejectedHostsButton, &QPushButton::clicked, this, [&]()
+	{
+		m_ui->rejectedHostsItemView->insertRow();
+
+		editRejectedHost();
+	});
 	connect(m_ui->editRejectedHostsButton, &QPushButton::clicked, this, &CookiesExceptionsDialog::editRejectedHost);
-	connect(m_ui->removeRejectedHostsButton, &QPushButton::clicked, this, &CookiesExceptionsDialog::removeRejectedHost);
+	connect(m_ui->removeRejectedHostsButton, &QPushButton::clicked, this, [&]()
+	{
+		m_ui->rejectedHostsItemView->removeRow();
+		m_ui->rejectedHostsItemView->setFocus();
+
+		updateRejectedHostsActions();
+	});
 }
 
 CookiesExceptionsDialog::~CookiesExceptionsDialog()
@@ -81,20 +103,6 @@ void CookiesExceptionsDialog::changeEvent(QEvent *event)
 	}
 }
 
-void CookiesExceptionsDialog::addAcceptedHost()
-{
-	m_ui->acceptedHostsItemView->insertRow();
-
-	editAcceptedHost();
-}
-
-void CookiesExceptionsDialog::addRejectedHost()
-{
-	m_ui->rejectedHostsItemView->insertRow();
-
-	editRejectedHost();
-}
-
 void CookiesExceptionsDialog::editAcceptedHost()
 {
 	m_ui->acceptedHostsItemView->edit(m_ui->acceptedHostsItemView->getIndex(m_ui->acceptedHostsItemView->getCurrentRow()));
@@ -103,22 +111,6 @@ void CookiesExceptionsDialog::editAcceptedHost()
 void CookiesExceptionsDialog::editRejectedHost()
 {
 	m_ui->rejectedHostsItemView->edit(m_ui->rejectedHostsItemView->getIndex(m_ui->rejectedHostsItemView->getCurrentRow()));
-}
-
-void CookiesExceptionsDialog::removeAcceptedHost()
-{
-	m_ui->acceptedHostsItemView->removeRow();
-	m_ui->acceptedHostsItemView->setFocus();
-
-	updateAcceptedHostsActions();
-}
-
-void CookiesExceptionsDialog::removeRejectedHost()
-{
-	m_ui->rejectedHostsItemView->removeRow();
-	m_ui->rejectedHostsItemView->setFocus();
-
-	updateRejectedHostsActions();
 }
 
 void CookiesExceptionsDialog::updateAcceptedHostsActions()
