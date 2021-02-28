@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -96,9 +96,20 @@ ProxyPropertiesDialog::ProxyPropertiesDialog(const ProxyDefinition &proxy, QWidg
 	connect(m_ui->buttonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*)>(&QButtonGroup::buttonClicked), this, &ProxyPropertiesDialog::updateProxyType);
 	connect(m_ui->allCheckBox, &QCheckBox::clicked, this, &ProxyPropertiesDialog::updateProxyType);
 	connect(m_ui->exceptionsItemViewWidget, &ItemViewWidget::needsActionsUpdate, this, &ProxyPropertiesDialog::updateExceptionsActions);
-	connect(m_ui->addExceptionButton, &QPushButton::clicked, this, &ProxyPropertiesDialog::addException);
+	connect(m_ui->addExceptionButton, &QPushButton::clicked, this, [&]()
+	{
+		m_ui->exceptionsItemViewWidget->insertRow();
+
+		editException();
+	});
 	connect(m_ui->editExceptionButton, &QPushButton::clicked, this, &ProxyPropertiesDialog::editException);
-	connect(m_ui->removeExceptionButton, &QPushButton::clicked, this, &ProxyPropertiesDialog::removeException);
+	connect(m_ui->removeExceptionButton, &QPushButton::clicked, this, [&]()
+	{
+		m_ui->exceptionsItemViewWidget->removeRow();
+		m_ui->exceptionsItemViewWidget->setFocus();
+
+		updateExceptionsActions();
+	});
 }
 
 ProxyPropertiesDialog::~ProxyPropertiesDialog()
@@ -117,24 +128,9 @@ void ProxyPropertiesDialog::changeEvent(QEvent *event)
 	}
 }
 
-void ProxyPropertiesDialog::addException()
-{
-	m_ui->exceptionsItemViewWidget->insertRow();
-
-	editException();
-}
-
 void ProxyPropertiesDialog::editException()
 {
 	m_ui->exceptionsItemViewWidget->edit(m_ui->exceptionsItemViewWidget->getIndex(m_ui->exceptionsItemViewWidget->getCurrentRow()));
-}
-
-void ProxyPropertiesDialog::removeException()
-{
-	m_ui->exceptionsItemViewWidget->removeRow();
-	m_ui->exceptionsItemViewWidget->setFocus();
-
-	updateExceptionsActions();
 }
 
 void ProxyPropertiesDialog::updateExceptionsActions()
