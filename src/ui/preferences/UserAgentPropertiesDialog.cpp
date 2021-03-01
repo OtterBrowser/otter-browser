@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,10 @@ UserAgentPropertiesDialog::UserAgentPropertiesDialog(const UserAgentDefinition &
 
 	setWindowTitle(userAgent.isValid() ? tr ("Edit User Agent") : tr("Add User Agent"));
 
-	connect(m_ui->previewButton, &QToolButton::clicked, this, &UserAgentPropertiesDialog::showPreview);
+	connect(m_ui->previewButton, &QToolButton::clicked, this, [&]()
+	{
+		QToolTip::showText(m_ui->valueLineEditWidget->mapToGlobal(m_ui->valueLineEditWidget->rect().bottomLeft()), AddonsManager::getWebBackend()->getUserAgent(m_ui->valueLineEditWidget->text()));
+	});
 }
 
 UserAgentPropertiesDialog::~UserAgentPropertiesDialog()
@@ -67,19 +70,6 @@ void UserAgentPropertiesDialog::changeEvent(QEvent *event)
 	{
 		m_ui->retranslateUi(this);
 	}
-}
-
-void UserAgentPropertiesDialog::insertPlaceholder(QAction *action)
-{
-	if (!action->data().toString().isEmpty())
-	{
-		m_ui->valueLineEditWidget->insert(QLatin1Char('{') + action->data().toString() + QLatin1Char('}'));
-	}
-}
-
-void UserAgentPropertiesDialog::showPreview()
-{
-	QToolTip::showText(m_ui->valueLineEditWidget->mapToGlobal(m_ui->valueLineEditWidget->rect().bottomLeft()), AddonsManager::getWebBackend()->getUserAgent(m_ui->valueLineEditWidget->text()));
 }
 
 UserAgentDefinition UserAgentPropertiesDialog::getUserAgent() const
@@ -107,7 +97,13 @@ bool UserAgentPropertiesDialog::eventFilter(QObject *object, QEvent *event)
 			placeholdersMenu->addAction(tr("Engine Version"))->setData(QLatin1String("engineVersion"));
 			placeholdersMenu->addAction(tr("Application Version"))->setData(QLatin1String("applicationVersion"));
 
-			connect(placeholdersMenu, &QMenu::triggered, this, &UserAgentPropertiesDialog::insertPlaceholder);
+			connect(placeholdersMenu, &QMenu::triggered, this, [&](QAction *action)
+			{
+				if (!action->data().toString().isEmpty())
+				{
+					m_ui->valueLineEditWidget->insert(QLatin1Char('{') + action->data().toString() + QLatin1Char('}'));
+				}
+			});
 
 			contextMenu->exec(static_cast<QContextMenuEvent*>(event)->globalPos());
 			contextMenu->deleteLater();
