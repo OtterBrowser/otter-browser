@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -250,9 +250,26 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 	connect(m_ui->versionLineEditWidget, &QLineEdit::textChanged, m_ui->actionsViewWidget, &ItemViewWidget::markAsModified);
 	connect(m_ui->authorLineEditWidget, &QLineEdit::textChanged, m_ui->actionsViewWidget, &ItemViewWidget::markAsModified);
 	connect(m_ui->filterLineEditWidget, &QLineEdit::textChanged, m_ui->actionsViewWidget, &ItemViewWidget::setFilterString);
-	connect(m_ui->actionsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &KeyboardProfileDialog::updateActions);
-	connect(m_ui->addActionButton, &QPushButton::clicked, this, &KeyboardProfileDialog::addAction);
-	connect(m_ui->removeActionButton, &QPushButton::clicked, this, &KeyboardProfileDialog::removeAction);
+	connect(m_ui->actionsViewWidget, &ItemViewWidget::needsActionsUpdate, this, [&]()
+	{
+		m_ui->removeActionButton->setEnabled(m_ui->actionsViewWidget->getCurrentIndex().isValid());
+	});
+	connect(m_ui->addActionButton, &QPushButton::clicked, this, [&]()
+	{
+		QList<QStandardItem*> items({new QStandardItem(), new QStandardItem(), new QStandardItem(), new QStandardItem()});
+		items[0]->setData(NormalStatus, StatusRole);
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
+		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+		items[3]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
+
+		m_ui->actionsViewWidget->insertRow(items);
+		m_ui->actionsViewWidget->setCurrentIndex(items[1]->index());
+	});
+	connect(m_ui->removeActionButton, &QPushButton::clicked, this, [&]()
+	{
+		m_ui->actionsViewWidget->removeRow();
+	});
 }
 
 KeyboardProfileDialog::~KeyboardProfileDialog()
@@ -269,29 +286,6 @@ void KeyboardProfileDialog::changeEvent(QEvent *event)
 		m_ui->retranslateUi(this);
 		m_ui->actionsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Status"), tr("Action"), tr("Parameters"), tr("Shortcut")});
 	}
-}
-
-void KeyboardProfileDialog::addAction()
-{
-	QList<QStandardItem*> items({new QStandardItem(), new QStandardItem(), new QStandardItem(), new QStandardItem()});
-	items[0]->setData(NormalStatus, StatusRole);
-	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
-	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
-	items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
-	items[3]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
-
-	m_ui->actionsViewWidget->insertRow(items);
-	m_ui->actionsViewWidget->setCurrentIndex(items[1]->index());
-}
-
-void KeyboardProfileDialog::removeAction()
-{
-	m_ui->actionsViewWidget->removeRow();
-}
-
-void KeyboardProfileDialog::updateActions()
-{
-	m_ui->removeActionButton->setEnabled(m_ui->actionsViewWidget->getCurrentIndex().isValid());
 }
 
 KeyboardProfile KeyboardProfileDialog::getProfile() const
