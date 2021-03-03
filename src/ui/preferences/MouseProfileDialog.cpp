@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -166,8 +166,14 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	connect(m_ui->stepsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &MouseProfileDialog::updateStepsActions);
 	connect(m_ui->stepsViewWidget, &ItemViewWidget::canMoveRowDownChanged, m_ui->moveDownStepsButton, &QToolButton::setEnabled);
 	connect(m_ui->stepsViewWidget, &ItemViewWidget::canMoveRowUpChanged, m_ui->moveUpStepsButton, &QToolButton::setEnabled);
-	connect(m_ui->addStepButton, &QPushButton::clicked, this, &MouseProfileDialog::addStep);
-	connect(m_ui->removeStepButton, &QPushButton::clicked, this, &MouseProfileDialog::removeStep);
+	connect(m_ui->addStepButton, &QPushButton::clicked, this, [&]()
+	{
+		m_ui->stepsViewWidget->insertRow();
+	});
+	connect(m_ui->removeStepButton, &QPushButton::clicked, this, [&]()
+	{
+		m_ui->stepsViewWidget->removeRow();
+	});
 	connect(m_ui->moveDownStepsButton, &QToolButton::clicked, m_ui->stepsViewWidget, &ItemViewWidget::moveDownRow);
 	connect(m_ui->moveUpStepsButton, &QToolButton::clicked, m_ui->stepsViewWidget, &ItemViewWidget::moveUpRow);
 }
@@ -219,16 +225,6 @@ void MouseProfileDialog::removeGesture()
 	{
 		item->parent()->removeRow(item->row());
 	}
-}
-
-void MouseProfileDialog::addStep()
-{
-	m_ui->stepsViewWidget->insertRow();
-}
-
-void MouseProfileDialog::removeStep()
-{
-	m_ui->stepsViewWidget->removeRow();
 }
 
 void MouseProfileDialog::updateGesturesActions()
