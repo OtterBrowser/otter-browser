@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -34,8 +34,8 @@ PermissionBarWidget::PermissionBarWidget(WebWidget::FeaturePermission feature, c
 
 	setup();
 
-	connect(m_ui->okButton, &QToolButton::clicked, this, &PermissionBarWidget::handleAccepted);
-	connect(m_ui->cancelButton, &QToolButton::clicked, this, &PermissionBarWidget::handleRejected);
+	connect(m_ui->okButton, &QToolButton::clicked, this, &PermissionBarWidget::handlePermissionGranted);
+	connect(m_ui->cancelButton, &QToolButton::clicked, this, &PermissionBarWidget::handlePermissionDenied);
 }
 
 PermissionBarWidget::~PermissionBarWidget()
@@ -111,7 +111,7 @@ void PermissionBarWidget::setup()
 	}
 }
 
-void PermissionBarWidget::handleAccepted()
+void PermissionBarWidget::handlePermissionGranted()
 {
 	hide();
 
@@ -125,7 +125,7 @@ void PermissionBarWidget::handleAccepted()
 	}
 }
 
-void PermissionBarWidget::handleRejected()
+void PermissionBarWidget::handlePermissionDenied()
 {
 	hide();
 
