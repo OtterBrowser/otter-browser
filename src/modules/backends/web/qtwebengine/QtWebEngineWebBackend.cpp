@@ -198,11 +198,11 @@ WebWidget* QtWebEngineWebBackend::createWidget(const QVariantMap &parameters, Co
 
 #if QTWEBENGINECORE_VERSION < 0x050D00
 		m_requestInterceptor = new QtWebEngineUrlRequestInterceptor(this);
-#endif
 
+		QWebEngineProfile::defaultProfile()->setRequestInterceptor(m_requestInterceptor);
+#endif
 		QWebEngineProfile::defaultProfile()->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
 		QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
-		QWebEngineProfile::defaultProfile()->setRequestInterceptor(m_requestInterceptor);
 
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FocusOnNavigationEnabled, false);
