@@ -596,7 +596,7 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 	{
 		m_error = DownloadError;
 
-		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(device->errorString()), Console::OtherCategory, Console::ErrorLevel, getPath());
+		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(device ? device->errorString() : QLatin1String("-")), Console::OtherCategory, Console::ErrorLevel, getPath());
 
 		return;
 	}
