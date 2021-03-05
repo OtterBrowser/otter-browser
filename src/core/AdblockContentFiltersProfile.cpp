@@ -2,7 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2010 - 2014 David Rosca <nowrep@gmail.com>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -268,7 +268,7 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 	for (int i = 0; i < line.length(); ++i)
 	{
 		const QChar value(line.at(i));
-		bool childrenExists(false);
+		bool hasChildren(false);
 
 		for (int j = 0; j < node->children.count(); ++j)
 		{
@@ -278,13 +278,13 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 			{
 				node = nextNode;
 
-				childrenExists = true;
+				hasChildren = true;
 
 				break;
 			}
 		}
 
-		if (!childrenExists)
+		if (!hasChildren)
 		{
 			Node *newNode(new Node());
 			newNode->value = value;
