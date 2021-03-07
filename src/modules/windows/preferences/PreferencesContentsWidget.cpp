@@ -23,6 +23,7 @@
 #include "PreferencesGeneralPageWidget.h"
 #include "PreferencesPrivacyPageWidget.h"
 #include "PreferencesSearchPageWidget.h"
+#include "../../../core/Application.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/ItemViewWidget.h"
 
@@ -46,6 +47,21 @@ PreferencesContentsWidget::PreferencesContentsWidget(const QVariantMap &paramete
 	showTab(GeneralTab);
 
 	connect(m_ui->tabWidget, &QTabWidget::currentChanged, this, &PreferencesContentsWidget::showTab);
+	connect(m_ui->saveButton, &QPushButton::clicked, this, [&]()
+	{
+		m_ui->saveButton->setEnabled(false);
+
+		emit requestedSave();
+	});
+	connect(m_ui->allSettingsButton, &QPushButton::clicked, this,[&]()
+	{
+		const QUrl url(QLatin1String("about:config"));
+
+		if (!SessionsManager::hasUrl(url, true))
+		{
+			Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, this);
+		}
+	});
 }
 
 PreferencesContentsWidget::~PreferencesContentsWidget()
@@ -65,7 +81,7 @@ void PreferencesContentsWidget::changeEvent(QEvent *event)
 
 void PreferencesContentsWidget::markAsModified()
 {
-///TODO
+	m_ui->saveButton->setEnabled(true);
 }
 
 void PreferencesContentsWidget::showTab(int tab)
