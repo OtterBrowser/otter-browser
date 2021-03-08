@@ -44,6 +44,7 @@ PreferencesContentsWidget::PreferencesContentsWidget(const QVariantMap &paramete
 
 	m_loadedTabs.fill(false, 5);
 
+	updateStyle();
 	showTab(GeneralTab);
 
 	connect(m_ui->tabWidget, &QTabWidget::currentChanged, this, &PreferencesContentsWidget::showTab);
@@ -73,9 +74,20 @@ void PreferencesContentsWidget::changeEvent(QEvent *event)
 {
 	ContentsWidget::changeEvent(event);
 
-	if (event->type() == QEvent::LanguageChange)
+	switch (event->type())
 	{
-		m_ui->retranslateUi(this);
+		case QEvent::FontChange:
+		case QEvent::LayoutDirectionChange:
+		case QEvent::StyleChange:
+			updateStyle();
+
+			break;
+		case QEvent::LanguageChange:
+			m_ui->retranslateUi(this);
+
+			break;
+		default:
+			break;
 	}
 }
 
@@ -187,6 +199,23 @@ void PreferencesContentsWidget::showTab(int tab)
 	{
 		connect(viewWidgets.at(i), &ItemViewWidget::modified, this, &PreferencesContentsWidget::markAsModified);
 	}
+}
+
+void PreferencesContentsWidget::updateStyle()
+{
+	QFont font(m_ui->tabWidget->font());
+
+	if (font.pixelSize() > 0)
+	{
+		font.setPixelSize(font.pixelSize() * 1.5);
+	}
+	else
+	{
+		font.setPointSize(font.pointSize() * 1.5);
+	}
+
+	m_ui->tabWidget->setTabPosition(isLeftToRight() ? QTabWidget::West : QTabWidget::East);
+	m_ui->tabWidget->tabBar()->setFont(font);
 }
 
 QString PreferencesContentsWidget::getTitle() const

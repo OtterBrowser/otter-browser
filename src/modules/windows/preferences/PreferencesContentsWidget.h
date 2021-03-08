@@ -54,6 +54,7 @@ protected:
 	};
 
 	void changeEvent(QEvent *event) override;
+	void updateStyle();
 
 protected slots:
 	void markAsModified();
