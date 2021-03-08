@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -132,6 +132,19 @@ void Style::drawControl(ControlElement element, const QStyleOption *option, QPai
 			if (option->rect.width() >= 30)
 			{
 				QProxyStyle::drawControl(element, option, painter, widget);
+			}
+
+			break;
+		case CE_TabBarTabLabel:
+			{
+				QStyleOptionTab tabOption(*qstyleoption_cast<const QStyleOptionTab*>(option));
+
+				if (tabOption.shape == QTabBar::RoundedWest || tabOption.shape == QTabBar::RoundedEast)
+				{
+					tabOption.shape = QTabBar::RoundedNorth;
+				}
+
+				QProxyStyle::drawControl(element, &tabOption, painter, widget);
 			}
 
 			break;
@@ -295,6 +308,23 @@ QRect Style::subElementRect(SubElement element, const QStyleOption *option, cons
 	}
 
 	return QProxyStyle::subElementRect(element, option, widget);
+}
+
+QSize Style::sizeFromContents(ContentsType type, const QStyleOption *option, const QSize &contentsSize, const QWidget *widget) const
+{
+	const QSize size(QProxyStyle::sizeFromContents(type, option, contentsSize, widget));
+
+	if (type == CT_TabBarTab)
+	{
+		const QStyleOptionTab *tabOption(qstyleoption_cast<const QStyleOptionTab*>(option));
+
+		if (tabOption->shape == QTabBar::RoundedWest || tabOption->shape == QTabBar::RoundedEast)
+		{
+			return size.transposed();
+		}
+	}
+
+	return size;
 }
 
 int Style::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const
