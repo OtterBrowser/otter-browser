@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -62,6 +62,7 @@ public:
 	int getIdentifier() const;
 	int getIconSize() const;
 	int getMaximumButtonSize() const;
+	bool event(QEvent *event) override;
 	static bool calculateShouldBeVisible(const ToolBarsManager::ToolBarDefinition &definition, const Session::MainWindow::ToolBarState &state, ToolBarsManager::ToolBarsMode mode);
 	bool canDrop(QDropEvent *event) const;
 	bool isCollapsed() const;
