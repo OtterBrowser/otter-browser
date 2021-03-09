@@ -258,12 +258,12 @@ set(otter_src
 	src/modules/windows/notes/NotesContentsWidget.cpp
 	src/modules/windows/pageInformation/PageInformationContentsWidget.cpp
 	src/modules/windows/passwords/PasswordsContentsWidget.cpp
-	src/modules/windows/preferences/PreferencesAdvancedPageWidget.cpp
-	src/modules/windows/preferences/PreferencesContentPageWidget.cpp
+	src/modules/windows/preferences/AdvancedPreferencesPage.cpp
+	src/modules/windows/preferences/ContentPreferencesPage.cpp
+	src/modules/windows/preferences/GeneralPreferencesPage.cpp
 	src/modules/windows/preferences/PreferencesContentsWidget.cpp
-	src/modules/windows/preferences/PreferencesGeneralPageWidget.cpp
-	src/modules/windows/preferences/PreferencesPrivacyPageWidget.cpp
-	src/modules/windows/preferences/PreferencesSearchPageWidget.cpp
+	src/modules/windows/preferences/PrivacyPreferencesPage.cpp
+	src/modules/windows/preferences/SearchPreferencesPage.cpp
 	src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp
 	src/modules/windows/transfers/TransfersContentsWidget.cpp
 	src/modules/windows/web/PasswordBarWidget.cpp
@@ -337,12 +337,12 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/notes/NotesContentsWidget.ui
 	src/modules/windows/pageInformation/PageInformationContentsWidget.ui
 	src/modules/windows/passwords/PasswordsContentsWidget.ui
-	src/modules/windows/preferences/PreferencesAdvancedPageWidget.ui
-	src/modules/windows/preferences/PreferencesContentPageWidget.ui
+	src/modules/windows/preferences/AdvancedPreferencesPage.ui
+	src/modules/windows/preferences/ContentPreferencesPage.ui
+	src/modules/windows/preferences/GeneralPreferencesPage.ui
 	src/modules/windows/preferences/PreferencesContentsWidget.ui
-	src/modules/windows/preferences/PreferencesGeneralPageWidget.ui
-	src/modules/windows/preferences/PreferencesPrivacyPageWidget.ui
-	src/modules/windows/preferences/PreferencesSearchPageWidget.ui
+	src/modules/windows/preferences/PrivacyPreferencesPage.ui
+	src/modules/windows/preferences/SearchPreferencesPage.ui
 	src/modules/windows/tabHistory/TabHistoryContentsWidget.ui
 	src/modules/windows/transfers/TransfersContentsWidget.ui
 	src/modules/windows/web/PasswordBarWidget.ui

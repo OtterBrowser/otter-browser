@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Otter::PreferencesAdvancedPageWidget</class>
- <widget class="QWidget" name="Otter::PreferencesAdvancedPageWidget">
+ <class>Otter::AdvancedPreferencesPage</class>
+ <widget class="QWidget" name="Otter::AdvancedPreferencesPage">
   <property name="geometry">
    <rect>
     <x>0</x>

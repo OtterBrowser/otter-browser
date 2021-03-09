@@ -18,11 +18,10 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_PREFERENCESSEARCHPAGEWIDGET_H
-#define OTTER_PREFERENCESSEARCHPAGEWIDGET_H
+#ifndef OTTER_CONTENTPREFERENCESPAGE_H
+#define OTTER_CONTENTPREFERENCESPAGE_H
 
 #include "../../../ui/ItemDelegate.h"
-#include "../../../core/SearchEnginesManager.h"
 
 #include <QtWidgets/QWidget>
 
@@ -31,71 +30,49 @@ namespace Otter
 
 namespace Ui
 {
-	class PreferencesSearchPageWidget;
+	class ContentPreferencesPage;
 }
 
-class Animation;
-class SearchEngineFetchJob;
-
-class SearchEngineTitleDelegate final : public ItemDelegate
+class ColorItemDelegate final : public ItemDelegate
 {
 public:
-	explicit SearchEngineTitleDelegate(QObject *parent);
-
-	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
-};
-
-class SearchEngineKeywordDelegate final : public ItemDelegate
-{
-public:
-	explicit SearchEngineKeywordDelegate(QObject *parent);
+	explicit ColorItemDelegate(QObject *parent);
 
 	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
 	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+
+protected:
+	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
 };
 
-class PreferencesSearchPageWidget final : public QWidget
+class FontItemDelegate final : public ItemDelegate
+{
+public:
+	explicit FontItemDelegate(QObject *parent);
+
+	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
+	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+
+protected:
+	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
+};
+
+class ContentPreferencesPage final : public QWidget
 {
 	Q_OBJECT
 
 public:
-	enum DataRole
-	{
-		IdentifierRole = Qt::UserRole,
-		IsUpdatingRole
-	};
-
-	explicit PreferencesSearchPageWidget(QWidget *parent = nullptr);
-	~PreferencesSearchPageWidget();
-
-	static Animation* getUpdateAnimation();
-	static QStringList getKeywords(const QAbstractItemModel *model, int excludeRow = -1);
+	explicit ContentPreferencesPage(QWidget *parent = nullptr);
+	~ContentPreferencesPage();
 
 public slots:
 	void save();
 
 protected:
 	void changeEvent(QEvent *event) override;
-	void addSearchEngine(const QString &path, const QString &identifier, bool isReadding);
-	void updateReaddSearchEngineMenu();
-	QList<QStandardItem*> createRow(const SearchEnginesManager::SearchEngineDefinition &searchEngine, bool isDefault = false) const;
-
-protected slots:
-	void createSearchEngine();
-	void importSearchEngine();
-	void readdSearchEngine(QAction *action);
-	void editSearchEngine();
-	void updateSearchEngine();
-	void removeSearchEngine();
-	void updateSearchEngineActions();
 
 private:
-	QStringList m_filesToRemove;
-	QHash<QString, SearchEngineFetchJob*> m_updateJobs;
-	QHash<QString, QPair<bool, SearchEnginesManager::SearchEngineDefinition> > m_searchEngines;
-	Ui::PreferencesSearchPageWidget *m_ui;
-
-	static Animation* m_updateAnimation;
+	Ui::ContentPreferencesPage *m_ui;
 
 signals:
 	void settingsModified();

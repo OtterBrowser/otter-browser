@@ -17,22 +17,22 @@
 *
 **************************************************************************/
 
-#include "PreferencesPrivacyPageWidget.h"
+#include "PrivacyPreferencesPage.h"
 #include "../../../core/Application.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../ui/ClearHistoryDialog.h"
 #include "../../../ui/preferences/CookiesExceptionsDialog.h"
 
-#include "ui_PreferencesPrivacyPageWidget.h"
+#include "ui_PrivacyPreferencesPage.h"
 
 namespace Otter
 {
 
-PreferencesPrivacyPageWidget::PreferencesPrivacyPageWidget(QWidget *parent) : QWidget(parent),
+PrivacyPreferencesPage::PrivacyPreferencesPage(QWidget *parent) : QWidget(parent),
 	m_thirdPartyCookiesAcceptedHosts(SettingsManager::getOption(SettingsManager::Network_ThirdPartyCookiesAcceptedHostsOption).toStringList()),
 	m_thirdPartyCookiesRejectedHosts(SettingsManager::getOption(SettingsManager::Network_ThirdPartyCookiesRejectedHostsOption).toStringList()),
 	m_clearHistorySettings(SettingsManager::getOption(SettingsManager::History_ClearOnCloseOption).toStringList()),
-	m_ui(new Ui::PreferencesPrivacyPageWidget)
+	m_ui(new Ui::PrivacyPreferencesPage)
 {
 	m_clearHistorySettings.removeAll({});
 
@@ -78,7 +78,7 @@ PreferencesPrivacyPageWidget::PreferencesPrivacyPageWidget(QWidget *parent) : QW
 
 	connect(m_ui->privateModeCheckBox, &QCheckBox::toggled, m_ui->historyWidget, &QWidget::setDisabled);
 	connect(m_ui->enableCookiesCheckBox, &QCheckBox::toggled, m_ui->cookiesWidget, &QWidget::setEnabled);
-	connect(m_ui->thirdPartyCookiesExceptionsButton, &QPushButton::clicked, this, &PreferencesPrivacyPageWidget::setupThirdPartyCookiesExceptions);
+	connect(m_ui->thirdPartyCookiesExceptionsButton, &QPushButton::clicked, this, &PrivacyPreferencesPage::setupThirdPartyCookiesExceptions);
 	connect(m_ui->clearHistoryCheckBox, &QCheckBox::toggled, m_ui->clearHistoryButton, &QPushButton::setEnabled);
 	connect(m_ui->clearHistoryCheckBox, &QCheckBox::toggled, [&](bool isChecked)
 	{
@@ -89,19 +89,19 @@ PreferencesPrivacyPageWidget::PreferencesPrivacyPageWidget(QWidget *parent) : QW
 			emit settingsModified();
 		}
 	});
-	connect(m_ui->clearHistoryButton, &QPushButton::clicked, this, &PreferencesPrivacyPageWidget::setupClearHistory);
+	connect(m_ui->clearHistoryButton, &QPushButton::clicked, this, &PrivacyPreferencesPage::setupClearHistory);
 	connect(m_ui->managePasswordsButton, &QPushButton::clicked, [&]()
 	{
 		Application::triggerAction(ActionsManager::PasswordsAction, {}, this);
 	});
 }
 
-PreferencesPrivacyPageWidget::~PreferencesPrivacyPageWidget()
+PrivacyPreferencesPage::~PrivacyPreferencesPage()
 {
 	delete m_ui;
 }
 
-void PreferencesPrivacyPageWidget::changeEvent(QEvent *event)
+void PrivacyPreferencesPage::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
@@ -126,7 +126,7 @@ void PreferencesPrivacyPageWidget::changeEvent(QEvent *event)
 	}
 }
 
-void PreferencesPrivacyPageWidget::setupThirdPartyCookiesExceptions()
+void PrivacyPreferencesPage::setupThirdPartyCookiesExceptions()
 {
 	CookiesExceptionsDialog dialog(m_thirdPartyCookiesAcceptedHosts, m_thirdPartyCookiesRejectedHosts, this);
 
@@ -139,7 +139,7 @@ void PreferencesPrivacyPageWidget::setupThirdPartyCookiesExceptions()
 	}
 }
 
-void PreferencesPrivacyPageWidget::setupClearHistory()
+void PrivacyPreferencesPage::setupClearHistory()
 {
 	ClearHistoryDialog dialog(m_clearHistorySettings, true, this);
 
@@ -154,7 +154,7 @@ void PreferencesPrivacyPageWidget::setupClearHistory()
 	m_ui->clearHistoryButton->setEnabled(!m_clearHistorySettings.isEmpty());
 }
 
-void PreferencesPrivacyPageWidget::save()
+void PrivacyPreferencesPage::save()
 {
 	SettingsManager::setOption(SettingsManager::Network_DoNotTrackPolicyOption, m_ui->doNotTrackComboBox->currentData().toString());
 	SettingsManager::setOption(SettingsManager::Browser_PrivateModeOption, m_ui->privateModeCheckBox->isChecked());

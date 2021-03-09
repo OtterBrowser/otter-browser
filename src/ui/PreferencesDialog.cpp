@@ -20,11 +20,11 @@
 
 #include "PreferencesDialog.h"
 #include "ItemViewWidget.h"
-#include "../modules/windows/preferences/PreferencesAdvancedPageWidget.h"
-#include "../modules/windows/preferences/PreferencesContentPageWidget.h"
-#include "../modules/windows/preferences/PreferencesGeneralPageWidget.h"
-#include "../modules/windows/preferences/PreferencesPrivacyPageWidget.h"
-#include "../modules/windows/preferences/PreferencesSearchPageWidget.h"
+#include "../modules/windows/preferences/AdvancedPreferencesPage.h"
+#include "../modules/windows/preferences/ContentPreferencesPage.h"
+#include "../modules/windows/preferences/GeneralPreferencesPage.h"
+#include "../modules/windows/preferences/PrivacyPreferencesPage.h"
+#include "../modules/windows/preferences/SearchPreferencesPage.h"
 #include "../core/Application.h"
 #include "../core/SessionsManager.h"
 
@@ -111,56 +111,56 @@ void PreferencesDialog::showTab(int tab)
 	{
 		case ContentTab:
 			{
-				PreferencesContentPageWidget *pageWidget(new PreferencesContentPageWidget(this));
+				ContentPreferencesPage *page(new ContentPreferencesPage(this));
 
-				m_ui->contentLayout->addWidget(pageWidget);
+				m_ui->contentLayout->addWidget(page);
 
-				connect(this, &PreferencesDialog::requestedSave, pageWidget, &PreferencesContentPageWidget::save);
-				connect(pageWidget, &PreferencesContentPageWidget::settingsModified, this, &PreferencesDialog::markAsModified);
+				connect(this, &PreferencesDialog::requestedSave, page, &ContentPreferencesPage::save);
+				connect(page, &ContentPreferencesPage::settingsModified, this, &PreferencesDialog::markAsModified);
 			}
 
 			break;
 		case PrivacyTab:
 			{
-				PreferencesPrivacyPageWidget *pageWidget(new PreferencesPrivacyPageWidget(this));
+				PrivacyPreferencesPage *page(new PrivacyPreferencesPage(this));
 
-				m_ui->privacyLayout->addWidget(pageWidget);
+				m_ui->privacyLayout->addWidget(page);
 
-				connect(this, &PreferencesDialog::requestedSave, pageWidget, &PreferencesPrivacyPageWidget::save);
-				connect(pageWidget, &PreferencesPrivacyPageWidget::settingsModified, this, &PreferencesDialog::markAsModified);
+				connect(this, &PreferencesDialog::requestedSave, page, &PrivacyPreferencesPage::save);
+				connect(page, &PrivacyPreferencesPage::settingsModified, this, &PreferencesDialog::markAsModified);
 			}
 
 			break;
 		case SearchTab:
 			{
-				PreferencesSearchPageWidget *pageWidget(new PreferencesSearchPageWidget(this));
+				SearchPreferencesPage *page(new SearchPreferencesPage(this));
 
-				m_ui->searchLayout->addWidget(pageWidget);
+				m_ui->searchLayout->addWidget(page);
 
-				connect(this, &PreferencesDialog::requestedSave, pageWidget, &PreferencesSearchPageWidget::save);
-				connect(pageWidget, &PreferencesSearchPageWidget::settingsModified, this, &PreferencesDialog::markAsModified);
+				connect(this, &PreferencesDialog::requestedSave, page, &SearchPreferencesPage::save);
+				connect(page, &SearchPreferencesPage::settingsModified, this, &PreferencesDialog::markAsModified);
 			}
 
 			break;
 		case AdvancedTab:
 			{
-				PreferencesAdvancedPageWidget *pageWidget(new PreferencesAdvancedPageWidget(this));
+				AdvancedPreferencesPage *page(new AdvancedPreferencesPage(this));
 
-				m_ui->advancedLayout->addWidget(pageWidget);
+				m_ui->advancedLayout->addWidget(page);
 
-				connect(this, &PreferencesDialog::requestedSave, pageWidget, &PreferencesAdvancedPageWidget::save);
-				connect(pageWidget, &PreferencesAdvancedPageWidget::settingsModified, this, &PreferencesDialog::markAsModified);
+				connect(this, &PreferencesDialog::requestedSave, page, &AdvancedPreferencesPage::save);
+				connect(page, &AdvancedPreferencesPage::settingsModified, this, &PreferencesDialog::markAsModified);
 			}
 
 			break;
 		default:
 			{
-				PreferencesGeneralPageWidget *pageWidget(new PreferencesGeneralPageWidget(this));
+				GeneralPreferencesPage *page(new GeneralPreferencesPage(this));
 
-				m_ui->generalLayout->addWidget(pageWidget);
+				m_ui->generalLayout->addWidget(page);
 
-				connect(this, &PreferencesDialog::requestedSave, pageWidget, &PreferencesGeneralPageWidget::save);
-				connect(pageWidget, &PreferencesGeneralPageWidget::settingsModified, this, &PreferencesDialog::markAsModified);
+				connect(this, &PreferencesDialog::requestedSave, page, &GeneralPreferencesPage::save);
+				connect(page, &GeneralPreferencesPage::settingsModified, this, &PreferencesDialog::markAsModified);
 			}
 
 			break;

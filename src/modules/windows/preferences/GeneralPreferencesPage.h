@@ -19,8 +19,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_PREFERENCESGENERALPAGEWIDGET_H
-#define OTTER_PREFERENCESGENERALPAGEWIDGET_H
+#ifndef OTTER_GENERALPREFERENCESPAGE_H
+#define OTTER_GENERALPREFERENCESPAGE_H
 
 #include <QtWidgets/QWidget>
 
@@ -29,16 +29,16 @@ namespace Otter
 
 namespace Ui
 {
-	class PreferencesGeneralPageWidget;
+	class GeneralPreferencesPage;
 }
 
-class PreferencesGeneralPageWidget final : public QWidget
+class GeneralPreferencesPage final : public QWidget
 {
 	Q_OBJECT
 
 public:
-	explicit PreferencesGeneralPageWidget(QWidget *parent = nullptr);
-	~PreferencesGeneralPageWidget();
+	explicit GeneralPreferencesPage(QWidget *parent = nullptr);
+	~GeneralPreferencesPage();
 
 public slots:
 	void save();
@@ -48,7 +48,7 @@ protected:
 
 private:
 	QString m_acceptLanguage;
-	Ui::PreferencesGeneralPageWidget *m_ui;
+	Ui::GeneralPreferencesPage *m_ui;
 
 signals:
 	void settingsModified();

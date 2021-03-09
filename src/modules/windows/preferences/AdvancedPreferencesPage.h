@@ -19,8 +19,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_PREFERENCESADVANCEDPAGEWIDGET_H
-#define OTTER_PREFERENCESADVANCEDPAGEWIDGET_H
+#ifndef OTTER_ADVANCEDPREFERENCESPAGE_H
+#define OTTER_ADVANCEDPREFERENCESPAGE_H
 
 #include "../../../core/NetworkManagerFactory.h"
 
@@ -32,13 +32,13 @@ namespace Otter
 
 namespace Ui
 {
-	class PreferencesAdvancedPageWidget;
+	class AdvancedPreferencesPage;
 }
 
 class KeyboardProfile;
 class MouseProfile;
 
-class PreferencesAdvancedPageWidget final : public QWidget
+class AdvancedPreferencesPage final : public QWidget
 {
 	Q_OBJECT
 
@@ -54,8 +54,8 @@ public:
 		OpenCommandRole
 	};
 
-	explicit PreferencesAdvancedPageWidget(QWidget *parent = nullptr);
-	~PreferencesAdvancedPageWidget();
+	explicit AdvancedPreferencesPage(QWidget *parent = nullptr);
+	~AdvancedPreferencesPage();
 
 public slots:
 	void save();
@@ -115,7 +115,7 @@ private:
 	QHash<QString, MouseProfile> m_mouseProfiles;
 	QHash<QString, ProxyDefinition> m_proxies;
 	QHash<int, QVariant> m_javaScriptOptions;
-	Ui::PreferencesAdvancedPageWidget *m_ui;
+	Ui::AdvancedPreferencesPage *m_ui;
 
 signals:
 	void settingsModified();

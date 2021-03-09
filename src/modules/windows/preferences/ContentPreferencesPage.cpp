@@ -18,13 +18,13 @@
 *
 **************************************************************************/
 
-#include "PreferencesContentPageWidget.h"
+#include "ContentPreferencesPage.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../ui/ColorWidget.h"
 #include "../../../ui/OptionWidget.h"
 #include "../../../../3rdparty/columnresizer/ColumnResizer.h"
 
-#include "ui_PreferencesContentPageWidget.h"
+#include "ui_ContentPreferencesPage.h"
 
 #include <QtGui/QPainter>
 
@@ -111,9 +111,9 @@ QWidget* FontItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
 	return widget;
 }
 
-PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
+ContentPreferencesPage::ContentPreferencesPage(QWidget *parent) :
 	QWidget(parent),
-	m_ui(new Ui::PreferencesContentPageWidget)
+	m_ui(new Ui::ContentPreferencesPage)
 {
 	m_ui->setupUi(this);
 	m_ui->popupsComboBox->addItem(tr("Ask"), QLatin1String("ask"));
@@ -199,12 +199,12 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	});
 }
 
-PreferencesContentPageWidget::~PreferencesContentPageWidget()
+ContentPreferencesPage::~ContentPreferencesPage()
 {
 	delete m_ui;
 }
 
-void PreferencesContentPageWidget::changeEvent(QEvent *event)
+void ContentPreferencesPage::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
@@ -220,7 +220,7 @@ void PreferencesContentPageWidget::changeEvent(QEvent *event)
 	}
 }
 
-void PreferencesContentPageWidget::save()
+void ContentPreferencesPage::save()
 {
 	SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, m_ui->popupsComboBox->currentData().toString());
 	SettingsManager::setOption(SettingsManager::Content_DefaultZoomOption, m_ui->defaultZoomSpinBox->value());

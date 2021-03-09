@@ -17,8 +17,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_PREFERENCESPRIVACYPAGEWIDGET_H
-#define OTTER_PREFERENCESPRIVACYPAGEWIDGET_H
+#ifndef OTTER_PRIVACYPREFERENCESPAGE_H
+#define OTTER_PRIVACYPREFERENCESPAGE_H
 
 #include <QtWidgets/QWidget>
 
@@ -27,16 +27,16 @@ namespace Otter
 
 namespace Ui
 {
-	class PreferencesPrivacyPageWidget;
+	class PrivacyPreferencesPage;
 }
 
-class PreferencesPrivacyPageWidget final : public QWidget
+class PrivacyPreferencesPage final : public QWidget
 {
 	Q_OBJECT
 
 public:
-	explicit PreferencesPrivacyPageWidget(QWidget *parent = nullptr);
-	~PreferencesPrivacyPageWidget();
+	explicit PrivacyPreferencesPage(QWidget *parent = nullptr);
+	~PrivacyPreferencesPage();
 
 public slots:
 	void save();
@@ -52,7 +52,7 @@ private:
 	QStringList m_thirdPartyCookiesAcceptedHosts;
 	QStringList m_thirdPartyCookiesRejectedHosts;
 	QStringList m_clearHistorySettings;
-	Ui::PreferencesPrivacyPageWidget *m_ui;
+	Ui::PrivacyPreferencesPage *m_ui;
 
 signals:
 	void settingsModified();

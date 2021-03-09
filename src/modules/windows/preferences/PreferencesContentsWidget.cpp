@@ -18,11 +18,11 @@
 **************************************************************************/
 
 #include "PreferencesContentsWidget.h"
-#include "PreferencesAdvancedPageWidget.h"
-#include "PreferencesContentPageWidget.h"
-#include "PreferencesGeneralPageWidget.h"
-#include "PreferencesPrivacyPageWidget.h"
-#include "PreferencesSearchPageWidget.h"
+#include "AdvancedPreferencesPage.h"
+#include "ContentPreferencesPage.h"
+#include "GeneralPreferencesPage.h"
+#include "PrivacyPreferencesPage.h"
+#include "SearchPreferencesPage.h"
 #include "../../../core/Application.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/ItemViewWidget.h"
@@ -109,56 +109,56 @@ void PreferencesContentsWidget::showTab(int tab)
 	{
 		case ContentTab:
 			{
-				PreferencesContentPageWidget *pageWidget(new PreferencesContentPageWidget(this));
+				ContentPreferencesPage *page(new ContentPreferencesPage(this));
 
-				m_ui->contentLayout->addWidget(pageWidget);
+				m_ui->contentLayout->addWidget(page);
 
-				connect(this, &PreferencesContentsWidget::requestedSave, pageWidget, &PreferencesContentPageWidget::save);
-				connect(pageWidget, &PreferencesContentPageWidget::settingsModified, this, &PreferencesContentsWidget::markAsModified);
+				connect(this, &PreferencesContentsWidget::requestedSave, page, &ContentPreferencesPage::save);
+				connect(page, &ContentPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
 			}
 
 			break;
 		case PrivacyTab:
 			{
-				PreferencesPrivacyPageWidget *pageWidget(new PreferencesPrivacyPageWidget(this));
+				PrivacyPreferencesPage *page(new PrivacyPreferencesPage(this));
 
-				m_ui->privacyLayout->addWidget(pageWidget);
+				m_ui->privacyLayout->addWidget(page);
 
-				connect(this, &PreferencesContentsWidget::requestedSave, pageWidget, &PreferencesPrivacyPageWidget::save);
-				connect(pageWidget, &PreferencesPrivacyPageWidget::settingsModified, this, &PreferencesContentsWidget::markAsModified);
+				connect(this, &PreferencesContentsWidget::requestedSave, page, &PrivacyPreferencesPage::save);
+				connect(page, &PrivacyPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
 			}
 
 			break;
 		case SearchTab:
 			{
-				PreferencesSearchPageWidget *pageWidget(new PreferencesSearchPageWidget(this));
+				SearchPreferencesPage *page(new SearchPreferencesPage(this));
 
-				m_ui->searchLayout->addWidget(pageWidget);
+				m_ui->searchLayout->addWidget(page);
 
-				connect(this, &PreferencesContentsWidget::requestedSave, pageWidget, &PreferencesSearchPageWidget::save);
-				connect(pageWidget, &PreferencesSearchPageWidget::settingsModified, this, &PreferencesContentsWidget::markAsModified);
+				connect(this, &PreferencesContentsWidget::requestedSave, page, &SearchPreferencesPage::save);
+				connect(page, &SearchPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
 			}
 
 			break;
 		case AdvancedTab:
 			{
-				PreferencesAdvancedPageWidget *pageWidget(new PreferencesAdvancedPageWidget(this));
+				AdvancedPreferencesPage *page(new AdvancedPreferencesPage(this));
 
-				m_ui->advancedLayout->addWidget(pageWidget);
+				m_ui->advancedLayout->addWidget(page);
 
-				connect(this, &PreferencesContentsWidget::requestedSave, pageWidget, &PreferencesAdvancedPageWidget::save);
-				connect(pageWidget, &PreferencesAdvancedPageWidget::settingsModified, this, &PreferencesContentsWidget::markAsModified);
+				connect(this, &PreferencesContentsWidget::requestedSave, page, &AdvancedPreferencesPage::save);
+				connect(page, &AdvancedPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
 			}
 
 			break;
 		default:
 			{
-				PreferencesGeneralPageWidget *pageWidget(new PreferencesGeneralPageWidget(this));
+				GeneralPreferencesPage *page(new GeneralPreferencesPage(this));
 
-				m_ui->generalLayout->addWidget(pageWidget);
+				m_ui->generalLayout->addWidget(page);
 
-				connect(this, &PreferencesContentsWidget::requestedSave, pageWidget, &PreferencesGeneralPageWidget::save);
-				connect(pageWidget, &PreferencesGeneralPageWidget::settingsModified, this, &PreferencesContentsWidget::markAsModified);
+				connect(this, &PreferencesContentsWidget::requestedSave, page, &GeneralPreferencesPage::save);
+				connect(page, &GeneralPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
 			}
 
 			break;

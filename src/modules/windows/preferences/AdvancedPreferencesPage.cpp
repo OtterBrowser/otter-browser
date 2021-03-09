@@ -19,7 +19,7 @@
 *
 **************************************************************************/
 
-#include "PreferencesAdvancedPageWidget.h"
+#include "AdvancedPreferencesPage.h"
 #include "../../../core/ActionsManager.h"
 #include "../../../core/Application.h"
 #include "../../../core/GesturesManager.h"
@@ -39,7 +39,7 @@
 #include "../../../ui/WebsitePreferencesDialog.h"
 #include "../../../../3rdparty/columnresizer/ColumnResizer.h"
 
-#include "ui_PreferencesAdvancedPageWidget.h"
+#include "ui_AdvancedPreferencesPage.h"
 
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonObject>
@@ -56,8 +56,8 @@
 namespace Otter
 {
 
-PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : QWidget(parent),
-	m_ui(new Ui::PreferencesAdvancedPageWidget)
+AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : QWidget(parent),
+	m_ui(new Ui::AdvancedPreferencesPage)
 {
 	m_ui->setupUi(this);
 
@@ -345,7 +345,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->keyboardViewWidget->setRowsMovable(true);
 
 	QMenu *addKeyboardProfileMenu(new QMenu(m_ui->keyboardAddButton));
-	addKeyboardProfileMenu->addAction(tr("New…"), this, &PreferencesAdvancedPageWidget::addKeyboardProfile);
+	addKeyboardProfileMenu->addAction(tr("New…"), this, &AdvancedPreferencesPage::addKeyboardProfile);
 	addKeyboardProfileMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->keyboardAddButton));
 
 	m_ui->keyboardAddButton->setMenu(addKeyboardProfileMenu);
@@ -382,7 +382,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->mouseViewWidget->setRowsMovable(true);
 
 	QMenu *addMouseProfileMenu(new QMenu(m_ui->mouseAddButton));
-	addMouseProfileMenu->addAction(tr("New…"), this, &PreferencesAdvancedPageWidget::addMouseProfile);
+	addMouseProfileMenu->addAction(tr("New…"), this, &AdvancedPreferencesPage::addMouseProfile);
 	addMouseProfileMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->mouseAddButton));
 
 	m_ui->mouseAddButton->setMenu(addMouseProfileMenu);
@@ -394,68 +394,68 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	columnResizer->addWidgetsFromFormLayout(m_ui->enableImagesLayout, QFormLayout::LabelRole);
 	columnResizer->addWidgetsFromFormLayout(m_ui->contentGeneralLayout, QFormLayout::LabelRole);
 
-	connect(m_ui->advancedViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::changeCurrentPage);
-	connect(m_ui->notificationsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateNotificationsActions);
-	connect(m_ui->notificationsPlaySoundButton, &QToolButton::clicked, this, &PreferencesAdvancedPageWidget::playNotificationSound);
+	connect(m_ui->advancedViewWidget, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::changeCurrentPage);
+	connect(m_ui->notificationsItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateNotificationsActions);
+	connect(m_ui->notificationsPlaySoundButton, &QToolButton::clicked, this, &AdvancedPreferencesPage::playNotificationSound);
 	connect(m_ui->enableJavaScriptCheckBox, &QCheckBox::toggled, m_ui->javaScriptOptionsButton, &QPushButton::setEnabled);
-	connect(m_ui->javaScriptOptionsButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::updateJavaScriptOptions);
+	connect(m_ui->javaScriptOptionsButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::updateJavaScriptOptions);
 	connect(m_ui->contentOverridesFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->contentOverridesItemView, &ItemViewWidget::setFilterString);
-	connect(m_ui->contentOverridesItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateOverridesActions);
-	connect(m_ui->contentOverridesAddButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::addOverride);
-	connect(m_ui->contentOverridesEditButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::editOverride);
-	connect(m_ui->contentOverridesRemoveButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::removeOverride);
-	connect(m_ui->mimeTypesItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateDownloadsActions);
-	connect(m_ui->mimeTypesAddMimeTypeButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::addDownloadsMimeType);
-	connect(m_ui->mimeTypesRemoveMimeTypeButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::removeDownloadsMimeType);
-	connect(m_ui->mimeTypesButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
-	connect(m_ui->mimeTypesButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsMode);
-	connect(m_ui->mimeTypesSaveDirectlyCheckBox, &QCheckBox::toggled, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
-	connect(m_ui->mimeTypesFilePathWidget, &Otter::FilePathWidget::pathChanged, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
-	connect(m_ui->mimeTypesApplicationComboBoxWidget, &Otter::ApplicationComboBoxWidget::currentCommandChanged, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
-	connect(m_ui->userAgentsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateUserAgentsActions);
-	connect(m_ui->userAgentsAddButton->menu(), &QMenu::triggered, this, &PreferencesAdvancedPageWidget::addUserAgent);
-	connect(m_ui->userAgentsEditButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::editUserAgent);
+	connect(m_ui->contentOverridesItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateOverridesActions);
+	connect(m_ui->contentOverridesAddButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::addOverride);
+	connect(m_ui->contentOverridesEditButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::editOverride);
+	connect(m_ui->contentOverridesRemoveButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::removeOverride);
+	connect(m_ui->mimeTypesItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateDownloadsActions);
+	connect(m_ui->mimeTypesAddMimeTypeButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::addDownloadsMimeType);
+	connect(m_ui->mimeTypesRemoveMimeTypeButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::removeDownloadsMimeType);
+	connect(m_ui->mimeTypesButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this, &AdvancedPreferencesPage::updateDownloadsOptions);
+	connect(m_ui->mimeTypesButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this, &AdvancedPreferencesPage::updateDownloadsMode);
+	connect(m_ui->mimeTypesSaveDirectlyCheckBox, &QCheckBox::toggled, this, &AdvancedPreferencesPage::updateDownloadsOptions);
+	connect(m_ui->mimeTypesFilePathWidget, &Otter::FilePathWidget::pathChanged, this, &AdvancedPreferencesPage::updateDownloadsOptions);
+	connect(m_ui->mimeTypesApplicationComboBoxWidget, &Otter::ApplicationComboBoxWidget::currentCommandChanged, this, &AdvancedPreferencesPage::updateDownloadsOptions);
+	connect(m_ui->userAgentsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateUserAgentsActions);
+	connect(m_ui->userAgentsAddButton->menu(), &QMenu::triggered, this, &AdvancedPreferencesPage::addUserAgent);
+	connect(m_ui->userAgentsEditButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::editUserAgent);
 	connect(m_ui->userAgentsRemoveButton, &QPushButton::clicked, m_ui->userAgentsViewWidget, &ItemViewWidget::removeRow);
-	connect(m_ui->proxiesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateProxiesActions);
-	connect(m_ui->proxiesAddButton->menu(), &QMenu::triggered, this, &PreferencesAdvancedPageWidget::addProxy);
-	connect(m_ui->proxiesEditButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::editProxy);
+	connect(m_ui->proxiesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateProxiesActions);
+	connect(m_ui->proxiesAddButton->menu(), &QMenu::triggered, this, &AdvancedPreferencesPage::addProxy);
+	connect(m_ui->proxiesEditButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::editProxy);
 	connect(m_ui->proxiesRemoveButton, &QPushButton::clicked, m_ui->proxiesViewWidget, &ItemViewWidget::removeRow);
 	connect(m_ui->ciphersViewWidget, &ItemViewWidget::canMoveRowDownChanged, m_ui->ciphersMoveDownButton, &QToolButton::setEnabled);
 	connect(m_ui->ciphersViewWidget, &ItemViewWidget::canMoveRowUpChanged, m_ui->ciphersMoveUpButton, &QToolButton::setEnabled);
-	connect(m_ui->ciphersViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateCiphersActions);
-	connect(m_ui->ciphersAddButton->menu(), &QMenu::triggered, this, &PreferencesAdvancedPageWidget::addCipher);
-	connect(m_ui->ciphersRemoveButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::removeCipher);
+	connect(m_ui->ciphersViewWidget, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateCiphersActions);
+	connect(m_ui->ciphersAddButton->menu(), &QMenu::triggered, this, &AdvancedPreferencesPage::addCipher);
+	connect(m_ui->ciphersRemoveButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::removeCipher);
 	connect(m_ui->ciphersMoveDownButton, &QToolButton::clicked, m_ui->ciphersViewWidget, &ItemViewWidget::moveDownRow);
 	connect(m_ui->ciphersMoveUpButton, &QToolButton::clicked, m_ui->ciphersViewWidget, &ItemViewWidget::moveUpRow);
-	connect(m_ui->updateChannelsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateUpdateChannelsActions);
+	connect(m_ui->updateChannelsItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateUpdateChannelsActions);
 	connect(m_ui->keyboardViewWidget, &ItemViewWidget::canMoveRowDownChanged, m_ui->keyboardMoveDownButton, &QToolButton::setEnabled);
 	connect(m_ui->keyboardViewWidget, &ItemViewWidget::canMoveRowUpChanged, m_ui->keyboardMoveUpButton, &QToolButton::setEnabled);
-	connect(m_ui->keyboardViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateKeyboardProfileActions);
-	connect(m_ui->keyboardViewWidget, &ItemViewWidget::doubleClicked, this, &PreferencesAdvancedPageWidget::editKeyboardProfile);
-	connect(m_ui->keyboardAddButton->menu()->actions().at(1)->menu(), &QMenu::triggered, this, &PreferencesAdvancedPageWidget::readdKeyboardProfile);
-	connect(m_ui->keyboardEditButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::editKeyboardProfile);
-	connect(m_ui->keyboardCloneButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::cloneKeyboardProfile);
-	connect(m_ui->keyboardRemoveButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::removeKeyboardProfile);
+	connect(m_ui->keyboardViewWidget, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateKeyboardProfileActions);
+	connect(m_ui->keyboardViewWidget, &ItemViewWidget::doubleClicked, this, &AdvancedPreferencesPage::editKeyboardProfile);
+	connect(m_ui->keyboardAddButton->menu()->actions().at(1)->menu(), &QMenu::triggered, this, &AdvancedPreferencesPage::readdKeyboardProfile);
+	connect(m_ui->keyboardEditButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::editKeyboardProfile);
+	connect(m_ui->keyboardCloneButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::cloneKeyboardProfile);
+	connect(m_ui->keyboardRemoveButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::removeKeyboardProfile);
 	connect(m_ui->keyboardMoveDownButton, &QToolButton::clicked, m_ui->keyboardViewWidget, &ItemViewWidget::moveDownRow);
 	connect(m_ui->keyboardMoveUpButton, &QToolButton::clicked, m_ui->keyboardViewWidget, &ItemViewWidget::moveUpRow);
 	connect(m_ui->mouseViewWidget, &ItemViewWidget::canMoveRowDownChanged, m_ui->mouseMoveDownButton, &QToolButton::setEnabled);
 	connect(m_ui->mouseViewWidget, &ItemViewWidget::canMoveRowUpChanged, m_ui->mouseMoveUpButton, &QToolButton::setEnabled);
-	connect(m_ui->mouseViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateMouseProfileActions);
-	connect(m_ui->mouseViewWidget, &ItemViewWidget::doubleClicked, this, &PreferencesAdvancedPageWidget::editMouseProfile);
-	connect(m_ui->mouseAddButton->menu()->actions().at(1)->menu(), &QMenu::triggered, this, &PreferencesAdvancedPageWidget::readdMouseProfile);
-	connect(m_ui->mouseEditButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::editMouseProfile);
-	connect(m_ui->mouseCloneButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::cloneMouseProfile);
-	connect(m_ui->mouseRemoveButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::removeMouseProfile);
+	connect(m_ui->mouseViewWidget, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateMouseProfileActions);
+	connect(m_ui->mouseViewWidget, &ItemViewWidget::doubleClicked, this, &AdvancedPreferencesPage::editMouseProfile);
+	connect(m_ui->mouseAddButton->menu()->actions().at(1)->menu(), &QMenu::triggered, this, &AdvancedPreferencesPage::readdMouseProfile);
+	connect(m_ui->mouseEditButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::editMouseProfile);
+	connect(m_ui->mouseCloneButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::cloneMouseProfile);
+	connect(m_ui->mouseRemoveButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::removeMouseProfile);
 	connect(m_ui->mouseMoveDownButton, &QToolButton::clicked, m_ui->mouseViewWidget, &ItemViewWidget::moveDownRow);
 	connect(m_ui->mouseMoveUpButton, &QToolButton::clicked, m_ui->mouseViewWidget, &ItemViewWidget::moveUpRow);
 }
 
-PreferencesAdvancedPageWidget::~PreferencesAdvancedPageWidget()
+AdvancedPreferencesPage::~AdvancedPreferencesPage()
 {
 	delete m_ui;
 }
 
-void PreferencesAdvancedPageWidget::changeEvent(QEvent *event)
+void AdvancedPreferencesPage::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
@@ -490,14 +490,14 @@ void PreferencesAdvancedPageWidget::changeEvent(QEvent *event)
 	}
 }
 
-void PreferencesAdvancedPageWidget::resizeEvent(QResizeEvent *event)
+void AdvancedPreferencesPage::resizeEvent(QResizeEvent *event)
 {
 	QWidget::resizeEvent(event);
 
 	updatePageSwitcher();
 }
 
-void PreferencesAdvancedPageWidget::playNotificationSound()
+void AdvancedPreferencesPage::playNotificationSound()
 {
 	QSoundEffect *effect(new QSoundEffect(this));
 	effect->setSource(QUrl::fromLocalFile(m_ui->notificationsPlaySoundFilePathWidget->getPath()));
@@ -522,7 +522,7 @@ void PreferencesAdvancedPageWidget::playNotificationSound()
 	}
 }
 
-void PreferencesAdvancedPageWidget::updateNotificationsActions()
+void AdvancedPreferencesPage::updateNotificationsActions()
 {
 	m_ui->notificationsPlaySoundFilePathWidget->blockSignals(true);
 	m_ui->notificationsShowAlertCheckBox->blockSignals(true);
@@ -542,13 +542,13 @@ void PreferencesAdvancedPageWidget::updateNotificationsActions()
 	m_ui->notificationsShowNotificationCheckBox->blockSignals(false);
 }
 
-void PreferencesAdvancedPageWidget::updateNotificationsOptions()
+void AdvancedPreferencesPage::updateNotificationsOptions()
 {
 	const QModelIndex index(m_ui->notificationsItemView->getIndex(m_ui->notificationsItemView->getCurrentRow()));
 
 	if (index.isValid())
 	{
-		disconnect(m_ui->notificationsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateNotificationsActions);
+		disconnect(m_ui->notificationsItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateNotificationsActions);
 
 		const QString path(m_ui->notificationsPlaySoundFilePathWidget->getPath());
 
@@ -557,11 +557,11 @@ void PreferencesAdvancedPageWidget::updateNotificationsOptions()
 		m_ui->notificationsItemView->setData(index, m_ui->notificationsShowAlertCheckBox->isChecked(), ShouldShowAlertRole);
 		m_ui->notificationsItemView->setData(index, m_ui->notificationsShowNotificationCheckBox->isChecked(), ShouldShowNotificationRole);
 
-		connect(m_ui->notificationsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateNotificationsActions);
+		connect(m_ui->notificationsItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateNotificationsActions);
 	}
 }
 
-void PreferencesAdvancedPageWidget::addOverride()
+void AdvancedPreferencesPage::addOverride()
 {
 	WebsitePreferencesDialog dialog({}, {}, this);
 
@@ -587,13 +587,13 @@ void PreferencesAdvancedPageWidget::addOverride()
 	}
 }
 
-void PreferencesAdvancedPageWidget::editOverride()
+void AdvancedPreferencesPage::editOverride()
 {
 	WebsitePreferencesDialog dialog(m_ui->contentOverridesItemView->getCurrentIndex().data(Qt::DisplayRole).toString(), {}, this);
 	dialog.exec();
 }
 
-void PreferencesAdvancedPageWidget::removeOverride()
+void AdvancedPreferencesPage::removeOverride()
 {
 	const QString host(m_ui->contentOverridesItemView->getCurrentIndex().data(Qt::DisplayRole).toString());
 
@@ -605,7 +605,7 @@ void PreferencesAdvancedPageWidget::removeOverride()
 	}
 }
 
-void PreferencesAdvancedPageWidget::updateOverridesActions()
+void AdvancedPreferencesPage::updateOverridesActions()
 {
 	const QModelIndex index(m_ui->contentOverridesItemView->getCurrentIndex());
 
@@ -613,7 +613,7 @@ void PreferencesAdvancedPageWidget::updateOverridesActions()
 	m_ui->contentOverridesRemoveButton->setEnabled(index.isValid());
 }
 
-void PreferencesAdvancedPageWidget::addDownloadsMimeType()
+void AdvancedPreferencesPage::addDownloadsMimeType()
 {
 	const QString mimeType(QInputDialog::getText(this, tr("MIME Type Name"), tr("Select name of MIME Type:")));
 
@@ -640,7 +640,7 @@ void PreferencesAdvancedPageWidget::addDownloadsMimeType()
 	}
 }
 
-void PreferencesAdvancedPageWidget::removeDownloadsMimeType()
+void AdvancedPreferencesPage::removeDownloadsMimeType()
 {
 	const QModelIndex index(m_ui->mimeTypesItemView->getIndex(m_ui->mimeTypesItemView->getCurrentRow()));
 
@@ -650,7 +650,7 @@ void PreferencesAdvancedPageWidget::removeDownloadsMimeType()
 	}
 }
 
-void PreferencesAdvancedPageWidget::updateDownloadsActions()
+void AdvancedPreferencesPage::updateDownloadsActions()
 {
 	m_ui->mimeTypesButtonGroup->blockSignals(true);
 	m_ui->mimeTypesAskButton->blockSignals(true);
@@ -700,10 +700,10 @@ void PreferencesAdvancedPageWidget::updateDownloadsActions()
 	m_ui->mimeTypesApplicationComboBoxWidget->blockSignals(false);
 }
 
-void PreferencesAdvancedPageWidget::updateDownloadsOptions()
+void AdvancedPreferencesPage::updateDownloadsOptions()
 {
-	disconnect(m_ui->mimeTypesItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateDownloadsActions);
-	disconnect(m_ui->mimeTypesButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
+	disconnect(m_ui->mimeTypesItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateDownloadsActions);
+	disconnect(m_ui->mimeTypesButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this, &AdvancedPreferencesPage::updateDownloadsOptions);
 
 	const QModelIndex index(m_ui->mimeTypesItemView->getIndex(m_ui->mimeTypesItemView->getCurrentRow()));
 
@@ -729,17 +729,17 @@ void PreferencesAdvancedPageWidget::updateDownloadsOptions()
 		m_ui->mimeTypesItemView->setData(index, ((mode == HandlersManager::MimeTypeHandlerDefinition::OpenTransfer) ? m_ui->mimeTypesApplicationComboBoxWidget->getCommand() : QString()), OpenCommandRole);
 	}
 
-	connect(m_ui->mimeTypesItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateDownloadsActions);
-	connect(m_ui->mimeTypesButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
+	connect(m_ui->mimeTypesItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateDownloadsActions);
+	connect(m_ui->mimeTypesButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this, &AdvancedPreferencesPage::updateDownloadsOptions);
 }
 
-void PreferencesAdvancedPageWidget::updateDownloadsMode()
+void AdvancedPreferencesPage::updateDownloadsMode()
 {
 	m_ui->mimeTypesOpenOptionsWidget->setEnabled(m_ui->mimeTypesOpenButton->isChecked());
 	m_ui->mimeTypesSaveOptionsWidget->setEnabled(m_ui->mimeTypesSaveButton->isChecked());
 }
 
-void PreferencesAdvancedPageWidget::addUserAgent(QAction *action)
+void AdvancedPreferencesPage::addUserAgent(QAction *action)
 {
 	if (!action)
 	{
@@ -822,7 +822,7 @@ void PreferencesAdvancedPageWidget::addUserAgent(QAction *action)
 	}
 }
 
-void PreferencesAdvancedPageWidget::editUserAgent()
+void AdvancedPreferencesPage::editUserAgent()
 {
 	const QModelIndex index(m_ui->userAgentsViewWidget->getCurrentIndex());
 
@@ -865,7 +865,7 @@ void PreferencesAdvancedPageWidget::editUserAgent()
 	}
 }
 
-void PreferencesAdvancedPageWidget::updateUserAgentsActions()
+void AdvancedPreferencesPage::updateUserAgentsActions()
 {
 	const QModelIndex index(m_ui->userAgentsViewWidget->getCurrentIndex());
 	const ItemModel::ItemType type(static_cast<ItemModel::ItemType>(index.data(ItemModel::TypeRole).toInt()));
@@ -874,7 +874,7 @@ void PreferencesAdvancedPageWidget::updateUserAgentsActions()
 	m_ui->userAgentsRemoveButton->setEnabled(index.isValid() && index.data(UserAgentsModel::IdentifierRole).toString() != QLatin1String("default"));
 }
 
-void PreferencesAdvancedPageWidget::saveUserAgents(QJsonArray *userAgents, const QStandardItem *parent)
+void AdvancedPreferencesPage::saveUserAgents(QJsonArray *userAgents, const QStandardItem *parent)
 {
 	for (int i = 0; i < parent->rowCount(); ++i)
 	{
@@ -911,7 +911,7 @@ void PreferencesAdvancedPageWidget::saveUserAgents(QJsonArray *userAgents, const
 	}
 }
 
-void PreferencesAdvancedPageWidget::addProxy(QAction *action)
+void AdvancedPreferencesPage::addProxy(QAction *action)
 {
 	if (!action)
 	{
@@ -994,7 +994,7 @@ void PreferencesAdvancedPageWidget::addProxy(QAction *action)
 	}
 }
 
-void PreferencesAdvancedPageWidget::editProxy()
+void AdvancedPreferencesPage::editProxy()
 {
 	const QModelIndex index(m_ui->proxiesViewWidget->getCurrentIndex());
 
@@ -1034,7 +1034,7 @@ void PreferencesAdvancedPageWidget::editProxy()
 	}
 }
 
-void PreferencesAdvancedPageWidget::updateProxiesActions()
+void AdvancedPreferencesPage::updateProxiesActions()
 {
 	const QModelIndex index(m_ui->proxiesViewWidget->getCurrentIndex());
 	const QString identifier(index.data(ProxiesModel::IdentifierRole).toString());
@@ -1045,7 +1045,7 @@ void PreferencesAdvancedPageWidget::updateProxiesActions()
 	m_ui->proxiesRemoveButton->setEnabled(index.isValid() && !isReadOnly);
 }
 
-void PreferencesAdvancedPageWidget::saveProxies(QJsonArray *proxies, const QStandardItem *parent)
+void AdvancedPreferencesPage::saveProxies(QJsonArray *proxies, const QStandardItem *parent)
 {
 	for (int i = 0; i < parent->rowCount(); ++i)
 	{
@@ -1145,7 +1145,7 @@ void PreferencesAdvancedPageWidget::saveProxies(QJsonArray *proxies, const QStan
 	}
 }
 
-void PreferencesAdvancedPageWidget::addCipher(QAction *action)
+void AdvancedPreferencesPage::addCipher(QAction *action)
 {
 	if (!action)
 	{
@@ -1160,7 +1160,7 @@ void PreferencesAdvancedPageWidget::addCipher(QAction *action)
 	m_ui->ciphersAddButton->setEnabled(m_ui->ciphersAddButton->menu()->actions().count() > 0);
 }
 
-void PreferencesAdvancedPageWidget::removeCipher()
+void AdvancedPreferencesPage::removeCipher()
 {
 	const int currentRow(m_ui->ciphersViewWidget->getCurrentRow());
 
@@ -1173,14 +1173,14 @@ void PreferencesAdvancedPageWidget::removeCipher()
 	}
 }
 
-void PreferencesAdvancedPageWidget::updateCiphersActions()
+void AdvancedPreferencesPage::updateCiphersActions()
 {
 	const int currentRow(m_ui->ciphersViewWidget->getCurrentRow());
 
 	m_ui->ciphersRemoveButton->setEnabled(currentRow >= 0 && currentRow < m_ui->ciphersViewWidget->getRowCount());
 }
 
-void PreferencesAdvancedPageWidget::updateUpdateChannelsActions()
+void AdvancedPreferencesPage::updateUpdateChannelsActions()
 {
 	const bool hasSelectedUpdateChannels(!getSelectedUpdateChannels().isEmpty());
 
@@ -1188,7 +1188,7 @@ void PreferencesAdvancedPageWidget::updateUpdateChannelsActions()
 	m_ui->autoInstallCheckBox->setEnabled(hasSelectedUpdateChannels);
 }
 
-void PreferencesAdvancedPageWidget::addKeyboardProfile()
+void AdvancedPreferencesPage::addKeyboardProfile()
 {
 	const QString identifier(createProfileIdentifier(m_ui->keyboardViewWidget->getSourceModel()));
 
@@ -1206,7 +1206,7 @@ void PreferencesAdvancedPageWidget::addKeyboardProfile()
 	m_ui->keyboardViewWidget->insertRow({item});
 }
 
-void PreferencesAdvancedPageWidget::readdKeyboardProfile(QAction *action)
+void AdvancedPreferencesPage::readdKeyboardProfile(QAction *action)
 {
 	if (!action || action->data().isNull())
 	{
@@ -1233,7 +1233,7 @@ void PreferencesAdvancedPageWidget::readdKeyboardProfile(QAction *action)
 	updateReaddKeyboardProfileMenu();
 }
 
-void PreferencesAdvancedPageWidget::editKeyboardProfile()
+void AdvancedPreferencesPage::editKeyboardProfile()
 {
 	const QModelIndex index(m_ui->keyboardViewWidget->currentIndex());
 	const QString identifier(index.data(Qt::UserRole).toString());
@@ -1264,7 +1264,7 @@ void PreferencesAdvancedPageWidget::editKeyboardProfile()
 	m_ui->keyboardViewWidget->setData(index, profile.getDescription(), Qt::ToolTipRole);
 }
 
-void PreferencesAdvancedPageWidget::cloneKeyboardProfile()
+void AdvancedPreferencesPage::cloneKeyboardProfile()
 {
 	const QString identifier(m_ui->keyboardViewWidget->currentIndex().data(Qt::UserRole).toString());
 
@@ -1298,7 +1298,7 @@ void PreferencesAdvancedPageWidget::cloneKeyboardProfile()
 	m_ui->keyboardViewWidget->insertRow({item});
 }
 
-void PreferencesAdvancedPageWidget::removeKeyboardProfile()
+void AdvancedPreferencesPage::removeKeyboardProfile()
 {
 	const QString identifier(m_ui->keyboardViewWidget->currentIndex().data(Qt::UserRole).toString());
 
@@ -1336,7 +1336,7 @@ void PreferencesAdvancedPageWidget::removeKeyboardProfile()
 	}
 }
 
-void PreferencesAdvancedPageWidget::updateKeyboardProfileActions()
+void AdvancedPreferencesPage::updateKeyboardProfileActions()
 {
 	const int currentRow(m_ui->keyboardViewWidget->getCurrentRow());
 	const bool isSelected(currentRow >= 0 && currentRow < m_ui->keyboardViewWidget->getRowCount());
@@ -1346,7 +1346,7 @@ void PreferencesAdvancedPageWidget::updateKeyboardProfileActions()
 	m_ui->keyboardRemoveButton->setEnabled(isSelected);
 }
 
-void PreferencesAdvancedPageWidget::updateReaddKeyboardProfileMenu()
+void AdvancedPreferencesPage::updateReaddKeyboardProfileMenu()
 {
 	if (!m_ui->keyboardAddButton->menu())
 	{
@@ -1389,7 +1389,7 @@ void PreferencesAdvancedPageWidget::updateReaddKeyboardProfileMenu()
 	}
 }
 
-void PreferencesAdvancedPageWidget::addMouseProfile()
+void AdvancedPreferencesPage::addMouseProfile()
 {
 	const QString identifier(createProfileIdentifier(m_ui->mouseViewWidget->getSourceModel()));
 
@@ -1407,7 +1407,7 @@ void PreferencesAdvancedPageWidget::addMouseProfile()
 	m_ui->mouseViewWidget->insertRow({item});
 }
 
-void PreferencesAdvancedPageWidget::readdMouseProfile(QAction *action)
+void AdvancedPreferencesPage::readdMouseProfile(QAction *action)
 {
 	if (!action || action->data().isNull())
 	{
@@ -1434,7 +1434,7 @@ void PreferencesAdvancedPageWidget::readdMouseProfile(QAction *action)
 	updateReaddMouseProfileMenu();
 }
 
-void PreferencesAdvancedPageWidget::editMouseProfile()
+void AdvancedPreferencesPage::editMouseProfile()
 {
 	const QModelIndex index(m_ui->mouseViewWidget->currentIndex());
 	const QString identifier(index.data(Qt::UserRole).toString());
@@ -1465,7 +1465,7 @@ void PreferencesAdvancedPageWidget::editMouseProfile()
 	m_ui->mouseViewWidget->setData(index, profile.getDescription(), Qt::ToolTipRole);
 }
 
-void PreferencesAdvancedPageWidget::cloneMouseProfile()
+void AdvancedPreferencesPage::cloneMouseProfile()
 {
 	const QString identifier(m_ui->mouseViewWidget->currentIndex().data(Qt::UserRole).toString());
 
@@ -1499,7 +1499,7 @@ void PreferencesAdvancedPageWidget::cloneMouseProfile()
 	m_ui->mouseViewWidget->insertRow({item});
 }
 
-void PreferencesAdvancedPageWidget::removeMouseProfile()
+void AdvancedPreferencesPage::removeMouseProfile()
 {
 	const QString identifier(m_ui->mouseViewWidget->currentIndex().data(Qt::UserRole).toString());
 
@@ -1537,7 +1537,7 @@ void PreferencesAdvancedPageWidget::removeMouseProfile()
 	}
 }
 
-void PreferencesAdvancedPageWidget::updateMouseProfileActions()
+void AdvancedPreferencesPage::updateMouseProfileActions()
 {
 	const int currentRow(m_ui->mouseViewWidget->getCurrentRow());
 	const bool isSelected(currentRow >= 0 && currentRow < m_ui->mouseViewWidget->getRowCount());
@@ -1547,7 +1547,7 @@ void PreferencesAdvancedPageWidget::updateMouseProfileActions()
 	m_ui->mouseRemoveButton->setEnabled(isSelected);
 }
 
-void PreferencesAdvancedPageWidget::updateReaddMouseProfileMenu()
+void AdvancedPreferencesPage::updateReaddMouseProfileMenu()
 {
 	if (!m_ui->mouseAddButton->menu())
 	{
@@ -1590,7 +1590,7 @@ void PreferencesAdvancedPageWidget::updateReaddMouseProfileMenu()
 	}
 }
 
-void PreferencesAdvancedPageWidget::updateJavaScriptOptions()
+void AdvancedPreferencesPage::updateJavaScriptOptions()
 {
 	const bool isSet(!m_javaScriptOptions.isEmpty());
 
@@ -1618,7 +1618,7 @@ void PreferencesAdvancedPageWidget::updateJavaScriptOptions()
 	}
 }
 
-void PreferencesAdvancedPageWidget::changeCurrentPage()
+void AdvancedPreferencesPage::changeCurrentPage()
 {
 	const QModelIndex index(m_ui->advancedViewWidget->currentIndex());
 
@@ -1628,7 +1628,7 @@ void PreferencesAdvancedPageWidget::changeCurrentPage()
 	}
 }
 
-void PreferencesAdvancedPageWidget::save()
+void AdvancedPreferencesPage::save()
 {
 	if (SessionsManager::isReadOnly())
 	{
@@ -1871,7 +1871,7 @@ void PreferencesAdvancedPageWidget::save()
 	updateReaddKeyboardProfileMenu();
 }
 
-void PreferencesAdvancedPageWidget::updatePageSwitcher()
+void AdvancedPreferencesPage::updatePageSwitcher()
 {
 	int maximumWidth(100);
 
@@ -1888,7 +1888,7 @@ void PreferencesAdvancedPageWidget::updatePageSwitcher()
 	m_ui->advancedViewWidget->setMinimumWidth(qMin(200, maximumWidth));
 }
 
-QString PreferencesAdvancedPageWidget::createProfileIdentifier(QStandardItemModel *model, const QString &base) const
+QString AdvancedPreferencesPage::createProfileIdentifier(QStandardItemModel *model, const QString &base) const
 {
 	QStringList identifiers;
 	identifiers.reserve(model->rowCount());
@@ -1906,7 +1906,7 @@ QString PreferencesAdvancedPageWidget::createProfileIdentifier(QStandardItemMode
 	return Utils::createIdentifier(base, identifiers);
 }
 
-QStringList PreferencesAdvancedPageWidget::getSelectedUpdateChannels() const
+QStringList AdvancedPreferencesPage::getSelectedUpdateChannels() const
 {
 	QStringList updateChannels;
 

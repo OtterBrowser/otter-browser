@@ -19,7 +19,7 @@
 *
 **************************************************************************/
 
-#include "PreferencesGeneralPageWidget.h"
+#include "GeneralPreferencesPage.h"
 #include "../../../core/Application.h"
 #include "../../../core/BookmarksManager.h"
 #include "../../../core/BookmarksModel.h"
@@ -32,14 +32,14 @@
 #include "../../../ui/preferences/AcceptLanguageDialog.h"
 #include "../../../../3rdparty/columnresizer/ColumnResizer.h"
 
-#include "ui_PreferencesGeneralPageWidget.h"
+#include "ui_GeneralPreferencesPage.h"
 
 namespace Otter
 {
 
-PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QWidget(parent),
+GeneralPreferencesPage::GeneralPreferencesPage(QWidget *parent) : QWidget(parent),
 	m_acceptLanguage(SettingsManager::getOption(SettingsManager::Network_AcceptLanguageOption).toString()),
-	m_ui(new Ui::PreferencesGeneralPageWidget)
+	m_ui(new Ui::GeneralPreferencesPage)
 {
 	m_ui->setupUi(this);
 
@@ -124,12 +124,12 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 	});
 }
 
-PreferencesGeneralPageWidget::~PreferencesGeneralPageWidget()
+GeneralPreferencesPage::~GeneralPreferencesPage()
 {
 	delete m_ui;
 }
 
-void PreferencesGeneralPageWidget::changeEvent(QEvent *event)
+void GeneralPreferencesPage::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
@@ -144,7 +144,7 @@ void PreferencesGeneralPageWidget::changeEvent(QEvent *event)
 	}
 }
 
-void PreferencesGeneralPageWidget::save()
+void GeneralPreferencesPage::save()
 {
 	SettingsManager::setOption(SettingsManager::Browser_StartupBehaviorOption, m_ui->startupBehaviorComboBox->currentData().toString());
 	SettingsManager::setOption(SettingsManager::Browser_HomePageOption, m_ui->homePageLineEditWidget->text());
