@@ -25,6 +25,12 @@
    </property>
    <item>
     <widget class="QTabWidget" name="tabWidget">
+     <property name="maximumSize">
+      <size>
+       <width>1000</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="tabPosition">
       <enum>QTabWidget::West</enum>
      </property>
