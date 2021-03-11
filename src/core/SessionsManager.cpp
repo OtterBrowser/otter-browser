@@ -874,6 +874,15 @@ bool SessionsManager::isReadOnly()
 
 bool SessionsManager::hasUrl(const QUrl &url, bool activate)
 {
+	MainWindow *activeWindow(Application::getActiveWindow());
+
+	if (activeWindow ->hasUrl(url, activate))
+	{
+		Application::triggerAction(ActionsManager::ActivateWindowAction, {{QLatin1String("window"), activeWindow->getIdentifier()}}, m_instance);
+
+		return true;
+	}
+
 	const QVector<MainWindow*> windows(Application::getWindows());
 	QMultiMap<qint64, MainWindow*> map;
 
