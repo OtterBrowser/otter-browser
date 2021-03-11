@@ -888,7 +888,7 @@ bool SessionsManager::hasUrl(const QUrl &url, bool activate)
 
 	for (int i = 0; i < windows.count(); ++i)
 	{
-		if (windows.at(i)->getActiveWindow())
+		if (windows.at(i) != activeWindow && windows.at(i)->getActiveWindow())
 		{
 			map.insert(windows.at(i)->getActiveWindow()->getLastActivity().toMSecsSinceEpoch(), windows.at(i));
 		}
