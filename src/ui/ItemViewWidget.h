@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -125,6 +125,7 @@ public:
 	QSize sizeHint() const override;
 	ViewMode getViewMode() const;
 	Qt::SortOrder getSortOrder() const;
+	int getContentsHeight() const;
 	int getSortColumn() const;
 	int getCurrentRow() const;
 	int getRowCount(const QModelIndex &parent = {}) const;

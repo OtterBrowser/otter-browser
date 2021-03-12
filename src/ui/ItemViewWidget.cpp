@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2015 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -1094,6 +1094,23 @@ ItemViewWidget::ViewMode ItemViewWidget::getViewMode() const
 Qt::SortOrder ItemViewWidget::getSortOrder() const
 {
 	return m_sortOrder;
+}
+
+int ItemViewWidget::getContentsHeight() const
+{
+	int height(frameWidth() * 2);
+
+	if (header())
+	{
+		height += header()->height();
+	}
+
+	for (int i = 0; i < getRowCount(); ++i)
+	{
+		height += rowHeight(getIndex(i));
+	}
+
+	return height;
 }
 
 int ItemViewWidget::getSortColumn() const
