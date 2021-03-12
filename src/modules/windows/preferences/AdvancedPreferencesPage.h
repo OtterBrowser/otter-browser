@@ -105,7 +105,6 @@ protected slots:
 	void cloneMouseProfile();
 	void removeMouseProfile();
 	void updateMouseProfileActions();
-	void updateJavaScriptOptions();
 	void changeCurrentPage();
 	void updatePageSwitcher();
 
@@ -114,7 +113,6 @@ private:
 	QHash<QString, KeyboardProfile> m_keyboardProfiles;
 	QHash<QString, MouseProfile> m_mouseProfiles;
 	QHash<QString, ProxyDefinition> m_proxies;
-	QHash<int, QVariant> m_javaScriptOptions;
 	Ui::AdvancedPreferencesPage *m_ui;
 
 signals:

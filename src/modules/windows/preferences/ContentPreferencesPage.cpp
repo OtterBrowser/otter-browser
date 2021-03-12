@@ -116,6 +116,22 @@ ContentPreferencesPage::ContentPreferencesPage(QWidget *parent) :
 	m_ui(new Ui::ContentPreferencesPage)
 {
 	m_ui->setupUi(this);
+	m_ui->enableImagesComboBox->addItem(tr("All images"), QLatin1String("enabled"));
+	m_ui->enableImagesComboBox->addItem(tr("Cached images"), QLatin1String("onlyCached"));
+	m_ui->enableImagesComboBox->addItem(tr("No images"), QLatin1String("disabled"));
+
+	const int enableImagesIndex(m_ui->enableImagesComboBox->findData(SettingsManager::getOption(SettingsManager::Permissions_EnableImagesOption).toString()));
+
+	m_ui->enableImagesComboBox->setCurrentIndex((enableImagesIndex < 0) ? 0 : enableImagesIndex);
+	m_ui->enablePluginsComboBox->addItem(tr("Enabled"), QLatin1String("enabled"));
+	m_ui->enablePluginsComboBox->addItem(tr("On demand"), QLatin1String("onDemand"));
+	m_ui->enablePluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
+
+	const int enablePluginsIndex(m_ui->enablePluginsComboBox->findData(SettingsManager::getOption(SettingsManager::Permissions_EnablePluginsOption).toString()));
+
+	m_ui->enablePluginsComboBox->setCurrentIndex((enablePluginsIndex < 0) ? 1 : enablePluginsIndex);
+	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getOption(SettingsManager::Content_UserStyleSheetOption).toString());
+	m_ui->userStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
 	m_ui->popupsComboBox->addItem(tr("Ask"), QLatin1String("ask"));
 	m_ui->popupsComboBox->addItem(tr("Block all"), QLatin1String("blockAll"));
 	m_ui->popupsComboBox->addItem(tr("Open all"), QLatin1String("openAll"));
@@ -175,6 +191,7 @@ ContentPreferencesPage::ContentPreferencesPage(QWidget *parent) :
 	m_ui->colorsViewWidget->setItemDelegateForColumn(1, new ColorItemDelegate(this));
 
 	ColumnResizer *columnResizer(new ColumnResizer(this));
+	columnResizer->addWidgetsFromFormLayout(m_ui->contentGeneralLayout, QFormLayout::LabelRole);
 	columnResizer->addWidgetsFromFormLayout(m_ui->blockingLayout, QFormLayout::LabelRole);
 	columnResizer->addWidgetsFromFormLayout(m_ui->zoomLayout, QFormLayout::LabelRole);
 	columnResizer->addWidgetsFromFormLayout(m_ui->fontsLayout, QFormLayout::LabelRole);
@@ -219,6 +236,13 @@ void ContentPreferencesPage::changeEvent(QEvent *event)
 			break;
 		case QEvent::LanguageChange:
 			m_ui->retranslateUi(this);
+			m_ui->enableImagesComboBox->setItemText(0, tr("All images"));
+			m_ui->enableImagesComboBox->setItemText(1, tr("Cached images"));
+			m_ui->enableImagesComboBox->setItemText(2, tr("No images"));
+			m_ui->enablePluginsComboBox->setItemText(0, tr("Enabled"));
+			m_ui->enablePluginsComboBox->setItemText(1, tr("On demand"));
+			m_ui->enablePluginsComboBox->setItemText(2, tr("Disabled"));
+			m_ui->userStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
 			m_ui->popupsComboBox->setItemText(0, tr("Ask"));
 			m_ui->popupsComboBox->setItemText(1, tr("Block all"));
 			m_ui->popupsComboBox->setItemText(2, tr("Open all"));
@@ -234,6 +258,9 @@ void ContentPreferencesPage::changeEvent(QEvent *event)
 
 void ContentPreferencesPage::save()
 {
+	SettingsManager::setOption(SettingsManager::Permissions_EnableImagesOption, m_ui->enableImagesComboBox->currentData(Qt::UserRole).toString());
+	SettingsManager::setOption(SettingsManager::Permissions_EnablePluginsOption, m_ui->enablePluginsComboBox->currentData(Qt::UserRole).toString());
+	SettingsManager::setOption(SettingsManager::Content_UserStyleSheetOption, m_ui->userStyleSheetFilePathWidget->getPath());
 	SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, m_ui->popupsComboBox->currentData().toString());
 	SettingsManager::setOption(SettingsManager::Content_DefaultZoomOption, m_ui->defaultZoomSpinBox->value());
 	SettingsManager::setOption(SettingsManager::Content_ZoomTextOnlyOption, m_ui->zoomTextOnlyCheckBox->isChecked());

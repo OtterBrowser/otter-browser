@@ -7,10 +7,66 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>476</height>
+    <height>586</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="contentGeneralHeader">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>General</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="contentGeneralLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="userStyleSheetWidget">
+       <property name="text">
+        <string>User style sheet:</string>
+       </property>
+       <property name="buddy">
+        <cstring>userStyleSheetFilePathWidget</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="Otter::FilePathWidget" name="userStyleSheetFilePathWidget" native="true"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="enableImagesLabel">
+       <property name="text">
+        <string>Images:</string>
+       </property>
+       <property name="buddy">
+        <cstring>enableImagesComboBox</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QComboBox" name="enableImagesComboBox"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="enablePluginsLabel">
+       <property name="text">
+        <string>Plugins:</string>
+       </property>
+       <property name="buddy">
+        <cstring>enablePluginsComboBox</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="enablePluginsComboBox"/>
+     </item>
+    </layout>
+   </item>
    <item>
     <widget class="QLabel" name="blockingHeader">
      <property name="font">
@@ -257,6 +313,12 @@
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
     </spacer>
    </item>
   </layout>
@@ -266,6 +328,12 @@
    <class>Otter::ItemViewWidget</class>
    <extends>QTreeView</extends>
    <header>src/ui/ItemViewWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Otter::FilePathWidget</class>
+   <extends>QWidget</extends>
+   <header>src/ui/FilePathWidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>
