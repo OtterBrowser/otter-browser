@@ -70,6 +70,7 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event) override;
+	void updateStyle();
 
 private:
 	Ui::ContentPreferencesPage *m_ui;

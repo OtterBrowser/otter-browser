@@ -179,6 +179,8 @@ ContentPreferencesPage::ContentPreferencesPage(QWidget *parent) :
 	columnResizer->addWidgetsFromFormLayout(m_ui->zoomLayout, QFormLayout::LabelRole);
 	columnResizer->addWidgetsFromFormLayout(m_ui->fontsLayout, QFormLayout::LabelRole);
 
+	updateStyle();
+
 	connect(m_ui->fontsViewWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, [&](const QModelIndex &currentIndex, const QModelIndex &previousIndex)
 	{
 		m_ui->fontsViewWidget->closePersistentEditor(previousIndex.sibling(previousIndex.row(), 1));
@@ -208,15 +210,25 @@ void ContentPreferencesPage::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
-	if (event->type() == QEvent::LanguageChange)
+	switch (event->type())
 	{
-		m_ui->retranslateUi(this);
-		m_ui->popupsComboBox->setItemText(0, tr("Ask"));
-		m_ui->popupsComboBox->setItemText(1, tr("Block all"));
-		m_ui->popupsComboBox->setItemText(2, tr("Open all"));
-		m_ui->popupsComboBox->setItemText(3, tr("Open all in background"));
-		m_ui->fontsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Style"), tr("Font"), tr("Preview")});
-		m_ui->colorsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Type"), tr("Preview")});
+		case QEvent::FontChange:
+		case QEvent::StyleChange:
+			updateStyle();
+
+			break;
+		case QEvent::LanguageChange:
+			m_ui->retranslateUi(this);
+			m_ui->popupsComboBox->setItemText(0, tr("Ask"));
+			m_ui->popupsComboBox->setItemText(1, tr("Block all"));
+			m_ui->popupsComboBox->setItemText(2, tr("Open all"));
+			m_ui->popupsComboBox->setItemText(3, tr("Open all in background"));
+			m_ui->fontsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Style"), tr("Font"), tr("Preview")});
+			m_ui->colorsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Type"), tr("Preview")});
+
+			break;
+		default:
+			break;
 	}
 }
 
@@ -238,6 +250,12 @@ void ContentPreferencesPage::save()
 	{
 		SettingsManager::setOption(SettingsManager::getOptionIdentifier(m_ui->colorsViewWidget->getIndex(i, 1).data(Qt::UserRole).toString()), m_ui->colorsViewWidget->getIndex(i, 1).data(Qt::EditRole));
 	}
+}
+
+void ContentPreferencesPage::updateStyle()
+{
+	m_ui->colorsViewWidget->setMaximumHeight(m_ui->colorsViewWidget->getContentsHeight());
+	m_ui->fontsViewWidget->setMaximumHeight(m_ui->fontsViewWidget->getContentsHeight());
 }
 
 }
