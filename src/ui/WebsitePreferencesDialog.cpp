@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -262,14 +262,14 @@ void WebsitePreferencesDialog::handleButtonClicked(QAbstractButton *button)
 {
 	const QString host(getHost());
 
-	if (host.isEmpty())
-	{
-		return;
-	}
-
 	switch (m_ui->buttonBox->buttonRole(button))
 	{
 		case QDialogButtonBox::AcceptRole:
+			if (host.isEmpty())
+			{
+				return;
+			}
+
 			SettingsManager::setOption(SettingsManager::Content_DefaultCharacterEncodingOption, (m_ui->encodingOverrideCheckBox->isChecked() ? m_ui->encodingComboBox->currentData(Qt::UserRole).toString() : QVariant()), host);
 			SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, (m_ui->popupsPolicyOverrideCheckBox->isChecked() ? m_ui->popupsPolicyComboBox->currentData(Qt::UserRole).toString() : QVariant()), host);
 			SettingsManager::setOption(SettingsManager::Permissions_EnableImagesOption, (m_ui->enableImagesOverrideCheckBox->isChecked() ? m_ui->enableImagesComboBox->currentData(Qt::UserRole).toString() : QVariant()), host);
@@ -304,7 +304,11 @@ void WebsitePreferencesDialog::handleButtonClicked(QAbstractButton *button)
 
 			break;
 		case QDialogButtonBox::ResetRole:
-			SettingsManager::removeOverride(host);
+			if (!host.isEmpty())
+			{
+				SettingsManager::removeOverride(host);
+			}
+
 			accept();
 
 			break;
