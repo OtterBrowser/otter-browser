@@ -291,6 +291,15 @@ QDateTime HistoryManager::getLastVisitTime(const QUrl &url)
 	return m_browsingHistoryModel->getLastVisitTime(url);
 }
 
+QIcon HistoryManager::getIcon(const QString &host)
+{
+	Q_UNUSED(host)
+
+///TODO
+
+	return ThemesManager::createIcon(QLatin1String("text-html"));
+}
+
 QIcon HistoryManager::getIcon(const QUrl &url)
 {
 	if (Utils::isUrlEmpty(url))
