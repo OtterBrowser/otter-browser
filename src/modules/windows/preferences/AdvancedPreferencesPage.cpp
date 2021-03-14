@@ -24,6 +24,7 @@
 #include "../../../core/Application.h"
 #include "../../../core/GesturesManager.h"
 #include "../../../core/HandlersManager.h"
+#include "../../../core/HistoryManager.h"
 #include "../../../core/JsonSettings.h"
 #include "../../../core/NotificationsManager.h"
 #include "../../../core/SessionsManager.h"
@@ -172,7 +173,7 @@ AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : QWidget(pare
 
 	for (int i = 0; i < overrideHosts.count(); ++i)
 	{
-		QStandardItem *item(new QStandardItem(overrideHosts.at(i)));
+		QStandardItem *item(new QStandardItem(HistoryManager::getIcon(overrideHosts.at(i)), overrideHosts.at(i)));
 		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 		overridesModel->appendRow(item);
@@ -572,7 +573,7 @@ void AdvancedPreferencesPage::addOverride()
 
 		if (indexes.isEmpty())
 		{
-			QStandardItem *item(new QStandardItem(host));
+			QStandardItem *item(new QStandardItem(HistoryManager::getIcon(host), host));
 			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 			m_ui->contentOverridesItemView->insertRow({item});
