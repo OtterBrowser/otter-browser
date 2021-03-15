@@ -65,6 +65,7 @@ protected:
 	void resizeEvent(QResizeEvent *event) override;
 	void updateReaddKeyboardProfileMenu();
 	void updateReaddMouseProfileMenu();
+	void updateStyle();
 	QString createProfileIdentifier(QStandardItemModel *model, const QString &base = {}) const;
 	QStringList getSelectedUpdateChannels() const;
 

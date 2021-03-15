@@ -390,6 +390,7 @@ AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : QWidget(pare
 	m_ui->mouseEnableGesturesCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_EnableMouseGesturesOption).toBool());
 
 	updateReaddMouseProfileMenu();
+	updateStyle();
 
 	connect(m_ui->advancedViewWidget, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::changeCurrentPage);
 	connect(m_ui->notificationsItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateNotificationsActions);
@@ -455,33 +456,45 @@ void AdvancedPreferencesPage::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
-	if (event->type() == QEvent::LanguageChange)
+	switch (event->type())
 	{
-		const QStringList navigationTitles({tr("Browsing"), tr("Notifications"), tr("Appearance"), tr("Content"), {}, tr("Downloads"), tr("Programs"), {}, tr("History"), tr("Network"), tr("Security"), tr("Updates"), {}, tr("Keyboard"), tr("Mouse")});
+		case QEvent::FontChange:
+		case QEvent::StyleChange:
+			updateStyle();
 
-		m_ui->retranslateUi(this);
-		m_ui->browsingDisplayModeComboBox->setItemText(0, tr("Compact"));
-		m_ui->browsingDisplayModeComboBox->setItemText(1, tr("Columns"));
-		m_ui->appearranceWidgetStyleComboBox->setItemText(0, tr("System Style"));
-		m_ui->scriptsCanCloseWindowsComboBox->setItemText(0, tr("Ask"));
-		m_ui->scriptsCanCloseWindowsComboBox->setItemText(1, tr("Always"));
-		m_ui->scriptsCanCloseWindowsComboBox->setItemText(2, tr("Never"));
-		m_ui->enableFullScreenComboBox->setItemText(0, tr("Ask"));
-		m_ui->enableFullScreenComboBox->setItemText(1, tr("Always"));
-		m_ui->enableFullScreenComboBox->setItemText(2, tr("Never"));
-		m_ui->notificationsPlaySoundFilePathWidget->setFilters({tr("WAV files (*.wav)")});
-		m_ui->appearranceStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
-		m_ui->notificationsItemView->getSourceModel()->setHorizontalHeaderLabels({tr("Name"), tr("Description")});
-
-		for (int i = 0; i < navigationTitles.count(); ++i)
-		{
-			if (!navigationTitles.at(i).isEmpty())
+			break;
+		case QEvent::LanguageChange:
 			{
-				m_ui->advancedViewWidget->setData(m_ui->advancedViewWidget->getIndex(i), navigationTitles.at(i), Qt::DisplayRole);
-			}
-		}
+				const QStringList navigationTitles({tr("Browsing"), tr("Notifications"), tr("Appearance"), tr("Content"), {}, tr("Downloads"), tr("Programs"), {}, tr("History"), tr("Network"), tr("Security"), tr("Updates"), {}, tr("Keyboard"), tr("Mouse")});
 
-		updatePageSwitcher();
+				m_ui->retranslateUi(this);
+				m_ui->browsingDisplayModeComboBox->setItemText(0, tr("Compact"));
+				m_ui->browsingDisplayModeComboBox->setItemText(1, tr("Columns"));
+				m_ui->appearranceWidgetStyleComboBox->setItemText(0, tr("System Style"));
+				m_ui->scriptsCanCloseWindowsComboBox->setItemText(0, tr("Ask"));
+				m_ui->scriptsCanCloseWindowsComboBox->setItemText(1, tr("Always"));
+				m_ui->scriptsCanCloseWindowsComboBox->setItemText(2, tr("Never"));
+				m_ui->enableFullScreenComboBox->setItemText(0, tr("Ask"));
+				m_ui->enableFullScreenComboBox->setItemText(1, tr("Always"));
+				m_ui->enableFullScreenComboBox->setItemText(2, tr("Never"));
+				m_ui->notificationsPlaySoundFilePathWidget->setFilters({tr("WAV files (*.wav)")});
+				m_ui->appearranceStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
+				m_ui->notificationsItemView->getSourceModel()->setHorizontalHeaderLabels({tr("Name"), tr("Description")});
+
+				for (int i = 0; i < navigationTitles.count(); ++i)
+				{
+					if (!navigationTitles.at(i).isEmpty())
+					{
+						m_ui->advancedViewWidget->setData(m_ui->advancedViewWidget->getIndex(i), navigationTitles.at(i), Qt::DisplayRole);
+					}
+				}
+
+				updatePageSwitcher();
+			}
+
+			break;
+		default:
+			break;
 	}
 }
 
@@ -1583,6 +1596,12 @@ void AdvancedPreferencesPage::updateReaddMouseProfileMenu()
 	{
 		readdMenu->addAction((availableMouseProfiles.at(i).getTitle()))->setData(availableMouseProfiles.at(i).getName());
 	}
+}
+
+void AdvancedPreferencesPage::updateStyle()
+{
+	m_ui->updateChannelsItemView->setMaximumHeight(m_ui->updateChannelsItemView->getContentsHeight());
+	m_ui->notificationsItemView->setMaximumHeight(m_ui->notificationsItemView->getContentsHeight());
 }
 
 void AdvancedPreferencesPage::changeCurrentPage()
