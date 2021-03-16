@@ -517,6 +517,9 @@
            </item>
            <item>
             <widget class="Otter::ItemViewWidget" name="contentOverridesItemView">
+             <property name="contextMenuPolicy">
+              <enum>Qt::NoContextMenu</enum>
+             </property>
              <property name="editTriggers">
               <set>QAbstractItemView::NoEditTriggers</set>
              </property>
@@ -1194,6 +1197,9 @@
            <width>0</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="contextMenuPolicy">
+          <enum>Qt::NoContextMenu</enum>
          </property>
          <property name="editTriggers">
           <set>QAbstractItemView::NoEditTriggers</set>

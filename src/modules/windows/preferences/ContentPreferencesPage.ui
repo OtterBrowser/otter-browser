@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>586</height>
+    <height>594</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -168,6 +168,9 @@
    </item>
    <item>
     <widget class="Otter::ItemViewWidget" name="fontsViewWidget">
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
      <property name="autoScroll">
       <bool>false</bool>
      </property>
@@ -288,6 +291,9 @@
    </item>
    <item>
     <widget class="Otter::ItemViewWidget" name="colorsViewWidget">
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
@@ -312,12 +318,6 @@
     <spacer name="contentlSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
      </property>
     </spacer>
    </item>
