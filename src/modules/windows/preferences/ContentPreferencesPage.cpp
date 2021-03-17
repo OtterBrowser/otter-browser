@@ -111,8 +111,7 @@ QWidget* FontItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
 	return widget;
 }
 
-ContentPreferencesPage::ContentPreferencesPage(QWidget *parent) :
-	QWidget(parent),
+ContentPreferencesPage::ContentPreferencesPage(QWidget *parent) : PreferencesPage(parent),
 	m_ui(new Ui::ContentPreferencesPage)
 {
 	m_ui->setupUi(this);

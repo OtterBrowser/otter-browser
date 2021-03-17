@@ -37,7 +37,7 @@
 namespace Otter
 {
 
-GeneralPreferencesPage::GeneralPreferencesPage(QWidget *parent) : QWidget(parent),
+GeneralPreferencesPage::GeneralPreferencesPage(QWidget *parent) : PreferencesPage(parent),
 	m_acceptLanguage(SettingsManager::getOption(SettingsManager::Network_AcceptLanguageOption).toString()),
 	m_ui(new Ui::GeneralPreferencesPage)
 {

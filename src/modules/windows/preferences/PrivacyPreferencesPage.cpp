@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-PrivacyPreferencesPage::PrivacyPreferencesPage(QWidget *parent) : QWidget(parent),
+PrivacyPreferencesPage::PrivacyPreferencesPage(QWidget *parent) : PreferencesPage(parent),
 	m_thirdPartyCookiesAcceptedHosts(SettingsManager::getOption(SettingsManager::Network_ThirdPartyCookiesAcceptedHostsOption).toStringList()),
 	m_thirdPartyCookiesRejectedHosts(SettingsManager::getOption(SettingsManager::Network_ThirdPartyCookiesRejectedHostsOption).toStringList()),
 	m_clearHistorySettings(SettingsManager::getOption(SettingsManager::History_ClearOnCloseOption).toStringList()),

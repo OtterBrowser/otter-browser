@@ -55,7 +55,7 @@
 namespace Otter
 {
 
-AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : QWidget(parent),
+AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : PreferencesPage(parent),
 	m_ui(new Ui::AdvancedPreferencesPage)
 {
 	m_ui->setupUi(this);

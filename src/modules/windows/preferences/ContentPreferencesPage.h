@@ -21,9 +21,8 @@
 #ifndef OTTER_CONTENTPREFERENCESPAGE_H
 #define OTTER_CONTENTPREFERENCESPAGE_H
 
+#include "PreferencesPage.h"
 #include "../../../ui/ItemDelegate.h"
-
-#include <QtWidgets/QWidget>
 
 namespace Otter
 {
@@ -57,16 +56,16 @@ protected:
 	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
 };
 
-class ContentPreferencesPage final : public QWidget
+class ContentPreferencesPage final : public PreferencesPage
 {
 	Q_OBJECT
 
 public:
-	explicit ContentPreferencesPage(QWidget *parent = nullptr);
+	explicit ContentPreferencesPage(QWidget *parent);
 	~ContentPreferencesPage();
 
 public slots:
-	void save();
+	void save() override;
 
 protected:
 	void changeEvent(QEvent *event) override;
@@ -74,9 +73,6 @@ protected:
 
 private:
 	Ui::ContentPreferencesPage *m_ui;
-
-signals:
-	void settingsModified();
 };
 
 }

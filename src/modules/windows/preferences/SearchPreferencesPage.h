@@ -21,10 +21,9 @@
 #ifndef OTTER_SEARCHPREFERENCESPAGE_H
 #define OTTER_SEARCHPREFERENCESPAGE_H
 
+#include "PreferencesPage.h"
 #include "../../../ui/ItemDelegate.h"
 #include "../../../core/SearchEnginesManager.h"
-
-#include <QtWidgets/QWidget>
 
 namespace Otter
 {
@@ -54,7 +53,7 @@ public:
 	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
 
-class SearchPreferencesPage final : public QWidget
+class SearchPreferencesPage final : public PreferencesPage
 {
 	Q_OBJECT
 
@@ -65,14 +64,14 @@ public:
 		IsUpdatingRole
 	};
 
-	explicit SearchPreferencesPage(QWidget *parent = nullptr);
+	explicit SearchPreferencesPage(QWidget *parent);
 	~SearchPreferencesPage();
 
 	static Animation* getUpdateAnimation();
 	static QStringList getKeywords(const QAbstractItemModel *model, int excludeRow = -1);
 
 public slots:
-	void save();
+	void save() override;
 
 protected:
 	void changeEvent(QEvent *event) override;
@@ -96,9 +95,6 @@ private:
 	Ui::SearchPreferencesPage *m_ui;
 
 	static Animation* m_updateAnimation;
-
-signals:
-	void settingsModified();
 };
 
 }

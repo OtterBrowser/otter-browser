@@ -261,6 +261,7 @@ set(otter_src
 	src/modules/windows/preferences/ContentPreferencesPage.cpp
 	src/modules/windows/preferences/GeneralPreferencesPage.cpp
 	src/modules/windows/preferences/PreferencesContentsWidget.cpp
+	src/modules/windows/preferences/PreferencesPage.cpp
 	src/modules/windows/preferences/PrivacyPreferencesPage.cpp
 	src/modules/windows/preferences/SearchPreferencesPage.cpp
 	src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp

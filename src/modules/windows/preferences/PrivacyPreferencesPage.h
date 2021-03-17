@@ -20,7 +20,7 @@
 #ifndef OTTER_PRIVACYPREFERENCESPAGE_H
 #define OTTER_PRIVACYPREFERENCESPAGE_H
 
-#include <QtWidgets/QWidget>
+#include "PreferencesPage.h"
 
 namespace Otter
 {
@@ -30,16 +30,16 @@ namespace Ui
 	class PrivacyPreferencesPage;
 }
 
-class PrivacyPreferencesPage final : public QWidget
+class PrivacyPreferencesPage final : public PreferencesPage
 {
 	Q_OBJECT
 
 public:
-	explicit PrivacyPreferencesPage(QWidget *parent = nullptr);
+	explicit PrivacyPreferencesPage(QWidget *parent);
 	~PrivacyPreferencesPage();
 
 public slots:
-	void save();
+	void save() override;
 
 protected:
 	void changeEvent(QEvent *event) override;
@@ -53,9 +53,6 @@ private:
 	QStringList m_thirdPartyCookiesRejectedHosts;
 	QStringList m_clearHistorySettings;
 	Ui::PrivacyPreferencesPage *m_ui;
-
-signals:
-	void settingsModified();
 };
 
 }
