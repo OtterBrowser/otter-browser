@@ -111,7 +111,10 @@ void PreferencesContentsWidget::showTab(int tab)
 			{
 				ContentPreferencesPage *page(new ContentPreferencesPage(this));
 
-				m_ui->contentLayout->addWidget(page);
+				m_ui->contentScrollArea->setWidget(page);
+				m_ui->contentScrollArea->viewport()->setAutoFillBackground(false);
+
+				page->setAutoFillBackground(false);
 
 				connect(this, &PreferencesContentsWidget::requestedSave, page, &ContentPreferencesPage::save);
 				connect(page, &ContentPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
@@ -122,7 +125,10 @@ void PreferencesContentsWidget::showTab(int tab)
 			{
 				PrivacyPreferencesPage *page(new PrivacyPreferencesPage(this));
 
-				m_ui->privacyLayout->addWidget(page);
+				m_ui->privacyScrollArea->setWidget(page);
+				m_ui->privacyScrollArea->viewport()->setAutoFillBackground(false);
+
+				page->setAutoFillBackground(false);
 
 				connect(this, &PreferencesContentsWidget::requestedSave, page, &PrivacyPreferencesPage::save);
 				connect(page, &PrivacyPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
@@ -133,7 +139,10 @@ void PreferencesContentsWidget::showTab(int tab)
 			{
 				SearchPreferencesPage *page(new SearchPreferencesPage(this));
 
-				m_ui->searchLayout->addWidget(page);
+				m_ui->searchScrollArea->setWidget(page);
+				m_ui->searchScrollArea->viewport()->setAutoFillBackground(false);
+
+				page->setAutoFillBackground(false);
 
 				connect(this, &PreferencesContentsWidget::requestedSave, page, &SearchPreferencesPage::save);
 				connect(page, &SearchPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
@@ -144,7 +153,10 @@ void PreferencesContentsWidget::showTab(int tab)
 			{
 				AdvancedPreferencesPage *page(new AdvancedPreferencesPage(this));
 
-				m_ui->advancedLayout->addWidget(page);
+				m_ui->advancedScrollArea->setWidget(page);
+				m_ui->advancedScrollArea->viewport()->setAutoFillBackground(false);
+
+				page->setAutoFillBackground(false);
 
 				connect(this, &PreferencesContentsWidget::requestedSave, page, &AdvancedPreferencesPage::save);
 				connect(page, &AdvancedPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
@@ -155,7 +167,10 @@ void PreferencesContentsWidget::showTab(int tab)
 			{
 				GeneralPreferencesPage *page(new GeneralPreferencesPage(this));
 
-				m_ui->generalLayout->addWidget(page);
+				m_ui->generalSrollArea->setWidget(page);
+				m_ui->generalSrollArea->viewport()->setAutoFillBackground(false);
+
+				page->setAutoFillBackground(false);
 
 				connect(this, &PreferencesContentsWidget::requestedSave, page, &GeneralPreferencesPage::save);
 				connect(page, &GeneralPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
