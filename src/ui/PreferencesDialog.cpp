@@ -25,6 +25,7 @@
 #include "../modules/windows/preferences/GeneralPreferencesPage.h"
 #include "../modules/windows/preferences/PrivacyPreferencesPage.h"
 #include "../modules/windows/preferences/SearchPreferencesPage.h"
+#include "../modules/windows/preferences/WebsitesPreferencesPage.h"
 #include "../core/Application.h"
 #include "../core/SessionsManager.h"
 
@@ -42,7 +43,7 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 {
 	m_ui->setupUi(this);
 
-	m_loadedTabs.fill(false, 5);
+	m_loadedTabs.fill(false, 6);
 
 	int tab(GeneralTab);
 
@@ -57,6 +58,10 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	else if (section == QLatin1String("search"))
 	{
 		tab = SearchTab;
+	}
+	else if (section == QLatin1String("websites"))
+	{
+		tab = WebsitesTab;
 	}
 	else if (section == QLatin1String("advanced"))
 	{
@@ -139,6 +144,17 @@ void PreferencesDialog::showTab(int tab)
 
 				connect(this, &PreferencesDialog::requestedSave, page, &SearchPreferencesPage::save);
 				connect(page, &SearchPreferencesPage::settingsModified, this, &PreferencesDialog::markAsModified);
+			}
+
+			break;
+		case WebsitesTab:
+			{
+				WebsitesPreferencesPage *page(new WebsitesPreferencesPage(this));
+
+				m_ui->websitesLayout->addWidget(page);
+
+				connect(this, &PreferencesDialog::requestedSave, page, &WebsitesPreferencesPage::save);
+				connect(page, &WebsitesPreferencesPage::settingsModified, this, &PreferencesDialog::markAsModified);
 			}
 
 			break;

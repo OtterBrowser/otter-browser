@@ -50,7 +50,8 @@ protected:
 		ContentTab = 1,
 		PrivacyTab = 2,
 		SearchTab = 3,
-		AdvancedTab = 4
+		WebsitesTab = 4,
+		AdvancedTab = 5
 	};
 
 	void changeEvent(QEvent *event) override;

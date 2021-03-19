@@ -492,89 +492,11 @@
         </layout>
        </item>
        <item>
-        <widget class="QLabel" name="overridesHeader">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
+        <spacer name="scriptingSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-         <property name="text">
-          <string>Website Preferences</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="contentOverridesLayout">
-         <item>
-          <layout class="QVBoxLayout" name="contentOverridesContentLayout">
-           <item>
-            <widget class="Otter::LineEditWidget" name="contentOverridesFilterLineEditWidget">
-             <property name="placeholderText">
-              <string>Search…</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="Otter::ItemViewWidget" name="contentOverridesItemView">
-             <property name="contextMenuPolicy">
-              <enum>Qt::NoContextMenu</enum>
-             </property>
-             <property name="editTriggers">
-              <set>QAbstractItemView::NoEditTriggers</set>
-             </property>
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <attribute name="headerVisible">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="headerDefaultSectionSize">
-              <number>250</number>
-             </attribute>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="contentOverridesButtonsLayout" stretch="0,0,0,1">
-           <item>
-            <widget class="QPushButton" name="contentOverridesAddButton">
-             <property name="text">
-              <string>Add</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="contentOverridesEditButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Edit…</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="contentOverridesRemoveButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Remove</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="contentOverridesButtonsSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-        </layout>
+        </spacer>
        </item>
       </layout>
      </widget>

@@ -24,7 +24,6 @@
 #include "../../../core/Application.h"
 #include "../../../core/GesturesManager.h"
 #include "../../../core/HandlersManager.h"
-#include "../../../core/HistoryManager.h"
 #include "../../../core/JsonSettings.h"
 #include "../../../core/NotificationsManager.h"
 #include "../../../core/SessionsManager.h"
@@ -36,7 +35,6 @@
 #include "../../../ui/preferences/ProxyPropertiesDialog.h"
 #include "../../../ui/preferences/UserAgentPropertiesDialog.h"
 #include "../../../ui/Style.h"
-#include "../../../ui/WebsitePreferencesDialog.h"
 
 #include "ui_AdvancedPreferencesPage.h"
 
@@ -167,20 +165,6 @@ AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : PreferencesP
 	const int enableFullScreenIndex(m_ui->enableFullScreenComboBox->findData(SettingsManager::getOption(SettingsManager::Permissions_EnableFullScreenOption).toString()));
 
 	m_ui->enableFullScreenComboBox->setCurrentIndex((enableFullScreenIndex < 0) ? 0 : enableFullScreenIndex);
-
-	QStandardItemModel *overridesModel(new QStandardItemModel(this));
-	const QStringList overrideHosts(SettingsManager::getOverrideHosts());
-
-	for (int i = 0; i < overrideHosts.count(); ++i)
-	{
-		QStandardItem *item(new QStandardItem(HistoryManager::getIcon(overrideHosts.at(i)), overrideHosts.at(i)));
-		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
-
-		overridesModel->appendRow(item);
-	}
-
-	m_ui->contentOverridesFilterLineEditWidget->setClearOnEscape(true);
-	m_ui->contentOverridesItemView->setModel(overridesModel);
 
 	QStandardItemModel *mimeTypesModel(new QStandardItemModel(this));
 	mimeTypesModel->setHorizontalHeaderLabels({tr("Name")});
@@ -396,11 +380,6 @@ AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : PreferencesP
 	connect(m_ui->notificationsItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateNotificationsActions);
 	connect(m_ui->notificationsPlaySoundButton, &QToolButton::clicked, this, &AdvancedPreferencesPage::playNotificationSound);
 	connect(m_ui->enableJavaScriptCheckBox, &QCheckBox::toggled, m_ui->javaScriptWidget, &QWidget::setEnabled);
-	connect(m_ui->contentOverridesFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->contentOverridesItemView, &ItemViewWidget::setFilterString);
-	connect(m_ui->contentOverridesItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateOverridesActions);
-	connect(m_ui->contentOverridesAddButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::addOverride);
-	connect(m_ui->contentOverridesEditButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::editOverride);
-	connect(m_ui->contentOverridesRemoveButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::removeOverride);
 	connect(m_ui->mimeTypesItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateDownloadsActions);
 	connect(m_ui->mimeTypesAddMimeTypeButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::addDownloadsMimeType);
 	connect(m_ui->mimeTypesRemoveMimeTypeButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::removeDownloadsMimeType);
@@ -567,58 +546,6 @@ void AdvancedPreferencesPage::updateNotificationsOptions()
 
 		connect(m_ui->notificationsItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateNotificationsActions);
 	}
-}
-
-void AdvancedPreferencesPage::addOverride()
-{
-	WebsitePreferencesDialog dialog({}, {}, this);
-
-	if (dialog.exec() == QDialog::Rejected)
-	{
-		return;
-	}
-
-	const QString host(dialog.getHost());
-
-	if (!host.isEmpty())
-	{
-		const QModelIndexList indexes(m_ui->contentOverridesItemView->getSourceModel()->match(m_ui->contentOverridesItemView->getSourceModel()->index(0, 0), Qt::DisplayRole, host));
-
-		if (indexes.isEmpty())
-		{
-			QStandardItem *item(new QStandardItem(HistoryManager::getIcon(host), host));
-			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
-
-			m_ui->contentOverridesItemView->insertRow({item});
-			m_ui->contentOverridesItemView->sortByColumn(0, Qt::AscendingOrder);
-		}
-	}
-}
-
-void AdvancedPreferencesPage::editOverride()
-{
-	WebsitePreferencesDialog dialog(m_ui->contentOverridesItemView->getCurrentIndex().data(Qt::DisplayRole).toString(), {}, this);
-	dialog.exec();
-}
-
-void AdvancedPreferencesPage::removeOverride()
-{
-	const QString host(m_ui->contentOverridesItemView->getCurrentIndex().data(Qt::DisplayRole).toString());
-
-	if (!host.isEmpty() && QMessageBox::question(this, tr("Question"), tr("Do you really want to remove preferences for this website?"), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Ok)
-	{
-		SettingsManager::removeOverride(host);
-
-		m_ui->contentOverridesItemView->removeRow();
-	}
-}
-
-void AdvancedPreferencesPage::updateOverridesActions()
-{
-	const QModelIndex index(m_ui->contentOverridesItemView->getCurrentIndex());
-
-	m_ui->contentOverridesEditButton->setEnabled(index.isValid());
-	m_ui->contentOverridesRemoveButton->setEnabled(index.isValid());
 }
 
 void AdvancedPreferencesPage::addDownloadsMimeType()

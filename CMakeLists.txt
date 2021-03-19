@@ -264,6 +264,7 @@ set(otter_src
 	src/modules/windows/preferences/PreferencesPage.cpp
 	src/modules/windows/preferences/PrivacyPreferencesPage.cpp
 	src/modules/windows/preferences/SearchPreferencesPage.cpp
+	src/modules/windows/preferences/WebsitesPreferencesPage.cpp
 	src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp
 	src/modules/windows/transfers/TransfersContentsWidget.cpp
 	src/modules/windows/web/PasswordBarWidget.cpp
@@ -342,6 +343,7 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/preferences/PreferencesContentsWidget.ui
 	src/modules/windows/preferences/PrivacyPreferencesPage.ui
 	src/modules/windows/preferences/SearchPreferencesPage.ui
+	src/modules/windows/preferences/WebsitesPreferencesPage.ui
 	src/modules/windows/tabHistory/TabHistoryContentsWidget.ui
 	src/modules/windows/transfers/TransfersContentsWidget.ui
 	src/modules/windows/web/PasswordBarWidget.ui

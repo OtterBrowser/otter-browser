@@ -1,7 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,51 +17,41 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_PREFERENCESDIALOG_H
-#define OTTER_PREFERENCESDIALOG_H
+#ifndef OTTER_WEBSITESPREFERENCESPAGE_H
+#define OTTER_WEBSITESPREFERENCESPAGE_H
 
-#include "Dialog.h"
+#include "PreferencesPage.h"
 
 namespace Otter
 {
 
 namespace Ui
 {
-	class PreferencesDialog;
+	class WebsitesPreferencesPage;
 }
 
-class PreferencesDialog final : public Dialog
+class WebsitesPreferencesPage final : public PreferencesPage
 {
 	Q_OBJECT
 
 public:
-	explicit PreferencesDialog(const QString &section, QWidget *parent = nullptr);
-	~PreferencesDialog();
+	explicit WebsitesPreferencesPage(QWidget *parent);
+	~WebsitesPreferencesPage();
+
+public slots:
+	void save() override;
 
 protected:
-	enum TabIndex
-	{
-		GeneralTab = 0,
-		ContentTab = 1,
-		PrivacyTab = 2,
-		SearchTab = 3,
-		WebsitesTab = 4,
-		AdvancedTab = 5
-	};
-
 	void changeEvent(QEvent *event) override;
 
 protected slots:
-	void showTab(int tab);
-	void markAsModified();
-	void save();
+	void addWebsite();
+	void editWebsite();
+	void removeWebsite();
+	void updateWebsiteActions();
 
 private:
-	QVector<bool> m_loadedTabs;
-	Ui::PreferencesDialog *m_ui;
-
-signals:
-	void requestedSave();
+	Ui::WebsitesPreferencesPage *m_ui;
 };
 
 }

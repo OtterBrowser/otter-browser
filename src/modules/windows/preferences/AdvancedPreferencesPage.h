@@ -73,10 +73,6 @@ protected slots:
 	void playNotificationSound();
 	void updateNotificationsActions();
 	void updateNotificationsOptions();
-	void addOverride();
-	void editOverride();
-	void removeOverride();
-	void updateOverridesActions();
 	void addDownloadsMimeType();
 	void removeDownloadsMimeType();
 	void updateDownloadsActions();

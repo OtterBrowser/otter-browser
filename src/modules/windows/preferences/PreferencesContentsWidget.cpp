@@ -23,6 +23,7 @@
 #include "GeneralPreferencesPage.h"
 #include "PrivacyPreferencesPage.h"
 #include "SearchPreferencesPage.h"
+#include "WebsitesPreferencesPage.h"
 #include "../../../core/Application.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/ItemViewWidget.h"
@@ -42,7 +43,7 @@ PreferencesContentsWidget::PreferencesContentsWidget(const QVariantMap &paramete
 {
 	m_ui->setupUi(this);
 
-	m_loadedTabs.fill(false, 5);
+	m_loadedTabs.fill(false, 6);
 
 	updateStyle();
 	showTab(GeneralTab);
@@ -146,6 +147,20 @@ void PreferencesContentsWidget::showTab(int tab)
 
 				connect(this, &PreferencesContentsWidget::requestedSave, page, &SearchPreferencesPage::save);
 				connect(page, &SearchPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
+			}
+
+			break;
+		case WebsitesTab:
+			{
+				WebsitesPreferencesPage *page(new WebsitesPreferencesPage(this));
+
+				m_ui->websitesScrollArea->setWidget(page);
+				m_ui->websitesScrollArea->viewport()->setAutoFillBackground(false);
+
+				page->setAutoFillBackground(false);
+
+				connect(this, &PreferencesContentsWidget::requestedSave, page, &WebsitesPreferencesPage::save);
+				connect(page, &WebsitesPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
 			}
 
 			break;
