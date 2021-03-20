@@ -59,7 +59,7 @@ AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : PreferencesP
 	m_ui->setupUi(this);
 
 	QStandardItemModel *navigationModel(new QStandardItemModel(this));
-	const QStringList navigationTitles({tr("Browsing"), tr("Notifications"), tr("Appearance"), tr("Content"), {}, tr("Downloads"), tr("Programs"), {}, tr("History"), tr("Network"), tr("Security"), tr("Updates"), {}, tr("Keyboard"), tr("Mouse")});
+	const QStringList navigationTitles({tr("Browsing"), tr("Notifications"), tr("Appearance"), {}, tr("Downloads"), tr("Programs"), {}, tr("History"), tr("Network"), tr("Scripting"), tr("Security"), tr("Updates"), {}, tr("Keyboard"), tr("Mouse")});
 	int navigationIndex(0);
 
 	for (int i = 0; i < navigationTitles.count(); ++i)
@@ -76,7 +76,7 @@ AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : PreferencesP
 		{
 			item->setData(navigationIndex, Qt::UserRole);
 
-			if (i == 8)
+			if (i == 7)
 			{
 				item->setEnabled(false);
 			}
@@ -145,27 +145,6 @@ AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : PreferencesP
 	m_ui->appearranceStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
 	m_ui->enableTrayIconCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_EnableTrayIconOption).toBool());
 
-	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Permissions_EnableJavaScriptOption).toBool());
-	m_ui->javaScriptWidget->setEnabled(m_ui->enableJavaScriptCheckBox->isChecked());
-	m_ui->scriptsCanChangeWindowGeometryCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption).toBool());
-	m_ui->scriptsCanShowStatusMessagesCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption).toBool());
-	m_ui->scriptsCanAccessClipboardCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanAccessClipboardOption).toBool());
-	m_ui->scriptsCanReceiveRightClicksCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption).toBool());
-	m_ui->scriptsCanCloseWindowsComboBox->addItem(tr("Ask"), QLatin1String("ask"));
-	m_ui->scriptsCanCloseWindowsComboBox->addItem(tr("Always"), QLatin1String("allow"));
-	m_ui->scriptsCanCloseWindowsComboBox->addItem(tr("Never"), QLatin1String("disallow"));
-	m_ui->enableFullScreenComboBox->addItem(tr("Ask"), QLatin1String("ask"));
-	m_ui->enableFullScreenComboBox->addItem(tr("Always"), QLatin1String("allow"));
-	m_ui->enableFullScreenComboBox->addItem(tr("Never"), QLatin1String("disallow"));
-
-	const int scriptsCanCloseWindowsIndex(m_ui->scriptsCanCloseWindowsComboBox->findData(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanCloseWindowsOption).toString()));
-
-	m_ui->scriptsCanCloseWindowsComboBox->setCurrentIndex((scriptsCanCloseWindowsIndex < 0) ? 0 : scriptsCanCloseWindowsIndex);
-
-	const int enableFullScreenIndex(m_ui->enableFullScreenComboBox->findData(SettingsManager::getOption(SettingsManager::Permissions_EnableFullScreenOption).toString()));
-
-	m_ui->enableFullScreenComboBox->setCurrentIndex((enableFullScreenIndex < 0) ? 0 : enableFullScreenIndex);
-
 	QStandardItemModel *mimeTypesModel(new QStandardItemModel(this));
 	mimeTypesModel->setHorizontalHeaderLabels({tr("Name")});
 
@@ -192,6 +171,27 @@ AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : PreferencesP
 
 	m_ui->protocolsItemView->setModel(protocolsModel);
 	m_ui->protocolsItemView->sortByColumn(0, Qt::AscendingOrder);
+
+	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Permissions_EnableJavaScriptOption).toBool());
+	m_ui->javaScriptWidget->setEnabled(m_ui->enableJavaScriptCheckBox->isChecked());
+	m_ui->scriptsCanChangeWindowGeometryCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption).toBool());
+	m_ui->scriptsCanShowStatusMessagesCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption).toBool());
+	m_ui->scriptsCanAccessClipboardCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanAccessClipboardOption).toBool());
+	m_ui->scriptsCanReceiveRightClicksCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption).toBool());
+	m_ui->scriptsCanCloseWindowsComboBox->addItem(tr("Ask"), QLatin1String("ask"));
+	m_ui->scriptsCanCloseWindowsComboBox->addItem(tr("Always"), QLatin1String("allow"));
+	m_ui->scriptsCanCloseWindowsComboBox->addItem(tr("Never"), QLatin1String("disallow"));
+	m_ui->enableFullScreenComboBox->addItem(tr("Ask"), QLatin1String("ask"));
+	m_ui->enableFullScreenComboBox->addItem(tr("Always"), QLatin1String("allow"));
+	m_ui->enableFullScreenComboBox->addItem(tr("Never"), QLatin1String("disallow"));
+
+	const int scriptsCanCloseWindowsIndex(m_ui->scriptsCanCloseWindowsComboBox->findData(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanCloseWindowsOption).toString()));
+
+	m_ui->scriptsCanCloseWindowsComboBox->setCurrentIndex((scriptsCanCloseWindowsIndex < 0) ? 0 : scriptsCanCloseWindowsIndex);
+
+	const int enableFullScreenIndex(m_ui->enableFullScreenComboBox->findData(SettingsManager::getOption(SettingsManager::Permissions_EnableFullScreenOption).toString()));
+
+	m_ui->enableFullScreenComboBox->setCurrentIndex((enableFullScreenIndex < 0) ? 0 : enableFullScreenIndex);
 
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Network_EnableReferrerOption).toBool());
 
@@ -379,7 +379,6 @@ AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : PreferencesP
 	connect(m_ui->advancedViewWidget, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::changeCurrentPage);
 	connect(m_ui->notificationsItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateNotificationsActions);
 	connect(m_ui->notificationsPlaySoundButton, &QToolButton::clicked, this, &AdvancedPreferencesPage::playNotificationSound);
-	connect(m_ui->enableJavaScriptCheckBox, &QCheckBox::toggled, m_ui->javaScriptWidget, &QWidget::setEnabled);
 	connect(m_ui->mimeTypesItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateDownloadsActions);
 	connect(m_ui->mimeTypesAddMimeTypeButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::addDownloadsMimeType);
 	connect(m_ui->mimeTypesRemoveMimeTypeButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::removeDownloadsMimeType);
@@ -388,6 +387,7 @@ AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : PreferencesP
 	connect(m_ui->mimeTypesSaveDirectlyCheckBox, &QCheckBox::toggled, this, &AdvancedPreferencesPage::updateDownloadsOptions);
 	connect(m_ui->mimeTypesFilePathWidget, &Otter::FilePathWidget::pathChanged, this, &AdvancedPreferencesPage::updateDownloadsOptions);
 	connect(m_ui->mimeTypesApplicationComboBoxWidget, &Otter::ApplicationComboBoxWidget::currentCommandChanged, this, &AdvancedPreferencesPage::updateDownloadsOptions);
+	connect(m_ui->enableJavaScriptCheckBox, &QCheckBox::toggled, m_ui->javaScriptWidget, &QWidget::setEnabled);
 	connect(m_ui->userAgentsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateUserAgentsActions);
 	connect(m_ui->userAgentsAddButton->menu(), &QMenu::triggered, this, &AdvancedPreferencesPage::addUserAgent);
 	connect(m_ui->userAgentsEditButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::editUserAgent);
@@ -444,21 +444,21 @@ void AdvancedPreferencesPage::changeEvent(QEvent *event)
 			break;
 		case QEvent::LanguageChange:
 			{
-				const QStringList navigationTitles({tr("Browsing"), tr("Notifications"), tr("Appearance"), tr("Content"), {}, tr("Downloads"), tr("Programs"), {}, tr("History"), tr("Network"), tr("Security"), tr("Updates"), {}, tr("Keyboard"), tr("Mouse")});
+				const QStringList navigationTitles({tr("Browsing"), tr("Notifications"), tr("Appearance"), {}, tr("Downloads"), tr("Programs"), {}, tr("History"), tr("Network"), tr("Scripting"), tr("Security"), tr("Updates"), {}, tr("Keyboard"), tr("Mouse")});
 
 				m_ui->retranslateUi(this);
 				m_ui->browsingDisplayModeComboBox->setItemText(0, tr("Compact"));
 				m_ui->browsingDisplayModeComboBox->setItemText(1, tr("Columns"));
 				m_ui->appearranceWidgetStyleComboBox->setItemText(0, tr("System Style"));
+				m_ui->notificationsPlaySoundFilePathWidget->setFilters({tr("WAV files (*.wav)")});
+				m_ui->appearranceStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
+				m_ui->notificationsItemView->getSourceModel()->setHorizontalHeaderLabels({tr("Name"), tr("Description")});
 				m_ui->scriptsCanCloseWindowsComboBox->setItemText(0, tr("Ask"));
 				m_ui->scriptsCanCloseWindowsComboBox->setItemText(1, tr("Always"));
 				m_ui->scriptsCanCloseWindowsComboBox->setItemText(2, tr("Never"));
 				m_ui->enableFullScreenComboBox->setItemText(0, tr("Ask"));
 				m_ui->enableFullScreenComboBox->setItemText(1, tr("Always"));
 				m_ui->enableFullScreenComboBox->setItemText(2, tr("Never"));
-				m_ui->notificationsPlaySoundFilePathWidget->setFilters({tr("WAV files (*.wav)")});
-				m_ui->appearranceStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
-				m_ui->notificationsItemView->getSourceModel()->setHorizontalHeaderLabels({tr("Name"), tr("Description")});
 
 				for (int i = 0; i < navigationTitles.count(); ++i)
 				{
@@ -1617,15 +1617,6 @@ void AdvancedPreferencesPage::save()
 		}
 	}
 
-	SettingsManager::setOption(SettingsManager::Permissions_EnableJavaScriptOption, m_ui->enableJavaScriptCheckBox->isChecked());
-	SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption, m_ui->scriptsCanChangeWindowGeometryCheckBox->isChecked());
-	SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, m_ui->scriptsCanShowStatusMessagesCheckBox->isChecked());
-	SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanAccessClipboardOption, m_ui->scriptsCanAccessClipboardCheckBox->isChecked());
-	SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption, m_ui->scriptsCanReceiveRightClicksCheckBox->isChecked());
-	SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanCloseWindowsOption, m_ui->scriptsCanCloseWindowsComboBox->currentData().toString());
-	SettingsManager::setOption(SettingsManager::Permissions_EnableFullScreenOption, m_ui->enableFullScreenComboBox->currentData().toString());
-
-
 	const QMimeDatabase mimeDatabase;
 
 	QFile::remove(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
@@ -1654,6 +1645,14 @@ void AdvancedPreferencesPage::save()
 
 		HandlersManager::setMimeTypeHandler(definition.mimeType, definition);
 	}
+
+	SettingsManager::setOption(SettingsManager::Permissions_EnableJavaScriptOption, m_ui->enableJavaScriptCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption, m_ui->scriptsCanChangeWindowGeometryCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, m_ui->scriptsCanShowStatusMessagesCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanAccessClipboardOption, m_ui->scriptsCanAccessClipboardCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption, m_ui->scriptsCanReceiveRightClicksCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanCloseWindowsOption, m_ui->scriptsCanCloseWindowsComboBox->currentData().toString());
+	SettingsManager::setOption(SettingsManager::Permissions_EnableFullScreenOption, m_ui->enableFullScreenComboBox->currentData().toString());
 
 	SettingsManager::setOption(SettingsManager::Network_EnableReferrerOption, m_ui->sendReferrerCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::Network_UserAgentOption, m_ui->userAgentsViewWidget->getCheckedIndex().data(UserAgentsModel::IdentifierRole).toString());

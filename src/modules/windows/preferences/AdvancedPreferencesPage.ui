@@ -351,155 +351,6 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="contentPage">
-      <layout class="QVBoxLayout" name="contentPageLayout">
-       <item>
-        <widget class="QLabel" name="scriptingHeader">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Scripting</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="enableJavaScriptCheckBox">
-         <property name="text">
-          <string>Enable JavaScript</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="javaScriptLayout">
-         <item>
-          <spacer name="javaScriptSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QWidget" name="javaScriptWidget" native="true">
-           <layout class="QVBoxLayout" name="javaScriptWidgetLayout">
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QCheckBox" name="scriptsCanChangeWindowGeometryCheckBox">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Allow moving and resizing of windows</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="scriptsCanShowStatusMessagesCheckBox">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Allow changing of status field</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="scriptsCanHideAddressBarCheckBox">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Allow script to hide address bar</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="scriptsCanAccessClipboardCheckBox">
-              <property name="text">
-               <string>Allow access to clipboard</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="scriptsCanReceiveRightClicksCheckBox">
-              <property name="text">
-               <string>Allow to receive right mouse button clicks</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QFormLayout" name="formLayout">
-              <item row="0" column="0">
-               <widget class="QLabel" name="scriptsCanCloseWindowsLabel">
-                <property name="text">
-                 <string>Allow to close windows:</string>
-                </property>
-                <property name="buddy">
-                 <cstring>scriptsCanCloseWindowsComboBox</cstring>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QComboBox" name="scriptsCanCloseWindowsComboBox"/>
-              </item>
-              <item row="1" column="1">
-               <widget class="QComboBox" name="enableFullScreenComboBox"/>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="enableFullScreenLabel">
-                <property name="text">
-                 <string>Allow to enter full screen mode:</string>
-                </property>
-                <property name="buddy">
-                 <cstring>enableFullScreenComboBox</cstring>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <spacer name="scriptingSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="mimeTypesPage">
       <layout class="QVBoxLayout" name="mimeTypesPageLayout" stretch="0,0,0,1">
        <item>
@@ -960,6 +811,155 @@
        </item>
        <item>
         <spacer name="networkPageSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="scriptingPage">
+      <layout class="QVBoxLayout" name="scriptingPageLayout">
+       <item>
+        <widget class="QLabel" name="scriptingHeader">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>JavaScript</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="enableJavaScriptCheckBox">
+         <property name="text">
+          <string>Enable JavaScript</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="javaScriptLayout">
+         <item>
+          <spacer name="javaScriptSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QWidget" name="javaScriptWidget" native="true">
+           <layout class="QVBoxLayout" name="javaScriptWidgetLayout">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="scriptsCanChangeWindowGeometryCheckBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Allow moving and resizing of windows</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="scriptsCanShowStatusMessagesCheckBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Allow changing of status field</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="scriptsCanHideAddressBarCheckBox">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Allow script to hide address bar</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="scriptsCanAccessClipboardCheckBox">
+              <property name="text">
+               <string>Allow access to clipboard</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="scriptsCanReceiveRightClicksCheckBox">
+              <property name="text">
+               <string>Allow to receive right mouse button clicks</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QFormLayout" name="formLayout">
+              <item row="0" column="0">
+               <widget class="QLabel" name="scriptsCanCloseWindowsLabel">
+                <property name="text">
+                 <string>Allow to close windows:</string>
+                </property>
+                <property name="buddy">
+                 <cstring>scriptsCanCloseWindowsComboBox</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QComboBox" name="scriptsCanCloseWindowsComboBox"/>
+              </item>
+              <item row="1" column="1">
+               <widget class="QComboBox" name="enableFullScreenComboBox"/>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="enableFullScreenLabel">
+                <property name="text">
+                 <string>Allow to enter full screen mode:</string>
+                </property>
+                <property name="buddy">
+                 <cstring>enableFullScreenComboBox</cstring>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="scriptingSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
