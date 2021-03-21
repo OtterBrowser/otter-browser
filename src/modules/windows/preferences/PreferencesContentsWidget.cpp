@@ -108,6 +108,20 @@ void PreferencesContentsWidget::showTab(int tab)
 
 	switch (tab)
 	{
+		case GeneralTab:
+			{
+				GeneralPreferencesPage *page(new GeneralPreferencesPage(this));
+
+				m_ui->generalSrollArea->setWidget(page);
+				m_ui->generalSrollArea->viewport()->setAutoFillBackground(false);
+
+				page->setAutoFillBackground(false);
+
+				connect(this, &PreferencesContentsWidget::requestedSave, page, &GeneralPreferencesPage::save);
+				connect(page, &GeneralPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
+			}
+
+			break;
 		case ContentTab:
 			{
 				ContentPreferencesPage *page(new ContentPreferencesPage(this));
@@ -175,20 +189,6 @@ void PreferencesContentsWidget::showTab(int tab)
 
 				connect(this, &PreferencesContentsWidget::requestedSave, page, &AdvancedPreferencesPage::save);
 				connect(page, &AdvancedPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
-			}
-
-			break;
-		default:
-			{
-				GeneralPreferencesPage *page(new GeneralPreferencesPage(this));
-
-				m_ui->generalSrollArea->setWidget(page);
-				m_ui->generalSrollArea->viewport()->setAutoFillBackground(false);
-
-				page->setAutoFillBackground(false);
-
-				connect(this, &PreferencesContentsWidget::requestedSave, page, &GeneralPreferencesPage::save);
-				connect(page, &GeneralPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
 			}
 
 			break;
