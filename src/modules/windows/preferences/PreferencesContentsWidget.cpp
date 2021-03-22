@@ -260,7 +260,35 @@ QLatin1String PreferencesContentsWidget::getType() const
 
 QUrl PreferencesContentsWidget::getUrl() const
 {
-	return QUrl(QLatin1String("about:preferences"));
+	QUrl url(QLatin1String("about:preferences"));
+
+	switch (m_ui->tabWidget->currentIndex())
+	{
+		case ContentTab:
+			url.setFragment(QLatin1String("content"));
+
+			break;
+		case PrivacyTab:
+			url.setFragment(QLatin1String("privacy"));
+
+			break;
+		case SearchTab:
+			url.setFragment(QLatin1String("search"));
+
+			break;
+		case WebsitesTab:
+			url.setFragment(QLatin1String("websites"));
+
+			break;
+		case AdvancedTab:
+			url.setFragment(QLatin1String("advanced"));
+
+			break;
+		default:
+			break;
+	}
+
+	return url;
 }
 
 QIcon PreferencesContentsWidget::getIcon() const
