@@ -99,6 +99,8 @@ void PreferencesContentsWidget::markAsModified()
 
 void PreferencesContentsWidget::showTab(int tab)
 {
+	emit urlChanged(getUrl());
+
 	if (tab < GeneralTab || tab > AdvancedTab || m_loadedTabs.value(tab))
 	{
 		return;
