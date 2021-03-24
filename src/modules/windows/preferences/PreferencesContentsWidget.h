@@ -43,6 +43,9 @@ public:
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
 
+public slots:
+	void setUrl(const QUrl &url, bool isTypedIn = true) override;
+
 protected:
 	enum TabIndex
 	{
