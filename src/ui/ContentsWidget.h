@@ -69,7 +69,7 @@ public slots:
 	virtual void setOption(int identifier, const QVariant &value);
 	virtual void setHistory(const Session::Window::History &history);
 	virtual void setZoom(int zoom);
-	virtual void setUrl(const QUrl &url, bool isTyped = true);
+	virtual void setUrl(const QUrl &url, bool isTypedIn = true);
 
 protected:
 	void timerEvent(QTimerEvent *event) override;

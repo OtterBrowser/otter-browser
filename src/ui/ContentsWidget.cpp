@@ -321,10 +321,10 @@ void ContentsWidget::setZoom(int zoom)
 	Q_UNUSED(zoom)
 }
 
-void ContentsWidget::setUrl(const QUrl &url, bool isTyped)
+void ContentsWidget::setUrl(const QUrl &url, bool isTypedIn)
 {
 	Q_UNUSED(url)
-	Q_UNUSED(isTyped)
+	Q_UNUSED(isTypedIn)
 }
 
 void ContentsWidget::setParent(Window *window)
