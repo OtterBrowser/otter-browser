@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -1264,7 +1264,7 @@ void WebContentsWidget::setZoom(int zoom)
 	m_webWidget->setZoom(zoom);
 }
 
-void WebContentsWidget::setUrl(const QUrl &url, bool isTyped)
+void WebContentsWidget::setUrl(const QUrl &url, bool isTypedIn)
 {
 	const QHash<int, QVariant> options(m_webWidget ? m_webWidget->getOptions() : QHash<int, QVariant>());
 	const QVariantMap parameters({{QLatin1String("hints"), (isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen)}});
@@ -1278,7 +1278,7 @@ void WebContentsWidget::setUrl(const QUrl &url, bool isTyped)
 		setWidget(nullptr, parameters, options);
 	}
 
-	m_webWidget->setRequestedUrl(url, isTyped);
+	m_webWidget->setRequestedUrl(url, isTypedIn);
 
 	if (m_window && m_window->isActive())
 	{
