@@ -182,6 +182,9 @@
        </item>
        <item>
         <widget class="Otter::ItemViewWidget" name="notificationsItemView">
+         <property name="contextMenuPolicy">
+          <enum>Qt::NoContextMenu</enum>
+         </property>
          <property name="editTriggers">
           <set>QAbstractItemView::NoEditTriggers</set>
          </property>
@@ -370,6 +373,9 @@
         <layout class="QHBoxLayout" name="mimeTypesLayout">
          <item>
           <widget class="Otter::ItemViewWidget" name="mimeTypesItemView">
+           <property name="contextMenuPolicy">
+            <enum>Qt::NoContextMenu</enum>
+           </property>
            <property name="editTriggers">
             <set>QAbstractItemView::NoEditTriggers</set>
            </property>
@@ -589,6 +595,9 @@
         <layout class="QHBoxLayout" name="protocolsLayout">
          <item>
           <widget class="Otter::ItemViewWidget" name="protocolsItemView">
+           <property name="contextMenuPolicy">
+            <enum>Qt::NoContextMenu</enum>
+           </property>
            <property name="editTriggers">
             <set>QAbstractItemView::NoEditTriggers</set>
            </property>
