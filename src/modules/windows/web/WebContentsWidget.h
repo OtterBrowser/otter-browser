@@ -44,24 +44,6 @@ class WebContentsWidget final : public ContentsWidget
 	Q_OBJECT
 
 public:
-	enum ScrollMode
-	{
-		NoScroll = 0,
-		MoveScroll,
-		DragScroll
-	};
-
-	enum ScrollDirection
-	{
-		NoDirection = 0,
-		TopDirection = 1,
-		BottomDirection = 2,
-		RightDirection = 4,
-		LeftDirection = 8
-	};
-
-	Q_DECLARE_FLAGS(ScrollDirections, ScrollDirection)
-
 	explicit WebContentsWidget(const QVariantMap &parameters, const QHash<int, QVariant> &options, WebWidget *widget, Window *window, QWidget *parent);
 
 	void search(const QString &search, const QString &query);
@@ -96,6 +78,24 @@ public slots:
 	void setUrl(const QUrl &url, bool isTypedIn = true) override;
 
 protected:
+	enum ScrollMode
+	{
+		NoScroll = 0,
+		MoveScroll,
+		DragScroll
+	};
+
+	enum ScrollDirection
+	{
+		NoDirection = 0,
+		TopDirection = 1,
+		BottomDirection = 2,
+		RightDirection = 4,
+		LeftDirection = 8
+	};
+
+	Q_DECLARE_FLAGS(ScrollDirections, ScrollDirection)
+
 	void timerEvent(QTimerEvent *event) override;
 	void showEvent(QShowEvent *event) override;
 	void focusInEvent(QFocusEvent *event) override;
