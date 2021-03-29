@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -87,7 +87,7 @@ public slots:
 	void requestClose();
 	void search(const QString &query, const QString &searchEngine);
 	void markAsActive(bool updateLastActivity = true);
-	void setUrl(const QUrl &url, bool isTyped = true);
+	void setUrl(const QUrl &url, bool isTypedIn = true);
 	void setZoom(int zoom);
 	void setPinned(bool isPinned);
 

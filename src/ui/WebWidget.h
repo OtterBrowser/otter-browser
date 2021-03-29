@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2017 Piktas Zuikis <piktas.zuikis@inbox.lt>
@@ -275,8 +275,8 @@ public slots:
 	virtual void setScrollPosition(const QPoint &position) = 0;
 	virtual void setHistory(const Session::Window::History &history) = 0;
 	virtual void setZoom(int zoom) = 0;
-	virtual void setUrl(const QUrl &url, bool isTyped = true) = 0;
-	void setRequestedUrl(const QUrl &url, bool isTyped = true, bool onlyUpdate = false);
+	virtual void setUrl(const QUrl &url, bool isTypedIn = true) = 0;
+	void setRequestedUrl(const QUrl &url, bool isTypedIn = true, bool onlyUpdate = false);
 
 protected:
 	explicit WebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent = nullptr);

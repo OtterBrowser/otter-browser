@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -340,7 +340,7 @@ void Window::setOption(int identifier, const QVariant &value)
 	}
 }
 
-void Window::setUrl(const QUrl &url, bool isTyped)
+void Window::setUrl(const QUrl &url, bool isTypedIn)
 {
 	ContentsWidget *newWidget(nullptr);
 
@@ -387,7 +387,7 @@ void Window::setUrl(const QUrl &url, bool isTyped)
 	{
 		if (!isRestoring)
 		{
-			m_contentsWidget->setUrl(url, isTyped);
+			m_contentsWidget->setUrl(url, isTypedIn);
 		}
 
 		if (!Utils::isUrlEmpty(getUrl()) || m_contentsWidget->getLoadingState() == WebWidget::OngoingLoadingState)
