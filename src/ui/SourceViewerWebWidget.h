@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ public slots:
 	void setScrollPosition(const QPoint &position) override;
 	void setHistory(const Session::Window::History &history) override;
 	void setZoom(int zoom) override;
-	void setUrl(const QUrl &url, bool isTyped = true) override;
+	void setUrl(const QUrl &url, bool isTypedIn = true) override;
 	void setContents(const QByteArray &contents, const QString &contentType);
 
 protected:
