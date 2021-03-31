@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ public:
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
-	void setUrl(const QUrl &url, bool isTyped = true) override;
+	void setUrl(const QUrl &url, bool isTypedIn = true) override;
 
 protected:
 	void changeEvent(QEvent *event) override;
