@@ -120,7 +120,7 @@ public slots:
 	void setScrollPosition(const QPoint &position) override;
 	void setHistory(const Session::Window::History &history) override;
 	void setZoom(int zoom) override;
-	void setUrl(const QUrl &url, bool isTyped = true) override;
+	void setUrl(const QUrl &url, bool isTypedIn = true) override;
 
 protected:
 	explicit QtWebEngineWebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent = nullptr);
