@@ -747,11 +747,11 @@ void WebWidget::setOptions(const QHash<int, QVariant> &options, const QStringLis
 	emit arbitraryActionsStateChanged({ActionsManager::ResetQuickPreferencesAction});
 }
 
-void WebWidget::setRequestedUrl(const QUrl &url, bool isTypedIn, bool onlyUpdate)
+void WebWidget::setRequestedUrl(const QUrl &url, bool isTypedIn, bool updateOnly)
 {
 	m_requestedUrl = url;
 
-	if (onlyUpdate)
+	if (updateOnly)
 	{
 		emit urlChanged(url);
 	}

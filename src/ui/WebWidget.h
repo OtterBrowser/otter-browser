@@ -276,7 +276,7 @@ public slots:
 	virtual void setHistory(const Session::Window::History &history) = 0;
 	virtual void setZoom(int zoom) = 0;
 	virtual void setUrl(const QUrl &url, bool isTypedIn = true) = 0;
-	void setRequestedUrl(const QUrl &url, bool isTypedIn = true, bool onlyUpdate = false);
+	void setRequestedUrl(const QUrl &url, bool isTypedIn = true, bool updateOnly = false);
 
 protected:
 	explicit WebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent = nullptr);
