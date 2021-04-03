@@ -1600,19 +1600,16 @@ WebWidget::PermissionPolicy WebWidget::getPermission(FeaturePermission feature, 
 
 				if (captureAudioValue == QLatin1String("allow") && captureVideoValue == QLatin1String("allow"))
 				{
-					value = QLatin1String("allow");
+					return GrantedPermission;
 				}
-				else if (captureAudioValue == QLatin1String("disallow") || captureVideoValue == QLatin1String("disallow"))
+
+				if (captureAudioValue == QLatin1String("disallow") || captureVideoValue == QLatin1String("disallow"))
 				{
-					value = QLatin1String("disallow");
-				}
-				else
-				{
-					value = QLatin1String("ask");
+					return DeniedPermission;
 				}
 			}
 
-			break;
+			return KeepAskingPermission;
 		case PlaybackAudioFeature:
 			value = getOption(SettingsManager::Permissions_EnableMediaPlaybackAudioOption, url).toString();
 
