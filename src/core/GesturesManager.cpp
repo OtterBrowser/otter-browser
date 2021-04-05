@@ -629,7 +629,7 @@ void GesturesManager::loadProfiles()
 	m_gestures.clear();
 
 	MouseProfile::Gesture contextMenuGestureDefinition;
-	contextMenuGestureDefinition.steps = {MouseProfile::Gesture::Step(QEvent::MouseButtonPress, Qt::RightButton), MouseProfile::Gesture::Step(QEvent::MouseButtonRelease, Qt::RightButton)};
+	contextMenuGestureDefinition.steps = {{QEvent::MouseButtonPress, Qt::RightButton}, {QEvent::MouseButtonRelease, Qt::RightButton}};
 	contextMenuGestureDefinition.action = ActionsManager::ContextMenuAction;
 
 	for (int i = (UnknownContext + 1); i < OtherContext; ++i)
@@ -723,12 +723,12 @@ void GesturesManager::recognizeMoveStep(const QInputEvent *event)
 
 	for (iterator = moves.begin(); iterator != moves.end(); ++iterator)
 	{
-		m_steps.append(MouseProfile::Gesture::Step(QEvent::MouseMove, *iterator, event->modifiers()));
+		m_steps.append({QEvent::MouseMove, *iterator, event->modifiers()});
 	}
 
 	if (m_steps.empty() && calculateLastMoveDistance(true) >= QApplication::startDragDistance())
 	{
-		m_steps.append(MouseProfile::Gesture::Step(QEvent::MouseMove, MouseGestures::UnknownMouseAction, event->modifiers()));
+		m_steps.append({QEvent::MouseMove, MouseGestures::UnknownMouseAction, event->modifiers()});
 	}
 }
 
@@ -1162,7 +1162,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 
 			if (calculateLastMoveDistance() >= QApplication::startDragDistance())
 			{
-				m_steps.append(MouseProfile::Gesture::Step(QEvent::MouseMove, MouseGestures::UnknownMouseAction, mouseEvent->modifiers()));
+				m_steps.append({QEvent::MouseMove, MouseGestures::UnknownMouseAction, mouseEvent->modifiers()});
 
 				gesture = matchGesture();
 
