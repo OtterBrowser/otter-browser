@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -39,11 +39,19 @@ CookiePropertiesDialog::CookiePropertiesDialog(const QNetworkCookie &cookie, QWi
 		setWindowTitle(tr("Edit Cookie"));
 	}
 
+	QString dateTimeFromat(QLocale().dateTimeFormat(QLocale::ShortFormat));
+
+	if (dateTimeFromat.endsWith(QLatin1String("HH:mm")))
+	{
+		dateTimeFromat += QLatin1String(":ss");
+	}
+
 	m_ui->nameLineEditWidget->setText(QString::fromLatin1(cookie.name()));
 	m_ui->valueLineEditWidget->setText(QString::fromLatin1(cookie.value()));
 	m_ui->domainLineEditWidget->setText(cookie.domain());
 	m_ui->pathLineEditWidget->setText(cookie.path());
 	m_ui->isSessionOnlyCheckBox->setChecked(!cookie.expirationDate().isValid());
+	m_ui->expiresDateTimeEdit->setDisplayFormat(dateTimeFromat);
 	m_ui->expiresDateTimeEdit->setDateTime(cookie.expirationDate());
 	m_ui->expiresDateTimeEdit->setEnabled(cookie.expirationDate().isValid());
 	m_ui->isSecureCheckBox->setChecked(cookie.isSecure());
