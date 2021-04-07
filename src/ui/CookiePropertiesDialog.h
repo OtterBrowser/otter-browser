@@ -46,6 +46,7 @@ public:
 
 protected:
 	void changeEvent(QEvent *event) override;
+	void updateDateTimeFromat();
 
 private:
 	QNetworkCookie m_cookie;

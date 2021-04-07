@@ -39,23 +39,17 @@ CookiePropertiesDialog::CookiePropertiesDialog(const QNetworkCookie &cookie, QWi
 		setWindowTitle(tr("Edit Cookie"));
 	}
 
-	QString dateTimeFromat(QLocale().dateTimeFormat(QLocale::ShortFormat));
-
-	if (dateTimeFromat.endsWith(QLatin1String("HH:mm")))
-	{
-		dateTimeFromat += QLatin1String(":ss");
-	}
-
 	m_ui->nameLineEditWidget->setText(QString::fromLatin1(cookie.name()));
 	m_ui->valueLineEditWidget->setText(QString::fromLatin1(cookie.value()));
 	m_ui->domainLineEditWidget->setText(cookie.domain());
 	m_ui->pathLineEditWidget->setText(cookie.path());
 	m_ui->isSessionOnlyCheckBox->setChecked(!cookie.expirationDate().isValid());
-	m_ui->expiresDateTimeEdit->setDisplayFormat(dateTimeFromat);
 	m_ui->expiresDateTimeEdit->setDateTime(cookie.expirationDate());
 	m_ui->expiresDateTimeEdit->setEnabled(cookie.expirationDate().isValid());
 	m_ui->isSecureCheckBox->setChecked(cookie.isSecure());
 	m_ui->isHttpOnlyCheckBox->setChecked(cookie.isHttpOnly());
+
+	updateDateTimeFromat();
 
 	connect(m_ui->isSessionOnlyCheckBox, &QCheckBox::clicked, m_ui->expiresDateTimeEdit, &CookiePropertiesDialog::setDisabled);
 }
@@ -69,10 +63,31 @@ void CookiePropertiesDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	if (event->type() == QEvent::LanguageChange)
+	switch (event->type())
 	{
-		m_ui->retranslateUi(this);
+		case QEvent::LanguageChange:
+			m_ui->retranslateUi(this);
+
+			break;
+		case QEvent::LocaleChange:
+			updateDateTimeFromat();
+
+			break;
+		default:
+			break;
 	}
+}
+
+void CookiePropertiesDialog::updateDateTimeFromat()
+{
+	QString dateTimeFromat(QLocale().dateTimeFormat(QLocale::ShortFormat));
+
+	if (dateTimeFromat.endsWith(QLatin1String("HH:mm")))
+	{
+		dateTimeFromat += QLatin1String(":ss");
+	}
+
+	m_ui->expiresDateTimeEdit->setDisplayFormat(dateTimeFromat);
 }
 
 QNetworkCookie CookiePropertiesDialog::getOriginalCookie() const
