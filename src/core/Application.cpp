@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -552,10 +552,10 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 					if (actions.at(i).type() == QVariant::Map)
 					{
-						const QVariantMap action(actions.at(i).toMap());
+						const QVariantMap actionData(actions.at(i).toMap());
 
-						actionIdentifier = action.value(QLatin1String("identifier"));
-						actionParameters = action.value(QLatin1String("parameters")).toMap();
+						actionIdentifier = actionData.value(QLatin1String("identifier"));
+						actionParameters = actionData.value(QLatin1String("parameters")).toMap();
 					}
 					else
 					{
