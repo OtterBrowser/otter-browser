@@ -59,9 +59,4 @@ Addon::AddonType WebBackend::getType() const
 	return WebBackendType;
 }
 
-WebBackend::BackendCapabilities WebBackend::getCapabilities() const
-{
-	return NoCapabilities;
-}
-
 }

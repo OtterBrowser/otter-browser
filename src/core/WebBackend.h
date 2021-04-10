@@ -47,32 +47,41 @@ class WebBackend : public QObject, public Addon
 	Q_OBJECT
 
 public:
-	enum BackendCapability : quint32
+	enum BackendCapability
 	{
-		NoCapabilities = 0,
-		CacheManagementCapability = 1,
-		CookiesManagementCapability = 2,
-		PasswordsManagementCapability = 4,
-		PluginsOnDemandCapability = 8,
-		UserScriptsCapability = 16,
-		UserStyleSheetsCapability = 32,
-		GlobalCookiesPolicyCapability = 64,
-		GlobalContentFilteringCapability = 128,
-		GlobalDoNotTrackCapability = 256,
-		GlobalProxyCapability = 512,
-		GlobalReferrerCapability = 1024,
-		GlobalUserAgentCapability = 2048,
-		TabCookiesPolicyCapability = 4096,
-		TabContentFilteringCapability = 8192,
-		TabDoNotTrackCapability = 16384,
-		TabProxyCapability = 32768,
-		TabReferrerCapability = 65536,
-		TabUserAgentCapability = 131072,
-		FindInPageHighlightAllCapability = 262144,
-		FindInPageExactMatchCapability = 524288
+		UnknownCapability = 0,
+		CacheManagementCapability,
+		CookiesManagementCapability,
+		PasswordsManagementCapability,
+		PluginsOnDemandCapability,
+		UserScriptsCapability,
+		UserStyleSheetsCapability,
+		GlobalCookiesPolicyCapability,
+		GlobalContentFilteringCapability,
+		GlobalDoNotTrackCapability,
+		GlobalProxyCapability,
+		GlobalReferrerCapability,
+		GlobalUserAgentCapability,
+		TabCookiesPolicyCapability,
+		TabContentFilteringCapability,
+		TabDoNotTrackCapability,
+		TabProxyCapability,
+		TabReferrerCapability,
+		TabUserAgentCapability,
+		FindInPageHighlightAllCapability,
+		FindInPageExactMatchCapability
 	};
 
-	Q_DECLARE_FLAGS(BackendCapabilities, BackendCapability)
+	enum CapabilityScope
+	{
+		NoScope = 0,
+		GlobalScope = 1,
+		DomainScope = 2,
+		TabScope = 4,
+		AllScopes = (GlobalScope | DomainScope | TabScope)
+	};
+
+	Q_DECLARE_FLAGS(CapabilityScopes, CapabilityScope)
 
 	explicit WebBackend(QObject *parent = nullptr);
 
@@ -84,12 +93,11 @@ public:
 	virtual QString getUserAgent(const QString &pattern = {}) const = 0;
 	virtual QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	AddonType getType() const override;
-	virtual BackendCapabilities getCapabilities() const;
 	virtual bool hasSslSupport() const = 0;
 };
 
 }
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::WebBackend::BackendCapabilities)
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::WebBackend::CapabilityScopes)
 
 #endif

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -314,11 +314,6 @@ QString QtWebEngineWebBackend::getUserAgent(const QString &pattern) const
 QUrl QtWebEngineWebBackend::getHomePage() const
 {
 	return QUrl(QLatin1String("https://otter-browser.org/"));
-}
-
-WebBackend::BackendCapabilities QtWebEngineWebBackend::getCapabilities() const
-{
-	return (UserScriptsCapability | GlobalCookiesPolicyCapability | GlobalContentFilteringCapability | GlobalDoNotTrackCapability | GlobalProxyCapability | GlobalReferrerCapability | GlobalUserAgentCapability);
 }
 
 bool QtWebEngineWebBackend::hasSslSupport() const
