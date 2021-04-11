@@ -59,4 +59,16 @@ Addon::AddonType WebBackend::getType() const
 	return WebBackendType;
 }
 
+WebBackend::CapabilityScopes WebBackend::getCapabilityScopes(WebBackend::BackendCapability capability) const
+{
+	Q_UNUSED(capability)
+
+	return NoScope;
+}
+
+bool WebBackend::hasCapability(WebBackend::BackendCapability capability) const
+{
+	return (getCapabilityScopes(capability) != NoScope);
+}
+
 }

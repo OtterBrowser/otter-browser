@@ -93,6 +93,8 @@ public:
 	virtual QString getUserAgent(const QString &pattern = {}) const = 0;
 	virtual QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	AddonType getType() const override;
+	virtual CapabilityScopes getCapabilityScopes(BackendCapability capability) const;
+	bool hasCapability(BackendCapability capability) const;
 	virtual bool hasSslSupport() const = 0;
 };
 
