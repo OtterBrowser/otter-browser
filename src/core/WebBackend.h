@@ -52,24 +52,18 @@ public:
 		UnknownCapability = 0,
 		CacheManagementCapability,
 		CookiesManagementCapability,
+		CookiesPolicyCapability,
+		ContentFilteringCapability,
+		DoNotTrackCapability,
+		FindInPageHighlightAllCapability,
+		FindInPageExactMatchCapability,
 		PasswordsManagementCapability,
 		PluginsOnDemandCapability,
+		ProxyCapability,
+		ReferrerCapability,
 		UserScriptsCapability,
 		UserStyleSheetsCapability,
-		GlobalCookiesPolicyCapability,
-		GlobalContentFilteringCapability,
-		GlobalDoNotTrackCapability,
-		GlobalProxyCapability,
-		GlobalReferrerCapability,
-		GlobalUserAgentCapability,
-		TabCookiesPolicyCapability,
-		TabContentFilteringCapability,
-		TabDoNotTrackCapability,
-		TabProxyCapability,
-		TabReferrerCapability,
-		TabUserAgentCapability,
-		FindInPageHighlightAllCapability,
-		FindInPageExactMatchCapability
+		UserAgentCapability
 	};
 
 	enum CapabilityScope
