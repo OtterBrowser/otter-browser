@@ -264,6 +264,32 @@ QString QtWebKitWebBackend::getActiveDictionary()
 	return {};
 }
 
+WebBackend::CapabilityScopes QtWebKitWebBackend::getCapabilityScopes(WebBackend::BackendCapability capability) const
+{
+	switch (capability)
+	{
+		case CacheManagementCapability:
+		case CookiesManagementCapability:
+		case PasswordsManagementCapability:
+			return GlobalScope;
+		case CookiesPolicyCapability:
+		case ContentFilteringCapability:
+		case DoNotTrackCapability:
+		case FindInPageHighlightAllCapability:
+		case PluginsOnDemandCapability:
+		case ProxyCapability:
+		case ReferrerCapability:
+		case UserAgentCapability:
+		case UserScriptsCapability:
+		case UserStyleSheetsCapability:
+			return AllScopes;
+		default:
+			break;
+	}
+
+	return NoScope;
+}
+
 int QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::OptionIdentifier identifier)
 {
 	switch (identifier)

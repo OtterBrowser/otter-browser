@@ -56,6 +56,7 @@ public:
 	QString getSslVersion() const override;
 	QString getUserAgent(const QString &pattern = {}) const override;
 	QUrl getHomePage() const override;
+	CapabilityScopes getCapabilityScopes(BackendCapability capability) const override;
 	static int getOptionIdentifier(OptionIdentifier identifier);
 	bool hasSslSupport() const override;
 
