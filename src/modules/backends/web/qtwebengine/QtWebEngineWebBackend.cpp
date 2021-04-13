@@ -316,6 +316,26 @@ QUrl QtWebEngineWebBackend::getHomePage() const
 	return QUrl(QLatin1String("https://otter-browser.org/"));
 }
 
+WebBackend::CapabilityScopes QtWebEngineWebBackend::getCapabilityScopes(WebBackend::BackendCapability capability) const
+{
+	switch (capability)
+	{
+		case CookiesPolicyCapability:
+		case ContentFilteringCapability:
+		case ProxyCapability:
+		case UserScriptsCapability:
+			return GlobalScope;
+		case DoNotTrackCapability:
+		case ReferrerCapability:
+		case UserAgentCapability:
+			return AllScopes;
+		default:
+			break;
+	}
+
+	return NoScope;
+}
+
 bool QtWebEngineWebBackend::hasSslSupport() const
 {
 	return true;
