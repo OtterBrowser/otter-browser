@@ -331,7 +331,7 @@ AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : PreferencesP
 
 	QMenu *addKeyboardProfileMenu(new QMenu(m_ui->keyboardAddButton));
 	addKeyboardProfileMenu->addAction(tr("New…"), this, &AdvancedPreferencesPage::addKeyboardProfile);
-	addKeyboardProfileMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->keyboardAddButton));
+	addKeyboardProfileMenu->addAction(tr("Re-add"))->setMenu(new QMenu(m_ui->keyboardAddButton));
 
 	m_ui->keyboardAddButton->setMenu(addKeyboardProfileMenu);
 	m_ui->keyboardEnableSingleKeyShortcutsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool());
@@ -368,7 +368,7 @@ AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : PreferencesP
 
 	QMenu *addMouseProfileMenu(new QMenu(m_ui->mouseAddButton));
 	addMouseProfileMenu->addAction(tr("New…"), this, &AdvancedPreferencesPage::addMouseProfile);
-	addMouseProfileMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->mouseAddButton));
+	addMouseProfileMenu->addAction(tr("Re-add"))->setMenu(new QMenu(m_ui->mouseAddButton));
 
 	m_ui->mouseAddButton->setMenu(addMouseProfileMenu);
 	m_ui->mouseEnableGesturesCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_EnableMouseGesturesOption).toBool());

@@ -130,7 +130,7 @@ SearchPreferencesPage::SearchPreferencesPage(QWidget *parent) : PreferencesPage(
 	QMenu *addSearchEngineMenu(new QMenu(m_ui->addSearchButton));
 	addSearchEngineMenu->addAction(tr("New…"), this, &SearchPreferencesPage::createSearchEngine);
 	addSearchEngineMenu->addAction(tr("File…"), this, &SearchPreferencesPage::importSearchEngine);
-	addSearchEngineMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->addSearchButton));
+	addSearchEngineMenu->addAction(tr("Re-add"))->setMenu(new QMenu(m_ui->addSearchButton));
 
 	m_ui->addSearchButton->setMenu(addSearchEngineMenu);
 	m_ui->moveDownSearchButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-down")));
