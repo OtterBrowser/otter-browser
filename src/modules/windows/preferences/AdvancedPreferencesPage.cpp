@@ -1499,7 +1499,7 @@ void AdvancedPreferencesPage::updateReaddMouseProfileMenu()
 
 		if (!m_mouseProfiles.contains(identifier) && !availableIdentifiers.contains(identifier))
 		{
-			MouseProfile profile(identifier, MouseProfile::MetaDataOnlyMode);
+			const MouseProfile profile(identifier, MouseProfile::MetaDataOnlyMode);
 
 			if (!profile.getName().isEmpty())
 			{
