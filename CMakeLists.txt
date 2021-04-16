@@ -598,6 +598,7 @@ install(FILES resources/icons/otter-browser-128.png DESTINATION ${CMAKE_INSTALL_
 install(FILES resources/icons/otter-browser-256.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/256x256/apps/ RENAME otter-browser.png)
 install(FILES resources/icons/otter-browser.svg DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps/)
 install(FILES otter-browser.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(FILES packaging/otter-browser.appdata.xml DESTINATION ${CMAKE_INSTALL_PREFIX}/share/metainfo)
 install(FILES man/otter-browser.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1/)
 install(TARGETS otter-browser DESTINATION bin/)
 
