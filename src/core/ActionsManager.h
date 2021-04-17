@@ -64,6 +64,7 @@ public:
 	QString getVersion() const override;
 	QHash<int, QVector<Action> > getDefinitions() const;
 	bool isModified() const;
+	bool isValid() const;
 	bool save();
 
 private:

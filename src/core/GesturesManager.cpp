@@ -519,6 +519,11 @@ bool MouseProfile::isModified() const
 	return m_isModified;
 }
 
+bool MouseProfile::isValid() const
+{
+	return !m_identifier.isEmpty();
+}
+
 bool MouseProfile::save()
 {
 	JsonSettings settings(SessionsManager::getWritableDataPath(QLatin1String("mouse/") + m_identifier + QLatin1String(".json")));

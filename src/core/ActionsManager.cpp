@@ -215,6 +215,11 @@ bool KeyboardProfile::isModified() const
 	return m_isModified;
 }
 
+bool KeyboardProfile::isValid() const
+{
+	return !m_identifier.isEmpty();
+}
+
 bool KeyboardProfile::save()
 {
 	JsonSettings settings(SessionsManager::getWritableDataPath(QLatin1String("keyboard/") + m_identifier + QLatin1String(".json")));

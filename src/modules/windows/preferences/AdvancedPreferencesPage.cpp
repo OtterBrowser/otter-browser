@@ -311,7 +311,7 @@ AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : PreferencesP
 	{
 		const KeyboardProfile profile(keyboardProfiles.at(i), KeyboardProfile::FullMode);
 
-		if (profile.getName().isEmpty())
+		if (!profile.isValid())
 		{
 			continue;
 		}
@@ -348,7 +348,7 @@ AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : PreferencesP
 	{
 		const MouseProfile profile(mouseProfiles.at(i), MouseProfile::FullMode);
 
-		if (profile.getName().isEmpty())
+		if (!profile.isValid())
 		{
 			continue;
 		}
@@ -1151,7 +1151,7 @@ void AdvancedPreferencesPage::readdKeyboardProfile(QAction *action)
 	const QString identifier(action->data().toString());
 	const KeyboardProfile profile(identifier, KeyboardProfile::FullMode);
 
-	if (profile.getName().isEmpty())
+	if (!profile.isValid())
 	{
 		return;
 	}
@@ -1300,7 +1300,7 @@ void AdvancedPreferencesPage::updateReaddKeyboardProfileMenu()
 		{
 			const KeyboardProfile profile(identifier, KeyboardProfile::MetaDataOnlyMode);
 
-			if (!profile.getName().isEmpty())
+			if (profile.isValid())
 			{
 				availableIdentifiers.append(identifier);
 
@@ -1352,7 +1352,7 @@ void AdvancedPreferencesPage::readdMouseProfile(QAction *action)
 	const QString identifier(action->data().toString());
 	const MouseProfile profile(identifier, MouseProfile::FullMode);
 
-	if (profile.getName().isEmpty())
+	if (!profile.isValid())
 	{
 		return;
 	}
@@ -1501,7 +1501,7 @@ void AdvancedPreferencesPage::updateReaddMouseProfileMenu()
 		{
 			const MouseProfile profile(identifier, MouseProfile::MetaDataOnlyMode);
 
-			if (!profile.getName().isEmpty())
+			if (profile.isValid())
 			{
 				availableIdentifiers.append(identifier);
 

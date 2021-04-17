@@ -82,6 +82,7 @@ public:
 	QHash<int, QVector<Gesture> > getDefinitions() const;
 	AddonType getType() const override;
 	bool isModified() const;
+	bool isValid() const;
 	bool save();
 
 private:
