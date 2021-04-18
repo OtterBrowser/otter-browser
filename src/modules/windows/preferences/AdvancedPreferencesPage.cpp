@@ -376,7 +376,15 @@ AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : PreferencesP
 	updateReaddMouseProfileMenu();
 	updateStyle();
 
-	connect(m_ui->advancedViewWidget, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::changeCurrentPage);
+	connect(m_ui->advancedViewWidget, &ItemViewWidget::needsActionsUpdate, this, [&]()
+	{
+		const QModelIndex index(m_ui->advancedViewWidget->currentIndex());
+
+		if (index.isValid() && index.data(Qt::UserRole).type() == QVariant::Int)
+		{
+			m_ui->advancedStackedWidget->setCurrentIndex(index.data(Qt::UserRole).toInt());
+		}
+	});
 	connect(m_ui->notificationsItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateNotificationsActions);
 	connect(m_ui->notificationsPlaySoundButton, &QToolButton::clicked, this, &AdvancedPreferencesPage::playNotificationSound);
 	connect(m_ui->mimeTypesItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateDownloadsActions);
@@ -1529,16 +1537,6 @@ void AdvancedPreferencesPage::updateStyle()
 {
 	m_ui->updateChannelsItemView->setMaximumHeight(m_ui->updateChannelsItemView->getContentsHeight());
 	m_ui->notificationsItemView->setMaximumHeight(m_ui->notificationsItemView->getContentsHeight());
-}
-
-void AdvancedPreferencesPage::changeCurrentPage()
-{
-	const QModelIndex index(m_ui->advancedViewWidget->currentIndex());
-
-	if (index.isValid() && index.data(Qt::UserRole).type() == QVariant::Int)
-	{
-		m_ui->advancedStackedWidget->setCurrentIndex(index.data(Qt::UserRole).toInt());
-	}
 }
 
 void AdvancedPreferencesPage::save()

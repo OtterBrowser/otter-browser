@@ -102,7 +102,6 @@ protected slots:
 	void cloneMouseProfile();
 	void removeMouseProfile();
 	void updateMouseProfileActions();
-	void changeCurrentPage();
 	void updatePageSwitcher();
 
 private:
