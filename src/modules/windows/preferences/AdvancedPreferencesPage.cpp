@@ -1706,7 +1706,19 @@ void AdvancedPreferencesPage::save()
 		SettingsManager::setOption(SettingsManager::Security_CiphersOption, ciphers);
 	}
 
-	SettingsManager::setOption(SettingsManager::Updates_ActiveChannelsOption, getSelectedUpdateChannels());
+	QStringList updateChannels;
+
+	for (int i = 0; i < m_ui->updateChannelsItemView->getRowCount(); ++i)
+	{
+		const QModelIndex index(m_ui->updateChannelsItemView->getIndex(i, 0));
+
+		if (static_cast<Qt::CheckState>(index.data(Qt::CheckStateRole).toInt()) == Qt::Checked)
+		{
+			updateChannels.append(index.data(Qt::UserRole).toString());
+		}
+	}
+
+	SettingsManager::setOption(SettingsManager::Updates_ActiveChannelsOption, updateChannels);
 	SettingsManager::setOption(SettingsManager::Updates_AutomaticInstallOption, m_ui->autoInstallCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::Updates_CheckIntervalOption, m_ui->intervalSpinBox->value());
 
@@ -1818,23 +1830,6 @@ QString AdvancedPreferencesPage::createProfileIdentifier(QStandardItemModel *mod
 	}
 
 	return Utils::createIdentifier(base, identifiers);
-}
-
-QStringList AdvancedPreferencesPage::getSelectedUpdateChannels() const
-{
-	QStringList updateChannels;
-
-	for (int i = 0; i < m_ui->updateChannelsItemView->getRowCount(); ++i)
-	{
-		const QModelIndex index(m_ui->updateChannelsItemView->getIndex(i, 0));
-
-		if (static_cast<Qt::CheckState>(index.data(Qt::CheckStateRole).toInt()) == Qt::Checked)
-		{
-			updateChannels.append(index.data(Qt::UserRole).toString());
-		}
-	}
-
-	return updateChannels;
 }
 
 }

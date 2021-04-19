@@ -67,7 +67,6 @@ protected:
 	void updateReaddMouseProfileMenu();
 	void updateStyle();
 	QString createProfileIdentifier(QStandardItemModel *model, const QString &base = {}) const;
-	QStringList getSelectedUpdateChannels() const;
 
 protected slots:
 	void playNotificationSound();
