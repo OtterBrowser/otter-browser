@@ -1125,7 +1125,17 @@ void AdvancedPreferencesPage::updateCiphersActions()
 
 void AdvancedPreferencesPage::updateUpdateChannelsActions()
 {
-	const bool hasSelectedUpdateChannels(!getSelectedUpdateChannels().isEmpty());
+	bool hasSelectedUpdateChannels(false);
+
+	for (int i = 0; i < m_ui->updateChannelsItemView->getRowCount(); ++i)
+	{
+		if (static_cast<Qt::CheckState>(m_ui->updateChannelsItemView->getIndex(i, 0).data(Qt::CheckStateRole).toInt()) == Qt::Checked)
+		{
+			hasSelectedUpdateChannels = true;
+
+			break;
+		}
+	}
 
 	m_ui->intervalSpinBox->setEnabled(hasSelectedUpdateChannels);
 	m_ui->autoInstallCheckBox->setEnabled(hasSelectedUpdateChannels);
