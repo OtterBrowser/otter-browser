@@ -106,14 +106,12 @@ SearchPreferencesPage::SearchPreferencesPage(QWidget *parent) : PreferencesPage(
 	{
 		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(searchEngines.at(i)));
 
-		if (!searchEngine.isValid())
+		if (searchEngine.isValid())
 		{
-			continue;
+			m_searchEngines[searchEngine.identifier] = {false, searchEngine};
+
+			searchEnginesModel->appendRow(createRow(searchEngine, (searchEngine.identifier == defaultSearchEngine)));
 		}
-
-		m_searchEngines[searchEngine.identifier] = {false, searchEngine};
-
-		searchEnginesModel->appendRow(createRow(searchEngine, (searchEngine.identifier == defaultSearchEngine)));
 	}
 
 	const QString suggestionsMode(SettingsManager::getOption(SettingsManager::Search_SearchEnginesSuggestionsModeOption).toString());
