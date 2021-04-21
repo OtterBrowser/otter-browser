@@ -568,6 +568,7 @@ Animation* SearchPreferencesPage::getUpdateAnimation()
 QStringList SearchPreferencesPage::getKeywords(const QAbstractItemModel *model, int excludeRow)
 {
 	QStringList keywords;
+	keywords.reserve(model->rowCount());
 
 	for (int i = 0; i < model->rowCount(); ++i)
 	{
