@@ -1129,7 +1129,7 @@ void AdvancedPreferencesPage::updateUpdateChannelsActions()
 
 	for (int i = 0; i < m_ui->updateChannelsItemView->getRowCount(); ++i)
 	{
-		if (static_cast<Qt::CheckState>(m_ui->updateChannelsItemView->getIndex(i, 0).data(Qt::CheckStateRole).toInt()) == Qt::Checked)
+		if (m_ui->updateChannelsItemView->getIndex(i, 0).data(Qt::CheckStateRole).toInt() == Qt::Checked)
 		{
 			hasSelectedUpdateChannels = true;
 
