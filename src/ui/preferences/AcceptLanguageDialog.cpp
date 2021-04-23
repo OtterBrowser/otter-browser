@@ -38,6 +38,7 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 	m_model->setHorizontalHeaderLabels({tr("Name"), tr("Code")});
 
 	m_ui->languagesViewWidget->setModel(m_model);
+	m_ui->languagesViewWidget->setRowsMovable(true);
 
 	const QStringList chosenLanguages(languages.split(QLatin1Char(','), QString::SkipEmptyParts));
 
