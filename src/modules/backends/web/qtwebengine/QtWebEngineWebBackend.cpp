@@ -22,6 +22,7 @@
 #include "QtWebEnginePage.h"
 #include "QtWebEngineTransfer.h"
 #include "QtWebEngineWebWidget.h"
+#include "../../../../core/BookmarksManager.h"
 #include "../../../../core/ContentFiltersManager.h"
 #include "../../../../core/HandlersManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
@@ -34,6 +35,7 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 #include <QtCore/QRegularExpression>
+#include <QtWebChannel/QtWebChannel>
 #include <QtWebEngineWidgets/QWebEngineProfile>
 #include <QtWebEngineWidgets/QWebEngineSettings>
 
@@ -260,6 +262,11 @@ WebWidget* QtWebEngineWebBackend::createWidget(const QVariantMap &parameters, Co
 	return new QtWebEngineWebWidget(parameters, this, parent);
 }
 
+BookmarksImportJob *QtWebEngineWebBackend::createBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed)
+{
+	return new QtWebEngineBookmarksImportJob(folder, path, areDuplicatesAllowed, this);
+}
+
 QString QtWebEngineWebBackend::getName() const
 {
 	return QLatin1String("qtwebengine");
@@ -334,6 +341,205 @@ WebBackend::CapabilityScopes QtWebEngineWebBackend::getCapabilityScopes(WebBacke
 	}
 
 	return NoScope;
+}
+
+QtWebEngineBookmarksImportJob::QtWebEngineBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed, QObject *parent) : BookmarksImportJob(folder, areDuplicatesAllowed, parent),
+	m_path(path),
+	m_currentAmount(0),
+	m_totalAmount(-1),
+	m_isRunning(false)
+{
+}
+
+void QtWebEngineBookmarksImportJob::start()
+{
+	QFile file(m_path);
+
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		endImport();
+		return;
+	}
+
+	m_isRunning = true;
+
+	QWebEnginePage *page = new QWebEnginePage(this);
+	QWebChannel *webChannel = new QWebChannel(this);
+
+	page->settings()->setAttribute(QWebEngineSettings::AutoLoadImages, false);
+	page->setWebChannel(webChannel);
+
+	webChannel->registerObject("bookmarkImporter", this);
+
+	connect(page, &QWebEnginePage::loadFinished,
+			[this, page]() {
+		QFile qWebChannelFile(":/qtwebchannel/qwebchannel.js");
+
+		if (!qWebChannelFile.open(QIODevice::ReadOnly))
+		{
+			endImport();
+			return;
+		}
+
+		page->runJavaScript(QString::fromLatin1(qWebChannelFile.readAll()));
+
+		QFile importBookmarksScriptFile(QLatin1String(":/modules/backends/web/qtwebengine/resources/importBookmarks.js"));
+
+		if (!importBookmarksScriptFile.open(QIODevice::ReadOnly))
+		{
+			endImport();
+			return;
+		}
+
+		page->runJavaScript(QString::fromLatin1(importBookmarksScriptFile.readAll()));
+	});
+
+	page->setHtml(QString::fromLatin1(file.readAll()));
+
+	file.close();
+}
+
+void QtWebEngineBookmarksImportJob::cancel()
+{
+}
+
+QDateTime QtWebEngineBookmarksImportJob::getDateTime(const QVariant &attribute)
+{
+#if QT_VERSION < 0x050800
+	const uint seconds(attribute.toUInt());
+
+	return ((seconds > 0) ? QDateTime::fromTime_t(seconds) : QDateTime());
+#else
+	const qint64 seconds(attribute.toLongLong());
+
+	return ((seconds != 0) ? QDateTime::fromSecsSinceEpoch(seconds) : QDateTime());
+#endif
+}
+
+bool QtWebEngineBookmarksImportJob::isRunning() const
+{
+	return m_isRunning;
+}
+
+void QtWebEngineBookmarksImportJob::beginImport(const int totalAmount, const int estimatedUrlsCount, const int estimatedKeywordsCount)
+{
+	m_totalAmount = totalAmount;
+
+	emit importStarted(Importer::BookmarksImport, m_totalAmount);
+
+	if (m_totalAmount == 0)
+	{
+		endImport();
+		return;
+	}
+
+	BookmarksManager::getModel()->beginImport(getImportFolder(), estimatedUrlsCount, estimatedKeywordsCount);
+}
+
+void QtWebEngineBookmarksImportJob::endImport()
+{
+	m_isRunning = false;
+
+	BookmarksManager::getModel()->endImport();
+
+	if (m_totalAmount < 0 || m_currentAmount < m_totalAmount)
+	{
+		emit importFinished(Importer::BookmarksImport, Importer::FailedImport, m_totalAmount);
+		emit jobFinished(false);
+	}
+	else
+	{
+		emit importFinished(Importer::BookmarksImport, Importer::SuccessfullImport, m_totalAmount);
+		emit jobFinished(true);
+	}
+
+	deleteLater();
+}
+
+void QtWebEngineBookmarksImportJob::beginFolder(QVariant itemVariant)
+{
+	++m_currentAmount;
+	emit importProgress(Importer::BookmarksImport, m_totalAmount, m_currentAmount);
+
+	const QVariantMap itemMap = itemVariant.toMap();
+	const QString title = itemMap["title"].toString();
+
+	QMap<int, QVariant> metaData({{BookmarksModel::TitleRole, title}});
+
+	const QDateTime dateAdded(getDateTime(itemMap["dateAdded"]));
+	const QDateTime dateModified(getDateTime(itemMap["dateModified"]));
+
+	if (dateAdded.isValid())
+	{
+		metaData[BookmarksModel::TimeAddedRole] = dateAdded;
+	}
+
+	if (dateModified.isValid())
+	{
+		metaData[BookmarksModel::TimeAddedRole] = dateModified;
+	}
+
+	setCurrentFolder(BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, metaData, getCurrentFolder()));
+}
+
+void QtWebEngineBookmarksImportJob::endFolder()
+{
+	goToParent();
+}
+
+void QtWebEngineBookmarksImportJob::addBookmark(QVariant itemVariant)
+{
+	++m_currentAmount;
+	emit importProgress(Importer::BookmarksImport, m_totalAmount, m_currentAmount);
+
+	const QVariantMap itemMap = itemVariant.toMap();
+	const QString typeString = itemMap["type"].toString();
+	const QString title = itemMap["title"].toString();
+
+	BookmarksModel::BookmarkType type(BookmarksModel::UnknownBookmark);
+	QMap<int, QVariant> metaData({{BookmarksModel::TitleRole, title}});
+
+	if (typeString == "anchor" || typeString == "feed")
+	{
+		const QDateTime dateAdded(getDateTime(itemMap["dateAdded"]));
+		const QDateTime dateModified(getDateTime(itemMap["dateModified"]));
+
+		if (dateAdded.isValid())
+		{
+			metaData[BookmarksModel::TimeAddedRole] = dateAdded;
+		}
+
+		if (dateModified.isValid())
+		{
+			metaData[BookmarksModel::TimeAddedRole] = dateModified;
+		}
+
+		type = (typeString == "anchor" ? BookmarksModel::UrlBookmark : BookmarksModel::FeedBookmark);
+
+		const QString url = itemMap["url"].toString();
+
+		if (!areDuplicatesAllowed() && BookmarksManager::hasBookmark(url))
+		{
+			return;
+		}
+
+		const QVariant shortcutUrl = itemMap["keyword"];
+		if (!shortcutUrl.isNull())
+		{
+			metaData[BookmarksModel::KeywordRole] = shortcutUrl.toString();
+		}
+
+		metaData[BookmarksModel::UrlRole] = url;
+	}
+	else if (typeString == "separator")
+	{
+		type = BookmarksModel::SeparatorBookmark;
+	}
+
+	if (type != BookmarksModel::UnknownBookmark)
+	{
+		BookmarksManager::addBookmark(type, metaData, getCurrentFolder());
+	}
 }
 
 bool QtWebEngineWebBackend::hasSslSupport() const

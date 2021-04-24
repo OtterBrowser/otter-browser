@@ -546,7 +546,7 @@ add_executable(otter-browser WIN32 MACOSX_BUNDLE
 )
 
 if (Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
-	target_link_libraries(otter-browser Qt5::WebEngineCore Qt5::WebEngineWidgets)
+        target_link_libraries(otter-browser Qt5::WebEngineCore Qt5::WebEngineWidgets Qt5::WebChannel)
 endif ()
 
 if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
