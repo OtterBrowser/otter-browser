@@ -28,6 +28,7 @@ ComboBoxWidget::ComboBoxWidget(QWidget *parent) : QComboBox(parent),
 {
 	m_view->header()->setStretchLastSection(true);
 	m_view->setViewMode(ItemViewWidget::TreeView);
+	m_view->setContextMenuPolicy(Qt::NoContextMenu);
 	m_view->setHeaderHidden(true);
 	m_view->setItemsExpandable(false);
 	m_view->setRootIsDecorated(false);
