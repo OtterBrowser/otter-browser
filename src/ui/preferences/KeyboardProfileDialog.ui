@@ -38,6 +38,9 @@
          </item>
          <item>
           <widget class="Otter::ItemViewWidget" name="actionsViewWidget">
+           <property name="contextMenuPolicy">
+            <enum>Qt::NoContextMenu</enum>
+           </property>
            <property name="editTriggers">
             <set>QAbstractItemView::CurrentChanged|QAbstractItemView::SelectedClicked</set>
            </property>

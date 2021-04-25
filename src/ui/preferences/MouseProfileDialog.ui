@@ -38,6 +38,9 @@
         <layout class="QHBoxLayout" name="gesturesLayout">
          <item>
           <widget class="Otter::ItemViewWidget" name="gesturesViewWidget">
+           <property name="contextMenuPolicy">
+            <enum>Qt::NoContextMenu</enum>
+           </property>
            <property name="editTriggers">
             <set>QAbstractItemView::CurrentChanged</set>
            </property>
