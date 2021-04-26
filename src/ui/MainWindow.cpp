@@ -2346,11 +2346,12 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 			break;
 		case ActionsManager::OpenFeedAction:
 			{
+				FeedsModel::Entry *entry(nullptr);
 				Feed *feed(nullptr);
 
 				if (parameters.contains(QLatin1String("entry")))
 				{
-					const FeedsModel::Entry *entry(FeedsManager::getModel()->getEntry(parameters[QLatin1String("entry")].toULongLong()));
+					entry = FeedsManager::getModel()->getEntry(parameters[QLatin1String("entry")].toULongLong());
 
 					if (entry && entry->getType() == FeedsModel::FeedEntry)
 					{
@@ -2377,6 +2378,12 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 						state.text.append(QStringLiteral(" (%1)").arg(unreadEntriesAmount));
 						state.counter = unreadEntriesAmount;
 					}
+				}
+				else if (entry && entry->getType() == FeedsModel::FolderEntry)
+				{
+					state.text = entry->data(FeedsModel::TitleRole).toString().replace(QLatin1Char('&'), QLatin1String("&&"));
+					state.icon = entry->data(Qt::DecorationRole).value<QIcon>();
+					state.isEnabled = true;
 				}
 			}
 
