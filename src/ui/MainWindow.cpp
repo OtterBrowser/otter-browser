@@ -2381,7 +2381,7 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 				}
 				else if (entry && entry->getType() == FeedsModel::FolderEntry)
 				{
-					state.text = entry->data(FeedsModel::TitleRole).toString().replace(QLatin1Char('&'), QLatin1String("&&"));
+					state.text = entry->getTitle().replace(QLatin1Char('&'), QLatin1String("&&"));
 					state.icon = entry->data(Qt::DecorationRole).value<QIcon>();
 					state.isEnabled = true;
 				}

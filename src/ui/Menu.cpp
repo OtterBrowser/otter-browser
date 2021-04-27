@@ -1049,7 +1049,7 @@ void Menu::populateFeedsMenu()
 
 		if (type == FeedsModel::FeedEntry || type == FeedsModel::FolderEntry || type == FeedsModel::RootEntry)
 		{
-			QString text(entry->data(FeedsModel::TitleRole).toString().replace(QLatin1Char('&'), QLatin1String("&&")));
+			QString text(entry->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")));
 			const int unreadEntriesAmount(entry->data(FeedsModel::UnreadEntriesAmountRole).toInt());
 
 			if (unreadEntriesAmount > 0)
