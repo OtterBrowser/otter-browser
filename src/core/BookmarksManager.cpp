@@ -21,7 +21,6 @@
 #include "BookmarksManager.h"
 #include "Application.h"
 #include "SessionsManager.h"
-#include "Utils.h"
 
 #include <QtCore/QDateTime>
 
