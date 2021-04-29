@@ -54,7 +54,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
         <source>This session only</source>
-        <translation>Alleen voor deze sessie</translation>
+        <translation>Alleen in deze sessie</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
@@ -97,12 +97,12 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="14"/>
         <source>Preferred Webpage Language</source>
-        <translation>Voorkeurstaal voor webpagina</translation>
+        <translation>Voorkeurstaal voor websites</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="20"/>
         <source>To add language, please choose one from list or type its code.</source>
-        <translation>Als je een taal wilt toevoegen, kies er dan één uit de lijst of voer een taalcode in.</translation>
+        <translation>Als u een taal wilt toevoegen, kies er dan één uit de lijst of voer een taalcode in.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="39"/>
@@ -169,7 +169,7 @@
     <message>
         <location filename="../../src/ui/Action.cpp" line="119"/>
         <source>Creating instance of deprecated action: %1</source>
-        <translation>Bezig met creëren van instantie van verouderde actie: %1</translation>
+        <translation>Bezig met maken van instantie van verouderde actie: %1</translation>
     </message>
 </context>
 <context>
@@ -177,12 +177,12 @@
     <message>
         <location filename="../../src/ui/ActionComboBoxWidget.cpp" line="84"/>
         <source>Select Action</source>
-        <translation>Actie selecteren</translation>
+        <translation>Actie kiezen</translation>
     </message>
     <message>
         <location filename="../../src/ui/ActionComboBoxWidget.cpp" line="155"/>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
 </context>
 <context>
@@ -198,7 +198,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="79"/>
@@ -209,7 +209,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="147"/>
         <source>Select Files</source>
-        <translation>Bestanden selecteren</translation>
+        <translation>Bestanden kiezen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="147"/>
@@ -226,13 +226,13 @@
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="184"/>
         <source>User Script with this name already exists:
 %1</source>
-        <translation>Er bestaat al een gebruikersscript met deze naam:
+        <translation>Er is al een gebruikersscript met deze naam:
 %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="185"/>
         <source>Do you want to replace it?</source>
-        <translation>Wil je dit script vervangen?</translation>
+        <translation>Wilt u dit script vervangen?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="192"/>
@@ -242,7 +242,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="237"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Foutmelding</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="237"/>
@@ -255,17 +255,17 @@
     <message numerus="yes">
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="366"/>
         <source>You are about to irreversibly remove %n addon(s).</source>
-        <translation><numerusform>Je staat op het punt om %n extensie permanent te verwijderen.</numerusform><numerusform>Je staat op het punt om %n extensies permanent te verwijderen.</numerusform></translation>
+        <translation><numerusform>U staat op het punt om %n extensie permanent te verwijderen.</numerusform><numerusform>U staat op het punt om %n extensies permanent te verwijderen.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="367"/>
         <source>Do you want to continue?</source>
-        <translation>Wil je doorgaan?</translation>
+        <translation>Wilt u doorgaan?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="433"/>
         <source>Add Addon…</source>
-        <translation>Extensie toevoegen...</translation>
+        <translation>Extensie toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="439"/>
@@ -280,7 +280,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="444"/>
         <source>Remove Addon…</source>
-        <translation>Extensie verwijderen...</translation>
+        <translation>Extensie verwijderen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="485"/>
@@ -327,12 +327,12 @@
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="341"/>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="372"/>
         <source>Enter address or search…</source>
-        <translation>Voer een adres of zoekopdracht in...</translation>
+        <translation>Voer een adres of zoekopdracht in…</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="540"/>
         <source>Remove this Icon</source>
-        <translation>Dit pictogram verwijderen</translation>
+        <translation>Pictogram verwijderen</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="631"/>
@@ -352,7 +352,7 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1045"/>
         <source>Show website information</source>
-        <translation>Website-informatie weergeven</translation>
+        <translation>Website-informatie tonen</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1059"/>
@@ -393,20 +393,20 @@
     <message>
         <location filename="../../src/core/Application.cpp" line="322"/>
         <source>Profile directory (%1) is not writable, application will be running in read-only mode.</source>
-        <translation>De profielmap (%1) is niet beschrijfbaar; de applicatie zal draaien in alleen-lezenmodus.</translation>
+        <translation>De profielmap, %1, is niet beschrijfbaar - Otter wordt gestart in de alleen-lezenmodus.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="345"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
-        <translation>Je profielmap (%1) heeft geen vrije ruimte meer.
+        <translation>Er is geen vrije ruimte meer in uw profielmap (%1).
 Dit kan leiden tot storingen of gegevensverlies.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="349"/>
         <source>Your profile directory (%1) is running low on free disk space (%2 remaining).
 This may lead to malfunctions or even data loss.</source>
-        <translation>Je profielmap (%1) heeft bijna geen vrije ruimte meer (%2 resterend).
+        <translation>Er is bijna geen vrije ruimte meer in uw profielmap (%1) (%2 resterend).
 Dit kan leiden tot storingen of gegevensverlies.</translation>
     </message>
     <message>
@@ -414,14 +414,14 @@ Dit kan leiden tot storingen of gegevensverlies.</translation>
         <location filename="../../src/core/Application.cpp" line="1643"/>
         <location filename="../../src/core/Application.cpp" line="1692"/>
         <source>Do you want to continue?</source>
-        <translation>Wil je doorgaan?</translation>
+        <translation>Wilt u doorgaan?</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="357"/>
         <location filename="../../src/core/Application.cpp" line="1647"/>
         <location filename="../../src/core/Application.cpp" line="1696"/>
         <source>Do not show this message again</source>
-        <translation>Dit bericht nooit meer tonen</translation>
+        <translation>Nooit meer tonen</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="358"/>
@@ -442,7 +442,7 @@ Dit kan leiden tot storingen of gegevensverlies.</translation>
         <location filename="../../src/core/Application.cpp" line="442"/>
         <source>SSL support is not available or incomplete.
 Some websites may work incorrectly or do not work at all.</source>
-        <translation>SSL-ondersteuning is niet beschikbaar of onvolledig.
+        <translation>Er is geen ssl-ondersteuning beschikbaar of deze is onvolledig.
 Sommige websites werken mogelijk niet (goed).</translation>
     </message>
     <message>
@@ -453,12 +453,12 @@ Sommige websites werken mogelijk niet (goed).</translation>
     <message>
         <location filename="../../src/core/Application.cpp" line="747"/>
         <source>Web backend: %1 %2.</source>
-        <translation>Web-aandrijving: %1 %2.</translation>
+        <translation>Webaandrijving: %1 %2.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="751"/>
         <source>SSL library not available.</source>
-        <translation>De SSL-bibliotheek is niet beschikbaar.</translation>
+        <translation>De ssl-bibliotheek is niet beschikbaar.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="755"/>
@@ -469,13 +469,13 @@ Sommige websites werken mogelijk niet (goed).</translation>
         <location filename="../../src/core/Application.cpp" line="1017"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
-        <translation>Deze sessie werd onjuist opgeslagen.
-Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
+        <translation>Deze sessie is onjuist opgeslagen.
+Weet u zeker dat u de sessie tóch wilt herstellen?</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1171"/>
         <source>New update %1 from %2 channel is available!</source>
-        <translation>Er is een nieuwe update beschikbaar. Versie: %1 - Kanaal: %2</translation>
+        <translation>Er is een update beschikbaar. Versie: %1 - Kanaal: %2</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1641"/>
@@ -486,7 +486,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message numerus="yes">
         <location filename="../../src/core/Application.cpp" line="1642"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
-        <translation><numerusform>Je staat op het punt om af te sluiten terwijl er nog %n bestand wordt gedownload.</numerusform><numerusform>Je staat op het punt om af te sluiten terwijl er nog %n bestanden worden gedownload.</numerusform></translation>
+        <translation><numerusform>U staat op het punt om af te sluiten terwijl er nog %n bestand wordt gedownload.</numerusform><numerusform>U staat op het punt om af te sluiten terwijl er nog %n bestanden worden gedownload.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1649"/>
@@ -497,7 +497,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/core/Application.cpp" line="1691"/>
         <source>You are about to quit the current Otter Browser session.</source>
-        <translation>Je staat op het punt om de huidige Otter-sessie af te sluiten.</translation>
+        <translation>U staat op het punt om de huidige Otter-sessie af te sluiten.</translation>
     </message>
 </context>
 <context>
@@ -507,19 +507,19 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="47"/>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="122"/>
         <source>Default Application</source>
-        <translation>Standaardapplicatie</translation>
+        <translation>Standaardprogramma</translation>
     </message>
     <message>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="36"/>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="48"/>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="144"/>
         <source>Other…</source>
-        <translation>Overig...</translation>
+        <translation>Overig…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="60"/>
         <source>Select Application</source>
-        <translation>Applicatie selecteren</translation>
+        <translation>Programma kiezen</translation>
     </message>
     <message>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="130"/>
@@ -532,12 +532,12 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="215"/>
         <source>Failed to parse feed file: %1</source>
-        <translation>Fout tijdens verwerken van feedbestand: %1</translation>
+        <translation>Het feedbestand kan niet worden verwerkt: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="226"/>
         <source>Failed to parse feed: no valid entries found</source>
-        <translation>Fout tijdens verwerken van feed: geen geldige items gevonden</translation>
+        <translation>De feed kan niet worden verwerkt: geen geldige items gevonden</translation>
     </message>
 </context>
 <context>
@@ -578,7 +578,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="19"/>
         <source>Title:</source>
-        <translation>Titel:</translation>
+        <translation>Naam:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="29"/>
@@ -598,22 +598,22 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="71"/>
         <source>New…</source>
-        <translation>Nieuw...</translation>
+        <translation>Nieuw…</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="96"/>
         <source>Visits:</source>
-        <translation>Aantal bezoeken:</translation>
+        <translation>Aantal keer bezocht:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="103"/>
         <source>Last visit:</source>
-        <translation>Laatste bezoek:</translation>
+        <translation>Recentste bezoek:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="110"/>
         <source>Created:</source>
-        <translation>Gecreëerd op:</translation>
+        <translation>Gemaakt op:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="138"/>
@@ -623,7 +623,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="152"/>
         <source>Keyword:</source>
-        <translation>Sleutelwoord:</translation>
+        <translation>Trefwoord:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="50"/>
@@ -650,12 +650,12 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="159"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Foutmelding</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="159"/>
         <source>Bookmark with this keyword already exists.</source>
-        <translation>Er is al een bladwijzer met dit sleutelwoord.</translation>
+        <translation>Er is al een bladwijzer met dit trefwoord.</translation>
     </message>
 </context>
 <context>
@@ -663,7 +663,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="97"/>
         <source>Title: %1</source>
-        <translation>Titel: %1</translation>
+        <translation>Naam: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="101"/>
@@ -678,12 +678,12 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="111"/>
         <source>Created: %1</source>
-        <translation>Gecreëerd: %1</translation>
+        <translation>Gemaakt op: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="116"/>
         <source>Visited: %1</source>
-        <translation>Bezocht: %1</translation>
+        <translation>Bezocht op: %1</translation>
     </message>
 </context>
 <context>
@@ -696,7 +696,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="43"/>
         <source>Select name of new folder:</source>
-        <translation>Selecteer de naam van de nieuwe map:</translation>
+        <translation>Geef de nieuwe map een naam:</translation>
     </message>
 </context>
 <context>
@@ -704,7 +704,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="85"/>
@@ -714,7 +714,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="92"/>
         <source>Title:</source>
-        <translation>Titel:</translation>
+        <translation>Naam:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="99"/>
@@ -724,7 +724,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="115"/>
         <source>Keyword:</source>
-        <translation>Sleutelwoord:</translation>
+        <translation>Trefwoord:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="130"/>
@@ -735,7 +735,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="140"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="246"/>
         <source>Properties…</source>
-        <translation>Eigenschappen...</translation>
+        <translation>Eigenschappen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="150"/>
@@ -747,14 +747,14 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="168"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="221"/>
         <source>Add Folder…</source>
-        <translation>Map toevoegen...</translation>
+        <translation>Map toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="169"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="222"/>
         <source>Add Bookmark…</source>
-        <translation>Bladwijzer toevoegen...</translation>
+        <translation>Bladwijzer toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="52"/>
@@ -766,7 +766,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Title</source>
-        <translation>Titel</translation>
+        <translation>Naam</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
@@ -781,7 +781,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Keyword</source>
-        <translation>Sleutelwoord</translation>
+        <translation>Trefwoord</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
@@ -801,7 +801,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Visits</source>
-        <translation>Aantal bezoeken</translation>
+        <translation>Aantal keer bezocht</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="160"/>
@@ -839,7 +839,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="70"/>
         <source>New…</source>
-        <translation>Nieuw...</translation>
+        <translation>Nieuw…</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
@@ -849,17 +849,17 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="107"/>
         <source>Import into subfolder</source>
-        <translation>Importeren naar submap</translation>
+        <translation>Importeren naar onderliggende map</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="120"/>
         <source>Leave empty to import into main folder</source>
-        <translation>Als je de bladwijzers wilt importeren naar de hoofdmap, vul hier dan niks in</translation>
+        <translation>Laat leeg om te importeren naar hoofdmap</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="127"/>
         <source>Subfolder name:</source>
-        <translation>Submapnaam:</translation>
+        <translation>Naam van onderliggende map:</translation>
     </message>
 </context>
 <context>
@@ -887,37 +887,37 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="362"/>
         <source>Failed to open notes file: %1</source>
-        <translation>Fout bij openen van notitiebestand: %1</translation>
+        <translation>Het notitiebestand kan niet worden geopend: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="362"/>
         <source>Failed to open bookmarks file: %1</source>
-        <translation>Fout bij openen van bladwijzerbestand: %1</translation>
+        <translation>Het bladwijzerbestand kan niet worden geopend: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="386"/>
         <source>Failed to load notes file: %1</source>
-        <translation>Fout bij laden van notitiebestand: %1</translation>
+        <translation>Het notitiebestand kan niet worden geladen: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="386"/>
         <source>Failed to load bookmarks file: %1</source>
-        <translation>Fout bij laden van bladwijzerbestand: %1</translation>
+        <translation>Het bladwijzerbestand kan niet worden geladen: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Foutmelding</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Failed to load notes file.</source>
-        <translation>Het laden van het notitiebestand is mislukt.</translation>
+        <translation>Het notitiebestand kan niet worden geladen.</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Failed to load bookmarks file.</source>
-        <translation>Het laden van het bladwijzerbestand is mislukt.</translation>
+        <translation>Het bladwijzerbestand kan niet worden geladen.</translation>
     </message>
 </context>
 <context>
@@ -925,7 +925,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="97"/>
@@ -1043,7 +1043,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="44"/>
         <source>Export…</source>
-        <translation>Exporteren...</translation>
+        <translation>Exporteren…</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="48"/>
@@ -1053,7 +1053,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="53"/>
         <source>View Certificate for %1</source>
-        <translation>Certificaten tonen voor %1</translation>
+        <translation>Certificaten van %1 tonen</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="62"/>
@@ -1064,17 +1064,17 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="116"/>
         <source>Select File</source>
-        <translation>Bestand selecteren</translation>
+        <translation>Bestand kiezen</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="116"/>
         <source>DER encoded X.509 certificates (*.der)</source>
-        <translation>Met DER-versleutelde X.509-certificaten (*.der)</translation>
+        <translation>Met DER versleutelde X.509-certificaten (*.der)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="116"/>
         <source>PEM encoded X.509 certificates (*.pem)</source>
-        <translation>Met PEM-versleutelde X.509-certificaten (*.pem)</translation>
+        <translation>Met PEM versleutelde X.509-certificaten (*.pem)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="116"/>
@@ -1089,7 +1089,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="124"/>
         <source>Failed to open file for writing.</source>
-        <translation>Fout bij openen van bestand voor wegschrijven.</translation>
+        <translation>Het bestand kan niet worden weggeschreven.</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="183"/>
@@ -1250,7 +1250,7 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="440"/>
         <source>Subject Public Key</source>
-        <translation>Onderwerp-publieke sleutel</translation>
+        <translation>Onderwerp-openbare sleutel</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="444"/>
@@ -1260,7 +1260,7 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="448"/>
         <source>Public Key</source>
-        <translation>Publieke sleutel</translation>
+        <translation>Openbare sleutel</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="452"/>
@@ -1288,7 +1288,7 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="14"/>
         <source>Clear History</source>
-        <translation>Geschiedenis verwijderen</translation>
+        <translation>Geschiedenis wissen</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="35"/>
@@ -1303,12 +1303,12 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="45"/>
         <source> h</source>
-        <translation>u</translation>
+        <translation> uur</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="61"/>
         <source>Clear browsing history</source>
-        <translation>Navigatiegeschiedenis verwijderen</translation>
+        <translation>Navigatiegeschiedenis wissen</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="68"/>
@@ -1318,17 +1318,17 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="78"/>
         <source>Clear forms history</source>
-        <translation>Formuliergeschiedenis verwijderen</translation>
+        <translation>Formuliergeschiedenis wissen</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="85"/>
         <source>Clear downloads history</source>
-        <translation>Downloadgeschiedenis verwijderen</translation>
+        <translation>Downloadgeschiedenis wissen</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="95"/>
         <source>Clear search history</source>
-        <translation>Zoekgeschiedenis verwijderen</translation>
+        <translation>Zoekgeschiedenis wissen</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="102"/>
@@ -1363,7 +1363,7 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="105"/>
         <source>Select Color…</source>
-        <translation>Kleur selecteren...</translation>
+        <translation>Kleur kiezen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="106"/>
@@ -1381,7 +1381,7 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="69"/>
@@ -1437,12 +1437,12 @@ Exponent: %2</translation>
         <source>The settings have been changed.
 Do you want to save them?</source>
         <translation>De instellingen zijn gewijzigd.
-Wil je de instellingen opslaan?</translation>
+Wilt u de instellingen opslaan?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="363"/>
         <source>Do you really want to restore default values of all options?</source>
-        <translation>Weet je zeker dat je alle opties wilt herstellen naar hun standaardwaarden?</translation>
+        <translation>Weet u zeker dat u alle opties wilt terugzetten op de standaardwaarden?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="500"/>
@@ -1477,7 +1477,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="544"/>
         <source>Advanced Configuration</source>
-        <translation>Geavanceerde configuratie</translation>
+        <translation>Geavanceerde instellingen</translation>
     </message>
 </context>
 <context>
@@ -1508,7 +1508,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="43"/>
         <source>Select lists which you want to use for content blocking (AdBlock Plus compatible):</source>
-        <translation>Selecteer de te gebruiken lijsten voor inhoudsblokkade (AdBlock Plus-compatibel):</translation>
+        <translation>Selecteer de te gebruiken lijsten voor inhoudsblokkade (compatibel met AdBlock Plus):</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="76"/>
@@ -1658,7 +1658,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="145"/>
         <source> day(s)</source>
-        <translation>dag(en)</translation>
+        <translation> dag(en)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="146"/>
@@ -1682,7 +1682,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="22"/>
         <source>Title:</source>
-        <translation>Titel:</translation>
+        <translation>Naam:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="35"/>
@@ -1707,7 +1707,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="81"/>
         <source> days</source>
-        <translation>dagen</translation>
+        <translation> dagen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="91"/>
@@ -1718,7 +1718,7 @@ Wil je de instellingen opslaan?</translation>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="40"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="77"/>
         <source>Advertisements</source>
-        <translation>Advertenties</translation>
+        <translation>Reclame</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="41"/>
@@ -1755,22 +1755,22 @@ Wil je de instellingen opslaan?</translation>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="114"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="121"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Foutmelding</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="93"/>
         <source>Valid update URL is required.</source>
-        <translation>Geldige update-URL vereist.</translation>
+        <translation>Geldige update-url vereist.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="114"/>
         <source>Profile with name %1.txt already exists.</source>
-        <translation>Er bestaat al een profiel met de naam &apos;%1.txt&apos;.</translation>
+        <translation>Er is al een profiel met de naam ‘%1.txt’.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="121"/>
         <source>Failed to create profile file: %1.</source>
-        <translation>Fout bij creëren van profielbestand: %1.</translation>
+        <translation>Het profielbestand kan niet worden aangemaakt: %1.</translation>
     </message>
 </context>
 <context>
@@ -1778,17 +1778,17 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="90"/>
         <source>Failed to read profile file</source>
-        <translation>Fout bij lezen van profielbestand</translation>
+        <translation>Het profielbestand kan niet worden uitgelezen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="94"/>
         <source>Failed to download profile rules</source>
-        <translation>Fout bij downloaden van profielregels</translation>
+        <translation>De profielregels kunnen niet worden gedownload</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="98"/>
         <source>Failed to verify profile rules using checksum</source>
-        <translation>Fout bij verifiëren van profielregels d.m.v. controlesom</translation>
+        <translation>De profielregels kunnen niet a.d.h. van de controlesom worden gecontroleerd</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="107"/>
@@ -1811,7 +1811,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="318"/>
         <source>Failed to remove content blocking profile file: %1</source>
-        <translation>Fout bij verwijderen van profielbestand voor inhoudsblokkering: %1</translation>
+        <translation>Het profielbestand voor inhoudsblokkering kan niet worden verwijderd: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="318"/>
@@ -1836,7 +1836,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Advertisements</source>
-        <translation>Advertenties</translation>
+        <translation>Reclame</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
@@ -1949,7 +1949,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="99"/>
@@ -1979,13 +1979,13 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="165"/>
         <source>Add…</source>
-        <translation>Toevoegen...</translation>
+        <translation>Toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="175"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="359"/>
         <source>Properties…</source>
-        <translation>Eigenschappen...</translation>
+        <translation>Eigenschappen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="185"/>
@@ -2017,17 +2017,17 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="335"/>
         <source>Add Cookie…</source>
-        <translation>Cookie toevoegen...</translation>
+        <translation>Cookie toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="346"/>
         <source>Remove All Cookies from This Domain…</source>
-        <translation>Alle cookies van dit domein verwijderen...</translation>
+        <translation>Alle cookies van dit domein verwijderen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="349"/>
         <source>Remove All Cookies…</source>
-        <translation>Alle cookies verwijderen...</translation>
+        <translation>Alle cookies verwijderen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="423"/>
@@ -2045,12 +2045,12 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="14"/>
         <source>Third-party Cookies Exceptions</source>
-        <translation>Cookies van derde partijen - Uitzonderingen</translation>
+        <translation>Cookies van externe partijen - Uitzonderingen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="26"/>
         <source>Always ACCEPT third-party cookies from:</source>
-        <translation>Cookies van derde partijen altijd ACCEPTEREN van:</translation>
+        <translation>Altijd externe cookies ACCEPTEREN van:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="44"/>
@@ -2073,7 +2073,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="88"/>
         <source>Always REJECT third-party cookies from:</source>
-        <translation>Cookies van derde partijen altijd WEIGEREN van:</translation>
+        <translation>Altijd externe cookies WEIGEREN van:</translation>
     </message>
 </context>
 <context>
@@ -2120,7 +2120,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="185"/>
         <source>Filter…</source>
-        <translation>Filteren...</translation>
+        <translation>Filteren…</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="195"/>
@@ -2175,12 +2175,12 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/core/FeedsManager.cpp" line="322"/>
         <source>Failed to parse feed: invalid feed type</source>
-        <translation>Fout tijdens verwerken van feed: ongeldig type</translation>
+        <translation>De feed is van een ongeldig type en kan niet worden verwerkt</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsManager.cpp" line="332"/>
         <source>Failed to download feed</source>
-        <translation>Fout bij downloaden van feed</translation>
+        <translation>De feed kan niet worden opgehaald</translation>
     </message>
 </context>
 <context>
@@ -2198,17 +2198,17 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="44"/>
         <source>New…</source>
-        <translation>Nieuw...</translation>
+        <translation>Nieuw…</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="53"/>
         <source>Title:</source>
-        <translation>Titel:</translation>
+        <translation>Naam:</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="80"/>
         <source>Change Icon…</source>
-        <translation>Pictogram wijzigen...</translation>
+        <translation>Pictogram wijzigen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="89"/>
@@ -2228,7 +2228,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="115"/>
         <source> minutes</source>
-        <translation>minuten</translation>
+        <translation> minuten</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="50"/>
@@ -2238,7 +2238,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="80"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Foutmelding</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="80"/>
@@ -2256,7 +2256,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
         <source>Select name of new folder:</source>
-        <translation>Selecteer de naam van de nieuwe map:</translation>
+        <translation>Geef de nieuwe map een naam:</translation>
     </message>
 </context>
 <context>
@@ -2275,7 +2275,7 @@ Wil je de instellingen opslaan?</translation>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="107"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="151"/>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="161"/>
@@ -2308,17 +2308,17 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="195"/>
         <source>You already subscribed this feed.</source>
-        <translation>Je bent al geabonneerd op deze feed.</translation>
+        <translation>U bent al geabonneerd op deze feed.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="196"/>
         <source>Do you want to continue?</source>
-        <translation>Wil je doorgaan?</translation>
+        <translation>Wilt u doorgaan?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="214"/>
         <source>Select Folder Name</source>
-        <translation>Mapnaam selecteren</translation>
+        <translation>Mapnaam kiezen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="214"/>
@@ -2339,13 +2339,13 @@ Wil je de instellingen opslaan?</translation>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="386"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="411"/>
         <source>Add Folder…</source>
-        <translation>Map toevoegen...</translation>
+        <translation>Map toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="387"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="412"/>
         <source>Add Feed…</source>
-        <translation>Feed toevoegen...</translation>
+        <translation>Feed toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="409"/>
@@ -2360,7 +2360,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="435"/>
         <source>Properties…</source>
-        <translation>Eigenschappen...</translation>
+        <translation>Eigenschappen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="477"/>
@@ -2402,7 +2402,7 @@ Wil je de instellingen opslaan?</translation>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="912"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="921"/>
         <source>Title: %1</source>
-        <translation>Titel: %1</translation>
+        <translation>Naam: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="912"/>
@@ -2436,22 +2436,22 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="230"/>
         <source>Failed to open feeds file: %1</source>
-        <translation>Fout bij openen van feedsbestand: %1</translation>
+        <translation>Het feedbestand kan niet worden geopend: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="253"/>
         <source>Failed to load feeds file: %1</source>
-        <translation>Fout bij laden van feedsbestand: %1</translation>
+        <translation>Het feedbestand kan niet worden geladen: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="255"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Foutmelding</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="255"/>
         <source>Failed to load feeds file.</source>
-        <translation>Fout bij laden van feedsbestand.</translation>
+        <translation>Het feedbestand kan niet worden geladen.</translation>
     </message>
 </context>
 <context>
@@ -2459,17 +2459,17 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="53"/>
         <source>Failed to open passwords file: %1</source>
-        <translation>Fout bij openen van wachtwoordbestand: %1</translation>
+        <translation>Het wachtwoordbestand kan niet worden geopend: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="109"/>
         <source>Failed to save passwords file: %1</source>
-        <translation>Fout bij opslaan van wachtwoordbestand: %1</translation>
+        <translation>Het wachtwoordbestand kan niet worden opgeslagen: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="196"/>
         <source>Failed to remove passwords file</source>
-        <translation>Fout bij verwijderen van wachtwoordbestand</translation>
+        <translation>Het wachtwoordbestand kan niet worden verwijderd</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="325"/>
@@ -2488,17 +2488,17 @@ Wil je de instellingen opslaan?</translation>
         <location filename="../../src/ui/FilePathWidget.cpp" line="49"/>
         <location filename="../../src/ui/FilePathWidget.cpp" line="74"/>
         <source>Browse…</source>
-        <translation>Bladeren...</translation>
+        <translation>Bladeren…</translation>
     </message>
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="88"/>
         <source>Select File</source>
-        <translation>Bestand selecteren</translation>
+        <translation>Bestand kiezen</translation>
     </message>
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="88"/>
         <source>Select Directory</source>
-        <translation>Map selecteren</translation>
+        <translation>Map kiezen</translation>
     </message>
 </context>
 <context>
@@ -2506,7 +2506,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="212"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Foutmelding</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="216"/>
@@ -2529,12 +2529,12 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Foutmelding</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Profile with this address already exists.</source>
-        <translation>Er bestaat al een profiel met dit adres.</translation>
+        <translation>Er is al een profiel met dit adres.</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
@@ -2544,7 +2544,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
         <source>Do you want to add this content blocking profile?</source>
-        <translation>Wil je dit inhoudsblokkeringbestand verwijderen?</translation>
+        <translation>Wilt u dit inhoudblokkeringsbestand verwijderen?</translation>
     </message>
 </context>
 <context>
@@ -2567,7 +2567,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="78"/>
         <source>No Sorting</source>
-        <translation>Ongesorteerd</translation>
+        <translation>Niet sorteren</translation>
     </message>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="91"/>
@@ -2590,7 +2590,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="45"/>
@@ -2648,7 +2648,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="388"/>
         <source>Add to Bookmarks…</source>
-        <translation>Toevoegen aan bladwijzers...</translation>
+        <translation>Toevoegen aan bladwijzers…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="389"/>
@@ -2684,7 +2684,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/core/HistoryModel.cpp" line="90"/>
         <source>Failed to open history file: %1</source>
-        <translation>Fout bij openen van geschiedenisbestand: %1</translation>
+        <translation>Het geschiedenisbestand kan niet worden geopend: %1</translation>
     </message>
 </context>
 <context>
@@ -2697,7 +2697,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="183"/>
         <source>Imports bookmarks from HTML file (Netscape format).</source>
-        <translation>Bladwijzers importeren uit een HTML-bestand (Netscape-formaat).</translation>
+        <translation>Importeer bladwijzers uit een html-bestand (Netscape-indeling).</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="228"/>
@@ -2713,7 +2713,7 @@ Wil je de instellingen opslaan?</translation>
         <location filename="../../src/ui/IconWidget.cpp" line="76"/>
         <location filename="../../src/ui/IconWidget.cpp" line="86"/>
         <source>Select Icon</source>
-        <translation>Pictogram selecteren</translation>
+        <translation>Pictogram kiezen</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="76"/>
@@ -2728,12 +2728,12 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="98"/>
         <source>Select From File…</source>
-        <translation>Selecteren uit bestand...</translation>
+        <translation>Kiezen uit bestand…</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="99"/>
         <source>Select From Theme…</source>
-        <translation>Selecteren uit thema...</translation>
+        <translation>Kiezen uit thema…</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="105"/>
@@ -2751,7 +2751,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="14"/>
         <source>Image Properties</source>
-        <translation>Afbeeldingseigenschappen...</translation>
+        <translation>Afbeeldingseigenschappen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="22"/>
@@ -2827,7 +2827,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/ImportDialog.ui" line="123"/>
         <source>Initializing…</source>
-        <translation>Bezig met initialiseren...</translation>
+        <translation>Bezig met initialiseren…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.ui" line="135"/>
@@ -2837,12 +2837,12 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="125"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Foutmelding</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="125"/>
         <source>Unable to import selected type.</source>
-        <translation>Het importeren van het geselecteerde type is onmogelijk.</translation>
+        <translation>Het importeren van het gekozen type is onmogelijk.</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="158"/>
@@ -3108,7 +3108,7 @@ Wil je de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="14"/>
         <source>Switch Application Language</source>
-        <translation>Applicatietaal wijzigen</translation>
+        <translation>Taal van toepassing wijzigen</translation>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="22"/>
@@ -3394,7 +3394,7 @@ Wil je deze nu migreren?</translation>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="201"/>
         <source>Select Action</source>
-        <translation>Actie selecteren</translation>
+        <translation>Actie kiezen</translation>
     </message>
 </context>
 <context>
@@ -3510,7 +3510,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="106"/>
         <source>Select Folder Name</source>
-        <translation>Mapnaam selecteren</translation>
+        <translation>Mapnaam kiezen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="106"/>
@@ -3570,7 +3570,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/OpenBookmarkDialog.ui" line="20"/>
         <source>Enter the keyword of bookmark:</source>
-        <translation>Voer het sleutelwoord in van de bladwijzer:</translation>
+        <translation>Voer het trefwoord in van de bladwijzer:</translation>
     </message>
 </context>
 <context>
@@ -4254,12 +4254,12 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="679"/>
         <source>Open with application</source>
-        <translation>Openen met applicatie</translation>
+        <translation>Openen met toepassing</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="725"/>
         <source>Pass web address directly to application</source>
-        <translation>Webadres direct doorsturen naar applicatie</translation>
+        <translation>Webadres direct doorsturen naar toepassing</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="775"/>
@@ -4382,7 +4382,7 @@ Wil je doorgaan?</translation>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="453"/>
         <source>Programs</source>
-        <translation>Applicaties</translation>
+        <translation>Toepassingen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
@@ -4561,7 +4561,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="594"/>
         <source>Select name of MIME Type:</source>
-        <translation>Naam van MIME-type selecteren</translation>
+        <translation>Naam van MIME-type kiezen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="614"/>
@@ -4587,7 +4587,7 @@ Wil je doorgaan?</translation>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="905"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="967"/>
         <source>Select folder name:</source>
-        <translation>Mapnaam selecteren:</translation>
+        <translation>Mapnaam kiezen:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="743"/>
@@ -5044,7 +5044,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="279"/>
         <source>Clear history when application closes</source>
-        <translation>Geschiedenis wissen bij sluiten van de applicatie</translation>
+        <translation>Geschiedenis wissen bij sluiten van de toepassing</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="299"/>
@@ -5181,7 +5181,7 @@ Wil je doorgaan?</translation>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="98"/>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="163"/>
         <source>Keyword</source>
-        <translation>Sleutelwoord</translation>
+        <translation>Trefwoord</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="127"/>
@@ -5206,7 +5206,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="199"/>
         <source>Select File</source>
-        <translation>Bestand selecteren</translation>
+        <translation>Bestand kiezen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="199"/>
@@ -5245,7 +5245,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="371"/>
         <source>Keyword is already in use. Do you want to continue anyway?</source>
-        <translation>Dit sleutelwoord wordt al gebruikt. Weet je zeker dat je wilt doorgaan?</translation>
+        <translation>Dit trefwoord wordt al gebruikt. Weet je zeker dat je wilt doorgaan?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="448"/>
@@ -5884,7 +5884,7 @@ Wil je deze overschrijven?</translation>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="71"/>
         <source>Keyword:</source>
-        <translation>Sleutelwoord:</translation>
+        <translation>Trefwoord:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="84"/>
@@ -5997,7 +5997,7 @@ Wil je deze overschrijven?</translation>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="820"/>
         <source>Select Search Engine</source>
-        <translation>Zoekmachine selecteren</translation>
+        <translation>Zoekmachine kiezen</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="824"/>
@@ -6015,12 +6015,12 @@ Wil je deze overschrijven?</translation>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="14"/>
         <source>Select Password</source>
-        <translation>Wachtwoord selecteren</translation>
+        <translation>Wachtwoord kiezen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="20"/>
         <source>Select set of credentials:</source>
-        <translation>Selecteer de referentie-set:</translation>
+        <translation>Kies de referentie-set:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="41"/>
@@ -6679,7 +6679,7 @@ Adres: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="429"/>
         <source>Display toggle button</source>
-        <translation>In-/uitklapknop weergeven</translation>
+        <translation>In-/uitklapknop tonen</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="46"/>
@@ -6974,7 +6974,7 @@ Adres: %2</translation>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="133"/>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="849"/>
         <source>Toggle Visibility</source>
-        <translation>Weergeven/Verbergen</translation>
+        <translation>Tonen/Verbergen</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="905"/>
@@ -7457,7 +7457,7 @@ Voortgang: %5&lt;/div&gt;</translation>
         <source>New version of Otter Browser is ready to install.
 Click Install button to restart browser and install the update or close this dialog to install the update during next browser restart.</source>
         <translation>De nieuwe versie van Otter-webbrowser kan worden geïnstalleerd.
-Klik op de knop Installeren om de update nu te installeren of sluit dit venster om de update later te installeren (bij de eerstvolgende start).</translation>
+Klik op Installeren om de update nu te installeren of sluit dit venster om de update later te installeren (bij de eerstvolgende start).</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="191"/>
@@ -7515,7 +7515,7 @@ Klik op de knop Installeren om de update nu te installeren of sluit dit venster 
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.cpp" line="108"/>
         <source>Application Version</source>
-        <translation>Applicatieversie</translation>
+        <translation>Versie van toepassing</translation>
     </message>
 </context>
 <context>
@@ -7548,7 +7548,7 @@ Klik op de knop Installeren om de update nu te installeren of sluit dit venster 
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1242"/>
         <source>Select User Agent</source>
-        <translation>Gebruikersagent selecteren</translation>
+        <translation>Gebruikersagent kiezen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1242"/>
@@ -7810,7 +7810,7 @@ Klik op de knop Installeren om de update nu te installeren of sluit dit venster 
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="48"/>
         <source>This website was marked as fraud.</source>
-        <translation>Deze website staat bekend als een frauduleuze website.</translation>
+        <translation>Deze website staat bekend als frauduleus.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="53"/>
@@ -8324,7 +8324,7 @@ Klik op de knop Installeren om de update nu te installeren of sluit dit venster 
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="358"/>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="408"/>
         <source>Failed to load a valid application path for MIME type %1: %2</source>
-        <translation>Het laden van een geldig applicatiepad is mislukt voor MIME-type %1: %2</translation>
+        <translation>Het laden van een geldig toepassingspad is mislukt voor MIME-type %1: %2</translation>
     </message>
 </context>
 <context>
@@ -9031,7 +9031,7 @@ Klik op de knop Installeren om de update nu te installeren of sluit dit venster 
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="389"/>
         <source>Deselect</source>
-        <translation>De-selecteren</translation>
+        <translation>Niets selecteren</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="390"/>
@@ -9400,7 +9400,7 @@ Klik op de knop Installeren om de update nu te installeren of sluit dit venster 
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="459"/>
         <source>Switch Application Language…</source>
-        <translation>Applicatietaal wijzigen...</translation>
+        <translation>Taal van toepassing wijzigen...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="460"/>
@@ -9856,7 +9856,7 @@ Klik op de knop Installeren om de update nu te installeren of sluit dit venster 
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1053"/>
         <source>Default Application</source>
-        <translation>Standaardapplicatie</translation>
+        <translation>Standaardtoepassing</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1061"/>
@@ -10109,7 +10109,7 @@ Klik op de knop Installeren om de update nu te installeren of sluit dit venster 
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="200"/>
         <source>Failed to find User Script file: %1</source>
-        <translation>Het gebruikersscriptbestand kan niet worden gevonden: %1</translation>
+        <translation>Kan gebruikersscriptbestand niet vinden: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="125"/>
@@ -10169,12 +10169,12 @@ Klik op de knop Installeren om de update nu te installeren of sluit dit venster 
     <message>
         <location filename="../../src/core/Application.cpp" line="136"/>
         <source>Tells application to avoid writing data to disk</source>
-        <translation>Laat de applicatie weten geen gegevens naar de schijf weg te schrijven</translation>
+        <translation>Laat de toepassing weten geen gegevens naar de schijf weg te schrijven</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="137"/>
         <source>Prints out diagnostic report and exits application</source>
-        <translation>Print een diagnostisch rapport en verlaat de applicatie</translation>
+        <translation>Print een diagnostisch rapport en verlaat de toepassing</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="414"/>
@@ -10203,7 +10203,7 @@ Script: %2</translation>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="44"/>
         <source>Unable to check for updates. Invalid URL: %1</source>
-        <translation>Er kan niet worden gecontroleerd op updates - de URL is ongeldig: %1</translation>
+        <translation>Er kan niet worden gecontroleerd op updates - de url is ongeldig: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="62"/>
@@ -10266,7 +10266,7 @@ Script: %2</translation>
         <source>Failed to run File Associations Manager, error code: %1
 Application ID: %2</source>
         <translation>Het uitvoeren van Bestandstoewijzingbeheer is mislukt - foutcode: %1
-Applicatie-ID: %2</translation>
+Toepassings-id: %2</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="522"/>
@@ -10276,7 +10276,7 @@ Applicatie-ID: %2</translation>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="577"/>
         <source>Failed to register application to system registry: %1, %2</source>
-        <translation>De applicatie kan niet worden geregistreerd in het systeemregister: %1, %2</translation>
+        <translation>De toepassing kan niet worden geregistreerd in het systeemregister: %1, %2</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="211"/>
@@ -10431,7 +10431,7 @@ Applicatie-ID: %2</translation>
     <message>
         <location filename="../../src/core/Utils.cpp" line="205"/>
         <source>Make sure your internet connection is active and check whether other applications that rely on the same connection are working.</source>
-        <translation>Zorg ervoor dat je verbonden bent met het internet en controleer of andere applicaties, die dezelfde verbinding gebruiken, wél werken.</translation>
+        <translation>Zorg ervoor dat je verbonden bent met het internet en controleer of andere toepassingen, die dezelfde verbinding gebruiken, wél werken.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="205"/>
@@ -10552,7 +10552,7 @@ Applicatie-ID: %2</translation>
         <source>Target path is not writable.
 Select another one.</source>
         <translation>Het doelpad is niet beschrijfbaar.
-Selecteer een ander pad.</translation>
+Kies een ander pad.</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="890"/>
