@@ -75,15 +75,17 @@ void BookmarksComboBoxWidget::updateBranch(const QModelIndex &parent)
 
 		if (index.isValid())
 		{
-			const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
+			switch (static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()))
+			{
+				case BookmarksModel::RootBookmark:
+				case BookmarksModel::FolderBookmark:
+					updateBranch(index);
 
-			if (type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark)
-			{
-				updateBranch(index);
-			}
-			else
-			{
-				getView()->setRowHidden(i, parent, true);
+					break;
+				default:
+					getView()->setRowHidden(i, parent, true);
+
+					break;
 			}
 		}
 	}
