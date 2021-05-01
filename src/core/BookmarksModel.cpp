@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -488,7 +488,7 @@ void BookmarksModel::restoreBookmark(Bookmark *bookmark)
 
 	Bookmark *formerParent(m_trash.contains(bookmark) ? getBookmark(m_trash[bookmark].first) : m_rootItem);
 
-	if (!formerParent || static_cast<BookmarkType>(formerParent->data(TypeRole).toInt()) != FolderBookmark)
+	if (!formerParent || formerParent->getType() != FolderBookmark)
 	{
 		formerParent = m_rootItem;
 	}
