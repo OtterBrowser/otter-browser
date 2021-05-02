@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -57,15 +57,17 @@ void FeedsComboBoxWidget::updateBranch(const QModelIndex &parent)
 
 		if (index.isValid())
 		{
-			const FeedsModel::EntryType type(static_cast<FeedsModel::EntryType>(index.data(FeedsModel::TypeRole).toInt()));
+			switch (static_cast<FeedsModel::EntryType>(index.data(FeedsModel::TypeRole).toInt()))
+			{
+				case FeedsModel::RootEntry:
+				case FeedsModel::FolderEntry:
+					updateBranch(index);
 
-			if (type == FeedsModel::RootEntry || type == FeedsModel::FolderEntry)
-			{
-				updateBranch(index);
-			}
-			else
-			{
-				getView()->setRowHidden(i, parent, true);
+					break;
+				default:
+					getView()->setRowHidden(i, parent, true);
+
+					break;
 			}
 		}
 	}
