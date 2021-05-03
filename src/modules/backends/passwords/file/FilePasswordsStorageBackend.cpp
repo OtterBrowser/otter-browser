@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -61,13 +61,13 @@ void FilePasswordsStorageBackend::initialize()
 
 	for (hostsIterator = hostsObject.constBegin(); hostsIterator != hostsObject.constEnd(); ++hostsIterator)
 	{
-		const QJsonArray hostArray(hostsIterator.value().toArray());
+		const QJsonArray passwordsArray(hostsIterator.value().toArray());
 		QVector<PasswordsManager::PasswordInformation> hostPasswords;
-		hostPasswords.reserve(hostArray.count());
+		hostPasswords.reserve(passwordsArray.count());
 
-		for (int i = 0; i < hostArray.count(); ++i)
+		for (int i = 0; i < passwordsArray.count(); ++i)
 		{
-			const QJsonObject passwordObject(hostArray.at(i).toObject());
+			const QJsonObject passwordObject(passwordsArray.at(i).toObject());
 			PasswordsManager::PasswordInformation password;
 			password.url = QUrl(passwordObject.value(QLatin1String("url")).toString());
 			password.timeAdded = QDateTime::fromString(passwordObject.value(QLatin1String("timeAdded")).toString(), Qt::ISODate);
@@ -121,7 +121,7 @@ void FilePasswordsStorageBackend::save()
 			continue;
 		}
 
-		QJsonArray hostArray;
+		QJsonArray passwordsArray;
 		const QVector<PasswordsManager::PasswordInformation> passwords(hostsIterator.value());
 
 		for (int i = 0; i < passwords.count(); ++i)
@@ -148,10 +148,10 @@ void FilePasswordsStorageBackend::save()
 			passwordObject.insert(QLatin1String("type"), ((passwords.at(i).type == PasswordsManager::AuthPassword) ? QLatin1String("auth") : QLatin1String("form")));
 			passwordObject.insert(QLatin1String("fields"), fieldsArray);
 
-			hostArray.append(passwordObject);
+			passwordsArray.append(passwordObject);
 		}
 
-		hostsObject.insert(hostsIterator.key(), hostArray);
+		hostsObject.insert(hostsIterator.key(), passwordsArray);
 	}
 
 	file.write(QJsonDocument(hostsObject).toJson(QJsonDocument::Compact));
