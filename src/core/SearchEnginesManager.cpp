@@ -559,7 +559,7 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 
 	if (!searchEngine.icon.isNull())
 	{
-		const QSize size(searchEngine.icon.availableSizes().value(0, QSize(16, 16)));
+		const QSize size(searchEngine.icon.availableSizes().value(0, {16, 16}));
 
 		writer.writeStartElement(QLatin1String("Image"));
 		writer.writeAttribute(QLatin1String("width"), QString::number(size.width()));
