@@ -189,7 +189,7 @@ void OptionWidget::setDefaultValue(const QVariant &value)
 		{
 			const QIcon icon(value.value<QIcon>());
 
-			m_iconWidget->setDefaultIcon(Utils::savePixmapAsDataUri(icon.pixmap(icon.availableSizes().value(0, QSize(16, 16)))));
+			m_iconWidget->setDefaultIcon(Utils::savePixmapAsDataUri(icon.pixmap(icon.availableSizes().value(0, {16, 16}))));
 		}
 		else
 		{
