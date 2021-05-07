@@ -534,7 +534,7 @@ void QtWebKitWebPageThumbnailJob::handlePageLoadFinished(bool result)
 
 	if (contentsSize.isNull())
 	{
-		m_page->setViewportSize(QSize(1280, 760));
+		m_page->setViewportSize({1280, 760});
 
 		contentsSize = m_page->mainFrame()->contentsSize();
 	}
