@@ -1043,7 +1043,7 @@ BookmarksModel::Bookmark* BookmarksModel::addBookmark(BookmarkType type, const Q
 
 	parent->insertRow(((index < 0) ? parent->rowCount() : index), bookmark);
 
-	if (type == UrlBookmark || type == SeparatorBookmark)
+	if (type == FeedBookmark || type == UrlBookmark || type == SeparatorBookmark)
 	{
 		bookmark->setDropEnabled(false);
 	}
