@@ -838,13 +838,7 @@ void BookmarksModel::removeBookmarkUrl(Bookmark *bookmark)
 
 	switch (bookmark->getType())
 	{
-		case FolderBookmark:
-			for (int i = 0; i < bookmark->rowCount(); ++i)
-			{
-				removeBookmarkUrl(bookmark->getChild(i));
-			}
-
-			break;
+		case FeedBookmark:
 		case UrlBookmark:
 			{
 				const QUrl url(Utils::normalizeUrl(bookmark->data(UrlRole).toUrl()));
@@ -858,6 +852,13 @@ void BookmarksModel::removeBookmarkUrl(Bookmark *bookmark)
 						m_urls.remove(url);
 					}
 				}
+			}
+
+			break;
+		case FolderBookmark:
+			for (int i = 0; i < bookmark->rowCount(); ++i)
+			{
+				removeBookmarkUrl(bookmark->getChild(i));
 			}
 
 			break;
