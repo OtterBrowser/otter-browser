@@ -2847,22 +2847,22 @@ Wilt u de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="158"/>
         <source>Processing…</source>
-        <translation>Bezig met verwerken...</translation>
+        <translation>Bezig met verwerken…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="186"/>
         <source>Failed to import data.</source>
-        <translation>Fout bij importeren van gegevens.</translation>
+        <translation>De gegevens kunnen niet worden geïmporteerd.</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="190"/>
         <source>Import cancelled by the user.</source>
-        <translation>De importering is geannuleerd door de gebruiker.</translation>
+        <translation>De import is afgebroken.</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="194"/>
         <source>Import finished successfully.</source>
-        <translation>De importering is voltooid.</translation>
+        <translation>Het importeren is voltooid.</translation>
     </message>
 </context>
 <context>
@@ -2875,7 +2875,7 @@ Wilt u de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="26"/>
         <source>Allow moving and resizing of windows</source>
-        <translation>Verplaatsen en groottewijzigingen van vensters toestaan</translation>
+        <translation>Vensterverplaatsing en -grootte-aanpassingen toestaan</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="39"/>
@@ -2905,7 +2905,7 @@ Wilt u de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="88"/>
         <source>Allow to enter full screen mode:</source>
-        <translation>Volledige scherm-modus toestaan:</translation>
+        <translation>Beeldvullende modus toestaan:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="37"/>
@@ -2940,7 +2940,7 @@ Wilt u de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="14"/>
         <source>Profile Configuration</source>
-        <translation>Profielconfiguratie</translation>
+        <translation>Profielinstellingen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="24"/>
@@ -2950,7 +2950,7 @@ Wilt u de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="32"/>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="71"/>
@@ -3003,7 +3003,7 @@ Wilt u de instellingen opslaan?</translation>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="233"/>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="270"/>
         <source>Parameters</source>
-        <translation>Parameters</translation>
+        <translation>Aanvullende opties</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="233"/>
@@ -3029,7 +3029,7 @@ Wilt u de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="409"/>
         <source>Single key shortcuts are currently disabled</source>
-        <translation>1-toets-sneltoetsen zijn momenteel uitgeschakeld</translation>
+        <translation>Enkeltoets-sneltoetsen zijn momenteel uitgeschakeld</translation>
     </message>
 </context>
 <context>
@@ -3037,7 +3037,7 @@ Wilt u de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="252"/>
@@ -3108,7 +3108,7 @@ Wilt u de instellingen opslaan?</translation>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="14"/>
         <source>Switch Application Language</source>
-        <translation>Taal van toepassing wijzigen</translation>
+        <translation>Programmataal wijzigen</translation>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="22"/>
@@ -3169,17 +3169,17 @@ Wilt u de instellingen opslaan?</translation>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="833"/>
         <source>You are about to open %n bookmark(s).</source>
-        <translation><numerusform>Je staat op het punt om %n bladwijzer te openen.</numerusform><numerusform>Je staat op het punt om %n bladwijzers te openen.</numerusform></translation>
+        <translation><numerusform>U staat op het punt om %n bladwijzer te openen.</numerusform><numerusform>U staat op het punt om %n bladwijzers te openen.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="834"/>
         <source>Do you want to continue?</source>
-        <translation>Wil je doorgaan?</translation>
+        <translation>Wilt u doorgaan?</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="838"/>
         <source>Do not show this message again</source>
-        <translation>Dit bericht niet opnieuw tonen</translation>
+        <translation>Niet opnieuw tonen</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="2177"/>
@@ -3216,7 +3216,7 @@ Wilt u de instellingen opslaan?</translation>
         <location filename="../../src/ui/Menu.cpp" line="491"/>
         <location filename="../../src/ui/Menu.cpp" line="580"/>
         <source>Failed to create menu action: %1</source>
-        <translation>Fout bij creëren van menu-actie: %1</translation>
+        <translation>De menu-actie kan niet worden gemaakt: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="917"/>
@@ -3254,13 +3254,13 @@ Wilt u de instellingen opslaan?</translation>
         <location filename="../../src/core/Migrator.cpp" line="589"/>
         <source>Configuration of the components listed below needs to be updated to new version.
 Do you want to migrate it?</source>
-        <translation>De configuratie van de onderstaande onderdelen moet worden bijgewerkt naar de nieuwste versie.
-Wil je deze nu migreren?</translation>
+        <translation>De instellingen van onderstaande onderdelen moeten worden bijgewerkt naar de nieuwste versie.
+Wilt u deze nu migreren?</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="612"/>
         <source>Create backup</source>
-        <translation>Back-up creëren</translation>
+        <translation>Back-up maken</translation>
     </message>
 </context>
 <context>
@@ -3277,17 +3277,17 @@ Wil je deze nu migreren?</translation>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="14"/>
         <source>Profile Configuration</source>
-        <translation>Profielconfiguratie</translation>
+        <translation>Profielinstellingen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="24"/>
         <source>Actions</source>
-        <translation>Acties</translation>
+        <translation>Actie</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="30"/>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="78"/>
@@ -3379,7 +3379,7 @@ Wil je deze nu migreren?</translation>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="139"/>
         <source>Parameters</source>
-        <translation>Parameters</translation>
+        <translation>Aanvullende opties</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="139"/>
@@ -3416,12 +3416,12 @@ Wil je deze nu migreren?</translation>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="322"/>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="342"/>
         <source>Failed to load proxy auto-config (PAC): %1</source>
-        <translation>Het laden van de automatische proxy-configuratie (PAC) is mislukt: %1</translation>
+        <translation>De automatische proxy-configuratie (pac) kan niet worden geladen: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="357"/>
         <source>Failed to load proxy auto-config (PAC). Invalid URL: %1</source>
-        <translation>Het laden van de proxy auto-config (PAC) is mislukt. De URL is ongeldig: %1</translation>
+        <translation>De proxy auto-config (pac) kan niet worden geladen omdat de url ongeldig is: %1</translation>
     </message>
 </context>
 <context>
@@ -3438,11 +3438,11 @@ Wil je deze nu migreren?</translation>
 %1
 
 Do you want to continue?</source>
-        <translation>Er zijn SSL-fouten opgetreden:
+        <translation>Er zijn ssl-fouten opgetreden:
 
 %1
 
-Wil je doorgaan?</translation>
+Wilt u doorgaan?</translation>
     </message>
 </context>
 <context>
@@ -3458,7 +3458,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="98"/>
@@ -3485,7 +3485,7 @@ Wil je doorgaan?</translation>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="164"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="195"/>
         <source>Add Folder…</source>
-        <translation>Map toevoegen...</translation>
+        <translation>Map toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="49"/>
@@ -3505,7 +3505,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="60"/>
         <source>Add note…</source>
-        <translation>Notitie toevoegen...</translation>
+        <translation>Notitie toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="106"/>
@@ -3570,7 +3570,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/OpenBookmarkDialog.ui" line="20"/>
         <source>Enter the keyword of bookmark:</source>
-        <translation>Voer het trefwoord in van de bladwijzer:</translation>
+        <translation>Voer het trefwoord van de bladwijzer in:</translation>
     </message>
 </context>
 <context>
@@ -3619,7 +3619,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="45"/>
         <source>Remove existing search engines</source>
-        <translation>Bestaande zoekmachines verwijderen</translation>
+        <translation>Reeds aanwezige zoekmachines verwijderen</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="54"/>
@@ -3665,7 +3665,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="89"/>
         <source>Imports feeds from OPML file</source>
-        <translation>Feeds importeren uit OPML-bestand</translation>
+        <translation>Feeds importeren uit opml-bestand</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="119"/>
@@ -3683,12 +3683,12 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="41"/>
         <source>New…</source>
-        <translation>Nieuw...</translation>
+        <translation>Nieuw…</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="52"/>
         <source>Allow to duplicate already existing feeds</source>
-        <translation>Dupliceren van reeds bestaande feeds toestaan</translation>
+        <translation>Klonen van reeds bestaande feeds toestaan</translation>
     </message>
 </context>
 <context>
@@ -3714,7 +3714,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="42"/>
@@ -3788,7 +3788,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="220"/>
         <source>Permissions</source>
-        <translation>Machtigingen</translation>
+        <translation>Bevoegdheden</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="224"/>
@@ -3837,13 +3837,13 @@ Wil je doorgaan?</translation>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="37"/>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="55"/>
         <source>Do you want to update login data for %1?</source>
-        <translation>Wil je de inloggegevens voor %1 bijwerken?</translation>
+        <translation>Wilt u de inloggegevens van %1 bijwerken?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="37"/>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="55"/>
         <source>Do you want to save login data for %1?</source>
-        <translation>Wil je de inloggegevens voor %1 opslaan?</translation>
+        <translation>Wilt u de inloggegevens van %1 opslaan?</translation>
     </message>
 </context>
 <context>
@@ -3851,7 +3851,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="70"/>
@@ -3881,19 +3881,19 @@ Wil je doorgaan?</translation>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="180"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="236"/>
         <source>You are about to delete %n password(s).</source>
-        <translation><numerusform>Je staat op het punt om %n wachtwoord te verwijderen.</numerusform><numerusform>Je staat op het punt om %n wachtwoorden te verwijderen.</numerusform></translation>
+        <translation><numerusform>U staat op het punt om %n wachtwoord te verwijderen.</numerusform><numerusform>U staat op het punt om %n wachtwoorden te verwijderen.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="181"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="237"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="256"/>
         <source>Do you want to continue?</source>
-        <translation>Wil je doorgaan?</translation>
+        <translation>Wilt u doorgaan?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="255"/>
         <source>You are about to delete all passwords.</source>
-        <translation>Je staat op het punt om alle wachtwoorden te verwijderen.</translation>
+        <translation>U staat op het punt om alle wachtwoorden te verwijderen.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="277"/>
@@ -3903,12 +3903,12 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="280"/>
         <source>Remove All Passwords from This Domain…</source>
-        <translation>Alle wachtwoorden van dit domein verwijderen...</translation>
+        <translation>Alle wachtwoorden van dit domein verwijderen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="283"/>
         <source>Remove All Passwords…</source>
-        <translation>Alle wachwoorden verwijderen...</translation>
+        <translation>Alle wachtwoorden verwijderen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="369"/>
@@ -3946,12 +3946,12 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="66"/>
         <source>%1 wants to enter full screen mode.</source>
-        <translation>%1 wil de volledige scherm-modus inschakelen.</translation>
+        <translation>%1 wil de beeldvullende modus inschakelen.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="71"/>
         <source>%1 wants access to your location.</source>
-        <translation>%1 wil je locatie weten.</translation>
+        <translation>%1 wil uw locatie opvragen.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="76"/>
@@ -3961,22 +3961,22 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="81"/>
         <source>%1 wants to lock mouse pointer.</source>
-        <translation>%1 wil je cursor vergrendelen.</translation>
+        <translation>%1 wil uw cursor vergrendelen.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="86"/>
         <source>%1 wants to access your microphone.</source>
-        <translation>%1 wil toegang tot je microfoon.</translation>
+        <translation>%1 wil toegang tot uw microfoon.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="91"/>
         <source>%1 wants to access your camera.</source>
-        <translation>%1 wil toegang tot je camera.</translation>
+        <translation>%1 wil toegang tot uw camera.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="96"/>
         <source>%1 wants to access your microphone and camera.</source>
-        <translation>%1 wil toegang tot je camera en microfoon.</translation>
+        <translation>%1 wil toegang tot uw camera en microfoon.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="101"/>
@@ -3986,7 +3986,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="106"/>
         <source>Invalid permission request from %1.</source>
-        <translation>Ongeldig machtigingsverzoek van %1.</translation>
+        <translation>Ongeldig bevoegdheidsverzoek van %1.</translation>
     </message>
 </context>
 <context>
@@ -3994,12 +3994,12 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="137"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Foutmelding</translation>
     </message>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="137"/>
         <source>Failed to install update.</source>
-        <translation>Het installeren van de update is mislukt.</translation>
+        <translation>De update kan niet worden geïnstalleerd.</translation>
     </message>
 </context>
 <context>
@@ -4038,7 +4038,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="104"/>
         <source>Always Ask What to Do for This Website</source>
-        <translation>Altijd vragen voor deze website</translation>
+        <translation>Altijd vragen op deze website</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="118"/>
@@ -4128,17 +4128,17 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="247"/>
         <source>Mark taskbar entry</source>
-        <translation>Taakbalkvermelding markeren</translation>
+        <translation>Taakbalkvermelding maken</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="263"/>
         <source>Options</source>
-        <translation>Opties</translation>
+        <translation>Instellingen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="270"/>
         <source>Prefer native notifications</source>
-        <translation>Systeemmeldingen de voorkeur geven</translation>
+        <translation>Voorkeur voor systeemmeldingen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="300"/>
@@ -4148,12 +4148,12 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="309"/>
         <source>Widget style:</source>
-        <translation>Widget-stijl:</translation>
+        <translation>Widgetstijl:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="319"/>
         <source>Interface style sheet:</source>
-        <translation>Stijlblad voor uiterlijk:</translation>
+        <translation>Vormgevingsstijlblad:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="343"/>
@@ -4178,7 +4178,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="404"/>
         <source>JavaScript Options…</source>
-        <translation>JavaScript-instellingen...</translation>
+        <translation>JavaScript-instellingen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="415"/>
@@ -4193,12 +4193,12 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="443"/>
         <source>Website Preferences</source>
-        <translation>Website-voorkeuren</translation>
+        <translation>Websitevoorkeuren</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="454"/>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="481"/>
@@ -4218,7 +4218,7 @@ Wil je doorgaan?</translation>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1249"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1402"/>
         <source>Edit…</source>
-        <translation>Bewerken...</translation>
+        <translation>Bewerken…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="501"/>
@@ -4249,17 +4249,17 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="664"/>
         <source>Do not ask for folder, save directly to</source>
-        <translation>Niet vragen om een map, direct opslaan in</translation>
+        <translation>Niet vragen om een map - direct opslaan in</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="679"/>
         <source>Open with application</source>
-        <translation>Openen met toepassing</translation>
+        <translation>Openen met programma</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="725"/>
         <source>Pass web address directly to application</source>
-        <translation>Webadres direct doorsturen naar toepassing</translation>
+        <translation>Webadres direct doorsturen naar programma</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="775"/>
@@ -4279,7 +4279,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="971"/>
         <source>SSL Ciphers</source>
-        <translation>SSL-ciphers</translation>
+        <translation>SSL-vercijfering</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1051"/>
@@ -4310,7 +4310,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1149"/>
         <source>Check for updates every</source>
-        <translation>Controleren op updates - elke</translation>
+        <translation>Controleren op updates, elke</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1159"/>
@@ -4331,12 +4331,12 @@ Wil je doorgaan?</translation>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1259"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1412"/>
         <source>Clone</source>
-        <translation>Dupliceren</translation>
+        <translation>Klonen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1333"/>
         <source>Enable single key shortcuts</source>
-        <translation>1-toets-sneltoetsen inschakelen</translation>
+        <translation>Enkeltoets-sneltoetsen inschakelen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1353"/>
@@ -4364,7 +4364,7 @@ Wil je doorgaan?</translation>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="453"/>
         <source>Appearance</source>
-        <translation>Uiterlijk</translation>
+        <translation>Vormgeving</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
@@ -4382,7 +4382,7 @@ Wil je doorgaan?</translation>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="453"/>
         <source>Programs</source>
-        <translation>Toepassingen</translation>
+        <translation>Programma&apos;s</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
@@ -4496,12 +4496,12 @@ Wil je doorgaan?</translation>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="217"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="232"/>
         <source>Add Folder…</source>
-        <translation>Map toevoegen...</translation>
+        <translation>Map toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="218"/>
         <source>Add User Agent…</source>
-        <translation>Gebruikersagent toevoegen...</translation>
+        <translation>Gebruikersagent toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="219"/>
@@ -4512,7 +4512,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="233"/>
         <source>Add Proxy…</source>
-        <translation>Proxy toevoegen...</translation>
+        <translation>Proxy toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="291"/>
@@ -4522,7 +4522,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="291"/>
         <source>Beta version</source>
-        <translation>Bèta-versie</translation>
+        <translation>Bètaversie</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="291"/>
@@ -4533,7 +4533,7 @@ Wil je doorgaan?</translation>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="339"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="375"/>
         <source>New…</source>
-        <translation>Nieuw...</translation>
+        <translation>Nieuw…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="340"/>
@@ -4551,27 +4551,27 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="576"/>
         <source>Do you really want to remove preferences for this website?</source>
-        <translation>Weet je zeker dat je de voorkeuren voor deze website wilt verwijderen?</translation>
+        <translation>Weet u zeker dat u de voorkeuren van deze website wilt verwijderen?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="594"/>
         <source>MIME Type Name</source>
-        <translation>Naam van MIME-type</translation>
+        <translation>Naam van mime-type</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="594"/>
         <source>Select name of MIME Type:</source>
-        <translation>Naam van MIME-type kiezen</translation>
+        <translation>Kies de naam van het mime-type:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="614"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Foutmelding</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="614"/>
         <source>Invalid MIME Type name.</source>
-        <translation>Ongeldige MIME-type-naam.</translation>
+        <translation>Ongeldige mime-typenaam.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="739"/>
@@ -4587,7 +4587,7 @@ Wil je doorgaan?</translation>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="905"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="967"/>
         <source>Select folder name:</source>
-        <translation>Mapnaam kiezen:</translation>
+        <translation>Kies een mapnaam:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="743"/>
@@ -4613,7 +4613,7 @@ Wil je doorgaan?</translation>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1266"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1461"/>
         <source>Do you really want to remove this profile?</source>
-        <translation>Weet je zeker dat je dit profiel wilt verwijderen?</translation>
+        <translation>Weet u zeker dat u dit profiel wilt verwijderen?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1275"/>
@@ -4662,7 +4662,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="143"/>
         <source>Default proportional font size:</source>
-        <translation>Standaard proportionele lettertypegrootte:</translation>
+        <translation>Standaard proportionele tekstgrootte:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="153"/>
@@ -4674,12 +4674,12 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="169"/>
         <source>Default fixed-width font size:</source>
-        <translation>Standaard vaste breedte lettertypegrootte:</translation>
+        <translation>Standaard vastebreedte-tekstgrootte:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="195"/>
         <source>Minimum font size:</source>
-        <translation>Minimale lettertypegrootte:</translation>
+        <translation>Minimale tekstgrootte:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="205"/>
@@ -4730,12 +4730,12 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="138"/>
         <source>Standard font</source>
-        <translation>Standaard lettertype</translation>
+        <translation>Standaardlettertype</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="138"/>
         <source>Fixed-width font</source>
-        <translation>Vaste breedte-lettertype</translation>
+        <translation>Vastebreedtelettertype</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="138"/>
@@ -4755,7 +4755,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="138"/>
         <source>Fantasy font</source>
-        <translation>Fantasie-lettertype</translation>
+        <translation>Fantasielettertype</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="143"/>
@@ -4785,7 +4785,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="161"/>
         <source>Visited Link Color</source>
-        <translation>Bezochte link-kleur</translation>
+        <translation>Kleur van bezochte link</translation>
     </message>
 </context>
 <context>
@@ -4793,7 +4793,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="17"/>
         <source>Preferences</source>
-        <translation>Voorkeuren</translation>
+        <translation>Instellingen</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="27"/>
@@ -4861,7 +4861,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="99"/>
         <source>Do not load the tab contents until selected</source>
-        <translation>Laden van tabbladen uitstellen totdat ze geselecteerd worden</translation>
+        <translation>Tabbladen pas laden na aanklikken</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="114"/>
@@ -4886,7 +4886,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="161"/>
         <source>Open new windows in new tabs instead</source>
-        <translation>Nieuwe vensters op een nieuw tabblad openen</translation>
+        <translation>Nieuwe vensters openen op nieuwe tabbladen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="168"/>
@@ -4901,7 +4901,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="184"/>
         <source>When closing tab:</source>
-        <translation>Na het sluiten van een tabblad:</translation>
+        <translation>Actie na sluiten van tabblad:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="198"/>
@@ -4926,12 +4926,12 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="233"/>
         <source>Preferred webpage language:</source>
-        <translation>Voorkeurstaal voor webpagina:</translation>
+        <translation>Voorkeurstaal op websites:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="258"/>
         <source>Edit…</source>
-        <translation>Bewerken...</translation>
+        <translation>Bewerken…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="275"/>
@@ -4961,12 +4961,12 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="48"/>
         <source>Show start page</source>
-        <translation>Startpagina tonen</translation>
+        <translation>Otter-pagina tonen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="49"/>
         <source>Show empty page</source>
-        <translation>Lege pagina tonen</translation>
+        <translation>Blanco pagina tonen</translation>
     </message>
 </context>
 <context>
@@ -5014,7 +5014,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="159"/>
         <source>Template…</source>
-        <translation>Sjabloon...</translation>
+        <translation>Sjabloon…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="170"/>
@@ -5034,22 +5034,22 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="241"/>
         <source>Accept third-party cookies:</source>
-        <translation>Cookies van derde partijen accepteren:</translation>
+        <translation>Cookies van externe partijen accepteren:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="263"/>
         <source>Exceptions…</source>
-        <translation>Uitzonderingen...</translation>
+        <translation>Uitzonderingen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="279"/>
         <source>Clear history when application closes</source>
-        <translation>Geschiedenis wissen bij sluiten van de toepassing</translation>
+        <translation>Geschiedenis wissen na afsluiten</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="299"/>
         <source>Settings…</source>
-        <translation>Instellingen...</translation>
+        <translation>Instellingen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="319"/>
@@ -5064,32 +5064,32 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="348"/>
         <source>Manage…</source>
-        <translation>Beheren...</translation>
+        <translation>Beheren…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="362"/>
         <source>Use a master password</source>
-        <translation>Een hoofdwachtwoord gebruiken</translation>
+        <translation>Hoofdwachtwoord gebruiken</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="385"/>
         <source>Change…</source>
-        <translation>Wijzigen...</translation>
+        <translation>Wijzigen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="40"/>
         <source>Inform websites that I do not want to be tracked</source>
-        <translation>Websites vertellen dat ik niet gevolgd wil worden</translation>
+        <translation>Websites laten weten dat ik niet gevolgd wil worden</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="41"/>
         <source>Inform websites that I allow tracking</source>
-        <translation>Websites vertellen dat ik gevolgd wil worden</translation>
+        <translation>Websites laten weten dat ik gevolgd mag worden</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="42"/>
         <source>Do not inform websites about my preference</source>
-        <translation>Websites niks vertellen over mijn voorkeur</translation>
+        <translation>Websites niets laten weten over mijn voorkeur</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="53"/>
@@ -5101,12 +5101,12 @@ Wil je doorgaan?</translation>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="54"/>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="68"/>
         <source>Only existing</source>
-        <translation>Alleen bestaande</translation>
+        <translation>Alleen aanwezige</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="55"/>
         <source>Only read existing</source>
-        <translation>Bestaande alleen lezen</translation>
+        <translation>Aanwezige alleen uitlezen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="60"/>
@@ -5134,7 +5134,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="21"/>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="60"/>
@@ -5144,7 +5144,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="70"/>
         <source>Edit…</source>
-        <translation>Bewerken...</translation>
+        <translation>Bewerken…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="80"/>
@@ -5169,7 +5169,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="154"/>
         <source>Enable search suggestions</source>
-        <translation>Zoeksuggesties inschakelen</translation>
+        <translation>Zoeksuggesties tonen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="98"/>
@@ -5186,12 +5186,12 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="127"/>
         <source>New…</source>
-        <translation>Nieuw...</translation>
+        <translation>Nieuw…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="128"/>
         <source>File…</source>
-        <translation>Bestand...</translation>
+        <translation>Bestand…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="130"/>
@@ -5206,7 +5206,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="199"/>
         <source>Select File</source>
-        <translation>Bestand kiezen</translation>
+        <translation>Kies een bestand</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="199"/>
@@ -5222,7 +5222,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="308"/>
         <source>Do you really want to remove this search engine?</source>
-        <translation>Weet je zeker dat je deze zoekmachine wilt verwijderen?</translation>
+        <translation>Weet u zeker dat u deze zoekmachine wilt verwijderen?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="317"/>
@@ -5234,23 +5234,23 @@ Wil je doorgaan?</translation>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="360"/>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="448"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Foutmelding</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="349"/>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="360"/>
         <source>Failed to open Open Search file.</source>
-        <translation>Het openen van het OpenSearch-bestand is mislukt.</translation>
+        <translation>Het OpenSearch-bestand kan niet worden geopend.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="371"/>
         <source>Keyword is already in use. Do you want to continue anyway?</source>
-        <translation>Dit trefwoord wordt al gebruikt. Weet je zeker dat je wilt doorgaan?</translation>
+        <translation>Dit trefwoord wordt al gebruikt. Weet u zeker dat u wilt doorgaan?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="448"/>
         <source>Failed to update search engine.</source>
-        <translation>Het bijwerken van de zoekmachine is mislukt.</translation>
+        <translation>De zoekmachine kan niet worden bijgewerkt.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="511"/>
@@ -5383,7 +5383,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="273"/>
         <source>Path to PAC file:</source>
-        <translation>Pad naar PAC-bestand:</translation>
+        <translation>Locatie van pac-bestand:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="286"/>
@@ -5457,19 +5457,19 @@ Wil je doorgaan?</translation>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="476"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="490"/>
         <source>Are you sure that you want to send form data again?</source>
-        <translation>Weet je zeker dat je de formuliergegevens opnieuw wilt versturen?</translation>
+        <translation>Weet u zeker dat u de formuliergegevens opnieuw wilt versturen?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="476"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="491"/>
         <source>Do you want to resend data?</source>
-        <translation>Wil je de gegevens opnieuw versturen?</translation>
+        <translation>Wilt u de gegevens opnieuw versturen?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="477"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="495"/>
         <source>Do not show this message again</source>
-        <translation>Dit bericht nooit meer tonen</translation>
+        <translation>Nooit meer tonen</translation>
     </message>
 </context>
 <context>
@@ -5495,12 +5495,12 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="529"/>
         <source>Failed to save image: %1</source>
-        <translation>Het opslaan van de afbeelding is mislukt: %1</translation>
+        <translation>De afbeelding kan niet worden opgeslagen: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="1420"/>
         <source>Blank Page</source>
-        <translation>Lege pagina</translation>
+        <translation>Blanco pagina</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="1433"/>
@@ -5559,7 +5559,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="201"/>
         <source>Receiving data from %1…</source>
-        <translation>Bezig met ontvangen van gegevens van %1...</translation>
+        <translation>Bezig met ontvangen van gegevens van %1…</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="273"/>
@@ -5570,7 +5570,7 @@ Wil je doorgaan?</translation>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="310"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="339"/>
         <source>Waiting for authentication…</source>
-        <translation>Bezig met wachten op authenticatie...</translation>
+        <translation>Bezig met wachten op authenticatie…</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="421"/>
@@ -5580,7 +5580,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="742"/>
         <source>Sending request to %1…</source>
-        <translation>Bezig met vezenden van verzoek naar %1...</translation>
+        <translation>Bezig met versturen van verzoek aan %1…</translation>
     </message>
 </context>
 <context>
@@ -5610,19 +5610,19 @@ Wil je doorgaan?</translation>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="614"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="628"/>
         <source>Are you sure that you want to send form data again?</source>
-        <translation>Weet je zeker dat je de formuliergegevens opnieuw wilt versturen?</translation>
+        <translation>Weet u zeker dat u de formuliergegevens opnieuw wilt versturen?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="614"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="629"/>
         <source>Do you want to resend data?</source>
-        <translation>Wil je de gegevens opnieuw versturen?</translation>
+        <translation>Wilt u de gegevens opnieuw versturen?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="615"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="633"/>
         <source>Do not show this message again</source>
-        <translation>Dit bericht nooit meer tonen</translation>
+        <translation>Nooit meer tonen</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="787"/>
@@ -5633,7 +5633,7 @@ Wil je doorgaan?</translation>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="859"/>
         <source>Request blocked by rule from profile %1:&lt;br&gt;
 %2</source>
-        <translation>De aanvraag is geblokkeerd door een regel uit profiel %1:&lt;br&gt;
+        <translation>De aanvraag is geblokkeerd door een regel uit profiel ‘%1’:&lt;br&gt;
 %2</translation>
     </message>
     <message>
@@ -5659,7 +5659,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="948"/>
         <source>Do you want to stop the script?</source>
-        <translation>Wil je het script stoppen?</translation>
+        <translation>Wilt u het script stoppen?</translation>
     </message>
 </context>
 <context>
@@ -5668,7 +5668,7 @@ Wil je doorgaan?</translation>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.cpp" line="34"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.cpp" line="43"/>
         <source>Click to load content (%1) handled by plugin from: %2</source>
-        <translation>Klik om de inhoud (%1) te laden die bestuurd wordt door de plug-in: %2</translation>
+        <translation>Klik om de inhoud (%1) te laden die bestuurd wordt door de plug-in ‘%2’</translation>
     </message>
 </context>
 <context>
@@ -5694,12 +5694,12 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="421"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Foutmelding</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="421"/>
         <source>Failed to open file for writing.</source>
-        <translation>Fout bij openen van bestand voor wegschrijven.</translation>
+        <translation>Het bestand kan niet worden weggeschreven.</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="441"/>
@@ -5709,7 +5709,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="449"/>
         <source>Failed to save image: %1</source>
-        <translation>Het opslaan van de afbeelding is mislukt: %1</translation>
+        <translation>De afbeelding kan niet worden opgeslagen: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="583"/>
@@ -5729,7 +5729,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2127"/>
         <source>Blank Page</source>
-        <translation>Lege pagina</translation>
+        <translation>Blanco pagina</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2140"/>
@@ -5773,12 +5773,12 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="376"/>
         <source>Failed to parse feed file: %1</source>
-        <translation>Fout tijdens verwerken van feedbestand: %1</translation>
+        <translation>Het feedbestand kan niet worden verwerkt: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="387"/>
         <source>Failed to parse feed: no valid entries found</source>
-        <translation>Fout tijdens verwerken van feed: geen geldige items gevonden</translation>
+        <translation>De feed kan niet worden verwerkt: geen geldige items aangetroffen</translation>
     </message>
 </context>
 <context>
@@ -5791,7 +5791,7 @@ Wil je doorgaan?</translation>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="22"/>
         <source>Session title:</source>
-        <translation>Sessietitel:</translation>
+        <translation>Sessienaam:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="32"/>
@@ -5812,18 +5812,18 @@ Wil je doorgaan?</translation>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="68"/>
         <source>Session with specified indentifier already exists.
 Do you want to overwrite it?</source>
-        <translation>Er bestaat al een sessie met de opgegeven identificatie.
-Wil je deze overschrijven?</translation>
+        <translation>Er is al een sessie met de opgegeven identificatie.
+Wilt u deze overschrijven?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="81"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Foutmelding</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="81"/>
         <source>Failed to save session.</source>
-        <translation>Fout bij opslaan van sessie.</translation>
+        <translation>De sessie kan niet worden opgeslagen.</translation>
     </message>
 </context>
 <context>
@@ -5831,7 +5831,7 @@ Wil je deze overschrijven?</translation>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="35"/>
         <source>Find…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="45"/>
@@ -5874,7 +5874,7 @@ Wil je deze overschrijven?</translation>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="49"/>
         <source>Change Icon…</source>
-        <translation>Pictogram wijzigen...</translation>
+        <translation>Pictogram wijzigen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="58"/>
@@ -5956,7 +5956,7 @@ Wil je deze overschrijven?</translation>
     <message>
         <location filename="../../src/core/SearchEnginesManager.cpp" line="171"/>
         <source>Manage Search Engines…</source>
-        <translation>Zoekmachines beheren...</translation>
+        <translation>Zoekmachines beheren…</translation>
     </message>
     <message>
         <location filename="../../src/core/SearchEnginesManager.cpp" line="192"/>
@@ -5987,22 +5987,22 @@ Wil je deze overschrijven?</translation>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="438"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Foutmelding</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="438"/>
         <source>Failed to add search engine.</source>
-        <translation>Het toevoegen van de zoekmachine is mislukt.</translation>
+        <translation>De zoekmachine kan niet worden toegevoegd.</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="820"/>
         <source>Select Search Engine</source>
-        <translation>Zoekmachine kiezen</translation>
+        <translation>Kies een zoekmachine</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="824"/>
         <source>Add Search Engine…</source>
-        <translation>Zoekmachine toevoegen...</translation>
+        <translation>Zoekmachine toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="828"/>
@@ -6015,12 +6015,12 @@ Wil je deze overschrijven?</translation>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="14"/>
         <source>Select Password</source>
-        <translation>Wachtwoord kiezen</translation>
+        <translation>Kies een wachtwoord</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="20"/>
         <source>Select set of credentials:</source>
-        <translation>Kies de referentie-set:</translation>
+        <translation>Kies de referentieset:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="41"/>
@@ -6052,7 +6052,7 @@ Wil je deze overschrijven?</translation>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="87"/>
         <source>Do you really want to remove this credentials set?</source>
-        <translation>Weet je zeker dat je deze referentie-set wilt verwijderen?</translation>
+        <translation>Weet u zeker dat u deze referentieset wilt verwijderen?</translation>
     </message>
 </context>
 <context>
@@ -6112,7 +6112,7 @@ Wil je deze overschrijven?</translation>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="77"/>
         <source>Open session in current window</source>
-        <translation>Sessie in huidig venster openen</translation>
+        <translation>Openen in huidig venster</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="45"/>
@@ -6124,7 +6124,7 @@ Wil je deze overschrijven?</translation>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="49"/>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="98"/>
         <source>Title</source>
-        <translation>Titel</translation>
+        <translation>Naam</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="49"/>
@@ -6157,8 +6157,8 @@ Wil je deze overschrijven?</translation>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="106"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
-        <translation>Deze sessie werd onjuist opgeslagen.
-Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
+        <translation>Deze sessie is onjuist opgeslagen.
+Weet u zeker dat u de sessie tóch wilt herstellen?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="123"/>
@@ -6168,17 +6168,17 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="123"/>
         <source>Are you sure that you want to delete session %1?</source>
-        <translation>Weet je zeker dat je de sessie, %1, wilt verwijderen?</translation>
+        <translation>Weet u zeker dat u de sessie ‘%1’ wilt verwijderen?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="131"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Foutmelding</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="131"/>
         <source>Failed to delete session.</source>
-        <translation>Fout bij verwijderen van sessie.</translation>
+        <translation>De sessie kan niet worden verwijderd.</translation>
     </message>
 </context>
 <context>
@@ -6223,7 +6223,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="467"/>
         <source>Add Web Panel…</source>
-        <translation>Webpaneel toevoegen...</translation>
+        <translation>Webpaneel toevoegen…</translation>
     </message>
 </context>
 <context>
@@ -6231,17 +6231,17 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="87"/>
         <source>Failed to save file: %1</source>
-        <translation>Het opslaan van het bestand is mislukt: %1</translation>
+        <translation>Het bestand kan niet worden opgeslagen: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="89"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Foutmelding</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="89"/>
         <source>Failed to save file.</source>
-        <translation>Het opslaan van het bestand is mislukt.</translation>
+        <translation>Het bestand kan niet worden opgeslagen.</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="115"/>
@@ -6253,7 +6253,7 @@ Weet je zeker dat je de sessie tóch wilt herstellen?</translation>
         <source>The document has been modified.
 Do you want to save your changes or discard them?</source>
         <translation>Dit document is bewerkt.
-Wil je de wijzigingen opslaan of verwerpen?</translation>
+Wilt u de wijzigingen opslaan of verwerpen?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="300"/>
@@ -6277,7 +6277,7 @@ Wil je de wijzigingen opslaan of verwerpen?</translation>
         <location filename="../../src/modules/windows/web/StartPageModel.cpp" line="100"/>
         <location filename="../../src/modules/windows/web/StartPageModel.cpp" line="101"/>
         <source>Add Tile…</source>
-        <translation>Tegel toevoegen...</translation>
+        <translation>Tegel toevoegen…</translation>
     </message>
 </context>
 <context>
@@ -6285,12 +6285,12 @@ Wil je de wijzigingen opslaan of verwerpen?</translation>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="14"/>
         <source>Start Page Preferences</source>
-        <translation>Startpagina-voorkeuren</translation>
+        <translation>Startpagina-instellingen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="20"/>
         <source>Use custom background image</source>
-        <translation>Aangepaste achtergrondafbeelding gebruiken</translation>
+        <translation>Eigen achtergrondafbeelding gebruiken</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="66"/>
@@ -6300,7 +6300,7 @@ Wil je de wijzigingen opslaan of verwerpen?</translation>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="79"/>
         <source>Image path:</source>
-        <translation>Pad naar afbeelding:</translation>
+        <translation>Locatie van afbeelding:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="89"/>
@@ -6360,7 +6360,7 @@ Wil je de wijzigingen opslaan of verwerpen?</translation>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="44"/>
         <source>Tile</source>
-        <translation>Tegelen</translation>
+        <translation>Tegels</translation>
     </message>
 </context>
 <context>
@@ -6373,7 +6373,7 @@ Wil je de wijzigingen opslaan of verwerpen?</translation>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="847"/>
         <source>Edit…</source>
-        <translation>Bewerken...</translation>
+        <translation>Bewerken…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="851"/>
@@ -6388,12 +6388,12 @@ Wil je de wijzigingen opslaan of verwerpen?</translation>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="863"/>
         <source>Configure…</source>
-        <translation>Instellen...</translation>
+        <translation>Instellen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="867"/>
         <source>Add Tile…</source>
-        <translation>Tegel toevoegen...</translation>
+        <translation>Tegel toevoegen…</translation>
     </message>
 </context>
 <context>
@@ -6417,12 +6417,12 @@ Wil je de wijzigingen opslaan of verwerpen?</translation>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
         <source>Begin with start page</source>
-        <translation>Nieuwe sessie met startpagina</translation>
+        <translation>Nieuwe sessie met Otter-pagina</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="124"/>
         <source>Begin with blank page</source>
-        <translation>Nieuwe sessie met lege pagina</translation>
+        <translation>Nieuwe sessie met blanco pagina</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="134"/>
@@ -6458,12 +6458,12 @@ Adres: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="1186"/>
         <source>Switch Tabs Using the Mouse Wheel</source>
-        <translation>Van tabblad wisselen d.m.v. het muiswiel</translation>
+        <translation>Schakelen tussen tabbladen met muiswiel</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="1190"/>
         <source>Show Thumbnails in Tabs</source>
-        <translation>Voorbeeldminiaturen tonen op tabbladen</translation>
+        <translation>Miniaturen tonen op tabbladen</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="1209"/>
@@ -6481,12 +6481,12 @@ Adres: %2</translation>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="820"/>
         <source>Switch Tabs Using the Mouse Wheel</source>
-        <translation>Van tabblad wisselen d.m.v. het muiswiel</translation>
+        <translation>Schakelen tussen tabbladen met muiswiel</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="824"/>
         <source>Show Thumbnails in Tabs</source>
-        <translation>Voorbeeldminiaturen tonen op tabbladen</translation>
+        <translation>Miniaturen tonen op tabbladen</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="843"/>
@@ -6501,17 +6501,17 @@ Adres: %2</translation>
     <message numerus="yes">
         <location filename="../../src/ui/TabBarWidget.cpp" line="1087"/>
         <source>You are about to open %n URL(s).</source>
-        <translation><numerusform>Je staat op het punt om %n URL te openen.</numerusform><numerusform>Je staat op het punt om %n URL&apos;s te openen.</numerusform></translation>
+        <translation><numerusform>U staat op het punt om %n url te openen.</numerusform><numerusform>U staat op het punt om %n url&apos;s te openen.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="1088"/>
         <source>Do you want to continue?</source>
-        <translation>Wil je doorgaan?</translation>
+        <translation>Wilt u doorgaan?</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="1092"/>
         <source>Do not show this message again</source>
-        <translation>Dit bericht nooit meer tonen</translation>
+        <translation>Nooit meer tonen</translation>
     </message>
 </context>
 <context>
@@ -6527,7 +6527,7 @@ Adres: %2</translation>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="156"/>
@@ -6597,7 +6597,7 @@ Adres: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="106"/>
         <source>Edit…</source>
-        <translation>Bewerken...</translation>
+        <translation>Bewerken…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="115"/>
@@ -6613,7 +6613,7 @@ Adres: %2</translation>
         <location filename="../../src/ui/ToolBarDialog.ui" line="209"/>
         <location filename="../../src/ui/ToolBarDialog.ui" line="219"/>
         <source>Filter…</source>
-        <translation>Filteren...</translation>
+        <translation>Filteren…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="256"/>
@@ -6628,12 +6628,12 @@ Adres: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="291"/>
         <source>New…</source>
-        <translation>Nieuw...</translation>
+        <translation>Nieuw…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="331"/>
         <source>Options</source>
-        <translation>Opties</translation>
+        <translation>Instellingen</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="339"/>
@@ -6643,7 +6643,7 @@ Adres: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="352"/>
         <source>Visibility in full screen mode:</source>
-        <translation>Zichtbaarheid in volledig scherm-modus:</translation>
+        <translation>Zichtbaarheid in beeldvullende modus:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="365"/>
@@ -6674,12 +6674,12 @@ Adres: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="414"/>
         <source>No limit</source>
-        <translation>Ongelimiteerd</translation>
+        <translation>Onbeperkt</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="429"/>
         <source>Display toggle button</source>
-        <translation>In-/uitklapknop tonen</translation>
+        <translation>In-/Uitklapknop tonen</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="46"/>
@@ -6722,7 +6722,7 @@ Adres: %2</translation>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="80"/>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="87"/>
         <source>Visible only when needed</source>
-        <translation>Alleen zichtbaar wanneer nodig</translation>
+        <translation>Alleen zichtbaar indien nodig</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="88"/>
@@ -6783,7 +6783,7 @@ Adres: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="389"/>
         <source>Global</source>
-        <translation>Globaal</translation>
+        <translation>Algemeen</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="389"/>
@@ -6854,12 +6854,12 @@ Adres: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="562"/>
         <source>Configuration Widget (%1)</source>
-        <translation>Configuratiewidget (%1)</translation>
+        <translation>Instelwidget (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="566"/>
         <source>Configuration Widget</source>
-        <translation>Configuratiewidget</translation>
+        <translation>Instelwidget</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="572"/>
@@ -6894,32 +6894,32 @@ Adres: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="599"/>
         <source>Progress Information (Document Progress)</source>
-        <translation>Voortgangsinformatie (Documentvoortgang)</translation>
+        <translation>Voortgangsinformatie (documentvoortgang)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="603"/>
         <source>Progress Information (Total Progress)</source>
-        <translation>Voortgangsinformatie (Totale voortgang)</translation>
+        <translation>Voortgangsinformatie (totale voortgang)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="607"/>
         <source>Progress Information (Loaded Elements)</source>
-        <translation>Voortgangsinformatie (Geladen elementen)</translation>
+        <translation>Voortgangsinformatie (aantal geladen elementen)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="611"/>
         <source>Progress Information (Loading Speed)</source>
-        <translation>Voortgangsinformatie (Laadsnelheid)</translation>
+        <translation>Voortgangsinformatie (laadsnelheid)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="615"/>
         <source>Progress Information (Elapsed Time)</source>
-        <translation>Voortgangsinformatie (Verstreken tijd)</translation>
+        <translation>Voortgangsinformatie (verstreken tijd)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="619"/>
         <source>Progress Information (Status Message)</source>
-        <translation>Voortgangsinformatie (Statusbericht)</translation>
+        <translation>Voortgangsinformatie (statusbericht)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="629"/>
@@ -6949,7 +6949,7 @@ Adres: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="652"/>
         <source>Downloads Progress Information</source>
-        <translation>Voortgangsinformatie van downloads</translation>
+        <translation>Voortgangsinformatie over downloads</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="657"/>
@@ -6989,17 +6989,17 @@ Adres: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="908"/>
         <source>Configure…</source>
-        <translation>Instellen...</translation>
+        <translation>Instellen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="911"/>
         <source>Reset to Defaults…</source>
-        <translation>Standaardwaarden herstellen...</translation>
+        <translation>Standaardwaarden herstellen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="928"/>
         <source>Remove…</source>
-        <translation>Verwijderen...</translation>
+        <translation>Verwijderen…</translation>
     </message>
 </context>
 <context>
@@ -7012,7 +7012,7 @@ Adres: %2</translation>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="365"/>
         <source>Do you really want to reset this toolbar to default configuration?</source>
-        <translation>Weet je zeker dat je de standaardconfiguratie van deze werkbalk wilt herstellen?</translation>
+        <translation>Weet u zeker dat u de standaardinstellingen van deze werkbalk wilt herstellen?</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="373"/>
@@ -7022,7 +7022,7 @@ Adres: %2</translation>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="373"/>
         <source>Do you really want to remove this toolbar?</source>
-        <translation>Weet je zeker dat je deze werkbalk wilt verwijderen?</translation>
+        <translation>Weet u zeker dat u deze werkbalk wilt verwijderen?</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="387"/>
@@ -7032,7 +7032,7 @@ Adres: %2</translation>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="387"/>
         <source>Do you really want to reset all toolbars to default configuration?</source>
-        <translation>Weet je zeker dat je de standaardconfiguratie van alle werkbalken wilt herstellen?</translation>
+        <translation>Weet u zeker dat u de standaardinstellingen van alle werkbalken wilt herstellen?</translation>
     </message>
 </context>
 <context>
@@ -7062,8 +7062,8 @@ Adres: %2</translation>
 Do you want to overwrite it?
 
 %1</source>
-        <translation>Er bestaat al een bestand met deze naam.
-Wil je het bestand overschrijven?
+        <translation>Er is al een bestand met deze naam.
+Wilt u dit overschrijven?
 
 %1</translation>
     </message>
@@ -7110,7 +7110,7 @@ Wil je het bestand overschrijven?
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="280"/>
         <source>Stop</source>
-        <translation>Stoppen</translation>
+        <translation>Afbreken</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="297"/>
@@ -7131,7 +7131,7 @@ Voortgang: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="14"/>
         <source>Opening unknown file</source>
-        <translation>Bezig met het openen van onbekend bestand</translation>
+        <translation>Bezig met het openen van onbekend bestand…</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="22"/>
@@ -7161,7 +7161,7 @@ Voortgang: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="104"/>
         <source>Remember choice for this file type</source>
-        <translation>Mijn keuze onthouden voor dit bestandstype</translation>
+        <translation>Keuze onthouden bij dit bestandstype</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="45"/>
@@ -7171,7 +7171,7 @@ Voortgang: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="65"/>
         <source>Opening %1</source>
-        <translation>Bezig met openen van %1</translation>
+        <translation>Bezig met openen van %1…</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="171"/>
@@ -7181,7 +7181,7 @@ Voortgang: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="175"/>
         <source>%1 (download completed)</source>
-        <translation>%1 (download afgerond)</translation>
+        <translation>%1 (downloaden voltooid)</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="179"/>
@@ -7194,7 +7194,7 @@ Voortgang: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="31"/>
         <source>Quick Download…</source>
-        <translation>Snelle download...</translation>
+        <translation>Snelle download…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="120"/>
@@ -7226,7 +7226,7 @@ Voortgang: %5&lt;/div&gt;</translation>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="405"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="452"/>
         <source>Stop</source>
-        <translation>Stoppen</translation>
+        <translation>Afbreken</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="200"/>
@@ -7291,8 +7291,8 @@ Voortgang: %5&lt;/div&gt;</translation>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="145"/>
         <source>This file is still being downloaded.
 Do you really want to remove it?</source>
-        <translation>Dit bestand wordt nog steeds gedownload.
-Weet je zeker dat je het bestand wilt verwijderen?</translation>
+        <translation>Dit bestand wordt nog gedownload.
+Weet u zeker dat u het wilt verwijderen?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="277"/>
@@ -7400,12 +7400,12 @@ Voortgang: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="20"/>
         <source>Checking for update…</source>
-        <translation>Bezig met controleren op updates...</translation>
+        <translation>Bezig met controleren op updates…</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="50"/>
         <source>Checking for updates…</source>
-        <translation>Bezig met controleren op updates...</translation>
+        <translation>Bezig met controleren op updates…</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="91"/>
@@ -7420,7 +7420,7 @@ Voortgang: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="101"/>
         <source>Details…</source>
-        <translation>Details...</translation>
+        <translation>Details…</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="104"/>
@@ -7435,7 +7435,7 @@ Voortgang: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="127"/>
         <source>Some of the updates do not contain packages for your platform. Try to check for updates later or visit details page for more info.</source>
-        <translation>Sommige updates bevatten bestanden die niet beschikbaar zijn voor jouw besturingssysteem. Probeer het later opnieuw of bekijk de detailspagina voor meer informatie.</translation>
+        <translation>Enkele updates bevatten bestanden die niet beschikbaar zijn voor uw besturingssysteem. Probeer het later opnieuw of bekijk de detailpagina voor meer informatie.</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="151"/>
@@ -7457,7 +7457,7 @@ Voortgang: %5&lt;/div&gt;</translation>
         <source>New version of Otter Browser is ready to install.
 Click Install button to restart browser and install the update or close this dialog to install the update during next browser restart.</source>
         <translation>De nieuwe versie van Otter-webbrowser kan worden geïnstalleerd.
-Klik op Installeren om de update nu te installeren of sluit dit venster om de update later te installeren (bij de eerstvolgende start).</translation>
+Klik op ‘Installeren’ om de update nu te installeren of sluit dit venster om de update later te installeren (bij de eerstvolgende opstart).</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="191"/>
@@ -7515,7 +7515,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.cpp" line="108"/>
         <source>Application Version</source>
-        <translation>Versie van toepassing</translation>
+        <translation>Programmaversie</translation>
     </message>
 </context>
 <context>
@@ -7533,27 +7533,27 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="993"/>
         <source>Do you want to try to reload it?</source>
-        <translation>Wil je proberen om het tabblad opnieuw te laden?</translation>
+        <translation>Wilt u proberen om het opnieuw te laden?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="994"/>
         <source>Do not show this message again</source>
-        <translation>Dit bericht nooit meer tonen</translation>
+        <translation>Nooit meer tonen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1160"/>
         <source>Failed to load requested web backend: %1</source>
-        <translation>Het laden van het gevraagde web-backend is mislukt: %1</translation>
+        <translation>Het gevraagde web-backend kan niet worden geladen: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1242"/>
         <source>Select User Agent</source>
-        <translation>Gebruikersagent kiezen</translation>
+        <translation>Kies een gebruikersagent</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1242"/>
         <source>Enter User Agent:</source>
-        <translation>Gebruikersagent invoeren:</translation>
+        <translation>Voer de naam in:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1399"/>
@@ -7581,12 +7581,12 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="313"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
-        <translation>De webpagina wil dit tabblad sluiten. Wil je dit toestaan?</translation>
+        <translation>De website wil dit tabblad sluiten. Wilt u dit toestaan?</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="314"/>
         <source>Do not show this message again</source>
-        <translation>Dit bericht nooit meer tonen</translation>
+        <translation>Nooit meer tonen</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="729"/>
@@ -7669,7 +7669,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="97"/>
         <source>Elements:</source>
-        <translation>Elementen:</translation>
+        <translation>Aantal elementen:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="104"/>
@@ -7679,23 +7679,23 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="126"/>
         <source>Title:</source>
-        <translation>Titel:</translation>
+        <translation>Naam</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="137"/>
         <source>Permissions</source>
-        <translation>Machtigingen</translation>
+        <translation>Bevoegdheden</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="149"/>
         <source>Preferences</source>
-        <translation>Voorkeuren</translation>
+        <translation>Instellingen</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="171"/>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="307"/>
         <source>Details…</source>
-        <translation>Details...</translation>
+        <translation>Details…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="180"/>
@@ -7705,7 +7705,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="187"/>
         <source>Set third-party cookies:</source>
-        <translation>Cookies van derde partijen instellen:</translation>
+        <translation>Cookies van externe partijen instellen:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="194"/>
@@ -7715,7 +7715,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="201"/>
         <source>Access your location:</source>
-        <translation>Toegang tot je locatie:</translation>
+        <translation>Toegang tot uw locatie:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="208"/>
@@ -7740,7 +7740,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="260"/>
         <source>Enter full screen mode:</source>
-        <translation>Volledig scherm-modus inschakelen:</translation>
+        <translation>Beeldvullende modus inschakelen:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="271"/>
@@ -7775,7 +7775,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="350"/>
         <source>Cipher</source>
-        <translation>Token</translation>
+        <translation>Vercijfering</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="357"/>
@@ -7816,22 +7816,22 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="53"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="63"/>
         <source>Your connection with this website is not private.</source>
-        <translation>Je verbinding met deze website is niet-versleuteld.</translation>
+        <translation>Uw verbinding met deze website is onversleuteld.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="58"/>
         <source>Your connection with this website is private.</source>
-        <translation>Je verbinding met deze website is versleuteld.</translation>
+        <translation>Uw verbinding met deze website is versleuteld.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="68"/>
         <source>You are viewing content from your local filesystem.</source>
-        <translation>Je toont inhoud van je lokale bestandssysteem.</translation>
+        <translation>U bekijkt inhoud van uw lokale bestandssysteem.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="73"/>
         <source>You are viewing safe page from Otter Browser.</source>
-        <translation>Je toont een veilige pagina vanuit Otter-webbrowser.</translation>
+        <translation>U bekijkt een veilige pagina vanuit Otter-webbrowser.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="78"/>
@@ -7852,12 +7852,12 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="94"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="113"/>
         <source>Only existing</source>
-        <translation>Alleen bestaande</translation>
+        <translation>Alleen aanwezige</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="98"/>
         <source>Only read existing</source>
-        <translation>Alleen bestaande uitlezen</translation>
+        <translation>Aanwezige alleen uitlezen</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="102"/>
@@ -7935,7 +7935,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="14"/>
         <source>Website Preferences</source>
-        <translation>Website-voorkeuren...</translation>
+        <translation>Websitevoorkeuren</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="25"/>
@@ -8009,7 +8009,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="303"/>
         <source>Do Not Track:</source>
-        <translation>Mij niet volgen:</translation>
+        <translation>Niet volgen:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="323"/>
@@ -8019,12 +8019,12 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="350"/>
         <source>Add…</source>
-        <translation>Toevoegen...</translation>
+        <translation>Toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="360"/>
         <source>Properties…</source>
-        <translation>Eigenschappen...</translation>
+        <translation>Eigenschappen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="370"/>
@@ -8034,7 +8034,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="412"/>
         <source>Accept third-party cookies:</source>
-        <translation>Cookies van derde partijen accepteren:</translation>
+        <translation>Cookies van externe partijen accepteren:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="448"/>
@@ -8054,7 +8054,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="567"/>
         <source>Allow to close windows:</source>
-        <translation>Toestaan om vensters te sluiten:</translation>
+        <translation>Vensters sluiten toestaan:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="600"/>
@@ -8064,7 +8064,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="627"/>
         <source>Allow moving and resizing of windows</source>
-        <translation>Verplaatsen en groottewijzigingen van vensters toestaan</translation>
+        <translation>Vensterverplaatsing en -grootte-aanpassingen toestaan</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="660"/>
@@ -8079,7 +8079,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="745"/>
         <source>Allow to enter full screen mode:</source>
-        <translation>Volledig scherm-modus toestaan:</translation>
+        <translation>Beeldvullende modus toestaan:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="758"/>
@@ -8196,7 +8196,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="104"/>
         <source>Inform websites that I allow tracking</source>
-        <translation>Websites laten weten dat ik volgen toesta</translation>
+        <translation>Websites laten weten dat ik gevolgd mag worden</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="105"/>
@@ -8207,17 +8207,17 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="116"/>
         <source>Only existing</source>
-        <translation>Alleen bestaande</translation>
+        <translation>Alleen aanwezige</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="109"/>
         <source>Only read existing</source>
-        <translation>Alleen bestaande uitlezen</translation>
+        <translation>Aanwezige alleen uitlezen</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="111"/>
         <source>Expires</source>
-        <translation>Vervalt</translation>
+        <translation>Vervalt op</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
@@ -8262,7 +8262,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="206"/>
         <source>this session only</source>
-        <translation>alleen voor deze sessie</translation>
+        <translation>alleen binnen deze sessie</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="453"/>
@@ -8275,7 +8275,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.cpp" line="267"/>
@@ -8308,23 +8308,23 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="177"/>
         <source>Failed to run command &quot;%1&quot;, file is not executable</source>
-        <translation>Uitvoeren van opdracht &quot;%1&quot; is mislukt; bestand is niet uitvoerbaar</translation>
+        <translation>De opdracht ‘%1’ kan niet worden uitgevoerd: het bestand is niet uitvoerbaar</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="204"/>
         <source>Failed to run command &quot;%1&quot; (arguments: &quot;%2&quot;)</source>
-        <translation>Uitvoeren van opdracht &quot;%1&quot; mislukt (argumenten: &quot;%2&quot;)</translation>
+        <translation>De opdracht ‘%1’ kan niet worden uitgevoerd (aanvullende opties: ‘%2’)</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="291"/>
         <source>No valid suffix for given MIME type: %1</source>
-        <translation>Er is geen geldige extensie opgegeven voor MIME-type: %1</translation>
+        <translation>Er is geen geldige extensie opgegeven bij mime-type ‘%1’</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="358"/>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="408"/>
         <source>Failed to load a valid application path for MIME type %1: %2</source>
-        <translation>Het laden van een geldig toepassingspad is mislukt voor MIME-type %1: %2</translation>
+        <translation>Het laden van een geldige programmalocatie is mislukt bij mime-type ‘%1’: %2</translation>
     </message>
 </context>
 <context>
@@ -8377,7 +8377,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     </message>
     <message>
         <source>Custom…</source>
-        <translation>Aangepast...</translation>
+        <translation>Aangepast…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="286"/>
@@ -8422,17 +8422,17 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="292"/>
         <source>Open…</source>
-        <translation>Openen...</translation>
+        <translation>Openen…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="293"/>
         <source>Save…</source>
-        <translation>Opslaan...</translation>
+        <translation>Opslaan…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="294"/>
         <source>Clone Tab</source>
-        <translation>Tabblad dupliceren</translation>
+        <translation>Tabblad klonen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="295"/>
@@ -8493,7 +8493,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="302"/>
         <source>Remove Local Tab History</source>
-        <translation>Lokale tabbladgeschiedenis verwijderen</translation>
+        <translation>Lokale tabbladgeschiedenis wissen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="303"/>
@@ -8506,7 +8506,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="303"/>
         <source>Remove Local and Global Tab History</source>
-        <translation>Lokale en globale tabbladgeschiedenis verwijderen</translation>
+        <translation>Lokale en algemene tabbladgeschiedenis wissen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="304"/>
@@ -8547,7 +8547,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="310"/>
         <source>Reopen Previously Closed Tab</source>
-        <translation>Eerder gesloten tabblad heropenen</translation>
+        <translation>Gesloten tabblad heropenen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="311"/>
@@ -8582,17 +8582,17 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="317"/>
         <source>Reopen Previously Closed Window</source>
-        <translation>Vorig gesloten venster heropenen</translation>
+        <translation>Gesloten venster heropenen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="318"/>
         <source>Manage Sessions…</source>
-        <translation>Sessies beheren...</translation>
+        <translation>Sessies beheren…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="319"/>
         <source>Save Current Session…</source>
-        <translation>Huidige sessie opslaan...</translation>
+        <translation>Huidige sessie opslaan…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="320"/>
@@ -8700,17 +8700,17 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
         <location filename="../../src/core/ActionsManager.cpp" line="332"/>
         <location filename="../../src/ui/WebWidget.cpp" line="955"/>
         <source>Bookmark Link…</source>
-        <translation>Link toevoegen aan bladwijzers...</translation>
+        <translation>Link toevoegen aan bladwijzers…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="333"/>
         <source>Save Link Target As…</source>
-        <translation>Link opslaan als...</translation>
+        <translation>Link opslaan als…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="334"/>
         <source>Save to Downloads</source>
-        <translation>Opslaan in Downloads</translation>
+        <translation>Opslaan in downloadsmap</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="335"/>
@@ -8778,7 +8778,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="346"/>
         <source>Save Image…</source>
-        <translation>Afbeelding opslaan...</translation>
+        <translation>Afbeelding opslaan…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="347"/>
@@ -8798,12 +8798,12 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="350"/>
         <source>Image Properties…</source>
-        <translation>Afbeeldingseigenschappen...</translation>
+        <translation>Afbeeldingseigenschappen…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="351"/>
         <source>Save Media…</source>
-        <translation>Media opslaan...</translation>
+        <translation>Media opslaan…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="352"/>
@@ -8870,7 +8870,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="359"/>
         <source>Go to URL</source>
-        <translation>Ga naar URL</translation>
+        <translation>Ga naar url</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="360"/>
@@ -8936,7 +8936,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="369"/>
         <source>Stop</source>
-        <translation>Stoppen</translation>
+        <translation>Afbreken</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="370"/>
@@ -8946,12 +8946,12 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="371"/>
         <source>Stop All Pages</source>
-        <translation>Alle pagina&apos;s stoppen</translation>
+        <translation>Alle pagina&apos;s afbreken</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="373"/>
         <source>Reload or Stop</source>
-        <translation>Herladen of stoppen</translation>
+        <translation>Herladen of afbreken</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="374"/>
@@ -8971,7 +8971,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="377"/>
         <source>Show Context Menu</source>
-        <translation>Contextmenu tonen</translation>
+        <translation>Rechtermuisknopmenu openen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="378"/>
@@ -9046,7 +9046,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="392"/>
         <source>Find…</source>
-        <translation>Zoeken...</translation>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="393"/>
@@ -9072,7 +9072,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="397"/>
         <source>Create Search…</source>
-        <translation>Zoekmachine creëren...</translation>
+        <translation>Zoekmachine toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="398"/>
@@ -9112,12 +9112,12 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="405"/>
         <source>Page Left</source>
-        <translation>Pagina links</translation>
+        <translation>Pagina naar links</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="406"/>
         <source>Page Right</source>
-        <translation>Pagina rechts</translation>
+        <translation>Pagina naar rechts</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="407"/>
@@ -9137,7 +9137,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="410"/>
         <source>Print…</source>
-        <translation>Afdrukken...</translation>
+        <translation>Afdrukken…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="411"/>
@@ -9147,22 +9147,22 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="412"/>
         <source>Take Screenshot</source>
-        <translation>Schermafbeelding maken</translation>
+        <translation>Schermfoto maken</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="413"/>
         <source>Activate Address Field</source>
-        <translation>Adresveld activeren</translation>
+        <translation>Adresveld focussen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="414"/>
         <source>Activate Search Field</source>
-        <translation>Zoekveld activeren</translation>
+        <translation>Zoekveld focussen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="415"/>
         <source>Activate Content</source>
-        <translation>Inhoud activeren</translation>
+        <translation>Inhoud focussen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="416"/>
@@ -9177,7 +9177,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="418"/>
         <source>Activate Tab</source>
-        <translation>Tabblad activeren</translation>
+        <translation>Tabblad focussen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="419"/>
@@ -9192,7 +9192,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="421"/>
         <source>Activate Window</source>
-        <translation>Venster activeren</translation>
+        <translation>Venster focussen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="422"/>
@@ -9202,7 +9202,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="423"/>
         <source>Bookmark Page…</source>
-        <translation>Pagina toevoegen aan bladwijzers...</translation>
+        <translation>Pagina toevoegen aan bladwijzers…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="424"/>
@@ -9252,7 +9252,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="433"/>
         <source>Inspect Element…</source>
-        <translation>Element inspecteren...</translation>
+        <translation>Element inspecteren…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="434"/>
@@ -9263,7 +9263,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
         <location filename="../../src/core/ActionsManager.cpp" line="435"/>
         <location filename="../../src/ui/Menu.cpp" line="416"/>
         <source>Full Screen</source>
-        <translation>Volledig scherm</translation>
+        <translation>Beeldvullende modus</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="436"/>
@@ -9303,12 +9303,12 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="443"/>
         <source>Reset to Defaults…</source>
-        <translation>Herstellen naar standaardwaarden...</translation>
+        <translation>Standaardwaarden herstellen…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="443"/>
         <source>Reset Toolbars to Defaults…</source>
-        <translation>Werkbalken herstellen naar standaardwaarden...</translation>
+        <translation>Werkbalken herstellen naar standaardwaarden…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="444"/>
@@ -9333,7 +9333,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="446"/>
         <source>Content Blocking…</source>
-        <translation>Inhoudsblokkering...</translation>
+        <translation>Inhoudsblokkering…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="447"/>
@@ -9343,7 +9343,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="448"/>
         <source>Clear History…</source>
-        <translation>Geschiedenis verwijderen...</translation>
+        <translation>Geschiedenis wissen…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="449"/>
@@ -9370,12 +9370,12 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="453"/>
         <source>Preferences…</source>
-        <translation>Voorkeuren...</translation>
+        <translation>Instellingen…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="454"/>
         <source>Website Preferences…</source>
-        <translation>Website-voorkeuren...</translation>
+        <translation>Websitevoorkeuren…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="455"/>
@@ -9385,42 +9385,42 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="456"/>
         <source>Reset Options</source>
-        <translation>Herstellen naar standaardwaarden</translation>
+        <translation>Standaardwaarden herstellen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="457"/>
         <source>Website Information…</source>
-        <translation>Website-informatie...</translation>
+        <translation>Website-informatie…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="458"/>
         <source>Website Certificate Information…</source>
-        <translation>Certificaatinformatie van website...</translation>
+        <translation>Certificaatinformatie van website…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="459"/>
         <source>Switch Application Language…</source>
-        <translation>Taal van toepassing wijzigen...</translation>
+        <translation>Programmataal wijzigen…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="460"/>
         <source>Check for Updates…</source>
-        <translation>Controleren op updates...</translation>
+        <translation>Controleren op updates…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="461"/>
         <source>Diagnostic Report…</source>
-        <translation>Diagnostisch rapport...</translation>
+        <translation>Diagnostisch rapport…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="462"/>
         <source>About Otter…</source>
-        <translation>Over Otter...</translation>
+        <translation>Over Otter…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="463"/>
         <source>About Qt…</source>
-        <translation>Over Qt...</translation>
+        <translation>Over Qt…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="464"/>
@@ -9595,7 +9595,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/Menu.cpp" line="95"/>
         <source>Character Encoding</source>
-        <translation>Karaktertekenset</translation>
+        <translation>Tekenset</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="105"/>
@@ -9615,32 +9615,32 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/Menu.cpp" line="130"/>
         <source>Import Opera Bookmarks…</source>
-        <translation>Opera-bladwijzers importeren...</translation>
+        <translation>Opera-bladwijzers importeren…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="131"/>
         <source>Import HTML Bookmarks…</source>
-        <translation>HTML-bladwijzers importeren...</translation>
+        <translation>HTML-bladwijzers importeren…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="133"/>
         <source>Import OPML Feeds…</source>
-        <translation>OPML-feeds importeren...</translation>
+        <translation>OPML-feeds importeren…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="135"/>
         <source>Import Opera Notes…</source>
-        <translation>Opera-notities importeren...</translation>
+        <translation>Opera-notities importeren…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="137"/>
         <source>Import Opera Search Engines…</source>
-        <translation>Opera-zoekmachines importeren...</translation>
+        <translation>Opera-zoekmachines importeren…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="139"/>
         <source>Import Opera Session…</source>
-        <translation>Opera-sessie importeren...</translation>
+        <translation>Opera-sessie importeren…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="152"/>
@@ -9705,7 +9705,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/Menu.cpp" line="412"/>
         <source>Accept Third-party Cookies</source>
-        <translation>Cookies van derde partijen accepteren</translation>
+        <translation>Cookies van externe partijen accepteren</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="420"/>
@@ -9801,12 +9801,12 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/Menu.cpp" line="779"/>
         <source>Only Existing</source>
-        <translation>Alleen bestaande</translation>
+        <translation>Alleen aanwezige</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="783"/>
         <source>Only Read Existing</source>
-        <translation>Alleen bestaande uitlezen</translation>
+        <translation>Aanwezige alleen uitlezen</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="787"/>
@@ -9826,7 +9826,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/Menu.cpp" line="803"/>
         <source>Only Cached</source>
-        <translation>Alleen gecachete</translation>
+        <translation>Alleen in cache</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="807"/>
@@ -9856,7 +9856,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1053"/>
         <source>Default Application</source>
-        <translation>Standaardtoepassing</translation>
+        <translation>Standaardprogramma</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1061"/>
@@ -9876,22 +9876,22 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1259"/>
         <source>Add Toolbar…</source>
-        <translation>Werkbalk toevoegen...</translation>
+        <translation>Werkbalk toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1260"/>
         <source>Add Bookmarks Bar…</source>
-        <translation>Bladwijzerbalk toevoegen...</translation>
+        <translation>Bladwijzerbalk toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1261"/>
         <source>Add Sidebar…</source>
-        <translation>Zijbalk toevoegen...</translation>
+        <translation>Zijbalk toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1343"/>
         <source>Custom User Agent…</source>
-        <translation>Aangepaste gebruikersagent...</translation>
+        <translation>Aangepaste gebruikersagent…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1387"/>
@@ -9901,7 +9901,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="955"/>
         <source>Edit Link Bookmark…</source>
-        <translation>Bladwijzerlink bewerken...</translation>
+        <translation>Bladwijzerlink bewerken…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="987"/>
@@ -9946,12 +9946,12 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1056"/>
         <source>Save Video…</source>
-        <translation>Video opslaan...</translation>
+        <translation>Video opslaan…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1056"/>
         <source>Save Audio…</source>
-        <translation>Audio opslaan...</translation>
+        <translation>Audio opslaan…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1061"/>
@@ -9986,12 +9986,12 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1281"/>
         <source>Edit Bookmark…</source>
-        <translation>Bladwijzer bewerken..</translation>
+        <translation>Bladwijzer bewerken…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1281"/>
         <source>Add Bookmark…</source>
-        <translation>Bladwijzer toevoegen...</translation>
+        <translation>Bladwijzer toevoegen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Window.cpp" line="656"/>
@@ -10024,7 +10024,7 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="126"/>
         <source>Advanced Configuration</source>
-        <translation>Geavanceerde configuratie</translation>
+        <translation>Geavanceerde instellingen</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="127"/>
@@ -10082,44 +10082,44 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="105"/>
         <source>Failed to open content blocking profile file: %1</source>
-        <translation>Fout bij openen van profielbestand voor inhoudsblokkering: %1</translation>
+        <translation>Het profielbestand voor inhoudsblokkering kan niet worden geopend: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="604"/>
         <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="632"/>
         <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="645"/>
         <source>Failed to update content blocking profile: %1</source>
-        <translation>Fout tijdens bijwerken van profielbestand voor inhoudsblokkering: %1</translation>
+        <translation>Het profielbestand voor inhoudsblokkering kan niet worden bijgewerkt: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="618"/>
         <source>Failed to update content blocking profile: checksum mismatch</source>
-        <translation>Fout tijdens bijwerken van profielbestand voor inhoudsblokkering: controlesom komt niet overeen</translation>
+        <translation>Het profielbestand voor inhoudsblokkering kan niet worden bijgewerkt: de controlesom komt niet overeen</translation>
     </message>
     <message>
         <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="885"/>
         <source>Failed to update content blocking profile, update URL is empty</source>
-        <translation>Fout tijdens bijwerken van profielbestand voor inhoudsblokkering: geen bijwerk-URL opgegeven</translation>
+        <translation>Het profielbestand voor inhoudsblokkering kan niet worden bijgewerkt: er is geen bijwerk-url</translation>
     </message>
     <message>
         <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="889"/>
         <source>Failed to update content blocking profile, update URL (%1) is invalid</source>
-        <translation>Fout tijdens bijwerken van profielbestand voor inhoudsblokkering: de bijwerk-URL (%1) is ongeldig</translation>
+        <translation>Het profielbestand voor inhoudsblokkering kan niet worden bijgewerkt: de bijwerk-url (%1) is ongeldig</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="200"/>
         <source>Failed to find User Script file: %1</source>
-        <translation>Kan gebruikersscriptbestand niet vinden: %1</translation>
+        <translation>Het gebruikersscriptbestand is niet aangetroffen: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="125"/>
         <source>URL to open</source>
-        <translation>Te openen URL</translation>
+        <translation>Te openen url</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="126"/>
         <source>Uses &lt;path&gt; as cache directory</source>
-        <translation>Gebruikt &lt;path&gt; als cache-map</translation>
+        <translation>Gebruikt &lt;path&gt; als cachemap</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="127"/>
@@ -10134,59 +10134,59 @@ Klik op Installeren om de update nu te installeren of sluit dit venster om de up
     <message>
         <location filename="../../src/core/Application.cpp" line="129"/>
         <source>Starts private session</source>
-        <translation>Begint een incognito-sessie</translation>
+        <translation>Opent een incognito-sessie</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="130"/>
         <source>Forces session chooser dialog</source>
-        <translation>Forceert het sessiekiezervenster</translation>
+        <translation>Toont het sessiekiezervenster</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="131"/>
         <source>Sets profile and cache paths to directories inside the same directory as that of application binary</source>
-        <translation>Stelt profiel- en cache-paden in als mappen in dezelfde map als die van het uitvoerbare bestand van de browser</translation>
+        <translation>Stelt profiel- en cachelocaties in als mappen binnen dezelfde map als die van het uitvoerbare bestand van de browser</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="132"/>
         <source>Loads URL in new tab</source>
-        <translation>Laadt een URL op een nieuw tabblad</translation>
+        <translation>Laadt een url op een nieuw tabblad</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="133"/>
         <source>Loads URL in new private tab</source>
-        <translation>Laadt een URL op een nieuw incognito-tabblad</translation>
+        <translation>Laadt een url op een nieuw incognito-tabblad</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="134"/>
         <source>Loads URL in new window</source>
-        <translation>Laadt een URL in een nieuw venster</translation>
+        <translation>Laadt een url in een nieuw venster</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="135"/>
         <source>Loads URL in new private window</source>
-        <translation>Laadt een URL in een nieuw incognito-venster</translation>
+        <translation>Laadt een url in een nieuw incognito-venster</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="136"/>
         <source>Tells application to avoid writing data to disk</source>
-        <translation>Laat de toepassing weten geen gegevens naar de schijf weg te schrijven</translation>
+        <translation>Laat het programma weten geen gegevens naar de schijf weg te schrijven</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="137"/>
         <source>Prints out diagnostic report and exits application</source>
-        <translation>Print een diagnostisch rapport en verlaat de toepassing</translation>
+        <translation>Maakt een diagnostisch rapport en sluit het programma af</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="414"/>
         <source>Failed to parse entry of proxy auto-config (PAC): %1</source>
-        <translation>Fout bij laden van de automatische proxy-configuratie (PAC): %1</translation>
+        <translation>Een item uit de automatische proxy-configuratie (pac) kan niet worden verwerkt: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="135"/>
         <source>Failed to install update
 Updater: %1
 Script: %2</source>
-        <translation>Het installeren van de update is mislukt
+        <translation>De update kan niet worden geïnstalleerd
 Updater: %1
 Script: %2</translation>
     </message>
@@ -10203,7 +10203,7 @@ Script: %2</translation>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="44"/>
         <source>Unable to check for updates. Invalid URL: %1</source>
-        <translation>Er kan niet worden gecontroleerd op updates - de url is ongeldig: %1</translation>
+        <translation>Er kan niet worden gecontroleerd op updates: de url, %1, is ongeldig</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="62"/>
@@ -10223,12 +10223,12 @@ Script: %2</translation>
     <message>
         <location filename="../../src/core/Updater.cpp" line="104"/>
         <source>Unable to download update: %1</source>
-        <translation>Het downloaden van de update is mislukt: %1</translation>
+        <translation>De update kan niet worden gedownload: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="65"/>
         <source>Failed to open User Script file: %1</source>
-        <translation>Het openen van het gebruikersscriptbestand is mislukt: %1</translation>
+        <translation>Het gebruikersscriptbestand kan niet worden geopend: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="151"/>
@@ -10238,7 +10238,7 @@ Script: %2</translation>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="228"/>
         <source>Failed to locate header of User Script file</source>
-        <translation>Het detecteren van de kop van het gebruikersscriptbestand is mislukt</translation>
+        <translation>De kop van het gebruikersscriptbestand kan niet worden gedetecteerd</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="163"/>
@@ -10252,7 +10252,7 @@ Script: %2</translation>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="249"/>
         <source>Request blocked by rule from profile %1:
 %2</source>
-        <translation>De aanvraag is geblokkeerd door een regel uit profiel %1:&lt;br&gt;
+        <translation>De aanvraag is geblokkeerd door een regel uit profiel ‘%1’:&lt;br&gt;
 %2</translation>
     </message>
     <message>
@@ -10265,28 +10265,28 @@ Script: %2</translation>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="503"/>
         <source>Failed to run File Associations Manager, error code: %1
 Application ID: %2</source>
-        <translation>Het uitvoeren van Bestandstoewijzingbeheer is mislukt - foutcode: %1
-Toepassings-id: %2</translation>
+        <translation>Bestandstoewijzingbeheer kan niet worden uitgevoerd. Foutcode: %1
+Programma-id: %2</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="522"/>
         <source>Failed to run File Associations Manager, error code: %1</source>
-        <translation>Het uitvoeren van Bestandstoewijzingbeheer is mislukt - foutcode: %1</translation>
+        <translation>Bestandstoewijzingbeheer kan niet worden uitgevoerd. Foutcode: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="577"/>
         <source>Failed to register application to system registry: %1, %2</source>
-        <translation>De toepassing kan niet worden geregistreerd in het systeemregister: %1, %2</translation>
+        <translation>Het programma kan niet worden geregistreerd in het systeemregister: %1, %2</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="211"/>
         <source>Failed to load custom rules: invalid adblock header</source>
-        <translation>Het laden van de aangepaste regels is mislukt: ongeldige advertentieblokkeringskop</translation>
+        <translation>De aangepaste regels kunnen niet worden geladen: ongeldige reclameblokkeringskop</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="519"/>
         <source>Failed to create a file with custom rules: %1</source>
-        <translation>Het creëren van een bestand met aangepaste regels is mislukt: %1</translation>
+        <translation>Er kan geen bestand met aangepaste regels worden gemaakt: %1</translation>
     </message>
 </context>
 <context>
@@ -10294,12 +10294,12 @@ Toepassings-id: %2</translation>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="193"/>
         <source>Keyboard and Mouse Configuration Profiles</source>
-        <translation>Toetsenbord- en muisconfiguratieprofielen</translation>
+        <translation>Toetsenbord- en muisinstellingsprofielen</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="327"/>
         <source>Options</source>
-        <translation>Opties</translation>
+        <translation>Instellingen</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="363"/>
@@ -10351,7 +10351,7 @@ Toepassings-id: %2</translation>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="693"/>
         <location filename="../../src/core/NetworkManagerFactory.h" line="90"/>
         <source>System Configuration</source>
-        <translation>Systeemconfiguratie</translation>
+        <translation>Systeeminstellingen</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.h" line="85"/>
@@ -10396,22 +10396,22 @@ Toepassings-id: %2</translation>
     <message>
         <location filename="../../src/core/Utils.cpp" line="185"/>
         <source>You tried to access the address &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, which was blocked by content blocker.</source>
-        <translation>Je probeert het adres &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; te bezoeken, maar het wordt geblokkeerd door de inhoudsblokkering.</translation>
+        <translation>U probeert het adres &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; te bezoeken, maar het wordt geblokkeerd door de inhoudsblokkering.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="189"/>
         <source>The owner of &lt;strong&gt;%1&lt;/strong&gt; has configured their page improperly. To protect your information from being stolen, connection to this website was aborted.</source>
-        <translation>De eigenaar van &lt;strong&gt;%1&lt;/strong&gt; heeft de pagina onjuist geconfigureerd. De websiteverbinding is verbroken om te voorkomen dat je persoonlijke informatie kan worden gestolen.</translation>
+        <translation>De eigenaar van &lt;strong&gt;%1&lt;/strong&gt; heeft de pagina niet goed ingesteld. De websiteverbinding is verbroken om te voorkomen dat uw persoonlijke informatie kan worden gestolen.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="193"/>
         <source>This web page at &lt;strong&gt;%1&lt;/strong&gt; has been reported as a web forgery. To protect your information from being stolen, connection to this website was aborted.</source>
-        <translation>De webpagina op &lt;strong&gt;%1&lt;/strong&gt; is gerapporteerd als vervalsing. De websiteverbinding is verbroken om te voorkomen dat je persoonlijke informatie kan worden gestolen.</translation>
+        <translation>De website &lt;strong&gt;%1&lt;/strong&gt; staat bekend als vervalsing. De websiteverbinding is verbroken om te voorkomen dat uw persoonlijke informatie kan worden gestolen.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="197"/>
         <source>You tried to access the address &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.</source>
-        <translation>Je probeert om verbinding te maken met het adres &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, maar dit adres is momenteel niet beschikbaar. Zorg ervoor dat het webadres (URL) juist is en voorzien van de juiste punctuatie en probeer dan de pagina te herladen.</translation>
+        <translation>U probeert verbinding te maken met het adres &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, maar dit adres is momenteel niet beschikbaar. Zorg er voor dat het webadres (url) juist is en voorzien van de juiste punctuatie. Herlaad daarna de pagina.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="201"/>
@@ -10431,17 +10431,17 @@ Toepassings-id: %2</translation>
     <message>
         <location filename="../../src/core/Utils.cpp" line="205"/>
         <source>Make sure your internet connection is active and check whether other applications that rely on the same connection are working.</source>
-        <translation>Zorg ervoor dat je verbonden bent met het internet en controleer of andere toepassingen, die dezelfde verbinding gebruiken, wél werken.</translation>
+        <translation>Zorg er voor dat u verbonden bent met het internet en controleer of andere programma&apos;s, die dezelfde verbinding gebruiken, wél werken.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="205"/>
         <source>Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing.</source>
-        <translation>Zorg ervoor dat je internet-beveiligingssoftware juist is ingesteld en dat deze geen storingen veroorzaakt tijdens normaal surfen op het internet.</translation>
+        <translation>Zorg er voor dat uw internetbeveiligingssoftware juist is ingesteld en dat deze geen storingen veroorzaakt tijdens normaal surfen op het internet.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="205"/>
         <source>Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.</source>
-        <translation>Probeer om op de F12-toets van je toetsenbord te drukken en proxyservers uit te schakelen, tenzij je verplicht bent om een proxy te gebruiken voor je internetverbinding. Herlaad daarna de pagina.</translation>
+        <translation>Druk op de F12-toets van uw toetsenbord en probeer proxyservers uit te schakelen, tenzij u verplicht bent om een proxy te gebruiken op uw internetverbinding. Herlaad daarna de pagina.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="216"/>
@@ -10491,22 +10491,22 @@ Toepassings-id: %2</translation>
     <message>
         <location filename="../../src/core/Utils.cpp" line="322"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Foutmelding</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="423"/>
         <source>Today at %1</source>
-        <translation>Vandaag, om %1</translation>
+        <translation>Vandaag om %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="428"/>
         <source>Yesterday at %1</source>
-        <translation>Gisteren, om %1</translation>
+        <translation>Gisteren om %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="434"/>
         <source>%1 at %2</source>
-        <translation>%1, om %2</translation>
+        <translation>%1 om %2</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="474"/>
@@ -10545,14 +10545,14 @@ Toepassings-id: %2</translation>
     <message>
         <location filename="../../src/core/Utils.cpp" line="645"/>
         <source>This path is already used by different download, pick another one.</source>
-        <translation>Dit pad wordt al gebruikt door een andere download; kies een ander pad.</translation>
+        <translation>Deze locatie wordt al gebruikt door een andere download - kies een andere locatie.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="654"/>
         <source>Target path is not writable.
 Select another one.</source>
-        <translation>Het doelpad is niet beschrijfbaar.
-Kies een ander pad.</translation>
+        <translation>De doellocatie is niet beschrijfbaar.
+Kies een andere locatie.</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="890"/>
