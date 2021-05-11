@@ -94,6 +94,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	m_documentLoadingProgress(0),
 	m_focusProxyTimer(0),
 	m_updateNavigationActionsTimer(0),
+	m_isClosing(false),
 	m_isEditing(false),
 	m_isFullScreen(false),
 	m_isTypedIn(false)
@@ -142,6 +143,11 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	connect(m_page, &QtWebEnginePage::aboutToNavigate, m_requestInterceptor, &QtWebEngineUrlRequestInterceptor::resetStatistics);
 	connect(m_requestInterceptor, &QtWebEngineUrlRequestInterceptor::pageInformationChanged, this, &QtWebEngineWebWidget::pageInformationChanged);
 	connect(m_requestInterceptor, &QtWebEngineUrlRequestInterceptor::requestBlocked, this, &QtWebEngineWebWidget::requestBlocked);
+}
+
+QtWebEngineWebWidget::~QtWebEngineWebWidget()
+{
+	m_isClosing = true;
 }
 
 void QtWebEngineWebWidget::timerEvent(QTimerEvent *event)
@@ -1182,6 +1188,11 @@ void QtWebEngineWebWidget::notifyNavigationActionsChanged()
 
 void QtWebEngineWebWidget::notifyWatchedDataChanged(ChangeWatcher watcher)
 {
+	if (m_isClosing)
+	{
+		return;
+	}
+
 	if (watcher >= m_watchedChanges.count())
 	{
 		m_watchedChanges.resize(watcher + 1);

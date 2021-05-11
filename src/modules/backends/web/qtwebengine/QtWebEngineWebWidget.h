@@ -73,6 +73,8 @@ public:
 		}
 	};
 
+	~QtWebEngineWebWidget();
+
 	void search(const QString &query, const QString &searchEngine) override;
 	void print(QPrinter *printer) override;
 	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = {}) const override;
@@ -189,6 +191,7 @@ private:
 	int m_documentLoadingProgress;
 	int m_focusProxyTimer;
 	int m_updateNavigationActionsTimer;
+	bool m_isClosing;
 	bool m_isEditing;
 	bool m_isFullScreen;
 	bool m_isTypedIn;
