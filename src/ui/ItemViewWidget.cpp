@@ -28,6 +28,7 @@
 
 #include <QtCore/QTimer>
 #include <QtGui/QDropEvent>
+#include <QtGui/QPainter>
 #include <QtWidgets/QToolTip>
 
 namespace Otter
@@ -205,6 +206,59 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	connect(visibilityMenu, &QMenu::triggered, this, &HeaderViewWidget::toggleColumnVisibility);
 
 	menu.exec(event->globalPos());
+}
+
+void HeaderViewWidget::paintSection(QPainter *painter, const QRect &rectangle, int column) const
+{
+	painter->save();
+
+	QHeaderView::paintSection(painter, rectangle, column);
+
+	painter->restore();
+
+	if (!model()->headerData(column, orientation(), IsShowingCheckBoxIndicatorRole).toBool())
+	{
+		return;
+	}
+
+	QStyleOptionHeader labelOption;
+	labelOption.text = QLatin1String("X");
+
+	initStyleOption(&labelOption);
+
+	const QRect labelRectangle(style()->subElementRect(QStyle::SE_HeaderLabel, &labelOption, this));
+	const int checkBoxSize(labelRectangle.height() * 0.7);
+	const int offset((rectangle.height() - checkBoxSize) / 2);
+
+	QStyleOptionButton checkBoxOption;
+	checkBoxOption.initFrom(this);
+
+	if (isLeftToRight())
+	{
+		checkBoxOption.rect = QRect((sectionPosition(column) + offset), offset, checkBoxSize, checkBoxSize);
+	}
+	else
+	{
+		checkBoxOption.rect = QRect((sectionPosition(column) + sectionSize(column) - (checkBoxSize + offset)), offset, checkBoxSize, checkBoxSize);
+	}
+
+	switch (model()->headerData(column, orientation(), Qt::CheckStateRole).toInt())
+	{
+		case Qt::Checked:
+			checkBoxOption.state = QStyle::State_On;
+
+			break;
+		case Qt::PartiallyChecked:
+			checkBoxOption.state = QStyle::State_NoChange;
+
+			break;
+		default:
+			checkBoxOption.state = QStyle::State_Off;
+
+			break;
+	}
+
+	style()->drawPrimitive(QStyle::PE_IndicatorCheckBox, &checkBoxOption, painter);
 }
 
 void HeaderViewWidget::toggleColumnVisibility(QAction *action)

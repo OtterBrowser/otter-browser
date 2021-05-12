@@ -65,7 +65,8 @@ class HeaderViewWidget final : public QHeaderView
 public:
 	enum DataRole
 	{
-		WidthRole = Qt::UserRole,
+		IsShowingCheckBoxIndicatorRole = Qt::UserRole,
+		WidthRole,
 		UserRole
 	};
 
@@ -81,6 +82,7 @@ protected:
 
 	void showEvent(QShowEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
+	void paintSection(QPainter *painter, const QRect &rectangle, int column) const override;
 	bool viewportEvent(QEvent *event) override;
 
 protected slots:
