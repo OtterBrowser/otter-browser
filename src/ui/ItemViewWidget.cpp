@@ -221,26 +221,9 @@ void HeaderViewWidget::paintSection(QPainter *painter, const QRect &rectangle, i
 		return;
 	}
 
-	QStyleOptionHeader labelOption;
-	labelOption.text = QLatin1String("X");
-
-	initStyleOption(&labelOption);
-
-	const QRect labelRectangle(style()->subElementRect(QStyle::SE_HeaderLabel, &labelOption, this));
-	const int checkBoxSize(labelRectangle.height() * 0.7);
-	const int offset((rectangle.height() - checkBoxSize) / 2);
-
 	QStyleOptionButton checkBoxOption;
 	checkBoxOption.initFrom(this);
-
-	if (isLeftToRight())
-	{
-		checkBoxOption.rect = QRect((sectionPosition(column) + offset), offset, checkBoxSize, checkBoxSize);
-	}
-	else
-	{
-		checkBoxOption.rect = QRect((sectionPosition(column) + sectionSize(column) - (checkBoxSize + offset)), offset, checkBoxSize, checkBoxSize);
-	}
+	checkBoxOption.rect = getCheckBoxRectangle(rectangle, column);
 
 	switch (model()->headerData(column, orientation(), Qt::CheckStateRole).toInt())
 	{
@@ -334,6 +317,25 @@ void HeaderViewWidget::setSort(int column, Qt::SortOrder order)
 	setSortIndicator(column, order);
 
 	emit sortChanged(column, order);
+}
+
+QRect HeaderViewWidget::getCheckBoxRectangle(const QRect &rectangle, int column) const
+{
+	QStyleOptionHeader labelOption;
+	labelOption.text = QLatin1String("X");
+
+	initStyleOption(&labelOption);
+
+	const QRect labelRectangle(style()->subElementRect(QStyle::SE_HeaderLabel, &labelOption, this));
+	const int checkBoxSize(labelRectangle.height() * 0.7);
+	const int offset((rectangle.height() - checkBoxSize) / 2);
+
+	if (isRightToLeft())
+	{
+		return QRect((sectionPosition(column) + sectionSize(column) - (checkBoxSize + offset)), offset, checkBoxSize, checkBoxSize);
+	}
+
+	return QRect((sectionPosition(column) + offset), offset, checkBoxSize, checkBoxSize);
 }
 
 bool HeaderViewWidget::viewportEvent(QEvent *event)
