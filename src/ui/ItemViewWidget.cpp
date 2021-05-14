@@ -332,10 +332,10 @@ QRect HeaderViewWidget::getCheckBoxRectangle(const QRect &rectangle, int column)
 
 	if (isRightToLeft())
 	{
-		return QRect((sectionPosition(column) + sectionSize(column) - (checkBoxSize + offset)), offset, checkBoxSize, checkBoxSize);
+		return {(sectionPosition(column) + sectionSize(column) - (checkBoxSize + offset)), offset, checkBoxSize, checkBoxSize};
 	}
 
-	return QRect((sectionPosition(column) + offset), offset, checkBoxSize, checkBoxSize);
+	return {(sectionPosition(column) + offset), offset, checkBoxSize, checkBoxSize};
 }
 
 bool HeaderViewWidget::viewportEvent(QEvent *event)
