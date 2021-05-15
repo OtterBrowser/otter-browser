@@ -223,7 +223,7 @@ void HeaderViewWidget::paintSection(QPainter *painter, const QRect &rectangle, i
 
 	QStyleOptionButton checkBoxOption;
 	checkBoxOption.initFrom(this);
-	checkBoxOption.rect = getCheckBoxRectangle(rectangle, column);
+	checkBoxOption.rect = getCheckBoxRectangle(column, rectangle.height());
 
 	switch (model()->headerData(column, orientation(), Qt::CheckStateRole).toInt())
 	{
@@ -319,7 +319,7 @@ void HeaderViewWidget::setSort(int column, Qt::SortOrder order)
 	emit sortChanged(column, order);
 }
 
-QRect HeaderViewWidget::getCheckBoxRectangle(const QRect &rectangle, int column) const
+QRect HeaderViewWidget::getCheckBoxRectangle(int column, int height) const
 {
 	QStyleOptionHeader labelOption;
 	labelOption.text = QLatin1String("X");
@@ -328,7 +328,7 @@ QRect HeaderViewWidget::getCheckBoxRectangle(const QRect &rectangle, int column)
 
 	const QRect labelRectangle(style()->subElementRect(QStyle::SE_HeaderLabel, &labelOption, this));
 	const int checkBoxSize(labelRectangle.height() * 0.7);
-	const int offset((rectangle.height() - checkBoxSize) / 2);
+	const int offset((height - checkBoxSize) / 2);
 
 	if (isRightToLeft())
 	{
