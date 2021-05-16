@@ -83,7 +83,7 @@ protected:
 	void showEvent(QShowEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
 	void paintSection(QPainter *painter, const QRect &rectangle, int column) const override;
-	QRect getCheckBoxRectangle(int column, int height) const;
+	QRect getCheckBoxRectangle(int column) const;
 	bool viewportEvent(QEvent *event) override;
 
 protected slots:
