@@ -98,7 +98,8 @@ void ViewportWidget::setUpdateDataRole(int updateDataRole)
 	m_updateDataRole = updateDataRole;
 }
 
-HeaderViewWidget::HeaderViewWidget(Qt::Orientation orientation, QWidget *parent) : QHeaderView(orientation, parent)
+HeaderViewWidget::HeaderViewWidget(Qt::Orientation orientation, QWidget *parent) : QHeaderView(orientation, parent),
+	m_clickedCheckBox(-1)
 {
 	setMinimumSectionSize(0);
 	setTextElideMode(Qt::ElideRight);
@@ -206,6 +207,36 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	connect(visibilityMenu, &QMenu::triggered, this, &HeaderViewWidget::toggleColumnVisibility);
 
 	menu.exec(event->globalPos());
+}
+
+void HeaderViewWidget::mousePressEvent(QMouseEvent *event)
+{
+	const int column(logicalIndexAt(event->pos()));
+
+	if (model()->headerData(column, orientation(), IsShowingCheckBoxIndicatorRole).toBool() && getCheckBoxRectangle(column).contains(event->pos()))
+	{
+		m_clickedCheckBox = column;
+	}
+	else
+	{
+		QHeaderView::mousePressEvent(event);
+	}
+}
+
+void HeaderViewWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+	const int column(logicalIndexAt(event->pos()));
+
+	if (column == m_clickedCheckBox && model()->headerData(column, orientation(), IsShowingCheckBoxIndicatorRole).toBool() && getCheckBoxRectangle(column).contains(event->pos()))
+	{
+		model()->setHeaderData(column, orientation(), ((model()->headerData(column, orientation(), Qt::CheckStateRole).toInt() == Qt::Checked) ? Qt::Unchecked : Qt::Checked), Qt::CheckStateRole);
+
+		updateSection(column);
+	}
+	else
+	{
+		QHeaderView::mouseReleaseEvent(event);
+	}
 }
 
 void HeaderViewWidget::paintSection(QPainter *painter, const QRect &rectangle, int column) const
