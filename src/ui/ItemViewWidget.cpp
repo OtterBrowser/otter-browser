@@ -204,7 +204,13 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	}
 
 	connect(sortMenu, &QMenu::triggered, this, &HeaderViewWidget::toggleSort);
-	connect(visibilityMenu, &QMenu::triggered, this, &HeaderViewWidget::toggleColumnVisibility);
+	connect(visibilityMenu, &QMenu::triggered, this, [&](QAction *action)
+	{
+		if (action)
+		{
+			emit columnVisibilityChanged(action->data().toInt(), !action->isChecked());
+		}
+	});
 
 	menu.exec(event->globalPos());
 }
@@ -273,14 +279,6 @@ void HeaderViewWidget::paintSection(QPainter *painter, const QRect &rectangle, i
 	}
 
 	style()->drawPrimitive(QStyle::PE_IndicatorCheckBox, &checkBoxOption, painter);
-}
-
-void HeaderViewWidget::toggleColumnVisibility(QAction *action)
-{
-	if (action)
-	{
-		emit columnVisibilityChanged(action->data().toInt(), !action->isChecked());
-	}
 }
 
 void HeaderViewWidget::toggleSort(QAction *action)
@@ -360,7 +358,7 @@ QRect HeaderViewWidget::getCheckBoxRectangle(int column) const
 	const QRect labelRectangle(style()->subElementRect(QStyle::SE_HeaderLabel, &labelOption, this));
 	const int checkBoxSize(labelRectangle.height() * 0.7);
 	const int offset((height() - checkBoxSize) / 2);
-
+///FIXME Use aligned SE_HeaderLabel to get margins?
 	if (isRightToLeft())
 	{
 		return {(sectionPosition(column) + sectionSize(column) - (checkBoxSize + offset)), offset, checkBoxSize, checkBoxSize};

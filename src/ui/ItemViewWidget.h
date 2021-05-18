@@ -89,7 +89,6 @@ protected:
 	bool viewportEvent(QEvent *event) override;
 
 protected slots:
-	void toggleColumnVisibility(QAction *action);
 	void toggleSort(QAction *action);
 	void handleSectionClicked(int column);
 	void setSort(int column, Qt::SortOrder order);
