@@ -203,7 +203,42 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 		showAllColumnsAction->setEnabled(!areAllColumnsVisible);
 	}
 
-	connect(sortMenu, &QMenu::triggered, this, &HeaderViewWidget::toggleSort);
+	connect(sortMenu, &QMenu::triggered, this, [&](QAction *action)
+	{
+		const ItemViewWidget *view(qobject_cast<ItemViewWidget*>(parent()));
+
+		if (action && view)
+		{
+			const int value(action->data().toInt());
+			int column(view->getSortColumn());
+
+			if (column < 0)
+			{
+				for (int i = 0; i < count(); ++i)
+				{
+					column = logicalIndex(i);
+
+					if (!isSectionHidden(column))
+					{
+						break;
+					}
+				}
+			}
+
+			if (value == AscendingOrder)
+			{
+				setSort(column, Qt::AscendingOrder);
+			}
+			else if (value == DescendingOrder)
+			{
+				setSort(column, Qt::DescendingOrder);
+			}
+			else
+			{
+				handleSectionClicked(value);
+			}
+		}
+	});
 	connect(visibilityMenu, &QMenu::triggered, this, [&](QAction *action)
 	{
 		if (action)
@@ -279,43 +314,6 @@ void HeaderViewWidget::paintSection(QPainter *painter, const QRect &rectangle, i
 	}
 
 	style()->drawPrimitive(QStyle::PE_IndicatorCheckBox, &checkBoxOption, painter);
-}
-
-void HeaderViewWidget::toggleSort(QAction *action)
-{
-	const ItemViewWidget *view(qobject_cast<ItemViewWidget*>(parent()));
-
-	if (action && view)
-	{
-		const int value(action->data().toInt());
-		int column(view->getSortColumn());
-
-		if (column < 0)
-		{
-			for (int i = 0; i < count(); ++i)
-			{
-				column = logicalIndex(i);
-
-				if (!isSectionHidden(column))
-				{
-					break;
-				}
-			}
-		}
-
-		if (value == AscendingOrder)
-		{
-			setSort(column, Qt::AscendingOrder);
-		}
-		else if (value == DescendingOrder)
-		{
-			setSort(column, Qt::DescendingOrder);
-		}
-		else
-		{
-			handleSectionClicked(value);
-		}
-	}
 }
 
 void HeaderViewWidget::handleSectionClicked(int column)
