@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -186,6 +186,19 @@ QVariant ItemModel::data(const QModelIndex &index, int role) const
 	}
 
 	return QStandardItemModel::data(index, role);
+}
+
+QVariant ItemModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+	if (role == Qt::DecorationRole && !headerData(section, orientation, Qt::CheckStateRole).isNull())
+	{
+		QPixmap pixmap(16, 16);
+		pixmap.fill(Qt::transparent);
+
+		return pixmap;
+	}
+
+	return QStandardItemModel::headerData(section, orientation, role);
 }
 
 QVariant ItemModel::getItemData(QStandardItem *item, int role)
