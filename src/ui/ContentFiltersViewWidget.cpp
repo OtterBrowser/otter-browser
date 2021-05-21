@@ -198,7 +198,7 @@ QString ContentFiltersIntervalDelegate::displayText(const QVariant &value, const
 Animation* ContentFiltersViewWidget::m_updateAnimation = nullptr;
 
 ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWidget(parent),
-	m_model(new QStandardItemModel(this)),
+	m_model(new ItemModel(this)),
 	m_areProfilesModified(false)
 {
 	setModel(m_model);

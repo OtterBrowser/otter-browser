@@ -24,6 +24,7 @@
 #include "ItemDelegate.h"
 #include "ItemViewWidget.h"
 #include "../core/AdblockContentFiltersProfile.h"
+#include "../core/ItemModel.h"
 
 namespace Otter
 {
@@ -113,7 +114,7 @@ protected slots:
 	void updateSelection();
 
 private:
-	QStandardItemModel *m_model;
+	ItemModel *m_model;
 	QString m_host;
 	QHash<QString, bool> m_profilesToRemove;
 	QStringList m_filesToRemove;
