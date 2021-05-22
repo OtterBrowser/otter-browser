@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -75,9 +75,6 @@ protected:
 
 	void drawCompletionText(QPainter *painter, const QFont &font, const QVector<TextSegment> &segments, const QRect &rectangle, bool isRightToLeft) const;
 	QVector<TextSegment> highlightSegments(const QString &highlight, const QVector<TextSegment> &segments) const;
-
-protected slots:
-	void handleOptionChanged(int identifier, const QVariant &value);
 
 private:
 	QString m_highlight;

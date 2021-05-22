@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -54,7 +54,13 @@ AddressDelegate::AddressDelegate(const QString &highlight, ViewMode mode, QObjec
 	m_displayMode((SettingsManager::getOption(SettingsManager::AddressField_CompletionDisplayModeOption).toString() == QLatin1String("columns")) ? ColumnsMode : CompactMode),
 	m_viewMode(mode)
 {
-	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &AddressDelegate::handleOptionChanged);
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, [&](int identifier, const QVariant &value)
+	{
+		if (identifier == SettingsManager::AddressField_CompletionDisplayModeOption)
+		{
+			m_displayMode = ((value.toString() == QLatin1String("columns")) ? ColumnsMode : CompactMode);
+		}
+	});
 }
 
 void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -207,14 +213,6 @@ void AddressDelegate::drawCompletionText(QPainter *painter, const QFont &font, c
 		{
 			availableRectangle.setLeft(availableRectangle.left() + length);
 		}
-	}
-}
-
-void AddressDelegate::handleOptionChanged(int identifier, const QVariant &value)
-{
-	if (identifier == SettingsManager::AddressField_CompletionDisplayModeOption)
-	{
-		m_displayMode = ((value.toString() == QLatin1String("columns")) ? ColumnsMode : CompactMode);
 	}
 }
 
