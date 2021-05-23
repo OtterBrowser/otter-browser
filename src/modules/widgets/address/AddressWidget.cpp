@@ -733,12 +733,6 @@ void AddressWidget::dragEnterEvent(QDragEnterEvent *event)
 	LineEditWidget::dragEnterEvent(event);
 }
 
-void AddressWidget::openUrl(const QString &url)
-{
-	setUrl(url);
-	handleUserInput(url, SessionsManager::CurrentTabOpen);
-}
-
 void AddressWidget::showCompletion(bool isTypedHistory)
 {
 	PopupViewWidget *popupWidget(getPopup());

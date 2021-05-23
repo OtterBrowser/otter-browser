@@ -150,7 +150,6 @@ protected:
 	EntryIdentifier getEntry(const QPoint &position) const;
 
 protected slots:
-	void openUrl(const QString &url);
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleActionsStateChanged(const QVector<int> &identifiers);
 	void handleIconChanged();
