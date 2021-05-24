@@ -52,11 +52,13 @@ QString WebWidget::m_fastForwardScript;
 
 WebWidget::WebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent) : QWidget(parent),
 	m_parent(parent),
+	m_toolTipParentWidget(nullptr),
 	m_backend(backend),
 	m_windowIdentifier(0),
 	m_loadingTime(0),
 	m_loadingTimer(0),
 	m_reloadTimer(0),
+	m_toolTipTimer(0),
 	m_toolTipEntryEnumerator(metaObject()->indexOfEnumerator(QLatin1String("ToolTipEntry").data()))
 {
 	Q_UNUSED(parameters)
@@ -90,6 +92,14 @@ void WebWidget::timerEvent(QTimerEvent *event)
 		{
 			triggerAction(ActionsManager::ReloadAction);
 		}
+	}
+	else if (event->timerId() == m_toolTipTimer)
+	{
+		killTimer(m_toolTipTimer);
+
+		m_toolTipTimer = 0;
+
+		QToolTip::showText(m_toolTipPosition, QStringLiteral("<div style=\"white-space:pre-line;\">%1</div>").arg(m_toolTip.join(QLatin1String("<br>"))), m_toolTipParentWidget);
 	}
 }
 
@@ -282,6 +292,13 @@ void WebWidget::handleLoadingStateChange(LoadingState state)
 
 void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 {
+	if (m_toolTipTimer != 0)
+	{
+		killTimer(m_toolTipTimer);
+
+		m_toolTipTimer = 0;
+	}
+
 	const HitTestResult hitResult(getHitTestResult(event->pos()));
 	const QUrl link(hitResult.linkUrl.isValid() ? hitResult.linkUrl : hitResult.formUrl);
 
@@ -335,11 +352,11 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 		entries[TitleEntry] = hitResult.title.toHtmlEscaped();
 	}
 
-	QStringList toolTip;
+	m_toolTip.clear();
 
 	if (entries.count() == 1 && entries.contains(TitleEntry))
 	{
-		toolTip.append(entries[TitleEntry]);
+		m_toolTip.append(entries[TitleEntry]);
 	}
 	else
 	{
@@ -350,15 +367,15 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 				switch (layout.at(i))
 				{
 					case LastVisitedEntry:
-						toolTip.append(tr("Last Visited: %1").arg(entries[LastVisitedEntry]));
+						m_toolTip.append(tr("Last Visited: %1").arg(entries[LastVisitedEntry]));
 
 						break;
 					case LinkEntry:
-						toolTip.append(tr("Address: %1").arg(entries[LinkEntry]));
+						m_toolTip.append(tr("Address: %1").arg(entries[LinkEntry]));
 
 						break;
 					case TitleEntry:
-						toolTip.append(tr("Title: %1").arg(entries[TitleEntry]));
+						m_toolTip.append(tr("Title: %1").arg(entries[TitleEntry]));
 
 						break;
 					default:
@@ -368,9 +385,11 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 		}
 	}
 
-	if (!toolTip.isEmpty())
+	if (!m_toolTip.isEmpty())
 	{
-		QToolTip::showText(event->globalPos(), QStringLiteral("<div style=\"white-space:pre-line;\">%1</div>").arg(toolTip.join(QLatin1String("<br>"))), widget);
+		m_toolTipParentWidget = widget;
+		m_toolTipPosition = event->globalPos();
+		m_toolTipTimer = startTimer(style()->styleHint(QStyle::SH_ToolTip_WakeUpDelay));
 	}
 }
 

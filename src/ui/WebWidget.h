@@ -321,11 +321,14 @@ protected slots:
 
 private:
 	ContentsWidget *m_parent;
+	QWidget *m_toolTipParentWidget;
 	WebBackend *m_backend;
 	QUrl m_requestedUrl;
 	QString m_statusMessage;
 	QString m_statusMessageOverride;
 	QPoint m_clickPosition;
+	QPoint m_toolTipPosition;
+	QStringList m_toolTip;
 	QHash<int, QVariant> m_options;
 	QHash<ChangeWatcher, QVector<QObject*> > m_changeWatchers;
 	HitTestResult m_hitResult;
@@ -333,6 +336,7 @@ private:
 	int m_loadingTime;
 	int m_loadingTimer;
 	int m_reloadTimer;
+	int m_toolTipTimer;
 	int m_toolTipEntryEnumerator;
 
 	static QString m_fastForwardScript;
