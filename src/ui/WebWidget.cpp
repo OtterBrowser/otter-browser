@@ -99,7 +99,10 @@ void WebWidget::timerEvent(QTimerEvent *event)
 
 		m_toolTipTimer = 0;
 
-		QToolTip::showText(m_toolTipPosition, QStringLiteral("<div style=\"white-space:pre-line;\">%1</div>").arg(m_toolTip.join(QLatin1String("<br>"))), m_toolTipParentWidget);
+		if (!m_toolTip.isEmpty())
+		{
+			QToolTip::showText(m_toolTipPosition, QStringLiteral("<div style=\"white-space:pre-line;\">%1</div>").arg(m_toolTip.join(QLatin1String("<br>"))), m_toolTipParentWidget);
+		}
 	}
 }
 
