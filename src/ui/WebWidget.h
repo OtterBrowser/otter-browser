@@ -285,7 +285,7 @@ protected:
 	void openUrl(const QUrl &url, SessionsManager::OpenHints hints);
 	void startReloadTimer();
 	void startTransfer(Transfer *transfer);
-	void handleToolTipEvent(QHelpEvent *event, QWidget *widget);
+	void handleToolTipEvent(QHelpEvent *event, QWidget *widget, const QRect &rectangle = {});
 	void updateHitTestResult(const QPoint &position);
 	virtual void updateWatchedData(ChangeWatcher watcher);
 	void setClickPosition(const QPoint &position);
@@ -326,6 +326,7 @@ private:
 	QUrl m_requestedUrl;
 	QString m_statusMessage;
 	QString m_statusMessageOverride;
+	QRect m_toolTipRectangle;
 	QPoint m_clickPosition;
 	QPoint m_toolTipPosition;
 	QStringList m_toolTip;

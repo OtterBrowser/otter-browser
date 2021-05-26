@@ -101,7 +101,7 @@ void WebWidget::timerEvent(QTimerEvent *event)
 
 		if (!m_toolTip.isEmpty())
 		{
-			QToolTip::showText(m_toolTipPosition, QStringLiteral("<div style=\"white-space:pre-line;\">%1</div>").arg(m_toolTip.join(QLatin1String("<br>"))), m_toolTipParentWidget);
+			QToolTip::showText(m_toolTipPosition, QStringLiteral("<div style=\"white-space:pre-line;\">%1</div>").arg(m_toolTip.join(QLatin1String("<br>"))), m_toolTipParentWidget, m_toolTipRectangle);
 		}
 	}
 }
@@ -293,7 +293,7 @@ void WebWidget::handleLoadingStateChange(LoadingState state)
 	}
 }
 
-void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
+void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget, const QRect &rectangle)
 {
 	if (m_toolTipTimer != 0)
 	{
@@ -391,6 +391,7 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 	if (!m_toolTip.isEmpty())
 	{
 		m_toolTipParentWidget = widget;
+		m_toolTipRectangle = rectangle;
 		m_toolTipPosition = event->globalPos();
 		m_toolTipTimer = startTimer(style()->styleHint(QStyle::SH_ToolTip_WakeUpDelay));
 	}
