@@ -293,7 +293,7 @@ void WebWidget::handleLoadingStateChange(LoadingState state)
 	}
 }
 
-void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget, const QRect &rectangle)
+void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 {
 	if (m_toolTipTimer != 0)
 	{
@@ -391,7 +391,7 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget, const QRe
 	if (!m_toolTip.isEmpty())
 	{
 		m_toolTipParentWidget = widget;
-		m_toolTipRectangle = rectangle;
+		m_toolTipRectangle = hitResult.elementGeometry;
 		m_toolTipPosition = event->globalPos();
 		m_toolTipTimer = startTimer(style()->styleHint(QStyle::SH_ToolTip_WakeUpDelay));
 	}

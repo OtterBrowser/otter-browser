@@ -285,7 +285,7 @@ protected:
 	void openUrl(const QUrl &url, SessionsManager::OpenHints hints);
 	void startReloadTimer();
 	void startTransfer(Transfer *transfer);
-	void handleToolTipEvent(QHelpEvent *event, QWidget *widget, const QRect &rectangle = {});
+	void handleToolTipEvent(QHelpEvent *event, QWidget *widget);
 	void updateHitTestResult(const QPoint &position);
 	virtual void updateWatchedData(ChangeWatcher watcher);
 	void setClickPosition(const QPoint &position);
