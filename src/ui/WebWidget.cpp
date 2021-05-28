@@ -355,6 +355,8 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 		entries[TitleEntry] = hitResult.title.toHtmlEscaped();
 	}
 
+	const QStringList previousToolTip(m_toolTip);
+
 	m_toolTip.clear();
 
 	if (entries.count() == 1 && entries.contains(TitleEntry))
@@ -393,7 +395,7 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 		m_toolTipParentWidget = widget;
 		m_toolTipRectangle = hitResult.elementGeometry;
 		m_toolTipPosition = event->globalPos();
-		m_toolTipTimer = startTimer(style()->styleHint(QStyle::SH_ToolTip_WakeUpDelay));
+		m_toolTipTimer = startTimer((previousToolTip == m_toolTip) ? 0 : style()->styleHint(QStyle::SH_ToolTip_WakeUpDelay));
 	}
 }
 
