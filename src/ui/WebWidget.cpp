@@ -295,13 +295,6 @@ void WebWidget::handleLoadingStateChange(LoadingState state)
 
 void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 {
-	if (m_toolTipTimer != 0)
-	{
-		killTimer(m_toolTipTimer);
-
-		m_toolTipTimer = 0;
-	}
-
 	const HitTestResult hitResult(getHitTestResult(event->pos()));
 	const QUrl link(hitResult.linkUrl.isValid() ? hitResult.linkUrl : hitResult.formUrl);
 
@@ -390,12 +383,18 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 		}
 	}
 
-	if (!m_toolTip.isEmpty())
+	if (!m_toolTip.isEmpty() && previousToolTip != m_toolTip)
 	{
 		m_toolTipParentWidget = widget;
 		m_toolTipRectangle = hitResult.elementGeometry;
 		m_toolTipPosition = event->globalPos();
-		m_toolTipTimer = startTimer((previousToolTip == m_toolTip) ? 0 : style()->styleHint(QStyle::SH_ToolTip_WakeUpDelay));
+		m_toolTipTimer = startTimer(style()->styleHint(QStyle::SH_ToolTip_WakeUpDelay));
+	}
+	else if (m_toolTipTimer != 0 && m_toolTip.isEmpty())
+	{
+		killTimer(m_toolTipTimer);
+
+		m_toolTipTimer = 0;
 	}
 }
 
