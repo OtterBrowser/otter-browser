@@ -312,7 +312,6 @@ protected:
 	virtual bool isScrollBar(const QPoint &position) const;
 
 protected slots:
-	void handleLoadingStateChange(LoadingState state);
 	void handleWindowCloseRequest();
 	void notifyRedoActionStateChanged();
 	void notifyUndoActionStateChanged();

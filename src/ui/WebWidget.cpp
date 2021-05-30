@@ -63,7 +63,23 @@ WebWidget::WebWidget(const QVariantMap &parameters, WebBackend *backend, Content
 {
 	Q_UNUSED(parameters)
 
-	connect(this, &WebWidget::loadingStateChanged, this, &WebWidget::handleLoadingStateChange);
+	connect(this, &WebWidget::loadingStateChanged, this, [&](LoadingState state)
+	{
+		if (m_loadingTimer != 0)
+		{
+			killTimer(m_loadingTimer);
+
+			m_loadingTimer = 0;
+		}
+
+		if (state == OngoingLoadingState)
+		{
+			m_loadingTime = 0;
+			m_loadingTimer = startTimer(1000);
+
+			emit pageInformationChanged(LoadingTimeInformation, 0);
+		}
+	});
 	connect(BookmarksManager::getModel(), &BookmarksModel::modelModified, this, [&]()
 	{
 		emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::BookmarkCategory});
@@ -272,24 +288,6 @@ void WebWidget::openUrl(const QUrl &url, SessionsManager::OpenHints hints)
 			}
 
 			break;
-	}
-}
-
-void WebWidget::handleLoadingStateChange(LoadingState state)
-{
-	if (m_loadingTimer != 0)
-	{
-		killTimer(m_loadingTimer);
-
-		m_loadingTimer = 0;
-	}
-
-	if (state == OngoingLoadingState)
-	{
-		m_loadingTime = 0;
-		m_loadingTimer = startTimer(1000);
-
-		emit pageInformationChanged(LoadingTimeInformation, 0);
 	}
 }
 
