@@ -20,8 +20,8 @@ If you want to help with the development of Otter Browser, please observe the fo
 
 ## Submitting patches
 
-* Make sure that you have a [GitHub account](https://github.com/signup/free).
-* Ensure that nobody is currently working on the selected task (check if someone is assigned to the ticket or ask on *#otter-browser* at freenode).
+* Make sure that you have a [GitHub account](https://github.com/join).
+* Ensure that nobody is currently working on the selected task (check if someone is assigned to the ticket or ask on *#otter-browser* at libera.chat).
 * Fork the repository on GitHub.
 * Create a branch just for that task.
 * Submit your changes as a pull request so they can be reviewed.
