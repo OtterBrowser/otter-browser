@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -210,16 +210,6 @@ void CacheContentsWidget::openEntry()
 	}
 }
 
-void CacheContentsWidget::copyEntryLink()
-{
-	const QUrl url(getEntry(m_ui->cacheViewWidget->currentIndex()));
-
-	if (url.isValid())
-	{
-		QApplication::clipboard()->setText(url.toDisplayString());
-	}
-}
-
 void CacheContentsWidget::handleEntryAdded(const QUrl &entry)
 {
 	const QString domain(entry.host());
@@ -354,7 +344,15 @@ void CacheContentsWidget::showContextMenu(const QPoint &position)
 		menu.addAction(QCoreApplication::translate("actions", "Open in New Window"), this, &CacheContentsWidget::openEntry)->setData(SessionsManager::NewWindowOpen);
 		menu.addAction(QCoreApplication::translate("actions", "Open in New Background Window"), this, &CacheContentsWidget::openEntry)->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
 		menu.addSeparator();
-		menu.addAction(tr("Copy Link to Clipboard"), this, &CacheContentsWidget::copyEntryLink);
+		menu.addAction(tr("Copy Link to Clipboard"), this, [&]()
+		{
+			const QUrl url(getEntry(m_ui->cacheViewWidget->currentIndex()));
+
+			if (url.isValid())
+			{
+				QApplication::clipboard()->setText(url.toDisplayString());
+			}
+		});
 		menu.addSeparator();
 		menu.addAction(tr("Remove Entry"), this, &CacheContentsWidget::removeEntry);
 	}
