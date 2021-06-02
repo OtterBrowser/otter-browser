@@ -311,26 +311,6 @@ void ConfigurationContentsWidget::triggerAction(int identifier, const QVariantMa
 	}
 }
 
-void ConfigurationContentsWidget::copyOptionName()
-{
-	const QModelIndex index(m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 2));
-
-	if (index.isValid())
-	{
-		QApplication::clipboard()->setText(index.data(NameRole).toString());
-	}
-}
-
-void ConfigurationContentsWidget::copyOptionValue()
-{
-	const QModelIndex index(m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 2));
-
-	if (index.isValid())
-	{
-		QApplication::clipboard()->setText(index.data(Qt::EditRole).toString());
-	}
-}
-
 void ConfigurationContentsWidget::resetOption()
 {
 	const QModelIndex index(m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 2));
@@ -494,12 +474,25 @@ void ConfigurationContentsWidget::handleIndexClicked(const QModelIndex &index)
 void ConfigurationContentsWidget::showContextMenu(const QPoint &position)
 {
 	const QModelIndex index(m_ui->configurationViewWidget->indexAt(position));
+	const QModelIndex valueIndex(index.sibling(index.row(), 2));
 	QMenu menu(this);
 
 	if (index.isValid() && index.parent() != m_ui->configurationViewWidget->rootIndex())
 	{
-		menu.addAction(tr("Copy Option Name"), this, &ConfigurationContentsWidget::copyOptionName);
-		menu.addAction(tr("Copy Option Value"), this, &ConfigurationContentsWidget::copyOptionValue);
+		menu.addAction(tr("Copy Option Name"), this, [&]()
+		{
+			if (valueIndex.isValid())
+			{
+				QApplication::clipboard()->setText(valueIndex.data(NameRole).toString());
+			}
+		});
+		menu.addAction(tr("Copy Option Value"), this, [&]()
+		{
+			if (valueIndex.isValid())
+			{
+				QApplication::clipboard()->setText(valueIndex.data(Qt::EditRole).toString());
+			}
+		});
 		menu.addSeparator();
 		menu.addAction(tr("Save Value"), this, &ConfigurationContentsWidget::saveOption)->setEnabled(index.sibling(index.row(), 0).data(IsModifiedRole).toBool());
 		menu.addAction(tr("Restore Default Value"), this, &ConfigurationContentsWidget::resetOption)->setEnabled(index.sibling(index.row(), 2).data(Qt::EditRole) != SettingsManager::getOptionDefinition(index.sibling(index.row(), 2).data(IdentifierRole).toInt()).defaultValue);

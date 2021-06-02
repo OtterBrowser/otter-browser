@@ -80,8 +80,6 @@ protected:
 	void saveAll(bool reset);
 
 protected slots:
-	void copyOptionName();
-	void copyOptionValue();
 	void resetOption();
 	void saveOption();
 	void handleOptionChanged(int identifier, const QVariant &value);
