@@ -474,11 +474,12 @@ void ConfigurationContentsWidget::handleIndexClicked(const QModelIndex &index)
 void ConfigurationContentsWidget::showContextMenu(const QPoint &position)
 {
 	const QModelIndex index(m_ui->configurationViewWidget->indexAt(position));
-	const QModelIndex valueIndex(index.sibling(index.row(), 2));
 	QMenu menu(this);
 
 	if (index.isValid() && index.parent() != m_ui->configurationViewWidget->rootIndex())
 	{
+		const QModelIndex valueIndex(index.sibling(index.row(), 2));
+
 		menu.addAction(tr("Copy Option Name"), this, [&]()
 		{
 			if (valueIndex.isValid())
