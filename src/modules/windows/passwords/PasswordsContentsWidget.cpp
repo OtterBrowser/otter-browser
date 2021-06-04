@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -269,26 +269,6 @@ void PasswordsContentsWidget::filterPasswords(const QString &filter)
 	}
 }
 
-void PasswordsContentsWidget::copyFieldName()
-{
-	const QModelIndex index(m_ui->passwordsViewWidget->currentIndex().sibling(m_ui->passwordsViewWidget->currentIndex().row(), 0));
-
-	if (index.isValid())
-	{
-		QApplication::clipboard()->setText(index.data(Qt::DisplayRole).toString());
-	}
-}
-
-void PasswordsContentsWidget::copyFieldValue()
-{
-	const QModelIndex index(m_ui->passwordsViewWidget->currentIndex().sibling(m_ui->passwordsViewWidget->currentIndex().row(), 1));
-
-	if (index.isValid())
-	{
-		QApplication::clipboard()->setText(index.data(Qt::DisplayRole).toString());
-	}
-}
-
 void PasswordsContentsWidget::removePasswords()
 {
 	const QModelIndexList indexes(m_ui->passwordsViewWidget->selectionModel()->selectedIndexes());
@@ -464,8 +444,22 @@ void PasswordsContentsWidget::showContextMenu(const QPoint &position)
 		{
 			if (index.parent().parent().isValid() && index.parent().parent().parent() == m_model->invisibleRootItem()->index())
 			{
-				menu.addAction(tr("Copy Field Name"), this, &PasswordsContentsWidget::copyFieldName);
-				menu.addAction(tr("Copy Field Value"), this, &PasswordsContentsWidget::copyFieldValue);
+				const QModelIndex valueIndex(index.sibling(index.row(), 0));
+
+				menu.addAction(tr("Copy Field Name"), this, [&]()
+				{
+					if (valueIndex.isValid())
+					{
+						QApplication::clipboard()->setText(valueIndex.data(Qt::DisplayRole).toString());
+					}
+				});
+				menu.addAction(tr("Copy Field Value"), this, [&]()
+				{
+					if (valueIndex.isValid())
+					{
+						QApplication::clipboard()->setText(valueIndex.data(Qt::DisplayRole).toString());
+					}
+				});
 				menu.addSeparator();
 			}
 
