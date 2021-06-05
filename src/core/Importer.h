@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -74,11 +74,6 @@ public:
 public slots:
 	virtual void cancel();
 	virtual bool import(const QString &path) = 0;
-
-protected slots:
-	void notifyImportStarted(int type, int total);
-	void notifyImportProgress(int type, int total, int amount);
-	void notifyImportFinished(int type, int result, int total);
 
 signals:
 	void importStarted(ImportType type, int total);
