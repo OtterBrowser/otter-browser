@@ -32,6 +32,13 @@ void Importer::cancel()
 {
 }
 
+QWidget* Importer::createOptionsWidget(QWidget *parent)
+{
+	Q_UNUSED(parent)
+
+	return nullptr;
+}
+
 Addon::AddonType Importer::getType() const
 {
 	return ImporterType;

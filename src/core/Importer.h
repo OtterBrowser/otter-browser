@@ -63,7 +63,7 @@ public:
 
 	explicit Importer(QObject *parent = nullptr);
 
-	virtual QWidget* createOptionsWidget(QWidget *parent) = 0;
+	virtual QWidget* createOptionsWidget(QWidget *parent);
 	virtual QString getSuggestedPath(const QString &path = {}) const = 0;
 	virtual QString getGroup() const = 0;
 	virtual QStringList getFileFilters() const = 0;
