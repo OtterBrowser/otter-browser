@@ -1,10 +1,10 @@
 (function(window)
 {
-	var image = document.querySelector('img');
-	var drag = null;
-	var dragEnd = null;
-	var dragInterval = 50;
-	var ignore = false;
+	let image = document.querySelector('img');
+	let drag = null;
+	let dragEnd = null;
+	let dragInterval = 50;
+	let ignore = false;
 
 	if (image && !image.classList.contains('imageViewer'))
 	{
@@ -12,15 +12,15 @@
 
 		image.addEventListener('click', function(event)
 		{
-			var clickStart = new Date().getTime();
+			const clickStart = new Date().getTime();
 
 			if (dragEnd !== null && ((clickStart - dragEnd) < dragInterval))
 			{
 				return;
 			}
 
-			var documentSize = [window.innerWidth, window.innerHeight];
-			var imageSize = [image.naturalWidth, image.naturalHeight];
+			const documentSize = [window.innerWidth, window.innerHeight];
+			const imageSize = [image.naturalWidth, image.naturalHeight];
 
 			if (imageSize[0] <= documentSize[0] && imageSize[1] <= documentSize[1])
 			{
@@ -35,11 +35,11 @@
 			{
 				if (document.documentElement.classList.contains('zoomedOut') || (image.classList.contains('loaded') && document.documentElement.classList.length === 0))
 				{
-					var imageComputedSize = [image.clientWidth, image.clientHeight];
-					var ratioX = (imageComputedSize[0] / imageSize[0]);
-					var ratioY = (imageComputedSize[1] / imageSize[1]);
-					var scrollToX = (event.offsetX / ratioX) - (imageComputedSize[0] / 2);
-					var scrollToY = (event.offsetY / ratioY) - (imageComputedSize[1] / 2);
+					const imageComputedSize = [image.clientWidth, image.clientHeight];
+					const ratioX = (imageComputedSize[0] / imageSize[0]);
+					const ratioY = (imageComputedSize[1] / imageSize[1]);
+					const scrollToX = (event.offsetX / ratioX) - (imageComputedSize[0] / 2);
+					const scrollToY = (event.offsetY / ratioY) - (imageComputedSize[1] / 2);
 
 					document.documentElement.classList.add('zoomedIn');
 					document.documentElement.classList.remove('zoomedOut');
@@ -124,7 +124,7 @@
 		image.removeAttribute('height');
 		image.removeAttribute('style');
 
-		var observer = new MutationObserver(function()
+		let observer = new MutationObserver(function()
 		{
 			image.removeAttribute('width');
 			image.removeAttribute('height');

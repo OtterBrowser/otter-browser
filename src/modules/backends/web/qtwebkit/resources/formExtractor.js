@@ -4,11 +4,11 @@
 	{
 		form.addEventListener('submit', function(event)
 		{
-			var inputs = form.querySelectorAll('input:not([disabled])[name]');
-			var fields = [];
-			var hasPassword = false;
+			const inputs = form.querySelectorAll('input:not([disabled])[name]');
+			let fields = [];
+			let hasPassword = false;
 
-			for (var i = 0; i < inputs.length; ++i)
+			for (let i = 0; i < inputs.length; ++i)
 			{
 				if (inputs[i].type == 'email' || inputs[i].type == 'password' || inputs[i].type == 'text')
 				{
@@ -23,7 +23,7 @@
 
 			if (hasPassword)
 			{
-				var request = new XMLHttpRequest();
+				let request = new XMLHttpRequest();
 				request.open('GET', '/otter-message', true);
 				request.setRequestHeader('X-Otter-Token', '%1');
 				request.setRequestHeader('X-Otter-Type', 'save-password');
@@ -33,18 +33,18 @@
 		});
 	}
 
-	for (var i = 0; i < document.forms.length; ++i)
+	for (let i = 0; i < document.forms.length; ++i)
 	{
 		attachFormListener(document.forms[i]);
 	}
 
-	var observer = new MutationObserver(function(mutations)
+	let observer = new MutationObserver(function(mutations)
 	{
 		mutations.forEach(function(mutation)
 		{
-			for (var i = 0; i < mutation.addedNodes.length; ++i)
+			for (let i = 0; i < mutation.addedNodes.length; ++i)
 			{
-				var addedNode = mutation.addedNodes[i];
+				const addedNode = mutation.addedNodes[i];
 
 				if (addedNode.tagName.toLowerCase() === 'form')
 				{

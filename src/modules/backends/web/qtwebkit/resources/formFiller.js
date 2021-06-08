@@ -1,12 +1,12 @@
 (function(window)
 {
-	var fields = %1;
+	const fields = %1;
 
-	for (var i = 0; i < document.forms.length; ++i)
+	for (let i = 0; i < document.forms.length; ++i)
 	{
-		var isMatched = true;
+		let isMatched = true;
 
-		for (var j = 0; j < fields.length; ++j)
+		for (let j = 0; j < fields.length; ++j)
 		{
 			if (document.forms[i].querySelector('input[name=' + fields[j].name + ']' + ((fields[j].type == 'password') ? '[type=password]' : '')) == null)
 			{
@@ -18,9 +18,9 @@
 
 		if (isMatched)
 		{
-			for (var j = 0; j < fields.length; ++j)
+			for (let j = 0; j < fields.length; ++j)
 			{
-				var element = document.forms[i].querySelector('input[name=' + fields[j].name + ']' + ((fields[j].type == 'password') ? '[type=password]' : ''));
+				let element = document.forms[i].querySelector('input[name=' + fields[j].name + ']' + ((fields[j].type == 'password') ? '[type=password]' : ''));
 
 				if (element !== null)
 				{

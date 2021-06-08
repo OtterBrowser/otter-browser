@@ -1,12 +1,12 @@
 (function(window)
 {
-	var addSslErrorExceptionButton = document.querySelector('button.addSslErrorException');
+	let addSslErrorExceptionButton = document.querySelector('button.addSslErrorException');
 
 	if (addSslErrorExceptionButton)
 	{
 		addSslErrorExceptionButton.addEventListener('click', function(event)
 		{
-			var request = new XMLHttpRequest();
+			let request = new XMLHttpRequest();
 			request.addEventListener('load', function(event)
 			{
 				window.location.reload(true);
@@ -23,13 +23,13 @@
 		});
 	}
 
-	var addContentBlockingExceptionButton = document.querySelector('button.addContentBlockingException');
+	let addContentBlockingExceptionButton = document.querySelector('button.addContentBlockingException');
 
 	if (addContentBlockingExceptionButton)
 	{
 		addContentBlockingExceptionButton.addEventListener('click', function(event)
 		{
-			var request = new XMLHttpRequest();
+			let request = new XMLHttpRequest();
 			request.addEventListener('load', function(event)
 			{
 				window.location.reload(true);
@@ -46,13 +46,13 @@
 		});
 	}
 
-	var advancedButton = document.querySelector('button.advanced');
+	let advancedButton = document.querySelector('button.advanced');
 
 	if (advancedButton)
 	{
 		advancedButton.addEventListener('click', function(event)
 		{
-			var descriptionElement = document.querySelector('div.description');
+			let descriptionElement = document.querySelector('div.description');
 
 			if (descriptionElement)
 			{
@@ -61,7 +61,7 @@
 		});
 	}
 
-	var goBackButton = document.querySelector('button.goBack');
+	let goBackButton = document.querySelector('button.goBack');
 
 	if (goBackButton)
 	{
@@ -78,7 +78,7 @@
 		});
 	}
 
-	var reloadPageButton = document.querySelector('button.reloadPage');
+	let reloadPageButton = document.querySelector('button.reloadPage');
 
 	if (reloadPageButton)
 	{
