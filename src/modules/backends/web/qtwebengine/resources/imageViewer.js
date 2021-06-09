@@ -12,14 +12,49 @@
 
 		document.head.appendChild(styleSheet);
 
-		styleSheet.sheet.insertRule('html, body {width:100%;height:100%;}', 0);
-		styleSheet.sheet.insertRule('body {display:-webkit-flex;margin:0;padding:0;-webkit-align-items:center;text-align:center;}', 0);
-		styleSheet.sheet.insertRule('img {max-width:100%;max-height:100%;margin:auto;-webkit-user-select:none;}', 0);
-		styleSheet.sheet.insertRule('.zoomedIn {display:table;}', 0);
-		styleSheet.sheet.insertRule('.zoomedIn body {display:table-cell;vertical-align:middle;}', 0);
-		styleSheet.sheet.insertRule('.zoomedIn img {max-width:none;max-height:none;cursor:-webkit-zoom-out;}', 0);
-		styleSheet.sheet.insertRule('.zoomedIn .drag {cursor:move;}', 0);
-		styleSheet.sheet.insertRule('.zoomedOut img {cursor:-webkit-zoom-in;}', 0);
+		styleSheet.sheet.insertRule(`html, body
+{
+	width:100%;
+	height:100%;
+}`, 0);
+		styleSheet.sheet.insertRule(`body
+{
+	display:-webkit-flex;
+	margin:0;
+	padding:0;
+	-webkit-align-items:center;
+	text-align:center;
+}`, 0);
+		styleSheet.sheet.insertRule(`img
+{
+	max-width:100%;
+	max-height:100%;
+	margin:auto;
+	-webkit-user-select:none;
+}`, 0);
+		styleSheet.sheet.insertRule(`.zoomedIn
+{
+	display:table;
+}`, 0);
+		styleSheet.sheet.insertRule(`.zoomedIn body
+{
+	display:table-cell;
+	vertical-align:middle;
+}`, 0);
+		styleSheet.sheet.insertRule(`.zoomedIn img
+{
+	max-width:none;
+	max-height:none;
+	cursor:-webkit-zoom-out;
+}`, 0);
+		styleSheet.sheet.insertRule(`.zoomedIn .drag
+{
+	cursor:move;
+}`, 0);
+		styleSheet.sheet.insertRule(`.zoomedOut img
+{
+	cursor:-webkit-zoom-in;
+}`, 0);
 
 		image.classList.add('imageViewer');
 
