@@ -19,10 +19,10 @@
 }`, 0);
 		styleSheet.sheet.insertRule(`body
 {
-	display:-webkit-flex;
+	display:flex;
 	margin:0;
 	padding:0;
-	-webkit-align-items:center;
+	align-items:center;
 	text-align:center;
 }`, 0);
 		styleSheet.sheet.insertRule(`img
@@ -30,7 +30,7 @@
 	max-width:100%;
 	max-height:100%;
 	margin:auto;
-	-webkit-user-select:none;
+	user-select:none;
 }`, 0);
 		styleSheet.sheet.insertRule(`.zoomedIn
 {
@@ -45,7 +45,7 @@
 {
 	max-width:none;
 	max-height:none;
-	cursor:-webkit-zoom-out;
+	cursor:zoom-out;
 }`, 0);
 		styleSheet.sheet.insertRule(`.zoomedIn .drag
 {
