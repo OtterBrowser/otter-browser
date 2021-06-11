@@ -210,7 +210,7 @@ void QtWebEnginePage::handleLoadFinished()
 			settings()->setAttribute(QWebEngineSettings::AutoLoadImages, true);
 			settings()->setAttribute(QWebEngineSettings::JavascriptEnabled, true);
 
-			QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/imageViewer.js"));
+			QFile file(SessionsManager::getReadableDataPath(QLatin1String("imageViwer.js")));
 
 			if (file.open(QIODevice::ReadOnly))
 			{

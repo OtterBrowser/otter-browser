@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -359,12 +359,17 @@ void QtWebKitPage::updateStyleSheets(const QUrl &url)
 
 	if (isViewingMedia && mediaElement.tagName().toLower() == QLatin1String("img"))
 	{
-		styleSheet += QLatin1String("html {width:100%;height:100%;} body {display:flex;margin:0;padding:0;align-items:center;text-align:center;} img {max-width:100%;max-height:100%;margin:auto;user-select:none;} .zoomedIn {display:table;} .zoomedIn body {display:table-cell;vertical-align:middle;} .zoomedIn img {max-width:none;max-height:none;cursor:zoom-out;} .zoomedIn .drag {cursor:move;} .zoomedOut img {cursor:zoom-in;}");
-
 		settings()->setAttribute(QWebSettings::AutoLoadImages, true);
 		settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
 
-		runScript(QLatin1String("imageViewer"));
+		QFile file(SessionsManager::getReadableDataPath(QLatin1String("imageViwer.js")));
+
+		if (file.open(QIODevice::ReadOnly))
+		{
+			mainFrame()->documentElement().evaluateJavaScript(QString::fromLatin1(file.readAll()));
+
+			file.close();
+		}
 	}
 
 	if (isViewingMedia != m_isViewingMedia)

@@ -150,6 +150,7 @@
         <file>other/syntaxHighlighting.json</file>
         <file>other/toolBars.json</file>
         <file>other/userAgents.json</file>
+        <file>scripts/imageViewer.js</file>
         <file>searchEngines/bing.xml</file>
         <file>searchEngines/duckduckgo.xml</file>
         <file>searchEngines/google.xml</file>
