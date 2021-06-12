@@ -56,11 +56,6 @@ public:
 		CancelledImport
 	};
 
-	struct ImporterInformation final : public AddonsManager::AddonInformation
-	{
-		QString group;
-	};
-
 	explicit Importer(QObject *parent = nullptr);
 
 	virtual QWidget* createOptionsWidget(QWidget *parent);
