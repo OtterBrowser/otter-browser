@@ -129,7 +129,7 @@ bool OperaNotesImporter::import(const QString &path)
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		emit importFinished(NotesImport, FailedImport, 0);
+		emit importFinished(NotesImport, FailedOperation, 0);
 
 		return false;
 	}
@@ -141,7 +141,7 @@ bool OperaNotesImporter::import(const QString &path)
 
 	if (line != QLatin1String("Opera Hotlist version 2.0"))
 	{
-		emit importFinished(NotesImport, FailedImport, 0);
+		emit importFinished(NotesImport, FailedOperation, 0);
 
 		return false;
 	}
@@ -245,7 +245,7 @@ bool OperaNotesImporter::import(const QString &path)
 
 	NotesManager::getModel()->endImport();
 
-	emit importFinished(NotesImport, SuccessfullImport, totalAmount);
+	emit importFinished(NotesImport, SuccessfullIOperation, totalAmount);
 
 	file.close();
 

@@ -49,11 +49,11 @@ public:
 		NotesImport = 1024
 	};
 
-	enum ImportResult
+	enum OperationResult
 	{
-		SuccessfullImport = 0,
-		FailedImport,
-		CancelledImport
+		SuccessfullIOperation = 0,
+		FailedOperation,
+		CancelledOperation
 	};
 
 	explicit Importer(QObject *parent = nullptr);
@@ -73,7 +73,7 @@ public slots:
 signals:
 	void importStarted(ImportType type, int total);
 	void importProgress(ImportType type, int total, int amount);
-	void importFinished(ImportType type, ImportResult result, int total);
+	void importFinished(ImportType type, OperationResult result, int total);
 };
 
 class ImportJob : public Job
@@ -86,7 +86,7 @@ public:
 signals:
 	void importStarted(Importer::ImportType type, int total);
 	void importProgress(Importer::ImportType type, int total, int amount);
-	void importFinished(Importer::ImportType type, Importer::ImportResult result, int total);
+	void importFinished(Importer::ImportType type, Importer::OperationResult result, int total);
 };
 
 class BookmarksImportJob : public ImportJob

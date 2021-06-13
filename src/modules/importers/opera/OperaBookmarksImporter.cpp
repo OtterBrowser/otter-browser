@@ -155,7 +155,7 @@ void OperaBookmarksImportJob::start()
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		emit importFinished(Importer::BookmarksImport, Importer::FailedImport, 0);
+		emit importFinished(Importer::BookmarksImport, Importer::FailedOperation, 0);
 		emit jobFinished(false);
 
 		deleteLater();
@@ -172,7 +172,7 @@ void OperaBookmarksImportJob::start()
 
 	if (line != QLatin1String("Opera Hotlist version 2.0"))
 	{
-		emit importFinished(Importer::BookmarksImport, Importer::FailedImport, 0);
+		emit importFinished(Importer::BookmarksImport, Importer::FailedOperation, 0);
 		emit jobFinished(false);
 
 		deleteLater();
@@ -291,7 +291,7 @@ void OperaBookmarksImportJob::start()
 
 	BookmarksManager::getModel()->endImport();
 
-	emit importFinished(Importer::BookmarksImport, Importer::SuccessfullImport, totalAmount);
+	emit importFinished(Importer::BookmarksImport, Importer::SuccessfullIOperation, totalAmount);
 	emit jobFinished(true);
 
 	file.close();

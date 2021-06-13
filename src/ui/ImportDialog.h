@@ -51,7 +51,7 @@ protected slots:
 	void handleImportRequested();
 	void handleImportStarted(Importer::ImportType type, int total);
 	void handleImportProgress(Importer::ImportType type, int total, int amount);
-	void handleImportFinished(Importer::ImportType type, Importer::ImportResult result, int total);
+	void handleImportFinished(Importer::ImportType type, Importer::OperationResult result, int total);
 	void setPath(const QString &path);
 
 private:

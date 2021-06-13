@@ -118,7 +118,7 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 
 	if (settings.hasError())
 	{
-		emit importFinished(SearchEnginesImport, FailedImport, 0);
+		emit importFinished(SearchEnginesImport, FailedOperation, 0);
 
 		return false;
 	}
@@ -190,7 +190,7 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 		}
 	}
 
-	emit importFinished(SearchEnginesImport, SuccessfullImport, totalAmount);
+	emit importFinished(SearchEnginesImport, SuccessfullIOperation, totalAmount);
 
 	return true;
 }

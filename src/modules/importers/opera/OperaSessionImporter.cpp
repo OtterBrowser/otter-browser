@@ -103,7 +103,7 @@ bool OperaSessionImporter::import(const QString &path)
 
 	if (originalSession.getValue(QLatin1String("version")).toInt() == 0)
 	{
-		emit importFinished(SessionsImport, FailedImport, 0);
+		emit importFinished(SessionsImport, FailedOperation, 0);
 
 		return false;
 	}
@@ -252,7 +252,7 @@ bool OperaSessionImporter::import(const QString &path)
 
 	qDeleteAll(mainWindows);
 
-	emit importFinished(SessionsImport, (result ? SuccessfullImport : FailedImport), 1);
+	emit importFinished(SessionsImport, (result ? SuccessfullIOperation : FailedOperation), 1);
 
 	return result;
 }

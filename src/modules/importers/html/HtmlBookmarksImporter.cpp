@@ -99,7 +99,7 @@ bool HtmlBookmarksImporter::import(const QString &path)
 
 	if (!webBackend)
 	{
-		emit importFinished(BookmarksImport, FailedImport, 0);
+		emit importFinished(BookmarksImport, FailedOperation, 0);
 
 		return false;
 	}
@@ -129,7 +129,7 @@ bool HtmlBookmarksImporter::import(const QString &path)
 
 	if (!job)
 	{
-		emit importFinished(BookmarksImport, FailedImport, 0);
+		emit importFinished(BookmarksImport, FailedOperation, 0);
 
 		return false;
 	}

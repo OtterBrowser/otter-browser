@@ -174,19 +174,19 @@ void ImportDialog::handleImportProgress(Importer::ImportType type, int total, in
 	}
 }
 
-void ImportDialog::handleImportFinished(Importer::ImportType type, Importer::ImportResult result, int total)
+void ImportDialog::handleImportFinished(Importer::ImportType type, Importer::OperationResult result, int total)
 {
 	handleImportProgress(type, total, total);
 
-	m_ui->messageIconLabel->setPixmap(ThemesManager::createIcon((result == Importer::SuccessfullImport) ? QLatin1String("task-complete") : QLatin1String("task-reject")).pixmap(32, 32));
+	m_ui->messageIconLabel->setPixmap(ThemesManager::createIcon((result == Importer::SuccessfullIOperation) ? QLatin1String("task-complete") : QLatin1String("task-reject")).pixmap(32, 32));
 
 	switch (result)
 	{
-		case Importer::FailedImport:
+		case Importer::FailedOperation:
 			m_ui->messageTextLabel->setText(tr("Failed to import data."));
 
 			break;
-		case Importer::CancelledImport:
+		case Importer::CancelledOperation:
 			m_ui->messageTextLabel->setText(tr("Import cancelled by the user."));
 
 			break;

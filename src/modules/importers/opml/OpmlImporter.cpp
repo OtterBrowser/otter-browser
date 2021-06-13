@@ -135,7 +135,7 @@ bool OpmlImporter::import(const QString &path)
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		emit importFinished(FeedsImport, FailedImport, 0);
+		emit importFinished(FeedsImport, FailedOperation, 0);
 
 		return false;
 	}
@@ -159,7 +159,7 @@ bool OpmlImporter::import(const QString &path)
 
 	model->deleteLater();
 
-	emit importFinished(FeedsImport, SuccessfullImport, totalAmount);
+	emit importFinished(FeedsImport, SuccessfullIOperation, totalAmount);
 
 	file.close();
 
