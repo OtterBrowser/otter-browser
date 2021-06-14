@@ -245,7 +245,7 @@ bool OperaNotesImporter::import(const QString &path)
 
 	NotesManager::getModel()->endImport();
 
-	emit importFinished(NotesImport, SuccessfullIOperation, totalAmount);
+	emit importFinished(NotesImport, SuccessfullOperation, totalAmount);
 
 	file.close();
 

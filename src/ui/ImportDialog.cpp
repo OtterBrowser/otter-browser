@@ -178,7 +178,7 @@ void ImportDialog::handleImportFinished(Importer::ImportType type, Importer::Ope
 {
 	handleImportProgress(type, total, total);
 
-	m_ui->messageIconLabel->setPixmap(ThemesManager::createIcon((result == Importer::SuccessfullIOperation) ? QLatin1String("task-complete") : QLatin1String("task-reject")).pixmap(32, 32));
+	m_ui->messageIconLabel->setPixmap(ThemesManager::createIcon((result == Importer::SuccessfullOperation) ? QLatin1String("task-complete") : QLatin1String("task-reject")).pixmap(32, 32));
 
 	switch (result)
 	{

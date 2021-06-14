@@ -291,7 +291,7 @@ void OperaBookmarksImportJob::start()
 
 	BookmarksManager::getModel()->endImport();
 
-	emit importFinished(Importer::BookmarksImport, Importer::SuccessfullIOperation, totalAmount);
+	emit importFinished(Importer::BookmarksImport, Importer::SuccessfullOperation, totalAmount);
 	emit jobFinished(true);
 
 	file.close();

@@ -190,7 +190,7 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 		}
 	}
 
-	emit importFinished(SearchEnginesImport, SuccessfullIOperation, totalAmount);
+	emit importFinished(SearchEnginesImport, SuccessfullOperation, totalAmount);
 
 	return true;
 }

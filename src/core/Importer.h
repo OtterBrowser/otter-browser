@@ -51,7 +51,7 @@ public:
 
 	enum OperationResult
 	{
-		SuccessfullIOperation = 0,
+		SuccessfullOperation = 0,
 		FailedOperation,
 		CancelledOperation
 	};

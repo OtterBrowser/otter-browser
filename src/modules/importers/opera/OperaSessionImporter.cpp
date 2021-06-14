@@ -252,7 +252,7 @@ bool OperaSessionImporter::import(const QString &path)
 
 	qDeleteAll(mainWindows);
 
-	emit importFinished(SessionsImport, (result ? SuccessfullIOperation : FailedOperation), 1);
+	emit importFinished(SessionsImport, (result ? SuccessfullOperation : FailedOperation), 1);
 
 	return result;
 }

@@ -159,7 +159,7 @@ bool OpmlImporter::import(const QString &path)
 
 	model->deleteLater();
 
-	emit importFinished(FeedsImport, SuccessfullIOperation, totalAmount);
+	emit importFinished(FeedsImport, SuccessfullOperation, totalAmount);
 
 	file.close();
 
