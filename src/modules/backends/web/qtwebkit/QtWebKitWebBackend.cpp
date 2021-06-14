@@ -446,7 +446,7 @@ void QtWebKitBookmarksImportJob::start()
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		emit importFinished(Importer::BookmarksImport, Importer::FailedImport, 0);
+		emit importFinished(Importer::BookmarksImport, Importer::FailedOperation, 0);
 		emit jobFinished(false);
 
 		deleteLater();
@@ -470,7 +470,7 @@ void QtWebKitBookmarksImportJob::start()
 
 	BookmarksManager::getModel()->endImport();
 
-	emit importFinished(Importer::BookmarksImport, Importer::SuccessfullImport, m_totalAmount);
+	emit importFinished(Importer::BookmarksImport, Importer::SuccessfullOperation, m_totalAmount);
 	emit jobFinished(true);
 
 	file.close();
