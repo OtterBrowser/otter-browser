@@ -35,7 +35,7 @@ class Importer : public QObject, public Addon
 public:
 	enum ImportType
 	{
-		OtherImport = 0,
+		UnknownImport = 0,
 		FullImport = 1,
 		BookmarksImport = 2,
 		SettingsImport = 4,
@@ -46,7 +46,8 @@ public:
 		HistoryImport = 128,
 		FeedsImport = 256,
 		MailImport = 512,
-		NotesImport = 1024
+		NotesImport = 1024,
+		OtherImport = 2048
 	};
 
 	enum OperationResult
