@@ -65,7 +65,7 @@ public:
 	virtual QStringList getFileFilters() const = 0;
 	AddonType getType() const override;
 	virtual ImportType getImportType() const = 0;
-	virtual bool canCancel();
+	virtual bool canCancel() const;
 
 public slots:
 	virtual void cancel();

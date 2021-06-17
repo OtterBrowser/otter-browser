@@ -44,7 +44,7 @@ Addon::AddonType Importer::getType() const
 	return ImporterType;
 }
 
-bool Importer::canCancel()
+bool Importer::canCancel() const
 {
 	return false;
 }
