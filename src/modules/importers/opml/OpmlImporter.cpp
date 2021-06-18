@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -127,6 +127,11 @@ QStringList OpmlImporter::getFileFilters() const
 Importer::ImportType OpmlImporter::getImportType() const
 {
 	return FeedsImport;
+}
+
+bool OpmlImporter::hasOptions() const
+{
+	return true;
 }
 
 bool OpmlImporter::import(const QString &path)

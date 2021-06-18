@@ -49,6 +49,11 @@ bool Importer::canCancel() const
 	return false;
 }
 
+bool Importer::hasOptions() const
+{
+	return false;
+}
+
 ImportJob::ImportJob(QObject *parent) : Job(parent)
 {
 }

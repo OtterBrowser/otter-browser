@@ -66,6 +66,7 @@ public:
 	AddonType getType() const override;
 	virtual ImportType getImportType() const = 0;
 	virtual bool canCancel() const;
+	virtual bool hasOptions() const;
 
 public slots:
 	virtual void cancel();
