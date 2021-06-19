@@ -45,11 +45,9 @@ ImportDialog::ImportDialog(Importer *importer, QWidget *parent) : Dialog(parent)
 
 	m_importer->setParent(this);
 
-	QWidget *widget(m_importer->createOptionsWidget(this));
-
-	if (widget)
+	if (m_importer->hasOptions())
 	{
-		m_ui->extraOptionsLayout->addWidget(widget);
+		m_ui->extraOptionsLayout->addWidget(m_importer->createOptionsWidget(this));
 	}
 
 	setWindowTitle(m_importer->getTitle());
