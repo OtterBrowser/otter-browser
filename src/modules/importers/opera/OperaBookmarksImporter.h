@@ -21,14 +21,14 @@
 #ifndef OTTER_OPERABOOKMARKSIMPORTER_H
 #define OTTER_OPERABOOKMARKSIMPORTER_H
 
-#include "../../../core/Importer.h"
+#include "../../../core/DataExchanger.h"
 
 namespace Otter
 {
 
 class BookmarksImporterWidget;
 
-class OperaBookmarksImporter final : public Importer
+class OperaBookmarksImporter final : public DataExchanger
 {
 	Q_OBJECT
 

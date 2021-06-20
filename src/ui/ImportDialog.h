@@ -22,7 +22,7 @@
 #define OTTER_IMPORTDIALOG_H
 
 #include "Dialog.h"
-#include "../core/Importer.h"
+#include "../core/DataExchanger.h"
 
 namespace Otter
 {
@@ -42,20 +42,20 @@ public:
 	static void createDialog(const QString &importerName, QWidget *parent = nullptr);
 
 protected:
-	explicit ImportDialog(Importer *importer, QWidget *parent);
+	explicit ImportDialog(DataExchanger *importer, QWidget *parent);
 
 	void closeEvent(QCloseEvent *event) override;
 	void changeEvent(QEvent *event) override;
 
 protected slots:
 	void handleImportRequested();
-	void handleImportStarted(Importer::ImportType type, int total);
-	void handleImportProgress(Importer::ImportType type, int total, int amount);
-	void handleImportFinished(Importer::ImportType type, Importer::OperationResult result, int total);
+	void handleImportStarted(DataExchanger::ImportType type, int total);
+	void handleImportProgress(DataExchanger::ImportType type, int total, int amount);
+	void handleImportFinished(DataExchanger::ImportType type, DataExchanger::OperationResult result, int total);
 	void setPath(const QString &path);
 
 private:
-	Importer *m_importer;
+	DataExchanger *m_importer;
 	QString m_path;
 	Ui::ImportDialog *m_ui;
 };

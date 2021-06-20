@@ -20,15 +20,15 @@
 #ifndef OTTER_OPMLMPORTER_H
 #define OTTER_OPMLMPORTER_H
 
+#include "../../../core/DataExchanger.h"
 #include "../../../core/FeedsModel.h"
-#include "../../../core/Importer.h"
 
 namespace Otter
 {
 
 class OpmlImporterWidget;
 
-class OpmlImporter final : public Importer
+class OpmlImporter final : public DataExchanger
 {
 	Q_OBJECT
 

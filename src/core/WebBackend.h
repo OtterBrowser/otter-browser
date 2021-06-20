@@ -22,7 +22,7 @@
 
 #include "AddonsManager.h"
 #include "BookmarksModel.h"
-#include "Importer.h"
+#include "DataExchanger.h"
 #include "SpellCheckManager.h"
 
 namespace Otter

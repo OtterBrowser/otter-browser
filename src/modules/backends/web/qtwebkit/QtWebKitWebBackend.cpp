@@ -332,7 +332,7 @@ void QtWebKitBookmarksImportJob::processElement(const QWebElement &element)
 
 			++m_currentAmount;
 
-			emit importProgress(Importer::BookmarksImport, m_totalAmount, m_currentAmount);
+			emit importProgress(DataExchanger::BookmarksImport, m_totalAmount, m_currentAmount);
 		}
 		else
 		{
@@ -417,7 +417,7 @@ void QtWebKitBookmarksImportJob::processElement(const QWebElement &element)
 
 				++m_currentAmount;
 
-				emit importProgress(Importer::BookmarksImport, m_totalAmount, m_currentAmount);
+				emit importProgress(DataExchanger::BookmarksImport, m_totalAmount, m_currentAmount);
 
 				if (type == BookmarksModel::FolderBookmark)
 				{
@@ -446,7 +446,7 @@ void QtWebKitBookmarksImportJob::start()
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		emit importFinished(Importer::BookmarksImport, Importer::FailedOperation, 0);
+		emit importFinished(DataExchanger::BookmarksImport, DataExchanger::FailedOperation, 0);
 		emit jobFinished(false);
 
 		deleteLater();
@@ -462,7 +462,7 @@ void QtWebKitBookmarksImportJob::start()
 
 	m_totalAmount = page.mainFrame()->findAllElements(QLatin1String("dt, hr")).count();
 
-	emit importStarted(Importer::BookmarksImport, m_totalAmount);
+	emit importStarted(DataExchanger::BookmarksImport, m_totalAmount);
 
 	BookmarksManager::getModel()->beginImport(getImportFolder(), page.mainFrame()->findAllElements(QLatin1String("a[href]")).count(), page.mainFrame()->findAllElements(QLatin1String("a[shortcuturl]")).count());
 
@@ -470,7 +470,7 @@ void QtWebKitBookmarksImportJob::start()
 
 	BookmarksManager::getModel()->endImport();
 
-	emit importFinished(Importer::BookmarksImport, Importer::SuccessfullOperation, m_totalAmount);
+	emit importFinished(DataExchanger::BookmarksImport, DataExchanger::SuccessfullOperation, m_totalAmount);
 	emit jobFinished(true);
 
 	file.close();

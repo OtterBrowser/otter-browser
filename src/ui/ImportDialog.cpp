@@ -35,7 +35,7 @@
 namespace Otter
 {
 
-ImportDialog::ImportDialog(Importer *importer, QWidget *parent) : Dialog(parent),
+ImportDialog::ImportDialog(DataExchanger *importer, QWidget *parent) : Dialog(parent),
 	m_importer(importer),
 	m_ui(new Ui::ImportDialog)
 {
@@ -86,7 +86,7 @@ void ImportDialog::changeEvent(QEvent *event)
 
 void ImportDialog::createDialog(const QString &importerName, QWidget *parent)
 {
-	Importer *importer(nullptr);
+	DataExchanger *importer(nullptr);
 
 	if (importerName == QLatin1String("HtmlBookmarks"))
 	{
@@ -138,15 +138,15 @@ void ImportDialog::handleImportRequested()
 	m_ui->stackedWidget->setCurrentIndex(1);
 
 	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &ImportDialog::reject);
-	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &Importer::cancel);
-	connect(m_importer, &Importer::importStarted, this, &ImportDialog::handleImportStarted);
-	connect(m_importer, &Importer::importProgress, this, &ImportDialog::handleImportProgress);
-	connect(m_importer, &Importer::importFinished, this, &ImportDialog::handleImportFinished);
+	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &DataExchanger::cancel);
+	connect(m_importer, &DataExchanger::importStarted, this, &ImportDialog::handleImportStarted);
+	connect(m_importer, &DataExchanger::importProgress, this, &ImportDialog::handleImportProgress);
+	connect(m_importer, &DataExchanger::importFinished, this, &ImportDialog::handleImportFinished);
 
 	m_importer->import(m_path);
 }
 
-void ImportDialog::handleImportStarted(Importer::ImportType type, int total)
+void ImportDialog::handleImportStarted(DataExchanger::ImportType type, int total)
 {
 	Q_UNUSED(type)
 
@@ -155,7 +155,7 @@ void ImportDialog::handleImportStarted(Importer::ImportType type, int total)
 	m_ui->messageTextLabel->setText(tr("Processing…"));
 }
 
-void ImportDialog::handleImportProgress(Importer::ImportType type, int total, int amount)
+void ImportDialog::handleImportProgress(DataExchanger::ImportType type, int total, int amount)
 {
 	Q_UNUSED(type)
 
@@ -171,19 +171,19 @@ void ImportDialog::handleImportProgress(Importer::ImportType type, int total, in
 	}
 }
 
-void ImportDialog::handleImportFinished(Importer::ImportType type, Importer::OperationResult result, int total)
+void ImportDialog::handleImportFinished(DataExchanger::ImportType type, DataExchanger::OperationResult result, int total)
 {
 	handleImportProgress(type, total, total);
 
-	m_ui->messageIconLabel->setPixmap(ThemesManager::createIcon((result == Importer::SuccessfullOperation) ? QLatin1String("task-complete") : QLatin1String("task-reject")).pixmap(32, 32));
+	m_ui->messageIconLabel->setPixmap(ThemesManager::createIcon((result == DataExchanger::SuccessfullOperation) ? QLatin1String("task-complete") : QLatin1String("task-reject")).pixmap(32, 32));
 
 	switch (result)
 	{
-		case Importer::FailedOperation:
+		case DataExchanger::FailedOperation:
 			m_ui->messageTextLabel->setText(tr("Failed to import data."));
 
 			break;
-		case Importer::CancelledOperation:
+		case DataExchanger::CancelledOperation:
 			m_ui->messageTextLabel->setText(tr("Import cancelled by the user."));
 
 			break;
@@ -197,7 +197,7 @@ void ImportDialog::handleImportFinished(Importer::ImportType type, Importer::Ope
 	m_ui->buttonBox->addButton(QDialogButtonBox::Close);
 	m_ui->buttonBox->setEnabled(true);
 
-	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &Importer::cancel);
+	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &DataExchanger::cancel);
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &ImportDialog::close);
 }
 

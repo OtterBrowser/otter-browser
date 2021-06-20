@@ -21,12 +21,12 @@
 #ifndef OTTER_OPERASESSIONIMPORTER_H
 #define OTTER_OPERASESSIONIMPORTER_H
 
-#include "../../../core/Importer.h"
+#include "../../../core/DataExchanger.h"
 
 namespace Otter
 {
 
-class OperaSessionImporter final : public Importer
+class OperaSessionImporter final : public DataExchanger
 {
 	Q_OBJECT
 

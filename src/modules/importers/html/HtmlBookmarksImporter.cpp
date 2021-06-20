@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-HtmlBookmarksImporter::HtmlBookmarksImporter(QObject *parent) : Importer(parent),
+HtmlBookmarksImporter::HtmlBookmarksImporter(QObject *parent) : DataExchanger(parent),
 	m_optionsWidget(nullptr)
 {
 }
@@ -88,7 +88,7 @@ QStringList HtmlBookmarksImporter::getFileFilters() const
 	return {tr("HTML files (*.htm *.html)")};
 }
 
-Importer::ImportType HtmlBookmarksImporter::getImportType() const
+DataExchanger::ImportType HtmlBookmarksImporter::getImportType() const
 {
 	return BookmarksImport;
 }

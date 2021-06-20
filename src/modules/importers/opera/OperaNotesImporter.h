@@ -22,14 +22,14 @@
 #define OTTER_OPERANOTESIMPORTER_H
 
 #include "../../../core/BookmarksModel.h"
-#include "../../../core/Importer.h"
+#include "../../../core/DataExchanger.h"
 
 namespace Otter
 {
 
 class BookmarksComboBoxWidget;
 
-class OperaNotesImporter final : public Importer
+class OperaNotesImporter final : public DataExchanger
 {
 	Q_OBJECT
 

@@ -33,7 +33,7 @@
 namespace Otter
 {
 
-OperaSearchEnginesImporter::OperaSearchEnginesImporter(QObject *parent) : Importer(parent),
+OperaSearchEnginesImporter::OperaSearchEnginesImporter(QObject *parent) : DataExchanger(parent),
 	m_optionsWidget(nullptr)
 {
 }
@@ -107,7 +107,7 @@ QStringList OperaSearchEnginesImporter::getFileFilters() const
 	return {tr("Opera search engines files (search.ini)")};
 }
 
-Importer::ImportType OperaSearchEnginesImporter::getImportType() const
+DataExchanger::ImportType OperaSearchEnginesImporter::getImportType() const
 {
 	return SearchEnginesImport;
 }

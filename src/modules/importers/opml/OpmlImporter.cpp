@@ -27,7 +27,7 @@
 namespace Otter
 {
 
-OpmlImporter::OpmlImporter(QObject *parent) : Importer(parent),
+OpmlImporter::OpmlImporter(QObject *parent) : DataExchanger(parent),
 	m_optionsWidget(nullptr)
 {
 }
@@ -124,7 +124,7 @@ QStringList OpmlImporter::getFileFilters() const
 	return {tr("OPML files (*.opml)")};
 }
 
-Importer::ImportType OpmlImporter::getImportType() const
+DataExchanger::ImportType OpmlImporter::getImportType() const
 {
 	return FeedsImport;
 }

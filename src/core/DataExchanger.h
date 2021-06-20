@@ -18,8 +18,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_IMPORTER_H
-#define OTTER_IMPORTER_H
+#ifndef OTTER_DATAEXCHANGER_H
+#define OTTER_DATAEXCHANGER_H
 
 #include "AddonsManager.h"
 #include "BookmarksModel.h"
@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-class Importer : public QObject, public Addon
+class DataExchanger : public QObject, public Addon
 {
 	Q_OBJECT
 
@@ -57,7 +57,7 @@ public:
 		CancelledOperation
 	};
 
-	explicit Importer(QObject *parent = nullptr);
+	explicit DataExchanger(QObject *parent = nullptr);
 
 	virtual QWidget* createOptionsWidget(QWidget *parent);
 	virtual QString getSuggestedPath(const QString &path = {}) const = 0;
@@ -86,9 +86,9 @@ public:
 	explicit ImportJob(QObject *parent = nullptr);
 
 signals:
-	void importStarted(Importer::ImportType type, int total);
-	void importProgress(Importer::ImportType type, int total, int amount);
-	void importFinished(Importer::ImportType type, Importer::OperationResult result, int total);
+	void importStarted(DataExchanger::ImportType type, int total);
+	void importProgress(DataExchanger::ImportType type, int total, int amount);
+	void importFinished(DataExchanger::ImportType type, DataExchanger::OperationResult result, int total);
 };
 
 class BookmarksImportJob : public ImportJob

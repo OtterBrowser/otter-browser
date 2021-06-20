@@ -32,7 +32,7 @@
 namespace Otter
 {
 
-OperaNotesImporter::OperaNotesImporter(QObject *parent) : Importer(parent),
+OperaNotesImporter::OperaNotesImporter(QObject *parent) : DataExchanger(parent),
 	m_folderComboBox(nullptr),
 	m_currentFolder(NotesManager::getModel()->getRootItem()),
 	m_importFolder(NotesManager::getModel()->getRootItem()),
@@ -118,7 +118,7 @@ QStringList OperaNotesImporter::getFileFilters() const
 	return {tr("Opera notes files (notes.adr)")};
 }
 
-Importer::ImportType OperaNotesImporter::getImportType() const
+DataExchanger::ImportType OperaNotesImporter::getImportType() const
 {
 	return NotesImport;
 }

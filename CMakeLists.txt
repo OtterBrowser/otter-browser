@@ -97,6 +97,7 @@ set(otter_src
 	src/core/ContentFiltersManager.cpp
 	src/core/Console.cpp
 	src/core/CookieJar.cpp
+	src/core/DataExchanger.cpp
 	src/core/FeedParser.cpp
 	src/core/FeedsManager.cpp
 	src/core/FeedsModel.cpp
@@ -105,7 +106,6 @@ set(otter_src
 	src/core/HandlersManager.cpp
 	src/core/HistoryManager.cpp
 	src/core/HistoryModel.cpp
-	src/core/Importer.cpp
 	src/core/IniSettings.cpp
 	src/core/InputInterpreter.cpp
 	src/core/ItemModel.cpp

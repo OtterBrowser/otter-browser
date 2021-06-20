@@ -18,38 +18,38 @@
 *
 **************************************************************************/
 
-#include "Importer.h"
+#include "DataExchanger.h"
 #include "BookmarksManager.h"
 
 namespace Otter
 {
 
-Importer::Importer(QObject *parent) : QObject(parent)
+DataExchanger::DataExchanger(QObject *parent) : QObject(parent)
 {
 }
 
-void Importer::cancel()
+void DataExchanger::cancel()
 {
 }
 
-QWidget* Importer::createOptionsWidget(QWidget *parent)
+QWidget* DataExchanger::createOptionsWidget(QWidget *parent)
 {
 	Q_UNUSED(parent)
 
 	return nullptr;
 }
 
-Addon::AddonType Importer::getType() const
+Addon::AddonType DataExchanger::getType() const
 {
 	return ImporterType;
 }
 
-bool Importer::canCancel() const
+bool DataExchanger::canCancel() const
 {
 	return false;
 }
 
-bool Importer::hasOptions() const
+bool DataExchanger::hasOptions() const
 {
 	return false;
 }

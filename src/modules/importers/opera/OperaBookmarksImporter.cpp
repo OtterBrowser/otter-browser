@@ -31,7 +31,7 @@
 namespace Otter
 {
 
-OperaBookmarksImporter::OperaBookmarksImporter(QObject *parent) : Importer(parent),
+OperaBookmarksImporter::OperaBookmarksImporter(QObject *parent) : DataExchanger(parent),
 	m_optionsWidget(nullptr)
 {
 }
@@ -104,7 +104,7 @@ QStringList OperaBookmarksImporter::getFileFilters() const
 	return {tr("Opera bookmarks files (bookmarks.adr)")};
 }
 
-Importer::ImportType OperaBookmarksImporter::getImportType() const
+DataExchanger::ImportType OperaBookmarksImporter::getImportType() const
 {
 	return BookmarksImport;
 }
@@ -160,7 +160,7 @@ void OperaBookmarksImportJob::start()
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		emit importFinished(Importer::BookmarksImport, Importer::FailedOperation, 0);
+		emit importFinished(DataExchanger::BookmarksImport, DataExchanger::FailedOperation, 0);
 		emit jobFinished(false);
 
 		deleteLater();
@@ -177,7 +177,7 @@ void OperaBookmarksImportJob::start()
 
 	if (line != QLatin1String("Opera Hotlist version 2.0"))
 	{
-		emit importFinished(Importer::BookmarksImport, Importer::FailedOperation, 0);
+		emit importFinished(DataExchanger::BookmarksImport, DataExchanger::FailedOperation, 0);
 		emit jobFinished(false);
 
 		deleteLater();
@@ -185,7 +185,7 @@ void OperaBookmarksImportJob::start()
 		return;
 	}
 
-	emit importStarted(Importer::BookmarksImport, -1);
+	emit importStarted(DataExchanger::BookmarksImport, -1);
 
 	const int estimatedAmount((file.size() > 0) ? static_cast<int>(file.size() / 250) : 0);
 	int totalAmount(0);
@@ -296,7 +296,7 @@ void OperaBookmarksImportJob::start()
 
 	BookmarksManager::getModel()->endImport();
 
-	emit importFinished(Importer::BookmarksImport, Importer::SuccessfullOperation, totalAmount);
+	emit importFinished(DataExchanger::BookmarksImport, DataExchanger::SuccessfullOperation, totalAmount);
 	emit jobFinished(true);
 
 	file.close();

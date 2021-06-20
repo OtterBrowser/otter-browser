@@ -21,14 +21,14 @@
 #ifndef OTTER_OPERASEARCHENGINESIMPORTER_H
 #define OTTER_OPERASEARCHENGINESIMPORTER_H
 
-#include "../../../core/Importer.h"
+#include "../../../core/DataExchanger.h"
 
 #include <QtWidgets/QCheckBox>
 
 namespace Otter
 {
 
-class OperaSearchEnginesImporter final : public Importer
+class OperaSearchEnginesImporter final : public DataExchanger
 {
 	Q_OBJECT
 

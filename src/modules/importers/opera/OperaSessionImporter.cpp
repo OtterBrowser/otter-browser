@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-OperaSessionImporter::OperaSessionImporter(QObject *parent) : Importer(parent)
+OperaSessionImporter::OperaSessionImporter(QObject *parent) : DataExchanger(parent)
 {
 }
 
@@ -90,7 +90,7 @@ QStringList OperaSessionImporter::getFileFilters() const
 	return {tr("Opera session files (*.win)")};
 }
 
-Importer::ImportType OperaSessionImporter::getImportType() const
+DataExchanger::ImportType OperaSessionImporter::getImportType() const
 {
 	return SessionsImport;
 }
