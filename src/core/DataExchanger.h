@@ -33,21 +33,21 @@ class DataExchanger : public QObject, public Addon
 	Q_OBJECT
 
 public:
-	enum ImportType
+	enum ExchangeType
 	{
-		UnknownImport = 0,
-		FullImport = 1,
-		BookmarksImport = 2,
-		SettingsImport = 4,
-		PasswordsImport = 8,
-		SearchEnginesImport = 16,
-		SessionsImport = 32,
-		CookiesImport = 64,
-		HistoryImport = 128,
-		FeedsImport = 256,
-		MailImport = 512,
-		NotesImport = 1024,
-		OtherImport = 2048
+		UnknownExchange = 0,
+		FullExchange = 1,
+		BookmarksExchange = 2,
+		SettingsExchange = 4,
+		PasswordsExchange = 8,
+		SearchEnginesExchange = 16,
+		SessionsExchange = 32,
+		CookiesExchange = 64,
+		HistoryExchange = 128,
+		FeedsExchange = 256,
+		MailExchange = 512,
+		NotesExchange = 1024,
+		OtherExchange = 2048
 	};
 
 	enum OperationResult
@@ -64,7 +64,7 @@ public:
 	virtual QString getGroup() const = 0;
 	virtual QStringList getFileFilters() const = 0;
 	AddonType getType() const override;
-	virtual ImportType getImportType() const = 0;
+	virtual ExchangeType getExchangeType() const = 0;
 	virtual bool canCancel() const;
 	virtual bool hasOptions() const;
 
@@ -73,9 +73,9 @@ public slots:
 	virtual bool import(const QString &path) = 0;
 
 signals:
-	void importStarted(ImportType type, int total);
-	void importProgress(ImportType type, int total, int amount);
-	void importFinished(ImportType type, OperationResult result, int total);
+	void importStarted(ExchangeType type, int total);
+	void importProgress(ExchangeType type, int total, int amount);
+	void importFinished(ExchangeType type, OperationResult result, int total);
 };
 
 class ImportJob : public Job
@@ -86,9 +86,9 @@ public:
 	explicit ImportJob(QObject *parent = nullptr);
 
 signals:
-	void importStarted(DataExchanger::ImportType type, int total);
-	void importProgress(DataExchanger::ImportType type, int total, int amount);
-	void importFinished(DataExchanger::ImportType type, DataExchanger::OperationResult result, int total);
+	void importStarted(DataExchanger::ExchangeType type, int total);
+	void importProgress(DataExchanger::ExchangeType type, int total, int amount);
+	void importFinished(DataExchanger::ExchangeType type, DataExchanger::OperationResult result, int total);
 };
 
 class BookmarksImportJob : public ImportJob

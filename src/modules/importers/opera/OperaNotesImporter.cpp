@@ -118,9 +118,9 @@ QStringList OperaNotesImporter::getFileFilters() const
 	return {tr("Opera notes files (notes.adr)")};
 }
 
-DataExchanger::ImportType OperaNotesImporter::getImportType() const
+DataExchanger::ExchangeType OperaNotesImporter::getExchangeType() const
 {
-	return NotesImport;
+	return NotesExchange;
 }
 
 bool OperaNotesImporter::hasOptions() const
@@ -134,7 +134,7 @@ bool OperaNotesImporter::import(const QString &path)
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		emit importFinished(NotesImport, FailedOperation, 0);
+		emit importFinished(NotesExchange, FailedOperation, 0);
 
 		return false;
 	}
@@ -146,12 +146,12 @@ bool OperaNotesImporter::import(const QString &path)
 
 	if (line != QLatin1String("Opera Hotlist version 2.0"))
 	{
-		emit importFinished(NotesImport, FailedOperation, 0);
+		emit importFinished(NotesExchange, FailedOperation, 0);
 
 		return false;
 	}
 
-	emit importStarted(NotesImport, -1);
+	emit importStarted(NotesExchange, -1);
 
 	if (m_optionsWidget)
 	{
@@ -250,7 +250,7 @@ bool OperaNotesImporter::import(const QString &path)
 
 	NotesManager::getModel()->endImport();
 
-	emit importFinished(NotesImport, SuccessfullOperation, totalAmount);
+	emit importFinished(NotesExchange, SuccessfullOperation, totalAmount);
 
 	file.close();
 

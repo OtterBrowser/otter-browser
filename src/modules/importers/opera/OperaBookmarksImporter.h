@@ -44,7 +44,7 @@ public:
 	QString getGroup() const override;
 	QUrl getHomePage() const override;
 	QStringList getFileFilters() const override;
-	ImportType getImportType() const override;
+	ExchangeType getExchangeType() const override;
 	bool hasOptions() const override;
 
 public slots:
@@ -54,12 +54,12 @@ private:
 	BookmarksImporterWidget *m_optionsWidget;
 };
 
-class OperaBookmarksImportJob final : public BookmarksImportJob
+class OperaBookmarksExchangeJob final : public BookmarksImportJob
 {
 	Q_OBJECT
 
 public:
-	explicit OperaBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed, QObject *parent = nullptr);
+	explicit OperaBookmarksExchangeJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed, QObject *parent = nullptr);
 	bool isRunning() const override;
 
 public slots:

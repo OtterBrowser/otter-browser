@@ -124,9 +124,9 @@ QStringList OpmlImporter::getFileFilters() const
 	return {tr("OPML files (*.opml)")};
 }
 
-DataExchanger::ImportType OpmlImporter::getImportType() const
+DataExchanger::ExchangeType OpmlImporter::getExchangeType() const
 {
-	return FeedsImport;
+	return FeedsExchange;
 }
 
 bool OpmlImporter::hasOptions() const
@@ -140,12 +140,12 @@ bool OpmlImporter::import(const QString &path)
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		emit importFinished(FeedsImport, FailedOperation, 0);
+		emit importFinished(FeedsExchange, FailedOperation, 0);
 
 		return false;
 	}
 
-	emit importStarted(FeedsImport, -1);
+	emit importStarted(FeedsExchange, -1);
 
 	FeedsModel *model(new FeedsModel(path, this));
 	const int estimatedAmount((file.size() > 0) ? static_cast<int>(file.size() / 250) : 0);
@@ -164,7 +164,7 @@ bool OpmlImporter::import(const QString &path)
 
 	model->deleteLater();
 
-	emit importFinished(FeedsImport, SuccessfullOperation, totalAmount);
+	emit importFinished(FeedsExchange, SuccessfullOperation, totalAmount);
 
 	file.close();
 

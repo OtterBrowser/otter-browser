@@ -49,9 +49,9 @@ protected:
 
 protected slots:
 	void handleImportRequested();
-	void handleImportStarted(DataExchanger::ImportType type, int total);
-	void handleImportProgress(DataExchanger::ImportType type, int total, int amount);
-	void handleImportFinished(DataExchanger::ImportType type, DataExchanger::OperationResult result, int total);
+	void handleImportStarted(DataExchanger::ExchangeType type, int total);
+	void handleImportProgress(DataExchanger::ExchangeType type, int total, int amount);
+	void handleImportFinished(DataExchanger::ExchangeType type, DataExchanger::OperationResult result, int total);
 	void setPath(const QString &path);
 
 private:

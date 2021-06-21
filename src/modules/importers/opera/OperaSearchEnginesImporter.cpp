@@ -107,9 +107,9 @@ QStringList OperaSearchEnginesImporter::getFileFilters() const
 	return {tr("Opera search engines files (search.ini)")};
 }
 
-DataExchanger::ImportType OperaSearchEnginesImporter::getImportType() const
+DataExchanger::ExchangeType OperaSearchEnginesImporter::getExchangeType() const
 {
-	return SearchEnginesImport;
+	return SearchEnginesExchange;
 }
 
 bool OperaSearchEnginesImporter::hasOptions() const
@@ -123,12 +123,12 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 
 	if (settings.hasError())
 	{
-		emit importFinished(SearchEnginesImport, FailedOperation, 0);
+		emit importFinished(SearchEnginesExchange, FailedOperation, 0);
 
 		return false;
 	}
 
-	emit importStarted(SearchEnginesImport, -1);
+	emit importStarted(SearchEnginesExchange, -1);
 
 	if (m_optionsWidget->isChecked())
 	{
@@ -195,7 +195,7 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 		}
 	}
 
-	emit importFinished(SearchEnginesImport, SuccessfullOperation, totalAmount);
+	emit importFinished(SearchEnginesExchange, SuccessfullOperation, totalAmount);
 
 	return true;
 }

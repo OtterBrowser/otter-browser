@@ -88,9 +88,9 @@ QStringList HtmlBookmarksImporter::getFileFilters() const
 	return {tr("HTML files (*.htm *.html)")};
 }
 
-DataExchanger::ImportType HtmlBookmarksImporter::getImportType() const
+DataExchanger::ExchangeType HtmlBookmarksImporter::getExchangeType() const
 {
-	return BookmarksImport;
+	return BookmarksExchange;
 }
 
 bool HtmlBookmarksImporter::hasOptions() const
@@ -104,7 +104,7 @@ bool HtmlBookmarksImporter::import(const QString &path)
 
 	if (!webBackend)
 	{
-		emit importFinished(BookmarksImport, FailedOperation, 0);
+		emit importFinished(BookmarksExchange, FailedOperation, 0);
 
 		return false;
 	}
@@ -134,7 +134,7 @@ bool HtmlBookmarksImporter::import(const QString &path)
 
 	if (!job)
 	{
-		emit importFinished(BookmarksImport, FailedOperation, 0);
+		emit importFinished(BookmarksExchange, FailedOperation, 0);
 
 		return false;
 	}

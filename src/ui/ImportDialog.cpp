@@ -146,7 +146,7 @@ void ImportDialog::handleImportRequested()
 	m_importer->import(m_path);
 }
 
-void ImportDialog::handleImportStarted(DataExchanger::ImportType type, int total)
+void ImportDialog::handleImportStarted(DataExchanger::ExchangeType type, int total)
 {
 	Q_UNUSED(type)
 
@@ -155,7 +155,7 @@ void ImportDialog::handleImportStarted(DataExchanger::ImportType type, int total
 	m_ui->messageTextLabel->setText(tr("Processing…"));
 }
 
-void ImportDialog::handleImportProgress(DataExchanger::ImportType type, int total, int amount)
+void ImportDialog::handleImportProgress(DataExchanger::ExchangeType type, int total, int amount)
 {
 	Q_UNUSED(type)
 
@@ -171,7 +171,7 @@ void ImportDialog::handleImportProgress(DataExchanger::ImportType type, int tota
 	}
 }
 
-void ImportDialog::handleImportFinished(DataExchanger::ImportType type, DataExchanger::OperationResult result, int total)
+void ImportDialog::handleImportFinished(DataExchanger::ExchangeType type, DataExchanger::OperationResult result, int total)
 {
 	handleImportProgress(type, total, total);
 

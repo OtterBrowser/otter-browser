@@ -90,9 +90,9 @@ QStringList OperaSessionImporter::getFileFilters() const
 	return {tr("Opera session files (*.win)")};
 }
 
-DataExchanger::ImportType OperaSessionImporter::getImportType() const
+DataExchanger::ExchangeType OperaSessionImporter::getExchangeType() const
 {
-	return SessionsImport;
+	return SessionsExchange;
 }
 
 bool OperaSessionImporter::import(const QString &path)
@@ -103,12 +103,12 @@ bool OperaSessionImporter::import(const QString &path)
 
 	if (originalSession.getValue(QLatin1String("version")).toInt() == 0)
 	{
-		emit importFinished(SessionsImport, FailedOperation, 0);
+		emit importFinished(SessionsExchange, FailedOperation, 0);
 
 		return false;
 	}
 
-	emit importStarted(SessionsImport, 1);
+	emit importStarted(SessionsExchange, 1);
 
 	SessionInformation session;
 	session.title = QFileInfo(path).completeBaseName();
@@ -252,7 +252,7 @@ bool OperaSessionImporter::import(const QString &path)
 
 	qDeleteAll(mainWindows);
 
-	emit importFinished(SessionsImport, (result ? SuccessfullOperation : FailedOperation), 1);
+	emit importFinished(SessionsExchange, (result ? SuccessfullOperation : FailedOperation), 1);
 
 	return result;
 }

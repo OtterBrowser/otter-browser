@@ -44,7 +44,7 @@ public:
 	QString getGroup() const override;
 	QUrl getHomePage() const override;
 	QStringList getFileFilters() const override;
-	ImportType getImportType() const override;
+	ExchangeType getExchangeType() const override;
 	bool hasOptions() const override;
 
 public slots:

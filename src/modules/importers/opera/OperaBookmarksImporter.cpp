@@ -104,9 +104,9 @@ QStringList OperaBookmarksImporter::getFileFilters() const
 	return {tr("Opera bookmarks files (bookmarks.adr)")};
 }
 
-DataExchanger::ImportType OperaBookmarksImporter::getImportType() const
+DataExchanger::ExchangeType OperaBookmarksImporter::getExchangeType() const
 {
-	return BookmarksImport;
+	return BookmarksExchange;
 }
 
 bool OperaBookmarksImporter::hasOptions() const
@@ -137,7 +137,7 @@ bool OperaBookmarksImporter::import(const QString &path)
 		}
 	}
 
-	BookmarksImportJob *job(new OperaBookmarksImportJob(folder, getSuggestedPath(path), areDuplicatesAllowed, this));
+	BookmarksImportJob *job(new OperaBookmarksExchangeJob(folder, getSuggestedPath(path), areDuplicatesAllowed, this));
 
 	connect(job, &BookmarksImportJob::importStarted, this, &OperaBookmarksImporter::importStarted);
 	connect(job, &BookmarksImportJob::importProgress, this, &OperaBookmarksImporter::importProgress);
@@ -148,19 +148,19 @@ bool OperaBookmarksImporter::import(const QString &path)
 	return true;
 }
 
-OperaBookmarksImportJob::OperaBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed, QObject *parent) : BookmarksImportJob(folder, areDuplicatesAllowed, parent),
+OperaBookmarksExchangeJob::OperaBookmarksExchangeJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed, QObject *parent) : BookmarksImportJob(folder, areDuplicatesAllowed, parent),
 	m_path(path),
 	m_isRunning(false)
 {
 }
 
-void OperaBookmarksImportJob::start()
+void OperaBookmarksExchangeJob::start()
 {
 	QFile file(m_path);
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		emit importFinished(DataExchanger::BookmarksImport, DataExchanger::FailedOperation, 0);
+		emit importFinished(DataExchanger::BookmarksExchange, DataExchanger::FailedOperation, 0);
 		emit jobFinished(false);
 
 		deleteLater();
@@ -177,7 +177,7 @@ void OperaBookmarksImportJob::start()
 
 	if (line != QLatin1String("Opera Hotlist version 2.0"))
 	{
-		emit importFinished(DataExchanger::BookmarksImport, DataExchanger::FailedOperation, 0);
+		emit importFinished(DataExchanger::BookmarksExchange, DataExchanger::FailedOperation, 0);
 		emit jobFinished(false);
 
 		deleteLater();
@@ -185,7 +185,7 @@ void OperaBookmarksImportJob::start()
 		return;
 	}
 
-	emit importStarted(DataExchanger::BookmarksImport, -1);
+	emit importStarted(DataExchanger::BookmarksExchange, -1);
 
 	const int estimatedAmount((file.size() > 0) ? static_cast<int>(file.size() / 250) : 0);
 	int totalAmount(0);
@@ -296,7 +296,7 @@ void OperaBookmarksImportJob::start()
 
 	BookmarksManager::getModel()->endImport();
 
-	emit importFinished(DataExchanger::BookmarksImport, DataExchanger::SuccessfullOperation, totalAmount);
+	emit importFinished(DataExchanger::BookmarksExchange, DataExchanger::SuccessfullOperation, totalAmount);
 	emit jobFinished(true);
 
 	file.close();
@@ -306,11 +306,11 @@ void OperaBookmarksImportJob::start()
 	deleteLater();
 }
 
-void OperaBookmarksImportJob::cancel()
+void OperaBookmarksExchangeJob::cancel()
 {
 }
 
-bool OperaBookmarksImportJob::isRunning() const
+bool OperaBookmarksExchangeJob::isRunning() const
 {
 	return m_isRunning;
 }
