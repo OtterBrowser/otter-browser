@@ -32,7 +32,7 @@
 namespace Otter
 {
 
-OperaNotesImporter::OperaNotesImporter(QObject *parent) : DataExchanger(parent),
+OperaNotesImporter::OperaNotesImporter(QObject *parent) : ImportDataExchanger(parent),
 	m_folderComboBox(nullptr),
 	m_currentFolder(NotesManager::getModel()->getRootItem()),
 	m_importFolder(NotesManager::getModel()->getRootItem()),

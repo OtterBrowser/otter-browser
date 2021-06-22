@@ -31,7 +31,7 @@
 namespace Otter
 {
 
-OperaBookmarksImporter::OperaBookmarksImporter(QObject *parent) : DataExchanger(parent),
+OperaBookmarksImporter::OperaBookmarksImporter(QObject *parent) : ImportDataExchanger(parent),
 	m_optionsWidget(nullptr)
 {
 }

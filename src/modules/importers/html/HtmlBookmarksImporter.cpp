@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-HtmlBookmarksImporter::HtmlBookmarksImporter(QObject *parent) : DataExchanger(parent),
+HtmlBookmarksImporter::HtmlBookmarksImporter(QObject *parent) : ImportDataExchanger(parent),
 	m_optionsWidget(nullptr)
 {
 }

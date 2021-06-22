@@ -54,6 +54,15 @@ bool DataExchanger::hasOptions() const
 	return false;
 }
 
+ImportDataExchanger::ImportDataExchanger(QObject *parent) : DataExchanger(parent)
+{
+}
+
+DataExchanger::ExchangeDirection ImportDataExchanger::getExchangeDirection() const
+{
+	return ImportDirection;
+}
+
 ImportJob::ImportJob(QObject *parent) : Job(parent)
 {
 }

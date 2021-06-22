@@ -33,7 +33,7 @@
 namespace Otter
 {
 
-OperaSearchEnginesImporter::OperaSearchEnginesImporter(QObject *parent) : DataExchanger(parent),
+OperaSearchEnginesImporter::OperaSearchEnginesImporter(QObject *parent) : ImportDataExchanger(parent),
 	m_optionsWidget(nullptr)
 {
 }

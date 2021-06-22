@@ -33,6 +33,13 @@ class DataExchanger : public QObject, public Addon
 	Q_OBJECT
 
 public:
+	enum ExchangeDirection
+	{
+		UnknownDirection = 0,
+		ExportDirection,
+		ImportDirection
+	};
+
 	enum ExchangeType
 	{
 		UnknownExchange = 0,
@@ -64,6 +71,7 @@ public:
 	virtual QString getGroup() const = 0;
 	virtual QStringList getFileFilters() const = 0;
 	AddonType getType() const override;
+	virtual ExchangeDirection getExchangeDirection() const = 0;
 	virtual ExchangeType getExchangeType() const = 0;
 	virtual bool canCancel() const;
 	virtual bool hasOptions() const;
@@ -76,6 +84,14 @@ signals:
 	void importStarted(ExchangeType type, int total);
 	void importProgress(ExchangeType type, int total, int amount);
 	void importFinished(ExchangeType type, OperationResult result, int total);
+};
+
+class ImportDataExchanger : public DataExchanger
+{
+public:
+	explicit ImportDataExchanger(QObject *parent);
+
+	ExchangeDirection getExchangeDirection() const override;
 };
 
 class ImportJob : public Job

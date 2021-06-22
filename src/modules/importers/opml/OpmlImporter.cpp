@@ -27,7 +27,7 @@
 namespace Otter
 {
 
-OpmlImporter::OpmlImporter(QObject *parent) : DataExchanger(parent),
+OpmlImporter::OpmlImporter(QObject *parent) : ImportDataExchanger(parent),
 	m_optionsWidget(nullptr)
 {
 }

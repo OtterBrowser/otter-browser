@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-OperaSessionImporter::OperaSessionImporter(QObject *parent) : DataExchanger(parent)
+OperaSessionImporter::OperaSessionImporter(QObject *parent) : ImportDataExchanger(parent)
 {
 }
 

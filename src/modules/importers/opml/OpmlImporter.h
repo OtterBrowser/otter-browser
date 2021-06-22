@@ -28,7 +28,7 @@ namespace Otter
 
 class OpmlImporterWidget;
 
-class OpmlImporter final : public DataExchanger
+class OpmlImporter final : public ImportDataExchanger
 {
 	Q_OBJECT
 

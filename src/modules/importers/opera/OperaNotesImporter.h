@@ -29,7 +29,7 @@ namespace Otter
 
 class BookmarksComboBoxWidget;
 
-class OperaNotesImporter final : public DataExchanger
+class OperaNotesImporter final : public ImportDataExchanger
 {
 	Q_OBJECT
 

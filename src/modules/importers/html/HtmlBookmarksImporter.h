@@ -28,7 +28,7 @@ namespace Otter
 
 class BookmarksImporterWidget;
 
-class HtmlBookmarksImporter final : public DataExchanger
+class HtmlBookmarksImporter final : public ImportDataExchanger
 {
 	Q_OBJECT
 
