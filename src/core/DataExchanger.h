@@ -78,20 +78,24 @@ public:
 
 public slots:
 	virtual void cancel();
+};
+
+class ImportDataExchanger : public DataExchanger
+{
+	Q_OBJECT
+
+public:
+	explicit ImportDataExchanger(QObject *parent);
+
+	ExchangeDirection getExchangeDirection() const override;
+
+public slots:
 	virtual bool import(const QString &path) = 0;
 
 signals:
 	void importStarted(ExchangeType type, int total);
 	void importProgress(ExchangeType type, int total, int amount);
 	void importFinished(ExchangeType type, OperationResult result, int total);
-};
-
-class ImportDataExchanger : public DataExchanger
-{
-public:
-	explicit ImportDataExchanger(QObject *parent);
-
-	ExchangeDirection getExchangeDirection() const override;
 };
 
 class ImportJob : public Job
