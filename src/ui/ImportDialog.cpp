@@ -35,7 +35,7 @@
 namespace Otter
 {
 
-ImportDialog::ImportDialog(DataExchanger *importer, QWidget *parent) : Dialog(parent),
+ImportDialog::ImportDialog(ImportDataExchanger *importer, QWidget *parent) : Dialog(parent),
 	m_importer(importer),
 	m_ui(new Ui::ImportDialog)
 {
@@ -86,7 +86,7 @@ void ImportDialog::changeEvent(QEvent *event)
 
 void ImportDialog::createDialog(const QString &importerName, QWidget *parent)
 {
-	DataExchanger *importer(nullptr);
+	ImportDataExchanger *importer(nullptr);
 
 	if (importerName == QLatin1String("HtmlBookmarks"))
 	{
@@ -139,9 +139,9 @@ void ImportDialog::handleImportRequested()
 
 	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &ImportDialog::reject);
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &DataExchanger::cancel);
-	connect(m_importer, &DataExchanger::importStarted, this, &ImportDialog::handleImportStarted);
-	connect(m_importer, &DataExchanger::importProgress, this, &ImportDialog::handleImportProgress);
-	connect(m_importer, &DataExchanger::importFinished, this, &ImportDialog::handleImportFinished);
+	connect(m_importer, &ImportDataExchanger::importStarted, this, &ImportDialog::handleImportStarted);
+	connect(m_importer, &ImportDataExchanger::importProgress, this, &ImportDialog::handleImportProgress);
+	connect(m_importer, &ImportDataExchanger::importFinished, this, &ImportDialog::handleImportFinished);
 
 	m_importer->import(m_path);
 }

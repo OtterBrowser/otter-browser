@@ -42,7 +42,7 @@ public:
 	static void createDialog(const QString &importerName, QWidget *parent = nullptr);
 
 protected:
-	explicit ImportDialog(DataExchanger *importer, QWidget *parent);
+	explicit ImportDialog(ImportDataExchanger *importer, QWidget *parent);
 
 	void closeEvent(QCloseEvent *event) override;
 	void changeEvent(QEvent *event) override;
@@ -55,7 +55,7 @@ protected slots:
 	void setPath(const QString &path);
 
 private:
-	DataExchanger *m_importer;
+	ImportDataExchanger *m_importer;
 	QString m_path;
 	Ui::ImportDialog *m_ui;
 };
