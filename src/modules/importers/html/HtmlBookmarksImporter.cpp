@@ -98,7 +98,7 @@ bool HtmlBookmarksImporter::hasOptions() const
 	return true;
 }
 
-bool HtmlBookmarksImporter::import(const QString &path)
+bool HtmlBookmarksImporter::importData(const QString &path)
 {
 	WebBackend *webBackend(AddonsManager::getWebBackend());
 

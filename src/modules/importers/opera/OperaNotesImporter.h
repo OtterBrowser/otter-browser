@@ -49,7 +49,7 @@ public:
 	bool hasOptions() const override;
 
 public slots:
-	bool import(const QString &path) override;
+	bool importData(const QString &path) override;
 
 protected:
 	enum OperaNoteEntry

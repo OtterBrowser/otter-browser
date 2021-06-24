@@ -108,7 +108,7 @@ public:
 	ExchangeDirection getExchangeDirection() const override;
 
 public slots:
-	virtual bool import(const QString &path) = 0;
+	virtual bool importData(const QString &path) = 0;
 
 signals:
 	void importStarted(ExchangeType type, int total);

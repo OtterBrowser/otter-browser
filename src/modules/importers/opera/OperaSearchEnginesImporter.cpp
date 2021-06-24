@@ -117,7 +117,7 @@ bool OperaSearchEnginesImporter::hasOptions() const
 	return true;
 }
 
-bool OperaSearchEnginesImporter::import(const QString &path)
+bool OperaSearchEnginesImporter::importData(const QString &path)
 {
 	IniSettings settings(getSuggestedPath(path), this);
 

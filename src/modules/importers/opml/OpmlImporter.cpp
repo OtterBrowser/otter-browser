@@ -134,7 +134,7 @@ bool OpmlImporter::hasOptions() const
 	return true;
 }
 
-bool OpmlImporter::import(const QString &path)
+bool OpmlImporter::importData(const QString &path)
 {
 	QFile file(getSuggestedPath(path));
 

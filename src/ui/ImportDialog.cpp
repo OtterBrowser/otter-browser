@@ -143,7 +143,7 @@ void ImportDialog::handleImportRequested()
 	connect(m_importer, &ImportDataExchanger::importProgress, this, &ImportDialog::handleImportProgress);
 	connect(m_importer, &ImportDataExchanger::importFinished, this, &ImportDialog::handleImportFinished);
 
-	m_importer->import(m_path);
+	m_importer->importData(m_path);
 }
 
 void ImportDialog::handleImportStarted(DataExchanger::ExchangeType type, int total)

@@ -128,7 +128,7 @@ bool OperaNotesImporter::hasOptions() const
 	return true;
 }
 
-bool OperaNotesImporter::import(const QString &path)
+bool OperaNotesImporter::importData(const QString &path)
 {
 	QFile file(getSuggestedPath(path));
 

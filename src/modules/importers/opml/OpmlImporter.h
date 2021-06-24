@@ -48,7 +48,7 @@ public:
 	bool hasOptions() const override;
 
 public slots:
-	bool import(const QString &path) override;
+	bool importData(const QString &path) override;
 
 protected:
 	void importFolder(FeedsModel::Entry *source, FeedsModel::Entry *target, bool areDuplicatesAllowed);

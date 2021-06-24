@@ -114,7 +114,7 @@ bool OperaBookmarksImporter::hasOptions() const
 	return true;
 }
 
-bool OperaBookmarksImporter::import(const QString &path)
+bool OperaBookmarksImporter::importData(const QString &path)
 {
 	BookmarksModel::Bookmark *folder(nullptr);
 	bool areDuplicatesAllowed(false);

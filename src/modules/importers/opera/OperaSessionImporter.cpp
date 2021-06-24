@@ -95,7 +95,7 @@ DataExchanger::ExchangeType OperaSessionImporter::getExchangeType() const
 	return SessionsExchange;
 }
 
-bool OperaSessionImporter::import(const QString &path)
+bool OperaSessionImporter::importData(const QString &path)
 {
 	QHash<int, Session::MainWindow*> mainWindows;
 	IniSettings originalSession(getSuggestedPath(path));
