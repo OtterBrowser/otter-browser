@@ -80,6 +80,24 @@ public slots:
 	virtual void cancel();
 };
 
+class ExportDataExchanger : public DataExchanger
+{
+	Q_OBJECT
+
+public:
+	explicit ExportDataExchanger(QObject *parent);
+
+	ExchangeDirection getExchangeDirection() const override;
+
+public slots:
+	virtual bool exportData(const QString &path) = 0;
+
+signals:
+	void exportStarted(ExchangeType type, int total);
+	void exportProgress(ExchangeType type, int total, int amount);
+	void exportFinished(ExchangeType type, OperationResult result, int total);
+};
+
 class ImportDataExchanger : public DataExchanger
 {
 	Q_OBJECT
