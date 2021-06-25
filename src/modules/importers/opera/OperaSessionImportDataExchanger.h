@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,32 +18,33 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_OPMLIMPORTERWIDGET_H
-#define OTTER_OPMLIMPORTERWIDGET_H
+#ifndef OTTER_OPERASESSIONIMPORTDATAEXCHANGER_H
+#define OTTER_OPERASESSIONIMPORTDATAEXCHANGER_H
 
-#include "../../../core/FeedsManager.h"
-
-#include <QtWidgets/QWidget>
+#include "../../../core/DataExchanger.h"
 
 namespace Otter
 {
 
-namespace Ui
+class OperaSessionImportDataExchanger final : public ImportDataExchanger
 {
-	class OpmlImporterWidget;
-}
+	Q_OBJECT
 
-class OpmlImporterWidget final : public QWidget
-{
 public:
-	explicit OpmlImporterWidget(QWidget *parent = nullptr);
-	~OpmlImporterWidget();
+	explicit OperaSessionImportDataExchanger(QObject *parent = nullptr);
 
-	FeedsModel::Entry* getTargetFolder() const;
-	bool areDuplicatesAllowed() const;
+	QString getName() const override;
+	QString getTitle() const override;
+	QString getDescription() const override;
+	QString getVersion() const override;
+	QString getSuggestedPath(const QString &path = {}) const override;
+	QString getGroup() const override;
+	QUrl getHomePage() const override;
+	QStringList getFileFilters() const override;
+	ExchangeType getExchangeType() const override;
 
-private:
-	Ui::OpmlImporterWidget *m_ui;
+public slots:
+	bool importData(const QString &path) override;
 };
 
 }

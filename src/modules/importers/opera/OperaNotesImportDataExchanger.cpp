@@ -18,7 +18,7 @@
 *
 **************************************************************************/
 
-#include "OperaNotesImporter.h"
+#include "OperaNotesImportDataExchanger.h"
 #include "../../../core/NotesManager.h"
 #include "../../../ui/BookmarksComboBoxWidget.h"
 
@@ -32,7 +32,7 @@
 namespace Otter
 {
 
-OperaNotesImporter::OperaNotesImporter(QObject *parent) : ImportDataExchanger(parent),
+OperaNotesImportDataExchanger::OperaNotesImportDataExchanger(QObject *parent) : ImportDataExchanger(parent),
 	m_folderComboBox(nullptr),
 	m_currentFolder(NotesManager::getModel()->getRootItem()),
 	m_importFolder(NotesManager::getModel()->getRootItem()),
@@ -40,7 +40,7 @@ OperaNotesImporter::OperaNotesImporter(QObject *parent) : ImportDataExchanger(pa
 {
 }
 
-QWidget* OperaNotesImporter::createOptionsWidget(QWidget *parent)
+QWidget* OperaNotesImportDataExchanger::createOptionsWidget(QWidget *parent)
 {
 	if (!m_optionsWidget)
 	{
@@ -60,27 +60,27 @@ QWidget* OperaNotesImporter::createOptionsWidget(QWidget *parent)
 	return m_optionsWidget;
 }
 
-QString OperaNotesImporter::getName() const
+QString OperaNotesImportDataExchanger::getName() const
 {
 	return QLatin1String("opera-notes");
 }
 
-QString OperaNotesImporter::getTitle() const
+QString OperaNotesImportDataExchanger::getTitle() const
 {
 	return tr("Opera Notes");
 }
 
-QString OperaNotesImporter::getDescription() const
+QString OperaNotesImportDataExchanger::getDescription() const
 {
 	return tr("Imports notes from Opera Browser version 12 or earlier");
 }
 
-QString OperaNotesImporter::getVersion() const
+QString OperaNotesImportDataExchanger::getVersion() const
 {
 	return QLatin1String("0.8");
 }
 
-QString OperaNotesImporter::getSuggestedPath(const QString &path) const
+QString OperaNotesImportDataExchanger::getSuggestedPath(const QString &path) const
 {
 	if (!path.isEmpty())
 	{
@@ -103,32 +103,32 @@ QString OperaNotesImporter::getSuggestedPath(const QString &path) const
 	return path;
 }
 
-QString OperaNotesImporter::getGroup() const
+QString OperaNotesImportDataExchanger::getGroup() const
 {
 	return QLatin1String("opera");
 }
 
-QUrl OperaNotesImporter::getHomePage() const
+QUrl OperaNotesImportDataExchanger::getHomePage() const
 {
 	return QUrl(QLatin1String("https://otter-browser.org/"));
 }
 
-QStringList OperaNotesImporter::getFileFilters() const
+QStringList OperaNotesImportDataExchanger::getFileFilters() const
 {
 	return {tr("Opera notes files (notes.adr)")};
 }
 
-DataExchanger::ExchangeType OperaNotesImporter::getExchangeType() const
+DataExchanger::ExchangeType OperaNotesImportDataExchanger::getExchangeType() const
 {
 	return NotesExchange;
 }
 
-bool OperaNotesImporter::hasOptions() const
+bool OperaNotesImportDataExchanger::hasOptions() const
 {
 	return true;
 }
 
-bool OperaNotesImporter::importData(const QString &path)
+bool OperaNotesImportDataExchanger::importData(const QString &path)
 {
 	QFile file(getSuggestedPath(path));
 

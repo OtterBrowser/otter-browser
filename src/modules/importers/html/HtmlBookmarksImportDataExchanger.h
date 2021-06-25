@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,23 +18,22 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_OPMLMPORTER_H
-#define OTTER_OPMLMPORTER_H
+#ifndef OTTER_HTMLBOOKMARKSIMPORTDATAEXCHANGER_H
+#define OTTER_HTMLBOOKMARKSIMPORTDATAEXCHANGER_H
 
 #include "../../../core/DataExchanger.h"
-#include "../../../core/FeedsModel.h"
 
 namespace Otter
 {
 
-class OpmlImporterWidget;
+class BookmarksImporterWidget;
 
-class OpmlImporter final : public ImportDataExchanger
+class HtmlBookmarksImportDataExchanger final : public ImportDataExchanger
 {
 	Q_OBJECT
 
 public:
-	explicit OpmlImporter(QObject *parent = nullptr);
+	explicit HtmlBookmarksImportDataExchanger(QObject *parent = nullptr);
 
 	QWidget* createOptionsWidget(QWidget *parent) override;
 	QString getName() const override;
@@ -50,11 +50,8 @@ public:
 public slots:
 	bool importData(const QString &path) override;
 
-protected:
-	void importFolder(FeedsModel::Entry *source, FeedsModel::Entry *target, bool areDuplicatesAllowed);
-
 private:
-	OpmlImporterWidget *m_optionsWidget;
+	BookmarksImporterWidget *m_optionsWidget;
 };
 
 }

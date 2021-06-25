@@ -18,7 +18,7 @@
 *
 **************************************************************************/
 
-#include "OperaBookmarksImporter.h"
+#include "OperaBookmarksImportDataExchanger.h"
 #include "../../../core/BookmarksManager.h"
 #include "../../../ui/BookmarksImporterWidget.h"
 
@@ -31,12 +31,12 @@
 namespace Otter
 {
 
-OperaBookmarksImporter::OperaBookmarksImporter(QObject *parent) : ImportDataExchanger(parent),
+OperaBookmarksImportDataExchanger::OperaBookmarksImportDataExchanger(QObject *parent) : ImportDataExchanger(parent),
 	m_optionsWidget(nullptr)
 {
 }
 
-QWidget* OperaBookmarksImporter::createOptionsWidget(QWidget *parent)
+QWidget* OperaBookmarksImportDataExchanger::createOptionsWidget(QWidget *parent)
 {
 	if (!m_optionsWidget)
 	{
@@ -46,27 +46,27 @@ QWidget* OperaBookmarksImporter::createOptionsWidget(QWidget *parent)
 	return m_optionsWidget;
 }
 
-QString OperaBookmarksImporter::getName() const
+QString OperaBookmarksImportDataExchanger::getName() const
 {
 	return QLatin1String("opera-bookmarks");
 }
 
-QString OperaBookmarksImporter::getTitle() const
+QString OperaBookmarksImportDataExchanger::getTitle() const
 {
 	return tr("Opera Bookmarks");
 }
 
-QString OperaBookmarksImporter::getDescription() const
+QString OperaBookmarksImportDataExchanger::getDescription() const
 {
 	return tr("Imports bookmarks from Opera Browser version 12 or earlier");
 }
 
-QString OperaBookmarksImporter::getVersion() const
+QString OperaBookmarksImportDataExchanger::getVersion() const
 {
 	return QLatin1String("0.8");
 }
 
-QString OperaBookmarksImporter::getSuggestedPath(const QString &path) const
+QString OperaBookmarksImportDataExchanger::getSuggestedPath(const QString &path) const
 {
 	if (!path.isEmpty())
 	{
@@ -89,32 +89,32 @@ QString OperaBookmarksImporter::getSuggestedPath(const QString &path) const
 	return path;
 }
 
-QString OperaBookmarksImporter::getGroup() const
+QString OperaBookmarksImportDataExchanger::getGroup() const
 {
 	return QLatin1String("opera");
 }
 
-QUrl OperaBookmarksImporter::getHomePage() const
+QUrl OperaBookmarksImportDataExchanger::getHomePage() const
 {
 	return QUrl(QLatin1String("https://otter-browser.org/"));
 }
 
-QStringList OperaBookmarksImporter::getFileFilters() const
+QStringList OperaBookmarksImportDataExchanger::getFileFilters() const
 {
 	return {tr("Opera bookmarks files (bookmarks.adr)")};
 }
 
-DataExchanger::ExchangeType OperaBookmarksImporter::getExchangeType() const
+DataExchanger::ExchangeType OperaBookmarksImportDataExchanger::getExchangeType() const
 {
 	return BookmarksExchange;
 }
 
-bool OperaBookmarksImporter::hasOptions() const
+bool OperaBookmarksImportDataExchanger::hasOptions() const
 {
 	return true;
 }
 
-bool OperaBookmarksImporter::importData(const QString &path)
+bool OperaBookmarksImportDataExchanger::importData(const QString &path)
 {
 	BookmarksModel::Bookmark *folder(nullptr);
 	bool areDuplicatesAllowed(false);
@@ -137,24 +137,24 @@ bool OperaBookmarksImporter::importData(const QString &path)
 		}
 	}
 
-	BookmarksImportJob *job(new OperaBookmarksExchangeJob(folder, getSuggestedPath(path), areDuplicatesAllowed, this));
+	BookmarksImportJob *job(new OperaBookmarksImportJob(folder, getSuggestedPath(path), areDuplicatesAllowed, this));
 
-	connect(job, &BookmarksImportJob::importStarted, this, &OperaBookmarksImporter::importStarted);
-	connect(job, &BookmarksImportJob::importProgress, this, &OperaBookmarksImporter::importProgress);
-	connect(job, &BookmarksImportJob::importFinished, this, &OperaBookmarksImporter::importFinished);
+	connect(job, &BookmarksImportJob::importStarted, this, &OperaBookmarksImportDataExchanger::importStarted);
+	connect(job, &BookmarksImportJob::importProgress, this, &OperaBookmarksImportDataExchanger::importProgress);
+	connect(job, &BookmarksImportJob::importFinished, this, &OperaBookmarksImportDataExchanger::importFinished);
 
 	job->start();
 
 	return true;
 }
 
-OperaBookmarksExchangeJob::OperaBookmarksExchangeJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed, QObject *parent) : BookmarksImportJob(folder, areDuplicatesAllowed, parent),
+OperaBookmarksImportJob::OperaBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed, QObject *parent) : BookmarksImportJob(folder, areDuplicatesAllowed, parent),
 	m_path(path),
 	m_isRunning(false)
 {
 }
 
-void OperaBookmarksExchangeJob::start()
+void OperaBookmarksImportJob::start()
 {
 	QFile file(m_path);
 
@@ -306,11 +306,11 @@ void OperaBookmarksExchangeJob::start()
 	deleteLater();
 }
 
-void OperaBookmarksExchangeJob::cancel()
+void OperaBookmarksImportJob::cancel()
 {
 }
 
-bool OperaBookmarksExchangeJob::isRunning() const
+bool OperaBookmarksImportJob::isRunning() const
 {
 	return m_isRunning;
 }

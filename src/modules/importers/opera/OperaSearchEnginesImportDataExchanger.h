@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014, 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2014 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -18,22 +18,22 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_HTMLBOOKMARKSIMPORTER_H
-#define OTTER_HTMLBOOKMARKSIMPORTER_H
+#ifndef OTTER_OPERASEARCHENGINESIMPORTDATAEXCHANGER_H
+#define OTTER_OPERASEARCHENGINESIMPORTDATAEXCHANGER_H
 
 #include "../../../core/DataExchanger.h"
+
+#include <QtWidgets/QCheckBox>
 
 namespace Otter
 {
 
-class BookmarksImporterWidget;
-
-class HtmlBookmarksImporter final : public ImportDataExchanger
+class OperaSearchEnginesImportDataExchanger final : public ImportDataExchanger
 {
 	Q_OBJECT
 
 public:
-	explicit HtmlBookmarksImporter(QObject *parent = nullptr);
+	explicit OperaSearchEnginesImportDataExchanger(QObject *parent = nullptr);
 
 	QWidget* createOptionsWidget(QWidget *parent) override;
 	QString getName() const override;
@@ -51,7 +51,8 @@ public slots:
 	bool importData(const QString &path) override;
 
 private:
-	BookmarksImporterWidget *m_optionsWidget;
+	QCheckBox *m_optionsWidget;
+	QString m_path;
 };
 
 }

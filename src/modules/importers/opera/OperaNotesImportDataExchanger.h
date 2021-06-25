@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014, 2016 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2014 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -18,22 +18,23 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_OPERASEARCHENGINESIMPORTER_H
-#define OTTER_OPERASEARCHENGINESIMPORTER_H
+#ifndef OTTER_OPERANOTESIMPORTDATAEXCHANGER_H
+#define OTTER_OPERANOTESIMPORTDATAEXCHANGER_H
 
+#include "../../../core/BookmarksModel.h"
 #include "../../../core/DataExchanger.h"
-
-#include <QtWidgets/QCheckBox>
 
 namespace Otter
 {
 
-class OperaSearchEnginesImporter final : public ImportDataExchanger
+class BookmarksComboBoxWidget;
+
+class OperaNotesImportDataExchanger final : public ImportDataExchanger
 {
 	Q_OBJECT
 
 public:
-	explicit OperaSearchEnginesImporter(QObject *parent = nullptr);
+	explicit OperaNotesImportDataExchanger(QObject *parent = nullptr);
 
 	QWidget* createOptionsWidget(QWidget *parent) override;
 	QString getName() const override;
@@ -50,9 +51,21 @@ public:
 public slots:
 	bool importData(const QString &path) override;
 
+protected:
+	enum OperaNoteEntry
+	{
+		NoEntry = 0,
+		NoteEntry,
+		FolderStartEntry,
+		FolderEndEntry,
+		SeparatorEntry
+	};
+
 private:
-	QCheckBox *m_optionsWidget;
-	QString m_path;
+	BookmarksComboBoxWidget *m_folderComboBox;
+	BookmarksModel::Bookmark *m_currentFolder;
+	BookmarksModel::Bookmark *m_importFolder;
+	QWidget *m_optionsWidget;
 };
 
 }

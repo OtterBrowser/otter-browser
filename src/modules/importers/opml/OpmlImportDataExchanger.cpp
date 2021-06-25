@@ -17,8 +17,8 @@
 *
 **************************************************************************/
 
-#include "OpmlImporter.h"
-#include "OpmlImporterWidget.h"
+#include "OpmlImportDataExchanger.h"
+#include "OpmlImportDataExchangerWidget.h"
 #include "../../../core/FeedsManager.h"
 
 #include <QtCore/QDir>
@@ -27,12 +27,12 @@
 namespace Otter
 {
 
-OpmlImporter::OpmlImporter(QObject *parent) : ImportDataExchanger(parent),
+OpmlImportDataExchanger::OpmlImportDataExchanger(QObject *parent) : ImportDataExchanger(parent),
 	m_optionsWidget(nullptr)
 {
 }
 
-void OpmlImporter::importFolder(FeedsModel::Entry *source, FeedsModel::Entry *target, bool areDuplicatesAllowed)
+void OpmlImportDataExchanger::importFolder(FeedsModel::Entry *source, FeedsModel::Entry *target, bool areDuplicatesAllowed)
 {
 	for (int i = 0; i < source->rowCount(); ++i)
 	{
@@ -69,37 +69,37 @@ void OpmlImporter::importFolder(FeedsModel::Entry *source, FeedsModel::Entry *ta
 	}
 }
 
-QWidget* OpmlImporter::createOptionsWidget(QWidget *parent)
+QWidget* OpmlImportDataExchanger::createOptionsWidget(QWidget *parent)
 {
 	if (!m_optionsWidget)
 	{
-		m_optionsWidget = new OpmlImporterWidget(parent);
+		m_optionsWidget = new OpmlImportDataExchangerWidget(parent);
 	}
 
 	return m_optionsWidget;
 }
 
-QString OpmlImporter::getName() const
+QString OpmlImportDataExchanger::getName() const
 {
 	return QLatin1String("opml");
 }
 
-QString OpmlImporter::getTitle() const
+QString OpmlImportDataExchanger::getTitle() const
 {
 	return tr("OPML Feeds");
 }
 
-QString OpmlImporter::getDescription() const
+QString OpmlImportDataExchanger::getDescription() const
 {
 	return tr("Imports feeds from OPML file");
 }
 
-QString OpmlImporter::getVersion() const
+QString OpmlImportDataExchanger::getVersion() const
 {
 	return QLatin1String("1.0");
 }
 
-QString OpmlImporter::getSuggestedPath(const QString &path) const
+QString OpmlImportDataExchanger::getSuggestedPath(const QString &path) const
 {
 	if (!path.isEmpty() && QFileInfo(path).isDir())
 	{
@@ -109,32 +109,32 @@ QString OpmlImporter::getSuggestedPath(const QString &path) const
 	return path;
 }
 
-QString OpmlImporter::getGroup() const
+QString OpmlImportDataExchanger::getGroup() const
 {
 	return QLatin1String("other");
 }
 
-QUrl OpmlImporter::getHomePage() const
+QUrl OpmlImportDataExchanger::getHomePage() const
 {
 	return QUrl(QLatin1String("https://otter-browser.org/"));
 }
 
-QStringList OpmlImporter::getFileFilters() const
+QStringList OpmlImportDataExchanger::getFileFilters() const
 {
 	return {tr("OPML files (*.opml)")};
 }
 
-DataExchanger::ExchangeType OpmlImporter::getExchangeType() const
+DataExchanger::ExchangeType OpmlImportDataExchanger::getExchangeType() const
 {
 	return FeedsExchange;
 }
 
-bool OpmlImporter::hasOptions() const
+bool OpmlImportDataExchanger::hasOptions() const
 {
 	return true;
 }
 
-bool OpmlImporter::importData(const QString &path)
+bool OpmlImportDataExchanger::importData(const QString &path)
 {
 	QFile file(getSuggestedPath(path));
 

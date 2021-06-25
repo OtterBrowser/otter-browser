@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2014 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -18,23 +18,22 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_OPERANOTESIMPORTER_H
-#define OTTER_OPERANOTESIMPORTER_H
+#ifndef OTTER_OPERABOOKMARKSIMPORTDATAEXCHANGER_H
+#define OTTER_OPERABOOKMARKSIMPORTDATAEXCHANGER_H
 
-#include "../../../core/BookmarksModel.h"
 #include "../../../core/DataExchanger.h"
 
 namespace Otter
 {
 
-class BookmarksComboBoxWidget;
+class BookmarksImporterWidget;
 
-class OperaNotesImporter final : public ImportDataExchanger
+class OperaBookmarksImportDataExchanger final : public ImportDataExchanger
 {
 	Q_OBJECT
 
 public:
-	explicit OperaNotesImporter(QObject *parent = nullptr);
+	explicit OperaBookmarksImportDataExchanger(QObject *parent = nullptr);
 
 	QWidget* createOptionsWidget(QWidget *parent) override;
 	QString getName() const override;
@@ -51,21 +50,35 @@ public:
 public slots:
 	bool importData(const QString &path) override;
 
+private:
+	BookmarksImporterWidget *m_optionsWidget;
+};
+
+class OperaBookmarksImportJob final : public BookmarksImportJob
+{
+	Q_OBJECT
+
+public:
+	explicit OperaBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed, QObject *parent = nullptr);
+	bool isRunning() const override;
+
+public slots:
+	void start() override;
+	void cancel() override;
+
 protected:
-	enum OperaNoteEntry
+	enum OperaBookmarkEntry
 	{
 		NoEntry = 0,
-		NoteEntry,
+		UrlEntry,
 		FolderStartEntry,
 		FolderEndEntry,
 		SeparatorEntry
 	};
 
 private:
-	BookmarksComboBoxWidget *m_folderComboBox;
-	BookmarksModel::Bookmark *m_currentFolder;
-	BookmarksModel::Bookmark *m_importFolder;
-	QWidget *m_optionsWidget;
+	QString m_path;
+	bool m_isRunning;
 };
 
 }

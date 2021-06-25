@@ -1,7 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2014 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,22 +17,23 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_OPERABOOKMARKSIMPORTER_H
-#define OTTER_OPERABOOKMARKSIMPORTER_H
+#ifndef OTTER_OPMLIMPORTDATAEXCHANGER_H
+#define OPMLIMPORTDATAEXCHANGER_H
 
 #include "../../../core/DataExchanger.h"
+#include "../../../core/FeedsModel.h"
 
 namespace Otter
 {
 
-class BookmarksImporterWidget;
+class OpmlImportDataExchangerWidget;
 
-class OperaBookmarksImporter final : public ImportDataExchanger
+class OpmlImportDataExchanger final : public ImportDataExchanger
 {
 	Q_OBJECT
 
 public:
-	explicit OperaBookmarksImporter(QObject *parent = nullptr);
+	explicit OpmlImportDataExchanger(QObject *parent = nullptr);
 
 	QWidget* createOptionsWidget(QWidget *parent) override;
 	QString getName() const override;
@@ -50,35 +50,11 @@ public:
 public slots:
 	bool importData(const QString &path) override;
 
-private:
-	BookmarksImporterWidget *m_optionsWidget;
-};
-
-class OperaBookmarksExchangeJob final : public BookmarksImportJob
-{
-	Q_OBJECT
-
-public:
-	explicit OperaBookmarksExchangeJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed, QObject *parent = nullptr);
-	bool isRunning() const override;
-
-public slots:
-	void start() override;
-	void cancel() override;
-
 protected:
-	enum OperaBookmarkEntry
-	{
-		NoEntry = 0,
-		UrlEntry,
-		FolderStartEntry,
-		FolderEndEntry,
-		SeparatorEntry
-	};
+	void importFolder(FeedsModel::Entry *source, FeedsModel::Entry *target, bool areDuplicatesAllowed);
 
 private:
-	QString m_path;
-	bool m_isRunning;
+	OpmlImportDataExchangerWidget *m_optionsWidget;
 };
 
 }

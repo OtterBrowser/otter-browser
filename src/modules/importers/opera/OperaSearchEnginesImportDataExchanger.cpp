@@ -18,7 +18,7 @@
 *
 **************************************************************************/
 
-#include "OperaSearchEnginesImporter.h"
+#include "OperaSearchEnginesImportDataExchanger.h"
 #include "../../../core/IniSettings.h"
 #include "../../../core/SearchEnginesManager.h"
 #include "../../../core/SessionsManager.h"
@@ -33,12 +33,12 @@
 namespace Otter
 {
 
-OperaSearchEnginesImporter::OperaSearchEnginesImporter(QObject *parent) : ImportDataExchanger(parent),
+OperaSearchEnginesImportDataExchanger::OperaSearchEnginesImportDataExchanger(QObject *parent) : ImportDataExchanger(parent),
 	m_optionsWidget(nullptr)
 {
 }
 
-QWidget* OperaSearchEnginesImporter::createOptionsWidget(QWidget *parent)
+QWidget* OperaSearchEnginesImportDataExchanger::createOptionsWidget(QWidget *parent)
 {
 	if (!m_optionsWidget)
 	{
@@ -48,27 +48,27 @@ QWidget* OperaSearchEnginesImporter::createOptionsWidget(QWidget *parent)
 	return m_optionsWidget;
 }
 
-QString OperaSearchEnginesImporter::getName() const
+QString OperaSearchEnginesImportDataExchanger::getName() const
 {
 	return QLatin1String("opera-search-engines");
 }
 
-QString OperaSearchEnginesImporter::getTitle() const
+QString OperaSearchEnginesImportDataExchanger::getTitle() const
 {
 	return tr("Opera search engines");
 }
 
-QString OperaSearchEnginesImporter::getDescription() const
+QString OperaSearchEnginesImportDataExchanger::getDescription() const
 {
 	return tr("Imports search engines from Opera Browser version 12 or earlier");
 }
 
-QString OperaSearchEnginesImporter::getVersion() const
+QString OperaSearchEnginesImportDataExchanger::getVersion() const
 {
 	return QLatin1String("0.8");
 }
 
-QString OperaSearchEnginesImporter::getSuggestedPath(const QString &path) const
+QString OperaSearchEnginesImportDataExchanger::getSuggestedPath(const QString &path) const
 {
 	if (!path.isEmpty())
 	{
@@ -92,32 +92,32 @@ QString OperaSearchEnginesImporter::getSuggestedPath(const QString &path) const
 	return path;
 }
 
-QString OperaSearchEnginesImporter::getGroup() const
+QString OperaSearchEnginesImportDataExchanger::getGroup() const
 {
 	return QLatin1String("opera");
 }
 
-QUrl OperaSearchEnginesImporter::getHomePage() const
+QUrl OperaSearchEnginesImportDataExchanger::getHomePage() const
 {
 	return QUrl(QLatin1String("https://otter-browser.org/"));
 }
 
-QStringList OperaSearchEnginesImporter::getFileFilters() const
+QStringList OperaSearchEnginesImportDataExchanger::getFileFilters() const
 {
 	return {tr("Opera search engines files (search.ini)")};
 }
 
-DataExchanger::ExchangeType OperaSearchEnginesImporter::getExchangeType() const
+DataExchanger::ExchangeType OperaSearchEnginesImportDataExchanger::getExchangeType() const
 {
 	return SearchEnginesExchange;
 }
 
-bool OperaSearchEnginesImporter::hasOptions() const
+bool OperaSearchEnginesImportDataExchanger::hasOptions() const
 {
 	return true;
 }
 
-bool OperaSearchEnginesImporter::importData(const QString &path)
+bool OperaSearchEnginesImportDataExchanger::importData(const QString &path)
 {
 	IniSettings settings(getSuggestedPath(path), this);
 

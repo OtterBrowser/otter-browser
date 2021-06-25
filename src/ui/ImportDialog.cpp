@@ -20,12 +20,12 @@
 
 #include "ImportDialog.h"
 #include "../core/ThemesManager.h"
-#include "../modules/importers/html/HtmlBookmarksImporter.h"
-#include "../modules/importers/opera/OperaBookmarksImporter.h"
-#include "../modules/importers/opera/OperaNotesImporter.h"
-#include "../modules/importers/opera/OperaSearchEnginesImporter.h"
-#include "../modules/importers/opera/OperaSessionImporter.h"
-#include "../modules/importers/opml/OpmlImporter.h"
+#include "../modules/importers/html/HtmlBookmarksImportDataExchanger.h"
+#include "../modules/importers/opera/OperaBookmarksImportDataExchanger.h"
+#include "../modules/importers/opera/OperaNotesImportDataExchanger.h"
+#include "../modules/importers/opera/OperaSearchEnginesImportDataExchanger.h"
+#include "../modules/importers/opera/OperaSessionImportDataExchanger.h"
+#include "../modules/importers/opml/OpmlImportDataExchanger.h"
 
 #include "ui_ImportDialog.h"
 
@@ -90,27 +90,27 @@ void ImportDialog::createDialog(const QString &importerName, QWidget *parent)
 
 	if (importerName == QLatin1String("HtmlBookmarks"))
 	{
-		importer = new HtmlBookmarksImporter();
+		importer = new HtmlBookmarksImportDataExchanger();
 	}
 	else if (importerName == QLatin1String("OperaBookmarks"))
 	{
-		importer = new OperaBookmarksImporter();
+		importer = new OperaBookmarksImportDataExchanger();
 	}
 	else if (importerName == QLatin1String("OperaNotes"))
 	{
-		importer = new OperaNotesImporter();
+		importer = new OperaNotesImportDataExchanger();
 	}
 	else if (importerName == QLatin1String("OperaSearchEngines"))
 	{
-		importer = new OperaSearchEnginesImporter();
+		importer = new OperaSearchEnginesImportDataExchanger();
 	}
 	else if (importerName == QLatin1String("OperaSession"))
 	{
-		importer = new OperaSessionImporter();
+		importer = new OperaSessionImportDataExchanger();
 	}
 	else if (importerName == QLatin1String("OpmlFeeds"))
 	{
-		importer = new OpmlImporter();
+		importer = new OpmlImportDataExchanger();
 	}
 
 	if (importer)

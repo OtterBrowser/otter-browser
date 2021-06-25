@@ -18,7 +18,7 @@
 *
 **************************************************************************/
 
-#include "OperaSessionImporter.h"
+#include "OperaSessionImportDataExchanger.h"
 #include "../../../core/IniSettings.h"
 #include "../../../core/SessionsManager.h"
 
@@ -28,31 +28,31 @@
 namespace Otter
 {
 
-OperaSessionImporter::OperaSessionImporter(QObject *parent) : ImportDataExchanger(parent)
+OperaSessionImportDataExchanger::OperaSessionImportDataExchanger(QObject *parent) : ImportDataExchanger(parent)
 {
 }
 
-QString OperaSessionImporter::getName() const
+QString OperaSessionImportDataExchanger::getName() const
 {
 	return QLatin1String("opera-session");
 }
 
-QString OperaSessionImporter::getTitle() const
+QString OperaSessionImportDataExchanger::getTitle() const
 {
 	return tr("Opera Session");
 }
 
-QString OperaSessionImporter::getDescription() const
+QString OperaSessionImportDataExchanger::getDescription() const
 {
 	return tr("Imports session from Opera Browser version 12 or earlier");
 }
 
-QString OperaSessionImporter::getVersion() const
+QString OperaSessionImportDataExchanger::getVersion() const
 {
 	return QLatin1String("0.2");
 }
 
-QString OperaSessionImporter::getSuggestedPath(const QString &path) const
+QString OperaSessionImportDataExchanger::getSuggestedPath(const QString &path) const
 {
 	if (!path.isEmpty())
 	{
@@ -75,27 +75,27 @@ QString OperaSessionImporter::getSuggestedPath(const QString &path) const
 	return path;
 }
 
-QString OperaSessionImporter::getGroup() const
+QString OperaSessionImportDataExchanger::getGroup() const
 {
 	return QLatin1String("opera");
 }
 
-QUrl OperaSessionImporter::getHomePage() const
+QUrl OperaSessionImportDataExchanger::getHomePage() const
 {
 	return QUrl(QLatin1String("https://otter-browser.org/"));
 }
 
-QStringList OperaSessionImporter::getFileFilters() const
+QStringList OperaSessionImportDataExchanger::getFileFilters() const
 {
 	return {tr("Opera session files (*.win)")};
 }
 
-DataExchanger::ExchangeType OperaSessionImporter::getExchangeType() const
+DataExchanger::ExchangeType OperaSessionImportDataExchanger::getExchangeType() const
 {
 	return SessionsExchange;
 }
 
-bool OperaSessionImporter::importData(const QString &path)
+bool OperaSessionImportDataExchanger::importData(const QString &path)
 {
 	QHash<int, Session::MainWindow*> mainWindows;
 	IniSettings originalSession(getSuggestedPath(path));

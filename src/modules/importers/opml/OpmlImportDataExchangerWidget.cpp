@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,30 +17,30 @@
 *
 **************************************************************************/
 
-#include "OpmlImporterWidget.h"
+#include "OpmlImportDataExchangerWidget.h"
 
-#include "ui_OpmlImporterWidget.h"
+#include "ui_OpmlImportDataExchangerWidget.h"
 
 namespace Otter
 {
 
-OpmlImporterWidget::OpmlImporterWidget(QWidget *parent) : QWidget(parent),
-	m_ui(new Ui::OpmlImporterWidget)
+OpmlImportDataExchangerWidget::OpmlImportDataExchangerWidget(QWidget *parent) : QWidget(parent),
+	m_ui(new Ui::OpmlImportDataExchangerWidget)
 {
 	m_ui->setupUi(this);
 }
 
-OpmlImporterWidget::~OpmlImporterWidget()
+OpmlImportDataExchangerWidget::~OpmlImportDataExchangerWidget()
 {
 	delete m_ui;
 }
 
-FeedsModel::Entry* OpmlImporterWidget::getTargetFolder() const
+FeedsModel::Entry* OpmlImportDataExchangerWidget::getTargetFolder() const
 {
 	return m_ui->folderComboBox->getCurrentFolder();
 }
 
-bool OpmlImporterWidget::areDuplicatesAllowed() const
+bool OpmlImportDataExchangerWidget::areDuplicatesAllowed() const
 {
 	return m_ui->allowDuplicatesCheckBox->isChecked();
 }

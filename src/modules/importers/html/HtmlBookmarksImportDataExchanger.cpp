@@ -18,7 +18,7 @@
 *
 **************************************************************************/
 
-#include "HtmlBookmarksImporter.h"
+#include "HtmlBookmarksImportDataExchanger.h"
 #include "../../../core/WebBackend.h"
 #include "../../../ui/BookmarksImporterWidget.h"
 
@@ -28,12 +28,12 @@
 namespace Otter
 {
 
-HtmlBookmarksImporter::HtmlBookmarksImporter(QObject *parent) : ImportDataExchanger(parent),
+HtmlBookmarksImportDataExchanger::HtmlBookmarksImportDataExchanger(QObject *parent) : ImportDataExchanger(parent),
 	m_optionsWidget(nullptr)
 {
 }
 
-QWidget* HtmlBookmarksImporter::createOptionsWidget(QWidget *parent)
+QWidget* HtmlBookmarksImportDataExchanger::createOptionsWidget(QWidget *parent)
 {
 	if (!m_optionsWidget)
 	{
@@ -43,27 +43,27 @@ QWidget* HtmlBookmarksImporter::createOptionsWidget(QWidget *parent)
 	return m_optionsWidget;
 }
 
-QString HtmlBookmarksImporter::getName() const
+QString HtmlBookmarksImportDataExchanger::getName() const
 {
 	return QLatin1String("html");
 }
 
-QString HtmlBookmarksImporter::getTitle() const
+QString HtmlBookmarksImportDataExchanger::getTitle() const
 {
 	return tr("HTML Bookmarks");
 }
 
-QString HtmlBookmarksImporter::getDescription() const
+QString HtmlBookmarksImportDataExchanger::getDescription() const
 {
 	return tr("Imports bookmarks from HTML file (Netscape format).");
 }
 
-QString HtmlBookmarksImporter::getVersion() const
+QString HtmlBookmarksImportDataExchanger::getVersion() const
 {
 	return QLatin1String("1.0");
 }
 
-QString HtmlBookmarksImporter::getSuggestedPath(const QString &path) const
+QString HtmlBookmarksImportDataExchanger::getSuggestedPath(const QString &path) const
 {
 	if (!path.isEmpty() && QFileInfo(path).isDir())
 	{
@@ -73,32 +73,32 @@ QString HtmlBookmarksImporter::getSuggestedPath(const QString &path) const
 	return path;
 }
 
-QString HtmlBookmarksImporter::getGroup() const
+QString HtmlBookmarksImportDataExchanger::getGroup() const
 {
 	return QLatin1String("other");
 }
 
-QUrl HtmlBookmarksImporter::getHomePage() const
+QUrl HtmlBookmarksImportDataExchanger::getHomePage() const
 {
 	return QUrl(QLatin1String("https://otter-browser.org/"));
 }
 
-QStringList HtmlBookmarksImporter::getFileFilters() const
+QStringList HtmlBookmarksImportDataExchanger::getFileFilters() const
 {
 	return {tr("HTML files (*.htm *.html)")};
 }
 
-DataExchanger::ExchangeType HtmlBookmarksImporter::getExchangeType() const
+DataExchanger::ExchangeType HtmlBookmarksImportDataExchanger::getExchangeType() const
 {
 	return BookmarksExchange;
 }
 
-bool HtmlBookmarksImporter::hasOptions() const
+bool HtmlBookmarksImportDataExchanger::hasOptions() const
 {
 	return true;
 }
 
-bool HtmlBookmarksImporter::importData(const QString &path)
+bool HtmlBookmarksImportDataExchanger::importData(const QString &path)
 {
 	WebBackend *webBackend(AddonsManager::getWebBackend());
 
@@ -139,9 +139,9 @@ bool HtmlBookmarksImporter::importData(const QString &path)
 		return false;
 	}
 
-	connect(job, &BookmarksImportJob::importStarted, this, &HtmlBookmarksImporter::importStarted);
-	connect(job, &BookmarksImportJob::importProgress, this, &HtmlBookmarksImporter::importProgress);
-	connect(job, &BookmarksImportJob::importFinished, this, &HtmlBookmarksImporter::importFinished);
+	connect(job, &BookmarksImportJob::importStarted, this, &HtmlBookmarksImportDataExchanger::importStarted);
+	connect(job, &BookmarksImportJob::importProgress, this, &HtmlBookmarksImportDataExchanger::importProgress);
+	connect(job, &BookmarksImportJob::importFinished, this, &HtmlBookmarksImportDataExchanger::importFinished);
 
 	job->start();
 

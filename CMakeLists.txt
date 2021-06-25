@@ -222,13 +222,13 @@ set(otter_src
 	src/ui/preferences/ProxyPropertiesDialog.cpp
 	src/ui/preferences/UserAgentPropertiesDialog.cpp
 	src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp
-	src/modules/importers/html/HtmlBookmarksImporter.cpp
-	src/modules/importers/opera/OperaBookmarksImporter.cpp
-	src/modules/importers/opera/OperaNotesImporter.cpp
-	src/modules/importers/opera/OperaSearchEnginesImporter.cpp
-	src/modules/importers/opera/OperaSessionImporter.cpp
-	src/modules/importers/opml/OpmlImporter.cpp
-	src/modules/importers/opml/OpmlImporterWidget.cpp
+	src/modules/importers/html/HtmlBookmarksImportDataExchanger.cpp
+	src/modules/importers/opera/OperaBookmarksImportDataExchanger.cpp
+	src/modules/importers/opera/OperaNotesImportDataExchanger.cpp
+	src/modules/importers/opera/OperaSearchEnginesImportDataExchanger.cpp
+	src/modules/importers/opera/OperaSessionImportDataExchanger.cpp
+	src/modules/importers/opml/OpmlImportDataExchanger.cpp
+	src/modules/importers/opml/OpmlImportDataExchangerWidget.cpp
 	src/modules/widgets/action/ActionWidget.cpp
 	src/modules/widgets/address/AddressCompletionModel.cpp
 	src/modules/widgets/address/AddressWidget.cpp
@@ -322,7 +322,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/preferences/MouseProfileDialog.ui
 	src/ui/preferences/ProxyPropertiesDialog.ui
 	src/ui/preferences/UserAgentPropertiesDialog.ui
-	src/modules/importers/opml/OpmlImporterWidget.ui
+	src/modules/importers/opml/OpmlImportDataExchangerWidget.ui
 	src/modules/widgets/errorConsole/ErrorConsoleWidget.ui
 	src/modules/windows/actions/ActionsContentsWidget.ui
 	src/modules/windows/addons/AddonsContentsWidget.ui
