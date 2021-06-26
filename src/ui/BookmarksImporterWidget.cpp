@@ -45,14 +45,7 @@ BookmarksImporterWidget::~BookmarksImporterWidget()
 
 void BookmarksImporterWidget::handleRemoveExistingChanged(bool isChecked)
 {
-	if (isChecked)
-	{
-		m_ui->removeDependentStackedWidget->setCurrentWidget(m_ui->noRemovePage);
-	}
-	else
-	{
-		m_ui->removeDependentStackedWidget->setCurrentWidget(m_ui->removePage);
-	}
+	m_ui->removeDependentStackedWidget->setCurrentWidget(isChecked ? m_ui->noRemovePage : m_ui->removePage);
 }
 
 void BookmarksImporterWidget::handleImportToSubfolderChanged(bool isChecked)
