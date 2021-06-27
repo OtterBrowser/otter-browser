@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #ifndef OTTER_OPMLIMPORTDATAEXCHANGER_H
-#define OPMLIMPORTDATAEXCHANGER_H
+#define OTTER_OPMLIMPORTDATAEXCHANGER_H
 
 #include "../../../core/DataExchanger.h"
 #include "../../../core/FeedsModel.h"
