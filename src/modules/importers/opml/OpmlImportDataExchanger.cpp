@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #include "OpmlImportDataExchanger.h"
-#include "OpmlImportDataExchangerWidget.h"
+#include "OpmlImportOptionsWidget.h"
 #include "../../../core/FeedsManager.h"
 
 #include <QtCore/QDir>
@@ -73,7 +73,7 @@ QWidget* OpmlImportDataExchanger::createOptionsWidget(QWidget *parent)
 {
 	if (!m_optionsWidget)
 	{
-		m_optionsWidget = new OpmlImportDataExchangerWidget(parent);
+		m_optionsWidget = new OpmlImportOptionsWidget(parent);
 	}
 
 	return m_optionsWidget;

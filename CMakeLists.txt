@@ -228,7 +228,7 @@ set(otter_src
 	src/modules/importers/opera/OperaSearchEnginesImportDataExchanger.cpp
 	src/modules/importers/opera/OperaSessionImportDataExchanger.cpp
 	src/modules/importers/opml/OpmlImportDataExchanger.cpp
-	src/modules/importers/opml/OpmlImportDataExchangerWidget.cpp
+	src/modules/importers/opml/OpmlImportOptionsWidget.cpp
 	src/modules/widgets/action/ActionWidget.cpp
 	src/modules/widgets/address/AddressCompletionModel.cpp
 	src/modules/widgets/address/AddressWidget.cpp
@@ -322,7 +322,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/preferences/MouseProfileDialog.ui
 	src/ui/preferences/ProxyPropertiesDialog.ui
 	src/ui/preferences/UserAgentPropertiesDialog.ui
-	src/modules/importers/opml/OpmlImportDataExchangerWidget.ui
+	src/modules/importers/opml/OpmlImportOptionsWidget.ui
 	src/modules/widgets/errorConsole/ErrorConsoleWidget.ui
 	src/modules/windows/actions/ActionsContentsWidget.ui
 	src/modules/windows/addons/AddonsContentsWidget.ui

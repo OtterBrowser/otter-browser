@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class OpmlImportDataExchangerWidget;
+class OpmlImportOptionsWidget;
 
 class OpmlImportDataExchanger final : public ImportDataExchanger
 {
@@ -54,7 +54,7 @@ protected:
 	void importFolder(FeedsModel::Entry *source, FeedsModel::Entry *target, bool areDuplicatesAllowed);
 
 private:
-	OpmlImportDataExchangerWidget *m_optionsWidget;
+	OpmlImportOptionsWidget *m_optionsWidget;
 };
 
 }

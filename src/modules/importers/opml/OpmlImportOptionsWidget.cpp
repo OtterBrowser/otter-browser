@@ -17,34 +17,32 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_OPMLIMPORTDATAEXCHANGERWIDGET_H
-#define OTTER_OOPMLIMPORTDATAEXCHANGERWIDGET_H
+#include "OpmlImportOptionsWidget.h"
 
-#include "../../../core/FeedsManager.h"
-
-#include <QtWidgets/QWidget>
+#include "ui_OpmlImportOptionsWidget.h"
 
 namespace Otter
 {
 
-namespace Ui
+OpmlImportOptionsWidget::OpmlImportOptionsWidget(QWidget *parent) : QWidget(parent),
+	m_ui(new Ui::OpmlImportOptionsWidget)
 {
-	class OpmlImportDataExchangerWidget;
+	m_ui->setupUi(this);
 }
 
-class OpmlImportDataExchangerWidget final : public QWidget
+OpmlImportOptionsWidget::~OpmlImportOptionsWidget()
 {
-public:
-	explicit OpmlImportDataExchangerWidget(QWidget *parent = nullptr);
-	~OpmlImportDataExchangerWidget();
-
-	FeedsModel::Entry* getTargetFolder() const;
-	bool areDuplicatesAllowed() const;
-
-private:
-	Ui::OpmlImportDataExchangerWidget *m_ui;
-};
-
+	delete m_ui;
 }
 
-#endif
+FeedsModel::Entry* OpmlImportOptionsWidget::getTargetFolder() const
+{
+	return m_ui->folderComboBox->getCurrentFolder();
+}
+
+bool OpmlImportOptionsWidget::areDuplicatesAllowed() const
+{
+	return m_ui->allowDuplicatesCheckBox->isChecked();
+}
+
+}
