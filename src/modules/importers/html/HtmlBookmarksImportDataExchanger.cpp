@@ -20,7 +20,7 @@
 
 #include "HtmlBookmarksImportDataExchanger.h"
 #include "../../../core/WebBackend.h"
-#include "../../../ui/BookmarksImporterWidget.h"
+#include "../../../ui/BookmarksImportOptionsWidget.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QFile>
@@ -37,7 +37,7 @@ QWidget* HtmlBookmarksImportDataExchanger::createOptionsWidget(QWidget *parent)
 {
 	if (!m_optionsWidget)
 	{
-		m_optionsWidget = new BookmarksImporterWidget(parent);
+		m_optionsWidget = new BookmarksImportOptionsWidget(parent);
 	}
 
 	return m_optionsWidget;

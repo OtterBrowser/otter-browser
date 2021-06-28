@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class BookmarksImporterWidget;
+class BookmarksImportOptionsWidget;
 
 class OperaBookmarksImportDataExchanger final : public ImportDataExchanger
 {
@@ -51,7 +51,7 @@ public slots:
 	bool importData(const QString &path) override;
 
 private:
-	BookmarksImporterWidget *m_optionsWidget;
+	BookmarksImportOptionsWidget *m_optionsWidget;
 };
 
 class OperaBookmarksImportJob final : public BookmarksImportJob

@@ -20,7 +20,7 @@
 
 #include "OperaBookmarksImportDataExchanger.h"
 #include "../../../core/BookmarksManager.h"
-#include "../../../ui/BookmarksImporterWidget.h"
+#include "../../../ui/BookmarksImportOptionsWidget.h"
 
 #include <QtCore/QDateTime>
 #include <QtCore/QDir>
@@ -40,7 +40,7 @@ QWidget* OperaBookmarksImportDataExchanger::createOptionsWidget(QWidget *parent)
 {
 	if (!m_optionsWidget)
 	{
-		m_optionsWidget = new BookmarksImporterWidget(parent);
+		m_optionsWidget = new BookmarksImportOptionsWidget(parent);
 	}
 
 	return m_optionsWidget;

@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_BOOKMARKSIMPORTERWIDGET_H
-#define OTTER_BOOKMARKSIMPORTERWIDGET_H
+#ifndef OTTER_BOOKMARKSIMPORTOPTIONSWIDGET_H
+#define OTTER_BOOKMARKSIMPORTOPTIONSWIDGET_H
 
 #include "../core/BookmarksManager.h"
 
@@ -30,16 +30,16 @@ namespace Otter
 
 namespace Ui
 {
-	class BookmarksImporterWidget;
+	class BookmarksImportOptionsWidget;
 }
 
-class BookmarksImporterWidget final : public QWidget
+class BookmarksImportOptionsWidget final : public QWidget
 {
 	Q_OBJECT
 
 public:
-	explicit BookmarksImporterWidget(QWidget *parent = nullptr);
-	~BookmarksImporterWidget();
+	explicit BookmarksImportOptionsWidget(QWidget *parent = nullptr);
+	~BookmarksImportOptionsWidget();
 
 	BookmarksModel::Bookmark* getTargetFolder() const;
 	QString getSubfolderName() const;
@@ -52,7 +52,7 @@ protected slots:
 	void handleImportToSubfolderChanged(bool isChecked);
 
 private:
-	Ui::BookmarksImporterWidget *m_ui;
+	Ui::BookmarksImportOptionsWidget *m_ui;
 };
 
 }
