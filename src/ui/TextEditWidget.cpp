@@ -269,6 +269,19 @@ void TextEditWidget::triggerAction(int identifier, const QVariantMap &parameters
 	}
 }
 
+void TextEditWidget::setSpellCheckingEnabled(bool isSpellCheckingEnabled)
+{
+	m_isSpellCheckingEnabled = isSpellCheckingEnabled;
+
+	if (!isSpellCheckingEnabled && m_highlighter)
+	{
+		m_highlighter->deleteLater();
+		m_highlighter = nullptr;
+	}
+
+	emit arbitraryActionsStateChanged({ActionsManager::CheckSpellingAction});
+}
+
 ActionsManager::ActionDefinition::State TextEditWidget::getActionState(int identifier, const QVariantMap &parameters) const
 {
 	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(identifier));

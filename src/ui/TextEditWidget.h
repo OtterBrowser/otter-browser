@@ -47,6 +47,7 @@ public:
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
+	void setSpellCheckingEnabled(bool isSpellCheckingEnabled);
 
 protected:
 	void focusInEvent(QFocusEvent *event) override;
