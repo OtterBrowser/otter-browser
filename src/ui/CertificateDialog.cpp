@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -41,6 +41,7 @@ CertificateDialog::CertificateDialog(QVector<QSslCertificate> certificates, QWid
 	m_ui(new Ui::CertificateDialog)
 {
 	m_ui->setupUi(this);
+	m_ui->valueTextEditWidget->setSpellCheckingEnabled(false);
 	m_ui->buttonBox->button(QDialogButtonBox::Save)->setText(tr("Export…"));
 
 	if (certificates.isEmpty())
