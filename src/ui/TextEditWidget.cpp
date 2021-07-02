@@ -335,7 +335,7 @@ ActionsManager::ActionDefinition::State TextEditWidget::getActionState(int ident
 			case ActionsManager::CheckSpellingAction:
 #ifdef OTTER_ENABLE_SPELLCHECK
 				{
-					state.isEnabled = true;
+					state.isEnabled = m_isSpellCheckingEnabled;
 
 					if (parameters.contains(QLatin1String("dictionary")))
 					{
