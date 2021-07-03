@@ -209,6 +209,7 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 	getViewportWidget()->setUpdateDataRole(IsShowingProgressIndicatorRole);
 
 	m_model->setHorizontalHeaderLabels({tr("Title"), tr("Update Interval"), tr("Last Update"), tr("Active Rules"), tr("All Rules")});
+	m_model->setHeaderData(0, Qt::Horizontal, true, HeaderViewWidget::IsShowingCheckBoxIndicatorRole);
 	m_model->setHeaderData(0, Qt::Horizontal, 250, HeaderViewWidget::WidthRole);
 
 	QHash<ContentFiltersProfile::ProfileCategory, QList<QList<QStandardItem*> > > categoryEntries;
