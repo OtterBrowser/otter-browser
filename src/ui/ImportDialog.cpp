@@ -52,7 +52,10 @@ ImportDialog::ImportDialog(ImportDataExchanger *importer, QWidget *parent) : Dia
 
 	setWindowTitle(m_importer->getTitle());
 
-	connect(m_ui->importPathWidget, &FilePathWidget::pathChanged, this, &ImportDialog::setPath);
+	connect(m_ui->importPathWidget, &FilePathWidget::pathChanged, this, [&](const QString &path)
+	{
+		m_path = path;
+	});
 	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &ImportDialog::handleImportRequested);
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &ImportDialog::reject);
 }
@@ -122,11 +125,6 @@ void ImportDialog::createDialog(const QString &importerName, QWidget *parent)
 	{
 		QMessageBox::critical(parent, tr("Error"), tr("Unable to import selected type."));
 	}
-}
-
-void ImportDialog::setPath(const QString &path)
-{
-	m_path = path;
 }
 
 void ImportDialog::handleImportRequested()

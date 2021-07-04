@@ -52,7 +52,6 @@ protected slots:
 	void handleImportStarted(DataExchanger::ExchangeType type, int total);
 	void handleImportProgress(DataExchanger::ExchangeType type, int total, int amount);
 	void handleImportFinished(DataExchanger::ExchangeType type, DataExchanger::OperationResult result, int total);
-	void setPath(const QString &path);
 
 private:
 	ImportDataExchanger *m_importer;
