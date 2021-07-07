@@ -39,7 +39,7 @@ QString OperaSessionImportDataExchanger::getName() const
 
 QString OperaSessionImportDataExchanger::getTitle() const
 {
-	return tr("Opera Session");
+	return tr("Import Opera Session");
 }
 
 QString OperaSessionImportDataExchanger::getDescription() const

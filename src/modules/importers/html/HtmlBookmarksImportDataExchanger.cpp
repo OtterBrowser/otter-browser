@@ -50,7 +50,7 @@ QString HtmlBookmarksImportDataExchanger::getName() const
 
 QString HtmlBookmarksImportDataExchanger::getTitle() const
 {
-	return tr("HTML Bookmarks");
+	return tr("Import HTML Bookmarks");
 }
 
 QString HtmlBookmarksImportDataExchanger::getDescription() const

@@ -53,7 +53,7 @@ QString OperaBookmarksImportDataExchanger::getName() const
 
 QString OperaBookmarksImportDataExchanger::getTitle() const
 {
-	return tr("Opera Bookmarks");
+	return tr("Import Opera Bookmarks");
 }
 
 QString OperaBookmarksImportDataExchanger::getDescription() const

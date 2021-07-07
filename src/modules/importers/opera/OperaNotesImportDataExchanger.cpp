@@ -67,7 +67,7 @@ QString OperaNotesImportDataExchanger::getName() const
 
 QString OperaNotesImportDataExchanger::getTitle() const
 {
-	return tr("Opera Notes");
+	return tr("Import Opera Notes");
 }
 
 QString OperaNotesImportDataExchanger::getDescription() const

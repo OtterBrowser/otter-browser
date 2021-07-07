@@ -86,7 +86,7 @@ QString OpmlImportDataExchanger::getName() const
 
 QString OpmlImportDataExchanger::getTitle() const
 {
-	return tr("OPML Feeds");
+	return tr("Import OPML Feeds");
 }
 
 QString OpmlImportDataExchanger::getDescription() const

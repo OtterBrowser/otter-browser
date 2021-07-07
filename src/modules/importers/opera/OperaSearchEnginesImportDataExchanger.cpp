@@ -55,7 +55,7 @@ QString OperaSearchEnginesImportDataExchanger::getName() const
 
 QString OperaSearchEnginesImportDataExchanger::getTitle() const
 {
-	return tr("Opera search engines");
+	return tr("Import Opera search engines");
 }
 
 QString OperaSearchEnginesImportDataExchanger::getDescription() const
