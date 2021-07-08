@@ -222,6 +222,7 @@ set(otter_src
 	src/ui/preferences/ProxyPropertiesDialog.cpp
 	src/ui/preferences/UserAgentPropertiesDialog.cpp
 	src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp
+	src/modules/exporters/xbel/XbelBookmarksExportDataExchanger.cpp
 	src/modules/importers/html/HtmlBookmarksImportDataExchanger.cpp
 	src/modules/importers/opera/OperaBookmarksImportDataExchanger.cpp
 	src/modules/importers/opera/OperaNotesImportDataExchanger.cpp
