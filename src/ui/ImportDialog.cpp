@@ -51,6 +51,8 @@ ImportDialog::ImportDialog(ImportDataExchanger *importer, QWidget *parent) : Dia
 	}
 
 	setWindowTitle(m_importer->getTitle());
+	setObjectName(importer->metaObject()->className());
+	adjustSize();
 
 	connect(m_ui->importPathWidget, &FilePathWidget::pathChanged, this, [&](const QString &path)
 	{
