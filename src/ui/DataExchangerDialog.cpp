@@ -18,7 +18,7 @@
 *
 **************************************************************************/
 
-#include "ImportDialog.h"
+#include "DataExchangerDialog.h"
 #include "../core/ThemesManager.h"
 #include "../modules/importers/html/HtmlBookmarksImportDataExchanger.h"
 #include "../modules/importers/opera/OperaBookmarksImportDataExchanger.h"
@@ -27,7 +27,7 @@
 #include "../modules/importers/opera/OperaSessionImportDataExchanger.h"
 #include "../modules/importers/opml/OpmlImportDataExchanger.h"
 
-#include "ui_ImportDialog.h"
+#include "ui_DataExchangerDialog.h"
 
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QMessageBox>
@@ -35,9 +35,9 @@
 namespace Otter
 {
 
-ImportDialog::ImportDialog(ImportDataExchanger *importer, QWidget *parent) : Dialog(parent),
+DataExchangerDialog::DataExchangerDialog(ImportDataExchanger *importer, QWidget *parent) : Dialog(parent),
 	m_importer(importer),
-	m_ui(new Ui::ImportDialog)
+	m_ui(new Ui::DataExchangerDialog)
 {
 	m_ui->setupUi(this);
 	m_ui->importPathWidget->setFilters(importer->getFileFilters());
@@ -58,11 +58,11 @@ ImportDialog::ImportDialog(ImportDataExchanger *importer, QWidget *parent) : Dia
 	{
 		m_path = path;
 	});
-	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &ImportDialog::handleImportRequested);
-	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &ImportDialog::reject);
+	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &DataExchangerDialog::handleImportRequested);
+	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::reject);
 }
 
-void ImportDialog::closeEvent(QCloseEvent *event)
+void DataExchangerDialog::closeEvent(QCloseEvent *event)
 {
 	if (m_ui->buttonBox->button(QDialogButtonBox::Abort))
 	{
@@ -72,12 +72,12 @@ void ImportDialog::closeEvent(QCloseEvent *event)
 	event->accept();
 }
 
-ImportDialog::~ImportDialog()
+DataExchangerDialog::~DataExchangerDialog()
 {
 	delete m_ui;
 }
 
-void ImportDialog::changeEvent(QEvent *event)
+void DataExchangerDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
@@ -89,7 +89,7 @@ void ImportDialog::changeEvent(QEvent *event)
 	}
 }
 
-void ImportDialog::createDialog(const QString &importerName, QWidget *parent)
+void DataExchangerDialog::createDialog(const QString &importerName, QWidget *parent)
 {
 	ImportDataExchanger *importer(nullptr);
 
@@ -120,7 +120,7 @@ void ImportDialog::createDialog(const QString &importerName, QWidget *parent)
 
 	if (importer)
 	{
-		ImportDialog dialog(importer, parent);
+		DataExchangerDialog dialog(importer, parent);
 		dialog.exec();
 	}
 	else
@@ -129,7 +129,7 @@ void ImportDialog::createDialog(const QString &importerName, QWidget *parent)
 	}
 }
 
-void ImportDialog::handleImportRequested()
+void DataExchangerDialog::handleImportRequested()
 {
 	m_ui->messageLayout->setDirection(isLeftToRight() ? QBoxLayout::LeftToRight : QBoxLayout::RightToLeft);
 	m_ui->messageIconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("task-ongoing")).pixmap(32, 32));
@@ -137,16 +137,16 @@ void ImportDialog::handleImportRequested()
 	m_ui->buttonBox->addButton(QDialogButtonBox::Abort)->setEnabled(m_importer->canCancel());
 	m_ui->stackedWidget->setCurrentIndex(1);
 
-	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &ImportDialog::reject);
+	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::reject);
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &DataExchanger::cancel);
-	connect(m_importer, &ImportDataExchanger::importStarted, this, &ImportDialog::handleImportStarted);
-	connect(m_importer, &ImportDataExchanger::importProgress, this, &ImportDialog::handleImportProgress);
-	connect(m_importer, &ImportDataExchanger::importFinished, this, &ImportDialog::handleImportFinished);
+	connect(m_importer, &ImportDataExchanger::importStarted, this, &DataExchangerDialog::handleImportStarted);
+	connect(m_importer, &ImportDataExchanger::importProgress, this, &DataExchangerDialog::handleImportProgress);
+	connect(m_importer, &ImportDataExchanger::importFinished, this, &DataExchangerDialog::handleImportFinished);
 
 	m_importer->importData(m_path);
 }
 
-void ImportDialog::handleImportStarted(DataExchanger::ExchangeType type, int total)
+void DataExchangerDialog::handleImportStarted(DataExchanger::ExchangeType type, int total)
 {
 	Q_UNUSED(type)
 
@@ -155,7 +155,7 @@ void ImportDialog::handleImportStarted(DataExchanger::ExchangeType type, int tot
 	m_ui->messageTextLabel->setText(tr("Processing…"));
 }
 
-void ImportDialog::handleImportProgress(DataExchanger::ExchangeType type, int total, int amount)
+void DataExchangerDialog::handleImportProgress(DataExchanger::ExchangeType type, int total, int amount)
 {
 	Q_UNUSED(type)
 
@@ -171,7 +171,7 @@ void ImportDialog::handleImportProgress(DataExchanger::ExchangeType type, int to
 	}
 }
 
-void ImportDialog::handleImportFinished(DataExchanger::ExchangeType type, DataExchanger::OperationResult result, int total)
+void DataExchangerDialog::handleImportFinished(DataExchanger::ExchangeType type, DataExchanger::OperationResult result, int total)
 {
 	handleImportProgress(type, total, total);
 
@@ -198,7 +198,7 @@ void ImportDialog::handleImportFinished(DataExchanger::ExchangeType type, DataEx
 	m_ui->buttonBox->setEnabled(true);
 
 	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &DataExchanger::cancel);
-	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &ImportDialog::close);
+	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::close);
 }
 
 }

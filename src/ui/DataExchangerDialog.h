@@ -18,8 +18,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_IMPORTDIALOG_H
-#define OTTER_IMPORTDIALOG_H
+#ifndef OTTER_DATAEXCHANGERDIALOG_H
+#define OTTER_DATAEXCHANGERDIALOG_H
 
 #include "Dialog.h"
 #include "../core/DataExchanger.h"
@@ -29,20 +29,20 @@ namespace Otter
 
 namespace Ui
 {
-	class ImportDialog;
+	class DataExchangerDialog;
 }
 
-class ImportDialog final : public Dialog
+class DataExchangerDialog final : public Dialog
 {
 	Q_OBJECT
 
 public:
-	~ImportDialog();
+	~DataExchangerDialog();
 
 	static void createDialog(const QString &importerName, QWidget *parent = nullptr);
 
 protected:
-	explicit ImportDialog(ImportDataExchanger *importer, QWidget *parent);
+	explicit DataExchangerDialog(ImportDataExchanger *importer, QWidget *parent);
 
 	void closeEvent(QCloseEvent *event) override;
 	void changeEvent(QEvent *event) override;
@@ -56,7 +56,7 @@ protected slots:
 private:
 	ImportDataExchanger *m_importer;
 	QString m_path;
-	Ui::ImportDialog *m_ui;
+	Ui::DataExchangerDialog *m_ui;
 };
 
 }

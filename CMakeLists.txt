@@ -158,6 +158,7 @@ set(otter_src
 	src/ui/ContentsDialog.cpp
 	src/ui/ContentsWidget.cpp
 	src/ui/CookiePropertiesDialog.cpp
+	src/ui/DataExchangerDialog.cpp
 	src/ui/DateTimeTextLabelWidget.cpp
 	src/ui/Dialog.cpp
 	src/ui/FeedPropertiesDialog.cpp
@@ -165,7 +166,6 @@ set(otter_src
 	src/ui/FilePathWidget.cpp
 	src/ui/IconWidget.cpp
 	src/ui/ImagePropertiesDialog.cpp
-	src/ui/ImportDialog.cpp
 	src/ui/ItemDelegate.cpp
 	src/ui/ItemViewWidget.cpp
 	src/ui/LineEditWidget.cpp
@@ -296,9 +296,9 @@ qt5_wrap_ui(otter_ui
 	src/ui/ClearHistoryDialog.ui
 	src/ui/ContentBlockingProfileDialog.ui
 	src/ui/CookiePropertiesDialog.ui
+	src/ui/DataExchangerDialog.ui
 	src/ui/FeedPropertiesDialog.ui
 	src/ui/ImagePropertiesDialog.ui
-	src/ui/ImportDialog.ui
 	src/ui/LocaleDialog.ui
 	src/ui/MainWindow.ui
 	src/ui/MasterPasswordDialog.ui

@@ -20,7 +20,7 @@
 #include "Menu.h"
 #include "Action.h"
 #include "ContentsWidget.h"
-#include "ImportDialog.h"
+#include "DataExchangerDialog.h"
 #include "MainWindow.h"
 #include "Window.h"
 #include "../core/Application.h"
@@ -170,7 +170,7 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			{
 				if (action)
 				{
-					ImportDialog::createDialog(qobject_cast<Action*>(action)->getParameters().value(QLatin1String("importer")).toString(), MainWindow::findMainWindow(this));
+					DataExchangerDialog::createDialog(qobject_cast<Action*>(action)->getParameters().value(QLatin1String("importer")).toString(), MainWindow::findMainWindow(this));
 				}
 			});
 
