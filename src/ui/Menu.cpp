@@ -142,16 +142,16 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			break;
 		case ImportExportMenu:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Import and Export"));
-			addAction(new Action(-1, {{QLatin1String("importer"), QLatin1String("OperaBookmarks")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Bookmarks…")}}, ActionExecutor::Object(), this));
-			addAction(new Action(-1, {{QLatin1String("importer"), QLatin1String("HtmlBookmarks")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import HTML Bookmarks…")}}, ActionExecutor::Object(), this));
+			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OperaBookmarks")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Bookmarks…")}}, ActionExecutor::Object(), this));
+			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("HtmlBookmarks")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import HTML Bookmarks…")}}, ActionExecutor::Object(), this));
 			addSeparator();
-			addAction(new Action(-1, {{QLatin1String("importer"), QLatin1String("OpmlFeeds")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import OPML Feeds…")}}, ActionExecutor::Object(), this));
+			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OpmlFeeds")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import OPML Feeds…")}}, ActionExecutor::Object(), this));
 			addSeparator();
-			addAction(new Action(-1, {{QLatin1String("importer"), QLatin1String("OperaNotes")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Notes…")}}, ActionExecutor::Object(), this));
+			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OperaNotes")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Notes…")}}, ActionExecutor::Object(), this));
 			addSeparator();
-			addAction(new Action(-1, {{QLatin1String("importer"), QLatin1String("OperaSearchEngines")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Search Engines…")}}, ActionExecutor::Object(), this));
+			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OperaSearchEngines")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Search Engines…")}}, ActionExecutor::Object(), this));
 			addSeparator();
-			addAction(new Action(-1, {{QLatin1String("importer"), QLatin1String("OperaSession")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Session…")}}, ActionExecutor::Object(), this));
+			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OperaSession")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Session…")}}, ActionExecutor::Object(), this));
 
 			if (SessionsManager::isReadOnly())
 			{
@@ -170,7 +170,7 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			{
 				if (action)
 				{
-					DataExchangerDialog::createDialog(qobject_cast<Action*>(action)->getParameters().value(QLatin1String("importer")).toString(), MainWindow::findMainWindow(this));
+					DataExchangerDialog::createDialog(qobject_cast<Action*>(action)->getParameters().value(QLatin1String("exchanger")).toString(), MainWindow::findMainWindow(this));
 				}
 			});
 
