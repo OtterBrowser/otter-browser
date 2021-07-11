@@ -89,38 +89,38 @@ void DataExchangerDialog::changeEvent(QEvent *event)
 	}
 }
 
-void DataExchangerDialog::createDialog(const QString &importerName, QWidget *parent)
+void DataExchangerDialog::createDialog(const QString &exchangerName, QWidget *parent)
 {
-	ImportDataExchanger *importer(nullptr);
+	ImportDataExchanger *exchanger(nullptr);
 
-	if (importerName == QLatin1String("HtmlBookmarks"))
+	if (exchangerName == QLatin1String("HtmlBookmarks"))
 	{
-		importer = new HtmlBookmarksImportDataExchanger();
+		exchanger = new HtmlBookmarksImportDataExchanger();
 	}
-	else if (importerName == QLatin1String("OperaBookmarks"))
+	else if (exchangerName == QLatin1String("OperaBookmarks"))
 	{
-		importer = new OperaBookmarksImportDataExchanger();
+		exchanger = new OperaBookmarksImportDataExchanger();
 	}
-	else if (importerName == QLatin1String("OperaNotes"))
+	else if (exchangerName == QLatin1String("OperaNotes"))
 	{
-		importer = new OperaNotesImportDataExchanger();
+		exchanger = new OperaNotesImportDataExchanger();
 	}
-	else if (importerName == QLatin1String("OperaSearchEngines"))
+	else if (exchangerName == QLatin1String("OperaSearchEngines"))
 	{
-		importer = new OperaSearchEnginesImportDataExchanger();
+		exchanger = new OperaSearchEnginesImportDataExchanger();
 	}
-	else if (importerName == QLatin1String("OperaSession"))
+	else if (exchangerName == QLatin1String("OperaSession"))
 	{
-		importer = new OperaSessionImportDataExchanger();
+		exchanger = new OperaSessionImportDataExchanger();
 	}
-	else if (importerName == QLatin1String("OpmlFeeds"))
+	else if (exchangerName == QLatin1String("OpmlFeeds"))
 	{
-		importer = new OpmlImportDataExchanger();
+		exchanger = new OpmlImportDataExchanger();
 	}
 
-	if (importer)
+	if (exchanger)
 	{
-		DataExchangerDialog dialog(importer, parent);
+		DataExchangerDialog dialog(exchanger, parent);
 		dialog.exec();
 	}
 	else

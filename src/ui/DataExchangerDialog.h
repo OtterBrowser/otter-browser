@@ -39,7 +39,7 @@ class DataExchangerDialog final : public Dialog
 public:
 	~DataExchangerDialog();
 
-	static void createDialog(const QString &importerName, QWidget *parent = nullptr);
+	static void createDialog(const QString &exchangerName, QWidget *parent = nullptr);
 
 protected:
 	explicit DataExchangerDialog(ImportDataExchanger *importer, QWidget *parent);
