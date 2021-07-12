@@ -142,16 +142,16 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			break;
 		case ImportExportMenu:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Import and Export"));
-			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OperaBookmarks")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Bookmarks…")}}, ActionExecutor::Object(), this));
-			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("HtmlBookmarks")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import HTML Bookmarks…")}}, ActionExecutor::Object(), this));
+			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OperaBookmarksImport")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Bookmarks…")}}, ActionExecutor::Object(), this));
+			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("HtmlBookmarksImport")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import HTML Bookmarks…")}}, ActionExecutor::Object(), this));
 			addSeparator();
-			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OpmlFeeds")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import OPML Feeds…")}}, ActionExecutor::Object(), this));
+			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OpmlFeedsImport")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import OPML Feeds…")}}, ActionExecutor::Object(), this));
 			addSeparator();
-			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OperaNotes")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Notes…")}}, ActionExecutor::Object(), this));
+			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OperaNotesImport")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Notes…")}}, ActionExecutor::Object(), this));
 			addSeparator();
-			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OperaSearchEngines")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Search Engines…")}}, ActionExecutor::Object(), this));
+			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OperaSearchEnginesImport")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Search Engines…")}}, ActionExecutor::Object(), this));
 			addSeparator();
-			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OperaSession")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Session…")}}, ActionExecutor::Object(), this));
+			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OperaSessionImport")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Session…")}}, ActionExecutor::Object(), this));
 
 			if (SessionsManager::isReadOnly())
 			{

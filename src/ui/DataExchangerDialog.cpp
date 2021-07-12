@@ -93,27 +93,27 @@ void DataExchangerDialog::createDialog(const QString &exchangerName, QWidget *pa
 {
 	ImportDataExchanger *exchanger(nullptr);
 
-	if (exchangerName == QLatin1String("HtmlBookmarks"))
+	if (exchangerName == QLatin1String("HtmlBookmarksImport"))
 	{
 		exchanger = new HtmlBookmarksImportDataExchanger();
 	}
-	else if (exchangerName == QLatin1String("OperaBookmarks"))
+	else if (exchangerName == QLatin1String("OperaBookmarksImport"))
 	{
 		exchanger = new OperaBookmarksImportDataExchanger();
 	}
-	else if (exchangerName == QLatin1String("OperaNotes"))
+	else if (exchangerName == QLatin1String("OperaNotesImport"))
 	{
 		exchanger = new OperaNotesImportDataExchanger();
 	}
-	else if (exchangerName == QLatin1String("OperaSearchEngines"))
+	else if (exchangerName == QLatin1String("OperaSearchEnginesImport"))
 	{
 		exchanger = new OperaSearchEnginesImportDataExchanger();
 	}
-	else if (exchangerName == QLatin1String("OperaSession"))
+	else if (exchangerName == QLatin1String("OperaSessionImport"))
 	{
 		exchanger = new OperaSessionImportDataExchanger();
 	}
-	else if (exchangerName == QLatin1String("OpmlFeeds"))
+	else if (exchangerName == QLatin1String("OpmlFeedsImport"))
 	{
 		exchanger = new OpmlImportDataExchanger();
 	}
