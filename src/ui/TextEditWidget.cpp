@@ -273,11 +273,13 @@ void TextEditWidget::setSpellCheckingEnabled(bool isSpellCheckingEnabled)
 {
 	m_isSpellCheckingEnabled = isSpellCheckingEnabled;
 
+#ifdef OTTER_ENABLE_SPELLCHECK
 	if (!isSpellCheckingEnabled && m_highlighter)
 	{
 		m_highlighter->deleteLater();
 		m_highlighter = nullptr;
 	}
+#endif
 
 	emit arbitraryActionsStateChanged({ActionsManager::CheckSpellingAction});
 }
