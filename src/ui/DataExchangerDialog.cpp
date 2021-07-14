@@ -125,7 +125,7 @@ void DataExchangerDialog::createDialog(const QString &exchangerName, QWidget *pa
 	}
 	else
 	{
-		QMessageBox::critical(parent, tr("Error"), tr("Unable to import selected type."));
+		QMessageBox::critical(parent, tr("Error"), (exchangerName.contains(QLatin1String("Import")) ? tr("Unable to import selected type.") : tr("Unable to export selected type.")));
 	}
 }
 
