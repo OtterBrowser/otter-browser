@@ -36,6 +36,7 @@ namespace Otter
 {
 
 DataExchangerDialog::DataExchangerDialog(ImportDataExchanger *importer, QWidget *parent) : Dialog(parent),
+	m_exporter(nullptr),
 	m_importer(importer),
 	m_ui(new Ui::DataExchangerDialog)
 {

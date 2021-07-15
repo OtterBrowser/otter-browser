@@ -54,6 +54,7 @@ protected slots:
 	void handleImportFinished(DataExchanger::ExchangeType type, DataExchanger::OperationResult result, int total);
 
 private:
+	ExportDataExchanger *m_exporter;
 	ImportDataExchanger *m_importer;
 	QString m_path;
 	Ui::DataExchangerDialog *m_ui;
