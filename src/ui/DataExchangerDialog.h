@@ -42,6 +42,7 @@ public:
 	static void createDialog(const QString &exchangerName, QWidget *parent = nullptr);
 
 protected:
+	explicit DataExchangerDialog(ExportDataExchanger *exporter, QWidget *parent);
 	explicit DataExchangerDialog(ImportDataExchanger *importer, QWidget *parent);
 
 	void closeEvent(QCloseEvent *event) override;

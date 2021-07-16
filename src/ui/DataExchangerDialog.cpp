@@ -20,6 +20,7 @@
 
 #include "DataExchangerDialog.h"
 #include "../core/ThemesManager.h"
+#include "../modules/exporters/xbel/XbelBookmarksExportDataExchanger.h"
 #include "../modules/importers/html/HtmlBookmarksImportDataExchanger.h"
 #include "../modules/importers/opera/OperaBookmarksImportDataExchanger.h"
 #include "../modules/importers/opera/OperaNotesImportDataExchanger.h"
@@ -35,6 +36,25 @@
 namespace Otter
 {
 
+DataExchangerDialog::DataExchangerDialog(ExportDataExchanger *exporter, QWidget *parent) : Dialog(parent),
+	m_exporter(exporter),
+	m_importer(nullptr),
+	m_ui(new Ui::DataExchangerDialog)
+{
+	m_ui->setupUi(this);
+
+	exporter->setParent(this);
+
+	if (exporter->hasOptions())
+	{
+		m_ui->extraOptionsLayout->addWidget(exporter->createOptionsWidget(this));
+	}
+
+	setWindowTitle(exporter->getTitle());
+	setObjectName(exporter->metaObject()->className());
+	adjustSize();
+}
+
 DataExchangerDialog::DataExchangerDialog(ImportDataExchanger *importer, QWidget *parent) : Dialog(parent),
 	m_exporter(nullptr),
 	m_importer(importer),
@@ -44,14 +64,14 @@ DataExchangerDialog::DataExchangerDialog(ImportDataExchanger *importer, QWidget 
 	m_ui->importPathWidget->setFilters(importer->getFileFilters());
 	m_ui->importPathWidget->setPath(importer->getSuggestedPath());
 
-	m_importer->setParent(this);
+	importer->setParent(this);
 
-	if (m_importer->hasOptions())
+	if (importer->hasOptions())
 	{
-		m_ui->extraOptionsLayout->addWidget(m_importer->createOptionsWidget(this));
+		m_ui->extraOptionsLayout->addWidget(importer->createOptionsWidget(this));
 	}
 
-	setWindowTitle(m_importer->getTitle());
+	setWindowTitle(importer->getTitle());
 	setObjectName(importer->metaObject()->className());
 	adjustSize();
 
@@ -92,36 +112,46 @@ void DataExchangerDialog::changeEvent(QEvent *event)
 
 void DataExchangerDialog::createDialog(const QString &exchangerName, QWidget *parent)
 {
-	ImportDataExchanger *exchanger(nullptr);
+	ExportDataExchanger *exportExchanger(nullptr);
+	ImportDataExchanger *importExchanger(nullptr);
 
-	if (exchangerName == QLatin1String("HtmlBookmarksImport"))
+	if (exchangerName == QLatin1String("XbelBookmarksExport"))
 	{
-		exchanger = new HtmlBookmarksImportDataExchanger();
+		exportExchanger = new XbelBookmarksExportDataExchanger();
+	}
+	else if (exchangerName == QLatin1String("HtmlBookmarksImport"))
+	{
+		importExchanger = new HtmlBookmarksImportDataExchanger();
 	}
 	else if (exchangerName == QLatin1String("OperaBookmarksImport"))
 	{
-		exchanger = new OperaBookmarksImportDataExchanger();
+		importExchanger = new OperaBookmarksImportDataExchanger();
 	}
 	else if (exchangerName == QLatin1String("OperaNotesImport"))
 	{
-		exchanger = new OperaNotesImportDataExchanger();
+		importExchanger = new OperaNotesImportDataExchanger();
 	}
 	else if (exchangerName == QLatin1String("OperaSearchEnginesImport"))
 	{
-		exchanger = new OperaSearchEnginesImportDataExchanger();
+		importExchanger = new OperaSearchEnginesImportDataExchanger();
 	}
 	else if (exchangerName == QLatin1String("OperaSessionImport"))
 	{
-		exchanger = new OperaSessionImportDataExchanger();
+		importExchanger = new OperaSessionImportDataExchanger();
 	}
 	else if (exchangerName == QLatin1String("OpmlFeedsImport"))
 	{
-		exchanger = new OpmlImportDataExchanger();
+		importExchanger = new OpmlImportDataExchanger();
 	}
 
-	if (exchanger)
+	if (exportExchanger)
 	{
-		DataExchangerDialog dialog(exchanger, parent);
+		DataExchangerDialog dialog(exportExchanger, parent);
+		dialog.exec();
+	}
+	else if (importExchanger)
+	{
+		DataExchangerDialog dialog(importExchanger, parent);
 		dialog.exec();
 	}
 	else
