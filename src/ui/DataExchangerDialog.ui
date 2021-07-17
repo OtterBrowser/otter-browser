@@ -16,7 +16,7 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="optionsPage">
+     <widget class="QWidget" name="importOptionsPage">
       <layout class="QVBoxLayout" name="optionsLayout">
        <property name="leftMargin">
         <number>0</number>
@@ -31,7 +31,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QLabel" name="OptionsHeaderLabel">
+        <widget class="QLabel" name="importOptionsHeaderLabel">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -44,12 +44,12 @@
         </widget>
        </item>
        <item>
-        <layout class="QFormLayout" name="commonOptionsLayout">
+        <layout class="QFormLayout" name="commonImportOptionsLayout">
          <property name="fieldGrowthPolicy">
           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
          </property>
          <item row="0" column="0">
-          <widget class="QLabel" name="importLabel">
+          <widget class="QLabel" name="importPathLabel">
            <property name="text">
             <string>Source:</string>
            </property>
@@ -64,10 +64,10 @@
         </layout>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="extraOptionsLayout"/>
+        <layout class="QVBoxLayout" name="extraImportOptionsLayout"/>
        </item>
        <item>
-        <spacer name="optionsSpacer">
+        <spacer name="importOptionsSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
