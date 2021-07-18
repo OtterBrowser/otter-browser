@@ -16,8 +16,61 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
+     <widget class="QWidget" name="exportOptionsPage">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="exportOptionsHeaderLabel">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Options</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QFormLayout" name="commonExportOptionsLayout">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLabel" name="exportPathLabel">
+           <property name="text">
+            <string>Target:</string>
+           </property>
+           <property name="buddy">
+            <cstring>importPathWidget</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="Otter::FilePathWidget" name="exportPathWidget" native="true"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="extraExportOptionsLayout"/>
+       </item>
+       <item>
+        <spacer name="exportOptionsSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>68</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="importOptionsPage">
-      <layout class="QVBoxLayout" name="optionsLayout">
+      <layout class="QVBoxLayout" name="importOptionsLayout">
        <property name="leftMargin">
         <number>0</number>
        </property>

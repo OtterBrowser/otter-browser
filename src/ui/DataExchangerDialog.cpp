@@ -42,6 +42,9 @@ DataExchangerDialog::DataExchangerDialog(ExportDataExchanger *exporter, QWidget 
 	m_ui(new Ui::DataExchangerDialog)
 {
 	m_ui->setupUi(this);
+	m_ui->stackedWidget->setCurrentWidget(m_ui->exportOptionsPage);
+	m_ui->exportPathWidget->setFilters(exporter->getFileFilters());
+	m_ui->exportPathWidget->setPath(exporter->getSuggestedPath());
 
 	exporter->setParent(this);
 
@@ -61,6 +64,7 @@ DataExchangerDialog::DataExchangerDialog(ImportDataExchanger *importer, QWidget 
 	m_ui(new Ui::DataExchangerDialog)
 {
 	m_ui->setupUi(this);
+	m_ui->stackedWidget->setCurrentWidget(m_ui->importOptionsPage);
 	m_ui->importPathWidget->setFilters(importer->getFileFilters());
 	m_ui->importPathWidget->setPath(importer->getSuggestedPath());
 
