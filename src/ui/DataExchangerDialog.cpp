@@ -56,6 +56,12 @@ DataExchangerDialog::DataExchangerDialog(ExportDataExchanger *exporter, QWidget 
 	setWindowTitle(exporter->getTitle());
 	setObjectName(exporter->metaObject()->className());
 	adjustSize();
+
+	connect(m_ui->exportPathWidget, &FilePathWidget::pathChanged, this, [&](const QString &path)
+	{
+		m_path = path;
+	});
+	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::reject);
 }
 
 DataExchangerDialog::DataExchangerDialog(ImportDataExchanger *importer, QWidget *parent) : Dialog(parent),
