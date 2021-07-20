@@ -50,7 +50,7 @@ DataExchangerDialog::DataExchangerDialog(ExportDataExchanger *exporter, QWidget 
 
 	if (exporter->hasOptions())
 	{
-		m_ui->extraImportOptionsLayout->addWidget(exporter->createOptionsWidget(this));
+		m_ui->extraExportOptionsLayout->addWidget(exporter->createOptionsWidget(this));
 	}
 
 	setWindowTitle(exporter->getTitle());
