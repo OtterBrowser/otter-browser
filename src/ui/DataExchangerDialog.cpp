@@ -176,7 +176,7 @@ void DataExchangerDialog::handleImportRequested()
 	m_ui->messageIconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("task-ongoing")).pixmap(32, 32));
 	m_ui->buttonBox->clear();
 	m_ui->buttonBox->addButton(QDialogButtonBox::Abort)->setEnabled(m_importer->canCancel());
-	m_ui->stackedWidget->setCurrentIndex(1);
+	m_ui->stackedWidget->setCurrentWidget(m_ui->resultsPage);
 
 	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::reject);
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &DataExchanger::cancel);
