@@ -172,13 +172,8 @@ void DataExchangerDialog::createDialog(const QString &exchangerName, QWidget *pa
 
 void DataExchangerDialog::handleImportRequested()
 {
-	m_ui->messageLayout->setDirection(isLeftToRight() ? QBoxLayout::LeftToRight : QBoxLayout::RightToLeft);
-	m_ui->messageIconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("task-ongoing")).pixmap(32, 32));
-	m_ui->buttonBox->clear();
-	m_ui->buttonBox->addButton(QDialogButtonBox::Abort)->setEnabled(m_importer->canCancel());
-	m_ui->stackedWidget->setCurrentWidget(m_ui->resultsPage);
+	setupResults(m_importer->canCancel());
 
-	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::reject);
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &DataExchanger::cancel);
 	connect(m_importer, &ImportDataExchanger::importStarted, this, &DataExchangerDialog::handleImportStarted);
 	connect(m_importer, &ImportDataExchanger::importProgress, this, &DataExchangerDialog::handleImportProgress);
@@ -240,6 +235,17 @@ void DataExchangerDialog::handleImportFinished(DataExchanger::ExchangeType type,
 
 	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &DataExchanger::cancel);
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::close);
+}
+
+void DataExchangerDialog::setupResults(bool canCancel)
+{
+	m_ui->messageLayout->setDirection(isLeftToRight() ? QBoxLayout::LeftToRight : QBoxLayout::RightToLeft);
+	m_ui->messageIconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("task-ongoing")).pixmap(32, 32));
+	m_ui->buttonBox->clear();
+	m_ui->buttonBox->addButton(QDialogButtonBox::Abort)->setEnabled(canCancel);
+	m_ui->stackedWidget->setCurrentWidget(m_ui->resultsPage);
+
+	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::reject);
 }
 
 }

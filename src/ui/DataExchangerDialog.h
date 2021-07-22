@@ -47,6 +47,7 @@ protected:
 
 	void closeEvent(QCloseEvent *event) override;
 	void changeEvent(QEvent *event) override;
+	void setupResults(bool canCancel);
 
 protected slots:
 	void handleImportRequested();
