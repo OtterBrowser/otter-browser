@@ -170,28 +170,7 @@ void DataExchangerDialog::createDialog(const QString &exchangerName, QWidget *pa
 	}
 }
 
-void DataExchangerDialog::handleImportRequested()
-{
-	setupResults(m_importer->canCancel());
-
-	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &DataExchanger::cancel);
-	connect(m_importer, &ImportDataExchanger::importStarted, this, &DataExchangerDialog::handleImportStarted);
-	connect(m_importer, &ImportDataExchanger::importProgress, this, &DataExchangerDialog::handleImportProgress);
-	connect(m_importer, &ImportDataExchanger::importFinished, this, &DataExchangerDialog::handleImportFinished);
-
-	m_importer->importData(m_path);
-}
-
-void DataExchangerDialog::handleImportStarted(DataExchanger::ExchangeType type, int total)
-{
-	Q_UNUSED(type)
-
-	handleImportProgress(type, total, 0);
-
-	m_ui->messageTextLabel->setText(tr("Processing…"));
-}
-
-void DataExchangerDialog::handleImportProgress(DataExchanger::ExchangeType type, int total, int amount)
+void DataExchangerDialog::handleExchangeProgress(DataExchanger::ExchangeType type, int total, int amount)
 {
 	Q_UNUSED(type)
 
@@ -207,9 +186,30 @@ void DataExchangerDialog::handleImportProgress(DataExchanger::ExchangeType type,
 	}
 }
 
+void DataExchangerDialog::handleImportRequested()
+{
+	setupResults(m_importer->canCancel());
+
+	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &DataExchanger::cancel);
+	connect(m_importer, &ImportDataExchanger::importStarted, this, &DataExchangerDialog::handleImportStarted);
+	connect(m_importer, &ImportDataExchanger::importProgress, this, &DataExchangerDialog::handleExchangeProgress);
+	connect(m_importer, &ImportDataExchanger::importFinished, this, &DataExchangerDialog::handleImportFinished);
+
+	m_importer->importData(m_path);
+}
+
+void DataExchangerDialog::handleImportStarted(DataExchanger::ExchangeType type, int total)
+{
+	Q_UNUSED(type)
+
+	handleExchangeProgress(type, total, 0);
+
+	m_ui->messageTextLabel->setText(tr("Processing…"));
+}
+
 void DataExchangerDialog::handleImportFinished(DataExchanger::ExchangeType type, DataExchanger::OperationResult result, int total)
 {
-	handleImportProgress(type, total, total);
+	handleExchangeProgress(type, total, total);
 
 	m_ui->messageIconLabel->setPixmap(ThemesManager::createIcon((result == DataExchanger::SuccessfullOperation) ? QLatin1String("task-complete") : QLatin1String("task-reject")).pixmap(32, 32));
 

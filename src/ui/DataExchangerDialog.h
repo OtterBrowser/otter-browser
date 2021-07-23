@@ -50,9 +50,9 @@ protected:
 	void setupResults(bool canCancel);
 
 protected slots:
+	void handleExchangeProgress(DataExchanger::ExchangeType type, int total, int amount);
 	void handleImportRequested();
 	void handleImportStarted(DataExchanger::ExchangeType type, int total);
-	void handleImportProgress(DataExchanger::ExchangeType type, int total, int amount);
 	void handleImportFinished(DataExchanger::ExchangeType type, DataExchanger::OperationResult result, int total);
 
 private:
