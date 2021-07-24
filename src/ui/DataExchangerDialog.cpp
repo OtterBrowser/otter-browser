@@ -200,8 +200,6 @@ void DataExchangerDialog::handleImportRequested()
 
 void DataExchangerDialog::handleImportStarted(DataExchanger::ExchangeType type, int total)
 {
-	Q_UNUSED(type)
-
 	handleExchangeProgress(type, total, 0);
 
 	m_ui->messageTextLabel->setText(tr("Processing…"));
