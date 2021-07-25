@@ -186,6 +186,16 @@ void DataExchangerDialog::handleExchangeProgress(DataExchanger::ExchangeType typ
 	}
 }
 
+void DataExchangerDialog::handleExchangeFinished(DataExchanger::ExchangeType type, DataExchanger::OperationResult result, int total)
+{
+	handleExchangeProgress(type, total, total);
+
+	m_ui->messageIconLabel->setPixmap(ThemesManager::createIcon((result == DataExchanger::SuccessfullOperation) ? QLatin1String("task-complete") : QLatin1String("task-reject")).pixmap(32, 32));
+	m_ui->buttonBox->clear();
+	m_ui->buttonBox->addButton(QDialogButtonBox::Close);
+	m_ui->buttonBox->setEnabled(true);
+}
+
 void DataExchangerDialog::handleImportRequested()
 {
 	setupResults(m_importer->canCancel());
@@ -207,9 +217,7 @@ void DataExchangerDialog::handleImportStarted(DataExchanger::ExchangeType type, 
 
 void DataExchangerDialog::handleImportFinished(DataExchanger::ExchangeType type, DataExchanger::OperationResult result, int total)
 {
-	handleExchangeProgress(type, total, total);
-
-	m_ui->messageIconLabel->setPixmap(ThemesManager::createIcon((result == DataExchanger::SuccessfullOperation) ? QLatin1String("task-complete") : QLatin1String("task-reject")).pixmap(32, 32));
+	handleExchangeFinished(type, result, total);
 
 	switch (result)
 	{
@@ -226,10 +234,6 @@ void DataExchangerDialog::handleImportFinished(DataExchanger::ExchangeType type,
 
 			break;
 	}
-
-	m_ui->buttonBox->clear();
-	m_ui->buttonBox->addButton(QDialogButtonBox::Close);
-	m_ui->buttonBox->setEnabled(true);
 
 	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &DataExchanger::cancel);
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::close);
