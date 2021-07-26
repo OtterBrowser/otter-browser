@@ -194,6 +194,8 @@ void DataExchangerDialog::handleExchangeFinished(DataExchanger::ExchangeType typ
 	m_ui->buttonBox->clear();
 	m_ui->buttonBox->addButton(QDialogButtonBox::Close);
 	m_ui->buttonBox->setEnabled(true);
+
+	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::close);
 }
 
 void DataExchangerDialog::handleImportRequested()
@@ -236,7 +238,6 @@ void DataExchangerDialog::handleImportFinished(DataExchanger::ExchangeType type,
 	}
 
 	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &DataExchanger::cancel);
-	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::close);
 }
 
 void DataExchangerDialog::setupResults(bool canCancel)
