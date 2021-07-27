@@ -61,6 +61,7 @@ DataExchangerDialog::DataExchangerDialog(ExportDataExchanger *exporter, QWidget 
 	{
 		m_path = path;
 	});
+	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &DataExchangerDialog::handleExportRequested);
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::reject);
 }
 
@@ -170,6 +171,13 @@ void DataExchangerDialog::createDialog(const QString &exchangerName, QWidget *pa
 	}
 }
 
+void DataExchangerDialog::handleExchangeStarted(DataExchanger::ExchangeType type, int total)
+{
+	handleExchangeProgress(type, total, 0);
+
+	m_ui->messageTextLabel->setText(tr("Processing…"));
+}
+
 void DataExchangerDialog::handleExchangeProgress(DataExchanger::ExchangeType type, int total, int amount)
 {
 	Q_UNUSED(type)
@@ -198,23 +206,51 @@ void DataExchangerDialog::handleExchangeFinished(DataExchanger::ExchangeType typ
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::close);
 }
 
+void DataExchangerDialog::handleExportRequested()
+{
+	setupResults(m_exporter->canCancel());
+
+	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_exporter, &DataExchanger::cancel);
+	connect(m_exporter, &ExportDataExchanger::exportStarted, this, &DataExchangerDialog::handleExchangeStarted);
+	connect(m_exporter, &ExportDataExchanger::exportProgress, this, &DataExchangerDialog::handleExchangeProgress);
+	connect(m_exporter, &ExportDataExchanger::exportFinished, this, &DataExchangerDialog::handleExportFinished);
+
+	m_exporter->exportData(m_path);
+}
+
+void DataExchangerDialog::handleExportFinished(DataExchanger::ExchangeType type, DataExchanger::OperationResult result, int total)
+{
+	handleExchangeFinished(type, result, total);
+
+	switch (result)
+	{
+		case DataExchanger::FailedOperation:
+			m_ui->messageTextLabel->setText(tr("Failed to export data."));
+
+			break;
+		case DataExchanger::CancelledOperation:
+			m_ui->messageTextLabel->setText(tr("Export cancelled by the user."));
+
+			break;
+		default:
+			m_ui->messageTextLabel->setText(tr("Export finished successfully."));
+
+			break;
+	}
+
+	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_exporter, &DataExchanger::cancel);
+}
+
 void DataExchangerDialog::handleImportRequested()
 {
 	setupResults(m_importer->canCancel());
 
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &DataExchanger::cancel);
-	connect(m_importer, &ImportDataExchanger::importStarted, this, &DataExchangerDialog::handleImportStarted);
+	connect(m_importer, &ImportDataExchanger::importStarted, this, &DataExchangerDialog::handleExchangeStarted);
 	connect(m_importer, &ImportDataExchanger::importProgress, this, &DataExchangerDialog::handleExchangeProgress);
 	connect(m_importer, &ImportDataExchanger::importFinished, this, &DataExchangerDialog::handleImportFinished);
 
 	m_importer->importData(m_path);
-}
-
-void DataExchangerDialog::handleImportStarted(DataExchanger::ExchangeType type, int total)
-{
-	handleExchangeProgress(type, total, 0);
-
-	m_ui->messageTextLabel->setText(tr("Processing…"));
 }
 
 void DataExchangerDialog::handleImportFinished(DataExchanger::ExchangeType type, DataExchanger::OperationResult result, int total)
