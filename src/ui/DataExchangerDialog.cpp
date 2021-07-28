@@ -98,7 +98,14 @@ void DataExchangerDialog::closeEvent(QCloseEvent *event)
 {
 	if (m_ui->buttonBox->button(QDialogButtonBox::Abort))
 	{
-		m_importer->cancel();
+		if (m_exporter)
+		{
+			m_exporter->cancel();
+		}
+		else if (m_importer)
+		{
+			m_importer->cancel();
+		}
 	}
 
 	event->accept();
