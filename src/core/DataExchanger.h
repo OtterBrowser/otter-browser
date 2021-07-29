@@ -78,6 +78,11 @@ public:
 
 public slots:
 	virtual void cancel();
+
+signals:
+	void exchangeStarted(ExchangeType type, int total);
+	void exchangeProgress(ExchangeType type, int total, int amount);
+	void exchangeFinished(ExchangeType type, OperationResult result, int total);
 };
 
 class ExportDataExchanger : public DataExchanger
@@ -91,11 +96,6 @@ public:
 
 public slots:
 	virtual bool exportData(const QString &path) = 0;
-
-signals:
-	void exportStarted(ExchangeType type, int total);
-	void exportProgress(ExchangeType type, int total, int amount);
-	void exportFinished(ExchangeType type, OperationResult result, int total);
 };
 
 class ImportDataExchanger : public DataExchanger
@@ -109,11 +109,6 @@ public:
 
 public slots:
 	virtual bool importData(const QString &path) = 0;
-
-signals:
-	void importStarted(ExchangeType type, int total);
-	void importProgress(ExchangeType type, int total, int amount);
-	void importFinished(ExchangeType type, OperationResult result, int total);
 };
 
 class ImportJob : public Job
