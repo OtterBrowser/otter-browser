@@ -103,12 +103,12 @@ bool OperaSessionImportDataExchanger::importData(const QString &path)
 
 	if (originalSession.getValue(QLatin1String("version")).toInt() == 0)
 	{
-		emit importFinished(SessionsExchange, FailedOperation, 0);
+		emit exchangeFinished(SessionsExchange, FailedOperation, 0);
 
 		return false;
 	}
 
-	emit importStarted(SessionsExchange, 1);
+	emit exchangeStarted(SessionsExchange, 1);
 
 	SessionInformation session;
 	session.title = QFileInfo(path).completeBaseName();
@@ -252,7 +252,7 @@ bool OperaSessionImportDataExchanger::importData(const QString &path)
 
 	qDeleteAll(mainWindows);
 
-	emit importFinished(SessionsExchange, (result ? SuccessfullOperation : FailedOperation), 1);
+	emit exchangeFinished(SessionsExchange, (result ? SuccessfullOperation : FailedOperation), 1);
 
 	return result;
 }

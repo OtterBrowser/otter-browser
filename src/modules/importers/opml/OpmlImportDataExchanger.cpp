@@ -140,12 +140,12 @@ bool OpmlImportDataExchanger::importData(const QString &path)
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		emit importFinished(FeedsExchange, FailedOperation, 0);
+		emit exchangeFinished(FeedsExchange, FailedOperation, 0);
 
 		return false;
 	}
 
-	emit importStarted(FeedsExchange, -1);
+	emit exchangeStarted(FeedsExchange, -1);
 
 	FeedsModel *model(new FeedsModel(path, this));
 	const int estimatedAmount((file.size() > 0) ? static_cast<int>(file.size() / 250) : 0);
@@ -164,7 +164,7 @@ bool OpmlImportDataExchanger::importData(const QString &path)
 
 	model->deleteLater();
 
-	emit importFinished(FeedsExchange, SuccessfullOperation, totalAmount);
+	emit exchangeFinished(FeedsExchange, SuccessfullOperation, totalAmount);
 
 	file.close();
 

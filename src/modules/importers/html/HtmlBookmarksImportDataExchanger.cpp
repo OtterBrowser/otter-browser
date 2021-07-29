@@ -104,7 +104,7 @@ bool HtmlBookmarksImportDataExchanger::importData(const QString &path)
 
 	if (!webBackend)
 	{
-		emit importFinished(BookmarksExchange, FailedOperation, 0);
+		emit exchangeFinished(BookmarksExchange, FailedOperation, 0);
 
 		return false;
 	}
@@ -134,14 +134,14 @@ bool HtmlBookmarksImportDataExchanger::importData(const QString &path)
 
 	if (!job)
 	{
-		emit importFinished(BookmarksExchange, FailedOperation, 0);
+		emit exchangeFinished(BookmarksExchange, FailedOperation, 0);
 
 		return false;
 	}
 
-	connect(job, &BookmarksImportJob::importStarted, this, &HtmlBookmarksImportDataExchanger::importStarted);
-	connect(job, &BookmarksImportJob::importProgress, this, &HtmlBookmarksImportDataExchanger::importProgress);
-	connect(job, &BookmarksImportJob::importFinished, this, &HtmlBookmarksImportDataExchanger::importFinished);
+	connect(job, &BookmarksImportJob::importStarted, this, &HtmlBookmarksImportDataExchanger::exchangeStarted);
+	connect(job, &BookmarksImportJob::importProgress, this, &HtmlBookmarksImportDataExchanger::exchangeProgress);
+	connect(job, &BookmarksImportJob::importFinished, this, &HtmlBookmarksImportDataExchanger::exchangeFinished);
 
 	job->start();
 

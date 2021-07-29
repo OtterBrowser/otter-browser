@@ -218,9 +218,9 @@ void DataExchangerDialog::handleExportRequested()
 	setupResults(m_exporter->canCancel());
 
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_exporter, &DataExchanger::cancel);
-	connect(m_exporter, &ExportDataExchanger::exportStarted, this, &DataExchangerDialog::handleExchangeStarted);
-	connect(m_exporter, &ExportDataExchanger::exportProgress, this, &DataExchangerDialog::handleExchangeProgress);
-	connect(m_exporter, &ExportDataExchanger::exportFinished, this, &DataExchangerDialog::handleExportFinished);
+	connect(m_exporter, &ExportDataExchanger::exchangeStarted, this, &DataExchangerDialog::handleExchangeStarted);
+	connect(m_exporter, &ExportDataExchanger::exchangeProgress, this, &DataExchangerDialog::handleExchangeProgress);
+	connect(m_exporter, &ExportDataExchanger::exchangeFinished, this, &DataExchangerDialog::handleExportFinished);
 
 	m_exporter->exportData(m_path);
 }
@@ -253,9 +253,9 @@ void DataExchangerDialog::handleImportRequested()
 	setupResults(m_importer->canCancel());
 
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &DataExchanger::cancel);
-	connect(m_importer, &ImportDataExchanger::importStarted, this, &DataExchangerDialog::handleExchangeStarted);
-	connect(m_importer, &ImportDataExchanger::importProgress, this, &DataExchangerDialog::handleExchangeProgress);
-	connect(m_importer, &ImportDataExchanger::importFinished, this, &DataExchangerDialog::handleImportFinished);
+	connect(m_importer, &ImportDataExchanger::exchangeStarted, this, &DataExchangerDialog::handleExchangeStarted);
+	connect(m_importer, &ImportDataExchanger::exchangeProgress, this, &DataExchangerDialog::handleExchangeProgress);
+	connect(m_importer, &ImportDataExchanger::exchangeFinished, this, &DataExchangerDialog::handleImportFinished);
 
 	m_importer->importData(m_path);
 }

@@ -139,9 +139,9 @@ bool OperaBookmarksImportDataExchanger::importData(const QString &path)
 
 	BookmarksImportJob *job(new OperaBookmarksImportJob(folder, getSuggestedPath(path), areDuplicatesAllowed, this));
 
-	connect(job, &BookmarksImportJob::importStarted, this, &OperaBookmarksImportDataExchanger::importStarted);
-	connect(job, &BookmarksImportJob::importProgress, this, &OperaBookmarksImportDataExchanger::importProgress);
-	connect(job, &BookmarksImportJob::importFinished, this, &OperaBookmarksImportDataExchanger::importFinished);
+	connect(job, &BookmarksImportJob::importStarted, this, &OperaBookmarksImportDataExchanger::exchangeStarted);
+	connect(job, &BookmarksImportJob::importProgress, this, &OperaBookmarksImportDataExchanger::exchangeProgress);
+	connect(job, &BookmarksImportJob::importFinished, this, &OperaBookmarksImportDataExchanger::exchangeFinished);
 
 	job->start();
 

@@ -123,12 +123,12 @@ bool OperaSearchEnginesImportDataExchanger::importData(const QString &path)
 
 	if (settings.hasError())
 	{
-		emit importFinished(SearchEnginesExchange, FailedOperation, 0);
+		emit exchangeFinished(SearchEnginesExchange, FailedOperation, 0);
 
 		return false;
 	}
 
-	emit importStarted(SearchEnginesExchange, -1);
+	emit exchangeStarted(SearchEnginesExchange, -1);
 
 	if (m_optionsWidget->isChecked())
 	{
@@ -195,7 +195,7 @@ bool OperaSearchEnginesImportDataExchanger::importData(const QString &path)
 		}
 	}
 
-	emit importFinished(SearchEnginesExchange, SuccessfullOperation, totalAmount);
+	emit exchangeFinished(SearchEnginesExchange, SuccessfullOperation, totalAmount);
 
 	return true;
 }
