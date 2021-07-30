@@ -47,7 +47,7 @@ protected:
 
 	void closeEvent(QCloseEvent *event) override;
 	void changeEvent(QEvent *event) override;
-	void setupResults(bool canCancel);
+	void setupResults(DataExchanger *exchanger);
 
 protected slots:
 	void handleExchangeStarted(DataExchanger::ExchangeType type, int total);

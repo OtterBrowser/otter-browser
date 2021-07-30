@@ -215,12 +215,7 @@ void DataExchangerDialog::handleExchangeFinished(DataExchanger::ExchangeType typ
 
 void DataExchangerDialog::handleExportRequested()
 {
-	setupResults(m_exporter->canCancel());
-
-	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_exporter, &DataExchanger::cancel);
-	connect(m_exporter, &ExportDataExchanger::exchangeStarted, this, &DataExchangerDialog::handleExchangeStarted);
-	connect(m_exporter, &ExportDataExchanger::exchangeProgress, this, &DataExchangerDialog::handleExchangeProgress);
-	connect(m_exporter, &ExportDataExchanger::exchangeFinished, this, &DataExchangerDialog::handleExportFinished);
+	setupResults(m_exporter);
 
 	m_exporter->exportData(m_path);
 }
@@ -250,12 +245,7 @@ void DataExchangerDialog::handleExportFinished(DataExchanger::ExchangeType type,
 
 void DataExchangerDialog::handleImportRequested()
 {
-	setupResults(m_importer->canCancel());
-
-	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &DataExchanger::cancel);
-	connect(m_importer, &ImportDataExchanger::exchangeStarted, this, &DataExchangerDialog::handleExchangeStarted);
-	connect(m_importer, &ImportDataExchanger::exchangeProgress, this, &DataExchangerDialog::handleExchangeProgress);
-	connect(m_importer, &ImportDataExchanger::exchangeFinished, this, &DataExchangerDialog::handleImportFinished);
+	setupResults(m_importer);
 
 	m_importer->importData(m_path);
 }
@@ -283,14 +273,18 @@ void DataExchangerDialog::handleImportFinished(DataExchanger::ExchangeType type,
 	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &DataExchanger::cancel);
 }
 
-void DataExchangerDialog::setupResults(bool canCancel)
+void DataExchangerDialog::setupResults(DataExchanger *exchanger)
 {
 	m_ui->messageLayout->setDirection(isLeftToRight() ? QBoxLayout::LeftToRight : QBoxLayout::RightToLeft);
 	m_ui->messageIconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("task-ongoing")).pixmap(32, 32));
 	m_ui->buttonBox->clear();
-	m_ui->buttonBox->addButton(QDialogButtonBox::Abort)->setEnabled(canCancel);
+	m_ui->buttonBox->addButton(QDialogButtonBox::Abort)->setEnabled(exchanger->canCancel());
 	m_ui->stackedWidget->setCurrentWidget(m_ui->resultsPage);
 
+	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, exchanger, &DataExchanger::cancel);
+	connect(exchanger, &DataExchanger::exchangeStarted, this, &DataExchangerDialog::handleExchangeStarted);
+	connect(exchanger, &DataExchanger::exchangeProgress, this, &DataExchangerDialog::handleExchangeProgress);
+	connect(exchanger, &DataExchanger::exchangeFinished, this, &DataExchangerDialog::handleExportFinished);
 	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::reject);
 }
 
