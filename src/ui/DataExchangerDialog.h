@@ -53,9 +53,7 @@ protected slots:
 	void handleExchangeStarted(DataExchanger::ExchangeType type, int total);
 	void handleExchangeProgress(DataExchanger::ExchangeType type, int total, int amount);
 	void handleExchangeFinished(DataExchanger::ExchangeType type, DataExchanger::OperationResult result, int total);
-	void handleExportRequested();
 	void handleExportFinished(DataExchanger::ExchangeType type, DataExchanger::OperationResult result, int total);
-	void handleImportRequested();
 	void handleImportFinished(DataExchanger::ExchangeType type, DataExchanger::OperationResult result, int total);
 
 private:

@@ -61,7 +61,12 @@ DataExchangerDialog::DataExchangerDialog(ExportDataExchanger *exporter, QWidget 
 	{
 		m_path = path;
 	});
-	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &DataExchangerDialog::handleExportRequested);
+	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, [&]()
+	{
+		setupResults(m_exporter);
+
+		m_exporter->exportData(m_path);
+	});
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::reject);
 }
 
@@ -90,7 +95,12 @@ DataExchangerDialog::DataExchangerDialog(ImportDataExchanger *importer, QWidget 
 	{
 		m_path = path;
 	});
-	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &DataExchangerDialog::handleImportRequested);
+	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, [&]()
+	{
+		setupResults(m_importer);
+
+		m_importer->importData(m_path);
+	});
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::reject);
 }
 
@@ -213,13 +223,6 @@ void DataExchangerDialog::handleExchangeFinished(DataExchanger::ExchangeType typ
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::close);
 }
 
-void DataExchangerDialog::handleExportRequested()
-{
-	setupResults(m_exporter);
-
-	m_exporter->exportData(m_path);
-}
-
 void DataExchangerDialog::handleExportFinished(DataExchanger::ExchangeType type, DataExchanger::OperationResult result, int total)
 {
 	handleExchangeFinished(type, result, total);
@@ -241,13 +244,6 @@ void DataExchangerDialog::handleExportFinished(DataExchanger::ExchangeType type,
 	}
 
 	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_exporter, &DataExchanger::cancel);
-}
-
-void DataExchangerDialog::handleImportRequested()
-{
-	setupResults(m_importer);
-
-	m_importer->importData(m_path);
 }
 
 void DataExchangerDialog::handleImportFinished(DataExchanger::ExchangeType type, DataExchanger::OperationResult result, int total)
