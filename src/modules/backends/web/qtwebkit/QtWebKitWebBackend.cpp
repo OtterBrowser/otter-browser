@@ -140,13 +140,6 @@ void QtWebKitWebBackend::handleOptionChanged(int identifier)
 	}
 }
 
-void QtWebKitWebBackend::setActiveWidget(WebWidget *widget)
-{
-	m_activeWidget = widget;
-
-	emit activeDictionaryChanged(getActiveDictionary());
-}
-
 WebWidget* QtWebKitWebBackend::createWidget(const QVariantMap &parameters, ContentsWidget *parent)
 {
 	if (!m_isInitialized)
@@ -176,7 +169,12 @@ WebWidget* QtWebKitWebBackend::createWidget(const QVariantMap &parameters, Conte
 
 	QtWebKitWebWidget *widget(new QtWebKitWebWidget(parameters, this, nullptr, parent));
 
-	connect(widget, &QtWebKitWebWidget::widgetActivated, this, &QtWebKitWebBackend::setActiveWidget);
+	connect(widget, &QtWebKitWebWidget::widgetActivated, this, [&](WebWidget *widget)
+	{
+		m_activeWidget = widget;
+
+		emit activeDictionaryChanged(getActiveDictionary());
+	});
 
 	return widget;
 }

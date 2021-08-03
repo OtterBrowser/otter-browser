@@ -66,7 +66,6 @@ protected:
 
 protected slots:
 	void handleOptionChanged(int identifier);
-	void setActiveWidget(WebWidget *widget);
 
 private:
 	bool m_isInitialized;
