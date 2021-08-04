@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2020 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,10 @@ DateTimeTextLabelWidget::DateTimeTextLabelWidget(QWidget *parent) : TextLabelWid
 {
 	connect(HistoryManager::getInstance(), &HistoryManager::dayChanged, [&]()
 	{
-		setDateTime(m_dateTime);
+		if (m_dateTime.isValid())
+		{
+			setDateTime(m_dateTime);
+		}
 	});
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, [&](int identifier)
 	{
