@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -62,15 +62,19 @@ void OpenAddressDialog::changeEvent(QEvent *event)
 
 void OpenAddressDialog::keyPressEvent(QKeyEvent *event)
 {
-	if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+	switch (event->key())
 	{
-		accept();
+		case Qt::Key_Enter:
+		case Qt::Key_Return:
+			accept();
 
-		event->accept();
-	}
-	else
-	{
-		QDialog::keyPressEvent(event);
+			event->accept();
+
+			break;
+		default:
+			QDialog::keyPressEvent(event);
+
+			break;
 	}
 }
 
