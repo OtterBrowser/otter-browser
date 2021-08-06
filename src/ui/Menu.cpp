@@ -152,6 +152,8 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OperaSearchEnginesImport")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Search Engines…")}}, ActionExecutor::Object(), this));
 			addSeparator();
 			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OperaSessionImport")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Session…")}}, ActionExecutor::Object(), this));
+			addSeparator();
+			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("XbelBookmarksExport")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Export Bookmarks as XBEL…")}}, ActionExecutor::Object(), this));
 
 			if (SessionsManager::isReadOnly())
 			{
