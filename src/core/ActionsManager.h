@@ -278,6 +278,7 @@ public:
 		ResetQuickPreferencesAction,
 		WebsiteInformationAction,
 		WebsiteCertificateInformationAction,
+		ExchangeDataAction,
 		SwitchApplicationLanguageAction,
 		CheckForUpdatesAction,
 		DiagnosticReportAction,
