@@ -50,6 +50,7 @@
 #elif defined(Q_OS_UNIX)
 #include "../modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.h"
 #endif
+#include "../ui/DataExchangerDialog.h"
 #include "../ui/LocaleDialog.h"
 #include "../ui/MainWindow.h"
 #include "../ui/NotificationDialog.h"
@@ -728,6 +729,10 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 			return;
 		case ActionsManager::ResetToolBarsAction:
 			ToolBarsManager::resetToolBars();
+
+			return;
+		case ActionsManager::ExchangeDataAction:
+			DataExchangerDialog::createDialog(parameters.value(QLatin1String("exchanger")).toString(), m_activeWindow);
 
 			return;
 		case ActionsManager::SwitchApplicationLanguageAction:
@@ -1607,6 +1612,47 @@ ActionsManager::ActionDefinition::State Application::getActionState(int identifi
 			break;
 		case ActionsManager::LockToolBarsAction:
 			state.isChecked = ToolBarsManager::areToolBarsLocked();
+
+			break;
+		case ActionsManager::ExchangeDataAction:
+			{
+				const QString exchanger(parameters.value(QLatin1String("exchanger")).toString());
+
+				state.isEnabled = (!SessionsManager::isReadOnly() || exchanger.endsWith(QLatin1String("Export")));
+
+				if (exchanger == QLatin1String("HtmlBookmarksImport"))
+				{
+					state.text = translate("actions", "Import HTML Bookmarks…");
+				}
+				else if (exchanger == QLatin1String("OperaBookmarksImport"))
+				{
+					state.text = translate("actions", "Import Opera Bookmarks…");
+				}
+				else if (exchanger == QLatin1String("OperaNotesImport"))
+				{
+					state.text = translate("actions", "Import Opera Notes…");
+				}
+				else if (exchanger == QLatin1String("OperaSearchEnginesImport"))
+				{
+					state.text = translate("actions", "Import Opera Search Engines…");
+				}
+				else if (exchanger == QLatin1String("OperaSessionImport"))
+				{
+					state.text = translate("actions", "Import Opera Session…");
+				}
+				else if (exchanger == QLatin1String("OpmlFeedsImport"))
+				{
+					state.text = translate("actions", "Import OPML Feeds…");
+				}
+				else if (exchanger == QLatin1String("XbelBookmarksExport"))
+				{
+					state.text = translate("actions", "Export Bookmarks as XBEL…");
+				}
+				else
+				{
+					state.isEnabled = false;
+				}
+			}
 
 			break;
 		default:
