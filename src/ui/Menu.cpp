@@ -20,7 +20,6 @@
 #include "Menu.h"
 #include "Action.h"
 #include "ContentsWidget.h"
-#include "DataExchangerDialog.h"
 #include "MainWindow.h"
 #include "Window.h"
 #include "../core/Application.h"
@@ -141,40 +140,32 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 
 			break;
 		case ImportExportMenu:
-			setTitle(QT_TRANSLATE_NOOP("actions", "Import and Export"));
-			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OperaBookmarksImport")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Bookmarks…")}}, ActionExecutor::Object(), this));
-			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("HtmlBookmarksImport")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import HTML Bookmarks…")}}, ActionExecutor::Object(), this));
-			addSeparator();
-			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OpmlFeedsImport")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import OPML Feeds…")}}, ActionExecutor::Object(), this));
-			addSeparator();
-			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OperaNotesImport")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Notes…")}}, ActionExecutor::Object(), this));
-			addSeparator();
-			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OperaSearchEnginesImport")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Search Engines…")}}, ActionExecutor::Object(), this));
-			addSeparator();
-			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("OperaSessionImport")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Session…")}}, ActionExecutor::Object(), this));
-			addSeparator();
-			addAction(new Action(-1, {{QLatin1String("exchanger"), QLatin1String("XbelBookmarksExport")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Export Bookmarks as XBEL…")}}, ActionExecutor::Object(), this));
-
-			if (SessionsManager::isReadOnly())
 			{
-				for (int i = 0; i < actions().count(); ++i)
-				{
-					QAction *action(actions().at(i));
+				setTitle(QT_TRANSLATE_NOOP("actions", "Import and Export"));
 
-					if (action && !action->isSeparator())
+				connect(this, &Menu::aboutToShow, this, [&]()
+				{
+					if (!isEmpty())
 					{
-						action->setEnabled(false);
+						return;
 					}
-				}
-			}
 
-			connect(this, &Menu::triggered, this, [&](QAction *action)
-			{
-				if (action)
-				{
-					DataExchangerDialog::createDialog(qobject_cast<Action*>(action)->getParameters().value(QLatin1String("exchanger")).toString(), MainWindow::findMainWindow(this));
-				}
-			});
+					const ActionExecutor::Object executor(Application::getInstance(), Application::getInstance());
+					const QStringList exchangers({QLatin1String("OperaBookmarksImport"), QLatin1String("HtmlBookmarksImport"), {}, QLatin1String("OpmlFeedsImport"), {}, QLatin1String("OperaNotesImport"), {}, QLatin1String("OperaSearchEnginesImport"), {}, QLatin1String("OperaSessionImport"), {}, QLatin1String("XbelBookmarksExport")});
+
+					for (int i = 0; i < exchangers.count(); ++i)
+					{
+						if (exchangers.at(i).isEmpty())
+						{
+							addSeparator();
+						}
+						else
+						{
+							addAction(new Action(ActionsManager::ExchangeDataAction, {{QLatin1String("exchanger"), exchangers.at(i)}}, executor, this));
+						}
+					}
+				});
+			}
 
 			break;
 		case NotesMenu:
