@@ -140,32 +140,30 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 
 			break;
 		case ImportExportMenu:
+			setTitle(QT_TRANSLATE_NOOP("actions", "Import and Export"));
+
+			connect(this, &Menu::aboutToShow, this, [&]()
 			{
-				setTitle(QT_TRANSLATE_NOOP("actions", "Import and Export"));
-
-				connect(this, &Menu::aboutToShow, this, [&]()
+				if (!isEmpty())
 				{
-					if (!isEmpty())
-					{
-						return;
-					}
+					return;
+				}
 
-					const ActionExecutor::Object executor(Application::getInstance(), Application::getInstance());
-					const QStringList exchangers({QLatin1String("OperaBookmarksImport"), QLatin1String("HtmlBookmarksImport"), {}, QLatin1String("OpmlFeedsImport"), {}, QLatin1String("OperaNotesImport"), {}, QLatin1String("OperaSearchEnginesImport"), {}, QLatin1String("OperaSessionImport"), {}, QLatin1String("XbelBookmarksExport")});
+				const ActionExecutor::Object executor(Application::getInstance(), Application::getInstance());
+				const QStringList exchangers({QLatin1String("OperaBookmarksImport"), QLatin1String("HtmlBookmarksImport"), {}, QLatin1String("OpmlFeedsImport"), {}, QLatin1String("OperaNotesImport"), {}, QLatin1String("OperaSearchEnginesImport"), {}, QLatin1String("OperaSessionImport"), {}, QLatin1String("XbelBookmarksExport")});
 
-					for (int i = 0; i < exchangers.count(); ++i)
+				for (int i = 0; i < exchangers.count(); ++i)
+				{
+					if (exchangers.at(i).isEmpty())
 					{
-						if (exchangers.at(i).isEmpty())
-						{
-							addSeparator();
-						}
-						else
-						{
-							addAction(new Action(ActionsManager::ExchangeDataAction, {{QLatin1String("exchanger"), exchangers.at(i)}}, executor, this));
-						}
+						addSeparator();
 					}
-				});
-			}
+					else
+					{
+						addAction(new Action(ActionsManager::ExchangeDataAction, {{QLatin1String("exchanger"), exchangers.at(i)}}, executor, this));
+					}
+				}
+			});
 
 			break;
 		case NotesMenu:
