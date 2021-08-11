@@ -32,7 +32,7 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 	m_autoHideTimer(0)
 {
 	const QVector<int> actions({-1, ActionsManager::NewTabAction, ActionsManager::NewTabPrivateAction, -1, ActionsManager::BookmarksAction, ActionsManager::TransfersAction, ActionsManager::HistoryAction, ActionsManager::NotesAction, -1, ActionsManager::ExitAction});
-	ActionExecutor::Object executor(Application::getInstance(), Application::getInstance());
+	const ActionExecutor::Object executor(Application::getInstance(), Application::getInstance());
 	Menu *menu(new Menu());
 	menu->addAction(tr("Show Windows"), this, &TrayIcon::toggleWindowsVisibility);
 
@@ -44,29 +44,38 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 		}
 		else
 		{
+			QString text;
+
 			switch (actions.at(i))
 			{
 				case ActionsManager::BookmarksAction:
-					menu->addAction(new Action(actions.at(i), {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Bookmarks")}}, executor, menu));
+					text = QT_TRANSLATE_NOOP("actions", "Bookmarks");
 
 					break;
 				case ActionsManager::TransfersAction:
-					menu->addAction(new Action(actions.at(i), {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Transfers")}}, executor, menu));
+					text = QT_TRANSLATE_NOOP("actions", "Transfers");
 
 					break;
 				case ActionsManager::HistoryAction:
-					menu->addAction(new Action(actions.at(i), {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "History")}}, executor, menu));
+					text = QT_TRANSLATE_NOOP("actions", "History");
 
 					break;
 				case ActionsManager::NotesAction:
-					menu->addAction(new Action(actions.at(i), {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Notes")}}, executor, menu));
+					text = QT_TRANSLATE_NOOP("actions", "Notes");
 
 					break;
 				default:
-					menu->addAction(new Action(actions.at(i), {}, executor, menu));
-
 					break;
 			}
+
+			QVariantMap options;
+
+			if (!text.isEmpty())
+			{
+				options = {{QLatin1String("text"), text}};
+			}
+
+			menu->addAction(new Action(actions.at(i), {}, options, executor, menu));
 		}
 	}
 
