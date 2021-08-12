@@ -41,42 +41,42 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 		if (actions.at(i) < 0)
 		{
 			menu->addSeparator();
+
+			continue;
 		}
-		else
+
+		QString text;
+
+		switch (actions.at(i))
 		{
-			QString text;
+			case ActionsManager::BookmarksAction:
+				text = QT_TRANSLATE_NOOP("actions", "Bookmarks");
 
-			switch (actions.at(i))
-			{
-				case ActionsManager::BookmarksAction:
-					text = QT_TRANSLATE_NOOP("actions", "Bookmarks");
+				break;
+			case ActionsManager::TransfersAction:
+				text = QT_TRANSLATE_NOOP("actions", "Transfers");
 
-					break;
-				case ActionsManager::TransfersAction:
-					text = QT_TRANSLATE_NOOP("actions", "Transfers");
+				break;
+			case ActionsManager::HistoryAction:
+				text = QT_TRANSLATE_NOOP("actions", "History");
 
-					break;
-				case ActionsManager::HistoryAction:
-					text = QT_TRANSLATE_NOOP("actions", "History");
+				break;
+			case ActionsManager::NotesAction:
+				text = QT_TRANSLATE_NOOP("actions", "Notes");
 
-					break;
-				case ActionsManager::NotesAction:
-					text = QT_TRANSLATE_NOOP("actions", "Notes");
-
-					break;
-				default:
-					break;
-			}
-
-			QVariantMap options;
-
-			if (!text.isEmpty())
-			{
-				options = {{QLatin1String("text"), text}};
-			}
-
-			menu->addAction(new Action(actions.at(i), {}, options, executor, menu));
+				break;
+			default:
+				break;
 		}
+
+		QVariantMap options;
+
+		if (!text.isEmpty())
+		{
+			options = {{QLatin1String("text"), text}};
+		}
+
+		menu->addAction(new Action(actions.at(i), {}, options, executor, menu));
 	}
 
 	m_trayIcon->setIcon(Application::windowIcon());
