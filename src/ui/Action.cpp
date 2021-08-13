@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -45,6 +45,7 @@ Action::Action(int identifier, const QVariantMap &parameters, const ActionExecut
 	setExecutor(executor);
 }
 
+///FIXME replace by ctor for -1 actions? replace parameters by setters
 Action::Action(int identifier, const QVariantMap &parameters, const QVariantMap &options, const ActionExecutor::Object &executor, QObject *parent) : QAction(parent),
 	m_parameters(parameters),
 	m_flags(NoFlags),
@@ -71,11 +72,7 @@ Action::Action(int identifier, const QVariantMap &parameters, const QVariantMap 
 
 	if (options.contains(QLatin1String("text")))
 	{
-		m_overrideText = options[QLatin1String("text")].toString();
-
-		m_flags |= HasCustomTextFlag;
-
-		setState(getState());
+		setOverrideText(options[QLatin1String("text")].toString());
 	}
 }
 
@@ -278,6 +275,22 @@ void Action::setExecutor(ActionExecutor::Object executor)
 	{
 		m_executor.connectSignals(this, &updateStateMethod, &handleArbitraryActionsStateChangedMethod, &handleCategorizedActionsStateChangeddMethod);
 	}
+}
+
+void Action::setOverrideText(const QString &text)
+{
+	m_overrideText = text;
+
+	m_flags |= HasCustomTextFlag;
+
+	setState(getState());
+}
+
+void Action::setOverrideIcon(const QIcon &icon)
+{
+	m_flags |= HasCustomIconFlag;
+
+	setIcon(icon);
 }
 
 void Action::setState(const ActionsManager::ActionDefinition::State &state)
