@@ -45,38 +45,31 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 			continue;
 		}
 
-		QString text;
+		Action *action(new Action(actions.at(i), {}, executor, menu));
 
 		switch (actions.at(i))
 		{
 			case ActionsManager::BookmarksAction:
-				text = QT_TRANSLATE_NOOP("actions", "Bookmarks");
+				action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
 
 				break;
 			case ActionsManager::TransfersAction:
-				text = QT_TRANSLATE_NOOP("actions", "Transfers");
+				action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Transfers"));
 
 				break;
 			case ActionsManager::HistoryAction:
-				text = QT_TRANSLATE_NOOP("actions", "History");
+				action->setOverrideText(QT_TRANSLATE_NOOP("actions", "History"));
 
 				break;
 			case ActionsManager::NotesAction:
-				text = QT_TRANSLATE_NOOP("actions", "Notes");
+				action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Notes"));
 
 				break;
 			default:
 				break;
 		}
 
-		QVariantMap options;
-
-		if (!text.isEmpty())
-		{
-			options = {{QLatin1String("text"), text}};
-		}
-
-		menu->addAction(new Action(actions.at(i), {}, options, executor, menu));
+		menu->addAction(action);
 	}
 
 	m_trayIcon->setIcon(Application::windowIcon());
