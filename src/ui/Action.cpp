@@ -45,7 +45,6 @@ Action::Action(int identifier, const QVariantMap &parameters, const ActionExecut
 	setExecutor(executor);
 }
 
-///FIXME replace by ctor for -1 actions? replace parameters by setters
 Action::Action(int identifier, const QVariantMap &parameters, const QVariantMap &options, const ActionExecutor::Object &executor, QObject *parent) : QAction(parent),
 	m_parameters(parameters),
 	m_flags(NoFlags),
@@ -60,14 +59,12 @@ Action::Action(int identifier, const QVariantMap &parameters, const QVariantMap 
 
 		if (data.type() == QVariant::Icon)
 		{
-			setIcon(data.value<QIcon>());
+			setOverrideIcon(data.value<QIcon>());
 		}
 		else
 		{
-			setIcon(ThemesManager::createIcon(data.toString()));
+			setOverrideIcon(data.toString());
 		}
-
-		m_flags |= HasCustomIconFlag;
 	}
 
 	if (options.contains(QLatin1String("text")))
@@ -284,6 +281,11 @@ void Action::setOverrideText(const QString &text)
 	m_flags |= HasCustomTextFlag;
 
 	setState(getState());
+}
+
+void Action::setOverrideIcon(const QString &icon)
+{
+	setOverrideIcon(ThemesManager::createIcon(icon));
 }
 
 void Action::setOverrideIcon(const QIcon &icon)
