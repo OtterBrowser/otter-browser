@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -128,7 +128,11 @@ void TabHistoryContentsWidget::showContextMenu(const QPoint &position)
 
 	if (index.isValid())
 	{
-		menu.addAction(new Action(ActionsManager::GoToHistoryIndexAction, {{QLatin1String("index"), index.row()}}, {{QLatin1String("icon"), {}}, {QLatin1String("text"), QCoreApplication::translate("actions", "Go to History Entry")}}, executor, &menu));
+		Action *goToHistoryIndexAction(new Action(ActionsManager::GoToHistoryIndexAction, {{QLatin1String("index"), index.row()}}, executor, &menu));
+		goToHistoryIndexAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Go to History Entry"));
+		goToHistoryIndexAction->setOverrideIcon(QIcon());
+
+		menu.addAction(goToHistoryIndexAction);
 		menu.addSeparator();
 		menu.addAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index.row()}}, executor, &menu));
 		menu.addAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index.row()}, {QLatin1String("clearGlobalHistory"), true}}, executor, &menu));
@@ -136,7 +140,7 @@ void TabHistoryContentsWidget::showContextMenu(const QPoint &position)
 	}
 
 	menu.addAction(new Action(ActionsManager::ClearTabHistoryAction, {}, executor, &menu));
-	menu.addAction(new Action(ActionsManager::ClearTabHistoryAction, {{QLatin1String("clearGlobalHistory"), true}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Purge Tab History")}}, executor, &menu));
+	menu.addAction(new Action(ActionsManager::ClearTabHistoryAction, {{QLatin1String("clearGlobalHistory"), true}}, executor, &menu));
 	menu.exec(m_ui->historyViewWidget->mapToGlobal(position));
 }
 
