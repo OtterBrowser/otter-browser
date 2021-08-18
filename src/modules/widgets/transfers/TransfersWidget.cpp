@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -122,7 +122,10 @@ void TransfersWidget::populateMenu()
 		}
 	}
 
-	menu()->addAction(new Action(ActionsManager::TransfersAction, {}, {{QLatin1String("text"), tr("Show all Downloads")}}, ActionExecutor::Object(Application::getInstance(), Application::getInstance()), this));
+	Action *transfersAction(new Action(ActionsManager::TransfersAction, {}, ActionExecutor::Object(Application::getInstance(), Application::getInstance()), this));
+	transfersAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Show all Downloads"));
+
+	menu()->addAction(transfersAction);
 }
 
 void TransfersWidget::updateState()
