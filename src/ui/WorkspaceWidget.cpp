@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -544,7 +544,11 @@ void WorkspaceWidget::addWindow(Window *window, const Session::Window::State &st
 		QMdiSubWindow *activeWindow(m_mdi->currentSubWindow());
 		MdiWindow *mdiWindow(new MdiWindow(window, m_mdi));
 		QMenu *menu(new QMenu(mdiWindow));
-		menu->addAction(new Action(ActionsManager::CloseTabAction, {}, {{QLatin1String("icon"), {}}, {QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Close")}}, windowExecutor, menu));
+		Action *closeAction(new Action(ActionsManager::CloseTabAction, {}, windowExecutor, menu));
+		closeAction->setOverrideIcon(QIcon());
+		closeAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Close"));
+
+		menu->addAction(closeAction);
 		menu->addAction(new Action(ActionsManager::RestoreTabAction, {}, windowExecutor, menu));
 		menu->addAction(new Action(ActionsManager::MinimizeTabAction, {}, windowExecutor, menu));
 		menu->addAction(new Action(ActionsManager::MaximizeTabAction, {}, windowExecutor, menu));
