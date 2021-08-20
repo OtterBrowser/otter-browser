@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -329,10 +329,12 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 			ActionExecutor::Object executor(m_window, m_window);
 			const int index(action->getParameters().value(QLatin1String("index")).toInt());
 			QMenu contextMenu(menu());
-			Action *removeEntryAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index}}, {{QLatin1String("text"), tr("Remove Entry")}}, executor, &contextMenu));
+			Action *removeEntryAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index}}, executor, &contextMenu));
+			removeEntryAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Remove Entry"));
 			removeEntryAction->setShortcut(QKeySequence(Qt::Key_Delete));
 
-			Action *purgeEntryAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index}}, {{QLatin1String("text"), tr("Purge Entry")}}, executor, &contextMenu));
+			Action *purgeEntryAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index}}, executor, &contextMenu));
+			purgeEntryAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Purge Entry"));
 			purgeEntryAction->setShortcut(QKeySequence(Qt::ShiftModifier | Qt::Key_Delete));
 
 			contextMenu.addAction(removeEntryAction);
