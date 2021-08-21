@@ -34,11 +34,30 @@ namespace Otter
 {
 
 ActionWidget::ActionWidget(int identifier, Window *window, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
-	m_action(new Action(identifier, definition.parameters, definition.options, ActionExecutor::Object(window, window), this))
+	m_action(new Action(identifier, definition.parameters, ActionExecutor::Object(window, window), this))
 {
 	installGesturesFilter(this, this, {GesturesManager::ToolBarContext, GesturesManager::GenericContext});
 	setDefaultAction(m_action);
 	setWindow(window);
+
+	if (definition.options.contains(QLatin1String("icon")))
+	{
+		const QVariant data(definition.options[QLatin1String("icon")]);
+
+		if (data.type() == QVariant::Icon)
+		{
+			m_action->setOverrideIcon(data.value<QIcon>());
+		}
+		else
+		{
+			m_action->setOverrideIcon(data.toString());
+		}
+	}
+
+	if (definition.options.contains(QLatin1String("text")))
+	{
+		m_action->setOverrideText(definition.options[QLatin1String("text")].toString());
+	}
 
 	switch (identifier)
 	{
