@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -2324,7 +2324,18 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 
 			break;
 		case ActionsManager::ActivateTabAction:
-			state.isEnabled = m_windows.contains(parameters.value(QLatin1String("tab"), 0).toULongLong());
+			{
+				const quint64 windowIdentifier(parameters.value(QLatin1String("tab"), 0).toULongLong());
+
+				if (m_windows.contains(windowIdentifier))
+				{
+					Window *window(m_windows[windowIdentifier]);
+
+					state.text = window->getTitle();
+					state.icon = window->getIcon();
+					state.isEnabled = true;
+				}
+			}
 
 			break;
 		case ActionsManager::OpenBookmarkAction:
