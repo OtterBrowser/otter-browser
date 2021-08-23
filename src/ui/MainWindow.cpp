@@ -2330,8 +2330,9 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 				if (m_windows.contains(windowIdentifier))
 				{
 					Window *window(m_windows[windowIdentifier]);
+					const QString title(window->getTitle());
 
-					state.text = window->getTitle();
+					state.text = (title.isEmpty() ? QT_TRANSLATE_NOOP("actions", "(Untitled)") : title);
 					state.icon = window->getIcon();
 					state.isEnabled = true;
 				}
