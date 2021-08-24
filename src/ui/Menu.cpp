@@ -1471,9 +1471,9 @@ void Menu::populateWindowsMenu()
 
 			if (windowItem)
 			{
-				const Window *window(windowItem->getActiveWindow());
+				const QVariantMap paramaters({{QLatin1String("tab"), windowItem->getActiveWindow()->getIdentifier()}});
 
-				addAction(new Action(ActionsManager::ActivateTabAction, {{QLatin1String("tab"), window->getIdentifier()}}, {{QLatin1String("icon"), window->getIcon()}, {QLatin1String("text"), Utils::elideText((window->getTitle().isEmpty() ? QT_TRANSLATE_NOOP("actions", "(Untitled)") : window->getTitle()), fontMetrics(), this)}}, executor, this));
+				addAction(new Action(ActionsManager::ActivateTabAction, paramaters, {{QLatin1String("text"), Utils::elideText(mainWindow->getActionState(ActionsManager::ActivateTabAction, paramaters).text, fontMetrics(), this)}}, executor, this));
 			}
 		}
 	}
