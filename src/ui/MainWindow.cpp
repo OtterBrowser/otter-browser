@@ -2335,6 +2335,7 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 					state.text = (title.isEmpty() ? QT_TRANSLATE_NOOP("actions", "(Untitled)") : title);
 					state.icon = window->getIcon();
 					state.isEnabled = true;
+					state.isTranslateable = title.isEmpty();
 				}
 			}
 

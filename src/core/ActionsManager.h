@@ -343,6 +343,7 @@ public:
 			int counter = -1;
 			bool isEnabled = true;
 			bool isChecked = false;
+			bool isTranslateable = true;
 		};
 
 		QString description;
