@@ -280,7 +280,7 @@ void Action::setOverrideText(const QString &text)
 
 	m_flags |= HasCustomTextFlag;
 
-	setState(getState());
+	updateState();
 }
 
 void Action::setOverrideIcon(const QString &icon)
@@ -314,19 +314,6 @@ ActionsManager::ActionDefinition Action::getDefinition() const
 	return ActionsManager::getActionDefinition(m_identifier);
 }
 
-ActionsManager::ActionDefinition::State Action::getState() const
-{
-	ActionsManager::ActionDefinition::State state;
-	state.statusTip = statusTip();
-	state.toolTip = toolTip();
-	state.text = (m_flags.testFlag(HasCustomTextFlag) ? QCoreApplication::translate("actions", m_overrideText.toUtf8().constData()) : getDefinition().getText());
-	state.icon = icon();
-	state.isEnabled = isEnabled();
-	state.isChecked = isChecked();
-
-	return state;
-}
-
 QVariantMap Action::getParameters() const
 {
 	return m_parameters;
@@ -342,7 +329,7 @@ bool Action::event(QEvent *event)
 	switch (event->type())
 	{
 		case QEvent::LanguageChange:
-			setState(getState());
+			updateState();
 
 			break;
 		case QEvent::LayoutDirectionChange:

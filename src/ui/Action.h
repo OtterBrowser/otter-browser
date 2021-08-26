@@ -58,7 +58,6 @@ protected:
 	void initialize();
 	void updateIcon();
 	void setState(const ActionsManager::ActionDefinition::State &state);
-	ActionsManager::ActionDefinition::State getState() const;
 
 protected slots:
 	void triggerAction(bool isChecked = false);
