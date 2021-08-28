@@ -509,19 +509,26 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &section
 				return;
 			}
 
-			QVariantMap mutableOptions(options);
+			Action *action(new Action(identifier, parameters, executor, this));
 
 			if (object.contains(QLatin1String("icon")))
 			{
-				mutableOptions[QLatin1String("icon")] = object.value(QLatin1String("icon")).toString();
+				const QVariant data(options[QLatin1String("icon")]);
+
+				if (data.type() == QVariant::Icon)
+				{
+					action->setOverrideIcon(data.value<QIcon>());
+				}
+				else
+				{
+					action->setOverrideIcon(data.toString());
+				}
 			}
 
 			if (object.contains(QLatin1String("title")))
 			{
-				mutableOptions[QLatin1String("text")] = object.value(QLatin1String("title")).toString();
+				action->setOverrideText(object.value(QLatin1String("title")).toString(), false);
 			}
-
-			Action *action(new Action(identifier, parameters, mutableOptions, executor, this));
 
 			if (object.contains(QLatin1String("group")))
 			{
@@ -659,7 +666,8 @@ void Menu::populateBookmarksMenu()
 			case BookmarksModel::UrlBookmark:
 			case BookmarksModel::RootBookmark:
 				{
-					Action *action(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}}, {{QLatin1String("text"), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, executor, this));
+					Action *action(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}}, executor, this));
+					action->setOverrideText(Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this), false);
 
 					if (type != BookmarksModel::UrlBookmark)
 					{
@@ -949,7 +957,10 @@ void Menu::populateClosedWindowsMenu()
 				parameters[QLatin1String("index")] = i;
 			}
 
-			addAction(new Action(ActionsManager::ReopenWindowAction, parameters, {{QLatin1String("text"), Utils::elideText(tr("Window - %1").arg(windows.at(i)), fontMetrics(), this)}}, executor, this));
+			Action *reopenWindowAction(new Action(ActionsManager::ReopenWindowAction, parameters, executor, this));
+			reopenWindowAction->setOverrideText(Utils::elideText(tr("Window - %1").arg(windows.at(i)), fontMetrics(), this), false);
+
+			addAction(reopenWindowAction);
 		}
 
 		addSeparator();
@@ -976,7 +987,19 @@ void Menu::populateClosedWindowsMenu()
 					parameters = {{QLatin1String("index"), i}};
 				}
 
-				addAction(new Action(ActionsManager::ReopenTabAction, parameters, {{QLatin1String("icon"), (tabs.at(i).isPrivate ? QVariant(QLatin1String("tab-private")) : tabs.at(i).icon)}, {QLatin1String("text"), Utils::elideText(tabs.at(i).window.getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, executor, this));
+				Action *reopenTabAction(new Action(ActionsManager::ReopenTabAction, parameters, executor, this));
+				reopenTabAction->setOverrideText(Utils::elideText(tabs.at(i).window.getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this), false);
+
+				if (tabs.at(i).isPrivate)
+				{
+					reopenTabAction->setOverrideIcon(QLatin1String("tab-private"));
+				}
+				else
+				{
+					reopenTabAction->setOverrideIcon(tabs.at(i).icon);
+				}
+
+				addAction(reopenTabAction);
 			}
 
 			clearAction->setEnabled(true);
@@ -1054,7 +1077,8 @@ void Menu::populateFeedsMenu()
 				text.append(QStringLiteral(" (%1)").arg(unreadEntriesAmount));
 			}
 
-			Action *action(new Action(ActionsManager::OpenFeedAction, {{QLatin1String("entry"), entry->getIdentifier()}}, {{QLatin1String("text"), Utils::elideText(text, fontMetrics(), this)}}, executor, this));
+			Action *action(new Action(ActionsManager::OpenFeedAction, {{QLatin1String("entry"), entry->getIdentifier()}}, executor, this));
+			action->setOverrideText(Utils::elideText(text, fontMetrics(), this), false);
 
 			if (type != FeedsModel::FeedEntry)
 			{
@@ -1106,7 +1130,8 @@ void Menu::populateNotesMenu()
 			case BookmarksModel::UrlBookmark:
 			case BookmarksModel::RootBookmark:
 				{
-					Action *action(new Action(ActionsManager::PasteAction, {{QLatin1String("note"), bookmark->getIdentifier()}}, {{QLatin1String("text"), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, getExecutor(), this));
+					Action *action(new Action(ActionsManager::PasteAction, {{QLatin1String("note"), bookmark->getIdentifier()}}, getExecutor(), this));
+					action->setOverrideText(Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this), false);
 
 					if (type == BookmarksModel::FolderBookmark)
 					{
@@ -1145,7 +1170,10 @@ void Menu::populateOpenInApplicationMenu()
 	{
 		parameters[QLatin1String("application")] = QString();
 
-		addAction(new Action(ActionsManager::OpenUrlAction, parameters, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Default Application")}}, executor, this));
+		Action *openUrlAction(new Action(ActionsManager::OpenUrlAction, parameters, executor, this));
+		openUrlAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Default Application"));
+
+		addAction(openUrlAction);
 	}
 	else
 	{
@@ -1153,7 +1181,11 @@ void Menu::populateOpenInApplicationMenu()
 		{
 			parameters[QLatin1String("application")] = applications.at(i).command;
 
-			addAction(new Action(ActionsManager::OpenUrlAction, parameters, {{QLatin1String("icon"), applications.at(i).icon}, {QLatin1String("text"), ((applications.at(i).name.isEmpty()) ? QT_TRANSLATE_NOOP("actions", "Unknown") : applications.at(i).name)}}, executor, this));
+			const bool hasValidName(!applications.at(i).name.isEmpty());
+			Action *openUrlAction(new Action(ActionsManager::OpenUrlAction, parameters, executor, this));
+			openUrlAction->setOverrideText((hasValidName ? applications.at(i).name : QT_TRANSLATE_NOOP("actions", "Unknown")), !hasValidName);
+			openUrlAction->setOverrideIcon(applications.at(i).icon);
+			addAction(new Action(ActionsManager::OpenUrlAction, parameters, executor, this));
 
 			if (i == 0)
 			{
@@ -1191,7 +1223,7 @@ void Menu::populateProxiesMenu()
 		{
 			const ProxyDefinition definition(NetworkManagerFactory::getProxy(proxies.at(i)));
 			Action *action(new Action(-1, {}, ActionExecutor::Object(), this));
-			action->setOverrideText(Utils::elideText(definition.getTitle(), fontMetrics(), this));
+			action->setOverrideText(Utils::elideText(definition.getTitle(), fontMetrics(), this), false);
 			action->setData(proxies.at(i));
 
 			if (definition.isFolder)
@@ -1233,7 +1265,9 @@ void Menu::populateSearchMenu()
 
 		if (searchEngine.isValid())
 		{
-			Action *action(new Action(ActionsManager::SearchAction, {{QLatin1String("searchEngine"), searchEngine.identifier}, {QLatin1String("queryPlaceholder"), ((m_role == ValidateMenu) ? QLatin1String("{pageUrl}") : QLatin1String("{selection}"))}}, {{QLatin1String("icon"), searchEngine.icon}, {QLatin1String("text"), searchEngine.title}}, executor, this));
+			Action *action(new Action(ActionsManager::SearchAction, {{QLatin1String("searchEngine"), searchEngine.identifier}, {QLatin1String("queryPlaceholder"), ((m_role == ValidateMenu) ? QLatin1String("{pageUrl}") : QLatin1String("{selection}"))}}, executor, this));
+			action->setOverrideText(searchEngine.title, false);
+			action->setOverrideIcon(searchEngine.icon);
 			action->setToolTip(searchEngine.description);
 
 			addAction(action);
@@ -1488,7 +1522,10 @@ void Menu::populateWindowsMenu()
 			{
 				const QVariantMap paramaters({{QLatin1String("tab"), windowItem->getActiveWindow()->getIdentifier()}});
 
-				addAction(new Action(ActionsManager::ActivateTabAction, paramaters, {{QLatin1String("text"), Utils::elideText(mainWindow->getActionState(ActionsManager::ActivateTabAction, paramaters).text, fontMetrics(), this)}}, executor, this));
+				Action *activateTabAction(new Action(ActionsManager::ActivateTabAction, paramaters, executor, this));
+				activateTabAction->setOverrideText(Utils::elideText(mainWindow->getActionState(ActionsManager::ActivateTabAction, paramaters).text, fontMetrics(), this));
+
+				addAction(activateTabAction);
 			}
 		}
 	}

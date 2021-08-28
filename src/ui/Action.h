@@ -46,7 +46,7 @@ public:
 	explicit Action(int identifier, const QVariantMap &parameters, const QVariantMap &options, const ActionExecutor::Object &executor, QObject *parent);
 
 	void setExecutor(ActionExecutor::Object executor);
-	void setOverrideText(const QString &text);
+	void setOverrideText(const QString &text, bool isTranslateable = true);
 	void setOverrideIcon(const QString &icon);
 	void setOverrideIcon(const QIcon &icon);
 	ActionsManager::ActionDefinition getDefinition() const;
@@ -68,10 +68,11 @@ protected slots:
 
 private:
 	ActionExecutor::Object m_executor;
-	QString m_overrideText;
+	QString m_textOverride;
 	QVariantMap m_parameters;
 	ActionFlags m_flags;
 	int m_identifier;
+	bool m_isTextOverrideTranslateable;
 };
 
 }
