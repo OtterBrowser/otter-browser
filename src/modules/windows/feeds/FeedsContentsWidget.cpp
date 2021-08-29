@@ -354,7 +354,8 @@ void FeedsContentsWidget::showEntriesContextMenu(const QPoint &position)
 	const QModelIndex index(m_ui->entriesViewWidget->indexAt(position).sibling(m_ui->entriesViewWidget->indexAt(position).row(), 0));
 	ActionExecutor::Object executor(this, this);
 	QMenu menu(this);
-	Action *openAction(new Action(ActionsManager::OpenUrlAction, {{QLatin1String("url"), index.data(UrlRole)}}, {{QLatin1String("text"), tr("Open")}}, executor, &menu));
+	Action *openAction(new Action(ActionsManager::OpenUrlAction, {{QLatin1String("url"), index.data(UrlRole)}}, executor, &menu));
+	openAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Open"));
 	openAction->setEnabled(!index.data(UrlRole).isNull());
 
 	menu.addAction(openAction);
