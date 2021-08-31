@@ -43,7 +43,6 @@ public:
 
 	explicit Action(int identifier, const QVariantMap &parameters, QObject *parent);
 	explicit Action(int identifier, const QVariantMap &parameters, const ActionExecutor::Object &executor, QObject *parent);
-	explicit Action(int identifier, const QVariantMap &parameters, const QVariantMap &options, const ActionExecutor::Object &executor, QObject *parent);
 
 	void setExecutor(ActionExecutor::Object executor);
 	void setOverrideText(const QString &text, bool isTranslateable = true);
