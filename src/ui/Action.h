@@ -41,6 +41,7 @@ public:
 
 	Q_DECLARE_FLAGS(ActionFlags, ActionFlag)
 
+	explicit Action(const QString &text, bool isTranslateable, QObject *parent);
 	explicit Action(int identifier, const QVariantMap &parameters, QObject *parent);
 	explicit Action(int identifier, const QVariantMap &parameters, const ActionExecutor::Object &executor, QObject *parent);
 

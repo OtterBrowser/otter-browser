@@ -28,6 +28,15 @@
 namespace Otter
 {
 
+Action::Action(const QString &text, bool isTranslateable, QObject *parent) : QAction(parent),
+	m_textOverride(text),
+	m_flags(HasCustomTextFlag),
+	m_identifier(-1),
+	m_isTextOverrideTranslateable(isTranslateable)
+{
+	initialize();
+}
+
 Action::Action(int identifier, const QVariantMap &parameters, QObject *parent) : QAction(parent),
 	m_parameters(parameters),
 	m_flags(NoFlags),
