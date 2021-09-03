@@ -46,17 +46,17 @@ ActionWidget::ActionWidget(int identifier, Window *window, const ToolBarsManager
 
 		if (data.type() == QVariant::Icon)
 		{
-			m_action->setOverrideIcon(data.value<QIcon>());
+			m_action->setIconOverride(data.value<QIcon>());
 		}
 		else
 		{
-			m_action->setOverrideIcon(data.toString());
+			m_action->setIconOverride(data.toString());
 		}
 	}
 
 	if (definition.options.contains(QLatin1String("text")))
 	{
-		m_action->setOverrideText(definition.options[QLatin1String("text")].toString());
+		m_action->setTextOverride(definition.options[QLatin1String("text")].toString());
 	}
 
 	switch (identifier)
@@ -349,11 +349,11 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 			const int index(action->getParameters().value(QLatin1String("index")).toInt());
 			QMenu contextMenu(menu());
 			Action *removeEntryAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index}}, executor, &contextMenu));
-			removeEntryAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Remove Entry"));
+			removeEntryAction->setTextOverride(QT_TRANSLATE_NOOP("actions", "Remove Entry"));
 			removeEntryAction->setShortcut(QKeySequence(Qt::Key_Delete));
 
 			Action *purgeEntryAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index}}, executor, &contextMenu));
-			purgeEntryAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Purge Entry"));
+			purgeEntryAction->setTextOverride(QT_TRANSLATE_NOOP("actions", "Purge Entry"));
 			purgeEntryAction->setShortcut(QKeySequence(Qt::ShiftModifier | Qt::Key_Delete));
 
 			contextMenu.addAction(removeEntryAction);

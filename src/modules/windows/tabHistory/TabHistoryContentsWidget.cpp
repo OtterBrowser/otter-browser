@@ -129,8 +129,8 @@ void TabHistoryContentsWidget::showContextMenu(const QPoint &position)
 	if (index.isValid())
 	{
 		Action *goToHistoryIndexAction(new Action(ActionsManager::GoToHistoryIndexAction, {{QLatin1String("index"), index.row()}}, executor, &menu));
-		goToHistoryIndexAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Go to History Entry"));
-		goToHistoryIndexAction->setOverrideIcon(QIcon());
+		goToHistoryIndexAction->setTextOverride(QT_TRANSLATE_NOOP("actions", "Go to History Entry"));
+		goToHistoryIndexAction->setIconOverride(QIcon());
 
 		menu.addAction(goToHistoryIndexAction);
 		menu.addSeparator();

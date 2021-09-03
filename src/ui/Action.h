@@ -46,9 +46,9 @@ public:
 	explicit Action(int identifier, const QVariantMap &parameters, const ActionExecutor::Object &executor, QObject *parent);
 
 	void setExecutor(ActionExecutor::Object executor);
-	void setOverrideText(const QString &text, bool isTranslateable = true);
-	void setOverrideIcon(const QString &icon);
-	void setOverrideIcon(const QIcon &icon);
+	void setTextOverride(const QString &text, bool isTranslateable = true);
+	void setIconOverride(const QString &icon);
+	void setIconOverride(const QIcon &icon);
 	ActionsManager::ActionDefinition getDefinition() const;
 	QVariantMap getParameters() const;
 	int getIdentifier() const;

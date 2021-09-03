@@ -123,7 +123,7 @@ void TransfersWidget::populateMenu()
 	}
 
 	Action *transfersAction(new Action(ActionsManager::TransfersAction, {}, ActionExecutor::Object(Application::getInstance(), Application::getInstance()), this));
-	transfersAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Show all Downloads"));
+	transfersAction->setTextOverride(QT_TRANSLATE_NOOP("actions", "Show all Downloads"));
 
 	menu()->addAction(transfersAction);
 }

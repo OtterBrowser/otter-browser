@@ -150,17 +150,17 @@ void ToolButtonWidget::addMenu(Menu *menu, const QVector<ToolBarsManager::ToolBa
 
 					if (data.type() == QVariant::Icon)
 					{
-						action->setOverrideIcon(data.value<QIcon>());
+						action->setIconOverride(data.value<QIcon>());
 					}
 					else
 					{
-						action->setOverrideIcon(data.toString());
+						action->setIconOverride(data.toString());
 					}
 				}
 
 				if (entry.options.contains(QLatin1String("text")))
 				{
-					action->setOverrideText(entry.options[QLatin1String("text")].toString());
+					action->setTextOverride(entry.options[QLatin1String("text")].toString());
 				}
 
 				menu->addAction(action);

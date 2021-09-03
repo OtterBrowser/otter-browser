@@ -50,15 +50,15 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 		switch (actions.at(i))
 		{
 			case ActionsManager::BookmarksAction:
-				action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
+				action->setTextOverride(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
 
 				break;
 			case ActionsManager::HistoryAction:
-				action->setOverrideText(QT_TRANSLATE_NOOP("actions", "History"));
+				action->setTextOverride(QT_TRANSLATE_NOOP("actions", "History"));
 
 				break;
 			case ActionsManager::NotesAction:
-				action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Notes"));
+				action->setTextOverride(QT_TRANSLATE_NOOP("actions", "Notes"));
 
 				break;
 			default:
