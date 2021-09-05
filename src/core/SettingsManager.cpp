@@ -557,6 +557,41 @@ QStringList SettingsManager::getOverrideHosts(int identifier)
 	return hosts;
 }
 
+QStringList SettingsManager::getOverridesHierarchy(const QString &host)
+{
+	QStringList hierarchy;
+
+	if (!m_hasWildcardedOverrides)
+	{
+		return hierarchy;
+	}
+
+	const QStringList groups(QSettings(m_overridePath, QSettings::IniFormat).childGroups());
+	const QStringList hostParts(host.split(QLatin1Char('.')));
+
+	for (int i = 0; i < hostParts.count(); ++i)
+	{
+		const QString explicitHost(hostParts.mid(i).join(QLatin1Char('.')));
+
+		if (i > 0)
+		{
+			const QString wildcardedHost(QLatin1String("*.") + explicitHost);
+
+			if (groups.contains(wildcardedHost))
+			{
+				hierarchy.append(wildcardedHost);
+			}
+		}
+
+		if (groups.contains(explicitHost))
+		{
+			hierarchy.append(explicitHost);
+		}
+	}
+
+	return hierarchy;
+}
+
 SettingsManager::OptionDefinition SettingsManager::getOptionDefinition(int identifier)
 {
 	if (identifier >= 0 && identifier < m_definitions.count())
