@@ -49,9 +49,12 @@ public:
 	void setTextOverride(const QString &text, bool isTranslateable = true);
 	void setIconOverride(const QString &icon);
 	void setIconOverride(const QIcon &icon);
+	QString getTextOverride() const;
 	ActionsManager::ActionDefinition getDefinition() const;
 	QVariantMap getParameters() const;
 	int getIdentifier() const;
+	bool hasTextOverride() const;
+	bool isTextOverrideTranslateable() const;
 	bool event(QEvent *event) override;
 
 protected:

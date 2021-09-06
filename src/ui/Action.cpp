@@ -300,6 +300,11 @@ void Action::setState(const ActionsManager::ActionDefinition::State &state)
 	}
 }
 
+QString Action::getTextOverride() const
+{
+	return m_textOverride;
+}
+
 ActionsManager::ActionDefinition Action::getDefinition() const
 {
 	return ActionsManager::getActionDefinition(m_identifier);
@@ -313,6 +318,16 @@ QVariantMap Action::getParameters() const
 int Action::getIdentifier() const
 {
 	return m_identifier;
+}
+
+bool Action::hasTextOverride() const
+{
+	return m_flags.testFlag(HasCustomTextFlag);
+}
+
+bool Action::isTextOverrideTranslateable() const
+{
+	return m_isTextOverrideTranslateable;
 }
 
 bool Action::event(QEvent *event)
