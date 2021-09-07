@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "Menu.h"
-#include "Action.h"
 #include "ContentsWidget.h"
 #include "MainWindow.h"
 #include "Window.h"
@@ -1691,6 +1690,11 @@ bool Menu::hasIncludeMatch(const QJsonObject &definition, const QString &key, co
 	}
 
 	return false;
+}
+
+MenuAction::MenuAction(const QString &text, bool isTranslateable, Menu *parent) : Action(text, isTranslateable, parent),
+	m_menu(parent)
+{
 }
 
 }

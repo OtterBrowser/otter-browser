@@ -21,6 +21,7 @@
 #define OTTER_MENU_H
 
 #include "../core/ActionExecutor.h"
+#include "../ui/Action.h"
 
 #include <QtCore/QJsonObject>
 #include <QtWidgets/QMenu>
@@ -117,6 +118,14 @@ private:
 	int m_option;
 
 	static int m_menuRoleIdentifierEnumerator;
+};
+
+class MenuAction final : public Action
+{
+	explicit MenuAction(const QString &text, bool isTranslateable, Menu *parent);
+
+private:
+	Menu *m_menu;
 };
 
 }
