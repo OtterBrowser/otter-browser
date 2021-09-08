@@ -122,10 +122,12 @@ private:
 
 class MenuAction final : public Action
 {
-	explicit MenuAction(const QString &text, bool isTranslateable, Menu *parent);
+public:
+	explicit MenuAction(const QString &text, bool isTranslateable, QMenu *parent);
+	explicit MenuAction(int identifier, const QVariantMap &parameters, const ActionExecutor::Object &executor, QMenu *parent);
 
 private:
-	Menu *m_menu;
+	QMenu *m_menu;
 };
 
 }
