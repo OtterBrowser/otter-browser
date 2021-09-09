@@ -60,7 +60,7 @@ public:
 protected:
 	void initialize();
 	void updateIcon();
-	void setState(const ActionsManager::ActionDefinition::State &state);
+	virtual void setState(const ActionsManager::ActionDefinition::State &state);
 
 protected slots:
 	void triggerAction(bool isChecked = false);
