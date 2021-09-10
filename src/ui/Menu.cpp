@@ -694,7 +694,7 @@ void Menu::populateBookmarksMenu()
 			case BookmarksModel::RootBookmark:
 				{
 					Action *action(new MenuAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}}, executor, this));
-					action->setTextOverride(Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this), false);
+					action->setTextOverride(bookmark->getTitle(), false);
 
 					if (type != BookmarksModel::UrlBookmark)
 					{
@@ -755,7 +755,7 @@ void Menu::populateBookmarkSelectorMenu()
 			case BookmarksModel::UrlBookmark:
 			case BookmarksModel::RootBookmark:
 				{
-					QAction *action(new QAction(bookmark->getIcon(), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this), this));
+					QAction *action(new QAction(bookmark->getIcon(), bookmark->getTitle(), this));
 					action->setStatusTip(bookmark->getUrl().toString());
 					action->setData(bookmark->getIdentifier());
 
@@ -981,7 +981,7 @@ void Menu::populateClosedWindowsMenu()
 			}
 
 			Action *reopenWindowAction(new MenuAction(ActionsManager::ReopenWindowAction, parameters, executor, this));
-			reopenWindowAction->setTextOverride(Utils::elideText(tr("Window - %1").arg(windows.at(i)), fontMetrics(), this), false);
+			reopenWindowAction->setTextOverride(tr("Window - %1").arg(windows.at(i)), false);
 
 			addAction(reopenWindowAction);
 		}
@@ -1011,7 +1011,7 @@ void Menu::populateClosedWindowsMenu()
 				}
 
 				Action *reopenTabAction(new MenuAction(ActionsManager::ReopenTabAction, parameters, executor, this));
-				reopenTabAction->setTextOverride(Utils::elideText(tabs.at(i).window.getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this), false);
+				reopenTabAction->setTextOverride(tabs.at(i).window.getTitle(), false);
 
 				if (tabs.at(i).isPrivate)
 				{
@@ -1101,7 +1101,7 @@ void Menu::populateFeedsMenu()
 			}
 
 			Action *action(new MenuAction(ActionsManager::OpenFeedAction, {{QLatin1String("entry"), entry->getIdentifier()}}, executor, this));
-			action->setTextOverride(Utils::elideText(text, fontMetrics(), this), false);
+			action->setTextOverride(text, false);
 
 			if (type != FeedsModel::FeedEntry)
 			{
@@ -1154,7 +1154,7 @@ void Menu::populateNotesMenu()
 			case BookmarksModel::RootBookmark:
 				{
 					Action *action(new MenuAction(ActionsManager::PasteAction, {{QLatin1String("note"), bookmark->getIdentifier()}}, getExecutor(), this));
-					action->setTextOverride(Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this), false);
+					action->setTextOverride(bookmark->getTitle(), false);
 
 					if (type == BookmarksModel::FolderBookmark)
 					{
@@ -1245,7 +1245,7 @@ void Menu::populateProxiesMenu()
 		else
 		{
 			const ProxyDefinition definition(NetworkManagerFactory::getProxy(proxies.at(i)));
-			Action *action(new MenuAction(Utils::elideText(definition.getTitle(), fontMetrics(), this), false, this));
+			Action *action(new MenuAction(definition.getTitle(), false, this));
 			action->setData(proxies.at(i));
 
 			if (definition.isFolder)
@@ -1536,10 +1536,7 @@ void Menu::populateWindowsMenu()
 			{
 				const QVariantMap paramaters({{QLatin1String("tab"), windowItem->getActiveWindow()->getIdentifier()}});
 
-				Action *activateTabAction(new MenuAction(ActionsManager::ActivateTabAction, paramaters, executor, this));
-				activateTabAction->setTextOverride(Utils::elideText(mainWindow->getActionState(ActionsManager::ActivateTabAction, paramaters).text, fontMetrics(), this));
-
-				addAction(activateTabAction);
+				addAction(new MenuAction(ActionsManager::ActivateTabAction, paramaters, executor, this));
 			}
 		}
 	}
