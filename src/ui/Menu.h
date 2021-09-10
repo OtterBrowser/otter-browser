@@ -122,9 +122,14 @@ private:
 
 class MenuAction final : public Action
 {
+	Q_OBJECT
+
 public:
 	explicit MenuAction(const QString &text, bool isTranslateable, QMenu *parent);
 	explicit MenuAction(int identifier, const QVariantMap &parameters, const ActionExecutor::Object &executor, QMenu *parent);
+
+protected slots:
+	void setState(const ActionsManager::ActionDefinition::State &state) override;
 
 private:
 	QMenu *m_menu;

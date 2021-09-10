@@ -1702,4 +1702,11 @@ MenuAction::MenuAction(int identifier, const QVariantMap &parameters, const Acti
 {
 }
 
+void MenuAction::setState(const ActionsManager::ActionDefinition::State &state)
+{
+	Action::setState(state);
+
+	setText(Utils::elideText(QString(state.text).replace(QLatin1Char('&'), QLatin1String("&&")), m_menu->fontMetrics(), m_menu));
+}
+
 }
