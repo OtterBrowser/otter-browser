@@ -1697,6 +1697,27 @@ MenuAction::MenuAction(const QString &text, bool isTranslateable, QMenu *parent)
 MenuAction::MenuAction(int identifier, const QVariantMap &parameters, const ActionExecutor::Object &executor, QMenu *parent) : Action(identifier, parameters, executor, parent),
 	m_menu(parent)
 {
+	switch (identifier)
+	{
+		case ActionsManager::PreferencesAction:
+			setMenuRole(QAction::PreferencesRole);
+
+			break;
+		case ActionsManager::AboutQtAction:
+			setMenuRole(QAction::AboutQtRole);
+
+			break;
+		case ActionsManager::ExitAction:
+			setMenuRole(QAction::QuitRole);
+
+			break;
+		case ActionsManager::AboutApplicationAction:
+			setMenuRole(QAction::AboutRole);
+
+			break;
+		default:
+			break;
+	}
 }
 
 void MenuAction::setState(const ActionsManager::ActionDefinition::State &state)

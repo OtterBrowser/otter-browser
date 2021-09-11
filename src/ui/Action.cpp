@@ -60,28 +60,6 @@ void Action::initialize()
 {
 	const ActionsManager::ActionDefinition definition(getDefinition());
 
-	switch (m_identifier)
-	{
-		case ActionsManager::PreferencesAction:
-			setMenuRole(QAction::PreferencesRole);
-
-			break;
-		case ActionsManager::AboutQtAction:
-			setMenuRole(QAction::AboutQtRole);
-
-			break;
-		case ActionsManager::ExitAction:
-			setMenuRole(QAction::QuitRole);
-
-			break;
-		case ActionsManager::AboutApplicationAction:
-			setMenuRole(QAction::AboutRole);
-
-			break;
-		default:
-			break;
-	}
-
 	setShortcutContext(Qt::WidgetShortcut);
 
 	if (definition.isValid())
