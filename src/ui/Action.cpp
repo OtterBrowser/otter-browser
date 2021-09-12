@@ -60,8 +60,6 @@ void Action::initialize()
 {
 	const ActionsManager::ActionDefinition definition(getDefinition());
 
-	setShortcutContext(Qt::WidgetShortcut);
-
 	if (definition.isValid())
 	{
 		if (definition.flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
@@ -75,12 +73,12 @@ void Action::initialize()
 		}
 
 		connect(this, &Action::triggered, this, &Action::triggerAction);
+		connect(ActionsManager::getInstance(), &ActionsManager::shortcutsChanged, this, &Action::updateShortcut);
 	}
 
+	setShortcutContext(Qt::WidgetShortcut);
 	updateIcon();
 	updateState();
-
-	connect(ActionsManager::getInstance(), &ActionsManager::shortcutsChanged, this, &Action::updateShortcut);
 }
 
 void Action::triggerAction(bool isChecked)
