@@ -273,6 +273,7 @@ void Action::setState(const ActionsManager::ActionDefinition::State &state)
 	if (!m_flags.testFlag(HasCustomIconFlag))
 	{
 		setIcon(state.icon);
+		updateIcon();
 	}
 }
 
