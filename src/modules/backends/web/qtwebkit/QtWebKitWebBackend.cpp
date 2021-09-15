@@ -270,6 +270,8 @@ WebBackend::CapabilityScopes QtWebKitWebBackend::getCapabilityScopes(WebBackend:
 		case CookiesManagementCapability:
 		case PasswordsManagementCapability:
 			return GlobalScope;
+		case HistoryMetadataCapability:
+			return TabScope;
 		case CookiesPolicyCapability:
 		case ContentFilteringCapability:
 		case DoNotTrackCapability:
