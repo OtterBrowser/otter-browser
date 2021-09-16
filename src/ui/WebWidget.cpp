@@ -38,6 +38,7 @@
 #include "../core/ThemesManager.h"
 #include "../core/TransfersManager.h"
 #include "../core/Utils.h"
+#include "../core/WebBackend.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QJsonArray>
@@ -1267,6 +1268,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 			if (parameters.value(QLatin1String("clearGlobalHistory"), false).toBool())
 			{
 				state.text = QCoreApplication::translate("actions", "Purge History Entry");
+				state.isEnabled = m_backend->getCapabilityScopes(WebBackend::HistoryMetadataCapability).testFlag(WebBackend::TabScope);
 			}
 
 			if (parameters.contains(QLatin1String("index")))
