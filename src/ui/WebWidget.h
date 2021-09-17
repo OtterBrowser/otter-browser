@@ -253,6 +253,7 @@ public:
 	virtual ContentStates getContentState() const;
 	virtual LoadingState getLoadingState() const = 0;
 	quint64 getWindowIdentifier() const;
+	virtual quint64 getGlobalHistoryEntryIdentifier(int index) const;
 	virtual int getZoom() const = 0;
 	bool hasOption(int identifier) const;
 	virtual bool hasSelection() const;

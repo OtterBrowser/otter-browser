@@ -1265,17 +1265,15 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::RemoveHistoryIndexAction:
-			if (parameters.value(QLatin1String("clearGlobalHistory"), false).toBool())
 			{
-				state.text = QCoreApplication::translate("actions", "Purge History Entry");
-				state.isEnabled = m_backend->getCapabilityScopes(WebBackend::HistoryMetadataCapability).testFlag(WebBackend::TabScope);
-			}
+				const int index(parameters.contains(QLatin1String("index")) ? parameters[QLatin1String("index")].toInt() : -1);
 
-			if (parameters.contains(QLatin1String("index")))
-			{
-				const int index(parameters[QLatin1String("index")].toInt());
-
-				if (index >= 0 && index < getHistory().entries.count())
+				if (parameters.value(QLatin1String("clearGlobalHistory"), false).toBool())
+				{
+					state.text = QCoreApplication::translate("actions", "Purge History Entry");
+					state.isEnabled = (m_backend->getCapabilityScopes(WebBackend::HistoryMetadataCapability).testFlag(WebBackend::TabScope) && getGlobalHistoryEntryIdentifier(index) > 0);
+				}
+				else if (index >= 0 && index < getHistory().entries.count())
 				{
 					state.isEnabled = true;
 				}
@@ -1695,6 +1693,13 @@ SessionsManager::OpenHints WebWidget::mapOpenActionToOpenHints(int identifier)
 quint64 WebWidget::getWindowIdentifier() const
 {
 	return m_windowIdentifier;
+}
+
+quint64 WebWidget::getGlobalHistoryEntryIdentifier(int index) const
+{
+	Q_UNUSED(index)
+
+	return 0;
 }
 
 int WebWidget::getAmountOfDeferredPlugins() const
