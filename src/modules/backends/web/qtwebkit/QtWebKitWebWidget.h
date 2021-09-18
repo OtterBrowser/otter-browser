@@ -87,6 +87,7 @@ public:
 	QMultiMap<QString, QString> getMetaData() const override;
 	ContentStates getContentState() const override;
 	LoadingState getLoadingState() const override;
+	quint64 getGlobalHistoryEntryIdentifier(int index) const override;
 	int getZoom() const override;
 	bool hasSelection() const override;
 	bool hasWatchedChanges(ChangeWatcher watcher) const override;
