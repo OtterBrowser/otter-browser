@@ -41,6 +41,7 @@
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QTextCodec>
 #include <QtGui/QMouseEvent>
+#include <QtWidgets/QDesktopWidget>
 
 namespace Otter
 {
@@ -1724,7 +1725,20 @@ void MenuAction::setState(const ActionsManager::ActionDefinition::State &state)
 {
 	Action::setState(state);
 
-	setText(Utils::elideText(QString(state.text).replace(QLatin1Char('&'), QLatin1String("&&")), m_menu->fontMetrics(), m_menu));
+	int maximumWidth(-1);
+
+	if (!shortcut().isEmpty())
+	{
+		const int shortcutWidth(m_menu->fontMetrics().boundingRect(QLatin1Char('X') + shortcut().toString(QKeySequence::NativeText)).width());
+		const int availableWidth(QApplication::desktop()->screenGeometry(m_menu).width() / 4);
+
+		if (shortcutWidth < availableWidth)
+		{
+			maximumWidth = (availableWidth - shortcutWidth);
+		}
+	}
+
+	setText(Utils::elideText(QString(state.text).replace(QLatin1Char('&'), QLatin1String("&&")), m_menu->fontMetrics(), m_menu, maximumWidth));
 }
 
 }
