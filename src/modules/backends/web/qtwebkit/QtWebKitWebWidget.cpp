@@ -310,7 +310,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			{
 				for (int i = 0; i < m_page->history()->count(); ++i)
 				{
-					const quint64 historyIdentifier(m_page->history()->itemAt(i).userData().toList().value(IdentifierEntryData).toULongLong());
+					const quint64 historyIdentifier(getGlobalHistoryEntryIdentifier(i));
 
 					if (historyIdentifier > 0)
 					{
@@ -628,7 +628,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				{
 					if (parameters.value(QLatin1String("clearGlobalHistory"), false).toBool())
 					{
-						const quint64 entryIdentifier(m_page->history()->itemAt(index).userData().toList().value(IdentifierEntryData).toULongLong());
+						const quint64 entryIdentifier(getGlobalHistoryEntryIdentifier(index));
 
 						if (entryIdentifier > 0)
 						{
