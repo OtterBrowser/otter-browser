@@ -2577,7 +2577,17 @@ WebWidget::LoadingState QtWebKitWebWidget::getLoadingState() const
 
 quint64 QtWebKitWebWidget::getGlobalHistoryEntryIdentifier(int index) const
 {
-	return ((index >= 0 && index < m_page->history()->count()) ? m_page->history()->itemAt(index).userData().toList().value(IdentifierEntryData).toULongLong() : 0);
+	if (index >= 0 && index < m_page->history()->count())
+	{
+		const QVariant state(m_page->history()->itemAt(index).userData());
+
+		if (state.isValid())
+		{
+			return state.toList().value(IdentifierEntryData).toULongLong();
+		}
+	}
+
+	return 0;
 }
 
 int QtWebKitWebWidget::getZoom() const
