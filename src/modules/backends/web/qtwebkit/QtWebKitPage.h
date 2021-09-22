@@ -69,6 +69,7 @@ public:
 
 	void triggerAction(WebAction action, bool isChecked = false) override;
 	QtWebKitFrame* getMainFrame() const;
+	QtWebKitNetworkManager* getNetworkManager() const;
 	QVariant runScript(const QString &path, QWebElement element = {});
 	bool event(QEvent *event) override;
 	bool extension(Extension extension, const ExtensionOption *option = nullptr, ExtensionReturn *output = nullptr) override;

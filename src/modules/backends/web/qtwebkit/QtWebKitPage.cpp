@@ -482,6 +482,11 @@ QtWebKitFrame* QtWebKitPage::getMainFrame() const
 	return m_mainFrame;
 }
 
+QtWebKitNetworkManager* QtWebKitPage::getNetworkManager() const
+{
+	return m_networkManager;
+}
+
 QtWebKitWebWidget* QtWebKitPage::createWidget(SessionsManager::OpenHints hints)
 {
 	QtWebKitWebWidget *widget(nullptr);
