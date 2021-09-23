@@ -178,8 +178,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *
 	connect(m_page->undoStack(), &QUndoStack::redoTextChanged, this, &QtWebKitWebWidget::notifyRedoActionStateChanged);
 	connect(m_page->undoStack(), &QUndoStack::canUndoChanged, this, &QtWebKitWebWidget::notifyUndoActionStateChanged);
 	connect(m_page->undoStack(), &QUndoStack::undoTextChanged, this, &QtWebKitWebWidget::notifyUndoActionStateChanged);
-	connect(m_networkManager, &QtWebKitNetworkManager::pageInformationChanged, this, &QtWebKitWebWidget::pageInformationChanged);
-	connect(m_networkManager, &QtWebKitNetworkManager::requestBlocked, this, &QtWebKitWebWidget::requestBlocked);
 	connect(m_networkManager, &QtWebKitNetworkManager::contentStateChanged, this, [&]()
 	{
 		emit contentStateChanged(getContentState());

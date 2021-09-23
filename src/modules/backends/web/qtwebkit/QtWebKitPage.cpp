@@ -176,6 +176,8 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &QtWebKitPage::handleOptionChanged);
 	connect(this, &QtWebKitPage::frameCreated, this, &QtWebKitPage::handleFrameCreation);
 	connect(this, &QtWebKitPage::consoleMessageReceived, this, &QtWebKitPage::handleConsoleMessage);
+	connect(m_networkManager, &QtWebKitNetworkManager::pageInformationChanged, parent, &QtWebKitWebWidget::pageInformationChanged);
+	connect(m_networkManager, &QtWebKitNetworkManager::requestBlocked, parent, &QtWebKitWebWidget::requestBlocked);
 	connect(mainFrame(), &QWebFrame::loadStarted, this, [&]()
 	{
 		updateStyleSheets();
