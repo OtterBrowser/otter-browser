@@ -1165,7 +1165,7 @@ void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
 	{
 		QVariantList state(m_page->history()->currentItem().userData().toList());
 
-		if (state.isEmpty() || state.count() < 4)
+		if (state.count() < 4)
 		{
 			state = {0, getZoom(), m_page->mainFrame()->scrollPosition(), QDateTime::currentDateTimeUtc()};
 		}
