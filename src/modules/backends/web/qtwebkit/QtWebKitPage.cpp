@@ -176,6 +176,8 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &QtWebKitPage::handleOptionChanged);
 	connect(this, &QtWebKitPage::frameCreated, this, &QtWebKitPage::handleFrameCreation);
 	connect(this, &QtWebKitPage::consoleMessageReceived, this, &QtWebKitPage::handleConsoleMessage);
+	connect(this, &QtWebKitPage::saveFrameStateRequested, this, &QtWebKitPage::saveState);
+	connect(this, &QtWebKitPage::restoreFrameStateRequested, this, &QtWebKitPage::restoreState);
 	connect(m_networkManager, &QtWebKitNetworkManager::pageInformationChanged, parent, &QtWebKitWebWidget::pageInformationChanged);
 	connect(m_networkManager, &QtWebKitNetworkManager::requestBlocked, parent, &QtWebKitWebWidget::requestBlocked);
 	connect(mainFrame(), &QWebFrame::loadStarted, this, [&]()
@@ -263,6 +265,41 @@ void QtWebKitPage::validatePopup(const QUrl &url)
 	{
 		QtWebKitWebWidget *widget(createWidget((popupsPolicy == QLatin1String("openAllInBackground")) ? (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen) : SessionsManager::NewTabOpen));
 		widget->setUrl(url);
+	}
+}
+
+void QtWebKitPage::saveState(QWebFrame *frame, QWebHistoryItem *item)
+{
+	if (m_widget && frame == mainFrame())
+	{
+		QVariantList state(history()->currentItem().userData().toList());
+
+		if (state.count() < 4)
+		{
+			state = {0, m_widget->getZoom(), mainFrame()->scrollPosition(), QDateTime::currentDateTimeUtc()};
+		}
+		else
+		{
+			state[QtWebKitWebWidget::ZoomEntryData] = m_widget->getZoom();
+			state[QtWebKitWebWidget::PositionEntryData] = mainFrame()->scrollPosition();
+		}
+
+		item->setUserData(state);
+	}
+}
+
+void QtWebKitPage::restoreState(QWebFrame *frame)
+{
+	if (m_widget && frame == mainFrame())
+	{
+		const QVariantList state(history()->currentItem().userData().toList());
+
+		m_widget->setZoom(state.value(QtWebKitWebWidget::ZoomEntryData, m_widget->getZoom()).toInt());
+
+		if (mainFrame()->scrollPosition().isNull())
+		{
+			mainFrame()->setScrollPosition(state.value(QtWebKitWebWidget::PositionEntryData).toPoint());
+		}
 	}
 }
 

@@ -157,8 +157,6 @@ protected:
 	bool isScrollBar(const QPoint &position) const override;
 
 protected slots:
-	void saveState(QWebFrame *frame, QWebHistoryItem *item);
-	void restoreState(QWebFrame *frame);
 	void handleDownloadRequested(const QNetworkRequest &request);
 	void handleUnsupportedContent(QNetworkReply *reply);
 	void handleOptionChanged(int identifier, const QVariant &value);

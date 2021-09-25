@@ -151,8 +151,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &QtWebKitWebWidget::handleOptionChanged);
 	connect(m_page, &QtWebKitPage::requestedNewWindow, this, &QtWebKitWebWidget::requestedNewWindow);
 	connect(m_page, &QtWebKitPage::requestedPopupWindow, this, &QtWebKitWebWidget::requestedPopupWindow);
-	connect(m_page, &QtWebKitPage::saveFrameStateRequested, this, &QtWebKitWebWidget::saveState);
-	connect(m_page, &QtWebKitPage::restoreFrameStateRequested, this, &QtWebKitWebWidget::restoreState);
 	connect(m_page, &QtWebKitPage::downloadRequested, this, &QtWebKitWebWidget::handleDownloadRequested);
 	connect(m_page, &QtWebKitPage::unsupportedContent, this, &QtWebKitWebWidget::handleUnsupportedContent);
 	connect(m_page, &QtWebKitPage::linkHovered, this, &QtWebKitWebWidget::setStatusMessageOverride);
@@ -1157,41 +1155,6 @@ void QtWebKitWebWidget::search(const QString &query, const QString &searchEngine
 void QtWebKitWebWidget::print(QPrinter *printer)
 {
 	m_page->mainFrame()->print(printer);
-}
-
-void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
-{
-	if (frame == m_page->mainFrame())
-	{
-		QVariantList state(m_page->history()->currentItem().userData().toList());
-
-		if (state.count() < 4)
-		{
-			state = {0, getZoom(), m_page->mainFrame()->scrollPosition(), QDateTime::currentDateTimeUtc()};
-		}
-		else
-		{
-			state[ZoomEntryData] = getZoom();
-			state[PositionEntryData] = m_page->mainFrame()->scrollPosition();
-		}
-
-		item->setUserData(state);
-	}
-}
-
-void QtWebKitWebWidget::restoreState(QWebFrame *frame)
-{
-	if (frame == m_page->mainFrame())
-	{
-		const QVariantList state(m_page->history()->currentItem().userData().toList());
-
-		setZoom(state.value(ZoomEntryData, getZoom()).toInt());
-
-		if (m_page->mainFrame()->scrollPosition().isNull())
-		{
-			m_page->mainFrame()->setScrollPosition(state.value(PositionEntryData).toPoint());
-		}
-	}
 }
 
 void QtWebKitWebWidget::clearPluginToken()

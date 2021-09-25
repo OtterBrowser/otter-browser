@@ -80,6 +80,8 @@ public:
 	bool isViewingMedia() const;
 
 public slots:
+	void saveState(QWebFrame *frame, QWebHistoryItem *item);
+	void restoreState(QWebFrame *frame);
 	void markAsDisplayingErrorPage();
 	void updateStyleSheets(const QUrl &url = {});
 
