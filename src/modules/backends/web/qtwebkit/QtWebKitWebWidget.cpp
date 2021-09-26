@@ -1477,7 +1477,7 @@ void QtWebKitWebWidget::handleHistory()
 
 	if (state.isValid())
 	{
-		const quint64 identifier(state.toList().value(IdentifierEntryData).toULongLong());
+		const quint64 identifier(state.toList().value(QtWebKitPage::IdentifierEntryData).toULongLong());
 
 		if (identifier > 0)
 		{
@@ -2240,8 +2240,8 @@ Session::Window::History QtWebKitWebWidget::getHistory() const
 	}
 	else
 	{
-		state[ZoomEntryData] = getZoom();
-		state[PositionEntryData] = m_page->mainFrame()->scrollPosition();
+		state[QtWebKitPage::ZoomEntryData] = getZoom();
+		state[QtWebKitPage::PositionEntryData] = m_page->mainFrame()->scrollPosition();
 	}
 
 	m_page->history()->currentItem().setUserData(state);
@@ -2260,11 +2260,11 @@ Session::Window::History QtWebKitWebWidget::getHistory() const
 		Session::Window::History::Entry entry;
 		entry.url = item.url().toString();
 		entry.title = item.title();
-		entry.time = itemState.value(VisitTimeEntryData).toDateTime();
-		entry.position = itemState.value(PositionEntryData, QPoint(0, 0)).toPoint();
-		entry.zoom = itemState.value(ZoomEntryData).toInt();
+		entry.time = itemState.value(QtWebKitPage::VisitTimeEntryData).toDateTime();
+		entry.position = itemState.value(QtWebKitPage::PositionEntryData, QPoint(0, 0)).toPoint();
+		entry.zoom = itemState.value(QtWebKitPage::ZoomEntryData).toInt();
 
-		const quint64 identifier(itemState.value(IdentifierEntryData).toULongLong());
+		const quint64 identifier(itemState.value(QtWebKitPage::IdentifierEntryData).toULongLong());
 
 		if (identifier > 0)
 		{
@@ -2284,8 +2284,8 @@ Session::Window::History QtWebKitWebWidget::getHistory() const
 		Session::Window::History::Entry entry;
 		entry.url = requestedUrl.toString();
 		entry.title = getTitle();
-		entry.position = state.value(PositionEntryData, QPoint(0, 0)).toPoint();
-		entry.zoom = state.value(ZoomEntryData).toInt();
+		entry.position = state.value(QtWebKitPage::PositionEntryData, QPoint(0, 0)).toPoint();
+		entry.zoom = state.value(QtWebKitPage::ZoomEntryData).toInt();
 
 		history.entries.append(entry);
 		history.index = historyCount;
@@ -2544,7 +2544,7 @@ quint64 QtWebKitWebWidget::getGlobalHistoryEntryIdentifier(int index) const
 
 		if (state.isValid())
 		{
-			return state.toList().value(IdentifierEntryData).toULongLong();
+			return state.toList().value(QtWebKitPage::IdentifierEntryData).toULongLong();
 		}
 	}
 

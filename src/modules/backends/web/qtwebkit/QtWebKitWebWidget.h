@@ -111,14 +111,6 @@ public slots:
 	void setUrl(const QUrl &url, bool isTypedIn = true) override;
 
 protected:
-	enum HistoryEntryData
-	{
-		IdentifierEntryData = 0,
-		ZoomEntryData,
-		PositionEntryData,
-		VisitTimeEntryData
-	};
-
 	explicit QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *backend, QtWebKitNetworkManager *networkManager = nullptr, ContentsWidget *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event) override;

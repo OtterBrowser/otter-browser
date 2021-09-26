@@ -64,6 +64,14 @@ class QtWebKitPage final : public QWebPage
 	Q_OBJECT
 
 public:
+	enum HistoryEntryData
+	{
+		IdentifierEntryData = 0,
+		ZoomEntryData,
+		PositionEntryData,
+		VisitTimeEntryData
+	};
+
 	explicit QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent);
 	~QtWebKitPage();
 

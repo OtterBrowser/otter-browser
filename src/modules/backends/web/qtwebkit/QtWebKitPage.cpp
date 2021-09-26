@@ -280,8 +280,8 @@ void QtWebKitPage::saveState(QWebFrame *frame, QWebHistoryItem *item)
 		}
 		else
 		{
-			state[QtWebKitWebWidget::ZoomEntryData] = m_widget->getZoom();
-			state[QtWebKitWebWidget::PositionEntryData] = mainFrame()->scrollPosition();
+			state[ZoomEntryData] = m_widget->getZoom();
+			state[PositionEntryData] = mainFrame()->scrollPosition();
 		}
 
 		item->setUserData(state);
@@ -294,11 +294,11 @@ void QtWebKitPage::restoreState(QWebFrame *frame)
 	{
 		const QVariantList state(history()->currentItem().userData().toList());
 
-		m_widget->setZoom(state.value(QtWebKitWebWidget::ZoomEntryData, m_widget->getZoom()).toInt());
+		m_widget->setZoom(state.value(ZoomEntryData, m_widget->getZoom()).toInt());
 
 		if (mainFrame()->scrollPosition().isNull())
 		{
-			mainFrame()->setScrollPosition(state.value(QtWebKitWebWidget::PositionEntryData).toPoint());
+			mainFrame()->setScrollPosition(state.value(PositionEntryData).toPoint());
 		}
 	}
 }
