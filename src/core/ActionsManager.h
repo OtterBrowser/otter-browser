@@ -151,6 +151,7 @@ public:
 		OpenLinkInNewPrivateWindowBackgroundAction,
 		CopyLinkToClipboardAction,
 		BookmarkLinkAction,
+		ShowLinkAsQrCodeAction,
 		SaveLinkToDiskAction,
 		SaveLinkToDownloadsAction,
 		OpenSelectionAsLinkAction,
