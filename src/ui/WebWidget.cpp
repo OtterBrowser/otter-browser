@@ -1064,6 +1064,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 		case ActionsManager::OpenLinkInNewPrivateWindowAction:
 		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
 		case ActionsManager::CopyLinkToClipboardAction:
+		case ActionsManager::ShowLinkAsQrCodeAction:
 		case ActionsManager::SaveLinkToDiskAction:
 		case ActionsManager::SaveLinkToDownloadsAction:
 			state.isEnabled = m_hitResult.linkUrl.isValid();
