@@ -44,6 +44,7 @@ public:
 	{
 		QVariantMap parameters;
 		QVector<QKeySequence> shortcuts;
+		QVector<QKeySequence> disabledShortcuts;
 		int action = -1;
 
 		bool operator ==(const Action &other) const;
