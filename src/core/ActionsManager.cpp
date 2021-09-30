@@ -97,29 +97,17 @@ KeyboardProfile::KeyboardProfile(const QString &identifier, LoadMode mode) :
 				continue;
 			}
 
-			const QJsonArray shortcutsArray(actionObject.value(QLatin1String("shortcuts")).toArray());
-			QVector<QKeySequence> shortcuts;
-			shortcuts.reserve(shortcutsArray.count());
+			const QVector<QKeySequence> shortcuts(loadShortcuts(actionObject.value(QLatin1String("shortcuts")).toArray(), areSingleKeyShortcutsAllowed));
+			const QVector<QKeySequence> disabledShortcuts(loadShortcuts(actionObject.value(QLatin1String("disabledShortcuts")).toArray(), true));
 
-			for (int k = 0; k < shortcutsArray.count(); ++k)
-			{
-				const QKeySequence shortcut(shortcutsArray.at(k).toString());
-
-				if (shortcut.isEmpty() || (!areSingleKeyShortcutsAllowed && !ActionsManager::isShortcutAllowed(shortcut, ActionsManager::DisallowSingleKeyShortcutCheck, false)))
-				{
-					continue;
-				}
-
-				shortcuts.append(shortcut);
-			}
-
-			if (shortcuts.isEmpty())
+			if (shortcuts.isEmpty() && disabledShortcuts.isEmpty())
 			{
 				continue;
 			}
 
 			KeyboardProfile::Action definition;
 			definition.shortcuts = shortcuts;
+			definition.disabledShortcuts = disabledShortcuts;
 			definition.parameters = actionObject.value(QLatin1String("parameters")).toVariant().toMap();
 			definition.action = action;
 
@@ -208,6 +196,26 @@ QString KeyboardProfile::getVersion() const
 QHash<int, QVector<KeyboardProfile::Action> > KeyboardProfile::getDefinitions() const
 {
 	return m_definitions;
+}
+
+QVector<QKeySequence> KeyboardProfile::loadShortcuts(const QJsonArray &rawShortcuts, bool areSingleKeyShortcutsAllowed) const
+{
+	QVector<QKeySequence> shortcuts;
+	shortcuts.reserve(rawShortcuts.count());
+
+	for (int i = 0; i < rawShortcuts.count(); ++i)
+	{
+		const QKeySequence shortcut(rawShortcuts.at(i).toString());
+
+		if (shortcut.isEmpty() || (!areSingleKeyShortcutsAllowed && !ActionsManager::isShortcutAllowed(shortcut, ActionsManager::DisallowSingleKeyShortcutCheck, false)))
+		{
+			continue;
+		}
+
+		shortcuts.append(shortcut);
+	}
+
+	return shortcuts;
 }
 
 bool KeyboardProfile::isModified() const

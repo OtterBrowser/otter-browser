@@ -68,6 +68,9 @@ public:
 	bool isValid() const;
 	bool save();
 
+protected:
+	QVector<QKeySequence> loadShortcuts(const QJsonArray &rawShortcuts, bool areSingleKeyShortcutsAllowed) const;
+
 private:
 	QString m_identifier;
 	QString m_title;
