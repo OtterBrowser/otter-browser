@@ -69,6 +69,7 @@ public:
 	bool save();
 
 protected:
+	QJsonArray createShortcutsArray(const QVector<QKeySequence> &shortcuts) const;
 	QVector<QKeySequence> loadShortcuts(const QJsonArray &rawShortcuts, bool areSingleKeyShortcutsAllowed) const;
 
 private:

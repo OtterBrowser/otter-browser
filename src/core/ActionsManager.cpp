@@ -198,6 +198,18 @@ QHash<int, QVector<KeyboardProfile::Action> > KeyboardProfile::getDefinitions() 
 	return m_definitions;
 }
 
+QJsonArray KeyboardProfile::createShortcutsArray(const QVector<QKeySequence> &shortcuts) const
+{
+	QJsonArray array;
+
+	for (int i = 0; i < shortcuts.count(); ++i)
+	{
+		array.append(shortcuts.at(i).toString());
+	}
+
+	return array;
+}
+
 QVector<QKeySequence> KeyboardProfile::loadShortcuts(const QJsonArray &rawShortcuts, bool areSingleKeyShortcutsAllowed) const
 {
 	QVector<QKeySequence> shortcuts;
@@ -252,14 +264,12 @@ bool KeyboardProfile::save()
 		for (int i = 0; i < contextsIterator.value().count(); ++i)
 		{
 			const KeyboardProfile::Action &action(contextsIterator.value().at(i));
-			QJsonArray shortcutsArray;
+			QJsonObject actionObject{{QLatin1String("action"), ActionsManager::getActionName(action.action)}, {QLatin1String("shortcuts"), createShortcutsArray(action.shortcuts)}};
 
-			for (int j = 0; j < action.shortcuts.count(); ++j)
+			if (!action.disabledShortcuts.isEmpty())
 			{
-				shortcutsArray.append(action.shortcuts.at(j).toString());
+				actionObject.insert(QLatin1String("disabledShortcuts"), createShortcutsArray(action.disabledShortcuts));
 			}
-
-			QJsonObject actionObject{{QLatin1String("action"), ActionsManager::getActionName(action.action)}, {QLatin1String("shortcuts"), shortcutsArray}};
 
 			if (!action.parameters.isEmpty())
 			{
