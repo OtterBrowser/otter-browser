@@ -35,31 +35,33 @@ ShortcutWidget::ShortcutWidget(const QKeySequence &shortcut, QWidget *parent) : 
 {
 	QVBoxLayout *layout(findChild<QVBoxLayout*>());
 
-	if (layout)
+	if (!layout)
 	{
-		m_clearButton = new QToolButton(this);
-		m_clearButton->setText(tr("Clear"));
-		m_clearButton->setEnabled(!shortcut.isEmpty());
-
-		layout->setDirection(QBoxLayout::LeftToRight);
-		layout->addWidget(m_clearButton);
-
-		connect(m_clearButton, &QToolButton::clicked, this, &ShortcutWidget::clear);
-		connect(this, &ShortcutWidget::keySequenceChanged, [&]()
-		{
-			const bool isEmpty(keySequence().isEmpty());
-
-			m_clearButton->setEnabled(!isEmpty);
-
-			if (isEmpty)
-			{
-				setStyleSheet({});
-				setToolTip({});
-			}
-
-			emit commitData(this);
-		});
+		return;
 	}
+
+	m_clearButton = new QToolButton(this);
+	m_clearButton->setText(tr("Clear"));
+	m_clearButton->setEnabled(!shortcut.isEmpty());
+
+	layout->setDirection(QBoxLayout::LeftToRight);
+	layout->addWidget(m_clearButton);
+
+	connect(m_clearButton, &QToolButton::clicked, this, &ShortcutWidget::clear);
+	connect(this, &ShortcutWidget::keySequenceChanged, [&]()
+	{
+		const bool isEmpty(keySequence().isEmpty());
+
+		m_clearButton->setEnabled(!isEmpty);
+
+		if (isEmpty)
+		{
+			setStyleSheet({});
+			setToolTip({});
+		}
+
+		emit commitData(this);
+	});
 }
 
 void ShortcutWidget::changeEvent(QEvent *event)
@@ -80,24 +82,26 @@ void KeyboardActionDelegate::setModelData(QWidget *editor, QAbstractItemModel *m
 {
 	const ActionComboBoxWidget *widget(qobject_cast<ActionComboBoxWidget*>(editor));
 
-	if (widget && widget->getActionIdentifier() >= 0)
+	if (!widget || widget->getActionIdentifier() <= 0)
 	{
-		const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(widget->getActionIdentifier()));
-		const QString name(ActionsManager::getActionName(widget->getActionIdentifier()));
+		return;
+	}
 
-		model->setData(index, definition.getText(true), Qt::DisplayRole);
-		model->setData(index, QStringLiteral("%1 (%2)").arg(definition.getText(true), name), Qt::ToolTipRole);
-		model->setData(index, widget->getActionIdentifier(), KeyboardProfileDialog::IdentifierRole);
-		model->setData(index, name, KeyboardProfileDialog::NameRole);
+	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(widget->getActionIdentifier()));
+	const QString name(ActionsManager::getActionName(widget->getActionIdentifier()));
 
-		if (definition.defaultState.icon.isNull())
-		{
-			model->setData(index, QColor(Qt::transparent), Qt::DecorationRole);
-		}
-		else
-		{
-			model->setData(index, definition.defaultState.icon, Qt::DecorationRole);
-		}
+	model->setData(index, definition.getText(true), Qt::DisplayRole);
+	model->setData(index, QStringLiteral("%1 (%2)").arg(definition.getText(true), name), Qt::ToolTipRole);
+	model->setData(index, widget->getActionIdentifier(), KeyboardProfileDialog::IdentifierRole);
+	model->setData(index, name, KeyboardProfileDialog::NameRole);
+
+	if (definition.defaultState.icon.isNull())
+	{
+		model->setData(index, QColor(Qt::transparent), Qt::DecorationRole);
+	}
+	else
+	{
+		model->setData(index, definition.defaultState.icon, Qt::DecorationRole);
 	}
 }
 
@@ -120,32 +124,49 @@ KeyboardShortcutDelegate::KeyboardShortcutDelegate(KeyboardProfileDialog *parent
 void KeyboardShortcutDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
 {
 	option->text = QKeySequence(index.data(Qt::DisplayRole).toString()).toString(QKeySequence::NativeText);
+
+	if (index.data(KeyboardProfileDialog::IsDisabledRole).toBool())
+	{
+		QFont font(option->font);
+		font.setStrikeOut(true);
+
+		option->font = font;
+		option->state.setFlag(QStyle::State_Enabled, false);
+	}
 }
 
 void KeyboardShortcutDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
 	const ShortcutWidget *widget(qobject_cast<ShortcutWidget*>(editor));
 
-	if (widget)
+	if (!widget)
 	{
-		const QKeySequence shortcut(widget->keySequence());
-		const KeyboardProfileDialog::ValidationResult result(m_dialog->validateShortcut(shortcut, index));
-		const QModelIndex statusIndex(index.sibling(index.row(), 0));
+		return;
+	}
 
-		if (result.text.isEmpty())
-		{
-			model->setData(statusIndex, {}, Qt::DecorationRole);
-			model->setData(statusIndex, {}, Qt::ToolTipRole);
-			model->setData(statusIndex, KeyboardProfileDialog::NormalStatus, KeyboardProfileDialog::StatusRole);
-		}
-		else
-		{
-			model->setData(statusIndex, result.icon, Qt::DecorationRole);
-			model->setData(statusIndex, result.text, Qt::ToolTipRole);
-			model->setData(statusIndex, (result.isError ? KeyboardProfileDialog::ErrorStatus : KeyboardProfileDialog::WarningStatus), KeyboardProfileDialog::StatusRole);
-		}
+	const QKeySequence shortcut(widget->keySequence());
 
-		model->setData(index, (shortcut.isEmpty() ? QVariant() : QVariant(shortcut.toString())));
+	model->setData(index, (shortcut.isEmpty() ? QVariant() : QVariant(shortcut.toString())));
+
+	if (index.sibling(index.row(), 3).data(KeyboardProfileDialog::IsDisabledRole).toBool())
+	{
+		return;
+	}
+
+	const KeyboardProfileDialog::ValidationResult result(m_dialog->validateShortcut(shortcut, index));
+	const QModelIndex statusIndex(index.sibling(index.row(), 0));
+
+	if (result.text.isEmpty())
+	{
+		model->setData(statusIndex, {}, Qt::DecorationRole);
+		model->setData(statusIndex, {}, Qt::ToolTipRole);
+		model->setData(statusIndex, KeyboardProfileDialog::NormalStatus, KeyboardProfileDialog::StatusRole);
+	}
+	else
+	{
+		model->setData(statusIndex, result.icon, Qt::DecorationRole);
+		model->setData(statusIndex, result.text, Qt::ToolTipRole);
+		model->setData(statusIndex, (result.isError ? KeyboardProfileDialog::ErrorStatus : KeyboardProfileDialog::WarningStatus), KeyboardProfileDialog::StatusRole);
 	}
 }
 
@@ -159,7 +180,7 @@ QWidget* KeyboardShortcutDelegate::createEditor(QWidget *parent, const QStyleOpt
 	connect(widget, &ShortcutWidget::commitData, this, &KeyboardShortcutDelegate::commitData);
 	connect(widget, &ShortcutWidget::keySequenceChanged, [=](const QKeySequence &shortcut)
 	{
-		if (!shortcut.isEmpty())
+		if (!shortcut.isEmpty() && !index.data(KeyboardProfileDialog::IsDisabledRole).toBool())
 		{
 			const KeyboardProfileDialog::ValidationResult result(m_dialog->validateShortcut(shortcut, index));
 
@@ -194,40 +215,9 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 	{
 		const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(definitions.at(i).action));
 		const QString name(ActionsManager::getActionName(definitions.at(i).action));
-		const QString parameters(definitions.at(i).parameters.isEmpty() ? QString() : QString::fromLatin1(QJsonDocument(QJsonObject::fromVariantMap(definitions.at(i).parameters)).toJson(QJsonDocument::Compact)));
 
-		for (int j = 0; j < definitions.at(i).shortcuts.count(); ++j)
-		{
-			const QKeySequence shortcut(definitions.at(i).shortcuts.at(j));
-			QList<QStandardItem*> items({new QStandardItem(), new QStandardItem(action.getText(true)), new QStandardItem(parameters), new QStandardItem(shortcut.toString())});
-			items[0]->setData(NormalStatus, StatusRole);
-			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
-			items[1]->setData(QColor(Qt::transparent), Qt::DecorationRole);
-			items[1]->setData(definitions.at(i).action, IdentifierRole);
-			items[1]->setData(name, NameRole);
-			items[1]->setData(definitions.at(i).parameters, ParametersRole);
-			items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
-			items[1]->setToolTip(QStringLiteral("%1 (%2)").arg(action.getText(true), name));
-			items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
-			items[2]->setToolTip(parameters);
-			items[3]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
-
-			if (!action.defaultState.icon.isNull())
-			{
-				items[1]->setIcon(action.defaultState.icon);
-			}
-
-			model->appendRow(items);
-
-			const ValidationResult result(validateShortcut(shortcut, items[3]->index()));
-
-			if (!result.text.isEmpty())
-			{
-				items[0]->setData(result.icon, Qt::DecorationRole);
-				items[0]->setData(result.text, Qt::ToolTipRole);
-				items[0]->setData((result.isError ? ErrorStatus : WarningStatus), StatusRole);
-			}
-		}
+		addShortcuts(model, definitions.at(i).action, name, action.getText(true), action.defaultState.icon, definitions.at(i).parameters, definitions.at(i).shortcuts, false);
+		addShortcuts(model, definitions.at(i).action, name, action.getText(true), action.defaultState.icon, definitions.at(i).parameters, definitions.at(i).disabledShortcuts, true);
 	}
 
 	model->setHorizontalHeaderLabels({tr("Status"), tr("Action"), tr("Parameters"), tr("Shortcut")});
@@ -288,6 +278,50 @@ void KeyboardProfileDialog::changeEvent(QEvent *event)
 	}
 }
 
+void KeyboardProfileDialog::addShortcuts(QStandardItemModel *model, int identifier, const QString &name, const QString &text, const QIcon &icon, const QVariantMap &rawParameters, const QVector<QKeySequence> &shortcuts, bool areShortcutsDisabled)
+{
+	const QString parameters(rawParameters.isEmpty() ? QString() : QString::fromLatin1(QJsonDocument(QJsonObject::fromVariantMap(rawParameters)).toJson(QJsonDocument::Compact)));
+
+	for (int j = 0; j < shortcuts.count(); ++j)
+	{
+		const QKeySequence shortcut(shortcuts.at(j));
+		QList<QStandardItem*> items({new QStandardItem(), new QStandardItem(text), new QStandardItem(parameters), new QStandardItem(shortcut.toString())});
+		items[0]->setData(NormalStatus, StatusRole);
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+		items[1]->setData(QColor(Qt::transparent), Qt::DecorationRole);
+		items[1]->setData(identifier, IdentifierRole);
+		items[1]->setData(name, NameRole);
+		items[1]->setData(rawParameters, ParametersRole);
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
+		items[1]->setToolTip(QStringLiteral("%1 (%2)").arg(text, name));
+		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+		items[2]->setToolTip(parameters);
+		items[3]->setData(areShortcutsDisabled, IsDisabledRole);
+		items[3]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
+
+		if (!icon.isNull())
+		{
+			items[1]->setIcon(icon);
+		}
+
+		model->appendRow(items);
+
+		if (areShortcutsDisabled)
+		{
+			return;
+		}
+
+		const ValidationResult result(validateShortcut(shortcut, items[3]->index()));
+
+		if (!result.text.isEmpty())
+		{
+			items[0]->setData(result.icon, Qt::DecorationRole);
+			items[0]->setData(result.text, Qt::ToolTipRole);
+			items[0]->setData((result.isError ? ErrorStatus : WarningStatus), StatusRole);
+		}
+	}
+}
+
 KeyboardProfile KeyboardProfileDialog::getProfile() const
 {
 	KeyboardProfile profile(m_profile);
@@ -321,7 +355,14 @@ KeyboardProfile KeyboardProfileDialog::getProfile() const
 				{
 					if (actionVariants.at(j).parameters == parameters)
 					{
-						actionVariants[j].shortcuts.append(shortcut);
+						if (m_ui->actionsViewWidget->getIndex(i, 3).data(IsDisabledRole).toBool())
+						{
+							actionVariants[j].disabledShortcuts.append(shortcut);
+						}
+						else
+						{
+							actionVariants[j].shortcuts.append(shortcut);
+						}
 
 						actions[action] = actionVariants;
 

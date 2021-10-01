@@ -25,6 +25,7 @@
 #include "../../core/ActionsManager.h"
 
 #include <QtCore/QModelIndex>
+#include <QtGui/QStandardItemModel>
 #include <QtWidgets/QKeySequenceEdit>
 #include <QtWidgets/QToolButton>
 
@@ -87,6 +88,7 @@ public:
 	enum DataRole
 	{
 		IdentifierRole = Qt::UserRole,
+		IsDisabledRole,
 		NameRole,
 		ParametersRole,
 		StatusRole
@@ -122,6 +124,7 @@ protected:
 	};
 
 	void changeEvent(QEvent *event) override;
+	void addShortcuts(QStandardItemModel *model, int identifier, const QString &name, const QString &text, const QIcon &icon, const QVariantMap &rawParameters, const QVector<QKeySequence> &shortcuts, bool areShortcutsDisabled);
 
 private:
 	KeyboardProfile m_profile;
