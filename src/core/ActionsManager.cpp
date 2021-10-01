@@ -679,7 +679,7 @@ QString ActionsManager::createReport()
 
 QString ActionsManager::getActionName(int identifier)
 {
-	return EnumeratorMapper(staticMetaObject.enumerator(m_actionIdentifierEnumerator), QLatin1String("Action")).mapToName(identifier);
+	return EnumeratorMapper(staticMetaObject.enumerator(m_actionIdentifierEnumerator), QLatin1String("Action")).mapToName(identifier, false);
 }
 
 QKeySequence ActionsManager::getActionShortcut(int identifier, const QVariantMap &parameters)
