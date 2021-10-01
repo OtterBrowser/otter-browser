@@ -114,6 +114,13 @@ public:
 	bool isModified() const;
 
 protected:
+	struct ShortcutsDefinition
+	{
+		QVariantMap parameters;
+		QVector<QKeySequence> shortcuts;
+		QVector<QKeySequence> disabledShortcuts;
+	};
+
 	void changeEvent(QEvent *event) override;
 
 private:

@@ -296,7 +296,7 @@ KeyboardProfile KeyboardProfileDialog::getProfile() const
 	profile.setVersion(m_ui->versionLineEditWidget->text());
 	profile.setAuthor(m_ui->authorLineEditWidget->text());
 
-	QMap<int, QVector<QPair<QVariantMap, QVector<QKeySequence> > > > actions;
+	QMap<int, QVector<ShortcutsDefinition> > actions;
 
 	for (int i = 0; i < m_ui->actionsViewWidget->getRowCount(); ++i)
 	{
@@ -315,13 +315,13 @@ KeyboardProfile KeyboardProfileDialog::getProfile() const
 
 			if (actions.contains(action))
 			{
-				QVector<QPair<QVariantMap, QVector<QKeySequence> > > actionVariants(actions[action]);
+				QVector<ShortcutsDefinition> actionVariants(actions[action]);
 
 				for (int j = 0; j < actionVariants.count(); ++j)
 				{
-					if (actionVariants.at(j).first == parameters)
+					if (actionVariants.at(j).parameters == parameters)
 					{
-						actionVariants[j].second.append(shortcut);
+						actionVariants[j].shortcuts.append(shortcut);
 
 						actions[action] = actionVariants;
 
@@ -339,19 +339,20 @@ KeyboardProfile KeyboardProfileDialog::getProfile() const
 		}
 	}
 
-	QMap<int, QVector<QPair<QVariantMap, QVector<QKeySequence> > > >::iterator iterator;
+	QMap<int, QVector<ShortcutsDefinition> >::iterator iterator;
 	QVector<KeyboardProfile::Action> definitions;
 	definitions.reserve(actions.count());
 
 	for (iterator = actions.begin(); iterator != actions.end(); ++iterator)
 	{
-		const QVector<QPair<QVariantMap, QVector<QKeySequence> > > actionVariants(iterator.value());
+		const QVector<ShortcutsDefinition> actionVariants(iterator.value());
 
 		for (int j = 0; j < actionVariants.count(); ++j)
 		{
 			KeyboardProfile::Action definition;
-			definition.parameters = actionVariants.at(j).first;
-			definition.shortcuts = actionVariants.at(j).second;
+			definition.parameters = actionVariants.at(j).parameters;
+			definition.shortcuts = actionVariants.at(j).shortcuts;
+			definition.disabledShortcuts = actionVariants.at(j).disabledShortcuts;
 			definition.action = iterator.key();
 
 			definitions.append(definition);
