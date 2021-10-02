@@ -246,15 +246,11 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 	});
 	connect(m_ui->addActionButton, &QPushButton::clicked, this, [&]()
 	{
-		QList<QStandardItem*> items({new QStandardItem(), new QStandardItem(), new QStandardItem(), new QStandardItem()});
-		items[0]->setData(NormalStatus, StatusRole);
-		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
-		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
-		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
-		items[3]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
-
-		m_ui->actionsViewWidget->insertRow(items);
-		m_ui->actionsViewWidget->setCurrentIndex(items[1]->index());
+		addNewShortcut(false);
+	});
+	connect(m_ui->disableActionButton, &QPushButton::clicked, this, [&]()
+	{
+		addNewShortcut(true);
 	});
 	connect(m_ui->removeActionButton, &QPushButton::clicked, this, [&]()
 	{
@@ -320,6 +316,20 @@ void KeyboardProfileDialog::addShortcuts(QStandardItemModel *model, int identifi
 			items[0]->setData((result.isError ? ErrorStatus : WarningStatus), StatusRole);
 		}
 	}
+}
+
+void KeyboardProfileDialog::addNewShortcut(bool isDisabled)
+{
+	QList<QStandardItem*> items({new QStandardItem(), new QStandardItem(), new QStandardItem(), new QStandardItem()});
+	items[0]->setData(NormalStatus, StatusRole);
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
+	items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+	items[3]->setData(isDisabled, IsDisabledRole);
+	items[3]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
+
+	m_ui->actionsViewWidget->insertRow(items);
+	m_ui->actionsViewWidget->setCurrentIndex(items[1]->index());
 }
 
 KeyboardProfile KeyboardProfileDialog::getProfile() const

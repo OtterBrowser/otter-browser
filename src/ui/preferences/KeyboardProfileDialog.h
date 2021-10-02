@@ -125,6 +125,7 @@ protected:
 
 	void changeEvent(QEvent *event) override;
 	void addShortcuts(QStandardItemModel *model, int identifier, const QString &name, const QString &text, const QIcon &icon, const QVariantMap &rawParameters, const QVector<QKeySequence> &shortcuts, bool areShortcutsDisabled);
+	void addNewShortcut(bool isDisabled);
 
 private:
 	KeyboardProfile m_profile;
