@@ -252,10 +252,7 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 	{
 		addNewShortcut(true);
 	});
-	connect(m_ui->removeActionButton, &QPushButton::clicked, this, [&]()
-	{
-		m_ui->actionsViewWidget->removeRow();
-	});
+	connect(m_ui->removeActionButton, &QPushButton::clicked, m_ui->actionsViewWidget, &ItemViewWidget::removeRow);
 }
 
 KeyboardProfileDialog::~KeyboardProfileDialog()
