@@ -352,6 +352,7 @@ KeyboardProfile KeyboardProfileDialog::getProfile() const
 		if (action >= 0 && !shortcut.isEmpty())
 		{
 			const QVariantMap parameters(m_ui->actionsViewWidget->getIndex(i, 1).data(ParametersRole).toMap());
+			const bool isDisabled(m_ui->actionsViewWidget->getIndex(i, 3).data(IsDisabledRole).toBool());
 			bool hasMatch(false);
 
 			if (actions.contains(action))
@@ -362,7 +363,7 @@ KeyboardProfile KeyboardProfileDialog::getProfile() const
 				{
 					if (actionVariants.at(j).parameters == parameters)
 					{
-						if (m_ui->actionsViewWidget->getIndex(i, 3).data(IsDisabledRole).toBool())
+						if (isDisabled)
 						{
 							actionVariants[j].disabledShortcuts.append(shortcut);
 						}
@@ -382,7 +383,14 @@ KeyboardProfile KeyboardProfileDialog::getProfile() const
 
 			if (!hasMatch)
 			{
-				actions[action] = {{parameters, {shortcut}}};
+				if (isDisabled)
+				{
+					actions[action] = {{parameters, {}, {shortcut}}};
+				}
+				else
+				{
+					actions[action] = {{parameters, {shortcut}, {}}};
+				}
 			}
 		}
 	}
