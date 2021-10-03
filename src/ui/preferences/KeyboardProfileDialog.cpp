@@ -349,48 +349,50 @@ KeyboardProfile KeyboardProfileDialog::getProfile() const
 		const QKeySequence shortcut(m_ui->actionsViewWidget->getIndex(i, 3).data(Qt::DisplayRole).toString());
 		const int action(m_ui->actionsViewWidget->getIndex(i, 1).data(IdentifierRole).toInt());
 
-		if (action >= 0 && !shortcut.isEmpty())
+		if (action < 0 || shortcut.isEmpty())
 		{
-			const QVariantMap parameters(m_ui->actionsViewWidget->getIndex(i, 1).data(ParametersRole).toMap());
-			const bool isDisabled(m_ui->actionsViewWidget->getIndex(i, 3).data(IsDisabledRole).toBool());
-			bool hasMatch(false);
+			continue;
+		}
 
-			if (actions.contains(action))
+		const QVariantMap parameters(m_ui->actionsViewWidget->getIndex(i, 1).data(ParametersRole).toMap());
+		const bool isDisabled(m_ui->actionsViewWidget->getIndex(i, 3).data(IsDisabledRole).toBool());
+		bool hasMatch(false);
+
+		if (actions.contains(action))
+		{
+			QVector<ShortcutsDefinition> actionVariants(actions[action]);
+
+			for (int j = 0; j < actionVariants.count(); ++j)
 			{
-				QVector<ShortcutsDefinition> actionVariants(actions[action]);
-
-				for (int j = 0; j < actionVariants.count(); ++j)
+				if (actionVariants.at(j).parameters == parameters)
 				{
-					if (actionVariants.at(j).parameters == parameters)
+					if (isDisabled)
 					{
-						if (isDisabled)
-						{
-							actionVariants[j].disabledShortcuts.append(shortcut);
-						}
-						else
-						{
-							actionVariants[j].shortcuts.append(shortcut);
-						}
-
-						actions[action] = actionVariants;
-
-						hasMatch = true;
-
-						break;
+						actionVariants[j].disabledShortcuts.append(shortcut);
 					}
+					else
+					{
+						actionVariants[j].shortcuts.append(shortcut);
+					}
+
+					actions[action] = actionVariants;
+
+					hasMatch = true;
+
+					break;
 				}
 			}
+		}
 
-			if (!hasMatch)
+		if (!hasMatch)
+		{
+			if (isDisabled)
 			{
-				if (isDisabled)
-				{
-					actions[action] = {{parameters, {}, {shortcut}}};
-				}
-				else
-				{
-					actions[action] = {{parameters, {shortcut}, {}}};
-				}
+				actions[action] = {{parameters, {}, {shortcut}}};
+			}
+			else
+			{
+				actions[action] = {{parameters, {shortcut}, {}}};
 			}
 		}
 	}
