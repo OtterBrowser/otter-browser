@@ -275,9 +275,9 @@ void KeyboardProfileDialog::addShortcuts(QStandardItemModel *model, int identifi
 {
 	const QString parameters(rawParameters.isEmpty() ? QString() : QString::fromLatin1(QJsonDocument(QJsonObject::fromVariantMap(rawParameters)).toJson(QJsonDocument::Compact)));
 
-	for (int j = 0; j < shortcuts.count(); ++j)
+	for (int i = 0; i < shortcuts.count(); ++i)
 	{
-		const QKeySequence shortcut(shortcuts.at(j));
+		const QKeySequence shortcut(shortcuts.at(i));
 		QList<QStandardItem*> items({new QStandardItem(), new QStandardItem(text), new QStandardItem(parameters), new QStandardItem(shortcut.toString())});
 		items[0]->setData(NormalStatus, StatusRole);
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
