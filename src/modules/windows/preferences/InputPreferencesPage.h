@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,60 +17,35 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_PREFERENCESCONTENTSWIDGET_H
-#define OTTER_PREFERENCESCONTENTSWIDGET_H
+#ifndef OTTER_INPUTPREFERENCESPAGE_H
+#define OTTER_INPUTPREFERENCESPAGE_H
 
-#include "../../../ui/ContentsWidget.h"
+#include "PreferencesPage.h"
 
 namespace Otter
 {
 
 namespace Ui
 {
-	class PreferencesContentsWidget;
+	class InputPreferencesPage;
 }
 
-class PreferencesContentsWidget final : public ContentsWidget
+class InputPreferencesPage final : public PreferencesPage
 {
 	Q_OBJECT
 
 public:
-	explicit PreferencesContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
-	~PreferencesContentsWidget();
-
-	QString getTitle() const override;
-	QLatin1String getType() const override;
-	QUrl getUrl() const override;
-	QIcon getIcon() const override;
+	explicit InputPreferencesPage(QWidget *parent);
+	~InputPreferencesPage();
 
 public slots:
-	void setUrl(const QUrl &url, bool isTypedIn = true) override;
+	void save() override;
 
 protected:
-	enum TabIndex
-	{
-		GeneralTab = 0,
-		ContentTab = 1,
-		PrivacyTab = 2,
-		SearchTab = 3,
-		InputTab = 4,
-		WebsitesTab = 5,
-		AdvancedTab = 6
-	};
-
 	void changeEvent(QEvent *event) override;
-	void updateStyle();
-
-protected slots:
-	void markAsModified();
-	void showTab(int tab);
 
 private:
-	QVector<bool> m_loadedTabs;
-	Ui::PreferencesContentsWidget *m_ui;
-
-signals:
-	void requestedSave();
+	Ui::InputPreferencesPage *m_ui;
 };
 
 }

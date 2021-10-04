@@ -261,6 +261,7 @@ set(otter_src
 	src/modules/windows/preferences/AdvancedPreferencesPage.cpp
 	src/modules/windows/preferences/ContentPreferencesPage.cpp
 	src/modules/windows/preferences/GeneralPreferencesPage.cpp
+	src/modules/windows/preferences/InputPreferencesPage.cpp
 	src/modules/windows/preferences/PreferencesContentsWidget.cpp
 	src/modules/windows/preferences/PreferencesPage.cpp
 	src/modules/windows/preferences/PrivacyPreferencesPage.cpp
@@ -341,6 +342,7 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/preferences/AdvancedPreferencesPage.ui
 	src/modules/windows/preferences/ContentPreferencesPage.ui
 	src/modules/windows/preferences/GeneralPreferencesPage.ui
+	src/modules/windows/preferences/InputPreferencesPage.ui
 	src/modules/windows/preferences/PreferencesContentsWidget.ui
 	src/modules/windows/preferences/PrivacyPreferencesPage.ui
 	src/modules/windows/preferences/SearchPreferencesPage.ui

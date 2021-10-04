@@ -21,6 +21,7 @@
 #include "AdvancedPreferencesPage.h"
 #include "ContentPreferencesPage.h"
 #include "GeneralPreferencesPage.h"
+#include "InputPreferencesPage.h"
 #include "PrivacyPreferencesPage.h"
 #include "SearchPreferencesPage.h"
 #include "WebsitesPreferencesPage.h"
@@ -43,7 +44,7 @@ PreferencesContentsWidget::PreferencesContentsWidget(const QVariantMap &paramete
 {
 	m_ui->setupUi(this);
 
-	m_loadedTabs.fill(false, 6);
+	m_loadedTabs.fill(false, (AdvancedTab + 1));
 
 	updateStyle();
 	showTab(GeneralTab);
@@ -166,6 +167,20 @@ void PreferencesContentsWidget::showTab(int tab)
 			}
 
 			break;
+		case InputTab:
+			{
+				InputPreferencesPage *page(new InputPreferencesPage(this));
+
+				m_ui->inputScrollArea->setWidget(page);
+				m_ui->inputScrollArea->viewport()->setAutoFillBackground(false);
+
+				page->setAutoFillBackground(false);
+
+				connect(this, &PreferencesContentsWidget::requestedSave, page, &InputPreferencesPage::save);
+				connect(page, &InputPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
+			}
+
+			break;
 		case WebsitesTab:
 			{
 				WebsitesPreferencesPage *page(new WebsitesPreferencesPage(this));
@@ -279,6 +294,10 @@ void PreferencesContentsWidget::setUrl(const QUrl &url, bool isTypedIn)
 	{
 		tab = WebsitesTab;
 	}
+	else if (section == QLatin1String("input"))
+	{
+		tab = InputTab;
+	}
 	else if (section == QLatin1String("advanced"))
 	{
 		tab = AdvancedTab;
@@ -313,6 +332,10 @@ QUrl PreferencesContentsWidget::getUrl() const
 			break;
 		case SearchTab:
 			url.setFragment(QLatin1String("search"));
+
+			break;
+		case InputTab:
+			url.setFragment(QLatin1String("input"));
 
 			break;
 		case WebsitesTab:
