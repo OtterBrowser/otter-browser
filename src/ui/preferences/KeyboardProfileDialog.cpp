@@ -383,16 +383,20 @@ KeyboardProfile KeyboardProfileDialog::getProfile() const
 				}
 			}
 		}
+		else
+		{
+			actions[action] = {};
+		}
 
 		if (!hasMatch)
 		{
 			if (isDisabled)
 			{
-				actions[action] = {{parameters, {}, {shortcut}}};
+				actions[action].append({parameters, {}, {shortcut}});
 			}
 			else
 			{
-				actions[action] = {{parameters, {shortcut}, {}}};
+				actions[action].append({parameters, {shortcut}, {}});
 			}
 		}
 	}
