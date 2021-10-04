@@ -135,7 +135,7 @@
 			{
 				"action": "Delete",
 				"shortcuts": [
-					"Delete"
+					"Del"
 				]
 			},
 			{
@@ -202,7 +202,6 @@
 					"Ctrl+Return"
 				]
 			},
-
 			{
 				"action": "GoBack",
 				"shortcuts": [
@@ -436,8 +435,7 @@
 			},
 			{
 				"action": "ShowToolBar",
-				"parameters":
-				{
+				"parameters": {
 					"toolBar": "MenuBar"
 				},
 				"shortcuts": [
