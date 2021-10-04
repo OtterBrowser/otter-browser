@@ -401,15 +401,6 @@
 				]
 			},
 			{
-				"action": "OpenBookmark",
-				"parameters": {
-					"startPageTile": 10
-				},
-				"shortcuts": [
-					"Ctrl+0"
-				]
-			},
-			{
 				"action": "QuickBookmarkAccess",
 				"shortcuts": [
 					"Shift+F2"
