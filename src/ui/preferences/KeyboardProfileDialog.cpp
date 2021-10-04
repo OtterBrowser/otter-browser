@@ -337,10 +337,14 @@ KeyboardProfile KeyboardProfileDialog::getProfile() const
 					}
 				}
 			}
+			else
+			{
+				actions[action] = {};
+			}
 
 			if (!hasMatch)
 			{
-				actions[action] = {{parameters, {shortcut}}};
+				actions[action].append({parameters, {shortcut}});
 			}
 		}
 	}
