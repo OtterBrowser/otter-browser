@@ -163,6 +163,14 @@ void KeyboardProfile::setDefinitions(const QHash<int, QVector<KeyboardProfile::A
 	}
 }
 
+void KeyboardProfile::setMetaData(const MetaData &metaData)
+{
+	setTitle(metaData.title);
+	setDescription(metaData.description);
+	setVersion(metaData.version);
+	setAuthor(metaData.author);
+}
+
 void KeyboardProfile::setModified(bool isModified)
 {
 	m_isModified = isModified;
@@ -191,6 +199,18 @@ QString KeyboardProfile::getAuthor() const
 QString KeyboardProfile::getVersion() const
 {
 	return m_version;
+}
+
+Addon::MetaData KeyboardProfile::getMetaData() const
+{
+	Addon::MetaData metaData;
+	metaData.title = getTitle();
+	metaData.description = getDescription();
+	metaData.version = getVersion();
+	metaData.author = getAuthor();
+	metaData.homepage = getHomePage();
+
+	return metaData;
 }
 
 QHash<int, QVector<KeyboardProfile::Action> > KeyboardProfile::getDefinitions() const

@@ -57,12 +57,14 @@ public:
 	void setAuthor(const QString &author);
 	void setVersion(const QString &version);
 	void setDefinitions(const QHash<int, QVector<Action> > &definitions);
+	void setMetaData(const MetaData &metaData);
 	void setModified(bool isModified);
 	QString getName() const override;
 	QString getTitle() const override;
 	QString getDescription() const override;
 	QString getAuthor() const;
 	QString getVersion() const override;
+	MetaData getMetaData() const;
 	QHash<int, QVector<Action> > getDefinitions() const;
 	bool isModified() const;
 	bool isValid() const;
