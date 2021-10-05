@@ -174,6 +174,7 @@ set(otter_src
 	src/ui/MasterPasswordDialog.cpp
 	src/ui/Menu.cpp
 	src/ui/MenuBarWidget.cpp
+	src/ui/MetaDataDialog.cpp
 	src/ui/NotificationDialog.cpp
 	src/ui/OpenAddressDialog.cpp
 	src/ui/OpenBookmarkDialog.cpp
@@ -303,6 +304,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/LocaleDialog.ui
 	src/ui/MainWindow.ui
 	src/ui/MasterPasswordDialog.ui
+	src/ui/MetaDataDialog.ui
 	src/ui/OpenAddressDialog.ui
 	src/ui/OpenBookmarkDialog.ui
 	src/ui/PreferencesDialog.ui
