@@ -174,7 +174,7 @@ void KeyboardProfile::setMetaData(const MetaData &metaData)
 	setVersion(metaData.version);
 	setAuthor(metaData.author);
 
-	m_homePage = metaData.homepage;
+	m_homePage = metaData.homePage;
 }
 
 void KeyboardProfile::setModified(bool isModified)
@@ -219,7 +219,7 @@ Addon::MetaData KeyboardProfile::getMetaData() const
 	metaData.description = getDescription();
 	metaData.version = getVersion();
 	metaData.author = getAuthor();
-	metaData.homepage = getHomePage();
+	metaData.homePage = getHomePage();
 
 	return metaData;
 }

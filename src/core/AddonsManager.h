@@ -40,7 +40,7 @@ public:
 		QString description;
 		QString author;
 		QString version;
-		QUrl homepage;
+		QUrl homePage;
 	};
 
 	enum AddonType

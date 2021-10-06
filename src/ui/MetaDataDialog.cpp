@@ -33,7 +33,7 @@ MetaDataDialog::MetaDataDialog(const Addon::MetaData &metaData, QWidget *parent)
 	m_ui->descriptionLineEditWidget->setText(metaData.description);
 	m_ui->versionLineEditWidget->setText(metaData.version);
 	m_ui->authorLineEditWidget->setText(metaData.author);
-	m_ui->homepageLineEditWidget->setText(metaData.homepage.toString());
+	m_ui->homepageLineEditWidget->setText(metaData.homePage.toString());
 
 	const QList<QLineEdit*> lineEdits(findChildren<QLineEdit*>());
 
@@ -68,7 +68,7 @@ Addon::MetaData MetaDataDialog::getMetaData() const
 	metaData.description = m_ui->descriptionLineEditWidget->text();
 	metaData.version = m_ui->versionLineEditWidget->text();
 	metaData.author = m_ui->authorLineEditWidget->text();
-	metaData.homepage = QUrl(m_ui->homepageLineEditWidget->text());
+	metaData.homePage = QUrl(m_ui->homepageLineEditWidget->text());
 
 	return metaData;
 }
