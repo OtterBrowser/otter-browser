@@ -71,6 +71,10 @@ KeyboardProfile::KeyboardProfile(const QString &identifier, LoadMode mode) :
 		{
 			m_version = value;
 		}
+		else if (key == QLatin1String("HomePage"))
+		{
+			m_homePage = QUrl(value);
+		}
 	}
 
 	if (mode == MetaDataOnlyMode)
@@ -169,6 +173,8 @@ void KeyboardProfile::setMetaData(const MetaData &metaData)
 	setDescription(metaData.description);
 	setVersion(metaData.version);
 	setAuthor(metaData.author);
+
+	m_homePage = metaData.homepage;
 }
 
 void KeyboardProfile::setModified(bool isModified)
@@ -199,6 +205,11 @@ QString KeyboardProfile::getAuthor() const
 QString KeyboardProfile::getVersion() const
 {
 	return m_version;
+}
+
+QUrl KeyboardProfile::getHomePage() const
+{
+	return m_homePage;
 }
 
 Addon::MetaData KeyboardProfile::getMetaData() const
@@ -271,6 +282,11 @@ bool KeyboardProfile::save()
 	stream << QLatin1String("Type: keyboard-profile\n");
 	stream << QLatin1String("Author: ") << m_author << QLatin1Char('\n');
 	stream << QLatin1String("Version: ") << m_version;
+
+	if (m_homePage.isValid())
+	{
+		stream << QLatin1Char('\n') << QLatin1String("HomePage: ") << m_homePage.toString();
+	}
 
 	settings.setComment(comment);
 

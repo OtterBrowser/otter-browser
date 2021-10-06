@@ -64,6 +64,7 @@ public:
 	QString getDescription() const override;
 	QString getAuthor() const;
 	QString getVersion() const override;
+	QUrl getHomePage() const override;
 	MetaData getMetaData() const;
 	QHash<int, QVector<Action> > getDefinitions() const;
 	bool isModified() const;
@@ -80,6 +81,7 @@ private:
 	QString m_description;
 	QString m_author;
 	QString m_version;
+	QUrl m_homePage;
 	QHash<int, QVector<Action> > m_definitions;
 	bool m_isModified;
 };
