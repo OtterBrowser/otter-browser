@@ -103,7 +103,7 @@
              </widget>
             </item>
             <item>
-             <layout class="QVBoxLayout" name="keyboardButtonsLayout" stretch="0,0,0,0,1,0">
+             <layout class="QVBoxLayout" name="keyboardProfilesButtonsLayout" stretch="0,0,0,0,1,0">
               <item>
                <widget class="QPushButton" name="keyboardAddProfileButton">
                 <property name="text">
@@ -146,16 +146,10 @@
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>0</width>
-                  <height>0</height>
-                 </size>
-                </property>
                </spacer>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="keyboardMoveButtonsLayout" stretch="0,1,0">
+               <layout class="QHBoxLayout" name="keyboardProfilesMoveButtonsLayout" stretch="0,1,0">
                 <item>
                  <widget class="QToolButton" name="keyboardMoveProfileUpButton">
                   <property name="enabled">
@@ -167,18 +161,12 @@
                  </widget>
                 </item>
                 <item>
-                 <spacer name="keyboardMoveButtonsSpacer">
+                 <spacer name="keyboardProfilesMoveButtonsSpacer">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
                   <property name="sizeType">
                    <enum>QSizePolicy::Minimum</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>0</width>
-                    <height>0</height>
-                   </size>
                   </property>
                  </spacer>
                 </item>
@@ -251,6 +239,9 @@
                <height>22</height>
               </size>
              </property>
+             <attribute name="headerDefaultSectionSize">
+              <number>150</number>
+             </attribute>
             </widget>
            </item>
           </layout>
