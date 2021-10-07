@@ -114,6 +114,7 @@ public:
 	explicit InputPreferencesPage(QWidget *parent);
 	~InputPreferencesPage();
 
+	static QString createParamatersPreview(const QVariantMap &rawParameters, const QString &separator);
 	static ValidationResult validateShortcut(const QKeySequence &shortcut, const QModelIndex &index);
 
 public slots:

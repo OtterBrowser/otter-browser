@@ -27,8 +27,6 @@
 #include "../../../ui/MetaDataDialog.h"
 
 #include <QtCore/QDir>
-#include <QtCore/QJsonDocument>
-#include <QtCore/QJsonObject>
 #include <QtCore/QTimer>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QPushButton>
@@ -132,20 +130,7 @@ void ParametersDelegate::initStyleOption(QStyleOptionViewItem *option, const QMo
 {
 	ItemDelegate::initStyleOption(option, index);
 
-	option->text.clear();
-
-	const QVariantMap rawParameters(index.sibling(index.row(), 1).data(InputPreferencesPage::ParametersRole).toMap());
-	QStringList parameters;
-	parameters.reserve(rawParameters.count());
-
-	QVariantMap::const_iterator iterator;
-
-	for (iterator = rawParameters.begin(); iterator != rawParameters.end(); ++iterator)
-	{
-		parameters.append(iterator.key() + QLatin1String(": ") + iterator.value().toString() + QLatin1Char(';'));
-	}
-
-	option->text = parameters.join(QLatin1Char(' '));
+	option->text = InputPreferencesPage::createParamatersPreview(index.sibling(index.row(), 1).data(InputPreferencesPage::ParametersRole).toMap(), QLatin1String("; "));
 }
 
 ShortcutDelegate::ShortcutDelegate(QObject *parent) : ItemDelegate(parent)
@@ -383,7 +368,7 @@ void InputPreferencesPage::loadKeyboardDefinitions(const QString &identifier)
 
 void InputPreferencesPage::addKeyboardShortcuts(QStandardItemModel *model, int identifier, const QString &name, const QString &text, const QIcon &icon, const QVariantMap &rawParameters, const QVector<QKeySequence> &shortcuts, bool areShortcutsDisabled)
 {
-	const QString parameters(rawParameters.isEmpty() ? QString() : QString::fromLatin1(QJsonDocument(QJsonObject::fromVariantMap(rawParameters)).toJson(QJsonDocument::Compact)));
+	const QString parameters(createParamatersPreview(rawParameters, QLatin1String("\n")));
 
 	for (int i = 0; i < shortcuts.count(); ++i)
 	{
@@ -633,6 +618,21 @@ QString InputPreferencesPage::createProfileIdentifier(QStandardItemModel *model,
 	}
 
 	return Utils::createIdentifier(base, identifiers);
+}
+
+QString InputPreferencesPage::createParamatersPreview(const QVariantMap &rawParameters, const QString &separator)
+{
+	QStringList parameters;
+	parameters.reserve(rawParameters.count());
+
+	QVariantMap::const_iterator iterator;
+
+	for (iterator = rawParameters.begin(); iterator != rawParameters.end(); ++iterator)
+	{
+		parameters.append(iterator.key() + QLatin1String(": ") + iterator.value().toString());
+	}
+
+	return parameters.join(separator);
 }
 
 InputPreferencesPage::ValidationResult InputPreferencesPage::validateShortcut(const QKeySequence &shortcut, const QModelIndex &index)
