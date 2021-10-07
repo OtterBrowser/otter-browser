@@ -30,7 +30,6 @@
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
-#include "../../../ui/preferences/KeyboardProfileDialog.h"
 #include "../../../ui/preferences/MouseProfileDialog.h"
 #include "../../../ui/preferences/ProxyPropertiesDialog.h"
 #include "../../../ui/preferences/UserAgentPropertiesDialog.h"
@@ -59,7 +58,7 @@ AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : PreferencesP
 	m_ui->setupUi(this);
 
 	QStandardItemModel *navigationModel(new QStandardItemModel(this));
-	const QStringList navigationTitles({tr("Browsing"), tr("Notifications"), tr("Appearance"), {}, tr("Downloads"), tr("Programs"), {}, tr("History"), tr("Network"), tr("Scripting"), tr("Security"), tr("Updates"), {}, tr("Keyboard"), tr("Mouse")});
+	const QStringList navigationTitles({tr("Browsing"), tr("Notifications"), tr("Appearance"), {}, tr("Downloads"), tr("Programs"), {}, tr("History"), tr("Network"), tr("Scripting"), tr("Security"), tr("Updates"), {}, tr("Mouse")});
 	int navigationIndex(0);
 
 	for (int i = 0; i < navigationTitles.count(); ++i)
@@ -301,43 +300,6 @@ AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : PreferencesP
 
 	updateUpdateChannelsActions();
 
-	m_ui->keyboardMoveDownButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-down")));
-	m_ui->keyboardMoveUpButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-up")));
-
-	QStandardItemModel *keyboardProfilesModel(new QStandardItemModel(this));
-	const QStringList keyboardProfiles(SettingsManager::getOption(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList());
-
-	for (int i = 0; i < keyboardProfiles.count(); ++i)
-	{
-		const KeyboardProfile profile(keyboardProfiles.at(i), KeyboardProfile::FullMode);
-
-		if (!profile.isValid())
-		{
-			continue;
-		}
-
-		m_keyboardProfiles[keyboardProfiles.at(i)] = profile;
-
-		QStandardItem *item(new QStandardItem(profile.getTitle()));
-		item->setToolTip(profile.getDescription());
-		item->setData(profile.getName(), Qt::UserRole);
-		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
-
-		keyboardProfilesModel->appendRow(item);
-	}
-
-	m_ui->keyboardViewWidget->setModel(keyboardProfilesModel);
-	m_ui->keyboardViewWidget->setRowsMovable(true);
-
-	QMenu *addKeyboardProfileMenu(new QMenu(m_ui->keyboardAddButton));
-	addKeyboardProfileMenu->addAction(tr("New…"), this, &AdvancedPreferencesPage::addKeyboardProfile);
-	addKeyboardProfileMenu->addAction(tr("Re-add"))->setMenu(new QMenu(m_ui->keyboardAddButton));
-
-	m_ui->keyboardAddButton->setMenu(addKeyboardProfileMenu);
-	m_ui->keyboardEnableSingleKeyShortcutsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool());
-
-	updateReaddKeyboardProfileMenu();
-
 	m_ui->mouseMoveDownButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-down")));
 	m_ui->mouseMoveUpButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-up")));
 
@@ -412,16 +374,6 @@ AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : PreferencesP
 	connect(m_ui->ciphersMoveDownButton, &QToolButton::clicked, m_ui->ciphersViewWidget, &ItemViewWidget::moveDownRow);
 	connect(m_ui->ciphersMoveUpButton, &QToolButton::clicked, m_ui->ciphersViewWidget, &ItemViewWidget::moveUpRow);
 	connect(m_ui->updateChannelsItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateUpdateChannelsActions);
-	connect(m_ui->keyboardViewWidget, &ItemViewWidget::canMoveRowDownChanged, m_ui->keyboardMoveDownButton, &QToolButton::setEnabled);
-	connect(m_ui->keyboardViewWidget, &ItemViewWidget::canMoveRowUpChanged, m_ui->keyboardMoveUpButton, &QToolButton::setEnabled);
-	connect(m_ui->keyboardViewWidget, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateKeyboardProfileActions);
-	connect(m_ui->keyboardViewWidget, &ItemViewWidget::doubleClicked, this, &AdvancedPreferencesPage::editKeyboardProfile);
-	connect(m_ui->keyboardAddButton->menu()->actions().at(1)->menu(), &QMenu::triggered, this, &AdvancedPreferencesPage::readdKeyboardProfile);
-	connect(m_ui->keyboardEditButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::editKeyboardProfile);
-	connect(m_ui->keyboardCloneButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::cloneKeyboardProfile);
-	connect(m_ui->keyboardRemoveButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::removeKeyboardProfile);
-	connect(m_ui->keyboardMoveDownButton, &QToolButton::clicked, m_ui->keyboardViewWidget, &ItemViewWidget::moveDownRow);
-	connect(m_ui->keyboardMoveUpButton, &QToolButton::clicked, m_ui->keyboardViewWidget, &ItemViewWidget::moveUpRow);
 	connect(m_ui->mouseViewWidget, &ItemViewWidget::canMoveRowDownChanged, m_ui->mouseMoveDownButton, &QToolButton::setEnabled);
 	connect(m_ui->mouseViewWidget, &ItemViewWidget::canMoveRowUpChanged, m_ui->mouseMoveUpButton, &QToolButton::setEnabled);
 	connect(m_ui->mouseViewWidget, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateMouseProfileActions);
@@ -452,7 +404,7 @@ void AdvancedPreferencesPage::changeEvent(QEvent *event)
 			break;
 		case QEvent::LanguageChange:
 			{
-				const QStringList navigationTitles({tr("Browsing"), tr("Notifications"), tr("Appearance"), {}, tr("Downloads"), tr("Programs"), {}, tr("History"), tr("Network"), tr("Scripting"), tr("Security"), tr("Updates"), {}, tr("Keyboard"), tr("Mouse")});
+				const QStringList navigationTitles({tr("Browsing"), tr("Notifications"), tr("Appearance"), {}, tr("Downloads"), tr("Programs"), {}, tr("History"), tr("Network"), tr("Scripting"), tr("Security"), tr("Updates"), {}, tr("Mouse")});
 
 				m_ui->retranslateUi(this);
 				m_ui->browsingDisplayModeComboBox->setItemText(0, tr("Compact"));
@@ -1141,207 +1093,6 @@ void AdvancedPreferencesPage::updateUpdateChannelsActions()
 	m_ui->autoInstallCheckBox->setEnabled(hasSelectedUpdateChannels);
 }
 
-void AdvancedPreferencesPage::addKeyboardProfile()
-{
-	const QString identifier(createProfileIdentifier(m_ui->keyboardViewWidget->getSourceModel()));
-
-	if (identifier.isEmpty())
-	{
-		return;
-	}
-
-	m_keyboardProfiles[identifier] = KeyboardProfile(identifier);
-
-	QStandardItem *item(new QStandardItem(tr("(Untitled)")));
-	item->setData(identifier, Qt::UserRole);
-	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
-
-	m_ui->keyboardViewWidget->insertRow({item});
-}
-
-void AdvancedPreferencesPage::readdKeyboardProfile(QAction *action)
-{
-	if (!action || action->data().isNull())
-	{
-		return;
-	}
-
-	const QString identifier(action->data().toString());
-	const KeyboardProfile profile(identifier, KeyboardProfile::FullMode);
-
-	if (!profile.isValid())
-	{
-		return;
-	}
-
-	m_keyboardProfiles[identifier] = profile;
-
-	QStandardItem *item(new QStandardItem(profile.getTitle()));
-	item->setToolTip(profile.getDescription());
-	item->setData(profile.getName(), Qt::UserRole);
-	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
-
-	m_ui->keyboardViewWidget->insertRow({item});
-
-	updateReaddKeyboardProfileMenu();
-}
-
-void AdvancedPreferencesPage::editKeyboardProfile()
-{
-	const QModelIndex index(m_ui->keyboardViewWidget->currentIndex());
-	const QString identifier(index.data(Qt::UserRole).toString());
-
-	if (identifier.isEmpty() || !m_keyboardProfiles.contains(identifier))
-	{
-		if (!index.isValid())
-		{
-			addKeyboardProfile();
-		}
-
-		return;
-	}
-
-	KeyboardProfileDialog dialog(identifier, m_keyboardProfiles, m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked(), this);
-
-	if (dialog.exec() == QDialog::Rejected || !dialog.isModified())
-	{
-		return;
-	}
-
-	const KeyboardProfile profile(dialog.getProfile());
-
-	m_keyboardProfiles[identifier] = profile;
-
-	m_ui->keyboardViewWidget->markAsModified();
-	m_ui->keyboardViewWidget->setData(index, profile.getTitle(), Qt::DisplayRole);
-	m_ui->keyboardViewWidget->setData(index, profile.getDescription(), Qt::ToolTipRole);
-}
-
-void AdvancedPreferencesPage::cloneKeyboardProfile()
-{
-	const QString identifier(m_ui->keyboardViewWidget->currentIndex().data(Qt::UserRole).toString());
-
-	if (identifier.isEmpty() || !m_keyboardProfiles.contains(identifier))
-	{
-		return;
-	}
-
-	const QString newIdentifier(createProfileIdentifier(m_ui->keyboardViewWidget->getSourceModel(), identifier));
-
-	if (newIdentifier.isEmpty())
-	{
-		return;
-	}
-
-	const KeyboardProfile profile(identifier, KeyboardProfile::FullMode);
-	KeyboardProfile newProfile(newIdentifier, KeyboardProfile::MetaDataOnlyMode);
-	newProfile.setAuthor(profile.getAuthor());
-	newProfile.setDefinitions(profile.getDefinitions());
-	newProfile.setDescription(profile.getDescription());
-	newProfile.setTitle(profile.getTitle());
-	newProfile.setVersion(profile.getVersion());
-
-	m_keyboardProfiles[newIdentifier] = newProfile;
-
-	QStandardItem *item(new QStandardItem(newProfile.getTitle()));
-	item->setToolTip(newProfile.getDescription());
-	item->setData(newIdentifier, Qt::UserRole);
-	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
-
-	m_ui->keyboardViewWidget->insertRow({item});
-}
-
-void AdvancedPreferencesPage::removeKeyboardProfile()
-{
-	const QString identifier(m_ui->keyboardViewWidget->currentIndex().data(Qt::UserRole).toString());
-
-	if (identifier.isEmpty() || !m_keyboardProfiles.contains(identifier))
-	{
-		return;
-	}
-
-	QMessageBox messageBox;
-	messageBox.setWindowTitle(tr("Question"));
-	messageBox.setText(tr("Do you really want to remove this profile?"));
-	messageBox.setIcon(QMessageBox::Question);
-	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
-	messageBox.setDefaultButton(QMessageBox::Cancel);
-
-	const QString path(SessionsManager::getWritableDataPath(QLatin1String("keyboard/") + identifier + QLatin1String(".json")));
-
-	if (QFile::exists(path))
-	{
-		messageBox.setCheckBox(new QCheckBox(tr("Delete profile permanently")));
-	}
-
-	if (messageBox.exec() == QMessageBox::Yes)
-	{
-		if (messageBox.checkBox() && messageBox.checkBox()->isChecked())
-		{
-			m_filesToRemove.append(path);
-		}
-
-		m_keyboardProfiles.remove(identifier);
-
-		m_ui->keyboardViewWidget->removeRow();
-
-		updateReaddKeyboardProfileMenu();
-	}
-}
-
-void AdvancedPreferencesPage::updateKeyboardProfileActions()
-{
-	const int currentRow(m_ui->keyboardViewWidget->getCurrentRow());
-	const bool isSelected(currentRow >= 0 && currentRow < m_ui->keyboardViewWidget->getRowCount());
-
-	m_ui->keyboardEditButton->setEnabled(isSelected);
-	m_ui->keyboardCloneButton->setEnabled(isSelected);
-	m_ui->keyboardRemoveButton->setEnabled(isSelected);
-}
-
-void AdvancedPreferencesPage::updateReaddKeyboardProfileMenu()
-{
-	if (!m_ui->keyboardAddButton->menu())
-	{
-		return;
-	}
-
-	QStringList availableIdentifiers;
-	QVector<KeyboardProfile> availableKeyboardProfiles;
-	const QList<QFileInfo> allKeyboardProfiles(QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"))).entryInfoList({QLatin1String("*.json")}, QDir::Files) + QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"), true)).entryInfoList({QLatin1String("*.json")}, QDir::Files));
-
-	for (int i = 0; i < allKeyboardProfiles.count(); ++i)
-	{
-		const QString identifier(allKeyboardProfiles.at(i).baseName());
-
-		if (!m_keyboardProfiles.contains(identifier) && !availableIdentifiers.contains(identifier))
-		{
-			const KeyboardProfile profile(identifier, KeyboardProfile::MetaDataOnlyMode);
-
-			if (profile.isValid())
-			{
-				availableIdentifiers.append(identifier);
-
-				availableKeyboardProfiles.append(profile);
-			}
-		}
-	}
-
-	if (!availableIdentifiers.contains(QLatin1String("default")) && !m_keyboardProfiles.contains(QLatin1String("default")))
-	{
-		availableKeyboardProfiles.prepend(KeyboardProfile(QLatin1String("default"), KeyboardProfile::MetaDataOnlyMode));
-	}
-
-	QMenu *readdMenu(m_ui->keyboardAddButton->menu()->actions().at(1)->menu());
-	readdMenu->clear();
-	readdMenu->setEnabled(!availableKeyboardProfiles.isEmpty());
-
-	for (int i = 0; i < availableKeyboardProfiles.count(); ++i)
-	{
-		readdMenu->addAction(availableKeyboardProfiles.at(i).getTitle())->setData(availableKeyboardProfiles.at(i).getName());
-	}
-}
-
 void AdvancedPreferencesPage::addMouseProfile()
 {
 	const QString identifier(createProfileIdentifier(m_ui->mouseViewWidget->getSourceModel()));
@@ -1722,41 +1473,6 @@ void AdvancedPreferencesPage::save()
 	SettingsManager::setOption(SettingsManager::Updates_AutomaticInstallOption, m_ui->autoInstallCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::Updates_CheckIntervalOption, m_ui->intervalSpinBox->value());
 
-	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("keyboard")));
-
-	bool needsKeyboardProfilesReload(false);
-	QHash<QString, KeyboardProfile>::iterator keyboardProfilesIterator;
-
-	for (keyboardProfilesIterator = m_keyboardProfiles.begin(); keyboardProfilesIterator != m_keyboardProfiles.end(); ++keyboardProfilesIterator)
-	{
-		if (keyboardProfilesIterator.value().isModified())
-		{
-			keyboardProfilesIterator.value().save();
-
-			needsKeyboardProfilesReload = true;
-		}
-	}
-
-	QStringList keyboardProfiles;
-	keyboardProfiles.reserve(m_ui->keyboardViewWidget->getRowCount());
-
-	for (int i = 0; i < m_ui->keyboardViewWidget->getRowCount(); ++i)
-	{
-		const QString identifier(m_ui->keyboardViewWidget->getIndex(i, 0).data(Qt::UserRole).toString());
-
-		if (!identifier.isEmpty())
-		{
-			keyboardProfiles.append(identifier);
-		}
-	}
-
-	if (needsKeyboardProfilesReload && SettingsManager::getOption(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList() == keyboardProfiles && SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool() == m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked())
-	{
-		ActionsManager::loadProfiles();
-	}
-
-	SettingsManager::setOption(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption, keyboardProfiles);
-	SettingsManager::setOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption, m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked());
 
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("mouse")));
 
@@ -1793,8 +1509,6 @@ void AdvancedPreferencesPage::save()
 
 	SettingsManager::setOption(SettingsManager::Browser_MouseProfilesOrderOption, mouseProfiles);
 	SettingsManager::setOption(SettingsManager::Browser_EnableMouseGesturesOption, m_ui->mouseEnableGesturesCheckBox->isChecked());
-
-	updateReaddKeyboardProfileMenu();
 }
 
 void AdvancedPreferencesPage::updatePageSwitcher()

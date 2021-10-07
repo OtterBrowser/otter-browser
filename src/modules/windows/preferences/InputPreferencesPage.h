@@ -1,6 +1,8 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,31 +23,125 @@
 #define OTTER_INPUTPREFERENCESPAGE_H
 
 #include "PreferencesPage.h"
+#include "../../../core/ActionsManager.h"
+#include "../../../ui/ItemDelegate.h"
+
+#include <QtGui/QStandardItemModel>
+#include <QtWidgets/QKeySequenceEdit>
+#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
-
 namespace Ui
 {
 	class InputPreferencesPage;
 }
+
+class ShortcutWidget final : public QKeySequenceEdit
+{
+	Q_OBJECT
+
+public:
+	explicit ShortcutWidget(const QKeySequence &shortcut, QWidget *parent = nullptr);
+
+protected:
+	void changeEvent(QEvent *event) override;
+
+private:
+	QToolButton *m_clearButton;
+
+signals:
+	void commitData(QWidget *editor);
+};
+
+class ActionDelegate final : public ItemDelegate
+{
+public:
+	explicit ActionDelegate(QObject *parent);
+
+	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
+	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+};
+
+class ShortcutDelegate final : public ItemDelegate
+{
+public:
+	explicit ShortcutDelegate(QObject *parent);
+
+	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
+	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+
+protected:
+	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
+};
 
 class InputPreferencesPage final : public PreferencesPage
 {
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		IdentifierRole = Qt::UserRole,
+		IsDisabledRole,
+		NameRole,
+		ParametersRole,
+		StatusRole
+	};
+
+	enum EntryStatus
+	{
+		ErrorStatus = 0,
+		WarningStatus,
+		NormalStatus
+	};
+
+	struct ValidationResult final
+	{
+		QString text;
+		QIcon icon;
+		bool isError = false;
+	};
+
 	explicit InputPreferencesPage(QWidget *parent);
 	~InputPreferencesPage();
+
+	static ValidationResult validateShortcut(const QKeySequence &shortcut, const QModelIndex &index);
 
 public slots:
 	void save() override;
 
 protected:
+	struct ShortcutsDefinition
+	{
+		QVariantMap parameters;
+		QVector<QKeySequence> shortcuts;
+		QVector<QKeySequence> disabledShortcuts;
+	};
+
 	void changeEvent(QEvent *event) override;
+	void loadKeyboardDefinitions(const QString &identifier);
+	void addKeyboardShortcuts(QStandardItemModel *model, int identifier, const QString &name, const QString &text, const QIcon &icon, const QVariantMap &rawParameters, const QVector<QKeySequence> &shortcuts, bool areShortcutsDisabled);
+	void addKeyboardShortcut(bool isDisabled);
+	QString createProfileIdentifier(QStandardItemModel *model, const QString &base = {}) const;
+	QHash<int, QVector<KeyboardProfile::Action> > getKeyboardDefinitions() const;
+
+protected slots:
+	void addKeyboardProfile();
+	void editKeyboardProfile();
+	void cloneKeyboardProfile();
+	void removeKeyboardProfile();
+	void updateKeyboardProfileActions();
+	void updateKeyboardShortcutActions();
 
 private:
+	QStandardItemModel *m_keyboardShortcutsModel;
+	QString m_activeKeyboardProfile;
+	QStringList m_filesToRemove;
+	QHash<QString, KeyboardProfile> m_keyboardProfiles;
 	Ui::InputPreferencesPage *m_ui;
+
+	static bool m_areSingleKeyShortcutsAllowed;
 };
 
 }

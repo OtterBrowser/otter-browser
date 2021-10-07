@@ -35,7 +35,6 @@ namespace Ui
 	class AdvancedPreferencesPage;
 }
 
-class KeyboardProfile;
 class MouseProfile;
 
 class AdvancedPreferencesPage final : public PreferencesPage
@@ -63,7 +62,6 @@ public slots:
 protected:
 	void changeEvent(QEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
-	void updateReaddKeyboardProfileMenu();
 	void updateReaddMouseProfileMenu();
 	void updateStyle();
 	QString createProfileIdentifier(QStandardItemModel *model, const QString &base = {}) const;
@@ -89,12 +87,6 @@ protected slots:
 	void removeCipher();
 	void updateCiphersActions();
 	void updateUpdateChannelsActions();
-	void addKeyboardProfile();
-	void readdKeyboardProfile(QAction *action);
-	void editKeyboardProfile();
-	void cloneKeyboardProfile();
-	void removeKeyboardProfile();
-	void updateKeyboardProfileActions();
 	void addMouseProfile();
 	void readdMouseProfile(QAction *action);
 	void editMouseProfile();
@@ -105,7 +97,6 @@ protected slots:
 
 private:
 	QStringList m_filesToRemove;
-	QHash<QString, KeyboardProfile> m_keyboardProfiles;
 	QHash<QString, MouseProfile> m_mouseProfiles;
 	QHash<QString, ProxyDefinition> m_proxies;
 	Ui::AdvancedPreferencesPage *m_ui;
