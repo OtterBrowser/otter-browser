@@ -63,6 +63,14 @@ public:
 	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
 
+class ParametersDelegate final : public ItemDelegate
+{
+public:
+	explicit ParametersDelegate(QObject *parent);
+
+	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
+};
+
 class ShortcutDelegate final : public ItemDelegate
 {
 public:

@@ -124,6 +124,30 @@ QWidget* ActionDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 	return widget;
 }
 
+ParametersDelegate::ParametersDelegate(QObject *parent) : ItemDelegate(parent)
+{
+}
+
+void ParametersDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+{
+	ItemDelegate::initStyleOption(option, index);
+
+	option->text.clear();
+
+	const QVariantMap rawParameters(index.sibling(index.row(), 1).data(InputPreferencesPage::ParametersRole).toMap());
+	QStringList parameters;
+	parameters.reserve(rawParameters.count());
+
+	QVariantMap::const_iterator iterator;
+
+	for (iterator = rawParameters.begin(); iterator != rawParameters.end(); ++iterator)
+	{
+		parameters.append(iterator.key() + QLatin1String(": ") + iterator.value().toString() + QLatin1Char(';'));
+	}
+
+	option->text = parameters.join(QLatin1Char(' '));
+}
+
 ShortcutDelegate::ShortcutDelegate(QObject *parent) : ItemDelegate(parent)
 {
 }
@@ -261,6 +285,7 @@ InputPreferencesPage::InputPreferencesPage(QWidget *parent) : PreferencesPage(pa
 
 	m_ui->keyboardShortcutsViewWidget->setModel(m_keyboardShortcutsModel);
 	m_ui->keyboardShortcutsViewWidget->setItemDelegateForColumn(1, new ActionDelegate(this));
+	m_ui->keyboardShortcutsViewWidget->setItemDelegateForColumn(2, new ParametersDelegate(this));
 	m_ui->keyboardShortcutsViewWidget->setItemDelegateForColumn(3, new ShortcutDelegate(this));
 	m_ui->keyboardShortcutsViewWidget->setFilterRoles({Qt::DisplayRole, NameRole});
 	m_ui->keyboardShortcutsViewWidget->setSortRoleMapping({{0, StatusRole}});
