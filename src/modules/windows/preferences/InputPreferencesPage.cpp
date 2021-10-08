@@ -658,7 +658,7 @@ QString InputPreferencesPage::createParamatersPreview(const QVariantMap &rawPara
 
 				break;
 			case QVariant::Map:
-				value = QLatin1String("{…}");
+				value = QStringLiteral("{…}");
 
 				break;
 			default:
