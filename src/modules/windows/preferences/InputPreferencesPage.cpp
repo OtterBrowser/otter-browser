@@ -24,6 +24,7 @@
 #include "../../../core/SessionsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/ActionComboBoxWidget.h"
+#include "../../../ui/ActionParametersDialog.h"
 #include "../../../ui/MetaDataDialog.h"
 
 #include <QtCore/QDir>
@@ -298,7 +299,10 @@ InputPreferencesPage::InputPreferencesPage(QWidget *parent) : PreferencesPage(pa
 	connect(m_ui->keyboardShortcutsFilterLineEditWidget, &QLineEdit::textChanged, m_ui->keyboardShortcutsViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->keyboardShortcutsViewWidget, &ItemViewWidget::needsActionsUpdate, this, [&]()
 	{
-		m_ui->keyboardRemoveShortcutButton->setEnabled(m_ui->keyboardShortcutsViewWidget->getCurrentIndex().isValid());
+		const bool isValid(m_ui->keyboardShortcutsViewWidget->getCurrentIndex().isValid());
+
+		m_ui->keyboardShortcutParametersButton->setEnabled(isValid);
+		m_ui->keyboardRemoveShortcutButton->setEnabled(isValid);
 	});
 	connect(m_ui->keyboardAddShortcutButton, &QPushButton::clicked, this, [&]()
 	{
@@ -308,6 +312,7 @@ InputPreferencesPage::InputPreferencesPage(QWidget *parent) : PreferencesPage(pa
 	{
 		addKeyboardShortcut(true);
 	});
+	connect(m_ui->keyboardShortcutParametersButton, &QPushButton::clicked, this, &InputPreferencesPage::editShortcutParameters);
 	connect(m_ui->keyboardRemoveShortcutButton, &QPushButton::clicked, m_ui->keyboardShortcutsViewWidget, &ItemViewWidget::removeRow);
 }
 
@@ -558,6 +563,20 @@ void InputPreferencesPage::updateKeyboardProfileActions()
 	updateKeyboardShortcutActions();
 }
 
+void InputPreferencesPage::editShortcutParameters()
+{
+	const QModelIndex index(m_ui->keyboardShortcutsViewWidget->getCurrentIndex(1));
+	ActionParametersDialog dialog(index.data(IdentifierRole).toInt(), index.sibling(index.row(), 1).data(ParametersRole).toMap(), this);
+
+	if (dialog.exec() == QDialog::Accepted && dialog.isModified())
+	{
+		const QVariantMap parameters(dialog.getParameters());
+
+		m_keyboardShortcutsModel->setData(index, parameters, ParametersRole);
+		m_keyboardShortcutsModel->item(index.row(), 2)->setToolTip(createParamatersPreview(parameters, QLatin1String("\n")));
+	}
+}
+
 void InputPreferencesPage::updateKeyboardShortcutActions()
 {
 	m_ui->keyboardShortcutsButtonsWidget->setEnabled(!m_activeKeyboardProfile.isEmpty() && m_keyboardProfiles.contains(m_activeKeyboardProfile));
@@ -629,7 +648,26 @@ QString InputPreferencesPage::createParamatersPreview(const QVariantMap &rawPara
 
 	for (iterator = rawParameters.begin(); iterator != rawParameters.end(); ++iterator)
 	{
-		parameters.append(iterator.key() + QLatin1String(": ") + iterator.value().toString());
+		QString value;
+
+		switch (iterator.value().type())
+		{
+			case QVariant::List:
+			case QVariant::StringList:
+				value = QLatin1Char('[') + iterator.value().toStringList().join(QLatin1String(", ")) + QLatin1Char(']');
+
+				break;
+			case QVariant::Map:
+				value = QLatin1String("{…}");
+
+				break;
+			default:
+				value = iterator.value().toString();
+
+				break;
+		}
+
+		parameters.append(iterator.key() + QLatin1String(": ") + value);
 	}
 
 	return parameters.join(separator);

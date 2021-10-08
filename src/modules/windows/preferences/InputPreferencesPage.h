@@ -141,6 +141,7 @@ protected slots:
 	void cloneKeyboardProfile();
 	void removeKeyboardProfile();
 	void updateKeyboardProfileActions();
+	void editShortcutParameters();
 	void updateKeyboardShortcutActions();
 
 private:

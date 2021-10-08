@@ -143,6 +143,7 @@ set(otter_src
 	src/ui/AcceptCookieDialog.cpp
 	src/ui/Action.cpp
 	src/ui/ActionComboBoxWidget.cpp
+	src/ui/ActionParametersDialog.cpp
 	src/ui/Animation.cpp
 	src/ui/ApplicationComboBoxWidget.cpp
 	src/ui/AuthenticationDialog.cpp
@@ -290,6 +291,7 @@ qt5_add_resources(otter_res
 
 qt5_wrap_ui(otter_ui
 	src/ui/AcceptCookieDialog.ui
+	src/ui/ActionParametersDialog.ui
 	src/ui/AuthenticationDialog.ui
 	src/ui/BookmarkPropertiesDialog.ui
 	src/ui/BookmarksImportOptionsWidget.ui
