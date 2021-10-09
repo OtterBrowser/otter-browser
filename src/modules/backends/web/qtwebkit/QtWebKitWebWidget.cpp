@@ -773,6 +773,10 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				Application::clipboard()->setMimeData(mimeData);
 			}
+			else if (parameters.value(QLatin1String("mode")) == QLatin1String("plainText"))
+			{
+				m_page->triggerAction(QWebPage::PasteAndMatchStyle);
+			}
 			else
 			{
 				m_page->triggerAction(QWebPage::Paste);
