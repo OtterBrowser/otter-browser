@@ -116,7 +116,8 @@
 					"mode": "plainText"
 				},
 				"shortcuts": [
-					"Ctrl+Alt+C"
+					"Ctrl+Alt+C",
+					"Ctrl+Shift+C"
 				]
 			},
 			{
