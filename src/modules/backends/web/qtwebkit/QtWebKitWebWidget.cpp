@@ -2769,6 +2769,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 					const HitTestResult hitResult(getCurrentHitTestResult());
 					QVector<GesturesManager::GesturesContext> contexts;
+					contexts.reserve(1);
 
 					if (hitResult.flags.testFlag(HitTestResult::IsContentEditableTest))
 					{
