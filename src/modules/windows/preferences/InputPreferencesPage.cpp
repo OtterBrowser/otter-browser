@@ -573,7 +573,7 @@ void InputPreferencesPage::editShortcutParameters()
 		const QVariantMap parameters(dialog.getParameters());
 
 		m_keyboardShortcutsModel->setData(index, parameters, ParametersRole);
-		m_keyboardShortcutsModel->item(index.row(), 2)->setToolTip(createParamatersPreview(parameters, QLatin1String("\n")));
+		m_keyboardShortcutsModel->setData(index.sibling(index.row(), 2), createParamatersPreview(parameters, QLatin1String("\n")), Qt::ToolTipRole);
 	}
 }
 
