@@ -30,7 +30,6 @@
 #include <QtCore/QDir>
 #include <QtCore/QTimer>
 #include <QtWidgets/QMessageBox>
-#include <QtWidgets/QPushButton>
 
 #include "ui_InputPreferencesPage.h"
 
@@ -222,17 +221,17 @@ bool InputPreferencesPage::m_areSingleKeyShortcutsAllowed(true);
 
 InputPreferencesPage::InputPreferencesPage(QWidget *parent) : PreferencesPage(parent),
 	m_keyboardShortcutsModel(new QStandardItemModel(this)),
+	m_advancedButton(new QPushButton(tr("Advanced…"), this)),
 	m_ui(new Ui::InputPreferencesPage)
 {
 	m_areSingleKeyShortcutsAllowed = SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool();
 
-	QPushButton *advancedButton(new QPushButton(tr("Advanced…"), this));
-	advancedButton->setCheckable(true);
-	advancedButton->setChecked(true);
-	advancedButton->setEnabled(false);
+	m_advancedButton->setCheckable(true);
+	m_advancedButton->setChecked(true);
+	m_advancedButton->setEnabled(false);
 
 	m_ui->setupUi(this);
-	m_ui->tabWidget->setCornerWidget(advancedButton);
+	m_ui->tabWidget->setCornerWidget(m_advancedButton);
 	m_ui->keyboardEnableSingleKeyShortcutsCheckBox->setChecked(m_areSingleKeyShortcutsAllowed);
 	m_ui->keyboardMoveProfileDownButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-down")));
 	m_ui->keyboardMoveProfileUpButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-up")));
@@ -330,6 +329,7 @@ void InputPreferencesPage::changeEvent(QEvent *event)
 		m_ui->retranslateUi(this);
 
 		m_keyboardShortcutsModel->setHorizontalHeaderLabels({tr("Status"), tr("Action"), tr("Parameters"), tr("Shortcut")});
+		m_advancedButton->setText(tr("Advanced…"));
 	}
 }
 

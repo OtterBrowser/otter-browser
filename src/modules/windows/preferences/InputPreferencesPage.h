@@ -28,6 +28,7 @@
 
 #include <QtGui/QStandardItemModel>
 #include <QtWidgets/QKeySequenceEdit>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QToolButton>
 
 namespace Otter
@@ -146,6 +147,7 @@ protected slots:
 
 private:
 	QStandardItemModel *m_keyboardShortcutsModel;
+	QPushButton *m_advancedButton;
 	QString m_activeKeyboardProfile;
 	QStringList m_filesToRemove;
 	QHash<QString, KeyboardProfile> m_keyboardProfiles;
