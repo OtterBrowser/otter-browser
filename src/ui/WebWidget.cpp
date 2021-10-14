@@ -1272,7 +1272,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 				if (parameters.value(QLatin1String("clearGlobalHistory"), false).toBool())
 				{
 					state.text = QCoreApplication::translate("actions", "Purge History Entry");
-					state.isEnabled = (m_backend->getCapabilityScopes(WebBackend::HistoryMetadataCapability).testFlag(WebBackend::TabScope) && getGlobalHistoryEntryIdentifier(index) > 0);
+					state.isEnabled = (m_backend->getCapabilityScopes(WebBackend::HistoryMetaDataCapability).testFlag(WebBackend::TabScope) && getGlobalHistoryEntryIdentifier(index) > 0);
 				}
 				else if (index >= 0 && index < getHistory().entries.count())
 				{

@@ -57,7 +57,7 @@ public:
 		DoNotTrackCapability,
 		FindInPageHighlightAllCapability,
 		FindInPageExactMatchCapability,
-		HistoryMetadataCapability,
+		HistoryMetaDataCapability,
 		PasswordsManagementCapability,
 		PluginsOnDemandCapability,
 		ProxyCapability,
