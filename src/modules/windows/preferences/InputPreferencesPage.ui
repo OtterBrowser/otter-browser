@@ -40,7 +40,7 @@
        </item>
        <item>
         <widget class="QWidget" name="keyboardProfilesWidget" native="true">
-         <layout class="QVBoxLayout" name="keyboardProfilesLayout">
+         <layout class="QVBoxLayout" name="keyboardProfilesWidgetLayout">
           <property name="leftMargin">
            <number>0</number>
           </property>
