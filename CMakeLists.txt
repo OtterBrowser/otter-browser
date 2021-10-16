@@ -165,6 +165,7 @@ set(otter_src
 	src/ui/FeedPropertiesDialog.cpp
 	src/ui/FeedsComboBoxWidget.cpp
 	src/ui/FilePathWidget.cpp
+	src/ui/HeaderWidget.cpp
 	src/ui/IconWidget.cpp
 	src/ui/ImagePropertiesDialog.cpp
 	src/ui/ItemDelegate.cpp
