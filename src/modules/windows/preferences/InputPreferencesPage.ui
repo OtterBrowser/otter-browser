@@ -22,13 +22,7 @@
       </attribute>
       <layout class="QVBoxLayout" name="keyboardLayout" stretch="0,0,1,0,3">
        <item>
-        <widget class="QLabel" name="keyboardOptionsHeader">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
+        <widget class="Otter::HeaderWidget" name="keyboardOptionsHeaderWidget">
          <property name="text">
           <string>Options</string>
          </property>
@@ -60,13 +54,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="keyboardProfilesHeader">
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
+           <widget class="Otter::HeaderWidget" name="keyboardProfilesHeaderWidget">
             <property name="text">
              <string>Profiles</string>
             </property>
@@ -190,13 +178,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="keyboardShortcutsHeader">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
+        <widget class="Otter::HeaderWidget" name="keyboardShortcutsHeaderWidget">
          <property name="text">
           <string>Shortcuts</string>
          </property>
@@ -331,6 +313,11 @@
    <class>Otter::LineEditWidget</class>
    <extends>QLineEdit</extends>
    <header>src/ui/LineEditWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Otter::HeaderWidget</class>
+   <extends>QLabel</extends>
+   <header>src/ui/HeaderWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
