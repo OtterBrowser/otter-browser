@@ -12,13 +12,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="startupHeader">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
+    <widget class="Otter::HeaderWidget" name="startupHeaderWidget">
      <property name="text">
       <string>Startup</string>
      </property>
@@ -97,13 +91,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="downloadsHeader">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
+    <widget class="Otter::HeaderWidget" name="downloadsHeaderWidget">
      <property name="text">
       <string>Downloads</string>
      </property>
@@ -137,13 +125,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="tabsHeader">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
+    <widget class="Otter::HeaderWidget" name="tabsHeaderWidget">
      <property name="text">
       <string>Tabs</string>
      </property>
@@ -207,13 +189,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="languageHeader">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
+    <widget class="Otter::HeaderWidget" name="languageHeaderWidget">
      <property name="text">
       <string>Language</string>
      </property>
@@ -238,12 +214,6 @@
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
         </spacer>
        </item>
        <item>
@@ -258,13 +228,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="systemDefaultsHeader">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
+    <widget class="Otter::HeaderWidget" name="systemDefaultsHeaderWidget">
      <property name="text">
       <string>System Defaults</string>
      </property>
@@ -306,6 +270,11 @@
    <extends>QWidget</extends>
    <header>src/ui/FilePathWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Otter::HeaderWidget</class>
+   <extends>QLabel</extends>
+   <header>src/ui/HeaderWidget.h</header>
   </customwidget>
   <customwidget>
    <class>Otter::LineEditWidget</class>

@@ -12,13 +12,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="contentGeneralHeader">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
+    <widget class="Otter::HeaderWidget" name="contentGeneralHeaderWidget">
      <property name="text">
       <string>General</string>
      </property>
@@ -68,13 +62,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="blockingHeader">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
+    <widget class="Otter::HeaderWidget" name="blockingHeaderWidget">
      <property name="text">
       <string>Blocking</string>
      </property>
@@ -101,13 +89,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="zoomHeader">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
+    <widget class="Otter::HeaderWidget" name="zoomHeaderWidget">
      <property name="text">
       <string>Zoom</string>
      </property>
@@ -154,13 +136,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="fontsHeader">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
+    <widget class="Otter::HeaderWidget" name="fontsHeaderWidget">
      <property name="text">
       <string>Fonts</string>
      </property>
@@ -277,13 +253,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="colorsHeader">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
+    <widget class="Otter::HeaderWidget" name="colorsHeaderWidget">
      <property name="text">
       <string>Colors</string>
      </property>
@@ -325,15 +295,20 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Otter::ItemViewWidget</class>
-   <extends>QTreeView</extends>
-   <header>src/ui/ItemViewWidget.h</header>
-  </customwidget>
-  <customwidget>
    <class>Otter::FilePathWidget</class>
    <extends>QWidget</extends>
    <header>src/ui/FilePathWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Otter::HeaderWidget</class>
+   <extends>QLabel</extends>
+   <header>src/ui/HeaderWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Otter::ItemViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ItemViewWidget.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

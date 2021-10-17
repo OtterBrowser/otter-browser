@@ -12,13 +12,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="trackingHeader">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
+    <widget class="Otter::HeaderWidget" name="trackingHeaderWidget">
      <property name="text">
       <string>Tracking</string>
      </property>
@@ -46,13 +40,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="historyHeader">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
+    <widget class="Otter::HeaderWidget" name="historyHeaderWidget">
      <property name="text">
       <string>History</string>
      </property>
@@ -141,12 +129,6 @@
            <spacer name="rememberFormsHistorySpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
             </property>
            </spacer>
           </item>
@@ -285,12 +267,6 @@
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
            </spacer>
           </item>
           <item>
@@ -308,13 +284,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="passwordsHeader">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
+    <widget class="Otter::HeaderWidget" name="passwordsHeaderWidget">
      <property name="text">
       <string>Passwords</string>
      </property>
@@ -333,12 +303,6 @@
       <spacer name="rememberPasswordsSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
        </property>
       </spacer>
      </item>
@@ -368,12 +332,6 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
       </spacer>
      </item>
      <item>
@@ -397,6 +355,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Otter::HeaderWidget</class>
+   <extends>QLabel</extends>
+   <header>src/ui/HeaderWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>doNotTrackComboBox</tabstop>
   <tabstop>privateModeCheckBox</tabstop>
