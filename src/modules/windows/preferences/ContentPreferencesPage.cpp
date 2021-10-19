@@ -135,6 +135,7 @@ ContentPreferencesPage::ContentPreferencesPage(QWidget *parent) : PreferencesPag
 	m_ui->popupsComboBox->addItem(tr("Block all"), QLatin1String("blockAll"));
 	m_ui->popupsComboBox->addItem(tr("Open all"), QLatin1String("openAll"));
 	m_ui->popupsComboBox->addItem(tr("Open all in background"), QLatin1String("openAllInBackground"));
+	m_ui->enableContentBlockingCheckBox->setChecked(SettingsManager::getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption).toBool());
 	m_ui->defaultZoomSpinBox->setValue(SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());
 	m_ui->zoomTextOnlyCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Content_ZoomTextOnlyOption).toBool());
 	m_ui->proportionalFontSizeSpinBox->setValue(SettingsManager::getOption(SettingsManager::Content_DefaultFontSizeOption).toInt());
@@ -261,6 +262,7 @@ void ContentPreferencesPage::save()
 	SettingsManager::setOption(SettingsManager::Permissions_EnablePluginsOption, m_ui->enablePluginsComboBox->currentData(Qt::UserRole).toString());
 	SettingsManager::setOption(SettingsManager::Content_UserStyleSheetOption, m_ui->userStyleSheetFilePathWidget->getPath());
 	SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, m_ui->popupsComboBox->currentData().toString());
+	SettingsManager::setOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, m_ui->enableContentBlockingCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::Content_DefaultZoomOption, m_ui->defaultZoomSpinBox->value());
 	SettingsManager::setOption(SettingsManager::Content_ZoomTextOnlyOption, m_ui->zoomTextOnlyCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::Content_DefaultFontSizeOption, m_ui->proportionalFontSizeSpinBox->value());
