@@ -19,6 +19,8 @@
 **************************************************************************/
 
 #include "ContentPreferencesPage.h"
+#include "../../../core/Application.h"
+#include "../../../core/SessionsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../ui/ColorWidget.h"
 #include "../../../ui/OptionWidget.h"
@@ -198,6 +200,15 @@ ContentPreferencesPage::ContentPreferencesPage(QWidget *parent) : PreferencesPag
 
 	updateStyle();
 
+	connect(m_ui->manageContentBlockingButton, &QPushButton::clicked, this,[&]()
+	{
+		const QUrl url(QLatin1String("about:content-filters"));
+
+		if (!SessionsManager::hasUrl(url, true))
+		{
+			Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, this);
+		}
+	});
 	connect(m_ui->fontsViewWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, [&](const QModelIndex &currentIndex, const QModelIndex &previousIndex)
 	{
 		m_ui->fontsViewWidget->closePersistentEditor(previousIndex.sibling(previousIndex.row(), 1));
