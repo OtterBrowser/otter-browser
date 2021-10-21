@@ -1860,7 +1860,7 @@ void MainWindow::handleTransferStarted()
 	{
 		const QUrl url(QLatin1String("about:transfers"));
 
-		if (!SessionsManager::hasUrl(url, false))
+		if (!SessionsManager::hasUrl(url))
 		{
 			triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen)}});
 		}
