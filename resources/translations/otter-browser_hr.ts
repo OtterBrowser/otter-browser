@@ -400,7 +400,8 @@
         <location filename="../../src/core/Application.cpp" line="345"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>Vaš profilni adresar (%1) nema slobodnog prostora na disku.
+Ovo bi moglo dovesti do neispravnosti ili gubitka podataka.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="349"/>
@@ -453,17 +454,17 @@ Neke web stranice moža rade neispravno ili uopće ne rade.</translation>
     <message>
         <location filename="../../src/core/Application.cpp" line="747"/>
         <source>Web backend: %1 %2.</source>
-        <translation type="unfinished"/>
+        <translation>Web backend: %1 %2.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="751"/>
         <source>SSL library not available.</source>
-        <translation type="unfinished"/>
+        <translation>SSL biblioteka nije dostupna</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="755"/>
         <source>SSL library version: %1.</source>
-        <translation type="unfinished"/>
+        <translation>SSL biblioteka verzija: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1017"/>
@@ -486,7 +487,7 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message numerus="yes">
         <location filename="../../src/core/Application.cpp" line="1642"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Izaći ćete dok se %n datoteka još preuzima.</numerusform><numerusform>Izaći ćete dok se %n datoteke još preuzimaju.</numerusform><numerusform>Izaći ćete dok se %n datoteka još preuzima.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1649"/>
@@ -532,7 +533,7 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="215"/>
         <source>Failed to parse feed file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjelo raščlanjenje feed datoteke: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="226"/>
@@ -887,22 +888,22 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="362"/>
         <source>Failed to open notes file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjelo otvaranje bilježne datoteke: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="362"/>
         <source>Failed to open bookmarks file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjelo otvaranje datoteke straničnika: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="386"/>
         <source>Failed to load notes file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjelo učitavanje bilježne datoteke: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="386"/>
         <source>Failed to load bookmarks file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjelo učitavanje datoteke straničnika: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
@@ -912,12 +913,12 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Failed to load notes file.</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjelo učitavanje bilježne datoteke.</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Failed to load bookmarks file.</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjelo učitavanje datoteke straničnika.</translation>
     </message>
 </context>
 <context>
@@ -1000,7 +1001,7 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="368"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiraj poveznicu na međuspremnik</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="372"/>
@@ -1020,7 +1021,7 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="535"/>
         <source>Cache</source>
-        <translation type="unfinished"/>
+        <translation>Predmemorija</translation>
     </message>
 </context>
 <context>
@@ -1028,17 +1029,17 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="17"/>
         <source>Certificate chain:</source>
-        <translation type="unfinished"/>
+        <translation>Lanac certifikata:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="34"/>
         <source>Certificate fields:</source>
-        <translation type="unfinished"/>
+        <translation>Polja certifikata:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="51"/>
         <source>Field value:</source>
-        <translation type="unfinished"/>
+        <translation>Vrijednost polja:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="44"/>
@@ -1048,12 +1049,12 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="48"/>
         <source>Invalid Certificate</source>
-        <translation type="unfinished"/>
+        <translation>Nevalidan certifikat</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="53"/>
         <source>View Certificate for %1</source>
-        <translation type="unfinished"/>
+        <translation>Pregledaj certifikat za %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="62"/>
@@ -1069,12 +1070,12 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="116"/>
         <source>DER encoded X.509 certificates (*.der)</source>
-        <translation type="unfinished"/>
+        <translation>DER kodirani X.509 certifikati (*.der)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="116"/>
         <source>PEM encoded X.509 certificates (*.pem)</source>
-        <translation type="unfinished"/>
+        <translation>PEM kodirani X.509 certifikati (*.pem)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="116"/>
@@ -1094,77 +1095,77 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="183"/>
         <source>Authority Key Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Identifikator Autoritetnog Ključa</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="187"/>
         <source>Subject Key Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Identifikator Subjektnog Ključa</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="191"/>
         <source>Key Usage</source>
-        <translation type="unfinished"/>
+        <translation>Korištenje Ključa</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="195"/>
         <source>Certificate Policies</source>
-        <translation type="unfinished"/>
+        <translation>Polica Certifikata</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="199"/>
         <source>Policy Mappings</source>
-        <translation type="unfinished"/>
+        <translation>Polica Mapiranja</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="203"/>
         <source>Subject Alternative Name</source>
-        <translation type="unfinished"/>
+        <translation>Alternativno Ime Subjekta</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="207"/>
         <source>Issuer Alternative Name</source>
-        <translation type="unfinished"/>
+        <translation>Alternativno Ime Izdavatelja</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="211"/>
         <source>Subject Directory Attributes</source>
-        <translation type="unfinished"/>
+        <translation>Atributi Subjektnog Adresara</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="215"/>
         <source>Basic Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Osnovna Ograničenja</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="219"/>
         <source>Name Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Ograničenja Imena</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="223"/>
         <source>Policy Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Ograničenja Police</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="227"/>
         <source>Extended Key Usage</source>
-        <translation type="unfinished"/>
+        <translation>Produženo Korištenje Ključa</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="231"/>
         <source>CRL Distribution Points</source>
-        <translation type="unfinished"/>
+        <translation>CRL Distribucijska Točka</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="235"/>
         <source>Inhibit Any Policy</source>
-        <translation type="unfinished"/>
+        <translation>Spriječi Bilo Koju Policu</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="239"/>
         <source>Delta CRL Distribution Point</source>
-        <translation type="unfinished"/>
+        <translation>Delta CRL Distribucijska Točka </translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="243"/>
