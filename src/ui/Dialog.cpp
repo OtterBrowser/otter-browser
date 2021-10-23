@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -47,19 +47,23 @@ void Dialog::showEvent(QShowEvent *event)
 		else
 		{
 			const QString name(Utils::normalizeObjectName(objectName(), QLatin1String("Dialog")));
-			const QJsonObject settingsObject(QJsonDocument::fromJson(file.readAll()).object());
 
-			file.close();
-
-			if (settingsObject.contains(name))
+			if (!name.isEmpty())
 			{
-				const QJsonObject sizeObject(settingsObject.value(name).toObject().value(QLatin1String("size")).toObject());
+				const QJsonObject settingsObject(QJsonDocument::fromJson(file.readAll()).object());
 
-				if (!sizeObject.isEmpty() && sizeObject.value(QLatin1String("width")).toInt() > 0 && sizeObject.value(QLatin1String("height")).toInt() > 0)
+				if (settingsObject.contains(name))
 				{
-					resize(sizeObject.value(QLatin1String("width")).toInt(), sizeObject.value(QLatin1String("height")).toInt());
+					const QJsonObject sizeObject(settingsObject.value(name).toObject().value(QLatin1String("size")).toObject());
+
+					if (!sizeObject.isEmpty() && sizeObject.value(QLatin1String("width")).toInt() > 0 && sizeObject.value(QLatin1String("height")).toInt() > 0)
+					{
+						resize(sizeObject.value(QLatin1String("width")).toInt(), sizeObject.value(QLatin1String("height")).toInt());
+					}
 				}
 			}
+
+			file.close();
 		}
 
 		m_wasRestored = true;
@@ -77,9 +81,15 @@ void Dialog::resizeEvent(QResizeEvent *event)
 		return;
 	}
 
+	const QString name(Utils::normalizeObjectName(objectName(), QLatin1String("Dialog")));
+
+	if (name.isEmpty())
+	{
+		return;
+	}
+
 	JsonSettings settings(SessionsManager::getWritableDataPath(QLatin1String("dialogs.json")));
 	QJsonObject settingsObject(settings.object());
-	const QString name(Utils::normalizeObjectName(objectName(), QLatin1String("Dialog")));
 	QJsonObject dialogObject(settingsObject.value(name).toObject());
 	dialogObject.insert(QLatin1String("size"), QJsonObject({{QLatin1String("width"), width()}, {QLatin1String("height"), height()}}));
 
