@@ -224,17 +224,17 @@ bool PacUtils::dateRange(const QVariant &arg1, const QVariant &arg2, const QVari
 
 	if (arguments.count() == 4 && arguments.at(1) > 1500 && arguments.at(3) > 1500)
 	{
-		return isDateInRange(QDate(arguments.at(1), arguments.at(0), currentDay.day()), QDate(arguments.at(3), arguments.at(2), currentDay.day()), currentDay);
+		return isDateInRange({arguments.at(1), arguments.at(0), currentDay.day()}, {arguments.at(3), arguments.at(2), currentDay.day()}, currentDay);
 	}
 
 	if (arguments.count() == 4)
 	{
-		return isDateInRange(QDate(currentDay.year(), arguments.at(1), arguments.at(0)), QDate(currentDay.year(), arguments.at(3), arguments.at(2)), currentDay);
+		return isDateInRange({currentDay.year(), arguments.at(1), arguments.at(0)}, {currentDay.year(), arguments.at(3), arguments.at(2)}, currentDay);
 	}
 
 	if (arguments.count() == 6)
 	{
-		return isDateInRange(QDate(arguments.at(2), arguments.at(1), arguments.at(0)), QDate(arguments.at(5), arguments.at(4), arguments.at(3)), currentDay);
+		return isDateInRange({arguments.at(2), arguments.at(1), arguments.at(0)}, {arguments.at(5), arguments.at(4), arguments.at(3)}, currentDay);
 	}
 
 	return false;
