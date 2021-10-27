@@ -43,7 +43,7 @@ PacUtils::PacUtils(QObject *parent) : QObject(parent)
 
 void PacUtils::alert(const QString &message) const
 {
-	Console::addMessage(message, Console::NetworkCategory, Console::WarningLevel);
+	Console::addMessage(message, Console::NetworkCategory, Console::DebugLevel);
 }
 
 QString PacUtils::dnsResolve(const QString &host) const
