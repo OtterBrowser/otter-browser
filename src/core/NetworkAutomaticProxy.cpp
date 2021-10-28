@@ -49,10 +49,11 @@ void PacUtils::alert(const QString &message) const
 QString PacUtils::dnsResolve(const QString &host) const
 {
 	const QHostInfo hostInformation(QHostInfo::fromName(host));
+	const QList<QHostAddress> addresses(hostInformation.addresses());
 
-	if (hostInformation.error() == QHostInfo::NoError && !hostInformation.addresses().isEmpty())
+	if (hostInformation.error() == QHostInfo::NoError && !addresses.isEmpty())
 	{
-		return hostInformation.addresses().value(0).toString();
+		return addresses.first().toString();
 	}
 
 	return {};
