@@ -65,9 +65,11 @@ QString PacUtils::myIpAddress() const
 
 	for (int i = 0; i < addresses.count(); ++i)
 	{
-		if (!addresses.at(i).isNull() && addresses.at(i) != QHostAddress::LocalHost && addresses.at(i) != QHostAddress::LocalHostIPv6 && addresses.at(i) != QHostAddress::Null && addresses.at(i) != QHostAddress::Broadcast && addresses.at(i) != QHostAddress::Any && addresses.at(i) != QHostAddress::AnyIPv6)
+		const QHostAddress address(addresses.at(i));
+
+		if (!address.isNull() && address != QHostAddress::LocalHost && address != QHostAddress::LocalHostIPv6 && address != QHostAddress::Null && address != QHostAddress::Broadcast && address != QHostAddress::Any && address != QHostAddress::AnyIPv6)
 		{
-			return addresses.at(i).toString();
+			return address.toString();
 		}
 	}
 
