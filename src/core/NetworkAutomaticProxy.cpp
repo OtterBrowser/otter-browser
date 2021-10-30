@@ -284,12 +284,12 @@ bool PacUtils::timeRange(const QVariant &arg1, const QVariant &arg2, const QVari
 
 	if (arguments.count() == 4)
 	{
-		return isTimeInRange(QTime(arguments.at(0), arguments.at(1)), QTime(arguments.at(2), arguments.at(3)), currentTime);
+		return isTimeInRange({arguments.at(0), arguments.at(1)}, {arguments.at(2), arguments.at(3)}, currentTime);
 	}
 
 	if (arguments.count() == 6)
 	{
-		return isTimeInRange(QTime(arguments.at(0), arguments.at(1), arguments.at(2)), QTime(arguments.at(3), arguments.at(4), arguments.at(5)), currentTime);
+		return isTimeInRange({arguments.at(0), arguments.at(1), arguments.at(2)}, {arguments.at(3), arguments.at(4), arguments.at(5)}, currentTime);
 	}
 
 	return false;
