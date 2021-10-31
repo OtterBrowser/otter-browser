@@ -1,19 +1,3 @@
-let result = {
-	alternateText: '',
-	flags: 0,
-	formUrl: '',
-	frameUrl: '',
-	geometry: { x: -1, y: -1, w: 0, h: 0 },
-	imageUrl: '',
-	linkUrl: '',
-	longDescription: '',
-	mediaUrl: '',
-	offset: [0, 0],
-	position: [%1, %2],
-	tagName: '',
-	title: ''
-};
-
 function normalizeUrl(url)
 {
 	let element = document.createElement('a');
@@ -154,4 +138,18 @@ function createHitTest(window, element, result)
 	return result;
 }
 
-createHitTest(window, ((%1 >= 0) ? document.elementFromPoint(%1, %2) : document.activeElement), result);
+createHitTest(window, ((%1 >= 0) ? document.elementFromPoint(%1, %2) : document.activeElement), {
+	alternateText: '',
+	flags: 0,
+	formUrl: '',
+	frameUrl: '',
+	geometry: { x: -1, y: -1, w: 0, h: 0 },
+	imageUrl: '',
+	linkUrl: '',
+	longDescription: '',
+	mediaUrl: '',
+	offset: [0, 0],
+	position: [%1, %2],
+	tagName: '',
+	title: ''
+});

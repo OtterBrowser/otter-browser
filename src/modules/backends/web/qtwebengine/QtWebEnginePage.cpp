@@ -383,7 +383,7 @@ QVariant QtWebEnginePage::runScriptSource(const QString &script)
 	QVariant result;
 	QEventLoop eventLoop;
 
-	runJavaScript(script, [&](const QVariant &runResult)
+	runJavaScript(script, QWebEngineScript::UserWorld, [&](const QVariant &runResult)
 	{
 		result = runResult;
 
