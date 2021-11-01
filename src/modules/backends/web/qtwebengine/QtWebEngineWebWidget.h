@@ -50,29 +50,6 @@ class QtWebEngineWebWidget final : public WebWidget
 	Q_OBJECT
 
 public:
-	struct QtWebEngineHitTestResult final : public HitTestResult
-	{
-		explicit QtWebEngineHitTestResult(const QVariant &result)
-		{
-			const QVariantMap map(result.toMap());
-			const QVariantMap geometryMap(map.value(QLatin1String("geometry")).toMap());
-
-			title = map.value(QLatin1String("title")).toString();
-			tagName = map.value(QLatin1String("tagName")).toString();
-			alternateText = map.value(QLatin1String("alternateText")).toString();
-			longDescription = map.value(QLatin1String("longDescription")).toString();
-			formUrl = QUrl(map.value(QLatin1String("formUrl")).toString());
-			frameUrl = QUrl(map.value(QLatin1String("frameUrl")).toString());
-			imageUrl = QUrl(map.value(QLatin1String("imageUrl")).toString());
-			linkUrl = QUrl(map.value(QLatin1String("linkUrl")).toString());
-			mediaUrl = QUrl(map.value(QLatin1String("mediaUrl")).toString());
-			elementGeometry = {geometryMap.value(QLatin1String("x")).toInt(), geometryMap.value(QLatin1String("y")).toInt(), geometryMap.value(QLatin1String("w")).toInt(), geometryMap.value(QLatin1String("h")).toInt()};
-			hitPosition = map.value(QLatin1String("position")).toPoint();
-			playbackRate = map.value(QLatin1String("playbackRate")).toReal();
-			flags = static_cast<HitTestFlags>(map.value(QLatin1String("flags")).toInt());
-		}
-	};
-
 	~QtWebEngineWebWidget();
 
 	void search(const QString &query, const QString &searchEngine) override;

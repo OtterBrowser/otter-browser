@@ -1706,7 +1706,23 @@ Session::Window::History QtWebEngineWebWidget::getHistory() const
 
 WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &position)
 {
-	m_hitResult = QtWebEngineHitTestResult(m_page->runScriptFile(QLatin1String("hitTest"), {QString::number(position.x() / m_page->zoomFactor()), QString::number(position.y() / m_page->zoomFactor())}));
+	const QVariantMap map(m_page->runScriptFile(QLatin1String("hitTest"), {QString::number(position.x() / m_page->zoomFactor()), QString::number(position.y() / m_page->zoomFactor())}).toMap());
+	const QVariantMap geometryMap(map.value(QLatin1String("geometry")).toMap());
+
+	m_hitResult = {};
+	m_hitResult.title = map.value(QLatin1String("title")).toString();
+	m_hitResult.tagName = map.value(QLatin1String("tagName")).toString();
+	m_hitResult.alternateText = map.value(QLatin1String("alternateText")).toString();
+	m_hitResult.longDescription = map.value(QLatin1String("longDescription")).toString();
+	m_hitResult.formUrl = QUrl(map.value(QLatin1String("formUrl")).toString());
+	m_hitResult.frameUrl = QUrl(map.value(QLatin1String("frameUrl")).toString());
+	m_hitResult.imageUrl = QUrl(map.value(QLatin1String("imageUrl")).toString());
+	m_hitResult.linkUrl = QUrl(map.value(QLatin1String("linkUrl")).toString());
+	m_hitResult.mediaUrl = QUrl(map.value(QLatin1String("mediaUrl")).toString());
+	m_hitResult.elementGeometry = {geometryMap.value(QLatin1String("x")).toInt(), geometryMap.value(QLatin1String("y")).toInt(), geometryMap.value(QLatin1String("w")).toInt(), geometryMap.value(QLatin1String("h")).toInt()};
+	m_hitResult.hitPosition = map.value(QLatin1String("position")).toPoint();
+	m_hitResult.playbackRate = map.value(QLatin1String("playbackRate")).toReal();
+	m_hitResult.flags = static_cast<HitTestResult::HitTestFlags>(map.value(QLatin1String("flags")).toInt());
 
 	if (m_hitResult.flags.testFlag(HitTestResult::IsSelectedTest) && !m_hitResult.linkUrl.isValid() && Utils::isUrl(m_page->selectedText()))
 	{

@@ -152,7 +152,7 @@ public:
 
 	Q_ENUM(ToolTipEntry)
 
-	struct HitTestResult
+	struct HitTestResult final
 	{
 		enum HitTestFlag
 		{
