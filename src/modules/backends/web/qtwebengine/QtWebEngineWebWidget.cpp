@@ -348,7 +348,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::ReloadFrameAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
-///TODO Add support for subframes
+//TODO Add support for subframes
 				m_page->runJavaScript(QStringLiteral("var frames = document.querySelectorAll('iframe[src=\"%1\"], frame[src=\"%1\"]'); for (var i = 0; i < frames.length; ++i) { frames[i].contentWindow.location.replace('%1'); }").arg(m_hitResult.frameUrl.toString()));
 			}
 
