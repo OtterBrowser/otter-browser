@@ -513,7 +513,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 					element.setAttribute(QLatin1String("src"), src);
 
-					m_page->mainFrame()->documentElement().evaluateJavaScript(QStringLiteral("var images = document.querySelectorAll('img[src=\"%1\"]'); for (var i = 0; i < images.length; ++i) { images[i].src = ''; images[i].src = '%1'; }").arg(src));
+					m_page->mainFrame()->documentElement().evaluateJavaScript(QStringLiteral("let images = document.querySelectorAll('img[src=\"%1\"]'); for (let i = 0; i < images.length; ++i) { images[i].src = ''; images[i].src = '%1'; }").arg(src));
 				}
 			}
 
@@ -2021,7 +2021,7 @@ QString QtWebKitWebWidget::getDescription() const
 
 QString QtWebKitWebWidget::getActiveStyleSheet() const
 {
-	if (m_page->mainFrame()->documentElement().evaluateJavaScript(QLatin1String("var isDefault = true; for (var i = 0; i < document.styleSheets.length; ++i) { if (document.styleSheets[i].ownerNode.rel.indexOf('alt') >= 0) { isDefault = false; break; } } isDefault")).toBool())
+	if (m_page->mainFrame()->documentElement().evaluateJavaScript(QLatin1String("let isDefault = true; for (let i = 0; i < document.styleSheets.length; ++i) { if (document.styleSheets[i].ownerNode.rel.indexOf('alt') >= 0) { isDefault = false; break; } } isDefault")).toBool())
 	{
 		return {};
 	}
