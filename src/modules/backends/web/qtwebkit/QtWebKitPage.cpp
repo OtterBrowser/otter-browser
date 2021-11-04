@@ -315,7 +315,7 @@ void QtWebKitPage::markAsPopup()
 
 void QtWebKitPage::handleOptionChanged(int identifier)
 {
-	if (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Content/")) || identifier == SettingsManager::Interface_ShowScrollBarsOption)
+	if (identifier == SettingsManager::Interface_ShowScrollBarsOption || SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Content/")))
 	{
 		updateStyleSheets();
 	}
