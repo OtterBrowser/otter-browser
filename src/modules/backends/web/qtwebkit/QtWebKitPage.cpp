@@ -335,7 +335,7 @@ void QtWebKitPage::handleFrameCreation(QWebFrame *frame)
 
 void QtWebKitPage::handleConsoleMessage(MessageSource category, MessageLevel level, const QString &message, int line, const QString &source)
 {
-	Console::MessageLevel mappedLevel(Console::UnknownLevel);
+	Console::MessageLevel mappedLevel(Console::DebugLevel);
 
 	switch (level)
 	{
@@ -352,8 +352,6 @@ void QtWebKitPage::handleConsoleMessage(MessageSource category, MessageLevel lev
 
 			break;
 		default:
-			mappedLevel = Console::DebugLevel;
-
 			break;
 	}
 
@@ -382,8 +380,6 @@ void QtWebKitPage::handleConsoleMessage(MessageSource category, MessageLevel lev
 
 			break;
 		default:
-			mappedCategory = Console::OtherCategory;
-
 			break;
 	}
 
