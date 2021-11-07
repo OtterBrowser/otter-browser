@@ -84,7 +84,6 @@ public:
 	bool shouldInterruptJavaScript() override;
 	bool supportsExtension(Extension extension) const override;
 	bool isDisplayingErrorPage() const;
-	bool isPopup() const;
 	bool isViewingMedia() const;
 
 public slots:

@@ -1004,11 +1004,6 @@ bool QtWebKitPage::isDisplayingErrorPage() const
 	return m_mainFrame->isDisplayingErrorPage();
 }
 
-bool QtWebKitPage::isPopup() const
-{
-	return m_isPopup;
-}
-
 bool QtWebKitPage::isViewingMedia() const
 {
 	return m_isViewingMedia;
