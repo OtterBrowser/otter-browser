@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -68,7 +68,11 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 {
 	NetworkManagerFactory::initialize();
 
-	if (!isPrivate)
+	if (isPrivate)
+	{
+		m_cookieJar = new CookieJar({}, this);
+	}
+	else
 	{
 		m_cookieJar = NetworkManagerFactory::getCookieJar();
 		m_cookieJar->setParent(QCoreApplication::instance());
@@ -78,10 +82,6 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 		setCache(cache);
 
 		cache->setParent(QCoreApplication::instance());
-	}
-	else
-	{
-		m_cookieJar = new CookieJar({}, this);
 	}
 
 	if (m_cookieJarProxy)
