@@ -277,22 +277,24 @@ void QtWebKitNetworkManager::handleTransferFinished()
 {
 	QNetworkReply *reply(qobject_cast<QNetworkReply*>(sender()));
 
-	if (reply)
+	if (!reply)
 	{
-		m_transfers.removeAll(reply);
+		return;
+	}
 
-		reply->deleteLater();
+	m_transfers.removeAll(reply);
 
-		if (m_transfers.isEmpty())
+	reply->deleteLater();
+
+	if (m_transfers.isEmpty())
+	{
+		if (m_widget)
 		{
-			if (m_widget)
-			{
-				setParent(m_widget);
-			}
-			else
-			{
-				deleteLater();
-			}
+			setParent(m_widget);
+		}
+		else
+		{
+			deleteLater();
 		}
 	}
 }
