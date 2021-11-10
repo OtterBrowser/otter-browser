@@ -1,38 +1,43 @@
-let elements = document.querySelectorAll('%1');
-let urls = [];
-let links = [];
-
-for (let i = 0; i < elements.length; ++i)
+function getLinks(selector)
 {
-	if (urls.includes(elements[i].href))
+	let elements = document.querySelectorAll(selector);
+	let urls = [];
+	let links = [];
+
+	for (let i = 0; i < elements.length; ++i)
 	{
-		continue;
-	}
-
-	urls.push(elements[i].href);
-
-	let link = {
-		title: elements[i].title.trim(),
-		mimeType: elements[i].type,
-		url: elements[i].href
-	};
-
-	if (link.title == '')
-	{
-		link.title = elements[i].textContent.trim();
-	}
-
-	if (link.title == '')
-	{
-		let imageElement = elements[i].querySelector('img[alt]:not([alt=\'\'])');
-
-		if (imageElement)
+		if (urls.includes(elements[i].href))
 		{
-			link.title = imageElement.alt;
+			continue;
 		}
+
+		urls.push(elements[i].href);
+
+		let link = {
+			title: elements[i].title.trim(),
+			mimeType: elements[i].type,
+			url: elements[i].href
+		};
+
+		if (link.title == '')
+		{
+			link.title = elements[i].textContent.trim();
+		}
+
+		if (link.title == '')
+		{
+			let imageElement = elements[i].querySelector('img[alt]:not([alt=\'\'])');
+
+			if (imageElement)
+			{
+				link.title = imageElement.alt;
+			}
+		}
+
+		links.push(link);
 	}
 
-	links.push(link);
+	return links;
 }
 
-links;
+getLinks('%1');
