@@ -1,41 +1,44 @@
-let whitelist = [%1];
-let blacklist = [%2];
-let ignoredElements = [];
-
-for (let i = 0; i < whitelist.length; ++i)
+function hideElements(allowedSelectors, disallowedSelectors)
 {
-	try
-	{
-		ignoredElements = ignoredElements.concat(Array.from(document.querySelectorAll(whitelist[i])));
-	}
-	catch (e)
-	{
-		console.error('Invalid selector: ' + whitelist[i]);
+	let ignoredElements = [];
 
-		continue;
-	}
-}
-
-for (let i = 0; i < blacklist.length; ++i)
-{
-	let elements = [];
-
-	try
+	for (let i = 0; i < allowedSelectors.length; ++i)
 	{
-		elements = document.querySelectorAll(blacklist[i]);
-	}
-	catch (e)
-	{
-		console.error('Invalid selector: ' + blacklist[i]);
-
-		continue;
-	}
-
-	for (let j = 0; j < elements.length; ++j)
-	{
-		if (ignoredElements.indexOf(elements[j]) < 0)
+		try
 		{
-			elements[j].style.cssText = 'display:none !important';
+			ignoredElements = ignoredElements.concat(Array.from(document.querySelectorAll(allowedSelectors[i])));
+		}
+		catch (error)
+		{
+			console.error('Invalid selector: ' + allowedSelectors[i]);
+
+			continue;
+		}
+	}
+
+	for (let i = 0; i < disallowedSelectors.length; ++i)
+	{
+		let elements = [];
+
+		try
+		{
+			elements = document.querySelectorAll(disallowedSelectors[i]);
+		}
+		catch (error)
+		{
+			console.error('Invalid selector: ' + disallowedSelectors[i]);
+
+			continue;
+		}
+
+		for (let j = 0; j < elements.length; ++j)
+		{
+			if (ignoredElements.indexOf(elements[j]) < 0)
+			{
+				elements[j].style.cssText = 'display:none !important';
+			}
 		}
 	}
 }
+
+hideElements([%1], [%2]);
