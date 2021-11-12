@@ -1,13 +1,18 @@
-let elements = document.querySelectorAll('link[rel=\'alternate stylesheet\']');
-let titles = [];
-
-for (let i = 0; i < elements.length; ++i)
+function getStyleSheets()
 {
-	if (elements[i].title !== '' && !titles.includes(elements[i].title))
+	let elements = document.querySelectorAll('link[rel=\'alternate stylesheet\']');
+	let titles = [];
+
+	for (let i = 0; i < elements.length; ++i)
 	{
-		titles.push(elements[i].title);
+		if (elements[i].title !== '' && !titles.includes(elements[i].title))
+		{
+			titles.push(elements[i].title);
+		}
+
 	}
 
+	return titles;
 }
 
-titles;
+getStyleSheets();
