@@ -1,13 +1,18 @@
-let requests = [%1];
-let elements = Array.from(document.querySelectorAll('[src]'));
-
-for (let i = 0; i < elements.length; ++i)
+function hideBlockedRequests()
 {
-	for (let j = 0; j < requests.length; ++j)
+	let requests = [%1];
+	let elements = Array.from(document.querySelectorAll('[src]'));
+
+	for (let i = 0; i < elements.length; ++i)
 	{
-		if (elements[i].getAttribute('src').indexOf(requests[j]) > -1)
+		for (let j = 0; j < requests.length; ++j)
 		{
-			elements[i].style.cssText = 'display:none !important';
+			if (elements[i].getAttribute('src').indexOf(requests[j]) > -1)
+			{
+				elements[i].style.cssText = 'display:none !important';
+			}
 		}
 	}
 }
+
+hideBlockedRequests();
