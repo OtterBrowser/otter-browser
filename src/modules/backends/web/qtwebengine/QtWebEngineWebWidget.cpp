@@ -1020,22 +1020,25 @@ void QtWebEngineWebWidget::handleLoadFinished()
 	notifyNavigationActionsChanged();
 	startReloadTimer();
 
-	m_page->runJavaScript(getFastForwardScript(false), [&](const QVariant &result)
+	QTimer::singleShot(100, this, [&]()
 	{
-		m_canGoForwardValue = (result.toBool() ? TrueValue : FalseValue);
-
-		emit arbitraryActionsStateChanged({ActionsManager::FastForwardAction});
-	});
-
-	const QVector<ChangeWatcher> watchers({FeedsWatcher, LinksWatcher, MetaDataWatcher, SearchEnginesWatcher, StylesheetsWatcher});
-
-	for (int i = 0; i < watchers.count(); ++i)
-	{
-		if (isWatchingChanges(watchers.at(i)))
+		m_page->runJavaScript(getFastForwardScript(false), [&](const QVariant &result)
 		{
-			updateWatchedData(watchers.at(i));
+			m_canGoForwardValue = (result.toBool() ? TrueValue : FalseValue);
+
+			emit arbitraryActionsStateChanged({ActionsManager::FastForwardAction});
+		});
+
+		const QVector<ChangeWatcher> watchers({FeedsWatcher, LinksWatcher, MetaDataWatcher, SearchEnginesWatcher, StylesheetsWatcher});
+
+		for (int i = 0; i < watchers.count(); ++i)
+		{
+			if (isWatchingChanges(watchers.at(i)))
+			{
+				updateWatchedData(watchers.at(i));
+			}
 		}
-	}
+	});
 
 	emit contentStateChanged(getContentState());
 	emit loadingStateChanged(FinishedLoadingState);
