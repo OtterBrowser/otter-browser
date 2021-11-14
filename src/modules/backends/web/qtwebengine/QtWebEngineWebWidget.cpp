@@ -465,8 +465,10 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 					if (result.isValid())
 					{
-						properties[QLatin1String("width")] = result.toList()[0].toInt();
-						properties[QLatin1String("height")] = result.toList()[1].toInt();
+						const QVariantList size(result.toList());
+
+						properties[QLatin1String("width")] = size[0].toInt();
+						properties[QLatin1String("height")] = size[1].toInt();
 					}
 
 					ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(m_hitResult.imageUrl, properties, nullptr, this));
