@@ -265,7 +265,14 @@ void QtWebKitPage::validatePopup(const QUrl &url)
 	}
 	else
 	{
-		QtWebKitWebWidget *widget(createWidget((popupsPolicy == QLatin1String("openAllInBackground")) ? (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen) : SessionsManager::NewTabOpen));
+		SessionsManager::OpenHints hints(SessionsManager::NewTabOpen);
+
+		if (popupsPolicy == QLatin1String("openAllInBackground"))
+		{
+			hints |= SessionsManager::BackgroundOpen;
+		}
+
+		QtWebKitWebWidget *widget(createWidget(hints));
 		widget->setUrl(url);
 	}
 }
