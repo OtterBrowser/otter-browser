@@ -279,36 +279,40 @@ void QtWebKitPage::validatePopup(const QUrl &url)
 
 void QtWebKitPage::saveState(QWebFrame *frame, QWebHistoryItem *item)
 {
-	if (m_widget && frame == mainFrame())
+	if (!m_widget || frame != mainFrame())
 	{
-		QVariantList state(history()->currentItem().userData().toList());
-
-		if (state.count() < 4)
-		{
-			state = {0, m_widget->getZoom(), mainFrame()->scrollPosition(), QDateTime::currentDateTimeUtc()};
-		}
-		else
-		{
-			state[ZoomEntryData] = m_widget->getZoom();
-			state[PositionEntryData] = mainFrame()->scrollPosition();
-		}
-
-		item->setUserData(state);
+		return;
 	}
+
+	QVariantList state(history()->currentItem().userData().toList());
+
+	if (state.count() < 4)
+	{
+		state = {0, m_widget->getZoom(), mainFrame()->scrollPosition(), QDateTime::currentDateTimeUtc()};
+	}
+	else
+	{
+		state[ZoomEntryData] = m_widget->getZoom();
+		state[PositionEntryData] = mainFrame()->scrollPosition();
+	}
+
+	item->setUserData(state);
 }
 
 void QtWebKitPage::restoreState(QWebFrame *frame)
 {
-	if (m_widget && frame == mainFrame())
+	if (!m_widget || frame != mainFrame())
 	{
-		const QVariantList state(history()->currentItem().userData().toList());
+		return;
+	}
 
-		m_widget->setZoom(state.value(ZoomEntryData, m_widget->getZoom()).toInt());
+	const QVariantList state(history()->currentItem().userData().toList());
 
-		if (mainFrame()->scrollPosition().isNull())
-		{
-			mainFrame()->setScrollPosition(state.value(PositionEntryData).toPoint());
-		}
+	m_widget->setZoom(state.value(ZoomEntryData, m_widget->getZoom()).toInt());
+
+	if (mainFrame()->scrollPosition().isNull())
+	{
+		mainFrame()->setScrollPosition(state.value(PositionEntryData).toPoint());
 	}
 }
 
