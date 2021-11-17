@@ -497,32 +497,32 @@ void QtWebKitPage::triggerAction(WebAction action, bool isChecked)
 
 QWebPage* QtWebKitPage::createWindow(WebWindowType type)
 {
-	if (type != WebModalDialog)
+	if (type == WebModalDialog)
 	{
-		const QString popupsPolicy(getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString());
-
-		if (!m_widget || currentFrame()->hitTestContent(m_widget->getClickPosition()).linkUrl().isEmpty())
-		{
-			if (popupsPolicy == QLatin1String("blockAll"))
-			{
-				return nullptr;
-			}
-
-			if (popupsPolicy == QLatin1String("ask") || !getOption(SettingsManager::ContentBlocking_ProfilesOption).isNull())
-			{
-				QtWebKitPage *page(new QtWebKitPage());
-				page->markAsPopup();
-
-				connect(page, &QtWebKitPage::aboutToNavigate, this, &QtWebKitPage::validatePopup);
-
-				return page;
-			}
-		}
-
-		return createWidget(SessionsManager::calculateOpenHints((popupsPolicy == QLatin1String("openAllInBackground")) ? (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen) : SessionsManager::NewTabOpen))->getPage();
+		return QWebPage::createWindow(type);
 	}
 
-	return QWebPage::createWindow(type);
+	const QString popupsPolicy(getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString());
+
+	if (!m_widget || currentFrame()->hitTestContent(m_widget->getClickPosition()).linkUrl().isEmpty())
+	{
+		if (popupsPolicy == QLatin1String("blockAll"))
+		{
+			return nullptr;
+		}
+
+		if (popupsPolicy == QLatin1String("ask") || !getOption(SettingsManager::ContentBlocking_ProfilesOption).isNull())
+		{
+			QtWebKitPage *page(new QtWebKitPage());
+			page->markAsPopup();
+
+			connect(page, &QtWebKitPage::aboutToNavigate, this, &QtWebKitPage::validatePopup);
+
+			return page;
+		}
+	}
+
+	return createWidget(SessionsManager::calculateOpenHints((popupsPolicy == QLatin1String("openAllInBackground")) ? (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen) : SessionsManager::NewTabOpen))->getPage();
 }
 
 QtWebKitFrame* QtWebKitPage::getMainFrame() const
