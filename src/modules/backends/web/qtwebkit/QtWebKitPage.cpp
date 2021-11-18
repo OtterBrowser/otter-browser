@@ -991,18 +991,18 @@ bool QtWebKitPage::extension(Extension extension, const ExtensionOption *option,
 
 bool QtWebKitPage::shouldInterruptJavaScript()
 {
-	if (m_widget)
+	if (!m_widget)
 	{
-		ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-warning")), tr("Question"), tr("The script on this page appears to have a problem."), tr("Do you want to stop the script?"), (QDialogButtonBox::Yes | QDialogButtonBox::No), nullptr, m_widget);
-
-		connect(m_widget, &QtWebKitWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
-
-		m_widget->showDialog(&dialog);
-
-		return dialog.isAccepted();
+		return QWebPage::shouldInterruptJavaScript();
 	}
 
-	return QWebPage::shouldInterruptJavaScript();
+	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-warning")), tr("Question"), tr("The script on this page appears to have a problem."), tr("Do you want to stop the script?"), (QDialogButtonBox::Yes | QDialogButtonBox::No), nullptr, m_widget);
+
+	connect(m_widget, &QtWebKitWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
+
+	m_widget->showDialog(&dialog);
+
+	return dialog.isAccepted();
 }
 
 bool QtWebKitPage::supportsExtension(Extension extension) const
