@@ -133,7 +133,7 @@ void QtWebKitFrame::handleLoadFinished()
 
 	const QStringList blockedRequests(m_widget->getBlockedElements());
 
-	if (blockedRequests.count() > 0)
+	if (!blockedRequests.isEmpty())
 	{
 		const QWebElementCollection elements(m_frame->documentElement().findAll(QLatin1String("[src]")));
 
