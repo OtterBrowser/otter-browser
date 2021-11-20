@@ -539,50 +539,52 @@ void QtWebKitWebPageThumbnailJob::handlePageLoadFinished(bool result)
 		contentsSize = m_page->mainFrame()->contentsSize();
 	}
 
-	if (!m_size.isNull() && !contentsSize.isNull())
+	if (m_size.isNull() || contentsSize.isNull())
 	{
-		if (contentsSize.width() < m_size.width())
-		{
-			contentsSize.setWidth(m_size.width());
-		}
-		else if (contentsSize.width() > 2000)
-		{
-			contentsSize.setWidth(2000);
-		}
+		return;
+	}
 
-		contentsSize.setHeight(qRound(m_size.height() * (static_cast<qreal>(contentsSize.width()) / m_size.width())));
+	if (contentsSize.width() < m_size.width())
+	{
+		contentsSize.setWidth(m_size.width());
+	}
+	else if (contentsSize.width() > 2000)
+	{
+		contentsSize.setWidth(2000);
+	}
 
-		if (contentsSize.isNull())
+	contentsSize.setHeight(qRound(m_size.height() * (static_cast<qreal>(contentsSize.width()) / m_size.width())));
+
+	if (contentsSize.isNull())
+	{
+		deleteLater();
+
+		emit jobFinished(true);
+	}
+	else
+	{
+		m_page->setViewportSize(contentsSize);
+
+		QTimer::singleShot(1000, this, [=]()
 		{
+			m_pixmap = QPixmap(contentsSize);
+			m_pixmap.fill(Qt::white);
+
+			QPainter painter(&m_pixmap);
+
+			m_page->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion({{0, 0}, contentsSize}));
+
+			painter.end();
+
+			if (m_pixmap.size() != m_size)
+			{
+				m_pixmap = m_pixmap.scaled(m_size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+			}
+
 			deleteLater();
 
 			emit jobFinished(true);
-		}
-		else
-		{
-			m_page->setViewportSize(contentsSize);
-
-			QTimer::singleShot(1000, this, [=]()
-			{
-				m_pixmap = QPixmap(contentsSize);
-				m_pixmap.fill(Qt::white);
-
-				QPainter painter(&m_pixmap);
-
-				m_page->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion({{0, 0}, contentsSize}));
-
-				painter.end();
-
-				if (m_pixmap.size() != m_size)
-				{
-					m_pixmap = m_pixmap.scaled(m_size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-				}
-
-				deleteLater();
-
-				emit jobFinished(true);
-			});
-		}
+		});
 	}
 }
 
