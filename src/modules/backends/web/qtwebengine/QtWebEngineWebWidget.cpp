@@ -961,7 +961,7 @@ void QtWebEngineWebWidget::handleLoadFinished()
 	notifyNavigationActionsChanged();
 	startReloadTimer();
 
-	QTimer::singleShot(100, this, [&]()
+	QTimer::singleShot(250, this, [&]()
 	{
 		m_page->runJavaScript(getFastForwardScript(false), [&](const QVariant &result)
 		{
