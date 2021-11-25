@@ -225,39 +225,42 @@ WebWidget* QtWebEngineWebBackend::createWidget(const QVariantMap &parameters, Co
 
 		ContentFiltersManager::initialize();
 
-		QWebEngineProfile::defaultProfile()->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
-		QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
-		QWebEngineProfile::defaultProfile()->setDownloadPath(SettingsManager::getOption(SettingsManager::Paths_DownloadsOption).toString());
-		QWebEngineProfile::defaultProfile()->setNotificationPresenter(&QtWebEngineWebBackend::showNotification);
+		QWebEngineProfile *profile(QWebEngineProfile::defaultProfile());
+		QWebEngineSettings *settings(QWebEngineSettings::globalSettings());
 
-		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::DnsPrefetchEnabled, SettingsManager::getOption(SettingsManager::Network_EnableDnsPrefetchOption).toBool());
-		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
-		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FocusOnNavigationEnabled, false);
-		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::XSSAuditingEnabled, true);
-		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PrintElementBackgrounds, SettingsManager::getOption(SettingsManager::Browser_PrintElementBackgroundsOption).toBool());
-		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::ScrollAnimatorEnabled, SettingsManager::getOption(SettingsManager::Interface_EnableSmoothScrollingOption).toBool());
+		profile->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
+		profile->setHttpUserAgent(getUserAgent());
+		profile->setDownloadPath(SettingsManager::getOption(SettingsManager::Paths_DownloadsOption).toString());
+		profile->setNotificationPresenter(&QtWebEngineWebBackend::showNotification);
+
+		settings->setAttribute(QWebEngineSettings::DnsPrefetchEnabled, SettingsManager::getOption(SettingsManager::Network_EnableDnsPrefetchOption).toBool());
+		settings->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
+		settings->setAttribute(QWebEngineSettings::FocusOnNavigationEnabled, false);
+		settings->setAttribute(QWebEngineSettings::XSSAuditingEnabled, true);
+		settings->setAttribute(QWebEngineSettings::PrintElementBackgrounds, SettingsManager::getOption(SettingsManager::Browser_PrintElementBackgroundsOption).toBool());
+		settings->setAttribute(QWebEngineSettings::ScrollAnimatorEnabled, SettingsManager::getOption(SettingsManager::Interface_EnableSmoothScrollingOption).toBool());
 
 		const QString cachePath(SessionsManager::getCachePath());
 
 		if (cachePath.isEmpty())
 		{
-			QWebEngineProfile::defaultProfile()->setHttpCacheType(QWebEngineProfile::MemoryHttpCache);
+			profile->setHttpCacheType(QWebEngineProfile::MemoryHttpCache);
 		}
 		else
 		{
 			QDir().mkpath(cachePath);
 
-			QWebEngineProfile::defaultProfile()->setHttpCacheType(QWebEngineProfile::DiskHttpCache);
-			QWebEngineProfile::defaultProfile()->setHttpCacheMaximumSize(SettingsManager::getOption(SettingsManager::Cache_DiskCacheLimitOption).toInt() * 1024);
-			QWebEngineProfile::defaultProfile()->setCachePath(cachePath);
-			QWebEngineProfile::defaultProfile()->setPersistentStoragePath(cachePath + QLatin1String("/persistentStorage/"));
+			profile->setHttpCacheType(QWebEngineProfile::DiskHttpCache);
+			profile->setHttpCacheMaximumSize(SettingsManager::getOption(SettingsManager::Cache_DiskCacheLimitOption).toInt() * 1024);
+			profile->setCachePath(cachePath);
+			profile->setPersistentStoragePath(cachePath + QLatin1String("/persistentStorage/"));
 		}
 
 		handleOptionChanged(SettingsManager::Content_DefaultFontSizeOption);
 		handleOptionChanged(SettingsManager::Permissions_EnableFullScreenOption);
 
 		connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &QtWebEngineWebBackend::handleOptionChanged);
-		connect(QWebEngineProfile::defaultProfile(), &QWebEngineProfile::downloadRequested, this, &QtWebEngineWebBackend::handleDownloadRequested);
+		connect(profile, &QWebEngineProfile::downloadRequested, this, &QtWebEngineWebBackend::handleDownloadRequested);
 	}
 
 	return new QtWebEngineWebWidget(parameters, this, parent);
