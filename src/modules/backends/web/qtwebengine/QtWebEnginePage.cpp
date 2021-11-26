@@ -295,32 +295,32 @@ QtWebEngineWebWidget* QtWebEnginePage::getWebWidget() const
 
 QWebEnginePage* QtWebEnginePage::createWindow(WebWindowType type)
 {
-	if (type != WebDialog)
+	if (type == WebDialog)
 	{
-		const QString popupsPolicy((m_widget ? m_widget->getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption) : SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption)).toString());
-
-		if (!m_widget || m_widget->getLastUrlClickTime().isNull() || m_widget->getLastUrlClickTime().secsTo(QDateTime::currentDateTimeUtc()) > 1)
-		{
-			if (popupsPolicy == QLatin1String("blockAll"))
-			{
-				return nullptr;
-			}
-
-			if (popupsPolicy == QLatin1String("ask") || !m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, m_widget->getUrl()).isNull())
-			{
-				QtWebEnginePage *page(new QtWebEnginePage(false, nullptr));
-				page->markAsPopup();
-
-				connect(page, &QtWebEnginePage::aboutToNavigate, this, &QtWebEnginePage::validatePopup);
-
-				return page;
-			}
-		}
-
-		return createWidget(SessionsManager::calculateOpenHints((popupsPolicy == QLatin1String("openAllInBackground")) ? (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen) : SessionsManager::NewTabOpen))->getPage();
+		return QWebEnginePage::createWindow(type);
 	}
 
-	return QWebEnginePage::createWindow(type);
+	const QString popupsPolicy((m_widget ? m_widget->getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption) : SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption)).toString());
+
+	if (!m_widget || m_widget->getLastUrlClickTime().isNull() || m_widget->getLastUrlClickTime().secsTo(QDateTime::currentDateTimeUtc()) > 1)
+	{
+		if (popupsPolicy == QLatin1String("blockAll"))
+		{
+			return nullptr;
+		}
+
+		if (popupsPolicy == QLatin1String("ask") || !m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, m_widget->getUrl()).isNull())
+		{
+			QtWebEnginePage *page(new QtWebEnginePage(false, nullptr));
+			page->markAsPopup();
+
+			connect(page, &QtWebEnginePage::aboutToNavigate, this, &QtWebEnginePage::validatePopup);
+
+			return page;
+		}
+	}
+
+	return createWidget(SessionsManager::calculateOpenHints((popupsPolicy == QLatin1String("openAllInBackground")) ? (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen) : SessionsManager::NewTabOpen))->getPage();
 }
 
 QtWebEngineWebWidget* QtWebEnginePage::createWidget(SessionsManager::OpenHints hints)
