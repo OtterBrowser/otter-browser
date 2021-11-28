@@ -172,7 +172,12 @@ void QtWebKitNetworkManager::handleDownloadProgress(qint64 bytesReceived, qint64
 {
 	QNetworkReply *reply(qobject_cast<QNetworkReply*>(sender()));
 
-	if (reply && reply == m_baseReply)
+	if (!reply || !m_replies.contains(reply))
+	{
+		return;
+	}
+
+	if (reply == m_baseReply)
 	{
 		if (bytesTotal == 0 || m_baseReply->hasRawHeader(QByteArrayLiteral("Location")))
 		{
@@ -184,11 +189,6 @@ void QtWebKitNetworkManager::handleDownloadProgress(qint64 bytesReceived, qint64
 			setPageInformation(WebWidget::DocumentBytesTotalInformation, bytesTotal);
 			setPageInformation(WebWidget::DocumentLoadingProgressInformation, ((bytesTotal > 0) ? Utils::calculatePercent(bytesReceived, bytesTotal) : -1));
 		}
-	}
-
-	if (!reply || !m_replies.contains(reply))
-	{
-		return;
 	}
 
 	const QUrl url(reply->url());
