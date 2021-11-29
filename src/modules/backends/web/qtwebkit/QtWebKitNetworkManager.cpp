@@ -209,14 +209,12 @@ void QtWebKitNetworkManager::handleDownloadProgress(qint64 bytesReceived, qint64
 		m_pageInformation[WebWidget::TotalBytesTotalInformation] = (m_pageInformation[WebWidget::TotalBytesTotalInformation].toLongLong() + bytesTotal);
 	}
 
-	if (difference <= 0)
+	if (difference > 0)
 	{
-		return;
+		m_bytesReceivedDifference += difference;
+
+		setPageInformation(WebWidget::TotalBytesReceivedInformation, (m_pageInformation[WebWidget::TotalBytesReceivedInformation].toLongLong() + difference));
 	}
-
-	m_bytesReceivedDifference += difference;
-
-	setPageInformation(WebWidget::TotalBytesReceivedInformation, (m_pageInformation[WebWidget::TotalBytesReceivedInformation].toLongLong() + difference));
 }
 
 void QtWebKitNetworkManager::handleRequestFinished(QNetworkReply *reply)
