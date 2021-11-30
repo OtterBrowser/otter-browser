@@ -350,15 +350,15 @@ void QtWebKitNetworkManager::handleProxyAuthenticationRequired(const QNetworkPro
 
 void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
 {
-	if (!m_widget)
-	{
-		return;
-	}
-
 	if (errors.isEmpty())
 	{
 		reply->ignoreSslErrors(errors);
 
+		return;
+	}
+
+	if (!m_widget)
+	{
 		return;
 	}
 
