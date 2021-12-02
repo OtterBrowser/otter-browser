@@ -520,14 +520,14 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			break;
 		case ActionsManager::ImagePropertiesAction:
 			{
-				QVariantMap properties({{QLatin1String("alternativeText"), hitResult.alternateText}, {QLatin1String("longDescription"), hitResult.longDescription}});
+				QMap<ImagePropertiesDialog::ImageProperty, QVariant> properties({{ImagePropertiesDialog::AlternativeTextProperty, hitResult.alternateText}, {ImagePropertiesDialog::LongDescriptionProperty, hitResult.longDescription}});
 				const QPixmap pixmap(m_page->mainFrame()->hitTestContent(hitResult.hitPosition).pixmap());
 
 				if (!pixmap.isNull())
 				{
-					properties[QLatin1String("width")] = pixmap.width();
-					properties[QLatin1String("height")] = pixmap.height();
-					properties[QLatin1String("depth")] = pixmap.depth();
+					properties[ImagePropertiesDialog::WidthProperty] = pixmap.width();
+					properties[ImagePropertiesDialog::HeightProperty] = pixmap.height();
+					properties[ImagePropertiesDialog::DepthProperty] = pixmap.depth();
 				}
 
 				ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(hitResult.imageUrl, properties, (m_networkManager->cache() ? m_networkManager->cache()->data(hitResult.imageUrl) : nullptr), this));

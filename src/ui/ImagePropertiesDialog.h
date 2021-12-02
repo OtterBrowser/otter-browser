@@ -47,7 +47,7 @@ public:
 		WidthProperty
 	};
 
-	explicit ImagePropertiesDialog(const QUrl &url, const QVariantMap &properties, QIODevice *device, QWidget *parent = nullptr);
+	explicit ImagePropertiesDialog(const QUrl &url, const QMap<ImageProperty, QVariant> &properties, QIODevice *device, QWidget *parent = nullptr);
 	~ImagePropertiesDialog();
 
 	void setButtonsVisible(bool visible);

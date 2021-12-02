@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QVariantMap &properties, QIODevice *device, QWidget *parent) : Dialog(parent),
+ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QMap<ImageProperty, QVariant> &properties, QIODevice *device, QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::ImagePropertiesDialog)
 {
 	m_ui->setupUi(this);
@@ -38,8 +38,8 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QVariantMap 
 	m_ui->sizeLabelWidget->setText(tr("Unknown"));
 	m_ui->typeLabelWidget->setText(tr("Unknown"));
 	m_ui->fileSizeLabelWidget->setText(tr("Unknown"));
-	m_ui->alternativeTextLabelWidget->setText(properties.value(QLatin1String("alternativeText")).toString());
-	m_ui->longDescriptionLabelWidget->setText(properties.value(QLatin1String("longDescription")).toString());
+	m_ui->alternativeTextLabelWidget->setText(properties.value(AlternativeTextProperty).toString());
+	m_ui->longDescriptionLabelWidget->setText(properties.value(LongDescriptionProperty).toString());
 
 	if (!device && url.scheme() == QLatin1String("data"))
 	{
@@ -75,15 +75,15 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QVariantMap 
 			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel").arg(image.width()).arg(image.height()).arg(image.depth()));
 		}
 	}
-	else if (properties.contains(QLatin1String("width")))
+	else if (properties.contains(WidthProperty))
 	{
-		if (properties.contains(QLatin1String("depth")))
+		if (properties.contains(DepthProperty))
 		{
-			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel").arg(properties.value(QLatin1String("width")).toInt()).arg(properties.value(QLatin1String("height")).toInt()).arg(properties.value(QLatin1String("depth")).toInt()));
+			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel").arg(properties.value(WidthProperty).toInt()).arg(properties.value(HeightProperty).toInt()).arg(properties.value(DepthProperty).toInt()));
 		}
 		else
 		{
-			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels").arg(properties.value(QLatin1String("width")).toInt()).arg(properties.value(QLatin1String("height")).toInt()));
+			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels").arg(properties.value(WidthProperty).toInt()).arg(properties.value(HeightProperty).toInt()));
 		}
 	}
 
