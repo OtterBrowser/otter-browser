@@ -525,8 +525,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (!pixmap.isNull())
 				{
-					properties[ImagePropertiesDialog::WidthProperty] = pixmap.width();
-					properties[ImagePropertiesDialog::HeightProperty] = pixmap.height();
+					properties[ImagePropertiesDialog::SizeProperty] = pixmap.size();
 					properties[ImagePropertiesDialog::DepthProperty] = pixmap.depth();
 				}
 

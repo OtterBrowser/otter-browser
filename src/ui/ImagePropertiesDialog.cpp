@@ -75,15 +75,17 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QMap<ImagePr
 			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel").arg(image.width()).arg(image.height()).arg(image.depth()));
 		}
 	}
-	else if (properties.contains(WidthProperty))
+	else if (properties.contains(SizeProperty))
 	{
+		const QSize size(properties[SizeProperty].toSize());
+
 		if (properties.contains(DepthProperty))
 		{
-			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel").arg(properties.value(WidthProperty).toInt()).arg(properties.value(HeightProperty).toInt()).arg(properties.value(DepthProperty).toInt()));
+			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel").arg(size.width()).arg(size.height()).arg(properties.value(DepthProperty).toInt()));
 		}
 		else
 		{
-			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels").arg(properties.value(WidthProperty).toInt()).arg(properties.value(HeightProperty).toInt()));
+			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels").arg(size.width()).arg(size.height()));
 		}
 	}
 

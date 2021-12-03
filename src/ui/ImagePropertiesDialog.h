@@ -42,9 +42,8 @@ public:
 		UnknownProperty = 0,
 		AlternativeTextProperty,
 		DepthProperty,
-		HeightProperty,
 		LongDescriptionProperty,
-		WidthProperty
+		SizeProperty
 	};
 
 	explicit ImagePropertiesDialog(const QUrl &url, const QMap<ImageProperty, QVariant> &properties, QIODevice *device, QWidget *parent = nullptr);
