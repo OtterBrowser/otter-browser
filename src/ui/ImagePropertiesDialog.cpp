@@ -50,52 +50,47 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QMap<ImagePr
 		device = buffer;
 	}
 
-	QImage image;
+	QSize size(properties.contains(SizeProperty) ? properties[SizeProperty].toSize() : QSize());
+	int depth(properties.contains(DepthProperty) ? properties[DepthProperty].toInt() : -1);
 	int frames(1);
 
 	if (device)
 	{
-		m_ui->fileSizeLabelWidget->setText(Utils::formatUnit(device->size(), false, 2, true));
-
 		QImageReader reader(device);
 
 		frames = reader.imageCount();
 
-		image = reader.read();
+		const QImage image(reader.read());
+
+		size = image.size();
+
+		depth = image.depth();
+
+		device->reset();
+
+		m_ui->fileSizeLabelWidget->setText(Utils::formatUnit(device->size(), false, 2, true));
+		m_ui->typeLabelWidget->setText(QMimeDatabase().mimeTypeForData(device).comment());
+
+		device->deleteLater();
 	}
 
-	if (!image.isNull())
+	if (size.isValid())
 	{
-		if (frames > 1)
+		if (depth > 0)
 		{
-			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel in %n frame(s)", "", frames).arg(image.width()).arg(image.height()).arg(image.depth()));
-		}
-		else
-		{
-			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel").arg(image.width()).arg(image.height()).arg(image.depth()));
-		}
-	}
-	else if (properties.contains(SizeProperty))
-	{
-		const QSize size(properties[SizeProperty].toSize());
-
-		if (properties.contains(DepthProperty))
-		{
-			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel").arg(size.width()).arg(size.height()).arg(properties.value(DepthProperty).toInt()));
+			if (frames > 1)
+			{
+				m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel in %n frame(s)", "", frames).arg(size.width()).arg(size.height()).arg(depth));
+			}
+			else
+			{
+				m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel").arg(size.width()).arg(size.height()).arg(depth));
+			}
 		}
 		else
 		{
 			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels").arg(size.width()).arg(size.height()));
 		}
-	}
-
-	if (device)
-	{
-		device->reset();
-
-		m_ui->typeLabelWidget->setText(QMimeDatabase().mimeTypeForData(device).comment());
-
-		device->deleteLater();
 	}
 
 	setMinimumWidth(400);
