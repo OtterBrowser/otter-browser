@@ -97,19 +97,15 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 				const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(gestures.at(j).action));
 				const QString name(ActionsManager::getActionName(gestures.at(j).action));
 				const QString parameters(gestures.at(j).parameters.isEmpty() ? QString() : QString::fromLatin1(QJsonDocument(QJsonObject::fromVariantMap(gestures.at(j).parameters)).toJson(QJsonDocument::Compact)));
-				QString steps;
+				QStringList steps;
+				steps.reserve(gestures.at(j).steps.count());
 
 				for (int k = 0; k < gestures.at(j).steps.count(); ++k)
 				{
-					if (k > 0)
-					{
-						steps += QLatin1String(", ");
-					}
-
-					steps += gestures.at(j).steps.at(k).toString();
+					steps.append(gestures.at(j).steps.at(k).toString());
 				}
 
-				QList<QStandardItem*> items({new QStandardItem(action.getText(true)), new QStandardItem(parameters), new QStandardItem(steps)});
+				QList<QStandardItem*> items({new QStandardItem(action.getText(true)), new QStandardItem(parameters), new QStandardItem(steps.join(QLatin1String(", ")))});
 				items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
 				items[0]->setData(action.identifier, IdentifierRole);
 				items[0]->setData(name, NameRole);
