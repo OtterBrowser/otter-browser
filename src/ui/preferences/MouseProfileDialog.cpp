@@ -39,24 +39,26 @@ void GestureActionDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
 {
 	ActionComboBoxWidget *widget(qobject_cast<ActionComboBoxWidget*>(editor));
 
-	if (widget && widget->getActionIdentifier() >= 0)
+	if (!widget || widget->getActionIdentifier() == 0)
 	{
-		const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(widget->getActionIdentifier()));
-		const QString name(widget->getActionIdentifier());
+		return;
+	}
 
-		model->setData(index, definition.getText(true), Qt::DisplayRole);
-		model->setData(index, QStringLiteral("%1 (%2)").arg(definition.getText(true), name), Qt::ToolTipRole);
-		model->setData(index, widget->getActionIdentifier(), MouseProfileDialog::IdentifierRole);
-		model->setData(index, name, MouseProfileDialog::NameRole);
+	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(widget->getActionIdentifier()));
+	const QString name(widget->getActionIdentifier());
 
-		if (definition.defaultState.icon.isNull())
-		{
-			model->setData(index, QColor(Qt::transparent), Qt::DecorationRole);
-		}
-		else
-		{
-			model->setData(index, definition.defaultState.icon, Qt::DecorationRole);
-		}
+	model->setData(index, definition.getText(true), Qt::DisplayRole);
+	model->setData(index, QStringLiteral("%1 (%2)").arg(definition.getText(true), name), Qt::ToolTipRole);
+	model->setData(index, widget->getActionIdentifier(), MouseProfileDialog::IdentifierRole);
+	model->setData(index, name, MouseProfileDialog::NameRole);
+
+	if (definition.defaultState.icon.isNull())
+	{
+		model->setData(index, QColor(Qt::transparent), Qt::DecorationRole);
+	}
+	else
+	{
+		model->setData(index, definition.defaultState.icon, Qt::DecorationRole);
 	}
 }
 
