@@ -261,23 +261,25 @@ void MouseProfileDialog::updateStepsActions()
 	m_ui->addStepButton->setEnabled(isGesture);
 	m_ui->removeStepButton->setEnabled(isGesture && item);
 
-	if (isGesture && item)
+	if (!isGesture || !item)
 	{
-		QStringList steps;
-		steps.reserve(m_ui->stepsViewWidget->getRowCount());
-
-		for (int i = 0; i < m_ui->stepsViewWidget->getRowCount(); ++i)
-		{
-			const QString step(m_ui->stepsViewWidget->getIndex(i, 0).data().toString());
-
-			if (!step.isEmpty())
-			{
-				steps.append(step);
-			}
-		}
-
-		m_ui->gesturesViewWidget->setData(item->index().sibling(item->index().row(), 2), steps.join(QLatin1String(", ")), Qt::DisplayRole);
+		return;
 	}
+
+	QStringList steps;
+	steps.reserve(m_ui->stepsViewWidget->getRowCount());
+
+	for (int i = 0; i < m_ui->stepsViewWidget->getRowCount(); ++i)
+	{
+		const QString step(m_ui->stepsViewWidget->getIndex(i, 0).data().toString());
+
+		if (!step.isEmpty())
+		{
+			steps.append(step);
+		}
+	}
+
+	m_ui->gesturesViewWidget->setData(item->index().sibling(item->index().row(), 2), steps.join(QLatin1String(", ")), Qt::DisplayRole);
 }
 
 MouseProfile MouseProfileDialog::getProfile() const
