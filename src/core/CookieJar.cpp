@@ -220,23 +220,23 @@ QList<QNetworkCookie> CookieJar::getCookiesForUrl(const QUrl &url) const
 
 QVector<QNetworkCookie> CookieJar::getCookies(const QString &domain) const
 {
-	if (!domain.isEmpty())
+	if (domain.isEmpty())
 	{
-		const QList<QNetworkCookie> cookies(allCookies());
-		QVector<QNetworkCookie> domainCookies;
-
-		for (int i = 0; i < cookies.count(); ++i)
-		{
-			if (cookies.at(i).domain() == domain || (cookies.at(i).domain().startsWith(QLatin1Char('.')) && domain.endsWith(cookies.at(i).domain())))
-			{
-				domainCookies.append(cookies.at(i));
-			}
-		}
-
-		return domainCookies;
+		return allCookies().toVector();
 	}
 
-	return allCookies().toVector();
+	const QList<QNetworkCookie> cookies(allCookies());
+	QVector<QNetworkCookie> domainCookies;
+
+	for (int i = 0; i < cookies.count(); ++i)
+	{
+		if (cookies.at(i).domain() == domain || (cookies.at(i).domain().startsWith(QLatin1Char('.')) && domain.endsWith(cookies.at(i).domain())))
+		{
+			domainCookies.append(cookies.at(i));
+		}
+	}
+
+	return domainCookies;
 }
 
 bool CookieJar::insertCookie(const QNetworkCookie &cookie)
