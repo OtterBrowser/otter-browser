@@ -71,6 +71,7 @@ public:
 
 protected:
 	void timerEvent(QTimerEvent *event) override;
+	void loadCookies(const QString &path);
 	void scheduleSave();
 	void save();
 

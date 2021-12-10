@@ -37,11 +37,32 @@ CookieJar::CookieJar(const QString &path, QObject *parent) : QNetworkCookieJar(p
 	m_keepMode(KeepUntilExpiresMode),
 	m_saveTimer(0)
 {
-	if (path.isEmpty())
+	if (!path.isEmpty())
+	{
+		loadCookies(path);
+	}
+
+	handleOptionChanged(SettingsManager::Network_CookiesPolicyOption, SettingsManager::getOption(SettingsManager::Network_CookiesPolicyOption));
+
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &CookieJar::handleOptionChanged);
+}
+
+void CookieJar::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() != m_saveTimer)
 	{
 		return;
 	}
 
+	killTimer(m_saveTimer);
+
+	m_saveTimer = 0;
+
+	save();
+}
+
+void CookieJar::loadCookies(const QString &path)
+{
 	QFile file(path);
 
 	if (!file.open(QIODevice::ReadOnly))
@@ -76,24 +97,7 @@ CookieJar::CookieJar(const QString &path, QObject *parent) : QNetworkCookieJar(p
 		}
 	}
 
-	handleOptionChanged(SettingsManager::Network_CookiesPolicyOption, SettingsManager::getOption(SettingsManager::Network_CookiesPolicyOption));
 	setAllCookies(allCookies);
-
-	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &CookieJar::handleOptionChanged);
-}
-
-void CookieJar::timerEvent(QTimerEvent *event)
-{
-	if (event->timerId() != m_saveTimer)
-	{
-		return;
-	}
-
-	killTimer(m_saveTimer);
-
-	m_saveTimer = 0;
-
-	save();
 }
 
 void CookieJar::clearCookies(int period)
