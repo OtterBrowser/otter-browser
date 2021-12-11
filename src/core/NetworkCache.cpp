@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -31,23 +31,23 @@ NetworkCache::NetworkCache(QObject *parent) : QNetworkDiskCache(parent)
 {
 	const QString cachePath(SessionsManager::getCachePath());
 
-	if (!cachePath.isEmpty())
+	if (cachePath.isEmpty())
 	{
-		QDir().mkpath(cachePath);
-
-		setCacheDirectory(cachePath);
-		setMaximumCacheSize(SettingsManager::getOption(SettingsManager::Cache_DiskCacheLimitOption).toInt() * 1024);
-
-		connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &NetworkCache::handleOptionChanged);
+		return;
 	}
-}
 
-void NetworkCache::handleOptionChanged(int identifier, const QVariant &value)
-{
-	if (identifier == SettingsManager::Cache_DiskCacheLimitOption)
+	QDir().mkpath(cachePath);
+
+	setCacheDirectory(cachePath);
+	setMaximumCacheSize(SettingsManager::getOption(SettingsManager::Cache_DiskCacheLimitOption).toInt() * 1024);
+
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, [&](int identifier, const QVariant &value)
 	{
-		setMaximumCacheSize(value.toInt() * 1024);
-	}
+		if (identifier == SettingsManager::Cache_DiskCacheLimitOption)
+		{
+			setMaximumCacheSize(value.toInt() * 1024);
+		}
+	});
 }
 
 void NetworkCache::clearCache(int period)
