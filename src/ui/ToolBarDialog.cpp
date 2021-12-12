@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -480,22 +480,24 @@ void ToolBarDialog::editEntry()
 	{
 		QLayoutItem *item(formLayout->itemAt(i, QFormLayout::FieldRole));
 
-		if (item)
+		if (!item)
 		{
-			const OptionWidget *widget(qobject_cast<OptionWidget*>(item->widget()));
+			continue;
+		}
 
-			if (widget)
+		const OptionWidget *widget(qobject_cast<OptionWidget*>(item->widget()));
+
+		if (widget)
+		{
+			const QString option(widget->objectName());
+
+			if (widget->isDefault())
 			{
-				const QString option(widget->objectName());
-
-				if (widget->isDefault())
-				{
-					options.remove(option);
-				}
-				else
-				{
-					options[option] = widget->getValue();
-				}
+				options.remove(option);
+			}
+			else
+			{
+				options[option] = widget->getValue();
 			}
 		}
 	}
