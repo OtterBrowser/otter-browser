@@ -56,7 +56,6 @@ protected:
 	void dragEnterEvent(QDragEnterEvent *event) override;
 
 protected slots:
-	void markAsNeedingAttention();
 	void handleLoadingStateChanged(WebWidget::LoadingState state);
 	void updateGeometries();
 	void updateTitle();

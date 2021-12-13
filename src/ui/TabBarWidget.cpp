@@ -68,7 +68,17 @@ TabHandleWidget::TabHandleWidget(Window *window, TabBarWidget *parent) : QWidget
 	setAcceptDrops(true);
 	setMouseTracking(true);
 
-	connect(window, &Window::needsAttention, this, &TabHandleWidget::markAsNeedingAttention);
+	connect(window, &Window::needsAttention, this, [&]()
+	{
+		if (!m_isActiveWindow)
+		{
+			QFont font(parentWidget()->font());
+			font.setBold(true);
+
+			setFont(font);
+			updateTitle();
+		}
+	});
 	connect(window, &Window::titleChanged, this, &TabHandleWidget::updateTitle);
 	connect(window, &Window::iconChanged, this, static_cast<void(TabHandleWidget::*)()>(&TabHandleWidget::update));
 	connect(window, &Window::loadingStateChanged, this, &TabHandleWidget::handleLoadingStateChanged);
@@ -290,18 +300,6 @@ void TabHandleWidget::dragEnterEvent(QDragEnterEvent *event)
 	if (m_dragTimer == 0 && event->mimeData()->property("x-window-identifier").isNull() && m_tabBarWidget->getWindow(m_tabBarWidget->currentIndex()) != m_window)
 	{
 		m_dragTimer = startTimer(500);
-	}
-}
-
-void TabHandleWidget::markAsNeedingAttention()
-{
-	if (!m_isActiveWindow)
-	{
-		QFont font(parentWidget()->font());
-		font.setBold(true);
-
-		setFont(font);
-		updateTitle();
 	}
 }
 
