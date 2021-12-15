@@ -260,7 +260,25 @@ SessionModel::SessionModel(QObject *parent) : QStandardItemModel(parent),
 	}
 
 	connect(Application::getInstance(), &Application::windowAdded, this, &SessionModel::handleMainWindowAdded);
-	connect(Application::getInstance(), &Application::windowRemoved, this, &SessionModel::handleMainWindowRemoved);
+	connect(Application::getInstance(), &Application::windowRemoved, this, [&](MainWindow *mainWindow)
+	{
+		if (!mainWindow)
+		{
+			return;
+		}
+
+		for (int i = 0; i < m_rootItem->rowCount(); ++i)
+		{
+			if (index(i, 0, m_rootItem->index()).data(IdentifierRole).toULongLong() == mainWindow->getIdentifier())
+			{
+				m_rootItem->removeRow(i);
+
+				break;
+			}
+		}
+
+		m_mainWindowItems.remove(mainWindow);
+	});
 	connect(Application::getInstance(), &Application::activeWindowChanged, this, &SessionModel::modelModified);
 	connect(this, &SessionModel::itemChanged, this, &SessionModel::modelModified);
 	connect(this, &SessionModel::rowsInserted, this, &SessionModel::modelModified);
@@ -290,26 +308,6 @@ void SessionModel::handleMainWindowAdded(MainWindow *mainWindow)
 	m_mainWindowItems[mainWindow] = item;
 
 	connect(mainWindow, &MainWindow::activeWindowChanged, this, &SessionModel::modelModified);
-}
-
-void SessionModel::handleMainWindowRemoved(MainWindow *mainWindow)
-{
-	if (!mainWindow)
-	{
-		return;
-	}
-
-	for (int i = 0; i < m_rootItem->rowCount(); ++i)
-	{
-		if (index(i, 0, m_rootItem->index()).data(IdentifierRole).toULongLong() == mainWindow->getIdentifier())
-		{
-			m_rootItem->removeRow(i);
-
-			break;
-		}
-	}
-
-	m_mainWindowItems.remove(mainWindow);
 }
 
 SessionItem* SessionModel::getRootItem() const
