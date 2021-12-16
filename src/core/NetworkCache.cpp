@@ -27,18 +27,16 @@
 namespace Otter
 {
 
-NetworkCache::NetworkCache(QObject *parent) : QNetworkDiskCache(parent)
+NetworkCache::NetworkCache(const QString &path, QObject *parent) : QNetworkDiskCache(parent)
 {
-	const QString cachePath(SessionsManager::getCachePath());
-
-	if (cachePath.isEmpty())
+	if (path.isEmpty())
 	{
 		return;
 	}
 
-	QDir().mkpath(cachePath);
+	QDir().mkpath(path);
 
-	setCacheDirectory(cachePath);
+	setCacheDirectory(path);
 	setMaximumCacheSize(SettingsManager::getOption(SettingsManager::Cache_DiskCacheLimitOption).toInt() * 1024);
 
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, [&](int identifier, const QVariant &value)

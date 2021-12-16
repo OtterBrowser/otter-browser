@@ -30,7 +30,7 @@ class NetworkCache final : public QNetworkDiskCache
 	Q_OBJECT
 
 public:
-	explicit NetworkCache(QObject *parent = nullptr);
+	explicit NetworkCache(const QString &path, QObject *parent = nullptr);
 
 	void clearCache(int period = 0);
 	void insert(QIODevice *device) override;
