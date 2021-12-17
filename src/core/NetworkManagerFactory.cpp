@@ -594,9 +594,8 @@ void NetworkManagerFactory::updateProxiesOption()
 void NetworkManagerFactory::updateUserAgentsOption()
 {
 	SettingsManager::OptionDefinition userAgentsOption(SettingsManager::getOptionDefinition(SettingsManager::Network_UserAgentOption));
-	userAgentsOption.choices.clear();
+	userAgentsOption.choices = {{QCoreApplication::translate("userAgents", "Default User Agent"), QLatin1String("default"), {}}};
 	userAgentsOption.choices.reserve(qRound(m_userAgents.count() * 0.75));
-	userAgentsOption.choices.append({QCoreApplication::translate("userAgents", "Default User Agent"), QLatin1String("default"), {}});
 
 	QMap<QString, UserAgentDefinition>::iterator iterator;
 
