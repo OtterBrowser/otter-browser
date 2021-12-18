@@ -588,6 +588,8 @@ void NetworkManagerFactory::updateProxiesOption()
 		}
 	}
 
+	proxiesOption.choices.squeeze();
+
 	SettingsManager::updateOptionDefinition(SettingsManager::Network_ProxyOption, proxiesOption);
 }
 
@@ -606,6 +608,8 @@ void NetworkManagerFactory::updateUserAgentsOption()
 			userAgentsOption.choices.append({iterator.value().getTitle(), iterator.value().identifier, {}});
 		}
 	}
+
+	userAgentsOption.choices.squeeze();
 
 	SettingsManager::updateOptionDefinition(SettingsManager::Network_UserAgentOption, userAgentsOption);
 }
