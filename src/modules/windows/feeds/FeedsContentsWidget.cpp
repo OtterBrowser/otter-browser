@@ -20,6 +20,7 @@
 #include "FeedsContentsWidget.h"
 #include "../../../core/Application.h"
 #include "../../../core/BookmarksManager.h"
+#include "../../../core/HandlersManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/Animation.h"
@@ -28,7 +29,6 @@
 
 #include "ui_FeedsContentsWidget.h"
 
-#include <QtGui/QDesktopServices>
 #include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
@@ -121,7 +121,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	{
 		const QModelIndex index(m_ui->entriesViewWidget->currentIndex());
 
-		QDesktopServices::openUrl(QLatin1String("mailto:") + index.sibling(index.row(), 0).data(EmailRole).toString());
+		HandlersManager::handleUrl(QLatin1String("mailto:") + index.sibling(index.row(), 0).data(EmailRole).toString());
 	});
 	connect(m_ui->urlButton, &QToolButton::clicked, [&]()
 	{
