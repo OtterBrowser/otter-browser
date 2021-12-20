@@ -544,7 +544,7 @@ void WebWidget::showContextMenu(const QPoint &position)
 		return;
 	}
 
-	ActionExecutor::Object executor;
+	ActionExecutor::Object executor(this, this);
 
 	if (m_parent)
 	{
@@ -556,10 +556,6 @@ void WebWidget::showContextMenu(const QPoint &position)
 		{
 			executor = ActionExecutor::Object(m_parent, m_parent);
 		}
-	}
-	else
-	{
-		executor = ActionExecutor::Object(this, this);
 	}
 
 	Menu menu(this);
