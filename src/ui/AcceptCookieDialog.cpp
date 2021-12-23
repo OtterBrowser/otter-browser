@@ -93,35 +93,36 @@ void AcceptCookieDialog::handleButtonClicked(QAbstractButton *button)
 	const QDialogButtonBox::ButtonRole role(m_ui->buttonBox->buttonRole(button));
 	const AcceptCookieResult result((role == QDialogButtonBox::AcceptRole) ? ((button->objectName() == QLatin1String("sessionOnly")) ? AcceptAsSessionCookie : AcceptCookie) : IgnoreCookie);
 
-	if (m_operation == CookieJar::InsertCookie)
+	switch (m_operation)
 	{
-		if (result == AcceptAsSessionCookie)
-		{
-			m_cookie.setExpirationDate({});
+		case CookieJar::InsertCookie:
+			if (result == AcceptAsSessionCookie)
+			{
+				m_cookie.setExpirationDate({});
 
-			m_cookieJar->forceInsertCookie(m_cookie);
-		}
-		else if (result == AcceptCookie)
-		{
-			m_cookieJar->forceInsertCookie(m_cookie);
-		}
-	}
-	else if (m_operation == CookieJar::UpdateCookie)
-	{
-		if (result == AcceptAsSessionCookie)
-		{
-			m_cookie.setExpirationDate({});
+				m_cookieJar->forceInsertCookie(m_cookie);
+			}
+			else if (result == AcceptCookie)
+			{
+				m_cookieJar->forceInsertCookie(m_cookie);
+			}
 
-			m_cookieJar->forceUpdateCookie(m_cookie);
-		}
-		else if (result == AcceptCookieDialog::AcceptCookie)
-		{
-			m_cookieJar->forceUpdateCookie(m_cookie);
-		}
-	}
-	else if (m_operation == CookieJar::InsertCookie && result != IgnoreCookie)
-	{
-		m_cookieJar->forceDeleteCookie(m_cookie);
+			break;
+		case CookieJar::UpdateCookie:
+			if (result == AcceptAsSessionCookie)
+			{
+				m_cookie.setExpirationDate({});
+
+				m_cookieJar->forceUpdateCookie(m_cookie);
+			}
+			else if (result == AcceptCookieDialog::AcceptCookie)
+			{
+				m_cookieJar->forceUpdateCookie(m_cookie);
+			}
+
+			break;
+		default:
+			break;
 	}
 
 	accept();
