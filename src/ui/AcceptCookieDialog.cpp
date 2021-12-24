@@ -121,6 +121,13 @@ void AcceptCookieDialog::handleButtonClicked(QAbstractButton *button)
 			}
 
 			break;
+		case CookieJar::RemoveCookie:
+			if (result == AcceptCookieDialog::AcceptCookie)
+			{
+				m_cookieJar->forceDeleteCookie(m_cookie);
+			}
+
+			break;
 		default:
 			break;
 	}
