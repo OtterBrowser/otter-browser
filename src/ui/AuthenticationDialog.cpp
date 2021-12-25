@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -72,24 +72,26 @@ void AuthenticationDialog::setup()
 	m_authenticator->setUser(m_ui->userComboBox->currentText());
 	m_authenticator->setPassword(m_ui->passwordLineEditWidget->text());
 
-	if (m_ui->rememberPasswordCheckBox->isChecked() && !m_authenticator->user().isEmpty() && !m_authenticator->password().isEmpty())
+	if (!m_ui->rememberPasswordCheckBox->isChecked() || m_authenticator->user().isEmpty() || m_authenticator->password().isEmpty())
 	{
-		PasswordsManager::PasswordInformation::Field userField;
-		userField.value = m_authenticator->user();
-		userField.type = PasswordsManager::TextField;
-
-		PasswordsManager::PasswordInformation::Field passwordField;
-		passwordField.value = m_authenticator->password();
-		passwordField.type = PasswordsManager::PasswordField;
-
-		PasswordsManager::PasswordInformation password;
-		password.url = m_url.toString();
-		password.timeAdded = QDateTime::currentDateTimeUtc();
-		password.type = PasswordsManager::AuthPassword;
-		password.fields = {userField, passwordField};
-
-		PasswordsManager::addPassword(password);
+		return;
 	}
+
+	PasswordsManager::PasswordInformation::Field userField;
+	userField.value = m_authenticator->user();
+	userField.type = PasswordsManager::TextField;
+
+	PasswordsManager::PasswordInformation::Field passwordField;
+	passwordField.value = m_authenticator->password();
+	passwordField.type = PasswordsManager::PasswordField;
+
+	PasswordsManager::PasswordInformation password;
+	password.url = m_url.toString();
+	password.timeAdded = QDateTime::currentDateTimeUtc();
+	password.type = PasswordsManager::AuthPassword;
+	password.fields = {userField, passwordField};
+
+	PasswordsManager::addPassword(password);
 }
 
 void AuthenticationDialog::handleAuthenticated(QAuthenticator *authenticator, bool wasAccepted)
