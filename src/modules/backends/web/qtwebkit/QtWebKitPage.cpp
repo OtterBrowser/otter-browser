@@ -1012,7 +1012,7 @@ bool QtWebKitPage::supportsExtension(Extension extension) const
 
 bool QtWebKitPage::isDisplayingErrorPage() const
 {
-	return m_mainFrame->isDisplayingErrorPage();
+	return (m_mainFrame && m_mainFrame->isDisplayingErrorPage());
 }
 
 bool QtWebKitPage::isPopup() const
