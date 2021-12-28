@@ -405,7 +405,6 @@ if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 		src/modules/backends/web/qtwebkit/QtWebKitPage.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitPlugin.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitPluginFactory.cpp
-		src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp
 		src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp
