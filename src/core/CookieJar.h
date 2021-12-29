@@ -86,8 +86,9 @@ private:
 	int m_saveTimer;
 
 signals:
-	void cookieAdded(QNetworkCookie cookie);
-	void cookieRemoved(QNetworkCookie cookie);
+	void cookieAdded(const QNetworkCookie &cookie);
+	void cookieModified(const QNetworkCookie &cookie);
+	void cookieRemoved(const QNetworkCookie &cookie);
 };
 
 }

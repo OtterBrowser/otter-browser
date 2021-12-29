@@ -319,6 +319,8 @@ bool CookieJar::forceUpdateCookie(const QNetworkCookie &cookie)
 	if (result)
 	{
 		scheduleSave();
+
+		emit cookieModified(cookie);
 	}
 
 	return result;
