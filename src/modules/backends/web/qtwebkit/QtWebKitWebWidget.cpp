@@ -21,7 +21,7 @@
 #include "QtWebKitWebWidget.h"
 #include "QtWebKitNetworkManager.h"
 #include "QtWebKitPage.h"
-#include "QtWebKitPluginWidget.h"
+#include "QtWebKitPluginFactory.h"
 #include "QtWebKitWebBackend.h"
 #include "../../../../core/Application.h"
 #include "../../../../core/BookmarksManager.h"
