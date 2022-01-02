@@ -73,6 +73,7 @@ void FilePasswordsStorageBackend::ensureInitialized()
 		for (int i = 0; i < passwordsArray.count(); ++i)
 		{
 			const QJsonObject passwordObject(passwordsArray.at(i).toObject());
+			const QJsonArray fieldsArray(passwordObject.value(QLatin1String("fields")).toArray());
 			PasswordsManager::PasswordInformation password;
 			password.url = QUrl(passwordObject.value(QLatin1String("url")).toString());
 			password.timeAdded = QDateTime::fromString(passwordObject.value(QLatin1String("timeAdded")).toString(), Qt::ISODate);
@@ -80,9 +81,6 @@ void FilePasswordsStorageBackend::ensureInitialized()
 			password.timeUsed = QDateTime::fromString(passwordObject.value(QLatin1String("timeUsed")).toString(), Qt::ISODate);
 			password.timeUsed.setTimeSpec(Qt::UTC);
 			password.type = ((passwordObject.value(QLatin1String("type")).toString() == QLatin1String("auth")) ? PasswordsManager::AuthPassword : PasswordsManager::FormPassword);
-
-			const QJsonArray fieldsArray(passwordObject.value(QLatin1String("fields")).toArray());
-
 			password.fields.reserve(fieldsArray.count());
 
 			for (int j = 0; j < fieldsArray.count(); ++j)
