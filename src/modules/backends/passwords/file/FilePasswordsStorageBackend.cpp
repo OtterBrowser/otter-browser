@@ -409,13 +409,14 @@ bool FilePasswordsStorageBackend::hasPasswords(const QUrl &url, PasswordsManager
 	ensureInitialized();
 
 	const QString host(Utils::extractHost(url));
+	const bool hasAnyPasswords(m_passwords.contains(host));
 
 	if (types == PasswordsManager::AnyPassword)
 	{
-		return m_passwords.contains(host);
+		return hasAnyPasswords;
 	}
 
-	if (m_passwords.contains(host))
+	if (hasAnyPasswords)
 	{
 		const QVector<PasswordsManager::PasswordInformation> passwords(m_passwords[host]);
 
