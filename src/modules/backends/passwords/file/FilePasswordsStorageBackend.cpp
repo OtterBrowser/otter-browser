@@ -61,7 +61,7 @@ void FilePasswordsStorageBackend::ensureInitialized()
 	}
 
 	QHash<QString, QVector<PasswordsManager::PasswordInformation> > passwords;
-	QJsonObject hostsObject(QJsonDocument::fromJson(file.readAll()).object());
+	const QJsonObject hostsObject(QJsonDocument::fromJson(file.readAll()).object());
 	QJsonObject::const_iterator hostsIterator;
 
 	for (hostsIterator = hostsObject.constBegin(); hostsIterator != hostsObject.constEnd(); ++hostsIterator)
