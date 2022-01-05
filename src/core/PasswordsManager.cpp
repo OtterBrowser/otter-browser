@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -81,22 +81,42 @@ PasswordsManager* PasswordsManager::getInstance()
 
 QStringList PasswordsManager::getHosts()
 {
-	return (m_backend ? m_backend->getHosts() : QStringList());
+	if (m_backend)
+	{
+		return m_backend->getHosts();
+	}
+
+	return {};
 }
 
 QVector<PasswordsManager::PasswordInformation> PasswordsManager::getPasswords(const QUrl &url, PasswordTypes types)
 {
-	return (m_backend ? m_backend->getPasswords(url, types) : QVector<PasswordsManager::PasswordInformation>());
+	if (m_backend)
+	{
+		return m_backend->getPasswords(url, types);
+	}
+
+	return {};
 }
 
 PasswordsManager::PasswordMatch PasswordsManager::hasPassword(const PasswordsManager::PasswordInformation &password)
 {
-	return (m_backend ? m_backend->hasPassword(password) : NoMatch);
+	if (m_backend)
+	{
+		return m_backend->hasPassword(password);
+	}
+
+	return NoMatch;
 }
 
 bool PasswordsManager::hasPasswords(const QUrl &url, PasswordTypes types)
 {
-	return (m_backend ? m_backend->hasPasswords(url, types) : false);
+	if (m_backend)
+	{
+		return m_backend->hasPasswords(url, types);
+	}
+
+	return false;
 }
 
 }
