@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -113,17 +113,19 @@ void SidebarWidget::changeEvent(QEvent *event)
 
 					for (int i = 0; i < actions.count(); ++i)
 					{
-						if (!actions.at(i)->data().toString().isEmpty())
+						QAction *action(actions.at(i));
+
+						if (!action->data().toString().isEmpty())
 						{
-							const QString panel(actions.at(i)->data().toString());
+							const QString panel(action->data().toString());
 
 							if (panel.startsWith(QLatin1String("web:")))
 							{
-								actions[i]->setText(Utils::elideText(getPanelTitle(panel), m_ui->panelsButton->menu()->fontMetrics(), nullptr, 300));
+								action->setText(Utils::elideText(getPanelTitle(panel), m_ui->panelsButton->menu()->fontMetrics(), nullptr, 300));
 							}
 							else
 							{
-								actions[i]->setText(getPanelTitle(panel));
+								action->setText(getPanelTitle(panel));
 							}
 						}
 					}
