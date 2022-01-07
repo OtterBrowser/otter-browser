@@ -166,23 +166,25 @@ void SidebarWidget::addWebPanel()
 		dialog.setText(mainWindow->getUrl().toString(QUrl::RemovePassword));
 	}
 
+	if (dialog.exec() == QDialog::Rejected || !dialog.getResult().isValid())
+	{
+		return;
+	}
+
 	QUrl url;
 
-	if (dialog.exec() == QDialog::Accepted && dialog.getResult().isValid())
+	switch (dialog.getResult().type)
 	{
-		switch (dialog.getResult().type)
-		{
-			case InputInterpreter::InterpreterResult::BookmarkType:
-				url = dialog.getResult().bookmark->getUrl();
+		case InputInterpreter::InterpreterResult::BookmarkType:
+			url = dialog.getResult().bookmark->getUrl();
 
-				break;
-			case InputInterpreter::InterpreterResult::UrlType:
-				url = dialog.getResult().url;
+			break;
+		case InputInterpreter::InterpreterResult::UrlType:
+			url = dialog.getResult().url;
 
-				break;
-			default:
-				break;
-		}
+			break;
+		default:
+			break;
 	}
 
 	if (!url.isEmpty())
