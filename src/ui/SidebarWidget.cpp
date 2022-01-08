@@ -43,6 +43,7 @@ namespace Otter
 SidebarWidget::SidebarWidget(ToolBarWidget *parent) : QWidget(parent),
 	m_toolBarWidget(parent),
 	m_resizerWidget(nullptr),
+	m_toolBar(new QToolBar(this)),
 	m_ui(new Ui::SidebarWidget)
 {
 	m_ui->setupUi(this);
@@ -52,18 +53,17 @@ SidebarWidget::SidebarWidget(ToolBarWidget *parent) : QWidget(parent),
 	ToolBarsManager::ToolBarDefinition::Entry definition;
 	definition.parameters[QLatin1String("sidebar")] = m_toolBarWidget->getIdentifier();
 
-	QToolBar *toolbar(new QToolBar(this));
-	toolbar->setIconSize({16, 16});
-	toolbar->addWidget(new PanelChooserWidget(definition, this));
-	toolbar->addWidget(new ActionWidget(ActionsManager::OpenPanelAction, nullptr, definition, this));
+	m_toolBar->setIconSize({16, 16});
+	m_toolBar->addWidget(new PanelChooserWidget(definition, this));
+	m_toolBar->addWidget(new ActionWidget(ActionsManager::OpenPanelAction, nullptr, definition, this));
 
-	QWidget *spacer(new QWidget(toolbar));
+	QWidget *spacer(new QWidget(m_toolBar));
 	spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-	toolbar->addWidget(spacer);
-	toolbar->addWidget(new ActionWidget(ActionsManager::ShowPanelAction, nullptr, definition, this));
+	m_toolBar->addWidget(spacer);
+	m_toolBar->addWidget(new ActionWidget(ActionsManager::ShowPanelAction, nullptr, definition, this));
 
-	m_ui->panelLayout->addWidget(toolbar);
+	m_ui->panelLayout->addWidget(m_toolBar);
 	m_ui->panelsButton->setPopupMode(QToolButton::InstantPopup);
 	m_ui->panelsButton->setIcon(ThemesManager::createIcon(QLatin1String("list-add")));
 	m_ui->horizontalLayout->addWidget(m_resizerWidget);
@@ -307,7 +307,6 @@ void SidebarWidget::saveSize()
 
 void SidebarWidget::updateLayout()
 {
-	QToolBar *toolbar(findChild<QToolBar*>());
 	const Qt::ToolBarArea area(m_toolBarWidget->getArea());
 	QBoxLayout::Direction direction((area == Qt::RightToolBarArea) ? QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
 
@@ -322,14 +321,9 @@ void SidebarWidget::updateLayout()
 
 	m_ui->horizontalLayout->setDirection(direction);
 
-	if (!toolbar)
-	{
-		return;
-	}
+	m_toolBar->setLayoutDirection((area == Qt::LeftToolBarArea) ? Qt::LeftToRight : Qt::RightToLeft);
 
-	toolbar->setLayoutDirection((area == Qt::LeftToolBarArea) ? Qt::LeftToRight : Qt::RightToLeft);
-
-	const QList<QWidget*> widgets(toolbar->findChildren<QWidget*>());
+	const QList<QWidget*> widgets(m_toolBar->findChildren<QWidget*>());
 
 	for (int i = 0; i < widgets.count(); ++i)
 	{

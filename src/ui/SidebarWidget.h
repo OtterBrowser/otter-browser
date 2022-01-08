@@ -22,6 +22,7 @@
 #define OTTER_SIDEBARWIDGET_H
 
 #include <QtWidgets/QToolButton>
+#include <QtWidgets/QToolBar>
 
 namespace Otter
 {
@@ -63,6 +64,7 @@ protected slots:
 private:
 	ToolBarWidget *m_toolBarWidget;
 	ResizerWidget *m_resizerWidget;
+	QToolBar *m_toolBar;
 	QString m_currentPanel;
 	QHash<QString, QToolButton*> m_buttons;
 	QHash<QString, ContentsWidget*> m_panels;
