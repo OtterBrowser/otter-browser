@@ -41,7 +41,7 @@ namespace Otter
 {
 
 SidebarWidget::SidebarWidget(ToolBarWidget *parent) : QWidget(parent),
-	m_toolBarWidget(parent),
+	m_parentToolBarWidget(parent),
 	m_resizerWidget(nullptr),
 	m_toolBar(new QToolBar(this)),
 	m_ui(new Ui::SidebarWidget)
@@ -51,7 +51,7 @@ SidebarWidget::SidebarWidget(ToolBarWidget *parent) : QWidget(parent),
 	m_resizerWidget = new ResizerWidget(m_ui->containerWidget, this);
 
 	ToolBarsManager::ToolBarDefinition::Entry definition;
-	definition.parameters[QLatin1String("sidebar")] = m_toolBarWidget->getIdentifier();
+	definition.parameters[QLatin1String("sidebar")] = m_parentToolBarWidget->getIdentifier();
 
 	m_toolBar->setIconSize({16, 16});
 	m_toolBar->addWidget(new PanelChooserWidget(definition, this));
@@ -68,7 +68,7 @@ SidebarWidget::SidebarWidget(ToolBarWidget *parent) : QWidget(parent),
 	m_ui->panelsButton->setIcon(ThemesManager::createIcon(QLatin1String("list-add")));
 	m_ui->horizontalLayout->addWidget(m_resizerWidget);
 
-	const int panelSize(m_toolBarWidget->getDefinition().panelSize);
+	const int panelSize(m_parentToolBarWidget->getDefinition().panelSize);
 
 	if (panelSize > 0)
 	{
@@ -144,7 +144,7 @@ void SidebarWidget::changeEvent(QEvent *event)
 
 void SidebarWidget::reload()
 {
-	const int panelSize(m_toolBarWidget->getDefinition().panelSize);
+	const int panelSize(m_parentToolBarWidget->getDefinition().panelSize);
 
 	if (panelSize > 0)
 	{
@@ -189,7 +189,7 @@ void SidebarWidget::addWebPanel()
 
 	if (!url.isEmpty())
 	{
-		ToolBarsManager::ToolBarDefinition definition(m_toolBarWidget->getDefinition());
+		ToolBarsManager::ToolBarDefinition definition(m_parentToolBarWidget->getDefinition());
 		definition.panels.append(QLatin1String("web:") + url.toString());
 
 		ToolBarsManager::setToolBar(definition);
@@ -205,7 +205,7 @@ void SidebarWidget::choosePanel(bool isChecked)
 		return;
 	}
 
-	ToolBarsManager::ToolBarDefinition definition(m_toolBarWidget->getDefinition());
+	ToolBarsManager::ToolBarDefinition definition(m_parentToolBarWidget->getDefinition());
 	const QString panel(action->data().toString());
 
 	if (isChecked)
@@ -232,13 +232,13 @@ void SidebarWidget::selectPanel(const QString &identifier)
 		return;
 	}
 
-	ToolBarsManager::ToolBarDefinition definition(m_toolBarWidget->getDefinition());
+	ToolBarsManager::ToolBarDefinition definition(m_parentToolBarWidget->getDefinition());
 	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 	ContentsWidget *contentsWidget(nullptr);
 
 	if (!identifier.isEmpty() && definition.panels.contains(identifier))
 	{
-		contentsWidget = ((m_panels.contains(identifier) && m_panels[identifier]) ? m_panels[identifier] : WidgetFactory::createSidebarPanel(identifier, m_toolBarWidget->getIdentifier(), mainWindow, this));
+		contentsWidget = ((m_panels.contains(identifier) && m_panels[identifier]) ? m_panels[identifier] : WidgetFactory::createSidebarPanel(identifier, m_parentToolBarWidget->getIdentifier(), mainWindow, this));
 	}
 
 	if (contentsWidget && mainWindow)
@@ -289,7 +289,7 @@ void SidebarWidget::selectPanel(const QString &identifier)
 
 void SidebarWidget::saveSize()
 {
-	ToolBarsManager::ToolBarDefinition definition(m_toolBarWidget->getDefinition());
+	ToolBarsManager::ToolBarDefinition definition(m_parentToolBarWidget->getDefinition());
 	int size(m_ui->containerWidget->maximumWidth());
 
 	if (size == QWIDGETSIZE_MAX)
@@ -307,10 +307,10 @@ void SidebarWidget::saveSize()
 
 void SidebarWidget::updateLayout()
 {
-	const Qt::ToolBarArea area(m_toolBarWidget->getArea());
+	const Qt::ToolBarArea area(m_parentToolBarWidget->getArea());
 	QBoxLayout::Direction direction((area == Qt::RightToolBarArea) ? QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
 
-	m_ui->toggleSpacer->changeSize((m_toolBarWidget->getDefinition().hasToggle ? 6 : 0), 0, QSizePolicy::Fixed);
+	m_ui->toggleSpacer->changeSize((m_parentToolBarWidget->getDefinition().hasToggle ? 6 : 0), 0, QSizePolicy::Fixed);
 
 	m_resizerWidget->setDirection((area == Qt::RightToolBarArea) ? ResizerWidget::RightToLeftDirection : ResizerWidget::LeftToRightDirection);
 
@@ -343,7 +343,7 @@ void SidebarWidget::updateLayout()
 
 void SidebarWidget::updatePanels()
 {
-	const ToolBarsManager::ToolBarDefinition definition(m_toolBarWidget->getDefinition());
+	const ToolBarsManager::ToolBarDefinition definition(m_parentToolBarWidget->getDefinition());
 
 	if (m_buttons.keys() == definition.panels)
 	{

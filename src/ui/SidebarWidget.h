@@ -62,7 +62,7 @@ protected slots:
 	void updatePanels();
 
 private:
-	ToolBarWidget *m_toolBarWidget;
+	ToolBarWidget *m_parentToolBarWidget;
 	ResizerWidget *m_resizerWidget;
 	QToolBar *m_toolBar;
 	QString m_currentPanel;
