@@ -63,7 +63,7 @@ SidebarWidget::SidebarWidget(ToolBarWidget *parent) : QWidget(parent),
 	m_toolBar->addWidget(spacer);
 	m_toolBar->addWidget(new ActionWidget(ActionsManager::ShowPanelAction, nullptr, definition, this));
 
-	m_ui->panelLayout->addWidget(m_toolBar);
+	m_ui->containerLayout->addWidget(m_toolBar);
 	m_ui->panelsButton->setPopupMode(QToolButton::InstantPopup);
 	m_ui->panelsButton->setIcon(ThemesManager::createIcon(QLatin1String("list-add")));
 	m_ui->horizontalLayout->addWidget(m_resizerWidget);
@@ -249,7 +249,7 @@ void SidebarWidget::selectPanel(const QString &identifier)
 
 	if (m_panels.contains(m_currentPanel) && m_panels[m_currentPanel])
 	{
-		m_ui->panelLayout->removeWidget(m_panels[m_currentPanel]);
+		m_ui->containerLayout->removeWidget(m_panels[m_currentPanel]);
 
 		m_panels[m_currentPanel]->hide();
 	}
@@ -261,7 +261,7 @@ void SidebarWidget::selectPanel(const QString &identifier)
 
 	if (contentsWidget)
 	{
-		m_ui->panelLayout->addWidget(contentsWidget);
+		m_ui->containerLayout->addWidget(contentsWidget);
 
 		contentsWidget->show();
 
@@ -373,7 +373,7 @@ void SidebarWidget::updatePanels()
 			{
 				m_currentPanel.clear();
 
-				m_ui->panelLayout->removeWidget(widget);
+				m_ui->containerLayout->removeWidget(widget);
 				m_ui->containerWidget->hide();
 
 				m_resizerWidget->hide();
