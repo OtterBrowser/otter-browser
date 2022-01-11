@@ -461,7 +461,7 @@ void SidebarWidget::updatePanels()
 	}
 
 	menu->addSeparator();
-	menu->addAction(tr("Add Web Panel…"), this, &SidebarWidget::addWebPanel);
+	menu->addAction(ThemesManager::createIcon(QLatin1String("text-html")), tr("Add Web Panel…"), this, &SidebarWidget::addWebPanel);
 
 	selectPanel(definition.currentPanel);
 }
