@@ -290,16 +290,12 @@ void SidebarWidget::selectPanel(const QString &identifier)
 void SidebarWidget::saveSize()
 {
 	ToolBarsManager::ToolBarDefinition definition(m_parentToolBarWidget->getDefinition());
-	int size(m_ui->containerWidget->maximumWidth());
+	const int maximumSize(m_ui->containerWidget->maximumWidth());
+	const int panelSize((maximumSize == QWIDGETSIZE_MAX) ? -1 : maximumSize);
 
-	if (size == QWIDGETSIZE_MAX)
+	if (panelSize != definition.panelSize)
 	{
-		size = -1;
-	}
-
-	if (size != definition.panelSize)
-	{
-		definition.panelSize = size;
+		definition.panelSize = panelSize;
 
 		ToolBarsManager::setToolBar(definition);
 	}
