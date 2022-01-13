@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -102,6 +102,7 @@ private:
 	int m_loadingSpeedTimer;
 	bool m_areImagesEnabled;
 	bool m_canSendReferrer;
+	bool m_isWorkingOffline;
 
 	static WebBackend *m_backend;
 

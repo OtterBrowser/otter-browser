@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -64,7 +64,8 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 	m_bytesReceivedDifference(0),
 	m_loadingSpeedTimer(0),
 	m_areImagesEnabled(true),
-	m_canSendReferrer(true)
+	m_canSendReferrer(true),
+	m_isWorkingOffline(false)
 {
 	NetworkManagerFactory::initialize();
 
@@ -468,6 +469,7 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 
 	m_areImagesEnabled = (getOption(SettingsManager::Permissions_EnableImagesOption, url).toString() != QLatin1String("disabled"));
 	m_canSendReferrer = getOption(SettingsManager::Network_EnableReferrerOption, url).toBool();
+	m_isWorkingOffline = getOption(SettingsManager::Network_WorkOfflineOption, url).toBool();
 
 	const QString generalCookiesPolicyValue(getOption(SettingsManager::Network_CookiesPolicyOption, url).toString());
 	CookieJar::CookiesPolicy generalCookiesPolicy(CookieJar::AcceptAllCookies);
@@ -701,7 +703,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 		mutableRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 	}
 
-	if (NetworkManagerFactory::isWorkingOffline())
+	if (m_isWorkingOffline)
 	{
 		mutableRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysCache);
 	}
