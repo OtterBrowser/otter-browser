@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2020 sMichal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -36,13 +36,14 @@ QtWebEngineUrlRequestInterceptor::QtWebEngineUrlRequestInterceptor(QtWebEngineWe
 	m_widget(parent),
 	m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy),
 	m_areImagesEnabled(true),
-	m_canSendReferrer(true)
+	m_canSendReferrer(true),
+	m_isWorkingOffline(false)
 {
 }
 
 void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo &request)
 {
-	if (!m_areImagesEnabled && request.resourceType() == QWebEngineUrlRequestInfo::ResourceTypeImage)
+	if (m_isWorkingOffline || (!m_areImagesEnabled && request.resourceType() == QWebEngineUrlRequestInfo::ResourceTypeImage))
 	{
 		request.block(true);
 
@@ -191,6 +192,7 @@ void QtWebEngineUrlRequestInterceptor::updateOptions(const QUrl &url)
 
 	m_areImagesEnabled = (getOption(SettingsManager::Permissions_EnableImagesOption, url).toString() != QLatin1String("disabled"));
 	m_canSendReferrer = getOption(SettingsManager::Network_EnableReferrerOption, url).toBool();
+	m_isWorkingOffline = getOption(SettingsManager::Network_WorkOfflineOption, url).toBool();
 }
 
 QVariant QtWebEngineUrlRequestInterceptor::getOption(int identifier, const QUrl &url) const

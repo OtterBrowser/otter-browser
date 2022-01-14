@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -61,6 +61,7 @@ private:
 	quint64 m_startedRequestsAmount;
 	bool m_areImagesEnabled;
 	bool m_canSendReferrer;
+	bool m_isWorkingOffline;
 
 	static WebBackend *m_backend;
 
