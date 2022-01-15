@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -186,23 +186,25 @@ void NotificationDialog::resizeEvent(QResizeEvent *event)
 
 void NotificationDialog::mouseReleaseEvent(QMouseEvent *event)
 {
-	if (event->button() == Qt::LeftButton)
+	if (event->button() != Qt::LeftButton)
 	{
-		m_animation->stop();
+		return;
+	}
 
-		if (m_closeLabel->geometry().contains(event->pos()))
-		{
-			m_notification->markAsIgnored();
+	m_animation->stop();
 
-			close();
-
-			return;
-		}
-
-		m_notification->markAsClicked();
+	if (m_closeLabel->geometry().contains(event->pos()))
+	{
+		m_notification->markAsIgnored();
 
 		close();
+
+		return;
 	}
+
+	m_notification->markAsClicked();
+
+	close();
 }
 
 void NotificationDialog::updateMessage()
