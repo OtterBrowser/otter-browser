@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -643,6 +643,24 @@ int SettingsManager::getOptionIdentifier(const QString &name)
 	}
 
 	return staticMetaObject.enumerator(m_optionIdentifierEnumerator).keyToValue(mutableName.toLatin1());
+}
+
+int SettingsManager::getOverridesCount(int identifier)
+{
+	const QSettings overrides(m_overridePath, QSettings::IniFormat);
+	const QStringList overridesGroups(overrides.childGroups());
+	const QString optionName(getOptionName(identifier));
+	int amount(0);
+
+	for (int i = 0; i < overridesGroups.count(); ++i)
+	{
+		if (overrides.contains(overridesGroups.at(i) + QLatin1Char('/') + optionName))
+		{
+			++amount;
+		}
+	}
+
+	return amount;
 }
 
 bool SettingsManager::hasOverride(const QString &host, int identifier)
