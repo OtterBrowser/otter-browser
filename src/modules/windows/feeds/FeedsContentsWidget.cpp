@@ -314,12 +314,6 @@ void FeedsContentsWidget::removeEntry()
 	}
 }
 
-void FeedsContentsWidget::markEntriesAsRead()
-{
-	m_feed->markAllEntriesAsRead();
-	updateFeedModel();
-}
-
 void FeedsContentsWidget::selectCategory()
 {
 	const QToolButton *toolButton(qobject_cast<QToolButton*>(sender()));
@@ -398,9 +392,20 @@ void FeedsContentsWidget::showFeedsContextMenu(const QPoint &position)
 					if (type == FeedsModel::FeedEntry)
 					{
 						menu.addAction(ThemesManager::createIcon(QLatin1String("view-refresh")), QCoreApplication::translate("actions", "Update"), this, &FeedsContentsWidget::updateFeed);
-						menu.addAction(tr("Mark All as Read"), this, &FeedsContentsWidget::markEntriesAsRead);
+
 						menu.addSeparator();
 						menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open"), this, &FeedsContentsWidget::openFeed);
+
+						menu.addSeparator();
+						menu.addAction(tr("Mark All as Read"), this, [&]()
+						{
+							if (m_feed)
+							{
+								m_feed->markAllEntriesAsRead();
+
+								updateFeedModel();
+							}
+						});
 					}
 
 					menu.addSeparator();
