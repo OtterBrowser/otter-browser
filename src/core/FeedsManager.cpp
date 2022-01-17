@@ -271,6 +271,8 @@ void Feed::update()
 
 										entry.publicationTime = normalizeTime(entry.publicationTime);
 
+										entry.lastReadTime = existingEntry.lastReadTime;
+
 										if (entry.updateTime.isValid())
 										{
 											entry.updateTime = normalizeTime(entry.updateTime);
