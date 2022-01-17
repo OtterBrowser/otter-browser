@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -181,17 +181,18 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 		QString type(metaEnum.valueToKey(definition.type));
 		type.chop(4);
 
-		QList<QStandardItem*> optionItems({new QStandardItem(option.last()), new QStandardItem(type.toLower()), new QStandardItem((value.type() == QVariant::StringList) ? value.toStringList().join(QLatin1String(", ")) : value.toString())});
+		QList<QStandardItem*> optionItems({new QStandardItem(option.last()), new QStandardItem(type.toLower()), new QStandardItem(QString::number(SettingsManager::getOverridesCount(identifier))), new QStandardItem((value.type() == QVariant::StringList) ? value.toStringList().join(QLatin1String(", ")) : value.toString())});
 		optionItems[0]->setFlags(optionItems[0]->flags() | Qt::ItemNeverHasChildren);
 		optionItems[1]->setFlags(optionItems[1]->flags() | Qt::ItemNeverHasChildren);
-		optionItems[2]->setData(QSize(-1, 30), Qt::SizeHintRole);
-		optionItems[2]->setData(identifier, IdentifierRole);
-		optionItems[2]->setData(options.at(i), NameRole);
 		optionItems[2]->setFlags(optionItems[2]->flags() | Qt::ItemNeverHasChildren);
+		optionItems[3]->setData(QSize(-1, 30), Qt::SizeHintRole);
+		optionItems[3]->setData(identifier, IdentifierRole);
+		optionItems[3]->setData(options.at(i), NameRole);
+		optionItems[3]->setFlags(optionItems[2]->flags() | Qt::ItemNeverHasChildren);
 
 		if (definition.flags.testFlag(SettingsManager::OptionDefinition::RequiresRestartFlag))
 		{
-			optionItems[2]->setData(true, RequiresRestartRole);
+			optionItems[3]->setData(true, RequiresRestartRole);
 		}
 
 		if (value != definition.defaultValue)
@@ -210,13 +211,13 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 		groupItem->appendRow(optionItems);
 	}
 
-	m_model->setHorizontalHeaderLabels({tr("Name"), tr("Type"), tr("Value")});
+	m_model->setHorizontalHeaderLabels({tr("Name"), tr("Type"), tr("Overrides"), tr("Value")});
 	m_model->sort(0);
 
 	m_ui->configurationViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->configurationViewWidget->setModel(m_model);
 	m_ui->configurationViewWidget->setLayoutDirection(Qt::LeftToRight);
-	m_ui->configurationViewWidget->setItemDelegateForColumn(2, new ConfigurationOptionDelegate(this));
+	m_ui->configurationViewWidget->setItemDelegateForColumn(3, new ConfigurationOptionDelegate(this));
 	m_ui->configurationViewWidget->setFilterRoles({Qt::DisplayRole, NameRole});
 	m_ui->configurationViewWidget->installEventFilter(this);
 	m_ui->resetAllButton->setEnabled(canResetAll);
@@ -282,7 +283,7 @@ void ConfigurationContentsWidget::changeEvent(QEvent *event)
 	{
 		m_ui->retranslateUi(this);
 
-		m_model->setHorizontalHeaderLabels({tr("Name"), tr("Type"), tr("Value")});
+		m_model->setHorizontalHeaderLabels({tr("Name"), tr("Type"), tr("Overrides"), tr("Value")});
 	}
 }
 
@@ -313,7 +314,7 @@ void ConfigurationContentsWidget::triggerAction(int identifier, const QVariantMa
 
 void ConfigurationContentsWidget::resetOption()
 {
-	const QModelIndex index(m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 2));
+	const QModelIndex index(m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 3));
 
 	if (index.isValid())
 	{
@@ -327,7 +328,7 @@ void ConfigurationContentsWidget::resetOption()
 
 void ConfigurationContentsWidget::saveOption()
 {
-	const QModelIndex index(m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 2));
+	const QModelIndex index(m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 3));
 
 	if (index.isValid())
 	{
@@ -363,7 +364,7 @@ void ConfigurationContentsWidget::saveAll(bool reset)
 
 			if (reset || isModified)
 			{
-				const QModelIndex valueIndex(m_model->index(j, 2, groupIndex));
+				const QModelIndex valueIndex(m_model->index(j, 3, groupIndex));
 				const int identifier(valueIndex.data(IdentifierRole).toInt());
 				const QVariant defaultValue(SettingsManager::getOptionDefinition(identifier).defaultValue);
 
@@ -422,7 +423,7 @@ void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVar
 
 		for (int j = 0; j < optionAmount; ++j)
 		{
-			const QModelIndex valueIndex(m_model->index(j, 2, groupIndex));
+			const QModelIndex valueIndex(m_model->index(j, 3, groupIndex));
 
 			if (valueIndex.data(IdentifierRole).toInt() == identifier)
 			{
@@ -452,12 +453,12 @@ void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVar
 
 void ConfigurationContentsWidget::handleCurrentIndexChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex)
 {
-	if (previousIndex.parent().isValid() && previousIndex.column() == 2)
+	if (previousIndex.parent().isValid() && previousIndex.column() == 3)
 	{
 		m_ui->configurationViewWidget->closePersistentEditor(previousIndex);
 	}
 
-	if (currentIndex.parent().isValid() && currentIndex.column() == 2)
+	if (currentIndex.parent().isValid() && currentIndex.column() == 3)
 	{
 		m_ui->configurationViewWidget->openPersistentEditor(currentIndex);
 	}
@@ -465,9 +466,9 @@ void ConfigurationContentsWidget::handleCurrentIndexChanged(const QModelIndex &c
 
 void ConfigurationContentsWidget::handleIndexClicked(const QModelIndex &index)
 {
-	if (index.parent().isValid() && index.column() != 2)
+	if (index.parent().isValid() && index.column() != 3)
 	{
-		m_ui->configurationViewWidget->setCurrentIndex(index.sibling(index.row(), 2));
+		m_ui->configurationViewWidget->setCurrentIndex(index.sibling(index.row(), 3));
 	}
 }
 
@@ -478,7 +479,7 @@ void ConfigurationContentsWidget::showContextMenu(const QPoint &position)
 
 	if (index.isValid() && index.parent() != m_ui->configurationViewWidget->rootIndex())
 	{
-		const QModelIndex valueIndex(index.sibling(index.row(), 2));
+		const QModelIndex valueIndex(index.sibling(index.row(), 3));
 
 		menu.addAction(tr("Copy Option Name"), this, [&]()
 		{
@@ -496,7 +497,7 @@ void ConfigurationContentsWidget::showContextMenu(const QPoint &position)
 		});
 		menu.addSeparator();
 		menu.addAction(tr("Save Value"), this, &ConfigurationContentsWidget::saveOption)->setEnabled(index.sibling(index.row(), 0).data(IsModifiedRole).toBool());
-		menu.addAction(tr("Restore Default Value"), this, &ConfigurationContentsWidget::resetOption)->setEnabled(index.sibling(index.row(), 2).data(Qt::EditRole) != SettingsManager::getOptionDefinition(index.sibling(index.row(), 2).data(IdentifierRole).toInt()).defaultValue);
+		menu.addAction(tr("Restore Default Value"), this, &ConfigurationContentsWidget::resetOption)->setEnabled(index.sibling(index.row(), 3).data(Qt::EditRole) != SettingsManager::getOptionDefinition(index.sibling(index.row(), 3).data(IdentifierRole).toInt()).defaultValue);
 		menu.addSeparator();
 	}
 
@@ -507,7 +508,7 @@ void ConfigurationContentsWidget::showContextMenu(const QPoint &position)
 
 void ConfigurationContentsWidget::updateActions()
 {
-	const QModelIndex index(m_ui->configurationViewWidget->selectionModel()->hasSelection() ? m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 2) : QModelIndex());
+	const QModelIndex index(m_ui->configurationViewWidget->selectionModel()->hasSelection() ? m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 3) : QModelIndex());
 	const int identifier(index.data(IdentifierRole).toInt());
 
 	if (identifier >= 0 && index.parent().isValid())
@@ -552,7 +553,7 @@ bool ConfigurationContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (static_cast<QKeyEvent*>(event)->key() == Qt::Key_Right && index.parent().isValid())
 		{
-			m_ui->configurationViewWidget->setCurrentIndex(index.sibling(index.row(), 2));
+			m_ui->configurationViewWidget->setCurrentIndex(index.sibling(index.row(), 3));
 		}
 	}
 
