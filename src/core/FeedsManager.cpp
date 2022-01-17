@@ -269,9 +269,9 @@ void Feed::update()
 											++amount;
 										}
 
+										entry.lastReadTime = existingEntry.lastReadTime;
 										entry.publicationTime = normalizeTime(entry.publicationTime);
 
-										entry.lastReadTime = existingEntry.lastReadTime;
 
 										if (entry.updateTime.isValid())
 										{
