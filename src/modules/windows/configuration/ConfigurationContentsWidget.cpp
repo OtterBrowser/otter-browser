@@ -228,6 +228,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	}
 
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &ConfigurationContentsWidget::handleOptionChanged);
+	connect(SettingsManager::getInstance(), &SettingsManager::hostOptionChanged, this, &ConfigurationContentsWidget::handleHostOptionChanged);
 	connect(m_ui->configurationViewWidget, &ItemViewWidget::customContextMenuRequested, this, &ConfigurationContentsWidget::showContextMenu);
 	connect(m_ui->configurationViewWidget, &ItemViewWidget::needsActionsUpdate, this, &ConfigurationContentsWidget::updateActions);
 	connect(m_ui->configurationViewWidget, &ItemViewWidget::clicked, this, &ConfigurationContentsWidget::handleIndexClicked);
@@ -449,6 +450,36 @@ void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVar
 	}
 
 	updateActions();
+}
+
+void ConfigurationContentsWidget::handleHostOptionChanged(int identifier)
+{
+	const QString name(SettingsManager::getOptionName(identifier));
+
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		const QModelIndex groupIndex(m_model->index(i, 0));
+		const QString groupTitle(groupIndex.data(Qt::DisplayRole).toString());
+
+		if (groupTitle.isEmpty() || !name.startsWith(groupTitle))
+		{
+			continue;
+		}
+
+		const int optionAmount(m_model->rowCount(groupIndex));
+
+		for (int j = 0; j < optionAmount; ++j)
+		{
+			const QModelIndex valueIndex(m_model->index(j, 3, groupIndex));
+
+			if (valueIndex.data(IdentifierRole).toInt() == identifier)
+			{
+				m_model->setData(m_model->index(j, 2, groupIndex), QString::number(SettingsManager::getOverridesCount(identifier)), Qt::DisplayRole);
+
+				break;
+			}
+		}
+	}
 }
 
 void ConfigurationContentsWidget::handleCurrentIndexChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex)

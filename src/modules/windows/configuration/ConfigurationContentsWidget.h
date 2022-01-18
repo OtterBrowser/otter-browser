@@ -83,6 +83,7 @@ protected slots:
 	void resetOption();
 	void saveOption();
 	void handleOptionChanged(int identifier, const QVariant &value);
+	void handleHostOptionChanged(int identifier);
 	void handleCurrentIndexChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex);
 	void handleIndexClicked(const QModelIndex &index);
 	void showContextMenu(const QPoint &position);
