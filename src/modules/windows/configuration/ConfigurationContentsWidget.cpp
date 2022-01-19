@@ -408,14 +408,14 @@ void ConfigurationContentsWidget::saveAll(bool reset)
 void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVariant &value)
 {
 	const QString name(SettingsManager::getOptionName(identifier));
+	const QString group(name.mid(0, name.indexOf(QLatin1Char('/'))));
 	const bool wasModified(m_ui->configurationViewWidget->isModified());
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
 		const QModelIndex groupIndex(m_model->index(i, 0));
-		const QString groupTitle(groupIndex.data(Qt::DisplayRole).toString());
 
-		if (groupTitle.isEmpty() || !name.startsWith(groupTitle))
+		if (groupIndex.data(Qt::DisplayRole).toString() != group)
 		{
 			continue;
 		}
@@ -455,13 +455,13 @@ void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVar
 void ConfigurationContentsWidget::handleHostOptionChanged(int identifier)
 {
 	const QString name(SettingsManager::getOptionName(identifier));
+	const QString group(name.mid(0, name.indexOf(QLatin1Char('/'))));
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
 		const QModelIndex groupIndex(m_model->index(i, 0));
-		const QString groupTitle(groupIndex.data(Qt::DisplayRole).toString());
 
-		if (groupTitle.isEmpty() || !name.startsWith(groupTitle))
+		if (groupIndex.data(Qt::DisplayRole).toString() != group)
 		{
 			continue;
 		}
