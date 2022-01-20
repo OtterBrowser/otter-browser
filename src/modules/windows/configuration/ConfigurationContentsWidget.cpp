@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "ConfigurationContentsWidget.h"
+#include "./OverridesDialog.h"
 #include "../../../core/ActionsManager.h"
 #include "../../../core/NetworkManagerFactory.h"
 #include "../../../core/SettingsManager.h"
@@ -524,6 +525,14 @@ void ConfigurationContentsWidget::showContextMenu(const QPoint &position)
 			if (valueIndex.isValid())
 			{
 				QApplication::clipboard()->setText(valueIndex.data(Qt::EditRole).toString());
+			}
+		});
+		menu.addSeparator();
+		menu.addAction(tr("Overrides…"), this, [&]()
+		{
+			if (valueIndex.isValid())
+			{
+				OverridesDialog(valueIndex.data(IdentifierRole).toInt(), this).exec();
 			}
 		});
 		menu.addSeparator();
