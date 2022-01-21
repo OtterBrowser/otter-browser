@@ -68,13 +68,13 @@ void Feed::markEntryAsRead(const QString &identifier)
 
 void Feed::markAllEntriesAsRead()
 {
-	const QDateTime now = QDateTime::currentDateTimeUtc();
+	const QDateTime currentDateTime(QDateTime::currentDateTimeUtc());
 
 	for (int i = 0; i < m_entries.count(); ++i)
 	{
 		if (!m_entries[i].lastReadTime.isValid())
 		{
-			m_entries[i].lastReadTime = QDateTime::currentDateTimeUtc();
+			m_entries[i].lastReadTime = currentDateTime;
 		}
 	}
 
