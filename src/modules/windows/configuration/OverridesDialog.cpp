@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "OverridesDialog.h"
+#include "ConfigurationContentsWidget.h"
 #include "../../../core/HistoryManager.h"
 #include "../../../core/SettingsManager.h"
 
@@ -39,9 +40,12 @@ OverridesDialog::OverridesDialog(int identifier, QWidget *parent) : Dialog(paren
 
 	for (int i = 0; i < overrideHosts.count(); ++i)
 	{
-		QList<QStandardItem*> items({new QStandardItem(HistoryManager::getIcon(overrideHosts.at(i)), overrideHosts.at(i)), new QStandardItem(SettingsManager::getOption(identifier, overrideHosts.at(i)).toString())});
+		const QVariant value(SettingsManager::getOption(identifier, overrideHosts.at(i)));
+		QList<QStandardItem*> items({new QStandardItem(HistoryManager::getIcon(overrideHosts.at(i)), overrideHosts.at(i)), new QStandardItem()});
 		items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
 		items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
+		items[1]->setData(value, Qt::EditRole);
+		items[1]->setData(identifier, ConfigurationContentsWidget::IdentifierRole);
 
 		m_model->appendRow(items);
 	}
@@ -52,6 +56,7 @@ OverridesDialog::OverridesDialog(int identifier, QWidget *parent) : Dialog(paren
 	m_ui->overridesViewWidget->setViewMode(ItemViewWidget::ListView);
 	m_ui->overridesViewWidget->setModel(m_model);
 	m_ui->overridesViewWidget->setLayoutDirection(Qt::LeftToRight);
+	m_ui->overridesViewWidget->setItemDelegateForColumn(1, new ConfigurationOptionDelegate(false, this));
 
 	connect(m_ui->overridesFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->overridesViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &OverridesDialog::close);

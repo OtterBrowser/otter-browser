@@ -38,7 +38,7 @@ class Window;
 class ConfigurationOptionDelegate final : public ItemDelegate
 {
 public:
-	explicit ConfigurationOptionDelegate(QObject *parent);
+	explicit ConfigurationOptionDelegate(bool shouldMarkAsModified, QObject *parent);
 
 	void setEditorData(QWidget *editor, const QModelIndex &index) const override;
 	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
@@ -46,6 +46,9 @@ public:
 
 protected:
 	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
+
+private:
+	bool m_shouldMarkAsModified;
 };
 
 class ConfigurationContentsWidget final : public ContentsWidget

@@ -38,7 +38,8 @@
 namespace Otter
 {
 
-ConfigurationOptionDelegate::ConfigurationOptionDelegate(QObject *parent) : ItemDelegate(parent)
+ConfigurationOptionDelegate::ConfigurationOptionDelegate(bool shouldMarkAsModified, QObject *parent) : ItemDelegate(parent),
+	m_shouldMarkAsModified(shouldMarkAsModified)
 {
 }
 
@@ -104,7 +105,7 @@ void ConfigurationOptionDelegate::setEditorData(QWidget *editor, const QModelInd
 {
 	OptionWidget *widget(qobject_cast<OptionWidget*>(editor));
 
-	if (widget && !index.sibling(index.row(), 0).data(ConfigurationContentsWidget::IsModifiedRole).toBool())
+	if (widget && (!m_shouldMarkAsModified || !index.sibling(index.row(), 0).data(ConfigurationContentsWidget::IsModifiedRole).toBool()))
 	{
 		widget->setValue(index.data(Qt::EditRole));
 	}
@@ -116,13 +117,17 @@ void ConfigurationOptionDelegate::setModelData(QWidget *editor, QAbstractItemMod
 
 	if (widget)
 	{
-		const QModelIndex optionIndex(index.sibling(index.row(), 0));
-		QFont font(optionIndex.data(Qt::FontRole).value<QFont>());
-		font.setBold(widget->getValue() != widget->getDefaultValue());
+		if (m_shouldMarkAsModified)
+		{
+			const QModelIndex optionIndex(index.sibling(index.row(), 0));
+			QFont font(optionIndex.data(Qt::FontRole).value<QFont>());
+			font.setBold(widget->getValue() != widget->getDefaultValue());
+
+			model->setData(optionIndex, font, Qt::FontRole);
+			model->setData(optionIndex, true, ConfigurationContentsWidget::IsModifiedRole);
+		}
 
 		model->setData(index, widget->getValue(), Qt::EditRole);
-		model->setData(optionIndex, font, Qt::FontRole);
-		model->setData(optionIndex, true, ConfigurationContentsWidget::IsModifiedRole);
 	}
 }
 
@@ -218,7 +223,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	m_ui->configurationViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->configurationViewWidget->setModel(m_model);
 	m_ui->configurationViewWidget->setLayoutDirection(Qt::LeftToRight);
-	m_ui->configurationViewWidget->setItemDelegateForColumn(3, new ConfigurationOptionDelegate(this));
+	m_ui->configurationViewWidget->setItemDelegateForColumn(3, new ConfigurationOptionDelegate(true, this));
 	m_ui->configurationViewWidget->setFilterRoles({Qt::DisplayRole, NameRole});
 	m_ui->configurationViewWidget->installEventFilter(this);
 	m_ui->resetAllButton->setEnabled(canResetAll);
