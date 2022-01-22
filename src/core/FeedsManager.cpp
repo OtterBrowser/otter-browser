@@ -66,6 +66,21 @@ void Feed::markEntryAsRead(const QString &identifier)
 	}
 }
 
+void Feed::markAllEntriesAsRead()
+{
+	const QDateTime currentDateTime(QDateTime::currentDateTimeUtc());
+
+	for (int i = 0; i < m_entries.count(); ++i)
+	{
+		if (!m_entries[i].lastReadTime.isValid())
+		{
+			m_entries[i].lastReadTime = currentDateTime;
+		}
+	}
+
+	emit feedModified(this);
+}
+
 void Feed::markEntryAsRemoved(const QString &identifier)
 {
 	if (!m_removedEntries.contains(identifier))

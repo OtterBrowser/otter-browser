@@ -394,6 +394,16 @@ void FeedsContentsWidget::showFeedsContextMenu(const QPoint &position)
 						menu.addAction(ThemesManager::createIcon(QLatin1String("view-refresh")), QCoreApplication::translate("actions", "Update"), this, &FeedsContentsWidget::updateFeed);
 						menu.addSeparator();
 						menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open"), this, &FeedsContentsWidget::openFeed);
+						menu.addSeparator();
+						menu.addAction(tr("Mark All as Read"), this, [&]()
+						{
+							if (m_feed)
+							{
+								m_feed->markAllEntriesAsRead();
+
+								updateFeedModel();
+							}
+						});
 					}
 
 					menu.addSeparator();
