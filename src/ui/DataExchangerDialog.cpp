@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -277,10 +277,18 @@ void DataExchangerDialog::setupResults(DataExchanger *exchanger)
 	m_ui->buttonBox->addButton(QDialogButtonBox::Abort)->setEnabled(exchanger->canCancel());
 	m_ui->stackedWidget->setCurrentWidget(m_ui->resultsPage);
 
+	if (exchanger->getExchangeDirection() == DataExchanger::ImportDirection)
+	{
+		connect(exchanger, &DataExchanger::exchangeFinished, this, &DataExchangerDialog::handleImportFinished);
+	}
+	else
+	{
+		connect(exchanger, &DataExchanger::exchangeFinished, this, &DataExchangerDialog::handleExportFinished);
+	}
+
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, exchanger, &DataExchanger::cancel);
 	connect(exchanger, &DataExchanger::exchangeStarted, this, &DataExchangerDialog::handleExchangeStarted);
 	connect(exchanger, &DataExchanger::exchangeProgress, this, &DataExchangerDialog::handleExchangeProgress);
-	connect(exchanger, &DataExchanger::exchangeFinished, this, &DataExchangerDialog::handleExportFinished);
 	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::reject);
 }
 
