@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -1622,7 +1622,10 @@ ActionsManager::ActionDefinition::State Application::getActionState(int identifi
 
 				if (exchanger == QLatin1String("HtmlBookmarksImport"))
 				{
+					const WebBackend *webBackend(AddonsManager::getWebBackend());
+
 					state.text = translate("actions", "Import HTML Bookmarks…");
+					state.isEnabled = (webBackend && webBackend->hasCapability(WebBackend::BookmarksImportCapability));
 				}
 				else if (exchanger == QLatin1String("OperaBookmarksImport"))
 				{

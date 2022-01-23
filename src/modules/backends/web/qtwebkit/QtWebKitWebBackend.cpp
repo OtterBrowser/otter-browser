@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -270,6 +270,7 @@ WebBackend::CapabilityScopes QtWebKitWebBackend::getCapabilityScopes(WebBackend:
 {
 	switch (capability)
 	{
+		case BookmarksImportCapability:
 		case CacheManagementCapability:
 		case CookiesManagementCapability:
 		case PasswordsManagementCapability:
