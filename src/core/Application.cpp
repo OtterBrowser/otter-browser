@@ -911,6 +911,10 @@ void Application::handleOptionChanged(int identifier, const QVariant &value)
 {
 	switch (identifier)
 	{
+		case SettingsManager::Backends_WebOption:
+			emit arbitraryActionsStateChanged({ActionsManager::ExchangeDataAction});
+
+			break;
 		case SettingsManager::Browser_EnableTrayIconOption:
 			if (!m_trayIcon && value.toBool())
 			{
