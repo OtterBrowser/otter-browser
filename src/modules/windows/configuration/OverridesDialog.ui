@@ -46,7 +46,7 @@
      <item>
       <layout class="QVBoxLayout" name="overridesButtonsLayout" stretch="0,1">
        <item>
-        <widget class="QPushButton" name="removeOverridehButton">
+        <widget class="QPushButton" name="removeOverrideButton">
          <property name="enabled">
           <bool>false</bool>
          </property>
