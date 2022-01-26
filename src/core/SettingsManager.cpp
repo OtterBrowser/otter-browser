@@ -268,6 +268,8 @@ void SettingsManager::removeOverride(const QString &host, int identifier)
 	else
 	{
 		QSettings(m_overridePath, QSettings::IniFormat).remove(host + QLatin1Char('/') + getOptionName(identifier));
+
+		emit m_instance->hostOptionChanged(identifier, getOption(identifier), host);
 	}
 }
 
