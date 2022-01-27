@@ -59,6 +59,21 @@ OverridesDialog::OverridesDialog(int identifier, QWidget *parent) : Dialog(paren
 	m_ui->overridesViewWidget->setItemDelegateForColumn(1, new ConfigurationOptionDelegate(false, this));
 
 	connect(m_ui->overridesFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->overridesViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->overridesViewWidget, &ItemViewWidget::needsActionsUpdate, this, [&]()
+	{
+		m_ui->removeOverrideButton->setEnabled(m_ui->overridesViewWidget->getCurrentIndex().isValid());
+	});
+	connect(m_ui->removeOverrideButton, &QPushButton::clicked, this, [&]()
+	{
+		const QModelIndex index(m_ui->overridesViewWidget->getCurrentIndex());
+
+		if (index.isValid())
+		{
+			m_ui->overridesViewWidget->removeRow();
+
+			SettingsManager::removeOverride(index.data(Qt::DisplayRole).toString(), m_identifier);
+		}
+	});
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &OverridesDialog::close);
 }
 
