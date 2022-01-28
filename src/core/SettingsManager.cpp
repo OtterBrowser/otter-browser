@@ -261,15 +261,52 @@ void SettingsManager::createInstance(const QString &path)
 
 void SettingsManager::removeOverride(const QString &host, int identifier)
 {
-	if (identifier < 0)
-	{
-		QSettings(m_overridePath, QSettings::IniFormat).remove(host);
-	}
-	else
+	if (identifier >= 0)
 	{
 		QSettings(m_overridePath, QSettings::IniFormat).remove(host + QLatin1Char('/') + getOptionName(identifier));
 
 		emit m_instance->hostOptionChanged(identifier, getOption(identifier), host);
+
+		return;
+	}
+
+	QSettings settings(m_overridePath, QSettings::IniFormat);
+	settings.beginGroup(host);
+
+	const QStringList groups(settings.childGroups());
+
+	if (groups.isEmpty())
+	{
+		return;
+	}
+
+	QVector<int> options;
+	options.reserve(groups.count());
+
+	for (int i = 0; i < groups.count(); ++i)
+	{
+		settings.beginGroup(groups.at(i));
+
+		const QStringList rawOptions(settings.childKeys());
+
+		for (int j = 0; j < rawOptions.count(); ++j)
+		{
+			const int option(getOptionIdentifier(groups.at(i) + QLatin1Char('/') + rawOptions.at(j)));
+
+			if (option >= 0)
+			{
+				options.append(option);
+			}
+		}
+
+		settings.endGroup();
+	}
+
+	QSettings(m_overridePath, QSettings::IniFormat).remove(host);
+
+	for (int i = 0; i < options.count(); ++i)
+	{
+		emit m_instance->hostOptionChanged(identifier, getOption(options.at(i)), host);
 	}
 }
 
