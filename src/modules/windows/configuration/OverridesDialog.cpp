@@ -71,8 +71,17 @@ OverridesDialog::OverridesDialog(int identifier, QWidget *parent) : Dialog(paren
 		{
 			m_ui->overridesViewWidget->removeRow();
 
-			SettingsManager::removeOverride(index.data(Qt::DisplayRole).toString(), m_identifier);
+			m_hostsToRemove.append(index.data(Qt::DisplayRole).toString());
 		}
+	});
+	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, [&]()
+	{
+		for (int i = 0; i < m_hostsToRemove.count(); ++i)
+		{
+			SettingsManager::removeOverride(m_hostsToRemove.at(i), m_identifier);
+		}
+
+		accept();
 	});
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &OverridesDialog::close);
 }

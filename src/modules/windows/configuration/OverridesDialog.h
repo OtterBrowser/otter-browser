@@ -45,6 +45,7 @@ protected:
 
 private:
 	QStandardItemModel *m_model;
+	QStringList m_hostsToRemove;
 	int m_identifier;
 	Ui::OverridesDialog *m_ui;
 };
