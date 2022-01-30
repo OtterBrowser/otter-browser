@@ -462,6 +462,7 @@ void ConfigurationContentsWidget::handleHostOptionChanged(int identifier)
 {
 	const QString name(SettingsManager::getOptionName(identifier));
 	const QString group(name.mid(0, name.indexOf(QLatin1Char('/'))));
+	const bool isModified(m_ui->configurationViewWidget->isModified());
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
@@ -485,6 +486,11 @@ void ConfigurationContentsWidget::handleHostOptionChanged(int identifier)
 				break;
 			}
 		}
+	}
+
+	if (!isModified)
+	{
+		m_ui->configurationViewWidget->setModified(false);
 	}
 }
 
