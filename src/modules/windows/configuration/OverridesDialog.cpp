@@ -69,9 +69,9 @@ OverridesDialog::OverridesDialog(int identifier, QWidget *parent) : Dialog(paren
 
 		if (index.isValid())
 		{
-			m_ui->overridesViewWidget->removeRow();
-
 			m_hostsToRemove.append(index.data(Qt::DisplayRole).toString());
+
+			m_ui->overridesViewWidget->removeRow();
 		}
 	});
 	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, [&]()
