@@ -261,16 +261,18 @@ void SettingsManager::createInstance(const QString &path)
 
 void SettingsManager::removeOverride(const QString &host, int identifier)
 {
+	QSettings settings(m_overridePath, QSettings::IniFormat);
+
 	if (identifier >= 0)
 	{
-		QSettings(m_overridePath, QSettings::IniFormat).remove(host + QLatin1Char('/') + getOptionName(identifier));
+		settings.remove(host + QLatin1Char('/') + getOptionName(identifier));
+		settings.sync();
 
 		emit m_instance->hostOptionChanged(identifier, getOption(identifier), host);
 
 		return;
 	}
 
-	QSettings settings(m_overridePath, QSettings::IniFormat);
 	settings.beginGroup(host);
 
 	const QStringList groups(settings.childGroups());
@@ -302,7 +304,9 @@ void SettingsManager::removeOverride(const QString &host, int identifier)
 		settings.endGroup();
 	}
 
-	QSettings(m_overridePath, QSettings::IniFormat).remove(host);
+	settings.endGroup();
+	settings.remove(host);
+	settings.sync();
 
 	for (int i = 0; i < options.count(); ++i)
 	{
