@@ -328,19 +328,21 @@ void SettingsManager::registerOption(int identifier, OptionType type, const QVar
 
 void SettingsManager::saveOption(const QString &path, const QString &key, const QVariant &value, OptionType type)
 {
+	QSettings settings(path, QSettings::IniFormat);
+
 	if (value.isNull())
 	{
-		QSettings(path, QSettings::IniFormat).remove(key);
+		settings.remove(key);
 	}
 	else if (type == ColorType)
 	{
 		const QColor color(value.value<QColor>());
 
-		QSettings(path, QSettings::IniFormat).setValue(key, (color.isValid() ? color.name(QColor::HexArgb).toUpper() : QString()));
+		settings.setValue(key, (color.isValid() ? color.name(QColor::HexArgb).toUpper() : QString()));
 	}
 	else
 	{
-		QSettings(path, QSettings::IniFormat).setValue(key, value);
+		settings.setValue(key, value);
 	}
 }
 
