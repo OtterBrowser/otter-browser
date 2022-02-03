@@ -44,7 +44,17 @@
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="overridesButtonsLayout" stretch="0,1">
+      <layout class="QVBoxLayout" name="overridesButtonsLayout" stretch="0,0,1">
+       <item>
+        <widget class="QPushButton" name="addOverrideButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Add</string>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QPushButton" name="removeOverrideButton">
          <property name="enabled">
