@@ -24,6 +24,8 @@
 
 #include "ui_OverridesDialog.h"
 
+#include <QtWidgets/QInputDialog>
+
 namespace Otter
 {
 
@@ -62,6 +64,28 @@ OverridesDialog::OverridesDialog(int identifier, QWidget *parent) : Dialog(paren
 	connect(m_ui->overridesViewWidget, &ItemViewWidget::needsActionsUpdate, this, [&]()
 	{
 		m_ui->removeOverrideButton->setEnabled(m_ui->overridesViewWidget->getCurrentIndex().isValid());
+	});
+	connect(m_ui->addOverrideButton, &QPushButton::clicked, this, [&]()
+	{
+		const QString host(QInputDialog::getText(this, tr("Select Website Name"), tr("Enter website name:")));
+
+		if (!host.isEmpty())
+		{
+			for (int i = 0; i < m_model->rowCount(); ++i)
+			{
+				if (m_ui->overridesViewWidget->getIndex(i, 0).data().toString() == host)
+				{
+					return;
+				}
+			}
+
+			QList<QStandardItem*> items({new QStandardItem(HistoryManager::getIcon(host), host), new QStandardItem()});
+			items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
+			items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
+			items[1]->setData(identifier, ConfigurationContentsWidget::IdentifierRole);
+
+			m_model->appendRow(items);
+		}
 	});
 	connect(m_ui->removeOverrideButton, &QPushButton::clicked, this, [&]()
 	{
