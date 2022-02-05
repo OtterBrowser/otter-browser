@@ -237,13 +237,30 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	connect(SettingsManager::getInstance(), &SettingsManager::hostOptionChanged, this, &ConfigurationContentsWidget::handleHostOptionChanged);
 	connect(m_ui->configurationViewWidget, &ItemViewWidget::customContextMenuRequested, this, &ConfigurationContentsWidget::showContextMenu);
 	connect(m_ui->configurationViewWidget, &ItemViewWidget::needsActionsUpdate, this, &ConfigurationContentsWidget::updateActions);
-	connect(m_ui->configurationViewWidget, &ItemViewWidget::clicked, this, &ConfigurationContentsWidget::handleIndexClicked);
+	connect(m_ui->configurationViewWidget, &ItemViewWidget::clicked, this, [&](const QModelIndex &index)
+	{
+		if (index.parent().isValid() && index.column() != 3)
+		{
+			m_ui->configurationViewWidget->setCurrentIndex(index.sibling(index.row(), 3));
+		}
+	});
 	connect(m_ui->configurationViewWidget, &ItemViewWidget::modified, [&]()
 	{
 		m_ui->resetAllButton->setEnabled(true);
 		m_ui->saveAllButton->setEnabled(true);
 	});
-	connect(m_ui->configurationViewWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, &ConfigurationContentsWidget::handleCurrentIndexChanged);
+	connect(m_ui->configurationViewWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, [&](const QModelIndex &currentIndex, const QModelIndex &previousIndex)
+	{
+		if (previousIndex.parent().isValid() && previousIndex.column() == 3)
+		{
+			m_ui->configurationViewWidget->closePersistentEditor(previousIndex);
+		}
+
+		if (currentIndex.parent().isValid() && currentIndex.column() == 3)
+		{
+			m_ui->configurationViewWidget->openPersistentEditor(currentIndex);
+		}
+	});
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->configurationViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->resetAllButton, &QPushButton::clicked, [&]()
 	{
@@ -491,27 +508,6 @@ void ConfigurationContentsWidget::handleHostOptionChanged(int identifier)
 	if (!isModified)
 	{
 		m_ui->configurationViewWidget->setModified(false);
-	}
-}
-
-void ConfigurationContentsWidget::handleCurrentIndexChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex)
-{
-	if (previousIndex.parent().isValid() && previousIndex.column() == 3)
-	{
-		m_ui->configurationViewWidget->closePersistentEditor(previousIndex);
-	}
-
-	if (currentIndex.parent().isValid() && currentIndex.column() == 3)
-	{
-		m_ui->configurationViewWidget->openPersistentEditor(currentIndex);
-	}
-}
-
-void ConfigurationContentsWidget::handleIndexClicked(const QModelIndex &index)
-{
-	if (index.parent().isValid() && index.column() != 3)
-	{
-		m_ui->configurationViewWidget->setCurrentIndex(index.sibling(index.row(), 3));
 	}
 }
 
