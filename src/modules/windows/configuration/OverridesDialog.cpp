@@ -65,6 +65,22 @@ OverridesDialog::OverridesDialog(int identifier, QWidget *parent) : Dialog(paren
 	{
 		m_ui->removeOverrideButton->setEnabled(m_ui->overridesViewWidget->getCurrentIndex().isValid());
 	});
+	connect(m_ui->overridesViewWidget, &ItemViewWidget::clicked, this, [&](const QModelIndex &index)
+	{
+		m_ui->overridesViewWidget->setCurrentIndex(index.sibling(index.row(), 1));
+	});
+	connect(m_ui->overridesViewWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, [&](const QModelIndex &currentIndex, const QModelIndex &previousIndex)
+	{
+		if (previousIndex.column() == 1)
+		{
+			m_ui->overridesViewWidget->closePersistentEditor(previousIndex);
+		}
+
+		if (currentIndex.column() == 1)
+		{
+			m_ui->overridesViewWidget->openPersistentEditor(currentIndex);
+		}
+	});
 	connect(m_ui->addOverrideButton, &QPushButton::clicked, this, [&]()
 	{
 		const QString host(QInputDialog::getText(this, tr("Select Website Name"), tr("Enter website name:")));
