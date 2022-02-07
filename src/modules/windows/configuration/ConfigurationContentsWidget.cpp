@@ -117,16 +117,17 @@ void ConfigurationOptionDelegate::setModelData(QWidget *editor, QAbstractItemMod
 
 	if (widget)
 	{
+		const QModelIndex optionIndex(index.sibling(index.row(), 0));
+
 		if (m_shouldMarkAsModified)
 		{
-			const QModelIndex optionIndex(index.sibling(index.row(), 0));
 			QFont font(optionIndex.data(Qt::FontRole).value<QFont>());
 			font.setBold(widget->getValue() != widget->getDefaultValue());
 
 			model->setData(optionIndex, font, Qt::FontRole);
-			model->setData(optionIndex, true, ConfigurationContentsWidget::IsModifiedRole);
 		}
 
+		model->setData(optionIndex, true, ConfigurationContentsWidget::IsModifiedRole);
 		model->setData(index, widget->getValue(), Qt::EditRole);
 	}
 }
