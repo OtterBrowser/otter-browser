@@ -121,6 +121,19 @@ OverridesDialog::OverridesDialog(int identifier, QWidget *parent) : Dialog(paren
 			SettingsManager::removeOverride(m_hostsToRemove.at(i), m_identifier);
 		}
 
+		if (m_ui->overridesViewWidget->isModified())
+		{
+			for (int i = 0; i < m_ui->overridesViewWidget->getRowCount(); ++i)
+			{
+				const QModelIndex index(m_ui->overridesViewWidget->getIndex(i));
+
+				if (index.data(ConfigurationContentsWidget::IsModifiedRole).toBool())
+				{
+					SettingsManager::setOption(m_identifier, index.sibling(i, 1).data(Qt::EditRole), index.data(Qt::DisplayRole).toString());
+				}
+			}
+		}
+
 		accept();
 	});
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &OverridesDialog::close);
