@@ -97,6 +97,7 @@ OverridesDialog::OverridesDialog(int identifier, QWidget *parent) : Dialog(paren
 
 			QList<QStandardItem*> items({new QStandardItem(HistoryManager::getIcon(host), host), new QStandardItem()});
 			items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
+			items[0]->setData(true, ConfigurationContentsWidget::IsModifiedRole);
 			items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
 			items[1]->setData(identifier, ConfigurationContentsWidget::IdentifierRole);
 
