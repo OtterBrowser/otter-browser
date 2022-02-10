@@ -99,6 +99,7 @@ OverridesDialog::OverridesDialog(int identifier, QWidget *parent) : Dialog(paren
 			items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
 			items[0]->setData(true, ConfigurationContentsWidget::IsModifiedRole);
 			items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
+			items[1]->setData(SettingsManager::getOption(m_identifier), Qt::EditRole);
 			items[1]->setData(identifier, ConfigurationContentsWidget::IdentifierRole);
 
 			m_model->appendRow(items);
