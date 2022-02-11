@@ -102,7 +102,7 @@ OverridesDialog::OverridesDialog(int identifier, QWidget *parent) : Dialog(paren
 			items[1]->setData(SettingsManager::getOption(m_identifier), Qt::EditRole);
 			items[1]->setData(identifier, ConfigurationContentsWidget::IdentifierRole);
 
-			m_model->appendRow(items);
+			m_ui->overridesViewWidget->insertRow(items);
 		}
 	});
 	connect(m_ui->removeOverrideButton, &QPushButton::clicked, this, [&]()
