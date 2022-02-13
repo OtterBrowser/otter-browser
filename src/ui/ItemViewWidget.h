@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -148,6 +148,7 @@ public slots:
 	void removeRow();
 	void moveUpRow();
 	void moveDownRow();
+	void selectRow(const QModelIndex &index);
 	void markAsModified();
 	void setSort(int column, Qt::SortOrder order);
 	void setColumnVisibility(int column, bool hide);
@@ -165,7 +166,6 @@ protected:
 	void startDrag(Qt::DropActions supportedActions) override;
 	void ensureInitialized();
 	void moveRow(bool moveUp);
-	void selectRow(const QModelIndex &index);
 	bool applyFilter(const QModelIndex &index, bool parentHasMatch = false);
 
 protected slots:
