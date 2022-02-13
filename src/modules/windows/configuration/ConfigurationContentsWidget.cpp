@@ -164,6 +164,8 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	const QMetaEnum metaEnum(SettingsManager::getInstance()->metaObject()->enumerator(SettingsManager::getInstance()->metaObject()->indexOfEnumerator(QLatin1String("OptionType").data())));
 	const QStringList options(SettingsManager::getOptions());
 	QStandardItem *groupItem(nullptr);
+	const QString fragment(parameters.value(QLatin1String("url")).toUrl().fragment());
+	QModelIndex selectedIndex;
 	bool canResetAll(false);
 
 	for (int i = 0; i < options.count(); ++i)
@@ -216,6 +218,11 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 		}
 
 		groupItem->appendRow(optionItems);
+
+		if (!fragment.isEmpty() && fragment == options.at(i))
+		{
+			selectedIndex = optionItems[0]->index();
+		}
 	}
 
 	m_model->setHorizontalHeaderLabels({tr("Name"), tr("Type"), tr("Overrides"), tr("Value")});
@@ -232,6 +239,12 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	if (isSidebarPanel())
 	{
 		m_ui->detailsWidget->hide();
+	}
+
+	if (selectedIndex.isValid())
+	{
+		m_ui->configurationViewWidget->expand(selectedIndex.parent());
+		m_ui->configurationViewWidget->selectRow(selectedIndex);
 	}
 
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &ConfigurationContentsWidget::handleOptionChanged);
