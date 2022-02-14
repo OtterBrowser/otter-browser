@@ -745,16 +745,16 @@ void FeedsContentsWidget::setFeed(Feed *feed)
 			m_feed->update();
 		}
 
-		if (!FeedsManager::getModel()->hasFeed(m_feed->getUrl()))
+		if (FeedsManager::getModel()->hasFeed(m_feed->getUrl()))
+		{
+			m_ui->subscribeFeedWidget->hide();
+		}
+		else
 		{
 			m_ui->iconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("application-rss+xml"), false).pixmap(m_ui->iconLabel->size()));
 			m_ui->messageLabel->setText(tr("Subscribe to this feed using:"));
 
 			m_ui->subscribeFeedWidget->show();
-		}
-		else
-		{
-			m_ui->subscribeFeedWidget->hide();
 		}
 
 		connect(m_feed, &Feed::entriesModified, this, &FeedsContentsWidget::updateFeedModel);
