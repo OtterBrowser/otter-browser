@@ -774,7 +774,15 @@ void FeedsContentsWidget::setUrl(const QUrl &url, bool isTypedIn)
 
 	if (url.scheme() == QLatin1String("view-feed"))
 	{
-		setFeed(FeedsManager::createFeed(url.toDisplayString().mid(10)));
+		const QUrl feedUrl(url.toDisplayString().mid(10));
+		const QVector<FeedsModel::Entry*> entries(FeedsManager::getModel()->getEntries(feedUrl));
+
+		setFeed(FeedsManager::createFeed(feedUrl));
+
+		if (!entries.isEmpty())
+		{
+			m_ui->feedsViewWidget->selectRow(entries[0]->index());
+		}
 	}
 }
 
