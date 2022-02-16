@@ -697,7 +697,7 @@ void FeedsContentsWidget::updateFeedModel()
 
 		m_feedModel->appendRow(items);
 
-		if (entry.identifier == identifier)
+		if (!identifier.isEmpty() && entry.identifier == identifier)
 		{
 			m_ui->entriesViewWidget->setCurrentIndex(m_ui->entriesViewWidget->getIndex(i));
 		}
