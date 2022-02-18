@@ -300,7 +300,10 @@ void FeedsContentsWidget::openEntry()
 
 	if (mainWindow && index.isValid() && !index.data(UrlRole).isNull())
 	{
-		mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), index.data(UrlRole)}});
+		const QAction *action(qobject_cast<QAction*>(sender()));
+		const SessionsManager::OpenHints hints(action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen);
+
+		mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), index.data(UrlRole)}, {QLatin1String("hints"), QVariant(hints)}});
 	}
 }
 
@@ -359,11 +362,12 @@ void FeedsContentsWidget::showEntriesContextMenu(const QPoint &position)
 	const QModelIndex index(m_ui->entriesViewWidget->indexAt(position).sibling(m_ui->entriesViewWidget->indexAt(position).row(), 0));
 	ActionExecutor::Object executor(this, this);
 	QMenu menu(this);
-	Action *openAction(new Action(ActionsManager::OpenUrlAction, {{QLatin1String("url"), index.data(UrlRole)}}, executor, &menu));
-	openAction->setTextOverride(QT_TRANSLATE_NOOP("actions", "Open"));
-	openAction->setEnabled(!index.data(UrlRole).isNull());
-
-	menu.addAction(openAction);
+	menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open"), this, &FeedsContentsWidget::openEntry);
+	menu.addAction(QCoreApplication::translate("actions", "Open in New Tab"), this, &FeedsContentsWidget::openEntry)->setData(SessionsManager::NewTabOpen);
+	menu.addAction(QCoreApplication::translate("actions", "Open in New Background Tab"), this, &FeedsContentsWidget::openEntry)->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
+	menu.addSeparator();
+	menu.addAction(QCoreApplication::translate("actions", "Open in New Window"), this, &FeedsContentsWidget::openEntry)->setData(SessionsManager::NewWindowOpen);
+	menu.addAction(QCoreApplication::translate("actions", "Open in New Background Window"), this, &FeedsContentsWidget::openEntry)->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
 	menu.addSeparator();
 	menu.addAction(new Action(ActionsManager::DeleteAction, {}, executor, &menu));
 	menu.exec(m_ui->entriesViewWidget->mapToGlobal(position));
