@@ -21,7 +21,6 @@
 #include "NotificationDialog.h"
 #include "../core/NotificationsManager.h"
 #include "../core/SettingsManager.h"
-#include "../core/ThemesManager.h"
 
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
