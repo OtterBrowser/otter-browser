@@ -8923,7 +8923,7 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="366"/>
         <source>Rewind History</source>
-        <translation>Přetočit historii</translation>
+        <translation>Zobrazit historii vracení se</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="367"/>

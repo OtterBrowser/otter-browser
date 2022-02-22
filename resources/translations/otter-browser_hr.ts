@@ -169,7 +169,7 @@
     <message>
         <location filename="../../src/ui/Action.cpp" line="119"/>
         <source>Creating instance of deprecated action: %1</source>
-        <translation type="unfinished"/>
+        <translation>Stvaranje slučaja zapostavljene radnje: %1</translation>
     </message>
 </context>
 <context>
@@ -248,12 +248,15 @@
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="237"/>
         <source>Failed to import following User Script file(s):
 %1</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Neupješno uvezivanje sljedeće datoteke korisničke skripte:
+&amp;1</numerusform><numerusform>Neupješno uvezivanje sljedećih datoteka korisničkih skripti:
+&amp;1</numerusform><numerusform>Neupješno uvezivanje sljedećih datoteka korisničkih skripti:
+&amp;1</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="366"/>
         <source>You are about to irreversibly remove %n addon(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Ovim ćete nepovratno ukloniti n% dodatak</numerusform><numerusform>Ovim ćete nepovratno ukloniti n% dodataka</numerusform><numerusform>Ovim ćete nepovratno ukloniti n% dodataka</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="367"/>
@@ -355,7 +358,7 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1059"/>
         <source>Show feed list</source>
-        <translation type="unfinished"/>
+        <translation>Prikaži popis izvora</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1071"/>
@@ -391,19 +394,21 @@
     <message>
         <location filename="../../src/core/Application.cpp" line="322"/>
         <source>Profile directory (%1) is not writable, application will be running in read-only mode.</source>
-        <translation type="unfinished"/>
+        <translation>Adresar profila (%1) nije moguće izmjeniti, aplikacija će se prebaciti u pregledni način rada</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="345"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>Vaš profilni adresar (%1) nema slobodnog prostora na disku.
+Ovo bi moglo dovesti do neispravnosti ili gubitka podataka.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="349"/>
         <source>Your profile directory (%1) is running low on free disk space (%2 remaining).
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>Vaš profilni adresar (%1) nema slobodnog prostora na disku (%2 preostalo).
+Ovo bi moglo dovesti do neispravnosti ili gubitku podataka.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="355"/>
@@ -422,7 +427,7 @@ This may lead to malfunctions or even data loss.</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="358"/>
         <source>Continue in Read-only Mode</source>
-        <translation type="unfinished"/>
+        <translation>Nastavi u preglednom načinu rada</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="360"/>
@@ -449,17 +454,17 @@ Neke web stranice moža rade neispravno ili uopće ne rade.</translation>
     <message>
         <location filename="../../src/core/Application.cpp" line="747"/>
         <source>Web backend: %1 %2.</source>
-        <translation type="unfinished"/>
+        <translation>Web backend: %1 %2.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="751"/>
         <source>SSL library not available.</source>
-        <translation type="unfinished"/>
+        <translation>SSL biblioteka nije dostupna</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="755"/>
         <source>SSL library version: %1.</source>
-        <translation type="unfinished"/>
+        <translation>SSL biblioteka verzija: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1017"/>
@@ -482,7 +487,7 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message numerus="yes">
         <location filename="../../src/core/Application.cpp" line="1642"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Izaći ćete dok se %n datoteka još preuzima.</numerusform><numerusform>Izaći ćete dok se %n datoteke još preuzimaju.</numerusform><numerusform>Izaći ćete dok se %n datoteka još preuzima.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1649"/>
@@ -528,7 +533,7 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="215"/>
         <source>Failed to parse feed file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjelo raščlanjenje feed datoteke: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="226"/>
@@ -883,22 +888,22 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="362"/>
         <source>Failed to open notes file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjelo otvaranje bilježne datoteke: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="362"/>
         <source>Failed to open bookmarks file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjelo otvaranje datoteke straničnika: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="386"/>
         <source>Failed to load notes file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjelo učitavanje bilježne datoteke: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="386"/>
         <source>Failed to load bookmarks file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjelo učitavanje datoteke straničnika: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
@@ -908,12 +913,12 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Failed to load notes file.</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjelo učitavanje bilježne datoteke.</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Failed to load bookmarks file.</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjelo učitavanje datoteke straničnika.</translation>
     </message>
 </context>
 <context>
@@ -996,7 +1001,7 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="368"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiraj poveznicu na međuspremnik</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="372"/>
@@ -1016,7 +1021,7 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="535"/>
         <source>Cache</source>
-        <translation type="unfinished"/>
+        <translation>Predmemorija</translation>
     </message>
 </context>
 <context>
@@ -1024,17 +1029,17 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="17"/>
         <source>Certificate chain:</source>
-        <translation type="unfinished"/>
+        <translation>Lanac certifikata:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="34"/>
         <source>Certificate fields:</source>
-        <translation type="unfinished"/>
+        <translation>Polja certifikata:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="51"/>
         <source>Field value:</source>
-        <translation type="unfinished"/>
+        <translation>Vrijednost polja:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="44"/>
@@ -1044,12 +1049,12 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="48"/>
         <source>Invalid Certificate</source>
-        <translation type="unfinished"/>
+        <translation>Nevalidan certifikat</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="53"/>
         <source>View Certificate for %1</source>
-        <translation type="unfinished"/>
+        <translation>Pregledaj certifikat za %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="62"/>
@@ -1065,17 +1070,17 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="116"/>
         <source>DER encoded X.509 certificates (*.der)</source>
-        <translation type="unfinished"/>
+        <translation>DER kodirani X.509 certifikati (*.der)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="116"/>
         <source>PEM encoded X.509 certificates (*.pem)</source>
-        <translation type="unfinished"/>
+        <translation>PEM kodirani X.509 certifikati (*.pem)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="116"/>
         <source>Text files (*.txt)</source>
-        <translation type="unfinished"/>
+        <translation>Tekstualne datoteke (*.txt)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="124"/>
@@ -1090,77 +1095,77 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="183"/>
         <source>Authority Key Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Identifikator Autoritetnog Ključa</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="187"/>
         <source>Subject Key Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Identifikator Subjektnog Ključa</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="191"/>
         <source>Key Usage</source>
-        <translation type="unfinished"/>
+        <translation>Korištenje Ključa</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="195"/>
         <source>Certificate Policies</source>
-        <translation type="unfinished"/>
+        <translation>Polica Certifikata</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="199"/>
         <source>Policy Mappings</source>
-        <translation type="unfinished"/>
+        <translation>Polica Mapiranja</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="203"/>
         <source>Subject Alternative Name</source>
-        <translation type="unfinished"/>
+        <translation>Alternativno Ime Subjekta</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="207"/>
         <source>Issuer Alternative Name</source>
-        <translation type="unfinished"/>
+        <translation>Alternativno Ime Izdavatelja</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="211"/>
         <source>Subject Directory Attributes</source>
-        <translation type="unfinished"/>
+        <translation>Atributi Subjektnog Adresara</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="215"/>
         <source>Basic Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Osnovna Ograničenja</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="219"/>
         <source>Name Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Ograničenja Imena</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="223"/>
         <source>Policy Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Ograničenja Police</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="227"/>
         <source>Extended Key Usage</source>
-        <translation type="unfinished"/>
+        <translation>Produženo Korištenje Ključa</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="231"/>
         <source>CRL Distribution Points</source>
-        <translation type="unfinished"/>
+        <translation>CRL Distribucijska Točka</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="235"/>
         <source>Inhibit Any Policy</source>
-        <translation type="unfinished"/>
+        <translation>Spriječi Bilo Koju Policu</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="239"/>
         <source>Delta CRL Distribution Point</source>
-        <translation type="unfinished"/>
+        <translation>Delta CRL Distribucijska Točka </translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="243"/>
@@ -1253,27 +1258,27 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="448"/>
         <source>Public Key</source>
-        <translation type="unfinished"/>
+        <translation>Javni ključ</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="452"/>
         <source>Extensions</source>
-        <translation type="unfinished"/>
+        <translation>Proširenja</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="460"/>
         <source>Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Otisak prsta</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="464"/>
         <source>SHA-1 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>SHA-1 otisak prsta</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="468"/>
         <source>SHA-256 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>SHA-256 otisak prsta</translation>
     </message>
 </context>
 <context>
@@ -1384,12 +1389,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="76"/>
         <source>Current Value:</source>
-        <translation type="unfinished"/>
+        <translation>Trenutna vrijednost:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="83"/>
         <source>Default Value:</source>
-        <translation type="unfinished"/>
+        <translation>Zadana vrijednost</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="106"/>
@@ -1399,7 +1404,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="116"/>
         <source>Restore Defaults</source>
-        <translation type="unfinished"/>
+        <translation>Obnovi na zadano</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="212"/>
@@ -1478,7 +1483,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/configurationOption/ConfigurationOptionWidget.cpp" line="46"/>
         <source>Choose option</source>
-        <translation type="unfinished"/>
+        <translation>Odaberi opciju</translation>
     </message>
 </context>
 <context>
@@ -1670,48 +1675,48 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="14"/>
         <source>Profile Settings</source>
-        <translation type="unfinished"/>
+        <translation>Postavke profila</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="22"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Naslov:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="35"/>
         <source>Category:</source>
-        <translation type="unfinished"/>
+        <translation>Kategorija:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="55"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Adresa:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="68"/>
         <source>Update interval:</source>
-        <translation type="unfinished"/>
+        <translation>Interval ažuriranja:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="78"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Nikada</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="81"/>
         <source> days</source>
-        <translation type="unfinished"/>
+        <translation>dana</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="91"/>
         <source>Last update:</source>
-        <translation type="unfinished"/>
+        <translation>Zadnje ažuriranje</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="40"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="77"/>
         <source>Advertisements</source>
-        <translation type="unfinished"/>
+        <translation>Reklame</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="41"/>
@@ -1741,14 +1746,14 @@ Do you want to save them?</source>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="45"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="82"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Ostalo</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="93"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="114"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="121"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Greška</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="93"/>
@@ -1758,7 +1763,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="114"/>
         <source>Profile with name %1.txt already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Profil s imenom  %1.txt već postoji.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="121"/>
@@ -1786,12 +1791,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="107"/>
         <source>Profile was never updated</source>
-        <translation type="unfinished"/>
+        <translation>Profil nikada nije ažuriran</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="111"/>
         <source>Profile was last updated more than one week ago</source>
-        <translation type="unfinished"/>
+        <translation>Profil je zadnji put ažuriran prije više od jednog tjedna</translation>
     </message>
 </context>
 <context>
@@ -1799,7 +1804,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="197"/>
         <source>Custom Rules</source>
-        <translation type="unfinished"/>
+        <translation>Prilagođena pravila</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="318"/>
@@ -1809,27 +1814,27 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="318"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Nepoznato</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="353"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Naslov</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="353"/>
         <source>Update Interval</source>
-        <translation type="unfinished"/>
+        <translation>Interval ažuriranja</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="353"/>
         <source>Last Update</source>
-        <translation type="unfinished"/>
+        <translation>Zadnje ažuriranje</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Advertisements</source>
-        <translation type="unfinished"/>
+        <translation>Reklame</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
@@ -1854,7 +1859,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Ostalo</translation>
     </message>
 </context>
 <context>
@@ -1924,17 +1929,17 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="119"/>
         <source>Allow accessing using JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>Dopusti pristupanje koristeći JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.cpp" line="35"/>
         <source>Add Cookie</source>
-        <translation type="unfinished"/>
+        <translation>Dodaj kolačić</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.cpp" line="39"/>
         <source>Edit Cookie</source>
-        <translation type="unfinished"/>
+        <translation>Uredi kolačić</translation>
     </message>
 </context>
 <context>
@@ -2010,7 +2015,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="335"/>
         <source>Add Cookie…</source>
-        <translation type="unfinished"/>
+        <translation>Dodaj kolačić...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="346"/>
@@ -2025,12 +2030,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="423"/>
         <source>this session only</source>
-        <translation type="unfinished"/>
+        <translation>samo ovu sesiju</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="447"/>
         <source>Cookies</source>
-        <translation type="unfinished"/>
+        <translation>Kolačići</translation>
     </message>
 </context>
 <context>
@@ -2138,7 +2143,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="181"/>
         <source>&lt;empty&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;empty&gt;</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="272"/>
@@ -2148,7 +2153,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="279"/>
         <source>Expand All</source>
-        <translation type="unfinished"/>
+        <translation>Proširi sve</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="280"/>
@@ -2185,42 +2190,42 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="22"/>
         <source>Folder:</source>
-        <translation type="unfinished"/>
+        <translation>Mapa:</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="44"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Novo...</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="53"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Naslov:</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="80"/>
         <source>Change Icon…</source>
-        <translation type="unfinished"/>
+        <translation>Promjeni ikonu</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="89"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Adresa:</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="102"/>
         <source>Update interval:</source>
-        <translation type="unfinished"/>
+        <translation>Interval ažuriranja:</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="112"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>NIkada</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="115"/>
         <source> minutes</source>
-        <translation type="unfinished"/>
+        <translation>minuta</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="50"/>
@@ -2230,12 +2235,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="80"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Greška</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="80"/>
         <source>Valid address is required.</source>
-        <translation type="unfinished"/>
+        <translation>Potrebna je valjana adresa.</translation>
     </message>
 </context>
 <context>
@@ -2243,12 +2248,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
         <source>Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Ime mape</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
         <source>Select name of new folder:</source>
-        <translation type="unfinished"/>
+        <translation>Odaberite ime ove mape:</translation>
     </message>
 </context>
 <context>
@@ -2256,29 +2261,29 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="67"/>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>U redu</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="74"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Otkaži</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="107"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="151"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Traži...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="161"/>
         <source>Categories</source>
-        <translation type="unfinished"/>
+        <translation>Kategorije</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="148"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="535"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Naslov</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="148"/>
@@ -2295,7 +2300,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="194"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>tanje</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="195"/>
@@ -2305,17 +2310,17 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="196"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Želite li nastaviti?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="214"/>
         <source>Select Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Odaberite ime mape</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="214"/>
         <source>Enter folder name:</source>
-        <translation type="unfinished"/>
+        <translation>Unesite ime mape:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="359"/>
