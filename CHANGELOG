@@ -1,3 +1,8 @@
+1.0.03 (2022-02-22):
+- updated QtWebEngine to (silently) breaking upstream changes;
+- updated translations;
+- some other backports.
+
 1.0.02 (2020-12-21):
 - optimized handling of large images for Start Page backgrounds;
 - improved validation of content blocking profile checksum;
