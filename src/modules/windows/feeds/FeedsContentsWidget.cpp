@@ -359,7 +359,6 @@ void FeedsContentsWidget::handleFeedModified(const QUrl &url)
 
 void FeedsContentsWidget::showEntriesContextMenu(const QPoint &position)
 {
-	const QModelIndex index(m_ui->entriesViewWidget->indexAt(position).sibling(m_ui->entriesViewWidget->indexAt(position).row(), 0));
 	ActionExecutor::Object executor(this, this);
 	QMenu menu(this);
 	menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open"), this, &FeedsContentsWidget::openEntry);
