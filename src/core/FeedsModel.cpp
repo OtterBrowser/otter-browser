@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -108,9 +108,11 @@ QVariant FeedsModel::Entry::data(int role) const
 						return ThemesManager::createIcon(QLatin1String("dialog-error"));
 					}
 
-					if (!m_feed->getIcon().isNull())
+					const QIcon icon(m_feed->getIcon());
+
+					if (!icon.isNull())
 					{
-						return m_feed->getIcon();
+						return icon;
 					}
 				}
 
