@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -90,18 +90,20 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 	if (m_mapping.contains(ProgressHasIndicatorRole) && index.data(m_mapping[ProgressHasIndicatorRole]).toBool() && m_mapping.contains(ProgressValueRole))
 	{
+		const bool hasError(m_mapping.contains(ProgressHasErrorRole) && index.data(m_mapping[ProgressHasErrorRole]).toBool());
+
 		initStyleOption(&mutableOption, index);
 
 		QStyleOptionProgressBar progressBarOption;
 		progressBarOption.palette = option.palette;
 		progressBarOption.minimum = 0;
 		progressBarOption.maximum = 100;
-		progressBarOption.progress = index.data(m_mapping[ProgressValueRole]).toInt();
+		progressBarOption.progress = (hasError ? 100 : index.data(m_mapping[ProgressValueRole]).toInt());
 		progressBarOption.rect = QApplication::style()->subElementRect(QStyle::SE_ItemViewItemText, &mutableOption);
 		progressBarOption.rect.setTop(progressBarOption.rect.bottom() - 3);
 		progressBarOption.rect.setBottom(progressBarOption.rect.bottom() - 1);
 
-		if (m_mapping.contains(ProgressHasErrorRole) && index.data(m_mapping[ProgressHasErrorRole]).toBool())
+		if (hasError)
 		{
 			progressBarOption.palette.setColor(QPalette::Highlight, QColor(Qt::red));
 		}
