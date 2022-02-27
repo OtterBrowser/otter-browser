@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -764,21 +764,23 @@ void AddressWidget::showCompletion(bool isTypedHistory)
 		});
 		connect(popupWidget, &PopupViewWidget::customContextMenuRequested, this, [&](const QPoint &position)
 		{
-			if (isTypedHistory)
+			if (!isTypedHistory)
 			{
-				const QModelIndex index(getPopup()->indexAt(position));
+				return;
+			}
 
-				if (index.isValid() && index.data(AddressCompletionModel::IsRemovableRole).toBool() && index.data(AddressCompletionModel::TypeRole).toInt() == AddressCompletionModel::CompletionEntry::TypedHistoryType)
+			const QModelIndex index(getPopup()->indexAt(position));
+
+			if (index.isValid() && index.data(AddressCompletionModel::IsRemovableRole).toBool() && index.data(AddressCompletionModel::TypeRole).toInt() == AddressCompletionModel::CompletionEntry::TypedHistoryType)
+			{
+				QMenu menu(this);
+				menu.addAction(tr("Remove Entry"), this, [&]()
 				{
-					QMenu menu(this);
-					menu.addAction(tr("Remove Entry"), this, [&]()
-					{
-						HistoryManager::getTypedHistoryModel()->removeEntry(index.data(AddressCompletionModel::HistoryIdentifierRole).toULongLong());
+					HistoryManager::getTypedHistoryModel()->removeEntry(index.data(AddressCompletionModel::HistoryIdentifierRole).toULongLong());
 
-						updateCompletion(true, true);
-					});
-					menu.exec(getPopup()->mapToGlobal(position));
-				}
+					updateCompletion(true, true);
+				});
+				menu.exec(getPopup()->mapToGlobal(position));
 			}
 		});
 		connect(popupWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, [&](const QModelIndex &index)
