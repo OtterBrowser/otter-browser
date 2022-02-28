@@ -764,24 +764,38 @@ void AddressWidget::showCompletion(bool isTypedHistory)
 		});
 		connect(popupWidget, &PopupViewWidget::customContextMenuRequested, this, [&](const QPoint &position)
 		{
-			if (!isTypedHistory)
+			const QModelIndex index(getPopup()->indexAt(position));
+
+			if (!index.isValid())
 			{
 				return;
 			}
 
-			const QModelIndex index(getPopup()->indexAt(position));
+			const AddressCompletionModel::CompletionEntry::EntryType type(static_cast<AddressCompletionModel::CompletionEntry::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()));
 
-			if (index.isValid() && index.data(AddressCompletionModel::IsRemovableRole).toBool() && index.data(AddressCompletionModel::TypeRole).toInt() == AddressCompletionModel::CompletionEntry::TypedHistoryType)
+			if (type <= AddressCompletionModel::CompletionEntry::HeaderType || type == AddressCompletionModel::CompletionEntry::SearchSuggestionType)
 			{
-				QMenu menu(this);
+				return;
+			}
+
+			QMenu menu(this);
+			menu.addAction(ThemesManager::createIcon(QLatin1String("edit-copy")), QCoreApplication::translate("actons", "Copy"), this, [&]()
+			{
+				QApplication::clipboard()->setText(index.data(AddressCompletionModel::UrlRole).toUrl().toString());
+			});
+
+			if (isTypedHistory && index.data(AddressCompletionModel::IsRemovableRole).toBool() && type == AddressCompletionModel::CompletionEntry::TypedHistoryType)
+			{
+				menu.addSeparator();
 				menu.addAction(tr("Remove Entry"), this, [&]()
 				{
 					HistoryManager::getTypedHistoryModel()->removeEntry(index.data(AddressCompletionModel::HistoryIdentifierRole).toULongLong());
 
 					updateCompletion(true, true);
 				});
-				menu.exec(getPopup()->mapToGlobal(position));
 			}
+
+			menu.exec(getPopup()->mapToGlobal(position));
 		});
 		connect(popupWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, [&](const QModelIndex &index)
 		{
