@@ -787,7 +787,7 @@ void AddressWidget::showCompletion(bool isTypedHistory)
 			if (isTypedHistory && index.data(AddressCompletionModel::IsRemovableRole).toBool() && type == AddressCompletionModel::CompletionEntry::TypedHistoryType)
 			{
 				menu.addSeparator();
-				menu.addAction(tr("Remove Entry"), this, [&]()
+				menu.addAction(ThemesManager::createIcon(QLatin1String("edit-delete")), tr("Remove Entry"), this, [&]()
 				{
 					HistoryManager::getTypedHistoryModel()->removeEntry(index.data(AddressCompletionModel::HistoryIdentifierRole).toULongLong());
 
