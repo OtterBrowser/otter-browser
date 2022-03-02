@@ -519,7 +519,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 			menu.addSeparator();
 		}
 
-		menu.addAction(tr("Remove Icon"), this, [&]()
+		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-delete")), tr("Remove Icon"), this, [&]()
 		{
 			const QString entryName(EnumeratorMapper(metaObject()->enumerator(m_entryIdentifierEnumerator), QLatin1String("Entry")).mapToName(entry));
 
