@@ -1455,14 +1455,8 @@ void AddressWidget::setUrl(const QUrl &url, bool force)
 	if (m_isSimplified || ((force || !m_wasEdited || !hasFocus()) && url.scheme() != QLatin1String("javascript")))
 	{
 		const QString host(url.host(QUrl::FullyEncoded));
-		QString toolTip(text);
 
-		if (host != url.host())
-		{
-			toolTip = QStringLiteral("(%1) %2").arg(host, text);
-		}
-
-		setToolTip(toolTip);
+		setToolTip((host == url.host()) ? text : QStringLiteral("(%1) %2").arg(host, text));
 		setText(text);
 		setCursorPosition(0);
 
