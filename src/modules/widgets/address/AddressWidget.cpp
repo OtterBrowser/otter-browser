@@ -936,7 +936,7 @@ void AddressWidget::handleWatchedDataChanged(WebWidget::ChangeWatcher watcher)
 
 void AddressWidget::handleUserInput(const QString &text, SessionsManager::OpenHints hints)
 {
-	if (m_isSimplified)
+	if (m_isSimplified || text.isEmpty())
 	{
 		return;
 	}
@@ -946,39 +946,38 @@ void AddressWidget::handleUserInput(const QString &text, SessionsManager::OpenHi
 		hints = SessionsManager::calculateOpenHints(SessionsManager::CurrentTabOpen);
 	}
 
-	if (!text.isEmpty())
+	const InputInterpreter::InterpreterResult result(InputInterpreter::interpret(text));
+
+	if (!result.isValid())
 	{
-		const InputInterpreter::InterpreterResult result(InputInterpreter::interpret(text));
+		return;
+	}
 
-		if (result.isValid())
-		{
-			MainWindow *mainWindow(m_window ? MainWindow::findMainWindow(m_window) : MainWindow::findMainWindow(this));
-			ActionExecutor::Object executor(mainWindow, mainWindow);
+	MainWindow *mainWindow(m_window ? MainWindow::findMainWindow(m_window) : MainWindow::findMainWindow(this));
+	ActionExecutor::Object executor(mainWindow, mainWindow);
 
-			switch (result.type)
+	switch (result.type)
+	{
+		case InputInterpreter::InterpreterResult::BookmarkType:
+			if (executor.isValid())
 			{
-				case InputInterpreter::InterpreterResult::BookmarkType:
-					if (executor.isValid())
-					{
-						executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), result.bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(hints)}});
-					}
-
-					break;
-				case InputInterpreter::InterpreterResult::UrlType:
-					if (executor.isValid())
-					{
-						executor.triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}, {QLatin1String("hints"), QVariant(hints)}});
-					}
-
-					break;
-				case InputInterpreter::InterpreterResult::SearchType:
-					emit requestedSearch(result.searchQuery, result.searchEngine, hints);
-
-					break;
-				default:
-					break;
+				executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), result.bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(hints)}});
 			}
-		}
+
+			break;
+		case InputInterpreter::InterpreterResult::UrlType:
+			if (executor.isValid())
+			{
+				executor.triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}, {QLatin1String("hints"), QVariant(hints)}});
+			}
+
+			break;
+		case InputInterpreter::InterpreterResult::SearchType:
+			emit requestedSearch(result.searchQuery, result.searchEngine, hints);
+
+			break;
+		default:
+			break;
 	}
 }
 
