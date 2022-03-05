@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -429,20 +429,22 @@ void SearchWidget::sendRequest(const QString &query)
 
 void SearchWidget::addSearchEngine(QAction *action)
 {
-	if (action)
+	if (!action)
 	{
-		SearchEngineFetchJob *job(new SearchEngineFetchJob(action->data().toUrl(), {}, true, this));
-
-		connect(job, &SearchEngineFetchJob::jobFinished, this, [&](bool isSuccess)
-		{
-			if (!isSuccess)
-			{
-				QMessageBox::warning(this, tr("Error"), tr("Failed to add search engine."), QMessageBox::Close);
-			}
-		});
-
-		job->start();
+		return;
 	}
+
+	SearchEngineFetchJob *job(new SearchEngineFetchJob(action->data().toUrl(), {}, true, this));
+
+	connect(job, &SearchEngineFetchJob::jobFinished, this, [&](bool isSuccess)
+	{
+		if (!isSuccess)
+		{
+			QMessageBox::warning(this, tr("Error"), tr("Failed to add search engine."), QMessageBox::Close);
+		}
+	});
+
+	job->start();
 }
 
 void SearchWidget::storeCurrentSearchEngine()
