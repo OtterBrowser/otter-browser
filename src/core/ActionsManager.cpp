@@ -455,7 +455,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(QuickFindAction, QT_TRANSLATE_NOOP("actions", "Quick Find"), {}, {}, ActionDefinition::WindowScope);
 	registerAction(SearchAction, QT_TRANSLATE_NOOP("actions", "Search"), {}, ThemesManager::createIcon(QLatin1String("edit-find")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);
 	registerAction(CreateSearchAction, QT_TRANSLATE_NOOP("actions", "Create Search…"), {}, {}, ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);
-	registerAction(AddSearchAction, QT_TRANSLATE_NOOP("actions", "Add Search"), {}, {}, ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::RequiresParameters));
+	registerAction(AddSearchAction, QT_TRANSLATE_NOOP("actions", "Add Search"), {}, {}, ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::RequiresParameters));
 	registerAction(ZoomInAction, QT_TRANSLATE_NOOP("actions", "Zoom In"), {}, ThemesManager::createIcon(QLatin1String("zoom-in")), ActionDefinition::WindowScope);
 	registerAction(ZoomOutAction, QT_TRANSLATE_NOOP("actions", "Zoom Out"), {}, ThemesManager::createIcon(QLatin1String("zoom-out")), ActionDefinition::WindowScope);
 	registerAction(ZoomOriginalAction, QT_TRANSLATE_NOOP("actions", "Zoom Original"), {}, ThemesManager::createIcon(QLatin1String("zoom-original")), ActionDefinition::WindowScope);
