@@ -702,6 +702,23 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 			}
 
 			return;
+		case ActionsManager::AddSearchAction:
+			if (parameters.contains(QLatin1String("url")))
+			{
+				SearchEngineFetchJob *job(new SearchEngineFetchJob(parameters[QLatin1String("url")].toUrl(), {}, true, m_instance));
+
+				connect(job, &SearchEngineFetchJob::jobFinished, m_instance, [&](bool isSuccess)
+				{
+					if (!isSuccess)
+					{
+						QMessageBox::warning(m_activeWindow, tr("Error"), tr("Failed to add search engine."), QMessageBox::Close);
+					}
+				});
+
+				job->start();
+			}
+
+			break;
 		case ActionsManager::ActivateWindowAction:
 			{
 				const quint64 windowIdentifier(parameters.value(QLatin1String("window")).toULongLong());
