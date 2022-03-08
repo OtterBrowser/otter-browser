@@ -73,7 +73,6 @@ protected slots:
 	void sendRequest(const QString &query = {});
 	void showSearchEngines();
 	void showSearchSuggestions();
-	void addSearchEngine(QAction *action);
 	void storeCurrentSearchEngine();
 	void restoreCurrentSearchEngine();
 	void handleOptionChanged(int identifier, const QVariant &value);

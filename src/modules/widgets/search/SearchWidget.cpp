@@ -19,17 +19,17 @@
 **************************************************************************/
 
 #include "SearchWidget.h"
+#include "../../../core/Application.h"
 #include "../../../core/SearchEnginesManager.h"
 #include "../../../core/SearchSuggester.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../ui/Action.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/ToolBarWidget.h"
 #include "../../../ui/Window.h"
 
 #include <QtGui/QPainter>
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QMessageBox>
 #include <QtWidgets/QToolTip>
 
 namespace Otter
@@ -305,16 +305,18 @@ void SearchWidget::mouseReleaseEvent(QMouseEvent *event)
 		{
 			QMenu menu(this);
 			const QVector<WebWidget::LinkUrl> searchEngines((m_window && m_window->getWebWidget()) ? m_window->getWebWidget()->getSearchEngines() : QVector<WebWidget::LinkUrl>());
+			ActionExecutor::Object executor(Application::getInstance(), Application::getInstance());
 
 			for (int i = 0; i < searchEngines.count(); ++i)
 			{
 				if (!SearchEnginesManager::hasSearchEngine(searchEngines.at(i).url))
 				{
-					menu.addAction(tr("Add %1").arg(searchEngines.at(i).title.isEmpty() ? tr("(untitled)") : searchEngines.at(i).title))->setData(searchEngines.at(i).url);
+					Action *action(new Action(ActionsManager::AddSearchAction, {{QLatin1String("url"), searchEngines.at(i).url}}, executor, this));
+					action->setTextOverride(tr("Add %1").arg(searchEngines.at(i).title.isEmpty() ? tr("(untitled)") : searchEngines.at(i).title));
+
+					menu.addAction(action);
 				}
 			}
-
-			connect(&menu, &QMenu::triggered, this, &SearchWidget::addSearchEngine);
 
 			menu.exec(mapToGlobal(m_addButtonRectangle.bottomLeft()));
 		}
@@ -425,26 +427,6 @@ void SearchWidget::sendRequest(const QString &query)
 	{
 		emit requestedSearch(m_query, m_searchEngine, SessionsManager::calculateOpenHints());
 	}
-}
-
-void SearchWidget::addSearchEngine(QAction *action)
-{
-	if (!action)
-	{
-		return;
-	}
-
-	SearchEngineFetchJob *job(new SearchEngineFetchJob(action->data().toUrl(), {}, true, this));
-
-	connect(job, &SearchEngineFetchJob::jobFinished, this, [&](bool isSuccess)
-	{
-		if (!isSuccess)
-		{
-			QMessageBox::warning(this, tr("Error"), tr("Failed to add search engine."), QMessageBox::Close);
-		}
-	});
-
-	job->start();
 }
 
 void SearchWidget::storeCurrentSearchEngine()
