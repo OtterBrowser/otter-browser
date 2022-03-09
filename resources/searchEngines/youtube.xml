@@ -4,7 +4,7 @@
 	<ShortName>YouTube</ShortName>
 	<Description>Search for videos on YouTube</Description>
 	<InputEncoding>UTF-8</InputEncoding>
-	<Image width="16" height="16" type="image/png">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAeElEQVQ4y2P4//8/AyWYgXoGMDAIALEDFDfgwDB5AVQDGBgSwEzScALEAAYGAzI0w7AByIAACgxIYID6DbuCBw/+/3dwwGdAA34DYGDDhv//FRQoMODAATINAHkhIICgF3AHooAAUYFIYTRSnJCwJ+UC0pLyQOZGAD5ePee5zL+3AAAAAElFTkSuQmCC</Image>
+	<Image width="16" height="16" type="image/png">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAEnRFWHRfcV9pY29PcmlnRGVwdGgAMzLV4rjsAAAAnklEQVQ4jcWS3Q2DMAyEP6IOkA3ICB6BFdiAEdkARmCEsEE2SB/AqD9xUMsDJ1mx4/NZtgx3o1EngwdkDzuDP+/v0kA6fjMMGfKPNmix/FGsJg4IF1Yg7mXub8QInbUOAIKr6rctTBOMI4RQpNQFFN6bqbrAukLfb2PEWKQ8gMUUEIGUzDQQHVCWhrNijuZXDsk6ZWGLPzFr57dTvhVPer9uIUXI/DIAAAAASUVORK5CYII=</Image>
 	<Url rel="results" type="text/html" method="get" template="https://www.youtube.com/results?search_query={searchTerms}&amp;sourceid=otter" />
 	<Url rel="self" type="application/opensearchdescription+xml" template="https://www.youtube.com/opensearch" />
 </OpenSearchDescription>
