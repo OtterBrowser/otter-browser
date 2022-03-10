@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -1289,13 +1289,15 @@ void QtWebKitWebWidget::handleDownloadRequested(const QNetworkRequest &request)
 
 				QFile file(path);
 
-				if (!file.open(QIODevice::WriteOnly))
+				if (file.open(QIODevice::WriteOnly))
+				{
+					file.write(device->readAll());
+					file.close();
+				}
+				else
 				{
 					QMessageBox::critical(this, tr("Error"), tr("Failed to open file for writing."), QMessageBox::Close);
 				}
-
-				file.write(device->readAll());
-				file.close();
 
 				device->deleteLater();
 
