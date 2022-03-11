@@ -313,6 +313,7 @@ void SearchWidget::mouseReleaseEvent(QMouseEvent *event)
 				{
 					Action *action(new Action(ActionsManager::AddSearchAction, {{QLatin1String("url"), searchEngines.at(i).url}}, executor, this));
 					action->setTextOverride(tr("Add %1").arg(searchEngines.at(i).title.isEmpty() ? tr("(untitled)") : searchEngines.at(i).title));
+					action->setIconOverride(m_window->getIcon());
 
 					menu.addAction(action);
 				}
