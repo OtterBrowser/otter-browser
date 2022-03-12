@@ -73,8 +73,6 @@ protected slots:
 	void sendRequest(const QString &query = {});
 	void showSearchEngines();
 	void showSearchSuggestions();
-	void storeCurrentSearchEngine();
-	void restoreCurrentSearchEngine();
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleWindowOptionChanged(int identifier, const QVariant &value);
 	void handleWatchedDataChanged(WebWidget::ChangeWatcher watcher);

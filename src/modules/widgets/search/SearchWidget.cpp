@@ -160,8 +160,27 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : LineEditWidget(par
 		connect(toolBar, &ToolBarWidget::windowChanged, this, &SearchWidget::setWindow);
 	}
 
-	connect(SearchEnginesManager::getInstance(), &SearchEnginesManager::searchEnginesModified, this, &SearchWidget::storeCurrentSearchEngine);
-	connect(SearchEnginesManager::getInstance(), &SearchEnginesManager::searchEnginesModelModified, this, &SearchWidget::restoreCurrentSearchEngine);
+	connect(SearchEnginesManager::getInstance(), &SearchEnginesManager::searchEnginesModified, this, [&]()
+	{
+		hidePopup();
+
+		disconnect(this, &SearchWidget::textChanged, this, &SearchWidget::setQuery);
+	});
+	connect(SearchEnginesManager::getInstance(), &SearchEnginesManager::searchEnginesModelModified, this, [&]()
+	{
+		if (!m_searchEngine.isEmpty())
+		{
+			setSearchEngine(m_searchEngine);
+
+			m_searchEngine.clear();
+		}
+
+		handleLoadingStateChanged();
+		updateGeometries();
+		setText(m_query);
+
+		connect(this, &SearchWidget::textChanged, this, &SearchWidget::setQuery);
+	});
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &SearchWidget::handleOptionChanged);
 	connect(this, &SearchWidget::textChanged, this, &SearchWidget::setQuery);
 	connect(this, &SearchWidget::textDropped, this, &SearchWidget::sendRequest);
@@ -428,29 +447,6 @@ void SearchWidget::sendRequest(const QString &query)
 	{
 		emit requestedSearch(m_query, m_searchEngine, SessionsManager::calculateOpenHints());
 	}
-}
-
-void SearchWidget::storeCurrentSearchEngine()
-{
-	hidePopup();
-
-	disconnect(this, &SearchWidget::textChanged, this, &SearchWidget::setQuery);
-}
-
-void SearchWidget::restoreCurrentSearchEngine()
-{
-	if (!m_searchEngine.isEmpty())
-	{
-		setSearchEngine(m_searchEngine);
-
-		m_searchEngine.clear();
-	}
-
-	handleLoadingStateChanged();
-	updateGeometries();
-	setText(m_query);
-
-	connect(this, &SearchWidget::textChanged, this, &SearchWidget::setQuery);
 }
 
 void SearchWidget::handleOptionChanged(int identifier, const QVariant &value)
