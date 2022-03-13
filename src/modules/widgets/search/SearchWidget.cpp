@@ -459,15 +459,15 @@ void SearchWidget::handleOptionChanged(int identifier, const QVariant &value)
 
 				if (dropAction == QLatin1String("pasteAndGo"))
 				{
-					setDropMode(LineEditWidget::ReplaceAndNotifyDropMode);
+					setDropMode(ReplaceAndNotifyDropMode);
 				}
 				else if (dropAction == QLatin1String("replace"))
 				{
-					setDropMode(LineEditWidget::ReplaceDropMode);
+					setDropMode(ReplaceDropMode);
 				}
 				else
 				{
-					setDropMode(LineEditWidget::PasteDropMode);
+					setDropMode(PasteDropMode);
 				}
 			}
 
