@@ -186,6 +186,7 @@ set(otter_src
 	src/ui/PreviewWidget.cpp
 	src/ui/ProgressBarWidget.cpp
 	src/ui/ProxyModel.cpp
+	src/ui/QuickResponseCodeWidget.cpp
 	src/ui/ReloadTimeDialog.cpp
 	src/ui/ReportDialog.cpp
 	src/ui/ResizerWidget.cpp
