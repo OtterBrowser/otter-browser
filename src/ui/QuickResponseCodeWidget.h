@@ -31,6 +31,9 @@ class QuickResponseCodeWidget final : public QLabel
 
 public:
 	explicit QuickResponseCodeWidget(QWidget *parent = nullptr);
+
+	int heightForWidth(int width) const override;
+	bool hasHeightForWidth() const override;
 };
 
 }

@@ -26,4 +26,14 @@ QuickResponseCodeWidget::QuickResponseCodeWidget(QWidget *parent) : QLabel(paren
 {
 }
 
+int QuickResponseCodeWidget::heightForWidth(int width) const
+{
+	return width;
+}
+
+bool QuickResponseCodeWidget::hasHeightForWidth() const
+{
+	return true;
+}
+
 }
