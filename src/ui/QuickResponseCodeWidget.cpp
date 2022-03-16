@@ -19,11 +19,28 @@
 
 #include "QuickResponseCodeWidget.h"
 
+#include <QtCore/QUrl>
+
 namespace Otter
 {
 
 QuickResponseCodeWidget::QuickResponseCodeWidget(QWidget *parent) : QLabel(parent)
 {
+}
+
+void QuickResponseCodeWidget::setText(const QString &text)
+{
+	if (text != m_text)
+	{
+		m_text = text;
+
+		update();
+	}
+}
+
+void QuickResponseCodeWidget::setUrl(const QUrl &url)
+{
+	setText(url.toString());
 }
 
 int QuickResponseCodeWidget::heightForWidth(int width) const

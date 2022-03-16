@@ -34,6 +34,13 @@ public:
 
 	int heightForWidth(int width) const override;
 	bool hasHeightForWidth() const override;
+
+public slots:
+	void setText(const QString &text);
+	void setUrl(const QUrl &url);
+
+private:
+	QString m_text;
 };
 
 }
