@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="pt" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="pt">
 <context>
     <name>Otter::AcceptCookieDialog</name>
     <message>
@@ -448,12 +448,12 @@ Alguns sites poderão não funcionar corretamente.</translation>
     <message>
         <location filename="../../src/core/Application.cpp" line="741"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</source>
-        <translation>&lt;b&gt;O Otter %1&lt;/b&gt;&lt;br&gt;é um navegador web é controlado pelo utilizador e não vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
+        <translation>&lt;b&gt;O Otter %1&lt;/b&gt;&lt;br&gt;é um navegador de Internet controlado pelo utilizador e não vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="747"/>
         <source>Web backend: %1 %2.</source>
-        <translation>Infraestrutura Web: %1 %2</translation>
+        <translation>Infraestrutura Web: %1 %2.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="751"/>
@@ -2228,7 +2228,7 @@ Guardar?</translation>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="115"/>
         <source> minutes</source>
-        <translation>minutos</translation>
+        <translation> minutos</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="50"/>
@@ -2243,7 +2243,7 @@ Guardar?</translation>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="80"/>
         <source>Valid address is required.</source>
-        <translation>Requer um endereço válido</translation>
+        <translation>Requer um endereço válido.</translation>
     </message>
 </context>
 <context>
@@ -3024,7 +3024,7 @@ Guardar?</translation>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="401"/>
         <source>This shortcut cannot be used because it would be overriden by a native hotkey used by an editing action</source>
-        <translation>Este atalho não pode ser utilizado porque se o fosse iria sobrepor uma tecla de atalho utilizada por uma ação de edição.</translation>
+        <translation>Este atalho não pode ser utilizado porque se o fosse iria sobrepor uma tecla de atalho utilizada por uma ação de edição</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="409"/>
@@ -4178,7 +4178,7 @@ Deseja continuar?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="404"/>
         <source>JavaScript Options…</source>
-        <translation>Opções de JavaScript</translation>
+        <translation>Opções de JavaScript…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="415"/>
