@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -78,7 +78,18 @@ PrivacyPreferencesPage::PrivacyPreferencesPage(QWidget *parent) : PreferencesPag
 
 	connect(m_ui->privateModeCheckBox, &QCheckBox::toggled, m_ui->historyWidget, &QWidget::setDisabled);
 	connect(m_ui->enableCookiesCheckBox, &QCheckBox::toggled, m_ui->cookiesWidget, &QWidget::setEnabled);
-	connect(m_ui->thirdPartyCookiesExceptionsButton, &QPushButton::clicked, this, &PrivacyPreferencesPage::setupThirdPartyCookiesExceptions);
+	connect(m_ui->thirdPartyCookiesExceptionsButton, &QPushButton::clicked, this, [&]()
+	{
+		CookiesExceptionsDialog dialog(m_thirdPartyCookiesAcceptedHosts, m_thirdPartyCookiesRejectedHosts, this);
+
+		if (dialog.exec() == QDialog::Accepted)
+		{
+			m_thirdPartyCookiesAcceptedHosts = dialog.getAcceptedHosts();
+			m_thirdPartyCookiesRejectedHosts = dialog.getRejectedHosts();
+
+			emit settingsModified();
+		}
+	});
 	connect(m_ui->clearHistoryCheckBox, &QCheckBox::toggled, m_ui->clearHistoryButton, &QPushButton::setEnabled);
 	connect(m_ui->clearHistoryCheckBox, &QCheckBox::toggled, [&](bool isChecked)
 	{
@@ -89,7 +100,20 @@ PrivacyPreferencesPage::PrivacyPreferencesPage(QWidget *parent) : PreferencesPag
 			emit settingsModified();
 		}
 	});
-	connect(m_ui->clearHistoryButton, &QPushButton::clicked, this, &PrivacyPreferencesPage::setupClearHistory);
+	connect(m_ui->clearHistoryButton, &QPushButton::clicked, this, [&]()
+	{
+		ClearHistoryDialog dialog(m_clearHistorySettings, true, this);
+
+		if (dialog.exec() == QDialog::Accepted)
+		{
+			m_clearHistorySettings = dialog.getClearSettings();
+
+			emit settingsModified();
+		}
+
+		m_ui->clearHistoryCheckBox->setChecked(!m_clearHistorySettings.isEmpty());
+		m_ui->clearHistoryButton->setEnabled(!m_clearHistorySettings.isEmpty());
+	});
 	connect(m_ui->managePasswordsButton, &QPushButton::clicked, [&]()
 	{
 		Application::triggerAction(ActionsManager::PasswordsAction, {}, this);
@@ -124,34 +148,6 @@ void PrivacyPreferencesPage::changeEvent(QEvent *event)
 		m_ui->thirdPartyCookiesPolicyComboBox->setItemText(1, tr("Only existing"));
 		m_ui->thirdPartyCookiesPolicyComboBox->setItemText(2, tr("Never"));
 	}
-}
-
-void PrivacyPreferencesPage::setupThirdPartyCookiesExceptions()
-{
-	CookiesExceptionsDialog dialog(m_thirdPartyCookiesAcceptedHosts, m_thirdPartyCookiesRejectedHosts, this);
-
-	if (dialog.exec() == QDialog::Accepted)
-	{
-		m_thirdPartyCookiesAcceptedHosts = dialog.getAcceptedHosts();
-		m_thirdPartyCookiesRejectedHosts = dialog.getRejectedHosts();
-
-		emit settingsModified();
-	}
-}
-
-void PrivacyPreferencesPage::setupClearHistory()
-{
-	ClearHistoryDialog dialog(m_clearHistorySettings, true, this);
-
-	if (dialog.exec() == QDialog::Accepted)
-	{
-		m_clearHistorySettings = dialog.getClearSettings();
-
-		emit settingsModified();
-	}
-
-	m_ui->clearHistoryCheckBox->setChecked(!m_clearHistorySettings.isEmpty());
-	m_ui->clearHistoryButton->setEnabled(!m_clearHistorySettings.isEmpty());
 }
 
 void PrivacyPreferencesPage::save()
