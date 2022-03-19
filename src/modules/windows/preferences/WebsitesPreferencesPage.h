@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2021 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -37,9 +37,6 @@ class WebsitesPreferencesPage final : public PreferencesPage
 public:
 	explicit WebsitesPreferencesPage(QWidget *parent);
 	~WebsitesPreferencesPage();
-
-public slots:
-	void save() override;
 
 protected:
 	void changeEvent(QEvent *event) override;
