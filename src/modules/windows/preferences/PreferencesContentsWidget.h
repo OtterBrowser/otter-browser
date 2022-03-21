@@ -69,6 +69,7 @@ protected slots:
 
 private:
 	QVector<bool> m_loadedTabs;
+	int m_tabIndexEnumerator;
 	Ui::PreferencesContentsWidget *m_ui;
 
 signals:

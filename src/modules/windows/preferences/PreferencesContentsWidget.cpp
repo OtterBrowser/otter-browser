@@ -40,6 +40,7 @@ namespace Otter
 {
 
 PreferencesContentsWidget::PreferencesContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
+	m_tabIndexEnumerator(metaObject()->indexOfEnumerator(QLatin1String("TabIndex").data())),
 	m_ui(new Ui::PreferencesContentsWidget)
 {
 	m_ui->setupUi(this);
