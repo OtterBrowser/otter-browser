@@ -321,34 +321,9 @@ QUrl PreferencesContentsWidget::getUrl() const
 {
 	QUrl url(QLatin1String("about:preferences"));
 
-	switch (m_ui->tabWidget->currentIndex())
+	if (m_ui->tabWidget->currentIndex() != GeneralTab)
 	{
-		case ContentTab:
-			url.setFragment(QLatin1String("content"));
-
-			break;
-		case PrivacyTab:
-			url.setFragment(QLatin1String("privacy"));
-
-			break;
-		case SearchTab:
-			url.setFragment(QLatin1String("search"));
-
-			break;
-		case InputTab:
-			url.setFragment(QLatin1String("input"));
-
-			break;
-		case WebsitesTab:
-			url.setFragment(QLatin1String("websites"));
-
-			break;
-		case AdvancedTab:
-			url.setFragment(QLatin1String("advanced"));
-
-			break;
-		default:
-			break;
+		url.setFragment(EnumeratorMapper(staticMetaObject.enumerator(m_tabIndexEnumerator), QLatin1String("Tab")).mapToName(m_ui->tabWidget->currentIndex()));
 	}
 
 	return url;
