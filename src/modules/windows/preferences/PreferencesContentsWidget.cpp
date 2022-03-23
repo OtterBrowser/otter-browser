@@ -272,39 +272,10 @@ void PreferencesContentsWidget::setUrl(const QUrl &url, bool isTypedIn)
 
 	const QString section(url.fragment());
 
-	if (section.isEmpty())
+	if (!section.isEmpty())
 	{
-		return;
+		m_ui->tabWidget->setCurrentIndex(EnumeratorMapper(staticMetaObject.enumerator(m_tabIndexEnumerator), QLatin1String("Tab")).mapToValue(section));
 	}
-
-	int tab(GeneralTab);
-
-	if (section == QLatin1String("content"))
-	{
-		tab = ContentTab;
-	}
-	else if (section == QLatin1String("privacy"))
-	{
-		tab = PrivacyTab;
-	}
-	else if (section == QLatin1String("search"))
-	{
-		tab = SearchTab;
-	}
-	else if (section == QLatin1String("websites"))
-	{
-		tab = WebsitesTab;
-	}
-	else if (section == QLatin1String("input"))
-	{
-		tab = InputTab;
-	}
-	else if (section == QLatin1String("advanced"))
-	{
-		tab = AdvancedTab;
-	}
-
-	m_ui->tabWidget->setCurrentIndex(tab);
 }
 
 QString PreferencesContentsWidget::getTitle() const
