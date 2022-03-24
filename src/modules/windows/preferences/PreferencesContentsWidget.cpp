@@ -274,7 +274,7 @@ void PreferencesContentsWidget::setUrl(const QUrl &url, bool isTypedIn)
 
 	if (!section.isEmpty())
 	{
-		m_ui->tabWidget->setCurrentIndex(EnumeratorMapper(staticMetaObject.enumerator(m_tabIndexEnumerator), QLatin1String("Tab")).mapToValue(section));
+		m_ui->tabWidget->setCurrentIndex(qMax(0, EnumeratorMapper(staticMetaObject.enumerator(m_tabIndexEnumerator), QLatin1String("Tab")).mapToValue(section)));
 	}
 }
 
