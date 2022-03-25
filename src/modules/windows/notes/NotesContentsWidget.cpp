@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -63,7 +63,10 @@ NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *
 		m_ui->actionsWidget->hide();
 	}
 
-	connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, this, &NotesContentsWidget::notifyPasteActionStateChanged);
+	connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, this, [&]()
+	{
+		emit arbitraryActionsStateChanged({ActionsManager::PasteAction});
+	});
 	connect(NotesManager::getModel(), &BookmarksModel::modelReset, this, &NotesContentsWidget::updateActions);
 	connect(m_ui->deleteButton, &QPushButton::clicked, this, &NotesContentsWidget::removeNote);
 	connect(m_ui->addButton, &QPushButton::clicked, this, &NotesContentsWidget::addNote);
@@ -128,11 +131,6 @@ void NotesContentsWidget::openUrl()
 	{
 		Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), bookmark->getUrl()}}, parentWidget());
 	}
-}
-
-void NotesContentsWidget::notifyPasteActionStateChanged()
-{
-	emit arbitraryActionsStateChanged({ActionsManager::PasteAction});
 }
 
 void NotesContentsWidget::showContextMenu(const QPoint &position)
