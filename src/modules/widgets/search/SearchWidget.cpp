@@ -653,7 +653,9 @@ void SearchWidget::setSearchEngine(const QString &searchEngine)
 
 void SearchWidget::setSearchEngine(const QModelIndex &index, bool canSendRequest)
 {
-	if (index.data(Qt::AccessibleDescriptionRole).toString().isEmpty())
+	const QString accessibleDescription(index.data(Qt::AccessibleDescriptionRole).toString());
+
+	if (accessibleDescription.isEmpty())
 	{
 		m_searchEngine = index.data(SearchEnginesManager::IdentifierRole).toString();
 
@@ -693,7 +695,7 @@ void SearchWidget::setSearchEngine(const QModelIndex &index, bool canSendRequest
 	setEnabled(true);
 	hidePopup();
 
-	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"))
+	if (accessibleDescription == QLatin1String("configure"))
 	{
 		MainWindow *mainWindow(m_window ? MainWindow::findMainWindow(m_window) : MainWindow::findMainWindow(this));
 
