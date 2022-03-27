@@ -186,6 +186,7 @@ set(otter_src
 	src/ui/PreviewWidget.cpp
 	src/ui/ProgressBarWidget.cpp
 	src/ui/ProxyModel.cpp
+	src/ui/QuickResponseCodeDialog.cpp
 	src/ui/QuickResponseCodeWidget.cpp
 	src/ui/ReloadTimeDialog.cpp
 	src/ui/ReportDialog.cpp
@@ -312,6 +313,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/OpenAddressDialog.ui
 	src/ui/OpenBookmarkDialog.ui
 	src/ui/PreferencesDialog.ui
+	src/ui/QuickResponseCodeDialog.ui
 	src/ui/ReloadTimeDialog.ui
 	src/ui/ReportDialog.ui
 	src/ui/SaveSessionDialog.ui
