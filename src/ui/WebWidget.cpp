@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2017 Piktas Zuikis <piktas.zuikis@inbox.lt>
@@ -1060,7 +1060,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 		case ActionsManager::OpenLinkInNewPrivateWindowAction:
 		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
 		case ActionsManager::CopyLinkToClipboardAction:
-		case ActionsManager::ShowLinkAsQrCodeAction:
+		case ActionsManager::ShowLinkAsQuickResponseCodeAction:
 		case ActionsManager::SaveLinkToDiskAction:
 		case ActionsManager::SaveLinkToDownloadsAction:
 			state.isEnabled = m_hitResult.linkUrl.isValid();

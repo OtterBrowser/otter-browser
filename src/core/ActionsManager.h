@@ -160,7 +160,7 @@ public:
 		OpenLinkInNewPrivateWindowBackgroundAction,
 		CopyLinkToClipboardAction,
 		BookmarkLinkAction,
-		ShowLinkAsQrCodeAction,
+		ShowLinkAsQuickResponseCodeAction,
 		SaveLinkToDiskAction,
 		SaveLinkToDownloadsAction,
 		OpenSelectionAsLinkAction,
