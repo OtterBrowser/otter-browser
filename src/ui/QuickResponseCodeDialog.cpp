@@ -18,8 +18,12 @@
 **************************************************************************/
 
 #include "QuickResponseCodeDialog.h"
+#include "../core/Utils.h"
 
 #include "ui_QuickResponseCodeDialog.h"
+
+#include <QtCore/QStandardPaths>
+#include <QtWidgets/QFileDialog>
 
 namespace Otter
 {
@@ -55,7 +59,15 @@ void QuickResponseCodeDialog::handleButtonClicked(QAbstractButton *button)
 	switch (m_ui->buttonBox->standardButton(button))
 	{
 		case QDialogButtonBox::Save:
-			///TODO
+			{
+				const QString path(QFileDialog::getSaveFileName(this, tr("Select File"), QDir(QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0)).filePath(QLatin1String("qr.png")), Utils::formatFileTypes({tr("PNG images (*.png)")})));
+
+				if (!path.isEmpty())
+				{
+					m_ui->quickResponseCodeWidget->getPixmap().save(path, "png");
+				}
+			}
+
 			break;
 		case QDialogButtonBox::Close:
 			accept();

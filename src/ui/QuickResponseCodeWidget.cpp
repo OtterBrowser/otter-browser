@@ -85,6 +85,19 @@ void QuickResponseCodeWidget::setUrl(const QUrl &url)
 	setText(url.toString());
 }
 
+QPixmap QuickResponseCodeWidget::getPixmap() const
+{
+	const int size(getSize());
+	QPixmap pixmap(size, size);
+	pixmap.fill(Qt::white);
+
+	QPainter painter(&pixmap);
+
+	render(&painter);
+
+	return pixmap;
+}
+
 QSize QuickResponseCodeWidget::minimumSizeHint() const
 {
 	const int size((m_code.getSize() + 8) * getSegmentSize());

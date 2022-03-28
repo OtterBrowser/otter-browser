@@ -35,6 +35,7 @@ public:
 	explicit QuickResponseCodeWidget(QWidget *parent = nullptr);
 
 	void render(QPainter *painter) const;
+	QPixmap getPixmap() const;
 	QSize minimumSizeHint() const override;
 	QSize sizeHint() const override;
 	int getSize() const;
