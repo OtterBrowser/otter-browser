@@ -20,6 +20,8 @@
 #ifndef OTTER_QUICKRESPONSECODEWIDGET_H
 #define OTTER_QUICKRESPONSECODEWIDGET_H
 
+#include "../../3rdparty/qrcodegen/qrcodegen.h"
+
 #include <QtWidgets/QLabel>
 
 namespace Otter
@@ -32,6 +34,10 @@ class QuickResponseCodeWidget final : public QLabel
 public:
 	explicit QuickResponseCodeWidget(QWidget *parent = nullptr);
 
+	void render(QPainter *painter) const;
+	QSize minimumSizeHint() const override;
+	QSize sizeHint() const override;
+	int getSize() const;
 	int heightForWidth(int width) const override;
 	bool hasHeightForWidth() const override;
 
@@ -39,8 +45,13 @@ public slots:
 	void setText(const QString &text);
 	void setUrl(const QUrl &url);
 
+protected:
+	void paintEvent(QPaintEvent *event) override;
+	int getSegmentSize() const;
+
 private:
 	QString m_text;
+	qrcodegen::QrCode m_code;
 };
 
 }

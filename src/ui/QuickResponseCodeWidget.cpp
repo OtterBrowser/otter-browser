@@ -20,12 +20,20 @@
 #include "QuickResponseCodeWidget.h"
 
 #include <QtCore/QUrl>
+#include <QtGui/QPainter>
+
+using qrcodegen::QrCode;
+using qrcodegen::QrSegment;
+
+#define BORDER_SIZE 4
 
 namespace Otter
 {
 
-QuickResponseCodeWidget::QuickResponseCodeWidget(QWidget *parent) : QLabel(parent)
+QuickResponseCodeWidget::QuickResponseCodeWidget(QWidget *parent) : QLabel(parent),
+	m_code(QrCode::encodeText(QByteArrayLiteral("https://otter-browser.org"), QrCode::Ecc::MEDIUM))
 {
+	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 }
 
 void QuickResponseCodeWidget::setText(const QString &text)
@@ -34,13 +42,69 @@ void QuickResponseCodeWidget::setText(const QString &text)
 	{
 		m_text = text;
 
+		m_code = QrCode::encodeText(text.toUtf8(), QrCode::Ecc::MEDIUM);
+
+		updateGeometry();
 		update();
+	}
+}
+
+void QuickResponseCodeWidget::paintEvent(QPaintEvent *event)
+{
+	Q_UNUSED(event)
+
+	const int size(getSize());
+	QPainter painter(this);
+	painter.translate(((width() - size) / 2), ((height() - size) / 2));
+	painter.fillRect(0, 0, size, size, Qt::white);
+
+	render(&painter);
+}
+
+void QuickResponseCodeWidget::render(QPainter *painter) const
+{
+	const int segmentSize(getSegmentSize());
+	const int borderSize(BORDER_SIZE * segmentSize);
+
+	painter->translate(borderSize, borderSize);
+
+	for (int i = 0; i < m_code.getSize(); ++i)
+	{
+		for (int j = 0; j < m_code.getSize(); ++j)
+		{
+			if (m_code.getModule(j, i))
+			{
+				painter->fillRect((j * segmentSize), (i * segmentSize), segmentSize, segmentSize, Qt::black);
+			}
+		}
 	}
 }
 
 void QuickResponseCodeWidget::setUrl(const QUrl &url)
 {
 	setText(url.toString());
+}
+
+QSize QuickResponseCodeWidget::minimumSizeHint() const
+{
+	const int size((m_code.getSize() + 8) * getSegmentSize());
+
+	return {size, size};
+}
+
+QSize QuickResponseCodeWidget::sizeHint() const
+{
+	return {width(), width()};
+}
+
+int QuickResponseCodeWidget::getSize() const
+{
+	return ((m_code.getSize() + (BORDER_SIZE * 2)) * getSegmentSize());
+}
+
+int QuickResponseCodeWidget::getSegmentSize() const
+{
+	return (5 * devicePixelRatio());
 }
 
 int QuickResponseCodeWidget::heightForWidth(int width) const
