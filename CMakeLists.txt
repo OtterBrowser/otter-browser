@@ -287,6 +287,7 @@ set(otter_src
 	src/modules/windows/windows/WindowsContentsWidget.cpp
 	3rdparty/columnresizer/ColumnResizer.cpp
 	3rdparty/mousegestures/MouseGestures.cpp
+	3rdparty/qrcodegen/qrcodegen.cpp
 )
 
 qt5_add_resources(otter_res
