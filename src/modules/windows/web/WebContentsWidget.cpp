@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -43,6 +43,7 @@
 #include "../../../ui/ContentsDialog.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/Menu.h"
+#include "../../../ui/QuickResponseCodeDialog.h"
 #include "../../../ui/ReloadTimeDialog.h"
 #include "../../../ui/SourceViewerWebWidget.h"
 #include "../../../ui/WebsiteInformationDialog.h"
@@ -326,6 +327,14 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 {
 	switch (identifier)
 	{
+		case ActionsManager::ShowLinkAsQuickResponseCodeAction:
+			{
+				QuickResponseCodeDialog *dialog(new QuickResponseCodeDialog(m_webWidget->getActiveLink().url.toString(), this));
+				dialog->setAttribute(Qt::WA_DeleteOnClose);
+				dialog->show();
+			}
+
+			break;
 		case ActionsManager::OpenSelectionAsLinkAction:
 			{
 				const QString text(m_webWidget->getSelectedText().trimmed());
