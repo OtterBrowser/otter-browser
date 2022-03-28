@@ -273,6 +273,7 @@
 				"OpenLink",
 				"separator",
 				"CopyLinkToClipboard",
+				"ShowLinkAsQuickResponseCode",
 				"separator",
 				"InspectElement",
 				"separator"
@@ -330,6 +331,7 @@
 				"separator",
 				"BookmarkLink",
 				"CopyLinkToClipboard",
+				"ShowLinkAsQuickResponseCode",
 				"separator",
 				"SaveLinkToDisk",
 				"SaveLinkToDownloads",
