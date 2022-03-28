@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>210</height>
+    <width>300</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,11 @@
     <widget class="Otter::QuickResponseCodeWidget" name="quickResponseCodeWidget" native="true"/>
    </item>
    <item>
-    <widget class="QLineEdit" name="messageLineEdit"/>
+    <widget class="QLineEdit" name="messageLineEdit">
+     <property name="clearButtonEnabled">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

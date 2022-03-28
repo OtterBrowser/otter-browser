@@ -28,8 +28,10 @@ QuickResponseCodeDialog::QuickResponseCodeDialog(const QString &message, QWidget
 	m_ui(new Ui::QuickResponseCodeDialog)
 {
 	m_ui->setupUi(this);
+	m_ui->quickResponseCodeWidget->setText(message);
 	m_ui->messageLineEdit->setText(message);
 
+	connect(m_ui->messageLineEdit, &QLineEdit::textChanged, m_ui->quickResponseCodeWidget, &QuickResponseCodeWidget::setText);
 	connect(m_ui->buttonBox, &QDialogButtonBox::clicked, this, &QuickResponseCodeDialog::handleButtonClicked);
 }
 
@@ -50,9 +52,17 @@ void QuickResponseCodeDialog::changeEvent(QEvent *event)
 
 void QuickResponseCodeDialog::handleButtonClicked(QAbstractButton *button)
 {
-	if (m_ui->buttonBox->standardButton(button) == QDialogButtonBox::Save)
+	switch (m_ui->buttonBox->standardButton(button))
 	{
-///TODO
+		case QDialogButtonBox::Save:
+			///TODO
+			break;
+		case QDialogButtonBox::Close:
+			accept();
+
+			break;
+		default:
+			break;
 	}
 }
 
