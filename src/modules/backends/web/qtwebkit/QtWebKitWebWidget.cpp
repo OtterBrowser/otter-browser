@@ -250,6 +250,7 @@ void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
 void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	const HitTestResult hitResult(getCurrentHitTestResult());
+	const QUrl url(extractUrl(parameters));
 
 	switch (identifier)
 	{
@@ -353,33 +354,33 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 					setClickPosition({});
 				}
-				else if (hitResult.linkUrl.isValid())
+				else if (url.isValid())
 				{
-					openUrl(hitResult.linkUrl, hints);
+					openUrl(url, hints);
 				}
 			}
 
 			break;
 		case ActionsManager::CopyLinkToClipboardAction:
-			if (!hitResult.linkUrl.isEmpty())
+			if (!url.isEmpty())
 			{
-				Application::clipboard()->setText(hitResult.linkUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
+				Application::clipboard()->setText(url.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			break;
 		case ActionsManager::BookmarkLinkAction:
-			if (hitResult.linkUrl.isValid())
+			if (url.isValid())
 			{
 				const QString title(hitResult.title);
 
-				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), hitResult.linkUrl}, {QLatin1String("title"), (title.isEmpty() ? m_page->mainFrame()->hitTestContent(hitResult.hitPosition).element().toPlainText() : title)}}, parentWidget(), trigger);
+				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), url}, {QLatin1String("title"), (title.isEmpty() ? m_page->mainFrame()->hitTestContent(hitResult.hitPosition).element().toPlainText() : title)}}, parentWidget(), trigger);
 			}
 
 			break;
 		case ActionsManager::SaveLinkToDiskAction:
-			if (hitResult.linkUrl.isValid())
+			if (url.isValid())
 			{
-				handleDownloadRequested(QNetworkRequest(hitResult.linkUrl));
+				handleDownloadRequested(QNetworkRequest(url));
 			}
 			else
 			{
@@ -388,7 +389,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::SaveLinkToDownloadsAction:
-			TransfersManager::addTransfer(TransfersManager::startTransfer(hitResult.linkUrl.toString(), {}, (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+			TransfersManager::addTransfer(TransfersManager::startTransfer(url.toString(), {}, (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
 			break;
 		case ActionsManager::OpenFrameAction:

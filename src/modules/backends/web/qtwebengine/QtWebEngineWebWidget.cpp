@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -224,6 +224,8 @@ void QtWebEngineWebWidget::ensureInitialized()
 
 void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
+	const QUrl url(extractUrl(parameters));
+
 	switch (identifier)
 	{
 		case ActionsManager::SaveAction:
@@ -299,33 +301,33 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 					setClickPosition({});
 				}
-				else if (m_hitResult.linkUrl.isValid())
+				else if (url.isValid())
 				{
-					openUrl(m_hitResult.linkUrl, hints);
+					openUrl(url, hints);
 				}
 			}
 
 			break;
 		case ActionsManager::CopyLinkToClipboardAction:
-			if (!m_hitResult.linkUrl.isEmpty())
+			if (!url.isEmpty())
 			{
-				Application::clipboard()->setText(m_hitResult.linkUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
+				Application::clipboard()->setText(url.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			break;
 		case ActionsManager::BookmarkLinkAction:
-			if (m_hitResult.linkUrl.isValid())
+			if (url.isValid())
 			{
-				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), m_hitResult.linkUrl}, {QLatin1String("title"), m_hitResult.title}}, parentWidget(), trigger);
+				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), url}, {QLatin1String("title"), m_hitResult.title}}, parentWidget(), trigger);
 			}
 
 			break;
 		case ActionsManager::SaveLinkToDiskAction:
-			startTransfer(TransfersManager::startTransfer(m_hitResult.linkUrl.toString(), {}, (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+			startTransfer(TransfersManager::startTransfer(url.toString(), {}, (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
 			break;
 		case ActionsManager::SaveLinkToDownloadsAction:
-			TransfersManager::startTransfer(m_hitResult.linkUrl.toString(), {}, (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption)));
+			TransfersManager::startTransfer(url.toString(), {}, (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption)));
 
 			break;
 		case ActionsManager::OpenFrameAction:

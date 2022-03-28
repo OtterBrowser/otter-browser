@@ -1006,6 +1006,16 @@ QVariant WebWidget::getPageInformation(PageInformation key) const
 	return {};
 }
 
+QUrl WebWidget::extractUrl(const QVariantMap &parameters) const
+{
+	if (parameters.contains(QLatin1String("url")))
+	{
+		return parameters[QLatin1String("url")].toUrl();
+	}
+
+	return m_hitResult.linkUrl;
+}
+
 QUrl WebWidget::getRequestedUrl() const
 {
 	return ((getUrl().isEmpty() || getLoadingState() == OngoingLoadingState) ? m_requestedUrl : getUrl());
@@ -1065,12 +1075,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 		case ActionsManager::SaveLinkToDiskAction:
 		case ActionsManager::SaveLinkToDownloadsAction:
 			{
-				QUrl url(m_hitResult.linkUrl);
-
-				if (parameters.contains(QLatin1String("url")))
-				{
-					url = parameters[QLatin1String("url")].toUrl();
-				}
+				const QUrl url(extractUrl(parameters));
 
 				state.isEnabled = url.isValid();
 
