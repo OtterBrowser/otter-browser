@@ -1060,27 +1060,42 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 		case ActionsManager::OpenLinkInNewPrivateWindowAction:
 		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
 		case ActionsManager::CopyLinkToClipboardAction:
+		case ActionsManager::BookmarkLinkAction:
 		case ActionsManager::ShowLinkAsQuickResponseCodeAction:
 		case ActionsManager::SaveLinkToDiskAction:
 		case ActionsManager::SaveLinkToDownloadsAction:
-			state.isEnabled = m_hitResult.linkUrl.isValid();
-
-			if (identifier == ActionsManager::OpenLinkAction && parameters.contains(QLatin1String("hints")))
 			{
-				const SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters));
+				QUrl url(m_hitResult.linkUrl);
 
-				state.text = getOpenActionText(hints);
-
-				if (hints != SessionsManager::DefaultOpen)
+				if (parameters.contains(QLatin1String("url")))
 				{
-					state.icon = {};
+					url = parameters[QLatin1String("url")].toUrl();
+				}
+
+				state.isEnabled = url.isValid();
+
+				switch (identifier)
+				{
+					case ActionsManager::BookmarkLinkAction:
+						state.text = (BookmarksManager::hasBookmark(url) ? QCoreApplication::translate("actions", "Edit Link Bookmark…") : QCoreApplication::translate("actions", "Bookmark Link…"));
+
+						break;
+					case ActionsManager::OpenLinkAction:
+						if (parameters.contains(QLatin1String("hints")))
+						{
+							const SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters));
+
+							state.text = getOpenActionText(hints);
+
+							if (hints != SessionsManager::DefaultOpen)
+							{
+								state.icon = {};
+							}
+						}
+
+						break;
 				}
 			}
-
-			break;
-		case ActionsManager::BookmarkLinkAction:
-			state.text = (BookmarksManager::hasBookmark(m_hitResult.linkUrl) ? QCoreApplication::translate("actions", "Edit Link Bookmark…") : QCoreApplication::translate("actions", "Bookmark Link…"));
-			state.isEnabled = m_hitResult.linkUrl.isValid();
 
 			break;
 		case ActionsManager::OpenFrameAction:
