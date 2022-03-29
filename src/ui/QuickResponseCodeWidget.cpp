@@ -117,7 +117,9 @@ int QuickResponseCodeWidget::getSize() const
 
 int QuickResponseCodeWidget::getSegmentSize() const
 {
-	return (5 * devicePixelRatio());
+	const int segmentSize(qMin(height(), width()) / (m_code.getSize() + (BORDER_SIZE * 2)));
+
+	return (qMax(5, segmentSize) * devicePixelRatio());
 }
 
 int QuickResponseCodeWidget::heightForWidth(int width) const
