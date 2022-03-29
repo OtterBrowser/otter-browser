@@ -60,7 +60,9 @@ void QuickResponseCodeDialog::handleButtonClicked(QAbstractButton *button)
 	{
 		case QDialogButtonBox::Save:
 			{
-				const QString path(QFileDialog::getSaveFileName(this, tr("Select File"), QDir(QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0)).filePath(QLatin1String("qr.png")), Utils::formatFileTypes({tr("PNG images (*.png)")})));
+				const QUrl url(m_ui->messageLineEdit->text());
+				const QString fileName(((url.isValid() && !url.host().isEmpty()) ? url.host() : QLatin1String("qr")) + QLatin1String(".png"));
+				const QString path(QFileDialog::getSaveFileName(this, tr("Select File"), QDir(QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0)).filePath(fileName), Utils::formatFileTypes({tr("PNG images (*.png)")})));
 
 				if (!path.isEmpty())
 				{
