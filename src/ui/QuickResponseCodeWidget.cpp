@@ -30,7 +30,7 @@ using qrcodegen::QrSegment;
 namespace Otter
 {
 
-QuickResponseCodeWidget::QuickResponseCodeWidget(QWidget *parent) : QLabel(parent),
+QuickResponseCodeWidget::QuickResponseCodeWidget(QWidget *parent) : QWidget(parent),
 	m_code(QrCode::encodeText(QByteArrayLiteral("https://otter-browser.org"), QrCode::Ecc::MEDIUM))
 {
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);

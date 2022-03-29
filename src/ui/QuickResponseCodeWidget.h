@@ -22,12 +22,12 @@
 
 #include "../../3rdparty/qrcodegen/qrcodegen.h"
 
-#include <QtWidgets/QLabel>
+#include <QtWidgets/QWidget>
 
 namespace Otter
 {
 
-class QuickResponseCodeWidget final : public QLabel
+class QuickResponseCodeWidget final : public QWidget
 {
 	Q_OBJECT
 
