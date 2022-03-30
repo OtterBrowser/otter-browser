@@ -44,6 +44,7 @@ QString SessionsManager::m_cachePath;
 QString SessionsManager::m_profilePath;
 QHash<QString, Session::Identity> SessionsManager::m_identities;
 QVector<Session::MainWindow> SessionsManager::m_closedWindows;
+int SessionsManager::m_openHintEnumerator(0);
 bool SessionsManager::m_isDirty(false);
 bool SessionsManager::m_isPrivate(false);
 bool SessionsManager::m_isReadOnly(false);
@@ -75,6 +76,7 @@ void SessionsManager::createInstance(const QString &profilePath, const QString &
 	if (!m_instance)
 	{
 		m_instance = new SessionsManager(QCoreApplication::instance());
+		m_openHintEnumerator = staticMetaObject.indexOfEnumerator(QLatin1String("OpenHint").data());
 		m_cachePath = cachePath;
 		m_profilePath = profilePath;
 		m_isPrivate = isPrivate;
@@ -498,6 +500,7 @@ SessionsManager::OpenHints SessionsManager::calculateOpenHints(const QVariantMap
 		return DefaultOpen;
 	}
 
+	const EnumeratorMapper mapper(staticMetaObject.enumerator(m_openHintEnumerator), QLatin1String("Open"));
 	const QStringList rawHints(parameters[QLatin1String("hints")].toStringList());
 	OpenHints hints(DefaultOpen);
 
@@ -506,30 +509,7 @@ SessionsManager::OpenHints SessionsManager::calculateOpenHints(const QVariantMap
 		QString hint(rawHints.at(i));
 		hint[0] = hint[0].toUpper();
 
-		if (hint == QLatin1String("Private"))
-		{
-			hints |= PrivateOpen;
-		}
-		else if (hint == QLatin1String("CurrentTab"))
-		{
-			hints |= CurrentTabOpen;
-		}
-		else if (hint == QLatin1String("NewTab"))
-		{
-			hints |= NewTabOpen;
-		}
-		else if (hint == QLatin1String("NewWindow"))
-		{
-			hints |= NewWindowOpen;
-		}
-		else if (hint == QLatin1String("Background"))
-		{
-			hints |= BackgroundOpen;
-		}
-		else if (hint == QLatin1String("End"))
-		{
-			hints |= EndOpen;
-		}
+		hints |= static_cast<OpenHint>(mapper.mapToValue(hint));
 	}
 
 	return hints;

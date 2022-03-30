@@ -237,6 +237,7 @@ public:
 		EndOpen = 32
 	};
 
+	Q_ENUM(OpenHint)
 	Q_DECLARE_FLAGS(OpenHints, OpenHint)
 
 	static void createInstance(const QString &profilePath, const QString &cachePath, bool isPrivate = false, bool isReadOnly = false);
@@ -286,6 +287,7 @@ private:
 	static QString m_profilePath;
 	static QHash<QString, Session::Identity> m_identities;
 	static QVector<Session::MainWindow> m_closedWindows;
+	static int m_openHintEnumerator;
 	static bool m_isDirty;
 	static bool m_isPrivate;
 	static bool m_isReadOnly;
