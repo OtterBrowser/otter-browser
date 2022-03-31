@@ -168,6 +168,7 @@ set(otter_src
 	src/ui/HeaderWidget.cpp
 	src/ui/IconWidget.cpp
 	src/ui/ImagePropertiesDialog.cpp
+	src/ui/InlineListWidget.cpp
 	src/ui/ItemDelegate.cpp
 	src/ui/ItemViewWidget.cpp
 	src/ui/LineEditWidget.cpp
