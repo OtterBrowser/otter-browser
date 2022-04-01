@@ -190,10 +190,11 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 		QString type(metaEnum.valueToKey(definition.type));
 		type.chop(4);
 
-		QList<QStandardItem*> optionItems({new QStandardItem(option.last()), new QStandardItem(type.toLower()), new QStandardItem(QString::number(SettingsManager::getOverridesCount(identifier))), new QStandardItem((value.type() == QVariant::StringList) ? value.toStringList().join(QLatin1String(", ")) : value.toString())});
+		QList<QStandardItem*> optionItems({new QStandardItem(option.last()), new QStandardItem(type.toLower()), new QStandardItem(QString::number(SettingsManager::getOverridesCount(identifier))), new QStandardItem()});
 		optionItems[0]->setFlags(optionItems[0]->flags() | Qt::ItemNeverHasChildren);
 		optionItems[1]->setFlags(optionItems[1]->flags() | Qt::ItemNeverHasChildren);
 		optionItems[2]->setFlags(optionItems[2]->flags() | Qt::ItemNeverHasChildren);
+		optionItems[3]->setData(value, Qt::EditRole);
 		optionItems[3]->setData(QSize(-1, 30), Qt::SizeHintRole);
 		optionItems[3]->setData(identifier, IdentifierRole);
 		optionItems[3]->setData(options.at(i), NameRole);
