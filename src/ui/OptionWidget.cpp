@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 #include "OptionWidget.h"
 #include "ColorWidget.h"
 #include "IconWidget.h"
+#include "InlineListWidget.h"
 #include "LineEditWidget.h"
 #include "FilePathWidget.h"
 #include "../core/ThemesManager.h"
@@ -36,6 +37,7 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 	m_colorWidget(nullptr),
 	m_filePathWidget(nullptr),
 	m_iconWidget(nullptr),
+	m_inlineListWidget(nullptr),
 	m_comboBox(nullptr),
 	m_fontComboBox(nullptr),
 	m_lineEditWidget(nullptr),
@@ -115,8 +117,16 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 			connect(m_filePathWidget, &FilePathWidget::pathChanged, this, &OptionWidget::markAsModified);
 
 			break;
+		case SettingsManager::ListType:
+			m_widget = m_inlineListWidget = new InlineListWidget(this);
+
+			m_inlineListWidget->setValues(value.toStringList());
+
+			connect(m_inlineListWidget, &InlineListWidget::modified, this, &OptionWidget::markAsModified);
+
+			break;
 		default:
-			m_widget = m_lineEditWidget = new LineEditWidget(((value.type() == QVariant::StringList) ? value.toStringList().join(QLatin1String(", ")) : value.toString()), this);
+			m_widget = m_lineEditWidget = new LineEditWidget(value.toString(), this);
 
 			m_lineEditWidget->setClearButtonEnabled(true);
 			m_lineEditWidget->selectAll();
@@ -245,9 +255,13 @@ void OptionWidget::setValue(const QVariant &value)
 			m_iconWidget->setIcon(value.value<QIcon>());
 		}
 	}
+	else if (m_inlineListWidget)
+	{
+		m_inlineListWidget->setValues(value.toStringList());
+	}
 	else if (m_lineEditWidget)
 	{
-		m_lineEditWidget->setText((value.type() == QVariant::StringList) ? value.toStringList().join(QLatin1String(", ")) : value.toString());
+		m_lineEditWidget->setText(value.toString());
 		m_lineEditWidget->setCursorPosition(0);
 	}
 	else if (m_spinBox)
@@ -363,18 +377,13 @@ QVariant OptionWidget::getValue() const
 		return m_iconWidget->getIcon();
 	}
 
+	if (m_inlineListWidget)
+	{
+		return m_inlineListWidget->getValues();
+	}
+
 	if (m_lineEditWidget)
 	{
-		if (m_lineEditWidget->text().isEmpty())
-		{
-			return {};
-		}
-
-		if (m_type == SettingsManager::ListType)
-		{
-			return m_lineEditWidget->text().split(QLatin1String(", "), QString::SkipEmptyParts);
-		}
-
 		return m_lineEditWidget->text();
 	}
 

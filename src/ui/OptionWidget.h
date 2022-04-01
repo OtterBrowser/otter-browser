@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -34,6 +34,7 @@ namespace Otter
 class ColorWidget;
 class FilePathWidget;
 class IconWidget;
+class InlineListWidget;
 class LineEditWidget;
 
 class OptionWidget final : public QWidget
@@ -64,6 +65,7 @@ private:
 	ColorWidget *m_colorWidget;
 	FilePathWidget *m_filePathWidget;
 	IconWidget *m_iconWidget;
+	InlineListWidget *m_inlineListWidget;
 	QComboBox *m_comboBox;
 	QFontComboBox *m_fontComboBox;
 	LineEditWidget *m_lineEditWidget;
