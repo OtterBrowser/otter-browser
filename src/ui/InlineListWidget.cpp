@@ -55,9 +55,11 @@ InlineListWidget::InlineListWidget(QWidget *parent) : QWidget(parent),
 	m_removeButton(new QToolButton(this)),
 	m_model(new QStandardItemModel(this))
 {
+	m_addButton->setToolTip(tr("Add"));
 	m_addButton->setIcon(ThemesManager::createIcon(QLatin1String("list-add")));
 	m_addButton->setAutoRaise(true);
 
+	m_removeButton->setToolTip(tr("Remove"));
 	m_removeButton->setIcon(ThemesManager::createIcon(QLatin1String("list-remove")));
 	m_removeButton->setAutoRaise(true);
 	m_removeButton->setEnabled(false);
@@ -113,6 +115,11 @@ void InlineListWidget::changeEvent(QEvent *event)
 		case QEvent::ApplicationFontChange:
 		case QEvent::StyleChange:
 			setMaximumHeight(qMax(m_treeView->sizeHintForRow(0), m_addButton->height()));
+
+			break;
+		case QEvent::LanguageChange:
+			m_addButton->setToolTip(tr("Add"));
+			m_removeButton->setToolTip(tr("Remove"));
 
 			break;
 		default:
