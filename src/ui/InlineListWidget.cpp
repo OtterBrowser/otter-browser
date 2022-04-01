@@ -81,6 +81,11 @@ InlineListWidget::InlineListWidget(QWidget *parent) : QWidget(parent),
 
 	setMaximumHeight(qMax(m_treeView->sizeHintForRow(0), m_addButton->height()));
 
+	connect(m_model, &QAbstractItemModel::dataChanged, this, &InlineListWidget::modified);
+	connect(m_treeView->selectionModel(), &QItemSelectionModel::selectionChanged, this, [&]()
+	{
+		m_removeButton->setEnabled(m_treeView->currentIndex().isValid());
+	});
 	connect(m_addButton, &QToolButton::clicked, this, [&]()
 	{
 		const int column(m_treeView->currentIndex().isValid() ? (m_treeView->currentIndex().column() + 1) : m_model->columnCount());
@@ -91,7 +96,12 @@ InlineListWidget::InlineListWidget(QWidget *parent) : QWidget(parent),
 
 		emit modified();
 	});
-	connect(m_model, &QAbstractItemModel::dataChanged, this, &InlineListWidget::modified);
+	connect(m_removeButton, &QToolButton::clicked, this, [&]()
+	{
+		m_model->removeColumn(m_treeView->currentIndex().column());
+
+		emit modified();
+	});
 }
 
 void InlineListWidget::changeEvent(QEvent *event)
