@@ -39,11 +39,11 @@
 namespace Otter
 {
 
-EntryDelegate::EntryDelegate(QObject *parent) : ItemDelegate(parent)
+FeedEntryDelegate::FeedEntryDelegate(QObject *parent) : ItemDelegate(parent)
 {
 }
 
-void EntryDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+void FeedEntryDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
 {
 	ItemDelegate::initStyleOption(option, index);
 
@@ -83,7 +83,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->subscribeFeedWidget->hide();
 	m_ui->feedsHorizontalSplitterWidget->setSizes({300, qMax(500, (width() - 300))});
 	m_ui->entriesFilterLineEditWidget->setClearOnEscape(true);
-	m_ui->entriesViewWidget->setItemDelegate(new EntryDelegate(this));
+	m_ui->entriesViewWidget->setItemDelegate(new FeedEntryDelegate(this));
 	m_ui->entriesViewWidget->installEventFilter(this);
 	m_ui->entriesViewWidget->viewport()->installEventFilter(this);
 	m_ui->entriesViewWidget->viewport()->setMouseTracking(true);
