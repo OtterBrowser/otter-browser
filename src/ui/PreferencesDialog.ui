@@ -46,6 +46,12 @@
       </attribute>
       <layout class="QVBoxLayout" name="searchLayout"/>
      </widget>
+     <widget class="QWidget" name="inputTab">
+      <attribute name="title">
+       <string>Input</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="inputLayout"/>
+     </widget>
      <widget class="QWidget" name="websitesTab">
       <attribute name="title">
        <string>Websites</string>

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -23,6 +23,7 @@
 #include "../modules/windows/preferences/AdvancedPreferencesPage.h"
 #include "../modules/windows/preferences/ContentPreferencesPage.h"
 #include "../modules/windows/preferences/GeneralPreferencesPage.h"
+#include "../modules/windows/preferences/InputPreferencesPage.h"
 #include "../modules/windows/preferences/PrivacyPreferencesPage.h"
 #include "../modules/windows/preferences/SearchPreferencesPage.h"
 #include "../modules/windows/preferences/WebsitesPreferencesPage.h"
@@ -43,7 +44,7 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 {
 	m_ui->setupUi(this);
 
-	m_loadedTabs.fill(false, 6);
+	m_loadedTabs.fill(false, 7);
 
 	int tab(GeneralTab);
 
@@ -58,6 +59,10 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	else if (section == QLatin1String("search"))
 	{
 		tab = SearchTab;
+	}
+	else if (section == QLatin1String("input"))
+	{
+		tab = InputTab;
 	}
 	else if (section == QLatin1String("websites"))
 	{
@@ -144,6 +149,17 @@ void PreferencesDialog::showTab(int tab)
 
 				connect(this, &PreferencesDialog::requestedSave, page, &SearchPreferencesPage::save);
 				connect(page, &SearchPreferencesPage::settingsModified, this, &PreferencesDialog::markAsModified);
+			}
+
+			break;
+		case InputTab:
+			{
+				InputPreferencesPage *page(new InputPreferencesPage(this));
+
+				m_ui->inputLayout->addWidget(page);
+
+				connect(this, &PreferencesDialog::requestedSave, page, &InputPreferencesPage::save);
+				connect(page, &InputPreferencesPage::settingsModified, this, &PreferencesDialog::markAsModified);
 			}
 
 			break;
