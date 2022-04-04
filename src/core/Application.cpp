@@ -1399,6 +1399,8 @@ QString Application::createReport(ReportOptions options)
 
 	if (options.testFlag(EnvironmentReport))
 	{
+		const QString sslVersion(webBackend ? webBackend->getSslVersion() : QString());
+
 		stream << QLatin1String("Environment:\n\t");
 		stream.setFieldWidth(30);
 		stream << QLatin1String("System Name");
@@ -1428,6 +1430,11 @@ QString Application::createReport(ReportOptions options)
 		stream.setFieldWidth(30);
 		stream << QLatin1String("Current Qt Version");
 		stream << qVersion();
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(30);
+		stream << QLatin1String("SSL Library Version");
+		stream << (sslVersion.isEmpty() ? QLatin1String("unavailable") : sslVersion);
 		stream.setFieldWidth(0);
 		stream << QLatin1String("\n\t");
 		stream.setFieldWidth(30);
