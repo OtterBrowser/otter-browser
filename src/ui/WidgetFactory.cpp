@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -273,6 +273,21 @@ ContentsWidget* createContentsWidget(const QString &identifier, const QVariantMa
 	if (identifier == QLatin1String("windows"))
 	{
 		return new WindowsContentsWidget(parameters, window, parent);
+	}
+
+	return nullptr;
+}
+
+ContentsWidget* createContentsWidget(const QUrl &url, const QVariantMap &parameters, Window *window, QWidget *parent)
+{
+	if (url.scheme() == QLatin1String("about"))
+	{
+		return createContentsWidget(url.path(), parameters, window, parent);
+	}
+
+	if (url.scheme() == QLatin1String("view-feed"))
+	{
+		return createContentsWidget(QLatin1String("feeds"), parameters, window, parent);
 	}
 
 	return nullptr;
