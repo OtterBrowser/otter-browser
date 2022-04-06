@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -159,6 +159,26 @@ QVector<HandlersManager::MimeTypeHandlerDefinition> HandlersManager::getMimeType
 	return handlers;
 }
 
+HandlersManager::HandlerType HandlersManager::getHandlerType(const QUrl &url)
+{
+	if (url.scheme() == QLatin1String("abp"))
+	{
+		return InternalHandler;
+	}
+
+	if (url.scheme() == QLatin1String("mailto"))
+	{
+		return ExternalHandler;
+	}
+
+	return NoHandler;
+}
+
+bool HandlersManager::canHandleUrl(const QUrl &url)
+{
+	return (getHandlerType(url) != NoHandler);
+}
+
 bool HandlersManager::handleUrl(const QUrl &url)
 {
 	if (url.scheme() == QLatin1String("abp"))
@@ -216,11 +236,6 @@ bool HandlersManager::handleUrl(const QUrl &url)
 	}
 
 	return false;
-}
-
-bool HandlersManager::canHandleUrl(const QUrl &url)
-{
-	return (url.scheme() == QLatin1String("abp") || url.scheme() == QLatin1String("mailto"));
 }
 
 }

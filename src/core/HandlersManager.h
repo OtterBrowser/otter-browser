@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,13 @@ class HandlersManager final : public QObject
 	Q_OBJECT
 
 public:
+	enum HandlerType
+	{
+		NoHandler = 0,
+		InternalHandler,
+		ExternalHandler
+	};
+
 	struct MimeTypeHandlerDefinition final
 	{
 		enum TransferMode
@@ -52,16 +59,9 @@ public:
 
 	struct ProtocolHandlerDefinition final
 	{
-		enum HandlerMode
-		{
-			NoHandler = 0,
-			InternalHandler,
-			ExternalHandler
-		};
-
 		QString protocol;
 		QString openCommand;
-		HandlerMode handlerMode = InternalHandler;
+		HandlerType handlerMode = InternalHandler;
 		bool isExplicit = true;
 	};
 
@@ -70,8 +70,9 @@ public:
 	static HandlersManager* getInstance();
 	static MimeTypeHandlerDefinition getMimeTypeHandler(const QMimeType &mimeType);
 	static QVector<MimeTypeHandlerDefinition> getMimeTypeHandlers();
-	static bool handleUrl(const QUrl &url);
+	static HandlerType getHandlerType(const QUrl &url);
 	static bool canHandleUrl(const QUrl &url);
+	static bool handleUrl(const QUrl &url);
 
 protected:
 	explicit HandlersManager(QObject *parent);
