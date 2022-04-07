@@ -19,6 +19,7 @@
 
 #include "HandlersManager.h"
 #include "AdblockContentFiltersProfile.h"
+#include "Application.h"
 #include "IniSettings.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
@@ -159,7 +160,7 @@ QVector<HandlersManager::MimeTypeHandlerDefinition> HandlersManager::getMimeType
 	return handlers;
 }
 
-HandlersManager::HandlerType HandlersManager::getHandlerType(const QUrl &url)
+HandlersManager::HandlerTypes HandlersManager::getHandlerType(const QUrl &url)
 {
 	if (url.scheme() == QLatin1String("abp"))
 	{
@@ -179,8 +180,20 @@ bool HandlersManager::canHandleUrl(const QUrl &url)
 	return (getHandlerType(url) != NoHandler);
 }
 
+bool HandlersManager::canViewUrl(const QUrl &url)
+{
+	return (getHandlerType(url).testFlag(IsWindowedHandler));
+}
+
 bool HandlersManager::handleUrl(const QUrl &url)
 {
+	if (canViewUrl(url))
+	{
+		Application::getInstance()->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
+
+		return true;
+	}
+
 	if (url.scheme() == QLatin1String("abp"))
 	{
 		const QUrlQuery query(url.query());
