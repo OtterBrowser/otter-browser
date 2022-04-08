@@ -162,6 +162,11 @@ QVector<HandlersManager::MimeTypeHandlerDefinition> HandlersManager::getMimeType
 
 HandlersManager::HandlerTypes HandlersManager::getHandlerType(const QUrl &url)
 {
+	if (url.scheme() == QLatin1String("about") || url.scheme() == QLatin1String("view-feed"))
+	{
+		return (InternalHandler | IsWindowedHandler);
+	}
+
 	if (url.scheme() == QLatin1String("abp"))
 	{
 		return InternalHandler;
