@@ -2,7 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2010 - 2014 David Rosca <nowrep@gmail.com>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 #include "Console.h"
 #include "Job.h"
 #include "SessionsManager.h"
+#include "../ui/ContentBlockingProfileDialog.h"
 
 #include <QtConcurrent/QtConcurrentRun>
 #include <QtCore/QBuffer>
@@ -30,6 +31,8 @@
 #include <QtCore/QDir>
 #include <QtCore/QSaveFile>
 #include <QtCore/QTextStream>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -960,6 +963,56 @@ bool AdblockContentFiltersProfile::create(const ContentFiltersProfile::ProfileSu
 	}
 
 	return true;
+}
+
+bool AdblockContentFiltersProfile::create(const QUrl &url, bool canOverwriteExisting)
+{
+	if (!canOverwriteExisting && ContentFiltersManager::getProfile(url))
+	{
+		QMessageBox::critical(QApplication::activeWindow(), tr("Error"), tr("Profile with this address already exists."), QMessageBox::Close);
+
+		return false;
+	}
+
+	if (QMessageBox::question(QApplication::activeWindow(), tr("Question"), tr("Do you want to add this content blocking profile?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
+	{
+		return  false;
+	}
+
+	ContentFiltersProfile::ProfileSummary profileSummary;
+	profileSummary.updateUrl = url;
+
+	ContentBlockingProfileDialog dialog(profileSummary, {}, QApplication::activeWindow());
+
+	if (dialog.exec() == QDialog::Rejected)
+	{
+		return false;
+	}
+
+	profileSummary = dialog.getProfile();
+
+	QFile file(dialog.getRulesPath());
+
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+		QMessageBox::critical(QApplication::activeWindow(), tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
+
+		return false;
+	}
+
+	profileSummary.name = Utils::createIdentifier(QFileInfo(url.path()).baseName(), ContentFiltersManager::getProfileNames());
+
+	const bool result(create(profileSummary, &file, canOverwriteExisting));
+
+	if (!result)
+	{
+		QMessageBox::critical(QApplication::activeWindow(), tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
+	}
+
+	file.close();
+	file.remove();
+
+	return result;
 }
 
 bool AdblockContentFiltersProfile::loadRules()

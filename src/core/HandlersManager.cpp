@@ -24,15 +24,12 @@
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "Utils.h"
-#include "../ui/ContentBlockingProfileDialog.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QUrlQuery>
 #include <QtGui/QDesktopServices>
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -206,41 +203,7 @@ bool HandlersManager::handleUrl(const QUrl &url)
 
 		if (location.isValid())
 		{
-			if (ContentFiltersManager::getProfile(location))
-			{
-				QMessageBox::critical(QApplication::activeWindow(), tr("Error"), tr("Profile with this address already exists."), QMessageBox::Close);
-			}
-			else if (QMessageBox::question(QApplication::activeWindow(), tr("Question"), tr("Do you want to add this content blocking profile?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
-			{
-				ContentFiltersProfile::ProfileSummary profileSummary;
-				profileSummary.updateUrl = location;
-
-				ContentBlockingProfileDialog dialog(profileSummary, {}, QApplication::activeWindow());
-
-				if (dialog.exec() == QDialog::Accepted)
-				{
-					profileSummary = dialog.getProfile();
-
-					QFile file(dialog.getRulesPath());
-
-					if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-					{
-						QMessageBox::critical(QApplication::activeWindow(), tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
-
-						return false;
-					}
-
-					profileSummary.name = Utils::createIdentifier(QFileInfo(location.path()).baseName(), ContentFiltersManager::getProfileNames());
-
-					if (!AdblockContentFiltersProfile::create(profileSummary, &file))
-					{
-						QMessageBox::critical(QApplication::activeWindow(), tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
-					}
-
-					file.close();
-					file.remove();
-				}
-			}
+			AdblockContentFiltersProfile::create(location);
 		}
 
 		return true;
