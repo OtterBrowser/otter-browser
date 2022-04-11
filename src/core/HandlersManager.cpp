@@ -184,7 +184,7 @@ bool HandlersManager::canHandleUrl(const QUrl &url)
 
 bool HandlersManager::canViewUrl(const QUrl &url)
 {
-	return (getHandlerType(url).testFlag(IsWindowedHandler));
+	return getHandlerType(url).testFlag(IsWindowedHandler);
 }
 
 bool HandlersManager::handleUrl(const QUrl &url)
