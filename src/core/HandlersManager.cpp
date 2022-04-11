@@ -164,7 +164,7 @@ HandlersManager::HandlerTypes HandlersManager::getHandlerType(const QUrl &url)
 		return (InternalHandler | IsWindowedHandler);
 	}
 
-	if (url.scheme() == QLatin1String("abp"))
+	if (url.scheme() == QLatin1String("abp") && url.path() == QLatin1String("subscribe"))
 	{
 		return InternalHandler;
 	}
