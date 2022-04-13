@@ -23,6 +23,7 @@
 #include "MainWindow.h"
 #include "WidgetFactory.h"
 #include "../core/Application.h"
+#include "../core/HandlersManager.h"
 #include "../core/HistoryManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
@@ -344,7 +345,7 @@ void Window::setUrl(const QUrl &url, bool isTypedIn)
 {
 	ContentsWidget *newWidget(nullptr);
 
-	if (url.scheme() == QLatin1String("about") || url.scheme() == QLatin1String("view-feed"))
+	if (HandlersManager::canViewUrl(url))
 	{
 		if (m_session.history.index < 0 && !Utils::isUrlEmpty(getUrl()) && SessionsManager::hasUrl(url, true))
 		{
@@ -353,7 +354,7 @@ void Window::setUrl(const QUrl &url, bool isTypedIn)
 			return;
 		}
 
-		newWidget = WidgetFactory::createContentsWidget(((url.scheme() == QLatin1String("view-feed")) ? QLatin1String("feeds") : url.path()), {{QLatin1String("url"), url}}, this, this);
+		newWidget = WidgetFactory::createContentsWidget(url, {{QLatin1String("url"), url}}, this, this);
 
 		if (newWidget)
 		{
