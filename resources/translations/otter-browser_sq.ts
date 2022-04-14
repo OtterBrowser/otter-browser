@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="sq" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="sq">
 <context>
     <name>Otter::AcceptCookieDialog</name>
     <message>
@@ -6246,7 +6246,7 @@ Jeni i sigurt se doni të rikthehet ky sesion, sido qoftë?</translation>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="115"/>
         <source>Warning</source>
-        <translation>Sinjalizmi</translation>
+        <translation>Kujdes</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="115"/>
