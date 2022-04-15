@@ -285,7 +285,7 @@ ContentsWidget* createContentsWidget(const QUrl &url, const QVariantMap &paramet
 		return createContentsWidget(url.path(), parameters, window, parent);
 	}
 
-	if (url.scheme() == QLatin1String("view-feed"))
+	if (url.scheme() == QLatin1String("feed") || url.scheme() == QLatin1String("view-feed"))
 	{
 		return createContentsWidget(QLatin1String("feeds"), parameters, window, parent);
 	}

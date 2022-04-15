@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -816,7 +816,7 @@ Feed* FeedsManager::getFeed(const QUrl &url)
 
 QUrl FeedsManager::createFeedReaderUrl(const QUrl &url)
 {
-	return QUrl(QLatin1String("view-feed:") + url.toDisplayString());
+	return QUrl(QLatin1String("feed:") + url.toDisplayString());
 }
 
 QVector<Feed*> FeedsManager::getFeeds()

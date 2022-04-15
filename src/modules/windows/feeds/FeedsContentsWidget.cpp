@@ -775,9 +775,19 @@ void FeedsContentsWidget::setUrl(const QUrl &url, bool isTypedIn)
 {
 	Q_UNUSED(isTypedIn)
 
-	if (url.scheme() == QLatin1String("view-feed"))
+	QUrl feedUrl;
+
+	if (url.scheme() == QLatin1String("feed"))
 	{
-		const QUrl feedUrl(url.toDisplayString().mid(10));
+		feedUrl = QUrl(url.toDisplayString().mid(7));
+	}
+	else if (url.scheme() == QLatin1String("view-feed"))
+	{
+		feedUrl = QUrl(url.toDisplayString().mid(10));
+	}
+
+	if (feedUrl.isValid())
+	{
 		const QVector<FeedsModel::Entry*> entries(FeedsManager::getModel()->getEntries(feedUrl));
 
 		setFeed(FeedsManager::createFeed(feedUrl));
