@@ -150,6 +150,14 @@
 	</dict>
 	<dict>
 		<key>CFBundleURLName</key>
+		<string>feed URL</string>
+		<key>CFBundleURLSchemes</key>
+		<array>
+			<string>feed</string>
+		</array>
+	</dict>
+	<dict>
+		<key>CFBundleURLName</key>
 		<string>file URL</string>
 		<key>CFBundleURLSchemes</key>
 		<array>
