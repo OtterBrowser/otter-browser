@@ -121,6 +121,28 @@
 		<key>CFBundleTypeRole</key>
 		<string>Viewer</string>
 	</dict>
+	<dict>
+		<key>CFBundleTypeExtensions</key>
+		<array>
+		<string>atom</string>
+		<string>rss</string>
+		</array>
+		<key>CFBundleTypeMIMETypes</key>
+		<array>
+		<string>application/atom+xml</string>
+		<string>application/rss+xml</string>
+		</array>
+		<key>CFBundleTypeName</key>
+		<string>Web Feed Document</string>
+		<key>CFBundleTypeOSTypes</key>
+		<array>
+			<string>TEXT</string>
+		</array>
+		<key>CFBundleTypeRole</key>
+		<string>Viewer</string>
+		<key>NSDocumentClass</key>
+		<string>BrowserDocument</string>
+	</dict>
 	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
