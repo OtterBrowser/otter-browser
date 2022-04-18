@@ -777,13 +777,9 @@ void FeedsContentsWidget::setUrl(const QUrl &url, bool isTypedIn)
 
 	QUrl feedUrl;
 
-	if (url.scheme() == QLatin1String("feed"))
+	if (url.scheme() == QLatin1String("feed") || url.scheme() == QLatin1String("view-feed"))
 	{
-		feedUrl = QUrl(url.toDisplayString().mid(7));
-	}
-	else if (url.scheme() == QLatin1String("view-feed"))
-	{
-		feedUrl = QUrl(url.toDisplayString().mid(10));
+		feedUrl = QUrl(url.toDisplayString().mid(url.scheme().length() + 1));
 	}
 
 	if (feedUrl.isValid())
