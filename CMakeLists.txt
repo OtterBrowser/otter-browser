@@ -567,6 +567,22 @@ else ()
 	message(STATUS ${OTTER_BACKENDS_WEB_SUMMARY})
 endif ()
 
+find_package(Git QUIET)
+
+set(GIT_REVISION "unknown")
+
+if (GIT_FOUND)
+	execute_process(
+		COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
+		WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+		OUTPUT_VARIABLE GIT_REVISION
+		ERROR_QUIET
+		OUTPUT_STRIP_TRAILING_WHITESPACE
+	)
+endif()
+
+add_definitions(-DOTTER_GIT_REVISION="${GIT_REVISION}")
+
 add_executable(otter-browser WIN32 MACOSX_BUNDLE
 	${otter_ui}
 	${otter_res}
