@@ -551,6 +551,22 @@ elseif (UNIX)
 	)
 endif ()
 
+feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
+
+list(LENGTH OTTER_BACKENDS_WEB OTTER_BACKENDS_WEB_LENGTH)
+
+if (${OTTER_BACKENDS_WEB_LENGTH} EQUAL 0)
+	message(SEND_ERROR "No web backends available!")
+else ()
+	set(OTTER_BACKENDS_WEB_SUMMARY "The following web backends will be built:\n\n")
+
+	foreach(_backend ${OTTER_BACKENDS_WEB})
+		set(OTTER_BACKENDS_WEB_SUMMARY "${OTTER_BACKENDS_WEB_SUMMARY} * ${_backend}\n")
+	endforeach(_backend)
+
+	message(STATUS ${OTTER_BACKENDS_WEB_SUMMARY})
+endif ()
+
 add_executable(otter-browser WIN32 MACOSX_BUNDLE
 	${otter_ui}
 	${otter_res}
@@ -613,19 +629,3 @@ install(FILES otter-browser.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES packaging/otter-browser.appdata.xml DESTINATION ${CMAKE_INSTALL_PREFIX}/share/metainfo)
 install(FILES man/otter-browser.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1/)
 install(TARGETS otter-browser DESTINATION bin/)
-
-feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
-
-list(LENGTH OTTER_BACKENDS_WEB OTTER_BACKENDS_WEB_LENGTH)
-
-if (${OTTER_BACKENDS_WEB_LENGTH} EQUAL 0)
-	message(SEND_ERROR "No web backends available!")
-else ()
-	set(OTTER_BACKENDS_WEB_SUMMARY "The following web backends will be built:\n\n")
-
-	foreach(_backend ${OTTER_BACKENDS_WEB})
-		set(OTTER_BACKENDS_WEB_SUMMARY "${OTTER_BACKENDS_WEB_SUMMARY} * ${_backend}\n")
-	endforeach(_backend)
-
-	message(STATUS ${OTTER_BACKENDS_WEB_SUMMARY})
-endif ()
