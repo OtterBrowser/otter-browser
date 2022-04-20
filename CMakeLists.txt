@@ -569,9 +569,17 @@ endif ()
 
 find_package(Git QUIET)
 
+set(GIT_DATETIME "unknown")
 set(GIT_REVISION "unknown")
 
 if (GIT_FOUND)
+	execute_process(
+		COMMAND ${GIT_EXECUTABLE} show -s --format=%ci
+		WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+		OUTPUT_VARIABLE GIT_DATETIME
+		ERROR_QUIET
+		OUTPUT_STRIP_TRAILING_WHITESPACE
+	)
 	execute_process(
 		COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
 		WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
@@ -581,6 +589,7 @@ if (GIT_FOUND)
 	)
 endif()
 
+add_definitions(-DOTTER_GIT_DATETIME="${GIT_DATETIME}")
 add_definitions(-DOTTER_GIT_REVISION="${GIT_REVISION}")
 
 add_executable(otter-browser WIN32 MACOSX_BUNDLE
