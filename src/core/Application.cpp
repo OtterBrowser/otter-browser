@@ -1395,6 +1395,20 @@ QString Application::createReport(ReportOptions options)
 	stream << QLatin1String("Web Backend");
 	stream << (webBackend ? QStringLiteral("%1 %2").arg(webBackend->getTitle(), webBackend->getEngineVersion()) : QLatin1String("none"));
 	stream.setFieldWidth(0);
+	stream << QLatin1String("\n\t");
+	stream.setFieldWidth(20);
+	stream << QLatin1String("Git Revision");
+
+	if (QString(OTTER_GIT_REVISION).trimmed().isEmpty() || QString(OTTER_GIT_REVISION) == QLatin1String("unknown"))
+	{
+		stream << QLatin1Char('-');
+	}
+	else
+	{
+		stream << QStringLiteral("%1 (%2)").arg(OTTER_GIT_REVISION).arg(OTTER_GIT_DATETIME);
+	}
+
+	stream.setFieldWidth(0);
 	stream << QLatin1String("\n\n");
 
 	if (options.testFlag(EnvironmentReport))
