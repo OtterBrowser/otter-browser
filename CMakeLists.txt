@@ -74,7 +74,7 @@ option(ENABLE_CRASHREPORTS "Enable built-in crash reporting (only for official b
 option(ENABLE_DBUS "Enable D-Bus based integration for notifications (only freedesktop.org compatible platforms)" ON)
 option(ENABLE_SPELLCHECK "Enable Hunspell based spell checking" ON)
 
-find_package(Qt5 5.6.0 REQUIRED COMPONENTS Core Gui Multimedia Network PrintSupport Qml Svg Widgets)
+find_package(Qt5 5.6.0 REQUIRED COMPONENTS Concurrent Core Gui Multimedia Network PrintSupport Qml Svg Widgets)
 find_package(Qt5WebEngineWidgets 5.15.0 QUIET)
 find_package(Qt5WebKitWidgets 5.212.0 QUIET)
 find_package(Hunspell 1.5.0 QUIET)
