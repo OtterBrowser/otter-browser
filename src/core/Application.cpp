@@ -1397,6 +1397,20 @@ QString Application::createReport(ReportOptions options)
 	stream.setFieldWidth(0);
 	stream << QLatin1String("\n\t");
 	stream.setFieldWidth(20);
+	stream << QLatin1String("Git Branch");
+
+	if (QString(OTTER_GIT_BRANCH).trimmed().isEmpty() || QString(OTTER_GIT_BRANCH) == QLatin1String("unknown"))
+	{
+		stream << QLatin1Char('-');
+	}
+	else
+	{
+		stream << OTTER_GIT_BRANCH;
+	}
+
+	stream.setFieldWidth(0);
+	stream << QLatin1String("\n\t");
+	stream.setFieldWidth(20);
 	stream << QLatin1String("Git Revision");
 
 	if (QString(OTTER_GIT_REVISION).trimmed().isEmpty() || QString(OTTER_GIT_REVISION) == QLatin1String("unknown"))
