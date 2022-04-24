@@ -1375,7 +1375,7 @@ QString Application::createReport(ReportOptions options)
 	stream.setFieldWidth(20);
 	stream << QLatin1String("Weekly Number");
 
-	if (QString(OTTER_VERSION_WEEKLY).trimmed().isEmpty())
+	if (QStringLiteral(OTTER_VERSION_WEEKLY).trimmed().isEmpty())
 	{
 		stream << QLatin1Char('-');
 	}
@@ -1399,7 +1399,7 @@ QString Application::createReport(ReportOptions options)
 	stream.setFieldWidth(20);
 	stream << QLatin1String("Git Branch");
 
-	if (QString(OTTER_GIT_BRANCH).trimmed().isEmpty() || QString(OTTER_GIT_BRANCH) == QLatin1String("unknown"))
+	if (QStringLiteral(OTTER_GIT_BRANCH).trimmed().isEmpty() || QStringLiteral(OTTER_GIT_BRANCH) == QLatin1String("unknown"))
 	{
 		stream << QLatin1Char('-');
 	}
@@ -1413,7 +1413,7 @@ QString Application::createReport(ReportOptions options)
 	stream.setFieldWidth(20);
 	stream << QLatin1String("Git Revision");
 
-	if (QString(OTTER_GIT_REVISION).trimmed().isEmpty() || QString(OTTER_GIT_REVISION) == QLatin1String("unknown"))
+	if (QStringLiteral(OTTER_GIT_REVISION).trimmed().isEmpty() || QStringLiteral(OTTER_GIT_REVISION) == QLatin1String("unknown"))
 	{
 		stream << QLatin1Char('-');
 	}
