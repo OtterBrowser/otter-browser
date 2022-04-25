@@ -574,27 +574,21 @@ set(GIT_DATETIME "unknown")
 set(GIT_REVISION "unknown")
 
 if (GIT_FOUND)
-	execute_process(
-		COMMAND ${GIT_EXECUTABLE} rev-parse --abbrev-ref HEAD
-		WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-		OUTPUT_VARIABLE GIT_BRANCH
-		ERROR_QUIET
-		OUTPUT_STRIP_TRAILING_WHITESPACE
-	)
-	execute_process(
-		COMMAND ${GIT_EXECUTABLE} show -s --format=%ci
-		WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-		OUTPUT_VARIABLE GIT_DATETIME
-		ERROR_QUIET
-		OUTPUT_STRIP_TRAILING_WHITESPACE
-	)
-	execute_process(
-		COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
-		WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-		OUTPUT_VARIABLE GIT_REVISION
-		ERROR_QUIET
-		OUTPUT_STRIP_TRAILING_WHITESPACE
-	)
+	macro(execute_git OUTPUT COMMAND)
+		separate_arguments(COMMAND)
+
+		execute_process(
+			COMMAND ${GIT_EXECUTABLE} ${COMMAND}
+			WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+			OUTPUT_VARIABLE ${OUTPUT}
+			ERROR_QUIET
+			OUTPUT_STRIP_TRAILING_WHITESPACE
+		)
+	endmacro()
+
+	execute_git("GIT_BRANCH" "rev-parse;--abbrev-ref;HEAD")
+	execute_git("GIT_DATETIME" "show;-s;--format=%ci")
+	execute_git("GIT_REVISION" "rev-parse;--short;HEAD")
 endif()
 
 add_definitions(-DOTTER_GIT_BRANCH="${GIT_BRANCH}")
