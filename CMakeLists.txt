@@ -368,14 +368,14 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/windows/WindowsContentsWidget.ui
 )
 
-foreach(_current_dir ${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
+foreach (_current_dir ${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
 	if (EXISTS "${_current_dir}/private/qpixmapfilter_p.h")
 		add_definitions(-DOTTER_ENABLE_STARTPAGEBLUR)
 		include_directories(${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
 
-		break()
-	endif()
-endforeach()
+		break ()
+	endif ()
+endforeach ()
 
 if (Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
 	add_definitions(-DOTTER_ENABLE_QTWEBENGINE)
@@ -560,9 +560,9 @@ if (${OTTER_BACKENDS_WEB_LENGTH} EQUAL 0)
 else ()
 	set(OTTER_BACKENDS_WEB_SUMMARY "The following web backends will be built:\n\n")
 
-	foreach(_backend ${OTTER_BACKENDS_WEB})
+	foreach (_backend ${OTTER_BACKENDS_WEB})
 		set(OTTER_BACKENDS_WEB_SUMMARY "${OTTER_BACKENDS_WEB_SUMMARY} * ${_backend}\n")
-	endforeach(_backend)
+	endforeach ()
 
 	message(STATUS ${OTTER_BACKENDS_WEB_SUMMARY})
 endif ()
@@ -577,8 +577,7 @@ if (GIT_FOUND)
 	macro(execute_git OUTPUT COMMAND)
 		separate_arguments(COMMAND)
 
-		execute_process(
-			COMMAND ${GIT_EXECUTABLE} ${COMMAND}
+		execute_process(COMMAND ${GIT_EXECUTABLE} ${COMMAND}
 			WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
 			OUTPUT_VARIABLE ${OUTPUT}
 			ERROR_QUIET
@@ -589,7 +588,7 @@ if (GIT_FOUND)
 	execute_git("GIT_BRANCH" "rev-parse;--abbrev-ref;HEAD")
 	execute_git("GIT_DATETIME" "show;-s;--format=%ci")
 	execute_git("GIT_REVISION" "rev-parse;--short;HEAD")
-endif()
+endif ()
 
 add_definitions(-DOTTER_GIT_BRANCH="${GIT_BRANCH}")
 add_definitions(-DOTTER_GIT_DATETIME="${GIT_DATETIME}")
@@ -638,13 +637,13 @@ set(XDG_APPS_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/applications CACHE FILEPA
 
 file(GLOB _qm_files resources/translations/*.qm)
 
-foreach(_current_QM_FILE ${_qm_files})
+foreach (_current_QM_FILE ${_qm_files})
 	install(FILES ${_current_QM_FILE} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/otter-browser/locale/)
 
 	if (APPLE)
 		file(COPY ${_current_QM_FILE} DESTINATION "Otter Browser.app/Contents/Resources/locale/")
-	endif()
-endforeach()
+	endif ()
+endforeach ()
 
 install(FILES resources/icons/otter-browser-16.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/16x16/apps/ RENAME otter-browser.png)
 install(FILES resources/icons/otter-browser-32.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/32x32/apps/ RENAME otter-browser.png)
