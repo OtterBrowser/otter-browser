@@ -833,7 +833,20 @@ QLatin1String FeedsContentsWidget::getType() const
 
 QUrl FeedsContentsWidget::getUrl() const
 {
-	return (m_feed ? FeedsManager::createFeedReaderUrl(m_feed->getUrl()) : QUrl(QLatin1String("about:feeds")));
+	if (m_feed)
+	{
+		const QUrl url(FeedsManager::createFeedReaderUrl(m_feed->getUrl()));
+		const QModelIndex index(m_ui->entriesViewWidget->currentIndex().sibling(m_ui->entriesViewWidget->currentIndex().row(), 0));
+
+		if (!index.isValid() || index.data(IdentifierRole).isNull())
+		{
+			return url;
+		}
+
+		return {url.toString() + QLatin1Char('#') + index.data(IdentifierRole).toString()};
+	}
+
+	return {QLatin1String("about:feeds")};
 }
 
 QIcon FeedsContentsWidget::getIcon() const
