@@ -541,6 +541,7 @@ void FeedsContentsWidget::updateEntry()
 	}
 
 	emit arbitraryActionsStateChanged({ActionsManager::DeleteAction});
+	emit urlChanged(getUrl());
 }
 
 void FeedsContentsWidget::updateFeedModel()
