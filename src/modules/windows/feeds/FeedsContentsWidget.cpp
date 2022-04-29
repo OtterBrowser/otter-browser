@@ -791,6 +791,21 @@ void FeedsContentsWidget::setUrl(const QUrl &url, bool isTypedIn)
 
 		if (!entries.isEmpty())
 		{
+			const QString identifier(url.fragment());
+
+			if (!identifier.isEmpty())
+			{
+				for (int i = 0; i < entries.count(); ++i)
+				{
+					if (entries.at(i)->data(IdentifierRole).toString() == identifier)
+					{
+						m_ui->feedsViewWidget->selectRow(entries[i]->index());
+
+						return;
+					}
+				}
+			}
+
 			m_ui->feedsViewWidget->selectRow(entries[0]->index());
 		}
 	}
