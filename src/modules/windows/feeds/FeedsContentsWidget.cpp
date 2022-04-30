@@ -783,32 +783,36 @@ void FeedsContentsWidget::setUrl(const QUrl &url, bool isTypedIn)
 		feedUrl = QUrl(url.toDisplayString().mid(url.scheme().length() + 1));
 	}
 
-	if (feedUrl.isValid())
+	if (!feedUrl.isValid())
 	{
-		const QVector<FeedsModel::Entry*> entries(FeedsManager::getModel()->getEntries(feedUrl));
+		return;
+	}
 
-		setFeed(FeedsManager::createFeed(feedUrl));
+	setFeed(FeedsManager::createFeed(feedUrl));
 
-		if (!entries.isEmpty())
+	if (m_feedModel->rowCount() == 0)
+	{
+		return;
+	}
+
+	const QString identifier(url.fragment());
+
+	if (!identifier.isEmpty())
+	{
+		for (int i = 0; i < m_feedModel->rowCount(); ++i)
 		{
-			const QString identifier(url.fragment());
+			const QModelIndex index(m_feedModel->index(i, 0));
 
-			if (!identifier.isEmpty())
+			if (index.data(IdentifierRole).toString() == identifier)
 			{
-				for (int i = 0; i < entries.count(); ++i)
-				{
-					if (entries.at(i)->data(IdentifierRole).toString() == identifier)
-					{
-						m_ui->feedsViewWidget->selectRow(entries[i]->index());
+				m_ui->feedsViewWidget->selectRow(index);
 
-						return;
-					}
-				}
+				return;
 			}
-
-			m_ui->feedsViewWidget->selectRow(entries[0]->index());
 		}
 	}
+
+	m_ui->feedsViewWidget->selectRow(m_feedModel->index(0, 0));
 }
 
 Animation* FeedsContentsWidget::getUpdateAnimation()
