@@ -805,14 +805,14 @@ void FeedsContentsWidget::setUrl(const QUrl &url, bool isTypedIn)
 
 			if (index.data(IdentifierRole).toString() == identifier)
 			{
-				m_ui->feedsViewWidget->selectRow(index);
+				m_ui->entriesViewWidget->selectRow(index);
 
 				return;
 			}
 		}
 	}
 
-	m_ui->feedsViewWidget->selectRow(m_feedModel->index(0, 0));
+	m_ui->entriesViewWidget->selectRow(m_feedModel->index(0, 0));
 }
 
 Animation* FeedsContentsWidget::getUpdateAnimation()
