@@ -355,7 +355,7 @@ QLatin1String BookmarksContentsWidget::getType() const
 
 QUrl BookmarksContentsWidget::getUrl() const
 {
-	return QUrl(QLatin1String("about:bookmarks"));
+	return {QLatin1String("about:bookmarks")};
 }
 
 QIcon BookmarksContentsWidget::getIcon() const
