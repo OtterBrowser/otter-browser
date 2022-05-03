@@ -5,6 +5,7 @@
 #  Hunspell_INCLUDE_DIR - the Hunspell include directory
 #  Hunspell_LIBRARIES - The libraries needed to use Hunspell
 #  Hunspell_DEFINITIONS - Compiler switches required for using Hunspell
+#  Hunspell::Hunspell - Library target
 
 if (Hunspell_INCLUDE_DIR AND Hunspell_LIBRARIES)
     # Already in cache, be silent
@@ -20,3 +21,12 @@ include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Hunspell DEFAULT_MSG Hunspell_LIBRARIES Hunspell_INCLUDE_DIR)
 
 mark_as_advanced(Hunspell_INCLUDE_DIR Hunspell_LIBRARIES)
+
+if (Hunspell_FOUND)
+    add_library(Hunspell::Hunspell INTERFACE IMPORTED)
+    set_target_properties(Qt5::WebKitWidgets PROPERTIES
+        INTERFACE_COMPILE_DEFINITIONS "${Hunspell_DEFINITIONS}"
+        INTERFACE_INCLUDE_DIRECTORIES "${Hunspell_INCLUDE_DIR}"
+        INTERFACE_LINK_LIBRARIES "${Hunspell_LIBRARIES}"
+    )
+endif()
