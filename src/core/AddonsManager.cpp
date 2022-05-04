@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -131,7 +131,6 @@ AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Notes"), {}, QUrl(QLatin1String("about:notes")), ThemesManager::createIcon(QLatin1String("notes"), false), SpecialPageInformation::UniversalType), QLatin1String("notes"));
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Page Information"), {}, {}, ThemesManager::createIcon(QLatin1String("view-information"), false), SpecialPageInformation::SidebarPanelType), QLatin1String("pageInformation"));
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Passwords"), {}, QUrl(QLatin1String("about:passwords")), ThemesManager::createIcon(QLatin1String("dialog-password"), false), SpecialPageInformation::UniversalType), QLatin1String("passwords"));
-	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Preferences"), {}, QUrl(QLatin1String("about:preferences")), ThemesManager::createIcon(QLatin1String("configuration"), false), SpecialPageInformation::StandaloneType), QLatin1String("preferences"));
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Tab History"), {}, {}, ThemesManager::createIcon(QLatin1String("tab-history"), false), SpecialPageInformation::SidebarPanelType), QLatin1String("tabHistory"));
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Downloads"), {}, QUrl(QLatin1String("about:transfers")), ThemesManager::createIcon(QLatin1String("transfers"), false), SpecialPageInformation::UniversalType), QLatin1String("transfers"));
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Windows and Tabs"), {}, QUrl(QLatin1String("about:windows")), ThemesManager::createIcon(QLatin1String("window"), false), SpecialPageInformation::UniversalType), QLatin1String("windows"));
