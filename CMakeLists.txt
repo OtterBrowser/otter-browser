@@ -377,7 +377,7 @@ foreach (_current_dir ${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
 	endif ()
 endforeach ()
 
-if (Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
+if (TARGET Qt5::WebEngineWidgets AND ENABLE_QTWEBENGINE)
 	add_definitions(-DOTTER_ENABLE_QTWEBENGINE)
 
 	list(APPEND OTTER_BACKENDS_WEB "QtWebEngine (experimental)")
@@ -396,7 +396,7 @@ if (Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
 	)
 endif ()
 
-if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
+if (TARGET Qt5::WebKitWidgets AND ENABLE_QTWEBKIT)
 	add_definitions(-DOTTER_ENABLE_QTWEBKIT -DQT_STATICPLUGIN)
 
 	list(APPEND OTTER_BACKENDS_WEB "QtWebKit")
@@ -418,7 +418,7 @@ if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 		src/modules/backends/web/qtwebkit/3rdparty/qtftp/qurlinfo.cpp
 	)
 
-	if (Hunspell_FOUND AND ENABLE_SPELLCHECK)
+	if (TARGET Hunspell::Hunspell AND ENABLE_SPELLCHECK)
 		set(otter_src
 			${otter_src}
 			src/modules/backends/web/qtwebkit/QtWebKitSpellChecker.cpp
@@ -470,9 +470,9 @@ if (ENABLE_CRASHREPORTS)
 	endif ()
 endif ()
 
-if (Hunspell_FOUND AND ENABLE_SPELLCHECK)
+if (TARGET Hunspell::Hunspell AND ENABLE_SPELLCHECK)
 	add_definitions(-DOTTER_ENABLE_SPELLCHECK)
-	include_directories(${Hunspell_INCLUDE_DIR})
+	include_directories(Hunspell::Hunspell)
 
 	set(otter_src
 		${otter_src}
@@ -536,7 +536,7 @@ elseif (APPLE)
 elseif (UNIX)
 	find_package(Qt5DBus 5.6.0 QUIET)
 
-	if (Qt5DBus_FOUND AND ENABLE_DBUS)
+	if (TARGET Qt5::DBus AND ENABLE_DBUS)
 		add_definitions(-DOTTER_ENABLE_DBUS)
 	endif ()
 
@@ -600,16 +600,16 @@ add_executable(otter-browser WIN32 MACOSX_BUNDLE
 	${otter_src}
 )
 
-if (Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
+if (TARGET Qt5::WebEngineWidgets AND ENABLE_QTWEBENGINE)
 	target_link_libraries(otter-browser Qt5::WebEngineCore Qt5::WebEngineWidgets)
 endif ()
 
-if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
+if (TARGET Qt5::WebKitWidgets AND ENABLE_QTWEBKIT)
 	target_link_libraries(otter-browser Qt5::WebKit Qt5::WebKitWidgets)
 endif ()
 
-if (Hunspell_FOUND AND ENABLE_SPELLCHECK)
-	target_link_libraries(otter-browser ${Hunspell_LIBRARIES})
+if (TARGET Hunspell::Hunspell AND ENABLE_SPELLCHECK)
+	target_link_libraries(otter-browser Hunspell::Hunspell)
 endif ()
 
 if (WIN32)
@@ -622,7 +622,7 @@ elseif (APPLE)
 
 	target_link_libraries(otter-browser Qt5::MacExtras ${FRAMEWORK_Cocoa} ${FRAMEWORK_Foundation})
 elseif (UNIX)
-	if (Qt5DBus_FOUND AND ENABLE_DBUS)
+	if (TARGET Qt5::DBus AND ENABLE_DBUS)
 		target_link_libraries(otter-browser Qt5::DBus)
 	endif ()
 
