@@ -75,7 +75,7 @@ option(ENABLE_DBUS "Enable D-Bus based integration for notifications (only freed
 option(ENABLE_SPELLCHECK "Enable Hunspell based spell checking" ON)
 
 find_package(Qt5 5.6.0 REQUIRED COMPONENTS Core Gui Multimedia Network PrintSupport Qml Svg Widgets)
-find_package(Qt5WebEngineWidgets 5.15.0 QUIET)
+find_package(Qt5 5.15.0 QUIET COMPONENTS WebEngineWidgets)
 find_package(Qt5WebKitWidgets 5.212.0 QUIET)
 find_package(Hunspell 1.5.0 QUIET)
 
