@@ -493,7 +493,7 @@ endif ()
 if (WIN32)
 	add_definitions(-DUNICODE -D_UNICODE)
 
-	find_package(Qt5WinExtras 5.6.0 QUIET)
+	find_package(Qt5 5.6.0 QUIET COMPONENTS WinExtras)
 
 	if (MSVC)
 		set(CMAKE_PREFIX_PATH $ENV{QTDIR})
@@ -515,7 +515,7 @@ if (WIN32)
 		src/modules/platforms/windows/WindowsPlatformStyle.cpp
 	)
 elseif (APPLE)
-	find_package(Qt5MacExtras 5.6.0 QUIET)
+	find_package(Qt5 5.6.0 QUIET COMPONENTS MacExtras)
 
 	set(CMAKE_OSX_DEPLOYMENT_TARGET 10.13)
 	set(MACOSX_BUNDLE_BUNDLE_NAME "Otter Browser")
@@ -534,7 +534,7 @@ elseif (APPLE)
 
 	set_source_files_properties(resources/icons/otter-browser.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 elseif (UNIX)
-	find_package(Qt5DBus 5.6.0 QUIET)
+	find_package(Qt5 5.6.0 QUIET COMPONENTS DBus)
 
 	if (TARGET Qt5::DBus AND ENABLE_DBUS)
 		add_definitions(-DOTTER_ENABLE_DBUS)
