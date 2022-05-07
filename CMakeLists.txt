@@ -590,9 +590,7 @@ if (GIT_FOUND)
 	execute_git("GIT_REVISION" "rev-parse;--short;HEAD")
 endif ()
 
-add_definitions(-DOTTER_GIT_BRANCH="${GIT_BRANCH}")
-add_definitions(-DOTTER_GIT_DATETIME="${GIT_DATETIME}")
-add_definitions(-DOTTER_GIT_REVISION="${GIT_REVISION}")
+add_definitions(-DOTTER_GIT_BRANCH="${GIT_BRANCH}" -DOTTER_GIT_DATETIME="${GIT_DATETIME}" -DOTTER_GIT_REVISION="${GIT_REVISION}")
 
 add_executable(otter-browser WIN32 MACOSX_BUNDLE
 	${otter_ui}
