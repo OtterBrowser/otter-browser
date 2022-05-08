@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -2633,16 +2633,18 @@ int MainWindow::getWindowIndex(quint64 identifier) const
 bool MainWindow::hasUrl(const QUrl &url, bool activate)
 {
 	const QVector<quint64> windows(createOrderedWindowList(true));
+	QVector<quint64>::const_reverse_iterator iterator;
 
-	for (int i = (windows.count() - 1); i >= 0; --i)
+	for (iterator = windows.rbegin(); iterator != windows.rend(); ++iterator)
 	{
-		const Window *window(getWindowByIdentifier(windows.at(i)));
+		const quint64 identifier(*iterator);
+		const Window *window(getWindowByIdentifier(identifier));
 
 		if (window && window->getUrl() == url)
 		{
 			if (activate)
 			{
-				setActiveWindowByIdentifier(windows.at(i));
+				setActiveWindowByIdentifier(identifier);
 			}
 
 			return true;
