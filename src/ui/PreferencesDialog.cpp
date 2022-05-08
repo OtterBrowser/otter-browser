@@ -84,6 +84,8 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::close);
 	connect(m_ui->allSettingsButton, &QPushButton::clicked, this,[&]()
 	{
+		accept();
+
 		const QUrl url(QLatin1String("about:config"));
 
 		if (!SessionsManager::hasUrl(url, true))
