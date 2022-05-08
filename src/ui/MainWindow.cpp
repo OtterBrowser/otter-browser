@@ -664,6 +664,13 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 					return;
 				}
 
+				if (url.scheme() == QLatin1String("about") && AddonsManager::getSpecialPages().contains(url.path()))
+				{
+					openSpecialPage(url, trigger);
+
+					return;
+				}
+
 				SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters, (trigger == ActionsManager::KeyboardTrigger || trigger == ActionsManager::MouseTrigger)));
 				const int index(parameters.value(QLatin1String("index"), -1).toInt());
 
