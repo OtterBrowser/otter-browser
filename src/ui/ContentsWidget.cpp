@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 
 #include <QtPrintSupport/QPrintDialog>
 #include <QtPrintSupport/QPrintPreviewDialog>
+#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -34,7 +35,8 @@ ContentsWidget::ContentsWidget(const QVariantMap &parameters, Window *window, QW
 	m_window(window),
 	m_layer(nullptr),
 	m_layerTimer(0),
-	m_sidebar(parameters.value(QLatin1String("sidebar"), -1).toInt())
+	m_sidebar(parameters.value(QLatin1String("sidebar"), -1).toInt()),
+	m_isModified(false)
 {
 	if (window)
 	{
@@ -106,6 +108,18 @@ void ContentsWidget::resizeEvent(QResizeEvent *event)
 				m_dialogs.at(i)->move(geometry().center() - QRect({0, 0}, m_dialogs.at(i)->size()).center());
 			}
 		}
+	}
+}
+
+void ContentsWidget::closeEvent(QCloseEvent *event)
+{
+	if (!m_isModified || canClose())
+	{
+		event->accept();
+	}
+	else
+	{
+		event->ignore();
 	}
 }
 
@@ -305,6 +319,21 @@ void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 	}
 }
 
+void ContentsWidget::markAsModified()
+{
+	setModified(true);
+}
+
+void ContentsWidget::setModified(bool isModified)
+{
+	if (m_isModified != isModified)
+	{
+		m_isModified = isModified;
+
+		emit isModifiedChanged(isModified);
+	}
+}
+
 void ContentsWidget::setOption(int identifier, const QVariant &value)
 {
 	Q_UNUSED(identifier)
@@ -440,6 +469,13 @@ int ContentsWidget::getZoom() const
 	return 100;
 }
 
+bool ContentsWidget::canClose()
+{
+	QMessageBox::warning(this, tr("Warning"), tr("Page contents have been changed."), QMessageBox::Close);
+
+	return false;
+}
+
 bool ContentsWidget::canClone() const
 {
 	return false;
@@ -448,6 +484,11 @@ bool ContentsWidget::canClone() const
 bool ContentsWidget::canZoom() const
 {
 	return false;
+}
+
+bool ContentsWidget::isModified() const
+{
+	return m_isModified;
 }
 
 bool ContentsWidget::isPrivate() const

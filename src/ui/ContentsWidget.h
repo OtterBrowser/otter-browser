@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -60,6 +60,7 @@ public:
 	virtual bool canClone() const;
 	virtual bool canZoom() const;
 	virtual bool isPrivate() const;
+	bool isModified() const;
 	bool isSidebarPanel() const;
 
 public slots:
@@ -76,11 +77,15 @@ protected:
 	void changeEvent(QEvent *event) override;
 	void showEvent(QShowEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
+	void closeEvent(QCloseEvent *event) override;
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
+	virtual bool canClose();
 
 protected slots:
 	void handleAboutToClose();
+	void markAsModified();
+	void setModified(bool isModified);
 
 private:
 	Window *m_window;
@@ -88,6 +93,7 @@ private:
 	QVector<QPointer<ContentsDialog> > m_dialogs;
 	int m_layerTimer;
 	int m_sidebar;
+	bool m_isModified;
 
 signals:
 	void aboutToNavigate();
@@ -110,6 +116,7 @@ signals:
 	void optionChanged(int identifier, const QVariant &value);
 	void zoomChanged(int zoom);
 	void canZoomChanged(bool isAllowed);
+	void isModifiedChanged(bool isModified);
 };
 
 class ActiveWindowObserverContentsWidget : public ContentsWidget
