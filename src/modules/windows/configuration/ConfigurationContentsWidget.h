@@ -78,9 +78,9 @@ public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
 
 protected:
-	void closeEvent(QCloseEvent *event) override;
 	void changeEvent(QEvent *event) override;
 	void saveAll(bool reset);
+	bool canClose() override;
 
 protected slots:
 	void resetOption();

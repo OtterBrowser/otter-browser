@@ -252,6 +252,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	connect(SettingsManager::getInstance(), &SettingsManager::hostOptionChanged, this, &ConfigurationContentsWidget::handleHostOptionChanged);
 	connect(m_ui->configurationViewWidget, &ItemViewWidget::customContextMenuRequested, this, &ConfigurationContentsWidget::showContextMenu);
 	connect(m_ui->configurationViewWidget, &ItemViewWidget::needsActionsUpdate, this, &ConfigurationContentsWidget::updateActions);
+	connect(m_ui->configurationViewWidget, &ItemViewWidget::isModifiedChanged, this, &ConfigurationContentsWidget::setModified);
 	connect(m_ui->configurationViewWidget, &ItemViewWidget::clicked, this, [&](const QModelIndex &index)
 	{
 		if (index.parent().isValid() && index.column() != 3)
@@ -290,28 +291,6 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 ConfigurationContentsWidget::~ConfigurationContentsWidget()
 {
 	delete m_ui;
-}
-
-void ConfigurationContentsWidget::closeEvent(QCloseEvent *event)
-{
-	if (m_ui->configurationViewWidget->isModified())
-	{
-		const int result(QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel));
-
-		if (result == QMessageBox::Cancel)
-		{
-			event->ignore();
-
-			return;
-		}
-
-		if (result == QMessageBox::Yes)
-		{
-			saveAll(false);
-		}
-	}
-
-	event->accept();
 }
 
 void ConfigurationContentsWidget::changeEvent(QEvent *event)
@@ -605,6 +584,23 @@ QUrl ConfigurationContentsWidget::getUrl() const
 QIcon ConfigurationContentsWidget::getIcon() const
 {
 	return ThemesManager::createIcon(QLatin1String("configuration"), false);
+}
+
+bool ConfigurationContentsWidget::canClose()
+{
+	const int result(QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel));
+
+	if (result == QMessageBox::Cancel)
+	{
+		return false;
+	}
+
+	if (result == QMessageBox::Yes)
+	{
+		saveAll(false);
+	}
+
+	return true;
 }
 
 bool ConfigurationContentsWidget::eventFilter(QObject *object, QEvent *event)
