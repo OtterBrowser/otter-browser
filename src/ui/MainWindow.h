@@ -109,7 +109,6 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *event) override;
 	void beginToolBarDragging(bool isSidebar = false);
 	void endToolBarDragging();
-	void openSpecialPage(const QUrl &url, ActionsManager::TriggerType trigger);
 	QWidget* findVisibleWidget(const QVector<QPointer<QWidget> > &widgets) const;
 	TabBarWidget* getTabBar() const;
 	QVector<quint64> createOrderedWindowList(bool includeMinimized) const;

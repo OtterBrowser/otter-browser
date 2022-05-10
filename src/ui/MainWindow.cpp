@@ -584,7 +584,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 
 			return;
 		case ActionsManager::BookmarksAction:
-			openSpecialPage(QUrl(QLatin1String("about:bookmarks")), trigger);
+			triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("about:bookmarks"))}}, trigger);
 
 			return;
 		case ActionsManager::QuickBookmarkAccessAction:
@@ -664,10 +664,8 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 					return;
 				}
 
-				if (url.scheme() == QLatin1String("about") && AddonsManager::getSpecialPages().contains(url.path()))
+				if (url.scheme() == QLatin1String("about") && AddonsManager::getSpecialPages().contains(url.path()) && SessionsManager::hasUrl(url, true))
 				{
-					openSpecialPage(url, trigger);
-
 					return;
 				}
 
@@ -1084,11 +1082,11 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 
 			return;
 		case ActionsManager::ContentBlockingAction:
-			openSpecialPage(QUrl(QLatin1String("about:content-filters")), trigger);
+			triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("about:content-filters"))}}, trigger);
 
 			return;
 		case ActionsManager::HistoryAction:
-			openSpecialPage(QUrl(QLatin1String("about:history")), trigger);
+			triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("about:history"))}}, trigger);
 
 			return;
 		case ActionsManager::ClearHistoryAction:
@@ -1099,23 +1097,23 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 
 			return;
 		case ActionsManager::AddonsAction:
-			openSpecialPage(QUrl(QLatin1String("about:addons")), trigger);
+			triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("about:addons"))}}, trigger);
 
 			return;
 		case ActionsManager::NotesAction:
-			openSpecialPage(QUrl(QLatin1String("about:notes")), trigger);
+			triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("about:notes"))}}, trigger);
 
 			return;
 		case ActionsManager::PasswordsAction:
-			openSpecialPage(QUrl(QLatin1String("about:passwords")), trigger);
+			triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("about:passwords"))}}, trigger);
 
 			return;
 		case ActionsManager::TransfersAction:
-			openSpecialPage(QUrl(QLatin1String("about:transfers")), trigger);
+			triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("about:transfers"))}}, trigger);
 
 			return;
 		case ActionsManager::CookiesAction:
-			openSpecialPage(QUrl(QLatin1String("about:cookies")), trigger);
+			triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("about:cookies"))}}, trigger);
 
 			return;
 		case ActionsManager::FullScreenAction:
@@ -1622,14 +1620,6 @@ void MainWindow::endToolBarDragging()
 	}
 
 	m_isDraggingToolBar = false;
-}
-
-void MainWindow::openSpecialPage(const QUrl &url, ActionsManager::TriggerType trigger)
-{
-	if (!SessionsManager::hasUrl(url, true))
-	{
-		triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, trigger);
-	}
 }
 
 void MainWindow::handleRequestedCloseWindow(Window *window)
