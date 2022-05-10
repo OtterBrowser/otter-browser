@@ -34,6 +34,7 @@
 #include <QtWidgets/QAbstractButton>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QMessageBox>
 #include <QtWidgets/QSpinBox>
 
 namespace Otter
@@ -50,10 +51,11 @@ PreferencesContentsWidget::PreferencesContentsWidget(const QVariantMap &paramete
 	updateStyle();
 	showTab(GeneralTab);
 
+	connect(this, &PreferencesContentsWidget::isModifiedChanged, m_ui->saveButton, &QPushButton::setEnabled);
 	connect(m_ui->tabWidget, &QTabWidget::currentChanged, this, &PreferencesContentsWidget::showTab);
 	connect(m_ui->saveButton, &QPushButton::clicked, this, [&]()
 	{
-		m_ui->saveButton->setEnabled(false);
+		setModified(false);
 
 		emit requestedSave();
 	});
@@ -92,11 +94,6 @@ void PreferencesContentsWidget::changeEvent(QEvent *event)
 		default:
 			break;
 	}
-}
-
-void PreferencesContentsWidget::markAsModified()
-{
-	m_ui->saveButton->setEnabled(true);
 }
 
 void PreferencesContentsWidget::showTab(int tab)
@@ -303,6 +300,23 @@ QUrl PreferencesContentsWidget::getUrl() const
 QIcon PreferencesContentsWidget::getIcon() const
 {
 	return ThemesManager::createIcon(QLatin1String("configuration"), false);
+}
+
+bool PreferencesContentsWidget::canClose()
+{
+	const int result(QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel));
+
+	if (result == QMessageBox::Cancel)
+	{
+		return false;
+	}
+
+	if (result == QMessageBox::Yes)
+	{
+		emit requestedSave();
+	}
+
+	return true;
 }
 
 }

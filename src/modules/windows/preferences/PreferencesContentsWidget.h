@@ -62,9 +62,9 @@ public slots:
 protected:
 	void changeEvent(QEvent *event) override;
 	void updateStyle();
+	bool canClose();
 
 protected slots:
-	void markAsModified();
 	void showTab(int tab);
 
 private:
