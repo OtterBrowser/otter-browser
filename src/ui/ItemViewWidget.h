@@ -199,6 +199,7 @@ signals:
 	void canMoveRowUpChanged(bool isAllowed);
 	void canMoveRowDownChanged(bool isAllowed);
 	void needsActionsUpdate();
+	void isModifiedChanged(bool isModified);
 	void modified();
 	void sortChanged(int column, Qt::SortOrder order);
 };

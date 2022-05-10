@@ -1064,7 +1064,12 @@ void ItemViewWidget::setViewMode(ItemViewWidget::ViewMode mode)
 
 void ItemViewWidget::setModified(bool isModified)
 {
-	m_isModified = isModified;
+	if (m_isModified != isModified)
+	{
+		m_isModified = isModified;
+
+		emit isModifiedChanged(isModified);
+	}
 
 	if (isModified)
 	{
