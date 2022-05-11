@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -55,28 +55,6 @@ ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &pa
 ContentFiltersContentsWidget::~ContentFiltersContentsWidget()
 {
 	delete m_ui;
-}
-
-void ContentFiltersContentsWidget::closeEvent(QCloseEvent *event)
-{
-	if (m_ui->profilesViewWidget->areProfilesModified())
-	{
-		const int result(QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel));
-
-		if (result == QMessageBox::Cancel)
-		{
-			event->ignore();
-
-			return;
-		}
-
-		if (result == QMessageBox::Yes)
-		{
-			m_ui->profilesViewWidget->save();
-		}
-	}
-
-	event->accept();
 }
 
 void ContentFiltersContentsWidget::changeEvent(QEvent *event)
@@ -192,6 +170,7 @@ void ContentFiltersContentsWidget::initializeSettingsPage()
 	});
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->profilesViewWidget, &ContentFiltersViewWidget::setFilterString);
 	connect(m_ui->profilesViewWidget, &ContentFiltersViewWidget::needsActionsUpdate, this, &ContentFiltersContentsWidget::updateActions);
+	connect(m_ui->profilesViewWidget, &ContentFiltersViewWidget::areProfilesModifiedChanged, this, &ContentFiltersContentsWidget::setModified);
 	connect(m_ui->profilesViewWidget, &ContentFiltersViewWidget::areProfilesModifiedChanged, m_ui->saveButton, &QPushButton::setEnabled);
 	connect(m_ui->saveButton, &QPushButton::clicked, m_ui->profilesViewWidget, &ContentFiltersViewWidget::save);
 	connect(m_ui->editButton, &QPushButton::clicked, m_ui->profilesViewWidget, &ContentFiltersViewWidget::editProfile);
@@ -245,6 +224,23 @@ QUrl ContentFiltersContentsWidget::getUrl() const
 QIcon ContentFiltersContentsWidget::getIcon() const
 {
 	return ThemesManager::createIcon(QLatin1String("content-blocking"), false);
+}
+
+bool ContentFiltersContentsWidget::canClose()
+{
+	const int result(QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel));
+
+	if (result == QMessageBox::Cancel)
+	{
+		return false;
+	}
+
+	if (result == QMessageBox::Yes)
+	{
+		m_ui->profilesViewWidget->save();
+	}
+
+	return true;
 }
 
 }

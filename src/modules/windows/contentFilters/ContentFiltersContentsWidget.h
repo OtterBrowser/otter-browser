@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -48,9 +48,9 @@ public:
 	QIcon getIcon() const override;
 
 protected:
-	void closeEvent(QCloseEvent *event) override;
 	void changeEvent(QEvent *event) override;
 	void initializeSettingsPage();
+	bool canClose() override;
 
 protected slots:
 	void updateActions();
