@@ -664,7 +664,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 					return;
 				}
 
-				if (url.scheme() == QLatin1String("about") && AddonsManager::getSpecialPages().contains(url.path()) && SessionsManager::hasUrl(url, true))
+				if (AddonsManager::isSpecialPage(url) && SessionsManager::hasUrl(url, true))
 				{
 					return;
 				}
@@ -2257,7 +2257,7 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 			{
 				const QUrl url(parameters[QLatin1String("url")].toUrl());
 
-				if (url.scheme() == QLatin1String("about") && AddonsManager::getSpecialPages().contains(url.path()))
+				if (AddonsManager::isSpecialPage(url))
 				{
 					const AddonsManager::SpecialPageInformation information(AddonsManager::getSpecialPage(url.path()));
 

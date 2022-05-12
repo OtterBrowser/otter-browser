@@ -159,7 +159,7 @@ QVector<HandlersManager::MimeTypeHandlerDefinition> HandlersManager::getMimeType
 
 HandlersManager::HandlerTypes HandlersManager::getHandlerType(const QUrl &url)
 {
-	if ((url.scheme() == QLatin1String("about") && AddonsManager::getSpecialPages().contains(url.path())) || url.scheme() == QLatin1String("feed") || url.scheme() == QLatin1String("view-feed"))
+	if (AddonsManager::isSpecialPage(url) || url.scheme() == QLatin1String("feed") || url.scheme() == QLatin1String("view-feed"))
 	{
 		return (InternalHandler | IsWindowedHandler);
 	}
