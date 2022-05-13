@@ -150,6 +150,7 @@ set(otter_src
 	src/ui/BookmarkPropertiesDialog.cpp
 	src/ui/BookmarksComboBoxWidget.cpp
 	src/ui/BookmarksImportOptionsWidget.cpp
+	src/ui/CategoriesTabWidget.cpp
 	src/ui/CertificateDialog.cpp
 	src/ui/ClearHistoryDialog.cpp
 	src/ui/ColorWidget.cpp
