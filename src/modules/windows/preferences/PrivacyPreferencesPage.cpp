@@ -32,10 +32,52 @@ PrivacyPreferencesPage::PrivacyPreferencesPage(QWidget *parent) : PreferencesPag
 	m_thirdPartyCookiesAcceptedHosts(SettingsManager::getOption(SettingsManager::Network_ThirdPartyCookiesAcceptedHostsOption).toStringList()),
 	m_thirdPartyCookiesRejectedHosts(SettingsManager::getOption(SettingsManager::Network_ThirdPartyCookiesRejectedHostsOption).toStringList()),
 	m_clearHistorySettings(SettingsManager::getOption(SettingsManager::History_ClearOnCloseOption).toStringList()),
-	m_ui(new Ui::PrivacyPreferencesPage)
+	m_ui(nullptr)
 {
 	m_clearHistorySettings.removeAll({});
+}
 
+PrivacyPreferencesPage::~PrivacyPreferencesPage()
+{
+	if (wasLoaded())
+	{
+		delete m_ui;
+	}
+}
+
+void PrivacyPreferencesPage::changeEvent(QEvent *event)
+{
+	QWidget::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange && wasLoaded())
+	{
+		m_ui->retranslateUi(this);
+		m_ui->doNotTrackComboBox->setItemText(0, tr("Inform websites that I do not want to be tracked"));
+		m_ui->doNotTrackComboBox->setItemText(1, tr("Inform websites that I allow tracking"));
+		m_ui->doNotTrackComboBox->setItemText(2, tr("Do not inform websites about my preference"));
+
+		m_ui->cookiesPolicyComboBox->setItemText(0, tr("Always"));
+		m_ui->cookiesPolicyComboBox->setItemText(1, tr("Only existing"));
+		m_ui->cookiesPolicyComboBox->setItemText(2, tr("Only read existing"));
+
+		m_ui->keepCookiesModeComboBox->setItemText(0, tr("Expires"));
+		m_ui->keepCookiesModeComboBox->setItemText(1, tr("Current session is closed"));
+		m_ui->keepCookiesModeComboBox->setItemText(2, tr("Always ask"));
+
+		m_ui->thirdPartyCookiesPolicyComboBox->setItemText(0, tr("Always"));
+		m_ui->thirdPartyCookiesPolicyComboBox->setItemText(1, tr("Only existing"));
+		m_ui->thirdPartyCookiesPolicyComboBox->setItemText(2, tr("Never"));
+	}
+}
+
+void PrivacyPreferencesPage::load()
+{
+	if (wasLoaded())
+	{
+		return;
+	}
+
+	m_ui = new Ui::PrivacyPreferencesPage();
 	m_ui->setupUi(this);
 	m_ui->doNotTrackComboBox->addItem(tr("Inform websites that I do not want to be tracked"), QLatin1String("doNotAllow"));
 	m_ui->doNotTrackComboBox->addItem(tr("Inform websites that I allow tracking"), QLatin1String("allow"));
@@ -118,36 +160,8 @@ PrivacyPreferencesPage::PrivacyPreferencesPage(QWidget *parent) : PreferencesPag
 	{
 		Application::triggerAction(ActionsManager::PasswordsAction, {}, this);
 	});
-}
 
-PrivacyPreferencesPage::~PrivacyPreferencesPage()
-{
-	delete m_ui;
-}
-
-void PrivacyPreferencesPage::changeEvent(QEvent *event)
-{
-	QWidget::changeEvent(event);
-
-	if (event->type() == QEvent::LanguageChange)
-	{
-		m_ui->retranslateUi(this);
-		m_ui->doNotTrackComboBox->setItemText(0, tr("Inform websites that I do not want to be tracked"));
-		m_ui->doNotTrackComboBox->setItemText(1, tr("Inform websites that I allow tracking"));
-		m_ui->doNotTrackComboBox->setItemText(2, tr("Do not inform websites about my preference"));
-
-		m_ui->cookiesPolicyComboBox->setItemText(0, tr("Always"));
-		m_ui->cookiesPolicyComboBox->setItemText(1, tr("Only existing"));
-		m_ui->cookiesPolicyComboBox->setItemText(2, tr("Only read existing"));
-
-		m_ui->keepCookiesModeComboBox->setItemText(0, tr("Expires"));
-		m_ui->keepCookiesModeComboBox->setItemText(1, tr("Current session is closed"));
-		m_ui->keepCookiesModeComboBox->setItemText(2, tr("Always ask"));
-
-		m_ui->thirdPartyCookiesPolicyComboBox->setItemText(0, tr("Always"));
-		m_ui->thirdPartyCookiesPolicyComboBox->setItemText(1, tr("Only existing"));
-		m_ui->thirdPartyCookiesPolicyComboBox->setItemText(2, tr("Never"));
-	}
+	markAsLoaded();
 }
 
 void PrivacyPreferencesPage::save()
@@ -163,6 +177,11 @@ void PrivacyPreferencesPage::save()
 	SettingsManager::setOption(SettingsManager::Network_ThirdPartyCookiesRejectedHostsOption, m_thirdPartyCookiesRejectedHosts);
 	SettingsManager::setOption(SettingsManager::History_ClearOnCloseOption, (m_ui->clearHistoryCheckBox->isChecked() ? m_clearHistorySettings : QStringList()));
 	SettingsManager::setOption(SettingsManager::Browser_RememberPasswordsOption, m_ui->rememberPasswordsCheckBox->isChecked());
+}
+
+QString PrivacyPreferencesPage::getTitle() const
+{
+	return tr("Privacy");
 }
 
 }

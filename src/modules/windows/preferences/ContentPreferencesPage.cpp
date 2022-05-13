@@ -114,8 +114,64 @@ QWidget* FontItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
 }
 
 ContentPreferencesPage::ContentPreferencesPage(QWidget *parent) : PreferencesPage(parent),
-	m_ui(new Ui::ContentPreferencesPage)
+	m_ui(nullptr)
 {
+}
+
+ContentPreferencesPage::~ContentPreferencesPage()
+{
+	if (wasLoaded())
+	{
+		delete m_ui;
+	}
+}
+
+void ContentPreferencesPage::changeEvent(QEvent *event)
+{
+	QWidget::changeEvent(event);
+
+	if (!wasLoaded())
+	{
+		return;
+	}
+
+	switch (event->type())
+	{
+		case QEvent::FontChange:
+		case QEvent::StyleChange:
+			updateStyle();
+
+			break;
+		case QEvent::LanguageChange:
+			m_ui->retranslateUi(this);
+			m_ui->enableImagesComboBox->setItemText(0, tr("All images"));
+			m_ui->enableImagesComboBox->setItemText(1, tr("Cached images"));
+			m_ui->enableImagesComboBox->setItemText(2, tr("No images"));
+			m_ui->enablePluginsComboBox->setItemText(0, tr("Enabled"));
+			m_ui->enablePluginsComboBox->setItemText(1, tr("On demand"));
+			m_ui->enablePluginsComboBox->setItemText(2, tr("Disabled"));
+			m_ui->userStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
+			m_ui->popupsComboBox->setItemText(0, tr("Ask"));
+			m_ui->popupsComboBox->setItemText(1, tr("Block all"));
+			m_ui->popupsComboBox->setItemText(2, tr("Open all"));
+			m_ui->popupsComboBox->setItemText(3, tr("Open all in background"));
+			m_ui->fontsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Style"), tr("Font"), tr("Preview")});
+			m_ui->colorsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Type"), tr("Preview")});
+
+			break;
+		default:
+			break;
+	}
+}
+
+void ContentPreferencesPage::load()
+{
+	if (wasLoaded())
+	{
+		return;
+	}
+
+	m_ui = new Ui::ContentPreferencesPage();
 	m_ui->setupUi(this);
 	m_ui->enableImagesComboBox->addItem(tr("All images"), QLatin1String("enabled"));
 	m_ui->enableImagesComboBox->addItem(tr("Cached images"), QLatin1String("onlyCached"));
@@ -227,44 +283,8 @@ ContentPreferencesPage::ContentPreferencesPage(QWidget *parent) : PreferencesPag
 			m_ui->colorsViewWidget->openPersistentEditor(currentIndex.sibling(currentIndex.row(), 1));
 		}
 	});
-}
 
-ContentPreferencesPage::~ContentPreferencesPage()
-{
-	delete m_ui;
-}
-
-void ContentPreferencesPage::changeEvent(QEvent *event)
-{
-	QWidget::changeEvent(event);
-
-	switch (event->type())
-	{
-		case QEvent::FontChange:
-		case QEvent::StyleChange:
-			updateStyle();
-
-			break;
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
-			m_ui->enableImagesComboBox->setItemText(0, tr("All images"));
-			m_ui->enableImagesComboBox->setItemText(1, tr("Cached images"));
-			m_ui->enableImagesComboBox->setItemText(2, tr("No images"));
-			m_ui->enablePluginsComboBox->setItemText(0, tr("Enabled"));
-			m_ui->enablePluginsComboBox->setItemText(1, tr("On demand"));
-			m_ui->enablePluginsComboBox->setItemText(2, tr("Disabled"));
-			m_ui->userStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
-			m_ui->popupsComboBox->setItemText(0, tr("Ask"));
-			m_ui->popupsComboBox->setItemText(1, tr("Block all"));
-			m_ui->popupsComboBox->setItemText(2, tr("Open all"));
-			m_ui->popupsComboBox->setItemText(3, tr("Open all in background"));
-			m_ui->fontsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Style"), tr("Font"), tr("Preview")});
-			m_ui->colorsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Type"), tr("Preview")});
-
-			break;
-		default:
-			break;
-	}
+	markAsLoaded();
 }
 
 void ContentPreferencesPage::save()
@@ -295,6 +315,11 @@ void ContentPreferencesPage::updateStyle()
 {
 	m_ui->colorsViewWidget->setMaximumHeight(m_ui->colorsViewWidget->getContentsHeight());
 	m_ui->fontsViewWidget->setMaximumHeight(m_ui->fontsViewWidget->getContentsHeight());
+}
+
+QString ContentPreferencesPage::getTitle() const
+{
+	return tr("Content");
 }
 
 }

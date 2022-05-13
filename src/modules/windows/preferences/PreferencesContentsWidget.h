@@ -30,6 +30,8 @@ namespace Ui
 	class PreferencesContentsWidget;
 }
 
+class PreferencesPage;
+
 class PreferencesContentsWidget final : public ContentsWidget
 {
 	Q_OBJECT
@@ -61,14 +63,10 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event) override;
-	void updateStyle();
-	bool canClose();
-
-protected slots:
-	void showTab(int tab);
+	void addPage(PreferencesPage *page);
+	bool canClose() override;
 
 private:
-	QVector<bool> m_loadedTabs;
 	int m_tabIndexEnumerator;
 	Ui::PreferencesContentsWidget *m_ui;
 

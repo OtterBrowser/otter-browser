@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -90,76 +90,23 @@ QWidget* SearchEngineKeywordDelegate::createEditor(QWidget *parent, const QStyle
 Animation* SearchPreferencesPage::m_updateAnimation = nullptr;
 
 SearchPreferencesPage::SearchPreferencesPage(QWidget *parent) : PreferencesPage(parent),
-	m_ui(new Ui::SearchPreferencesPage)
+	m_ui(nullptr)
 {
-	m_ui->setupUi(this);
-
-	ItemModel *searchEnginesModel(new ItemModel(this));
-	searchEnginesModel->setHorizontalHeaderLabels({tr("Name"), tr("Keyword")});
-	searchEnginesModel->setHeaderData(0, Qt::Horizontal, 250, HeaderViewWidget::WidthRole);
-	searchEnginesModel->setExclusive(true);
-
-	const QString defaultSearchEngine(SettingsManager::getOption(SettingsManager::Search_DefaultSearchEngineOption).toString());
-	const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
-
-	for (int i = 0; i < searchEngines.count(); ++i)
-	{
-		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(searchEngines.at(i)));
-
-		if (searchEngine.isValid())
-		{
-			m_searchEngines[searchEngine.identifier] = {false, searchEngine};
-
-			searchEnginesModel->appendRow(createRow(searchEngine, (searchEngine.identifier == defaultSearchEngine)));
-		}
-	}
-
-	const QString suggestionsMode(SettingsManager::getOption(SettingsManager::Search_SearchEnginesSuggestionsModeOption).toString());
-
-	m_ui->searchViewWidget->setModel(searchEnginesModel);
-	m_ui->searchViewWidget->setItemDelegateForColumn(0, new SearchEngineTitleDelegate(this));
-	m_ui->searchViewWidget->setItemDelegateForColumn(1, new SearchEngineKeywordDelegate(this));
-	m_ui->searchViewWidget->setExclusive(true);
-	m_ui->searchViewWidget->setRowsMovable(true);
-	m_ui->enableSearchSuggestionsCheckBox->setChecked(suggestionsMode != QLatin1String("disabled"));
-	m_ui->enableSearchSuggestionsInPrivateTabsCheckBox->setChecked(suggestionsMode == QLatin1String("enabled"));
-	m_ui->enableSearchSuggestionsInPrivateTabsCheckBox->setEnabled(m_ui->enableSearchSuggestionsCheckBox->isChecked());
-
-	QMenu *addSearchEngineMenu(new QMenu(m_ui->addSearchButton));
-	addSearchEngineMenu->addAction(tr("New…"), this, &SearchPreferencesPage::createSearchEngine);
-	addSearchEngineMenu->addAction(tr("File…"), this, &SearchPreferencesPage::importSearchEngine);
-	addSearchEngineMenu->addAction(tr("Re-add"))->setMenu(new QMenu(m_ui->addSearchButton));
-
-	m_ui->addSearchButton->setMenu(addSearchEngineMenu);
-	m_ui->moveDownSearchButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-down")));
-	m_ui->moveUpSearchButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-up")));
-
-	updateReaddSearchEngineMenu();
-
-	connect(m_ui->searchFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->searchViewWidget, &ItemViewWidget::setFilterString);
-	connect(m_ui->searchViewWidget, &ItemViewWidget::canMoveRowDownChanged, m_ui->moveDownSearchButton, &QToolButton::setEnabled);
-	connect(m_ui->searchViewWidget, &ItemViewWidget::canMoveRowUpChanged, m_ui->moveUpSearchButton, &QToolButton::setEnabled);
-	connect(m_ui->searchViewWidget, &ItemViewWidget::needsActionsUpdate, this, &SearchPreferencesPage::updateSearchEngineActions);
-	connect(m_ui->searchViewWidget, &ItemViewWidget::modified, this, &SearchPreferencesPage::settingsModified);
-	connect(m_ui->addSearchButton->menu()->actions().at(2)->menu(), &QMenu::triggered, this, &SearchPreferencesPage::readdSearchEngine);
-	connect(m_ui->editSearchButton, &QPushButton::clicked, this, &SearchPreferencesPage::editSearchEngine);
-	connect(m_ui->updateSearchButton, &QPushButton::clicked, this, &SearchPreferencesPage::updateSearchEngine);
-	connect(m_ui->removeSearchButton, &QPushButton::clicked, this, &SearchPreferencesPage::removeSearchEngine);
-	connect(m_ui->moveDownSearchButton, &QToolButton::clicked, m_ui->searchViewWidget, &ItemViewWidget::moveDownRow);
-	connect(m_ui->moveUpSearchButton, &QToolButton::clicked, m_ui->searchViewWidget, &ItemViewWidget::moveUpRow);
-	connect(m_ui->enableSearchSuggestionsCheckBox, &QCheckBox::toggled, m_ui->enableSearchSuggestionsInPrivateTabsCheckBox, &QCheckBox::setEnabled);
 }
 
 SearchPreferencesPage::~SearchPreferencesPage()
 {
-	delete m_ui;
+	if (wasLoaded())
+	{
+		delete m_ui;
+	}
 }
 
 void SearchPreferencesPage::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
-	if (event->type() == QEvent::LanguageChange)
+	if (event->type() == QEvent::LanguageChange && wasLoaded())
 	{
 		m_ui->retranslateUi(this);
 		m_ui->searchViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Name"), tr("Keyword")});
@@ -488,6 +435,74 @@ void SearchPreferencesPage::updateReaddSearchEngineMenu()
 	}
 }
 
+void SearchPreferencesPage::load()
+{
+	if (wasLoaded())
+	{
+		return;
+	}
+
+	m_ui = new Ui::SearchPreferencesPage();
+	m_ui->setupUi(this);
+
+	ItemModel *searchEnginesModel(new ItemModel(this));
+	searchEnginesModel->setHorizontalHeaderLabels({tr("Name"), tr("Keyword")});
+	searchEnginesModel->setHeaderData(0, Qt::Horizontal, 250, HeaderViewWidget::WidthRole);
+	searchEnginesModel->setExclusive(true);
+
+	const QString defaultSearchEngine(SettingsManager::getOption(SettingsManager::Search_DefaultSearchEngineOption).toString());
+	const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
+
+	for (int i = 0; i < searchEngines.count(); ++i)
+	{
+		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(searchEngines.at(i)));
+
+		if (searchEngine.isValid())
+		{
+			m_searchEngines[searchEngine.identifier] = {false, searchEngine};
+
+			searchEnginesModel->appendRow(createRow(searchEngine, (searchEngine.identifier == defaultSearchEngine)));
+		}
+	}
+
+	const QString suggestionsMode(SettingsManager::getOption(SettingsManager::Search_SearchEnginesSuggestionsModeOption).toString());
+
+	m_ui->searchViewWidget->setModel(searchEnginesModel);
+	m_ui->searchViewWidget->setItemDelegateForColumn(0, new SearchEngineTitleDelegate(this));
+	m_ui->searchViewWidget->setItemDelegateForColumn(1, new SearchEngineKeywordDelegate(this));
+	m_ui->searchViewWidget->setExclusive(true);
+	m_ui->searchViewWidget->setRowsMovable(true);
+	m_ui->enableSearchSuggestionsCheckBox->setChecked(suggestionsMode != QLatin1String("disabled"));
+	m_ui->enableSearchSuggestionsInPrivateTabsCheckBox->setChecked(suggestionsMode == QLatin1String("enabled"));
+	m_ui->enableSearchSuggestionsInPrivateTabsCheckBox->setEnabled(m_ui->enableSearchSuggestionsCheckBox->isChecked());
+
+	QMenu *addSearchEngineMenu(new QMenu(m_ui->addSearchButton));
+	addSearchEngineMenu->addAction(tr("New…"), this, &SearchPreferencesPage::createSearchEngine);
+	addSearchEngineMenu->addAction(tr("File…"), this, &SearchPreferencesPage::importSearchEngine);
+	addSearchEngineMenu->addAction(tr("Re-add"))->setMenu(new QMenu(m_ui->addSearchButton));
+
+	m_ui->addSearchButton->setMenu(addSearchEngineMenu);
+	m_ui->moveDownSearchButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-down")));
+	m_ui->moveUpSearchButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-up")));
+
+	updateReaddSearchEngineMenu();
+
+	connect(m_ui->searchFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->searchViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->searchViewWidget, &ItemViewWidget::canMoveRowDownChanged, m_ui->moveDownSearchButton, &QToolButton::setEnabled);
+	connect(m_ui->searchViewWidget, &ItemViewWidget::canMoveRowUpChanged, m_ui->moveUpSearchButton, &QToolButton::setEnabled);
+	connect(m_ui->searchViewWidget, &ItemViewWidget::needsActionsUpdate, this, &SearchPreferencesPage::updateSearchEngineActions);
+	connect(m_ui->searchViewWidget, &ItemViewWidget::modified, this, &SearchPreferencesPage::settingsModified);
+	connect(m_ui->addSearchButton->menu()->actions().at(2)->menu(), &QMenu::triggered, this, &SearchPreferencesPage::readdSearchEngine);
+	connect(m_ui->editSearchButton, &QPushButton::clicked, this, &SearchPreferencesPage::editSearchEngine);
+	connect(m_ui->updateSearchButton, &QPushButton::clicked, this, &SearchPreferencesPage::updateSearchEngine);
+	connect(m_ui->removeSearchButton, &QPushButton::clicked, this, &SearchPreferencesPage::removeSearchEngine);
+	connect(m_ui->moveDownSearchButton, &QToolButton::clicked, m_ui->searchViewWidget, &ItemViewWidget::moveDownRow);
+	connect(m_ui->moveUpSearchButton, &QToolButton::clicked, m_ui->searchViewWidget, &ItemViewWidget::moveUpRow);
+	connect(m_ui->enableSearchSuggestionsCheckBox, &QCheckBox::toggled, m_ui->enableSearchSuggestionsInPrivateTabsCheckBox, &QCheckBox::setEnabled);
+
+	markAsLoaded();
+}
+
 void SearchPreferencesPage::save()
 {
 	for (int i = 0; i < m_filesToRemove.count(); ++i)
@@ -563,6 +578,11 @@ void SearchPreferencesPage::save()
 Animation* SearchPreferencesPage::getUpdateAnimation()
 {
 	return m_updateAnimation;
+}
+
+QString SearchPreferencesPage::getTitle() const
+{
+	return tr("Search");
 }
 
 QStringList SearchPreferencesPage::getKeywords(const QAbstractItemModel *model, int excludeRow)

@@ -38,6 +38,9 @@ public:
 	explicit WebsitesPreferencesPage(QWidget *parent);
 	~WebsitesPreferencesPage();
 
+	void load() override;
+	QString getTitle() const override;
+
 protected:
 	void changeEvent(QEvent *event) override;
 

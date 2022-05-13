@@ -27,15 +27,10 @@
 #include "WebsitesPreferencesPage.h"
 #include "../../../core/Application.h"
 #include "../../../core/ThemesManager.h"
-#include "../../../ui/ItemViewWidget.h"
 
 #include "ui_PreferencesContentsWidget.h"
 
-#include <QtWidgets/QAbstractButton>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMessageBox>
-#include <QtWidgets/QSpinBox>
 
 namespace Otter
 {
@@ -46,13 +41,19 @@ PreferencesContentsWidget::PreferencesContentsWidget(const QVariantMap &paramete
 {
 	m_ui->setupUi(this);
 
-	m_loadedTabs.fill(false, (AdvancedTab + 1));
-
-	updateStyle();
-	showTab(GeneralTab);
+	addPage(new GeneralPreferencesPage(this));
+	addPage(new ContentPreferencesPage(this));
+	addPage(new PrivacyPreferencesPage(this));
+	addPage(new SearchPreferencesPage(this));
+	addPage(new InputPreferencesPage(this));
+	addPage(new WebsitesPreferencesPage(this));
+	addPage(new AdvancedPreferencesPage(this));
 
 	connect(this, &PreferencesContentsWidget::isModifiedChanged, m_ui->saveButton, &QPushButton::setEnabled);
-	connect(m_ui->tabWidget, &QTabWidget::currentChanged, this, &PreferencesContentsWidget::showTab);
+	connect(m_ui->categoriesTabWidget, &QTabWidget::currentChanged, this, [&]()
+	{
+		emit urlChanged(getUrl());
+	});
 	connect(m_ui->saveButton, &QPushButton::clicked, this, [&]()
 	{
 		setModified(false);
@@ -79,188 +80,17 @@ void PreferencesContentsWidget::changeEvent(QEvent *event)
 {
 	ContentsWidget::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::FontChange:
-		case QEvent::LayoutDirectionChange:
-		case QEvent::StyleChange:
-			updateStyle();
-
-			break;
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
-
-			break;
-		default:
-			break;
+		m_ui->retranslateUi(this);
 	}
 }
 
-void PreferencesContentsWidget::showTab(int tab)
+void PreferencesContentsWidget::addPage(PreferencesPage *page)
 {
-	emit urlChanged(getUrl());
+	m_ui->categoriesTabWidget->addPage(page);
 
-	if (tab < GeneralTab || tab > AdvancedTab || m_loadedTabs.value(tab))
-	{
-		return;
-	}
-
-	m_loadedTabs[tab] = true;
-
-	switch (tab)
-	{
-		case GeneralTab:
-			{
-				GeneralPreferencesPage *page(new GeneralPreferencesPage(this));
-
-				m_ui->generalSrollArea->setWidget(page);
-				m_ui->generalSrollArea->viewport()->setAutoFillBackground(false);
-
-				page->setAutoFillBackground(false);
-
-				connect(this, &PreferencesContentsWidget::requestedSave, page, &GeneralPreferencesPage::save);
-				connect(page, &GeneralPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
-			}
-
-			break;
-		case ContentTab:
-			{
-				ContentPreferencesPage *page(new ContentPreferencesPage(this));
-
-				m_ui->contentScrollArea->setWidget(page);
-				m_ui->contentScrollArea->viewport()->setAutoFillBackground(false);
-
-				page->setAutoFillBackground(false);
-
-				connect(this, &PreferencesContentsWidget::requestedSave, page, &ContentPreferencesPage::save);
-				connect(page, &ContentPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
-			}
-
-			break;
-		case PrivacyTab:
-			{
-				PrivacyPreferencesPage *page(new PrivacyPreferencesPage(this));
-
-				m_ui->privacyScrollArea->setWidget(page);
-				m_ui->privacyScrollArea->viewport()->setAutoFillBackground(false);
-
-				page->setAutoFillBackground(false);
-
-				connect(this, &PreferencesContentsWidget::requestedSave, page, &PrivacyPreferencesPage::save);
-				connect(page, &PrivacyPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
-			}
-
-			break;
-		case SearchTab:
-			{
-				SearchPreferencesPage *page(new SearchPreferencesPage(this));
-
-				m_ui->searchScrollArea->setWidget(page);
-				m_ui->searchScrollArea->viewport()->setAutoFillBackground(false);
-
-				page->setAutoFillBackground(false);
-
-				connect(this, &PreferencesContentsWidget::requestedSave, page, &SearchPreferencesPage::save);
-				connect(page, &SearchPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
-			}
-
-			break;
-		case InputTab:
-			{
-				InputPreferencesPage *page(new InputPreferencesPage(this));
-
-				m_ui->inputScrollArea->setWidget(page);
-				m_ui->inputScrollArea->viewport()->setAutoFillBackground(false);
-
-				page->setAutoFillBackground(false);
-
-				connect(this, &PreferencesContentsWidget::requestedSave, page, &InputPreferencesPage::save);
-				connect(page, &InputPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
-			}
-
-			break;
-		case WebsitesTab:
-			{
-				WebsitesPreferencesPage *page(new WebsitesPreferencesPage(this));
-
-				m_ui->websitesScrollArea->setWidget(page);
-				m_ui->websitesScrollArea->viewport()->setAutoFillBackground(false);
-
-				page->setAutoFillBackground(false);
-
-				connect(this, &PreferencesContentsWidget::requestedSave, page, &WebsitesPreferencesPage::save);
-				connect(page, &WebsitesPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
-			}
-
-			break;
-		case AdvancedTab:
-			{
-				AdvancedPreferencesPage *page(new AdvancedPreferencesPage(this));
-
-				m_ui->advancedScrollArea->setWidget(page);
-				m_ui->advancedScrollArea->viewport()->setAutoFillBackground(false);
-
-				page->setAutoFillBackground(false);
-
-				connect(this, &PreferencesContentsWidget::requestedSave, page, &AdvancedPreferencesPage::save);
-				connect(page, &AdvancedPreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
-			}
-
-			break;
-	}
-
-	QWidget *widget(m_ui->tabWidget->widget(tab));
-	const QList<QAbstractButton*> buttons(widget->findChildren<QAbstractButton*>());
-
-	for (int i = 0; i < buttons.count(); ++i)
-	{
-		connect(buttons.at(i), &QAbstractButton::toggled, this, &PreferencesContentsWidget::markAsModified);
-	}
-
-	const QList<QComboBox*> comboBoxes(widget->findChildren<QComboBox*>());
-
-	for (int i = 0; i < comboBoxes.count(); ++i)
-	{
-		connect(comboBoxes.at(i), static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &PreferencesContentsWidget::markAsModified);
-	}
-
-	const QList<QLineEdit*> lineEdits(widget->findChildren<QLineEdit*>());
-
-	for (int i = 0; i < lineEdits.count(); ++i)
-	{
-		connect(lineEdits.at(i), &QLineEdit::textChanged, this, &PreferencesContentsWidget::markAsModified);
-	}
-
-	const QList<QSpinBox*> spinBoxes(widget->findChildren<QSpinBox*>());
-
-	for (int i = 0; i < spinBoxes.count(); ++i)
-	{
-		connect(spinBoxes.at(i), static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &PreferencesContentsWidget::markAsModified);
-	}
-
-	const QList<ItemViewWidget*> viewWidgets(widget->findChildren<ItemViewWidget*>());
-
-	for (int i = 0; i < viewWidgets.count(); ++i)
-	{
-		connect(viewWidgets.at(i), &ItemViewWidget::modified, this, &PreferencesContentsWidget::markAsModified);
-	}
-}
-
-void PreferencesContentsWidget::updateStyle()
-{
-	QFont font(m_ui->tabWidget->font());
-
-	if (font.pixelSize() > 0)
-	{
-		font.setPixelSize(font.pixelSize() * 1.5);
-	}
-	else
-	{
-		font.setPointSize(font.pointSize() * 1.5);
-	}
-
-	m_ui->tabWidget->setTabPosition(isLeftToRight() ? QTabWidget::West : QTabWidget::East);
-	m_ui->tabWidget->tabBar()->setFont(font);
+	connect(page, &PreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
 }
 
 void PreferencesContentsWidget::setUrl(const QUrl &url, bool isTypedIn)
@@ -271,7 +101,7 @@ void PreferencesContentsWidget::setUrl(const QUrl &url, bool isTypedIn)
 
 	if (!section.isEmpty())
 	{
-		m_ui->tabWidget->setCurrentIndex(qMax(0, EnumeratorMapper(staticMetaObject.enumerator(m_tabIndexEnumerator), QLatin1String("Tab")).mapToValue(section)));
+		m_ui->categoriesTabWidget->setCurrentIndex(qMax(0, EnumeratorMapper(staticMetaObject.enumerator(m_tabIndexEnumerator), QLatin1String("Tab")).mapToValue(section)));
 	}
 }
 
@@ -289,9 +119,9 @@ QUrl PreferencesContentsWidget::getUrl() const
 {
 	QUrl url(QLatin1String("about:preferences"));
 
-	if (m_ui->tabWidget->currentIndex() != GeneralTab)
+	if (m_ui->categoriesTabWidget->currentIndex() != GeneralTab)
 	{
-		url.setFragment(EnumeratorMapper(staticMetaObject.enumerator(m_tabIndexEnumerator), QLatin1String("Tab")).mapToName(m_ui->tabWidget->currentIndex()));
+		url.setFragment(EnumeratorMapper(staticMetaObject.enumerator(m_tabIndexEnumerator), QLatin1String("Tab")).mapToName(m_ui->categoriesTabWidget->currentIndex()));
 	}
 
 	return url;

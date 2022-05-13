@@ -222,109 +222,23 @@ bool InputPreferencesPage::m_areSingleKeyShortcutsAllowed(true);
 InputPreferencesPage::InputPreferencesPage(QWidget *parent) : PreferencesPage(parent),
 	m_keyboardShortcutsModel(new QStandardItemModel(this)),
 	m_advancedButton(new QPushButton(tr("Advanced…"), this)),
-	m_ui(new Ui::InputPreferencesPage)
+	m_ui(nullptr)
 {
-	m_areSingleKeyShortcutsAllowed = SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool();
-
-	m_advancedButton->setCheckable(true);
-	m_advancedButton->setChecked(true);
-	m_advancedButton->setEnabled(false);
-
-	m_ui->setupUi(this);
-	m_ui->tabWidget->setCornerWidget(m_advancedButton);
-	m_ui->keyboardEnableSingleKeyShortcutsCheckBox->setChecked(m_areSingleKeyShortcutsAllowed);
-	m_ui->keyboardMoveProfileDownButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-down")));
-	m_ui->keyboardMoveProfileUpButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-up")));
-
-	QStandardItemModel *keyboardProfilesModel(new QStandardItemModel(this));
-	const QStringList keyboardProfiles(SettingsManager::getOption(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList());
-
-	for (int i = 0; i < keyboardProfiles.count(); ++i)
-	{
-		const KeyboardProfile profile(keyboardProfiles.at(i), KeyboardProfile::FullMode);
-
-		if (!profile.isValid())
-		{
-			continue;
-		}
-
-		m_keyboardProfiles[keyboardProfiles.at(i)] = profile;
-
-		QStandardItem *item(new QStandardItem(profile.getTitle()));
-		item->setToolTip(profile.getDescription());
-		item->setData(profile.getName(), Qt::UserRole);
-		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsUserCheckable | Qt::ItemNeverHasChildren);
-		item->setCheckState(Qt::Checked);
-
-		keyboardProfilesModel->appendRow(item);
-	}
-
-	m_ui->keyboardProfilesViewWidget->setModel(keyboardProfilesModel);
-	m_ui->keyboardProfilesViewWidget->setRowsMovable(true);
-	m_ui->keyboardProfilesViewWidget->setCurrentIndex(keyboardProfilesModel->index(0, 0));
-
-	m_keyboardShortcutsModel->setHorizontalHeaderLabels({tr("Status"), tr("Action"), tr("Parameters"), tr("Shortcut")});
-	m_keyboardShortcutsModel->setHeaderData(0, Qt::Horizontal, 28, HeaderViewWidget::WidthRole);
-	m_keyboardShortcutsModel->setHeaderData(1, Qt::Horizontal, 250, HeaderViewWidget::WidthRole);
-	m_keyboardShortcutsModel->setHeaderData(2, Qt::Horizontal, 300, HeaderViewWidget::WidthRole);
-
-	m_ui->keyboardShortcutsViewWidget->setModel(m_keyboardShortcutsModel);
-	m_ui->keyboardShortcutsViewWidget->setItemDelegateForColumn(1, new ActionDelegate(this));
-	m_ui->keyboardShortcutsViewWidget->setItemDelegateForColumn(2, new ParametersDelegate(this));
-	m_ui->keyboardShortcutsViewWidget->setItemDelegateForColumn(3, new ShortcutDelegate(this));
-	m_ui->keyboardShortcutsViewWidget->setFilterRoles({Qt::DisplayRole, NameRole});
-	m_ui->keyboardShortcutsViewWidget->setSortRoleMapping({{0, StatusRole}});
-
-	loadKeyboardDefinitions(keyboardProfilesModel->index(0, 0).data(Qt::UserRole).toString());
-	updateKeyboardProfileActions();
-	updateKeyboardShortcutActions();
-
-	m_ui->tabWidget->setTabEnabled(1, false);
-
-	connect(m_ui->keyboardEnableSingleKeyShortcutsCheckBox, &QCheckBox::toggled, this, [&](bool isChecked)
-	{
-		m_areSingleKeyShortcutsAllowed = isChecked;
-	});
-	connect(m_ui->keyboardProfilesViewWidget, &ItemViewWidget::canMoveRowDownChanged, m_ui->keyboardMoveProfileDownButton, &QToolButton::setEnabled);
-	connect(m_ui->keyboardProfilesViewWidget, &ItemViewWidget::canMoveRowUpChanged, m_ui->keyboardMoveProfileUpButton, &QToolButton::setEnabled);
-	connect(m_ui->keyboardProfilesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &InputPreferencesPage::updateKeyboardProfileActions);
-	connect(m_ui->keyboardProfilesViewWidget, &ItemViewWidget::doubleClicked, this, &InputPreferencesPage::editKeyboardProfile);
-	connect(m_ui->keyboardAddProfileButton, &QPushButton::clicked, this, &InputPreferencesPage::addKeyboardProfile);
-	connect(m_ui->keyboardEditProfileButton, &QPushButton::clicked, this, &InputPreferencesPage::editKeyboardProfile);
-	connect(m_ui->keyboardCloneProfileButton, &QPushButton::clicked, this, &InputPreferencesPage::cloneKeyboardProfile);
-	connect(m_ui->keyboardRemoveProfileButton, &QPushButton::clicked, this, &InputPreferencesPage::removeKeyboardProfile);
-	connect(m_ui->keyboardMoveProfileDownButton, &QToolButton::clicked, m_ui->keyboardProfilesViewWidget, &ItemViewWidget::moveDownRow);
-	connect(m_ui->keyboardMoveProfileUpButton, &QToolButton::clicked, m_ui->keyboardProfilesViewWidget, &ItemViewWidget::moveUpRow);
-	connect(m_ui->keyboardShortcutsFilterLineEditWidget, &QLineEdit::textChanged, m_ui->keyboardShortcutsViewWidget, &ItemViewWidget::setFilterString);
-	connect(m_ui->keyboardShortcutsViewWidget, &ItemViewWidget::needsActionsUpdate, this, [&]()
-	{
-		const bool isValid(m_ui->keyboardShortcutsViewWidget->getCurrentIndex().isValid());
-
-		m_ui->keyboardShortcutParametersButton->setEnabled(isValid);
-		m_ui->keyboardRemoveShortcutButton->setEnabled(isValid);
-	});
-	connect(m_ui->keyboardAddShortcutButton, &QPushButton::clicked, this, [&]()
-	{
-		addKeyboardShortcut(false);
-	});
-	connect(m_ui->keyboardDisableShortcutButton, &QPushButton::clicked, this, [&]()
-	{
-		addKeyboardShortcut(true);
-	});
-	connect(m_ui->keyboardShortcutParametersButton, &QPushButton::clicked, this, &InputPreferencesPage::editShortcutParameters);
-	connect(m_ui->keyboardRemoveShortcutButton, &QPushButton::clicked, m_ui->keyboardShortcutsViewWidget, &ItemViewWidget::removeRow);
 }
 
 InputPreferencesPage::~InputPreferencesPage()
 {
-	delete m_ui;
+	if (wasLoaded())
+	{
+		delete m_ui;
+	}
 }
 
 void InputPreferencesPage::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
-	if (event->type() == QEvent::LanguageChange)
+	if (event->type() == QEvent::LanguageChange && wasLoaded())
 	{
 		m_ui->retranslateUi(this);
 
@@ -582,6 +496,107 @@ void InputPreferencesPage::updateKeyboardShortcutActions()
 	m_ui->keyboardShortcutsButtonsWidget->setEnabled(!m_activeKeyboardProfile.isEmpty() && m_keyboardProfiles.contains(m_activeKeyboardProfile));
 }
 
+void InputPreferencesPage::load()
+{
+	if (wasLoaded())
+	{
+		return;
+	}
+
+	m_areSingleKeyShortcutsAllowed = SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool();
+
+	m_advancedButton->setCheckable(true);
+	m_advancedButton->setChecked(true);
+	m_advancedButton->setEnabled(false);
+
+	m_ui = new Ui::InputPreferencesPage();
+	m_ui->setupUi(this);
+	m_ui->tabWidget->setCornerWidget(m_advancedButton);
+	m_ui->keyboardEnableSingleKeyShortcutsCheckBox->setChecked(m_areSingleKeyShortcutsAllowed);
+	m_ui->keyboardMoveProfileDownButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-down")));
+	m_ui->keyboardMoveProfileUpButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-up")));
+
+	QStandardItemModel *keyboardProfilesModel(new QStandardItemModel(this));
+	const QStringList keyboardProfiles(SettingsManager::getOption(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList());
+
+	for (int i = 0; i < keyboardProfiles.count(); ++i)
+	{
+		const KeyboardProfile profile(keyboardProfiles.at(i), KeyboardProfile::FullMode);
+
+		if (!profile.isValid())
+		{
+			continue;
+		}
+
+		m_keyboardProfiles[keyboardProfiles.at(i)] = profile;
+
+		QStandardItem *item(new QStandardItem(profile.getTitle()));
+		item->setToolTip(profile.getDescription());
+		item->setData(profile.getName(), Qt::UserRole);
+		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsUserCheckable | Qt::ItemNeverHasChildren);
+		item->setCheckState(Qt::Checked);
+
+		keyboardProfilesModel->appendRow(item);
+	}
+
+	m_ui->keyboardProfilesViewWidget->setModel(keyboardProfilesModel);
+	m_ui->keyboardProfilesViewWidget->setRowsMovable(true);
+	m_ui->keyboardProfilesViewWidget->setCurrentIndex(keyboardProfilesModel->index(0, 0));
+
+	m_keyboardShortcutsModel->setHorizontalHeaderLabels({tr("Status"), tr("Action"), tr("Parameters"), tr("Shortcut")});
+	m_keyboardShortcutsModel->setHeaderData(0, Qt::Horizontal, 28, HeaderViewWidget::WidthRole);
+	m_keyboardShortcutsModel->setHeaderData(1, Qt::Horizontal, 250, HeaderViewWidget::WidthRole);
+	m_keyboardShortcutsModel->setHeaderData(2, Qt::Horizontal, 300, HeaderViewWidget::WidthRole);
+
+	m_ui->keyboardShortcutsViewWidget->setModel(m_keyboardShortcutsModel);
+	m_ui->keyboardShortcutsViewWidget->setItemDelegateForColumn(1, new ActionDelegate(this));
+	m_ui->keyboardShortcutsViewWidget->setItemDelegateForColumn(2, new ParametersDelegate(this));
+	m_ui->keyboardShortcutsViewWidget->setItemDelegateForColumn(3, new ShortcutDelegate(this));
+	m_ui->keyboardShortcutsViewWidget->setFilterRoles({Qt::DisplayRole, NameRole});
+	m_ui->keyboardShortcutsViewWidget->setSortRoleMapping({{0, StatusRole}});
+
+	loadKeyboardDefinitions(keyboardProfilesModel->index(0, 0).data(Qt::UserRole).toString());
+	updateKeyboardProfileActions();
+	updateKeyboardShortcutActions();
+
+	m_ui->tabWidget->setTabEnabled(1, false);
+
+	connect(m_ui->keyboardEnableSingleKeyShortcutsCheckBox, &QCheckBox::toggled, this, [&](bool isChecked)
+	{
+		m_areSingleKeyShortcutsAllowed = isChecked;
+	});
+	connect(m_ui->keyboardProfilesViewWidget, &ItemViewWidget::canMoveRowDownChanged, m_ui->keyboardMoveProfileDownButton, &QToolButton::setEnabled);
+	connect(m_ui->keyboardProfilesViewWidget, &ItemViewWidget::canMoveRowUpChanged, m_ui->keyboardMoveProfileUpButton, &QToolButton::setEnabled);
+	connect(m_ui->keyboardProfilesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &InputPreferencesPage::updateKeyboardProfileActions);
+	connect(m_ui->keyboardProfilesViewWidget, &ItemViewWidget::doubleClicked, this, &InputPreferencesPage::editKeyboardProfile);
+	connect(m_ui->keyboardAddProfileButton, &QPushButton::clicked, this, &InputPreferencesPage::addKeyboardProfile);
+	connect(m_ui->keyboardEditProfileButton, &QPushButton::clicked, this, &InputPreferencesPage::editKeyboardProfile);
+	connect(m_ui->keyboardCloneProfileButton, &QPushButton::clicked, this, &InputPreferencesPage::cloneKeyboardProfile);
+	connect(m_ui->keyboardRemoveProfileButton, &QPushButton::clicked, this, &InputPreferencesPage::removeKeyboardProfile);
+	connect(m_ui->keyboardMoveProfileDownButton, &QToolButton::clicked, m_ui->keyboardProfilesViewWidget, &ItemViewWidget::moveDownRow);
+	connect(m_ui->keyboardMoveProfileUpButton, &QToolButton::clicked, m_ui->keyboardProfilesViewWidget, &ItemViewWidget::moveUpRow);
+	connect(m_ui->keyboardShortcutsFilterLineEditWidget, &QLineEdit::textChanged, m_ui->keyboardShortcutsViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->keyboardShortcutsViewWidget, &ItemViewWidget::needsActionsUpdate, this, [&]()
+	{
+		const bool isValid(m_ui->keyboardShortcutsViewWidget->getCurrentIndex().isValid());
+
+		m_ui->keyboardShortcutParametersButton->setEnabled(isValid);
+		m_ui->keyboardRemoveShortcutButton->setEnabled(isValid);
+	});
+	connect(m_ui->keyboardAddShortcutButton, &QPushButton::clicked, this, [&]()
+	{
+		addKeyboardShortcut(false);
+	});
+	connect(m_ui->keyboardDisableShortcutButton, &QPushButton::clicked, this, [&]()
+	{
+		addKeyboardShortcut(true);
+	});
+	connect(m_ui->keyboardShortcutParametersButton, &QPushButton::clicked, this, &InputPreferencesPage::editShortcutParameters);
+	connect(m_ui->keyboardRemoveShortcutButton, &QPushButton::clicked, m_ui->keyboardShortcutsViewWidget, &ItemViewWidget::removeRow);
+
+	markAsLoaded();
+}
+
 void InputPreferencesPage::save()
 {
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("keyboard")));
@@ -671,6 +686,11 @@ QString InputPreferencesPage::createParamatersPreview(const QVariantMap &rawPara
 	}
 
 	return parameters.join(separator);
+}
+
+QString InputPreferencesPage::getTitle() const
+{
+	return tr("Input");
 }
 
 InputPreferencesPage::ValidationResult InputPreferencesPage::validateShortcut(const QKeySequence &shortcut, const QModelIndex &index)

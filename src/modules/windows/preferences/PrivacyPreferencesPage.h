@@ -38,6 +38,9 @@ public:
 	explicit PrivacyPreferencesPage(QWidget *parent);
 	~PrivacyPreferencesPage();
 
+	void load() override;
+	QString getTitle() const override;
+
 public slots:
 	void save() override;
 

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -39,8 +39,41 @@ namespace Otter
 
 GeneralPreferencesPage::GeneralPreferencesPage(QWidget *parent) : PreferencesPage(parent),
 	m_acceptLanguage(SettingsManager::getOption(SettingsManager::Network_AcceptLanguageOption).toString()),
-	m_ui(new Ui::GeneralPreferencesPage)
+	m_ui(nullptr)
 {
+}
+
+GeneralPreferencesPage::~GeneralPreferencesPage()
+{
+	if (wasLoaded())
+	{
+		delete m_ui;
+	}
+}
+
+void GeneralPreferencesPage::changeEvent(QEvent *event)
+{
+	QWidget::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange && wasLoaded())
+	{
+		m_ui->retranslateUi(this);
+		m_ui->startupBehaviorComboBox->setItemText(0, tr("Show windows and tabs from the last time"));
+		m_ui->startupBehaviorComboBox->setItemText(1, tr("Show startup dialog"));
+		m_ui->startupBehaviorComboBox->setItemText(2, tr("Show home page"));
+		m_ui->startupBehaviorComboBox->setItemText(3, tr("Show start page"));
+		m_ui->startupBehaviorComboBox->setItemText(4, tr("Show empty page"));
+	}
+}
+
+void GeneralPreferencesPage::load()
+{
+	if (wasLoaded())
+	{
+		return;
+	}
+
+	m_ui = new Ui::GeneralPreferencesPage();
 	m_ui->setupUi(this);
 
 	PlatformIntegration *platformIntegration(Application::getPlatformIntegration());
@@ -122,26 +155,8 @@ GeneralPreferencesPage::GeneralPreferencesPage(QWidget *parent) : PreferencesPag
 			emit settingsModified();
 		}
 	});
-}
 
-GeneralPreferencesPage::~GeneralPreferencesPage()
-{
-	delete m_ui;
-}
-
-void GeneralPreferencesPage::changeEvent(QEvent *event)
-{
-	QWidget::changeEvent(event);
-
-	if (event->type() == QEvent::LanguageChange)
-	{
-		m_ui->retranslateUi(this);
-		m_ui->startupBehaviorComboBox->setItemText(0, tr("Show windows and tabs from the last time"));
-		m_ui->startupBehaviorComboBox->setItemText(1, tr("Show startup dialog"));
-		m_ui->startupBehaviorComboBox->setItemText(2, tr("Show home page"));
-		m_ui->startupBehaviorComboBox->setItemText(3, tr("Show start page"));
-		m_ui->startupBehaviorComboBox->setItemText(4, tr("Show empty page"));
-	}
+	markAsLoaded();
 }
 
 void GeneralPreferencesPage::save()
@@ -155,6 +170,11 @@ void GeneralPreferencesPage::save()
 	SettingsManager::setOption(SettingsManager::Browser_ReuseCurrentTabOption, m_ui->reuseCurrentTabCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::TabBar_OpenNextToActiveOption, m_ui->openNextToActiveheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::Network_AcceptLanguageOption, m_acceptLanguage);
+}
+
+QString GeneralPreferencesPage::getTitle() const
+{
+	return tr("General");
 }
 
 }

@@ -20,12 +20,12 @@
 #ifndef OTTER_PREFERENCESPAGE_H
 #define OTTER_PREFERENCESPAGE_H
 
-#include <QtWidgets/QWidget>
+#include "../../../ui/CategoriesTabWidget.h"
 
 namespace Otter
 {
 
-class PreferencesPage : public QWidget
+class PreferencesPage : public CategoryPage
 {
 	Q_OBJECT
 
