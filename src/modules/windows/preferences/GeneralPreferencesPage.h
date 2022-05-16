@@ -22,7 +22,7 @@
 #ifndef OTTER_GENERALPREFERENCESPAGE_H
 #define OTTER_GENERALPREFERENCESPAGE_H
 
-#include "PreferencesPage.h"
+#include "../../../ui/CategoriesTabWidget.h"
 
 namespace Otter
 {
@@ -32,7 +32,7 @@ namespace Ui
 	class GeneralPreferencesPage;
 }
 
-class GeneralPreferencesPage final : public PreferencesPage
+class GeneralPreferencesPage final : public CategoryPage
 {
 	Q_OBJECT
 

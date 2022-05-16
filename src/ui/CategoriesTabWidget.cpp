@@ -119,6 +119,10 @@ void CategoryPage::markAsLoaded()
 	}
 }
 
+void CategoryPage::save()
+{
+}
+
 bool CategoryPage::wasLoaded() const
 {
 	return m_wasLoaded;

@@ -20,7 +20,7 @@
 #ifndef OTTER_WEBSITESPREFERENCESPAGE_H
 #define OTTER_WEBSITESPREFERENCESPAGE_H
 
-#include "PreferencesPage.h"
+#include "../../../ui/CategoriesTabWidget.h"
 
 namespace Otter
 {
@@ -30,7 +30,7 @@ namespace Ui
 	class WebsitesPreferencesPage;
 }
 
-class WebsitesPreferencesPage final : public PreferencesPage
+class WebsitesPreferencesPage final : public CategoryPage
 {
 	Q_OBJECT
 

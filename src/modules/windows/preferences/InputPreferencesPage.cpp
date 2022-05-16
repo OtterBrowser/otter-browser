@@ -219,7 +219,7 @@ QWidget* ShortcutDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
 
 bool InputPreferencesPage::m_areSingleKeyShortcutsAllowed(true);
 
-InputPreferencesPage::InputPreferencesPage(QWidget *parent) : PreferencesPage(parent),
+InputPreferencesPage::InputPreferencesPage(QWidget *parent) : CategoryPage(parent),
 	m_keyboardShortcutsModel(new QStandardItemModel(this)),
 	m_advancedButton(new QPushButton(tr("Advanced…"), this)),
 	m_ui(nullptr)

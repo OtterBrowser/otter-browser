@@ -21,7 +21,7 @@
 #ifndef OTTER_CONTENTPREFERENCESPAGE_H
 #define OTTER_CONTENTPREFERENCESPAGE_H
 
-#include "PreferencesPage.h"
+#include "../../../ui/CategoriesTabWidget.h"
 #include "../../../ui/ItemDelegate.h"
 
 namespace Otter
@@ -56,7 +56,7 @@ protected:
 	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
 };
 
-class ContentPreferencesPage final : public PreferencesPage
+class ContentPreferencesPage final : public CategoryPage
 {
 	Q_OBJECT
 

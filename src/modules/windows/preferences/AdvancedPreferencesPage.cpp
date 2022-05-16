@@ -52,7 +52,7 @@
 namespace Otter
 {
 
-AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : PreferencesPage(parent),
+AdvancedPreferencesPage::AdvancedPreferencesPage(QWidget *parent) : CategoryPage(parent),
 	m_ui(nullptr)
 {
 }

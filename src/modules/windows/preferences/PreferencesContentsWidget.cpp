@@ -86,11 +86,11 @@ void PreferencesContentsWidget::changeEvent(QEvent *event)
 	}
 }
 
-void PreferencesContentsWidget::addPage(PreferencesPage *page)
+void PreferencesContentsWidget::addPage(CategoryPage *page)
 {
 	m_ui->categoriesTabWidget->addPage(page);
 
-	connect(page, &PreferencesPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
+	connect(page, &CategoryPage::settingsModified, this, &PreferencesContentsWidget::markAsModified);
 }
 
 void PreferencesContentsWidget::setUrl(const QUrl &url, bool isTypedIn)

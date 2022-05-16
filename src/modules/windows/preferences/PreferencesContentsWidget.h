@@ -30,7 +30,7 @@ namespace Ui
 	class PreferencesContentsWidget;
 }
 
-class PreferencesPage;
+class CategoryPage;
 
 class PreferencesContentsWidget final : public ContentsWidget
 {
@@ -63,7 +63,7 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event) override;
-	void addPage(PreferencesPage *page);
+	void addPage(CategoryPage *page);
 	bool canClose() override;
 
 private:

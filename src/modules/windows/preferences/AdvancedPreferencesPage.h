@@ -22,8 +22,8 @@
 #ifndef OTTER_ADVANCEDPREFERENCESPAGE_H
 #define OTTER_ADVANCEDPREFERENCESPAGE_H
 
-#include "PreferencesPage.h"
 #include "../../../core/NetworkManagerFactory.h"
+#include "../../../ui/CategoriesTabWidget.h"
 
 #include <QtGui/QStandardItem>
 
@@ -37,7 +37,7 @@ namespace Ui
 
 class MouseProfile;
 
-class AdvancedPreferencesPage final : public PreferencesPage
+class AdvancedPreferencesPage final : public CategoryPage
 {
 	Q_OBJECT
 

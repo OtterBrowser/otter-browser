@@ -54,6 +54,9 @@ public:
 	virtual QString getTitle() const = 0;
 	bool wasLoaded() const;
 
+public slots:
+	virtual void save();
+
 protected:
 	void showEvent(QShowEvent *event) override;
 	void markAsLoaded();
@@ -63,6 +66,7 @@ private:
 
 signals:
 	void loaded();
+	void settingsModified();
 };
 
 }

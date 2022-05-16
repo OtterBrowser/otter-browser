@@ -22,8 +22,8 @@
 #ifndef OTTER_INPUTPREFERENCESPAGE_H
 #define OTTER_INPUTPREFERENCESPAGE_H
 
-#include "PreferencesPage.h"
 #include "../../../core/ActionsManager.h"
+#include "../../../ui/CategoriesTabWidget.h"
 #include "../../../ui/ItemDelegate.h"
 
 #include <QtGui/QStandardItemModel>
@@ -84,7 +84,7 @@ protected:
 	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
 };
 
-class InputPreferencesPage final : public PreferencesPage
+class InputPreferencesPage final : public CategoryPage
 {
 	Q_OBJECT
 

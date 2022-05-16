@@ -21,7 +21,7 @@
 #ifndef OTTER_SEARCHPREFERENCESPAGE_H
 #define OTTER_SEARCHPREFERENCESPAGE_H
 
-#include "PreferencesPage.h"
+#include "../../../ui/CategoriesTabWidget.h"
 #include "../../../ui/ItemDelegate.h"
 #include "../../../core/SearchEnginesManager.h"
 
@@ -53,7 +53,7 @@ public:
 	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
 
-class SearchPreferencesPage final : public PreferencesPage
+class SearchPreferencesPage final : public CategoryPage
 {
 	Q_OBJECT
 

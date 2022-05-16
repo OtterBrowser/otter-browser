@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-WebsitesPreferencesPage::WebsitesPreferencesPage(QWidget *parent) : PreferencesPage(parent),
+WebsitesPreferencesPage::WebsitesPreferencesPage(QWidget *parent) : CategoryPage(parent),
 	m_ui(nullptr)
 {
 }

@@ -89,7 +89,7 @@ QWidget* SearchEngineKeywordDelegate::createEditor(QWidget *parent, const QStyle
 
 Animation* SearchPreferencesPage::m_updateAnimation = nullptr;
 
-SearchPreferencesPage::SearchPreferencesPage(QWidget *parent) : PreferencesPage(parent),
+SearchPreferencesPage::SearchPreferencesPage(QWidget *parent) : CategoryPage(parent),
 	m_ui(nullptr)
 {
 }
