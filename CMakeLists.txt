@@ -253,6 +253,8 @@ set(otter_src
 	src/modules/widgets/zoom/ZoomWidget.cpp
 	src/modules/windows/actions/ActionsContentsWidget.cpp
 	src/modules/windows/addons/AddonsContentsWidget.cpp
+	src/modules/windows/addons/AddonsPage.cpp
+	src/modules/windows/addons/UserScriptsPage.cpp
 	src/modules/windows/bookmarks/BookmarksContentsWidget.cpp
 	src/modules/windows/cache/CacheContentsWidget.cpp
 	src/modules/windows/configuration/ConfigurationContentsWidget.cpp
@@ -337,6 +339,7 @@ qt5_wrap_ui(otter_ui
 	src/modules/widgets/errorConsole/ErrorConsoleWidget.ui
 	src/modules/windows/actions/ActionsContentsWidget.ui
 	src/modules/windows/addons/AddonsContentsWidget.ui
+	src/modules/windows/addons/AddonsPage.ui
 	src/modules/windows/bookmarks/BookmarksContentsWidget.ui
 	src/modules/windows/cache/CacheContentsWidget.ui
 	src/modules/windows/configuration/ConfigurationContentsWidget.ui
