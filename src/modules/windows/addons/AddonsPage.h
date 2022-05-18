@@ -47,6 +47,7 @@ public:
 	~AddonsPage();
 
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
+	WebWidget::LoadingState getLoadingState() const;
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
