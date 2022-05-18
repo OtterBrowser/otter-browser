@@ -62,6 +62,16 @@ void AddonsPage::timerEvent(QTimerEvent *event)
 	}
 }
 
+void AddonsPage::changeEvent(QEvent *event)
+{
+	CategoryPage::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		m_ui->retranslateUi(this);
+	}
+}
+
 void AddonsPage::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	Q_UNUSED(trigger)
