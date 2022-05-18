@@ -33,7 +33,7 @@ namespace Ui
 	class AddonsPage;
 }
 
-class AddonsPage : public CategoryPage
+class AddonsPage : public CategoryPage, public ActionExecutor
 {
 	Q_OBJECT
 
@@ -46,11 +46,17 @@ public:
 	explicit AddonsPage(QWidget *parent);
 	~AddonsPage();
 
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
+
+public slots:
+	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
+
 protected:
 	void timerEvent(QTimerEvent *event) override;
 	void addAddon(Addon *addon, const QMap<int, QVariant> &metaData = {});
 	void load() final override;
 	virtual void delayedLoad() = 0;
+	virtual void removeAddons() = 0;
 	void markAsFullyLoaded();
 	QStandardItemModel* getModel() const;
 	virtual QIcon getFallbackIcon() const;

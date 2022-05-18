@@ -62,6 +62,34 @@ void AddonsPage::timerEvent(QTimerEvent *event)
 	}
 }
 
+void AddonsPage::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
+{
+	Q_UNUSED(trigger)
+
+	switch (identifier)
+	{
+		case ActionsManager::SelectAllAction:
+			m_ui->addonsViewWidget->selectAll();
+
+			break;
+		case ActionsManager::DeleteAction:
+			removeAddons();
+
+			break;
+		case ActionsManager::FindAction:
+		case ActionsManager::QuickFindAction:
+			m_ui->filterLineEditWidget->setFocus();
+
+			break;
+		case ActionsManager::ActivateContentAction:
+			m_ui->addonsViewWidget->setFocus();
+
+			break;
+		default:
+			break;
+	}
+}
+
 void AddonsPage::addAddon(Addon *addon, const QMap<int, QVariant> &metaData)
 {
 	QStandardItem *item(new QStandardItem((addon->getIcon().isNull() ? getFallbackIcon() : addon->getIcon()), (addon->getVersion().isEmpty() ? addon->getTitle() : QStringLiteral("%1 %2").arg(addon->getTitle(), addon->getVersion()))));
@@ -101,6 +129,29 @@ QStandardItemModel *AddonsPage::getModel() const
 QIcon AddonsPage::getFallbackIcon() const
 {
 	return ThemesManager::createIcon(QLatin1String("unknown"), false);
+}
+
+ActionsManager::ActionDefinition::State AddonsPage::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	Q_UNUSED(parameters)
+
+	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
+
+	switch (identifier)
+	{
+		case ActionsManager::SelectAllAction:
+			state.isEnabled = true;
+
+			break;
+		case ActionsManager::DeleteAction:
+			state.isEnabled = (m_ui->addonsViewWidget->selectionModel() && !m_ui->addonsViewWidget->selectionModel()->selectedIndexes().isEmpty());
+
+			break;
+		default:
+			break;
+	}
+
+	return state;
 }
 
 }
