@@ -79,6 +79,7 @@ void AddonsPage::changeEvent(QEvent *event)
 
 void AddonsPage::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
+	Q_UNUSED(parameters)
 	Q_UNUSED(trigger)
 
 	switch (identifier)
