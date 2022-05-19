@@ -30,9 +30,13 @@ AddonsPage::AddonsPage(QWidget *parent) : CategoryPage(parent),
 	m_isLoading(true),
 	m_ui(new Ui::AddonsPage)
 {
+	QStandardItemModel *model(new QStandardItemModel(this));
+	model->setHorizontalHeaderLabels({tr("Title"), tr("Version")});
+	model->setHeaderData(0, Qt::Horizontal, 250, HeaderViewWidget::WidthRole);
+
 	m_ui->setupUi(this);
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
-	m_ui->addonsViewWidget->setModel(new QStandardItemModel(this));
+	m_ui->addonsViewWidget->setModel(model);
 	m_ui->addonsViewWidget->setViewMode(ItemViewWidget::ListView);
 	m_ui->addonsViewWidget->installEventFilter(this);
 
@@ -69,6 +73,7 @@ void AddonsPage::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+		m_ui->addonsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Title"), tr("Version")});
 	}
 }
 
@@ -102,14 +107,16 @@ void AddonsPage::triggerAction(int identifier, const QVariantMap &parameters, Ac
 
 void AddonsPage::addAddon(Addon *addon, const QMap<int, QVariant> &metaData)
 {
-	QStandardItem *item(new QStandardItem((addon->getIcon().isNull() ? getFallbackIcon() : addon->getIcon()), (addon->getVersion().isEmpty() ? addon->getTitle() : QStringLiteral("%1 %2").arg(addon->getTitle(), addon->getVersion()))));
-	item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
-	item->setCheckable(true);
-	item->setCheckState(addon->isEnabled() ? Qt::Checked : Qt::Unchecked);
-	item->setToolTip(addon->getDescription());
+	QList<QStandardItem*> items({new QStandardItem((addon->getIcon().isNull() ? getFallbackIcon() : addon->getIcon()), addon->getTitle()), new QStandardItem(addon->getVersion())});
+	items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
+	items[0]->setCheckable(true);
+	items[0]->setCheckState(addon->isEnabled() ? Qt::Checked : Qt::Unchecked);
+	items[0]->setToolTip(addon->getDescription());
+	items[1]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
+	items[1]->setToolTip(addon->getDescription());
 
-	m_ui->addonsViewWidget->getSourceModel()->appendRow(item);
-	m_ui->addonsViewWidget->getSourceModel()->setItemData(item->index(), metaData);
+	m_ui->addonsViewWidget->getSourceModel()->appendRow(items);
+	m_ui->addonsViewWidget->getSourceModel()->setItemData(items[0]->index(), metaData);
 }
 
 void AddonsPage::load()
