@@ -57,11 +57,12 @@ protected:
 	void changeEvent(QEvent *event) override;
 	void addAddon(Addon *addon, const QMap<int, QVariant> &metaData = {});
 	void load() final override;
-	virtual void delayedLoad() = 0;
-	virtual void removeAddons() = 0;
-	void markAsFullyLoaded();
+	virtual void delayedLoad() = 0;	void markAsFullyLoaded();
 	QStandardItemModel* getModel() const;
 	virtual QIcon getFallbackIcon() const;
+
+protected slots:
+	virtual void removeAddons() = 0;
 
 private:
 	int m_loadingTimer;
