@@ -46,6 +46,7 @@ public:
 	explicit AddonsPage(QWidget *parent);
 	~AddonsPage();
 
+	void print(QPrinter *printer);
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	WebWidget::LoadingState getLoadingState() const;
 

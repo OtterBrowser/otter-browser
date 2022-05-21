@@ -159,6 +159,11 @@ void AddonsPage::showContextMenu(const QPoint &position)
 	menu.exec(m_ui->addonsViewWidget->mapToGlobal(position));
 }
 
+void AddonsPage::print(QPrinter *printer)
+{
+	m_ui->addonsViewWidget->render(printer);
+}
+
 QStandardItemModel *AddonsPage::getModel() const
 {
 	return m_ui->addonsViewWidget->getSourceModel();
