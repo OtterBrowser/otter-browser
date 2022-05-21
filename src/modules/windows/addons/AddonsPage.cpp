@@ -22,6 +22,8 @@
 
 #include "ui_AddonsPage.h"
 
+#include <QtWidgets/QMenu>
+
 namespace Otter
 {
 
@@ -41,6 +43,7 @@ AddonsPage::AddonsPage(QWidget *parent) : CategoryPage(parent),
 	m_ui->addonsViewWidget->installEventFilter(this);
 
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->addonsViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->addonsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &AddonsPage::showContextMenu);
 }
 
 AddonsPage::~AddonsPage()
@@ -137,6 +140,23 @@ void AddonsPage::markAsFullyLoaded()
 	m_isLoading = false;
 
 	emit loadingStateChanged(WebWidget::FinishedLoadingState);
+}
+
+void AddonsPage::showContextMenu(const QPoint &position)
+{
+	QMenu menu(this);
+	menu.addAction(tr("Add Addon…"))->setEnabled(false);
+
+	if (m_ui->addonsViewWidget->selectionModel()->hasSelection())
+	{
+		menu.addSeparator();
+		menu.addAction(tr("Open Addon File"))->setEnabled(false);
+		menu.addAction(tr("Reload Addon"))->setEnabled(false);
+		menu.addSeparator();
+		menu.addAction(tr("Remove Addon…"), this, &AddonsPage::removeAddons);
+	}
+
+	menu.exec(m_ui->addonsViewWidget->mapToGlobal(position));
 }
 
 QStandardItemModel *AddonsPage::getModel() const

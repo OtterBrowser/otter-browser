@@ -63,6 +63,7 @@ protected:
 
 protected slots:
 	virtual void removeAddons() = 0;
+	void showContextMenu(const QPoint &position);
 
 private:
 	int m_loadingTimer;
