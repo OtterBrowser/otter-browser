@@ -151,7 +151,7 @@ void AddonsPage::showContextMenu(const QPoint &position)
 	{
 		menu.addSeparator();
 		menu.addAction(tr("Open Addon File"))->setEnabled(false);
-		menu.addAction(tr("Reload Addon"))->setEnabled(canReloadAddons());
+		menu.addAction(tr("Reload Addon"), this, &AddonsPage::reloadAddons)->setEnabled(canReloadAddons());
 		menu.addSeparator();
 		menu.addAction(tr("Remove Addon…"), this, &AddonsPage::removeAddons);
 	}
@@ -205,6 +205,10 @@ WebWidget::LoadingState AddonsPage::getLoadingState() const
 bool AddonsPage::canReloadAddons() const
 {
 	return false;
+}
+
+void AddonsPage::reloadAddons()
+{
 }
 
 }

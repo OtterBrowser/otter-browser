@@ -64,6 +64,7 @@ protected:
 	virtual bool canReloadAddons() const;
 
 protected slots:
+	virtual void reloadAddons();
 	virtual void removeAddons() = 0;
 	void showContextMenu(const QPoint &position);
 
