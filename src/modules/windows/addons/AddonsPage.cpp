@@ -197,6 +197,11 @@ ActionsManager::ActionDefinition::State AddonsPage::getActionState(int identifie
 	return state;
 }
 
+QModelIndexList AddonsPage::getSelectedIndexes() const
+{
+	return m_ui->addonsViewWidget->selectionModel()->selectedIndexes();
+}
+
 WebWidget::LoadingState AddonsPage::getLoadingState() const
 {
 	return (m_isLoading ? WebWidget::OngoingLoadingState : WebWidget::FinishedLoadingState);
