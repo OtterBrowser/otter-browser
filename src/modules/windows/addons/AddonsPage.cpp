@@ -123,6 +123,14 @@ void AddonsPage::addAddon(Addon *addon, const QMap<int, QVariant> &metaData)
 	m_ui->addonsViewWidget->getSourceModel()->setItemData(items[0]->index(), metaData);
 }
 
+void AddonsPage::openAddons()
+{
+}
+
+void AddonsPage::reloadAddons()
+{
+}
+
 void AddonsPage::load()
 {
 	if (!wasLoaded())
@@ -207,13 +215,14 @@ WebWidget::LoadingState AddonsPage::getLoadingState() const
 	return (m_isLoading ? WebWidget::OngoingLoadingState : WebWidget::FinishedLoadingState);
 }
 
-bool AddonsPage::canReloadAddons() const
+bool AddonsPage::canOpenAddons() const
 {
 	return false;
 }
 
-void AddonsPage::reloadAddons()
+bool AddonsPage::canReloadAddons() const
 {
+	return false;
 }
 
 }

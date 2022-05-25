@@ -62,9 +62,11 @@ protected:
 	QStandardItemModel* getModel() const;
 	virtual QIcon getFallbackIcon() const;
 	QModelIndexList getSelectedIndexes() const;
+	virtual bool canOpenAddons() const;
 	virtual bool canReloadAddons() const;
 
 protected slots:
+	virtual void openAddons();
 	virtual void reloadAddons();
 	virtual void removeAddons() = 0;
 	void showContextMenu(const QPoint &position);
