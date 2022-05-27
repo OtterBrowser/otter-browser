@@ -57,4 +57,25 @@ QIcon UserScriptsPage::getFallbackIcon() const
 	return ThemesManager::createIcon(QLatin1String("addon-user-script"), false);
 }
 
+QVector<UserScript*> UserScriptsPage::getSelectedUserScripts() const
+{
+	const QModelIndexList indexes(getSelectedIndexes());
+	QVector<UserScript*> userScripts;
+	userScripts.reserve(indexes.count());
+
+	for (int i = 0; i < indexes.count(); ++i)
+	{
+		UserScript *script(AddonsManager::getUserScript(indexes.at(i).data(NameRole).toString()));
+
+		if (script)
+		{
+			userScripts.append(script);
+		}
+	}
+
+	userScripts.squeeze();
+
+	return userScripts;
+}
+
 }

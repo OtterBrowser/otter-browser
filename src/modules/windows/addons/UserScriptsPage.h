@@ -38,6 +38,7 @@ protected:
 	void delayedLoad() override;
 	void removeAddons() override;
 	QIcon getFallbackIcon() const override;
+	QVector<UserScript*> getSelectedUserScripts() const;
 };
 
 }
