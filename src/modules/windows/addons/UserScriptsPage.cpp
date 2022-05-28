@@ -21,6 +21,8 @@
 #include "../../../core/ThemesManager.h"
 #include "../../../core/UserScript.h"
 
+#include <QtWidgets/QMessageBox>
+
 namespace Otter
 {
 
@@ -45,6 +47,35 @@ void UserScriptsPage::delayedLoad()
 
 void UserScriptsPage::removeAddons()
 {
+	const QVector<UserScript*> addons(getSelectedUserScripts());
+
+	if (addons.isEmpty())
+	{
+		return;
+	}
+
+	QMessageBox messageBox;
+	messageBox.setWindowTitle(tr("Question"));
+	messageBox.setText(tr("You are about to irreversibly remove %n addon(s).", "", addons.count()));
+	messageBox.setInformativeText(tr("Do you want to continue?"));
+	messageBox.setIcon(QMessageBox::Question);
+	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+	messageBox.setDefaultButton(QMessageBox::Yes);
+
+	if (messageBox.exec() == QMessageBox::Yes)
+	{
+		for (int i = 0; i < addons.count(); ++i)
+		{
+			if (addons.at(i)->canRemove())
+			{
+				addons.at(i)->remove();
+			}
+		}
+	}
+
+	AddonsManager::loadUserScripts();
+
+	save();
 }
 
 QString UserScriptsPage::getTitle() const
