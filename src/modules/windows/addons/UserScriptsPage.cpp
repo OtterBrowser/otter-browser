@@ -45,6 +45,16 @@ void UserScriptsPage::delayedLoad()
 	}
 }
 
+void UserScriptsPage::reloadAddons()
+{
+	const QVector<UserScript*> addons(getSelectedUserScripts());
+
+	for (int i = 0; i < addons.count(); ++i)
+	{
+		addons.at(i)->reload();
+	}
+}
+
 void UserScriptsPage::removeAddons()
 {
 	const QVector<UserScript*> addons(getSelectedUserScripts());
@@ -107,6 +117,11 @@ QVector<UserScript*> UserScriptsPage::getSelectedUserScripts() const
 	userScripts.squeeze();
 
 	return userScripts;
+}
+
+bool UserScriptsPage::canReloadAddons() const
+{
+	return true;
 }
 
 }
