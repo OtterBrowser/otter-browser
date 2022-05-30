@@ -38,9 +38,11 @@ protected:
 	void delayedLoad() override;
 	QIcon getFallbackIcon() const override;
 	QVector<UserScript*> getSelectedUserScripts() const;
+	bool canOpenAddons() const override;
 	bool canReloadAddons() const override;
 
 protected slots:
+	void openAddons() override;
 	void reloadAddons() override;
 	void removeAddons() override;
 };

@@ -45,6 +45,16 @@ void UserScriptsPage::delayedLoad()
 	}
 }
 
+void UserScriptsPage::openAddons()
+{
+	const QVector<UserScript*> addons(getSelectedUserScripts());
+
+	for (int i = 0; i < addons.count(); ++i)
+	{
+		Utils::runApplication({}, addons.at(i)->getPath());
+	}
+}
+
 void UserScriptsPage::reloadAddons()
 {
 	const QVector<UserScript*> addons(getSelectedUserScripts());
@@ -117,6 +127,11 @@ QVector<UserScript*> UserScriptsPage::getSelectedUserScripts() const
 	userScripts.squeeze();
 
 	return userScripts;
+}
+
+bool UserScriptsPage::canOpenAddons() const
+{
+	return true;
 }
 
 bool UserScriptsPage::canReloadAddons() const
