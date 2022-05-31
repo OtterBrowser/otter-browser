@@ -40,7 +40,7 @@ class AddonsPage : public CategoryPage, public ActionExecutor
 public:
 	enum DataRole
 	{
-		NameRole = Qt::UserRole,
+		IdentifierRole = Qt::UserRole,
 	};
 
 	explicit AddonsPage(QWidget *parent);

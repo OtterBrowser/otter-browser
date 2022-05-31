@@ -40,7 +40,7 @@ void UserScriptsPage::delayedLoad()
 
 		if (script)
 		{
-			addAddon(script, {{NameRole, script->getName()}});
+			addAddon(script, {{IdentifierRole, script->getName()}});
 		}
 	}
 }
@@ -116,7 +116,7 @@ QVector<UserScript*> UserScriptsPage::getSelectedUserScripts() const
 
 	for (int i = 0; i < indexes.count(); ++i)
 	{
-		UserScript *script(AddonsManager::getUserScript(indexes.at(i).data(NameRole).toString()));
+		UserScript *script(AddonsManager::getUserScript(indexes.at(i).data(IdentifierRole).toString()));
 
 		if (script)
 		{
