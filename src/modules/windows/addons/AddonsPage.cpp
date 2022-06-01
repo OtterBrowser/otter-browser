@@ -158,7 +158,7 @@ void AddonsPage::showContextMenu(const QPoint &position)
 	if (m_ui->addonsViewWidget->selectionModel()->hasSelection())
 	{
 		menu.addSeparator();
-		menu.addAction(tr("Open Addon File"))->setEnabled(false);
+		menu.addAction(tr("Open Addon File"), this, &AddonsPage::openAddons)->setEnabled(canOpenAddons());
 		menu.addAction(tr("Reload Addon"), this, &AddonsPage::reloadAddons)->setEnabled(canReloadAddons());
 		menu.addSeparator();
 		menu.addAction(tr("Remove Addon…"), this, &AddonsPage::removeAddons);
