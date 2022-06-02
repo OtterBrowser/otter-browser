@@ -56,7 +56,7 @@ public slots:
 protected:
 	void timerEvent(QTimerEvent *event) override;
 	void changeEvent(QEvent *event) override;
-	void addAddon(Addon *addon, const QMap<int, QVariant> &metaData = {});
+	void addAddonEntry(Addon *addon, const QMap<int, QVariant> &metaData = {});
 	void load() final override;
 	virtual void delayedLoad() = 0;	void markAsFullyLoaded();
 	QStandardItemModel* getModel() const;

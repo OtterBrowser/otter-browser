@@ -109,7 +109,7 @@ void AddonsPage::triggerAction(int identifier, const QVariantMap &parameters, Ac
 	}
 }
 
-void AddonsPage::addAddon(Addon *addon, const QMap<int, QVariant> &metaData)
+void AddonsPage::addAddonEntry(Addon *addon, const QMap<int, QVariant> &metaData)
 {
 	QList<QStandardItem*> items({new QStandardItem((addon->getIcon().isNull() ? getFallbackIcon() : addon->getIcon()), addon->getTitle()), new QStandardItem(addon->getVersion())});
 	items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);

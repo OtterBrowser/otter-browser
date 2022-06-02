@@ -40,7 +40,7 @@ void UserScriptsPage::delayedLoad()
 
 		if (script)
 		{
-			addAddon(script, {{IdentifierRole, script->getName()}});
+			addAddonEntry(script, {{IdentifierRole, script->getName()}});
 		}
 	}
 }
