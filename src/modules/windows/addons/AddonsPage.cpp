@@ -153,7 +153,7 @@ void AddonsPage::markAsFullyLoaded()
 void AddonsPage::showContextMenu(const QPoint &position)
 {
 	QMenu menu(this);
-	menu.addAction(tr("Add Addon…"))->setEnabled(false);
+	menu.addAction(tr("Add Addon…"), this, &AddonsPage::addAddon);
 
 	if (m_ui->addonsViewWidget->selectionModel()->hasSelection())
 	{

@@ -42,6 +42,7 @@ protected:
 	bool canReloadAddons() const override;
 
 protected slots:
+	void addAddon() override;
 	void openAddons() override;
 	void reloadAddons() override;
 	void removeAddons() override;

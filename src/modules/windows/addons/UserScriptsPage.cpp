@@ -45,6 +45,10 @@ void UserScriptsPage::delayedLoad()
 	}
 }
 
+void UserScriptsPage::addAddon()
+{
+}
+
 void UserScriptsPage::openAddons()
 {
 	const QVector<UserScript*> addons(getSelectedUserScripts());

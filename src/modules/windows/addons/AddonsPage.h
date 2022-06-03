@@ -66,6 +66,7 @@ protected:
 	virtual bool canReloadAddons() const;
 
 protected slots:
+	virtual void addAddon() = 0;
 	virtual void openAddons();
 	virtual void reloadAddons();
 	virtual void removeAddons() = 0;
