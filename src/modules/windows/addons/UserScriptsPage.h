@@ -30,6 +30,13 @@ class UserScriptsPage final : public AddonsPage
 	Q_OBJECT
 
 public:
+	enum ReplaceMode
+	{
+		UnknownMode = 0,
+		ReplaceAllMode,
+		IgnoreAllMode
+	};
+
 	explicit UserScriptsPage(QWidget *parent);
 
 	QString getTitle() const override;

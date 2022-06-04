@@ -21,6 +21,9 @@
 #include "../../../core/ThemesManager.h"
 #include "../../../core/UserScript.h"
 
+#include <QtCore/QStandardPaths>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -47,6 +50,102 @@ void UserScriptsPage::delayedLoad()
 
 void UserScriptsPage::addAddon()
 {
+	const QStringList sourcePaths(QFileDialog::getOpenFileNames(this, tr("Select Files"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), Utils::formatFileTypes({tr("User Script files (*.js)")})));
+
+	if (sourcePaths.isEmpty())
+	{
+		return;
+	}
+
+	QStringList failedPaths;
+	ReplaceMode replaceMode(UnknownMode);
+
+	for (int i = 0; i < sourcePaths.count(); ++i)
+	{
+		if (sourcePaths.at(i).isEmpty())
+		{
+			continue;
+		}
+
+		const QString scriptName(QFileInfo(sourcePaths.at(i)).completeBaseName());
+		const QString targetDirectory(QDir(SessionsManager::getWritableDataPath(QLatin1String("scripts"))).filePath(scriptName));
+		const QString targetPath(QDir(targetDirectory).filePath(QFileInfo(sourcePaths.at(i)).fileName()));
+		bool isReplacingScript(false);
+
+		if (QFile::exists(targetPath))
+		{
+			if (replaceMode == IgnoreAllMode)
+			{
+				continue;
+			}
+
+			if (replaceMode == ReplaceAllMode)
+			{
+				isReplacingScript = true;
+			}
+			else
+			{
+				QMessageBox messageBox;
+				messageBox.setWindowTitle(tr("Question"));
+				messageBox.setText(tr("User Script with this name already exists:\n%1").arg(targetPath));
+				messageBox.setInformativeText(tr("Do you want to replace it?"));
+				messageBox.setIcon(QMessageBox::Question);
+				messageBox.addButton(QMessageBox::Yes);
+				messageBox.addButton(QMessageBox::No);
+
+				if (i < (sourcePaths.count() - 1))
+				{
+					messageBox.setCheckBox(new QCheckBox(tr("Apply to all")));
+				}
+
+				messageBox.exec();
+
+				isReplacingScript = (messageBox.standardButton(messageBox.clickedButton()) == QMessageBox::Yes);
+
+				if (messageBox.checkBox() && messageBox.checkBox()->isChecked())
+				{
+					replaceMode = (isReplacingScript ? ReplaceAllMode : IgnoreAllMode);
+				}
+			}
+
+			if (!isReplacingScript)
+			{
+				continue;
+			}
+		}
+
+		if ((isReplacingScript && !QDir().remove(targetPath)) || (!isReplacingScript && !QDir().mkpath(targetDirectory)) || !QFile::copy(sourcePaths.at(i), targetPath))
+		{
+			failedPaths.append(sourcePaths.at(i));
+
+			continue;
+		}
+
+		if (isReplacingScript)
+		{
+			UserScript *script(AddonsManager::getUserScript(scriptName));
+
+			if (script)
+			{
+				script->reload();
+			}
+		}
+		else
+		{
+			UserScript script(targetPath);
+
+			addAddonEntry(&script, {{IdentifierRole, script.getName()}});
+		}
+	}
+
+	if (!failedPaths.isEmpty())
+	{
+		QMessageBox::critical(this, tr("Error"), tr("Failed to import following User Script file(s):\n%1", "", failedPaths.count()).arg(failedPaths.join(QLatin1Char('\n'))), QMessageBox::Close);
+	}
+
+	save();
+
+	AddonsManager::loadUserScripts();
 }
 
 void UserScriptsPage::openAddons()
