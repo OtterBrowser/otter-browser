@@ -43,7 +43,7 @@ void UserScriptsPage::delayedLoad()
 
 		if (script)
 		{
-			addAddonEntry(script, {{IdentifierRole, script->getName()}});
+			addAddonEntry(script);
 		}
 	}
 }
@@ -209,6 +209,11 @@ QString UserScriptsPage::getTitle() const
 QIcon UserScriptsPage::getFallbackIcon() const
 {
 	return ThemesManager::createIcon(QLatin1String("addon-user-script"), false);
+}
+
+QVariant UserScriptsPage::getAddonIdentifier(Addon *addon) const
+{
+	return addon->getName();
 }
 
 QVector<UserScript*> UserScriptsPage::getSelectedUserScripts() const

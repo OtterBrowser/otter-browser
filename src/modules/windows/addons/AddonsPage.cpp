@@ -112,6 +112,7 @@ void AddonsPage::triggerAction(int identifier, const QVariantMap &parameters, Ac
 void AddonsPage::addAddonEntry(Addon *addon, const QMap<int, QVariant> &metaData)
 {
 	QList<QStandardItem*> items({new QStandardItem((addon->getIcon().isNull() ? getFallbackIcon() : addon->getIcon()), addon->getTitle()), new QStandardItem(addon->getVersion())});
+	items[0]->setData(getAddonIdentifier(addon), IdentifierRole);
 	items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
 	items[0]->setCheckable(true);
 	items[0]->setCheckState(addon->isEnabled() ? Qt::Checked : Qt::Unchecked);

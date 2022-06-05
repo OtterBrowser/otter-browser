@@ -61,6 +61,7 @@ protected:
 	virtual void delayedLoad() = 0;	void markAsFullyLoaded();
 	QStandardItemModel* getModel() const;
 	virtual QIcon getFallbackIcon() const;
+	virtual QVariant getAddonIdentifier(Addon *addon) const = 0;
 	QModelIndexList getSelectedIndexes() const;
 	virtual bool canOpenAddons() const;
 	virtual bool canReloadAddons() const;
