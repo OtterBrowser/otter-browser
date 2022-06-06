@@ -165,6 +165,8 @@ void UserScriptsPage::reloadAddons()
 	for (int i = 0; i < addons.count(); ++i)
 	{
 		addons.at(i)->reload();
+
+		updateAddonEntry(addons.at(i));
 	}
 }
 

@@ -124,6 +124,27 @@ void AddonsPage::addAddonEntry(Addon *addon, const QMap<int, QVariant> &metaData
 	m_ui->addonsViewWidget->getSourceModel()->setItemData(items[0]->index(), metaData);
 }
 
+void AddonsPage::updateAddonEntry(Addon *addon)
+{
+	const QVariant identifier(getAddonIdentifier(addon));
+
+	for (int i = 0; i < m_ui->addonsViewWidget->getRowCount(); ++i)
+	{
+		const QModelIndex index(m_ui->addonsViewWidget->getIndex(i));
+
+		if (index.data(IdentifierRole) == identifier)
+		{
+			m_ui->addonsViewWidget->setData(index, (addon->getIcon().isNull() ? getFallbackIcon() : addon->getIcon()), Qt::DecorationRole);
+			m_ui->addonsViewWidget->setData(index, addon->getTitle(), Qt::DisplayRole);
+			m_ui->addonsViewWidget->setData(index, addon->getDescription(), Qt::ToolTipRole);
+			m_ui->addonsViewWidget->setData(index.sibling(i, 1), addon->getVersion(), Qt::DisplayRole);
+			m_ui->addonsViewWidget->setData(index.sibling(i, 1), addon->getDescription(), Qt::ToolTipRole);
+
+			return;
+		}
+	}
+}
+
 void AddonsPage::openAddons()
 {
 }
