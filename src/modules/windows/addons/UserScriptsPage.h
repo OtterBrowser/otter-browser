@@ -44,7 +44,7 @@ public:
 protected:
 	void delayedLoad() override;
 	QIcon getFallbackIcon() const override;
-	QVariant getAddonIdentifier(Addon *addon) const override;
+	QVariant getAddonIdentifier(Addon *addon) const;
 	QVector<UserScript*> getSelectedUserScripts() const;
 	bool canOpenAddons() const override;
 	bool canReloadAddons() const override;
