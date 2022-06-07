@@ -31,6 +31,15 @@ namespace Otter
 
 UserScriptsPage::UserScriptsPage(QWidget *parent) : AddonsPage(parent)
 {
+	connect(AddonsManager::getInstance(), &AddonsManager::userScriptModified, this, [&](const QString &name)
+	{
+		Addon *addon(AddonsManager::getUserScript(name));
+
+		if (addon)
+		{
+			updateAddonEntry(addon);
+		}
+	});
 }
 
 void UserScriptsPage::delayedLoad()
