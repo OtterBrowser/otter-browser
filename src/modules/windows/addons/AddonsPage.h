@@ -81,6 +81,7 @@ private:
 
 signals:
 	void loadingStateChanged(WebWidget::LoadingState state);
+	void selectionChanged();
 };
 
 }
