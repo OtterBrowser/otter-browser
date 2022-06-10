@@ -41,6 +41,9 @@ public:
 
 	QString getTitle() const override;
 
+public slots:
+	void save() override;
+
 protected:
 	void delayedLoad() override;
 	QIcon getFallbackIcon() const override;

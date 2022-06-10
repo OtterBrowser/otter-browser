@@ -18,9 +18,12 @@
 **************************************************************************/
 
 #include "UserScriptsPage.h"
+#include "../../../core/JsonSettings.h"
+#include "../../../core/SessionsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/UserScript.h"
 
+#include <QtCore/QJsonObject>
 #include <QtCore/QStandardPaths>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QFileDialog>
@@ -210,6 +213,41 @@ void UserScriptsPage::removeAddons()
 	AddonsManager::loadUserScripts();
 
 	save();
+}
+
+void UserScriptsPage::save()
+{
+	QStandardItemModel *model(getModel());
+	QModelIndexList indexesToRemove;
+	QJsonObject settingsObject;
+
+	for (int i = 0; i < model->rowCount(); ++i)
+	{
+		const QModelIndex index(model->index(i, 0));
+
+		if (index.isValid())
+		{
+			const QString name(index.data(IdentifierRole).toString());
+
+			if (!name.isEmpty() && AddonsManager::getUserScript(name))
+			{
+				settingsObject.insert(name, QJsonObject({{QLatin1String("isEnabled"), QJsonValue(index.data(Qt::CheckStateRole).toInt() == Qt::Checked)}}));
+			}
+			else
+			{
+				indexesToRemove.append(index);
+			}
+		}
+	}
+
+	JsonSettings settings;
+	settings.setObject(settingsObject);
+	settings.save(SessionsManager::getWritableDataPath(QLatin1String("scripts/scripts.json")));
+
+	for (int i = (indexesToRemove.count() - 1); i >= 0; --i)
+	{
+		model->removeRow(indexesToRemove.at(i).row(), indexesToRemove.at(i).parent());
+	}
 }
 
 QString UserScriptsPage::getTitle() const
