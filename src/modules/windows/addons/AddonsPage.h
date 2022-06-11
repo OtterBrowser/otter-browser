@@ -52,6 +52,7 @@ public:
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
+	virtual void addAddon() = 0;
 
 protected:
 	void timerEvent(QTimerEvent *event) override;
@@ -68,7 +69,6 @@ protected:
 	virtual bool canReloadAddons() const;
 
 protected slots:
-	virtual void addAddon() = 0;
 	virtual void openAddons();
 	virtual void reloadAddons();
 	virtual void removeAddons() = 0;
