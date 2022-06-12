@@ -24,7 +24,7 @@ mark_as_advanced(Hunspell_INCLUDE_DIR Hunspell_LIBRARIES)
 
 if (Hunspell_FOUND)
     add_library(Hunspell::Hunspell INTERFACE IMPORTED)
-    set_target_properties(Qt5::WebKitWidgets PROPERTIES
+    set_target_properties(Hunspell::Hunspell PROPERTIES
         INTERFACE_COMPILE_DEFINITIONS "${Hunspell_DEFINITIONS}"
         INTERFACE_INCLUDE_DIRECTORIES "${Hunspell_INCLUDE_DIR}"
         INTERFACE_LINK_LIBRARIES "${Hunspell_LIBRARIES}"
