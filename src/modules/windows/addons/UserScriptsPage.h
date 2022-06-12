@@ -57,6 +57,9 @@ protected slots:
 	void openAddons() override;
 	void reloadAddons() override;
 	void removeAddons() override;
+
+private:
+	QStringList m_addonsToRemove;
 };
 
 }

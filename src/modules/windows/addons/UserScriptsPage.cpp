@@ -191,6 +191,7 @@ void UserScriptsPage::removeAddons()
 		return;
 	}
 
+	bool hasAddonsToRemove(false);
 	QMessageBox messageBox;
 	messageBox.setWindowTitle(tr("Question"));
 	messageBox.setText(tr("You are about to irreversibly remove %n addon(s).", "", addons.count()));
@@ -205,18 +206,31 @@ void UserScriptsPage::removeAddons()
 		{
 			if (addons.at(i)->canRemove())
 			{
-				addons.at(i)->remove();
+				m_addonsToRemove.append(addons.at(i)->getName());
+
+				hasAddonsToRemove = true;
 			}
 		}
 	}
 
-	AddonsManager::loadUserScripts();
-
-	save();
+	if (hasAddonsToRemove)
+	{
+		emit settingsModified();
+	}
 }
 
 void UserScriptsPage::save()
 {
+	for (int i = 0; i < m_addonsToRemove.count(); ++i)
+	{
+		Addon *addon(AddonsManager::getUserScript(m_addonsToRemove.at(i)));
+
+		if (addon)
+		{
+			addon->remove();
+		}
+	}
+
 	QStandardItemModel *model(getModel());
 	QModelIndexList indexesToRemove;
 	QJsonObject settingsObject;
@@ -248,6 +262,8 @@ void UserScriptsPage::save()
 	{
 		model->removeRow(indexesToRemove.at(i).row(), indexesToRemove.at(i).parent());
 	}
+
+	m_addonsToRemove.clear();
 }
 
 QString UserScriptsPage::getTitle() const
