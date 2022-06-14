@@ -80,6 +80,7 @@ private:
 	Ui::AddonsPage *m_ui;
 
 signals:
+	void currentAddonChanged(const QString &title, const QUrl &url);
 	void loadingStateChanged(WebWidget::LoadingState state);
 	void selectionChanged();
 };
