@@ -44,7 +44,7 @@ AddonsPage::AddonsPage(QWidget *parent) : CategoryPage(parent),
 
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->addonsViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->addonsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &AddonsPage::showContextMenu);
-	connect(m_ui->addonsViewWidget->selectionModel(), &QItemSelectionModel::selectionChanged, this, &AddonsPage::selectionChanged);
+	connect(m_ui->addonsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &AddonsPage::needsActionsUpdate);
 }
 
 AddonsPage::~AddonsPage()

@@ -57,7 +57,7 @@ AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window
 	{
 		m_ui->saveButton->setEnabled(true);
 	});
-	connect(m_currentPage, &AddonsPage::selectionChanged, [&]()
+	connect(m_currentPage, &AddonsPage::needsActionsUpdate, [&]()
 	{
 		emit arbitraryActionsStateChanged({ActionsManager::DeleteAction});
 	});

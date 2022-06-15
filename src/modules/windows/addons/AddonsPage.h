@@ -82,7 +82,7 @@ private:
 signals:
 	void currentAddonChanged(const QString &title, const QUrl &url);
 	void loadingStateChanged(WebWidget::LoadingState state);
-	void selectionChanged();
+	void needsActionsUpdate();
 };
 
 }
