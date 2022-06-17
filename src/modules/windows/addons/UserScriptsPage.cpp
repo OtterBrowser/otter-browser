@@ -35,6 +35,19 @@ namespace Otter
 
 UserScriptsPage::UserScriptsPage(QWidget *parent) : AddonsPage(parent)
 {
+	connect(this, &AddonsPage::needsActionsUpdate, this, [&]()
+	{
+		const QModelIndexList indexes(getSelectedIndexes());
+
+		if (indexes.isEmpty())
+		{
+			emit currentAddonChanged(nullptr);
+		}
+		else
+		{
+			emit currentAddonChanged(AddonsManager::getUserScript(indexes.first().data(IdentifierRole).toString()));
+		}
+	});
 	connect(AddonsManager::getInstance(), &AddonsManager::userScriptModified, this, [&](const QString &name)
 	{
 		Addon *addon(AddonsManager::getUserScript(name));
