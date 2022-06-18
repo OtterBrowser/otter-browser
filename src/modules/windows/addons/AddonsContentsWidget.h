@@ -57,6 +57,9 @@ public slots:
 protected:
 	void changeEvent(QEvent *event) override;
 
+protected slots:
+	void updateDetails(Addon *addon);
+
 private:
 	AddonsPage *m_currentPage;
 	Ui::AddonsContentsWidget *m_ui;

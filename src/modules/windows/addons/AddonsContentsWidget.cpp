@@ -45,6 +45,10 @@ AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window
 	{
 		m_ui->detailsWidget->hide();
 	}
+	else
+	{
+		connect(m_currentPage, &AddonsPage::currentAddonChanged, this, &AddonsContentsWidget::updateDetails);
+	}
 
 	connect(m_ui->saveButton, &QPushButton::clicked, this, [&]()
 	{
@@ -99,6 +103,18 @@ void AddonsContentsWidget::triggerAction(int identifier, const QVariantMap &para
 			ContentsWidget::triggerAction(identifier, parameters, trigger);
 
 			break;
+	}
+}
+
+void AddonsContentsWidget::updateDetails(Addon *addon)
+{
+	m_ui->titleLabelWidget->clear();
+	m_ui->updateUrlLabelWidget->clear();
+
+	if (addon)
+	{
+		m_ui->titleLabelWidget->setText(addon->getTitle());
+		m_ui->updateUrlLabelWidget->setText(addon->getUpdateUrl().toString());
 	}
 }
 
