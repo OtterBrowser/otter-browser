@@ -195,9 +195,14 @@ void AddonsPage::print(QPrinter *printer)
 	m_ui->addonsViewWidget->render(printer);
 }
 
-QStandardItemModel *AddonsPage::getModel() const
+QStandardItemModel* AddonsPage::getModel() const
 {
 	return m_ui->addonsViewWidget->getSourceModel();
+}
+
+Addon* AddonsPage::getCurrentAddon() const
+{
+	return nullptr;
 }
 
 QIcon AddonsPage::getFallbackIcon() const
