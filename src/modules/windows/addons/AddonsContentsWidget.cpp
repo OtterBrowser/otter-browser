@@ -47,6 +47,8 @@ AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window
 	}
 	else
 	{
+		updateDetails(m_currentPage->getCurrentAddon());
+
 		connect(m_currentPage, &AddonsPage::currentAddonChanged, this, &AddonsContentsWidget::updateDetails);
 	}
 
