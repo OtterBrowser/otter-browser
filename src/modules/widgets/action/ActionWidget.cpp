@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -217,7 +217,10 @@ NavigationActionWidget::NavigationActionWidget(Window *window, const ToolBarsMan
 
 	if (toolBar && toolBar->getDefinition().isGlobal())
 	{
-		connect(toolBar, &ToolBarWidget::windowChanged, this, &NavigationActionWidget::setWindow);
+		connect(toolBar, &ToolBarWidget::windowChanged, this, [&](Window *window)
+		{
+			m_window = window;
+		});
 	}
 
 	connect(menu(), &QMenu::aboutToShow, this, &NavigationActionWidget::updateMenu);
@@ -256,11 +259,6 @@ void NavigationActionWidget::updateMenu()
 			addMenuEntry(i, history.entries.at(i));
 		}
 	}
-}
-
-void NavigationActionWidget::setWindow(Window *window)
-{
-	m_window = window;
 }
 
 bool NavigationActionWidget::event(QEvent *event)
