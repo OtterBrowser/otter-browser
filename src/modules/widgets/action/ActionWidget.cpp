@@ -99,7 +99,8 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 		case ActionsManager::NewWindowAction:
 		case ActionsManager::NewWindowPrivateAction:
 			{
-				SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(((identifier == ActionsManager::NewWindowAction || identifier == ActionsManager::NewWindowPrivateAction) ? SessionsManager::NewWindowOpen : SessionsManager::NewTabOpen), event->button(), event->modifiers()));
+				const bool isNewWindow(identifier == ActionsManager::NewWindowAction || identifier == ActionsManager::NewWindowPrivateAction);
+				SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints((isNewWindow ? SessionsManager::NewWindowOpen : SessionsManager::NewTabOpen), event->button(), event->modifiers()));
 
 				if (identifier == ActionsManager::NewTabPrivateAction || identifier == ActionsManager::NewWindowPrivateAction)
 				{
