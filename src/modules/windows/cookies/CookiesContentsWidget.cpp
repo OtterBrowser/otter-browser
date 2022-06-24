@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -291,43 +291,45 @@ void CookiesContentsWidget::handleCookieRemoved(const QNetworkCookie &cookie)
 	const QString domain(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
 	QStandardItem *domainItem(findDomainItem(domain));
 
-	if (domainItem)
+	if (!domainItem)
 	{
-		QPoint point;
+		return;
+	}
 
-		for (int j = 0; j < domainItem->rowCount(); ++j)
+	QPoint point;
+
+	for (int j = 0; j < domainItem->rowCount(); ++j)
+	{
+		if (cookie.hasSameIdentifier(getCookie(ItemModel::getItemData(domainItem->child(j, 0), Qt::UserRole))))
 		{
-			if (cookie.hasSameIdentifier(getCookie(ItemModel::getItemData(domainItem->child(j, 0), Qt::UserRole))))
+			const QStandardItem *cookieItem(domainItem->child(j, 0));
+
+			if (cookieItem)
 			{
-				const QStandardItem *cookieItem(domainItem->child(j, 0));
-
-				if (cookieItem)
-				{
-					point = m_ui->cookiesViewWidget->visualRect(cookieItem->index()).center();
-				}
-
-				domainItem->removeRow(j);
-
-				break;
+				point = m_ui->cookiesViewWidget->visualRect(cookieItem->index()).center();
 			}
-		}
 
-		if (domainItem->rowCount() == 0)
-		{
-			m_model->invisibleRootItem()->removeRow(domainItem->row());
-		}
-		else
-		{
-			domainItem->setText(QStringLiteral("%1 (%2)").arg(domain).arg(domainItem->rowCount()));
-		}
+			domainItem->removeRow(j);
 
-		if (!point.isNull())
-		{
-			const QModelIndex index(m_ui->cookiesViewWidget->indexAt(point));
-
-			m_ui->cookiesViewWidget->setCurrentIndex(index);
-			m_ui->cookiesViewWidget->selectionModel()->select(index, QItemSelectionModel::Select);
+			break;
 		}
+	}
+
+	if (domainItem->rowCount() == 0)
+	{
+		m_model->invisibleRootItem()->removeRow(domainItem->row());
+	}
+	else
+	{
+		domainItem->setText(QStringLiteral("%1 (%2)").arg(domain).arg(domainItem->rowCount()));
+	}
+
+	if (!point.isNull())
+	{
+		const QModelIndex index(m_ui->cookiesViewWidget->indexAt(point));
+
+		m_ui->cookiesViewWidget->setCurrentIndex(index);
+		m_ui->cookiesViewWidget->selectionModel()->select(index, QItemSelectionModel::Select);
 	}
 }
 
