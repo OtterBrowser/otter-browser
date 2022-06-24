@@ -298,18 +298,18 @@ void CookiesContentsWidget::handleCookieRemoved(const QNetworkCookie &cookie)
 
 	QPoint point;
 
-	for (int j = 0; j < domainItem->rowCount(); ++j)
+	for (int i = 0; i < domainItem->rowCount(); ++i)
 	{
-		if (cookie.hasSameIdentifier(getCookie(ItemModel::getItemData(domainItem->child(j, 0), Qt::UserRole))))
+		if (cookie.hasSameIdentifier(getCookie(ItemModel::getItemData(domainItem->child(i, 0), Qt::UserRole))))
 		{
-			const QStandardItem *cookieItem(domainItem->child(j, 0));
+			const QStandardItem *cookieItem(domainItem->child(i, 0));
 
 			if (cookieItem)
 			{
 				point = m_ui->cookiesViewWidget->visualRect(cookieItem->index()).center();
 			}
 
-			domainItem->removeRow(j);
+			domainItem->removeRow(i);
 
 			break;
 		}
