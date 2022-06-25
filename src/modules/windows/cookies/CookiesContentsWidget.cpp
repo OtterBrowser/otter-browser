@@ -142,7 +142,7 @@ void CookiesContentsWidget::removeCookies()
 
 			for (int j = 0; j < domainItem->rowCount(); ++j)
 			{
-				cookies.append(getCookie(ItemModel::getItemData(domainItem->child(j, 0), Qt::UserRole)));
+				cookies.append(getCookie(ItemModel::getItemData(domainItem->child(j, 0), CookieRole)));
 			}
 		}
 		else
@@ -151,7 +151,7 @@ void CookiesContentsWidget::removeCookies()
 
 			if (cookieItem)
 			{
-				cookies.append(getCookie(cookieItem->index().data(Qt::UserRole)));
+				cookies.append(getCookie(cookieItem->index().data(CookieRole)));
 			}
 		}
 	}
@@ -182,7 +182,7 @@ void CookiesContentsWidget::removeDomainCookies()
 		{
 			for (int j = 0; j < domainItem->rowCount(); ++j)
 			{
-				const QNetworkCookie cookie(getCookie(ItemModel::getItemData(domainItem->child(j, 0), Qt::UserRole)));
+				const QNetworkCookie cookie(getCookie(ItemModel::getItemData(domainItem->child(j, 0), CookieRole)));
 
 				if (!cookies.contains(cookie))
 				{
@@ -234,7 +234,7 @@ void CookiesContentsWidget::removeAllCookies()
 
 void CookiesContentsWidget::cookieProperties()
 {
-	CookiePropertiesDialog dialog(getCookie(m_ui->cookiesViewWidget->currentIndex().data(Qt::UserRole)), this);
+	CookiePropertiesDialog dialog(getCookie(m_ui->cookiesViewWidget->currentIndex().data(CookieRole)), this);
 
 	if (dialog.exec() == QDialog::Accepted && dialog.isModified())
 	{
@@ -254,7 +254,7 @@ void CookiesContentsWidget::handleCookieAdded(const QNetworkCookie &cookie)
 		{
 			QStandardItem *childItem(domainItem->child(i, 0));
 
-			if (childItem && cookie.hasSameIdentifier(getCookie(childItem->index().data(Qt::UserRole))))
+			if (childItem && cookie.hasSameIdentifier(getCookie(childItem->index().data(CookieRole))))
 			{
 				childItem->setData(cookie.toRawForm());
 
@@ -278,7 +278,7 @@ void CookiesContentsWidget::handleCookieAdded(const QNetworkCookie &cookie)
 	}
 
 	QStandardItem *cookieItem(new QStandardItem(QString::fromLatin1(cookie.name())));
-	cookieItem->setData(cookie.toRawForm(), Qt::UserRole);
+	cookieItem->setData(cookie.toRawForm(), CookieRole);
 	cookieItem->setToolTip(QString::fromLatin1(cookie.name()));
 	cookieItem->setFlags(cookieItem->flags() | Qt::ItemNeverHasChildren);
 
@@ -300,7 +300,7 @@ void CookiesContentsWidget::handleCookieRemoved(const QNetworkCookie &cookie)
 
 	for (int i = 0; i < domainItem->rowCount(); ++i)
 	{
-		if (cookie.hasSameIdentifier(getCookie(ItemModel::getItemData(domainItem->child(i, 0), Qt::UserRole))))
+		if (cookie.hasSameIdentifier(getCookie(ItemModel::getItemData(domainItem->child(i, 0), CookieRole))))
 		{
 			const QStandardItem *cookieItem(domainItem->child(i, 0));
 
@@ -411,7 +411,7 @@ void CookiesContentsWidget::updateActions()
 
 	if (indexes.count() == 1)
 	{
-		const QNetworkCookie cookie(getCookie(indexes.value(0).data(Qt::UserRole)));
+		const QNetworkCookie cookie(getCookie(indexes.value(0).data(CookieRole)));
 
 		if (!cookie.name().isEmpty())
 		{

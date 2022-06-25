@@ -40,6 +40,11 @@ class CookiesContentsWidget final : public ContentsWidget
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		CookieRole = Qt::UserRole
+	};
+
 	explicit CookiesContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
 	~CookiesContentsWidget();
 
