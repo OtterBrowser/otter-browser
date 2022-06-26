@@ -381,32 +381,34 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			{
 				const QVector<PasswordsManager::PasswordInformation> passwords(PasswordsManager::getPasswords(getUrl(), PasswordsManager::FormPassword));
 
-				if (!passwords.isEmpty())
+				if (passwords.isEmpty())
 				{
-					PasswordsManager::PasswordInformation password;
+					return;
+				}
 
-					if (passwords.count() == 1)
+				PasswordsManager::PasswordInformation password;
+
+				if (passwords.count() == 1)
+				{
+					password = passwords.value(0);
+				}
+				else
+				{
+					SelectPasswordDialog dialog(passwords, this);
+
+					if (dialog.exec() == QDialog::Accepted)
 					{
-						password = passwords.value(0);
+						password = dialog.getPassword();
 					}
-					else
-					{
-						SelectPasswordDialog dialog(passwords, this);
+				}
 
-						if (dialog.exec() == QDialog::Accepted)
-						{
-							password = dialog.getPassword();
-						}
-					}
+				if (password.isValid())
+				{
+					m_webWidget->fillPassword(password);
 
-					if (password.isValid())
-					{
-						m_webWidget->fillPassword(password);
+					password.timeUsed = QDateTime::currentDateTimeUtc();
 
-						password.timeUsed = QDateTime::currentDateTimeUtc();
-
-						PasswordsManager::addPassword(password);
-					}
+					PasswordsManager::addPassword(password);
 				}
 			}
 
