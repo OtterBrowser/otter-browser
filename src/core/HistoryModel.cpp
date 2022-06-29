@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -76,6 +76,11 @@ QIcon HistoryModel::Entry::getIcon() const
 quint64 HistoryModel::Entry::getIdentifier() const
 {
 	return data(IdentifierRole).toULongLong();
+}
+
+bool HistoryModel::Entry::isValid() const
+{
+	return (!data(IdentifierRole).isNull() && data(IdentifierRole).toULongLong() != 0);
 }
 
 HistoryModel::HistoryModel(const QString &path, HistoryType type, QObject *parent) : QStandardItemModel(parent),

@@ -259,7 +259,7 @@ void HistoryContentsWidget::copyEntryLink()
 
 void HistoryContentsWidget::handleEntryAdded(HistoryModel::Entry *entry)
 {
-	if (!entry || entry->getIdentifier() == 0 || findEntry(entry->getIdentifier()))
+	if (!entry || !entry->isValid() || findEntry(entry->getIdentifier()))
 	{
 		return;
 	}
@@ -315,7 +315,7 @@ void HistoryContentsWidget::handleEntryAdded(HistoryModel::Entry *entry)
 
 void HistoryContentsWidget::handleEntryModified(HistoryModel::Entry *entry)
 {
-	if (!entry || entry->getIdentifier() == 0)
+	if (!entry || !entry->isValid())
 	{
 		return;
 	}
@@ -337,7 +337,7 @@ void HistoryContentsWidget::handleEntryModified(HistoryModel::Entry *entry)
 
 void HistoryContentsWidget::handleEntryRemoved(HistoryModel::Entry *entry)
 {
-	if (!entry || entry->getIdentifier() == 0)
+	if (!entry || !entry->isValid())
 	{
 		return;
 	}
