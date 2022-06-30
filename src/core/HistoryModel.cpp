@@ -217,17 +217,19 @@ HistoryModel::Entry* HistoryModel::addEntry(const QUrl &url, const QString &titl
 	Entry *entry(new Entry());
 	entry->setIcon(icon);
 
+	const QModelIndex index(entry->index());
+
 	insertRow(0, entry);
-	setData(entry->index(), url, UrlRole);
-	setData(entry->index(), title, TitleRole);
-	setData(entry->index(), date, TimeVisitedRole);
+	setData(index, url, UrlRole);
+	setData(index, title, TitleRole);
+	setData(index, date, TimeVisitedRole);
 
 	if (identifier == 0 || m_identifiers.contains(identifier))
 	{
 		identifier = (m_identifiers.isEmpty() ? 1 : (m_identifiers.lastKey() + 1));
 	}
 
-	setData(entry->index(), identifier, IdentifierRole);
+	setData(index, identifier, IdentifierRole);
 
 	m_identifiers[identifier] = entry;
 
