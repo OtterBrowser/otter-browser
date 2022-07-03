@@ -203,11 +203,11 @@ HistoryModel::Entry* HistoryModel::addEntry(const QUrl &url, const QString &titl
 
 	if (m_type == TypedHistory && hasEntry(url))
 	{
-		const QUrl normalizedUrl(Utils::normalizeUrl(url));
+		const QVector<Entry*> entries(m_urls[Utils::normalizeUrl(url)]);
 
-		for (int i = 0; i < m_urls[normalizedUrl].count(); ++i)
+		for (int i = 0; i < entries.count(); ++i)
 		{
-			removeEntry(m_urls[normalizedUrl].at(i)->getIdentifier());
+			removeEntry(entries.at(i)->getIdentifier());
 		}
 	}
 
