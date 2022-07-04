@@ -379,7 +379,7 @@ bool HistoryModel::setData(const QModelIndex &index, const QVariant &value, int 
 		{
 			if (!m_urls.contains(newUrl))
 			{
-				m_urls[newUrl] = QVector<Entry*>();
+				m_urls[newUrl] = {};
 			}
 
 			m_urls[newUrl].append(entry);
