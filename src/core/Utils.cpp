@@ -277,6 +277,7 @@ QString createErrorPage(const ErrorPageInformation &information)
 			ErrorPageInformation::PageAction action;
 			action.name = QLatin1String("advanced");
 			action.title = QCoreApplication::translate("utils", "Advanced");
+			action.type = ErrorPageInformation::OtherAction;
 
 			actions.append(action);
 		}
