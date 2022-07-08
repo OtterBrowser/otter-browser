@@ -462,7 +462,9 @@ QString formatDateTime(const QDateTime &dateTime, QString format, bool allowFanc
 		format = SettingsManager::getOption(SettingsManager::Interface_DateTimeFormatOption).toString();
 	}
 
-	return (format.isEmpty() ? QLocale().toString(localDateTime, QLocale::ShortFormat) : QLocale().toString(localDateTime, format));
+	QLocale locale;
+
+	return (format.isEmpty() ? locale.toString(localDateTime, QLocale::ShortFormat) : locale.toString(localDateTime, format));
 }
 
 QString formatUnit(qint64 value, bool isSpeed, int precision, bool appendRaw)
