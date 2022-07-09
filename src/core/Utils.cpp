@@ -533,16 +533,16 @@ QString normalizePath(const QString &path)
 
 QUrl expandUrl(const QUrl &url)
 {
-	if (url.isValid() && url.scheme().isEmpty() && !url.path().startsWith(QLatin1Char('/')))
+	if (url.isValid() && url.scheme().isEmpty())
 	{
-		QUrl httpUrl(url);
-		httpUrl.setScheme(QLatin1String("http"));
+		if (!url.path().startsWith(QLatin1Char('/')))
+		{
+			QUrl httpUrl(url);
+			httpUrl.setScheme(QLatin1String("http"));
 
-		return httpUrl;
-	}
+			return httpUrl;
+		}
 
-	if (url.isValid() && (url.scheme().isEmpty() || url.scheme() == QLatin1String("file")))
-	{
 		QUrl localUrl(url);
 		localUrl.setScheme(QLatin1String("file"));
 
