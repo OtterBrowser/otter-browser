@@ -568,10 +568,10 @@ QLocale createLocale(const QString &name)
 {
 	if (name == QLatin1String("pt"))
 	{
-		return QLocale(QLocale::Portuguese, QLocale::Portugal);
+		return {QLocale::Portuguese, QLocale::Portugal};
 	}
 
-	return QLocale(name);
+	return {name};
 }
 
 QPixmap loadPixmapFromDataUri(const QString &data)
