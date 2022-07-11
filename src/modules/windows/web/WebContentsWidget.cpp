@@ -956,18 +956,18 @@ void WebContentsWidget::handleInspectorVisibilityChangeRequest(bool isVisible)
 		return;
 	}
 
-	QWidget *inspector(m_webWidget->getInspector());
+	QWidget *inspectorWidget(m_webWidget->getInspector());
 
-	if (!inspector)
+	if (!inspectorWidget)
 	{
 		return;
 	}
 
 	if (isVisible)
 	{
-		if (m_splitter->indexOf(inspector) < 0)
+		if (m_splitter->indexOf(inspectorWidget) < 0)
 		{
-			m_splitter->addWidget(inspector);
+			m_splitter->addWidget(inspectorWidget);
 
 			if (height() > 500)
 			{
@@ -979,11 +979,11 @@ void WebContentsWidget::handleInspectorVisibilityChangeRequest(bool isVisible)
 			}
 		}
 
-		inspector->show();
+		inspectorWidget->show();
 	}
 	else
 	{
-		inspector->hide();
+		inspectorWidget->hide();
 	}
 }
 
