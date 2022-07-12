@@ -865,28 +865,30 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 
 void WebContentsWidget::handleSavePasswordRequest(const PasswordsManager::PasswordInformation &password, bool isUpdate)
 {
-	if (!m_passwordBarWidget)
+	if (m_passwordBarWidget)
 	{
-		bool isValid(false);
+		return;
+	}
 
-		for (int i = 0; i < password.fields.count(); ++i)
+	bool isValid(false);
+
+	for (int i = 0; i < password.fields.count(); ++i)
+	{
+		if (password.fields.at(i).type == PasswordsManager::PasswordField && !password.fields.at(i).value.isEmpty())
 		{
-			if (password.fields.at(i).type == PasswordsManager::PasswordField && !password.fields.at(i).value.isEmpty())
-			{
-				isValid = true;
+			isValid = true;
 
-				break;
-			}
+			break;
 		}
+	}
 
-		if (isValid)
-		{
-			m_passwordBarWidget = new PasswordBarWidget(password, isUpdate, this);
+	if (isValid)
+	{
+		m_passwordBarWidget = new PasswordBarWidget(password, isUpdate, this);
 
-			connect(m_passwordBarWidget, &PasswordBarWidget::requestedClose, this, &WebContentsWidget::closePasswordBar);
+		connect(m_passwordBarWidget, &PasswordBarWidget::requestedClose, this, &WebContentsWidget::closePasswordBar);
 
-			addInformationBar(m_passwordBarWidget);
-		}
+		addInformationBar(m_passwordBarWidget);
 	}
 }
 
