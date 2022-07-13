@@ -917,7 +917,7 @@ void WebContentsWidget::handlePermissionRequest(WebWidget::FeaturePermission fea
 	{
 		for (int i = 0; i < m_permissionBarWidgets.count(); ++i)
 		{
-			if (m_permissionBarWidgets.at(i)->getFeature() == feature && m_permissionBarWidgets.at(i)->getUrl() == url)
+			if (m_permissionBarWidgets.at(i)->hasMatch(feature, url))
 			{
 				m_layout->removeWidget(m_permissionBarWidgets.at(i));
 
@@ -933,7 +933,7 @@ void WebContentsWidget::handlePermissionRequest(WebWidget::FeaturePermission fea
 	{
 		for (int i = 0; i < m_permissionBarWidgets.count(); ++i)
 		{
-			if (m_permissionBarWidgets.at(i)->getFeature() == feature && m_permissionBarWidgets.at(i)->getUrl() == url)
+			if (m_permissionBarWidgets.at(i)->hasMatch(feature, url))
 			{
 				return;
 			}

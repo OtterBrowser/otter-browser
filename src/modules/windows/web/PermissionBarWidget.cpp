@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -140,6 +140,11 @@ QUrl PermissionBarWidget::getUrl() const
 WebWidget::FeaturePermission PermissionBarWidget::getFeature() const
 {
 	return m_feature;
+}
+
+bool PermissionBarWidget::hasMatch(WebWidget::FeaturePermission feature, const QUrl &url) const
+{
+	return (m_feature == feature && m_url == url);
 }
 
 }
