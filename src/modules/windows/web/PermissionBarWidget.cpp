@@ -117,7 +117,7 @@ void PermissionBarWidget::handlePermissionGranted()
 
 	if (m_ui->permissionComboBox->currentIndex() == 0)
 	{
-		emit permissionChanged(WebWidget::GrantedPermission | WebWidget::KeepAskingPermission);
+		emit permissionChanged(WebWidget::GrantedPermission | WebWidget::KeepAskingForPermission);
 	}
 	else
 	{
@@ -129,7 +129,7 @@ void PermissionBarWidget::handlePermissionDenied()
 {
 	hide();
 
-	emit permissionChanged(WebWidget::DeniedPermission | WebWidget::KeepAskingPermission);
+	emit permissionChanged(WebWidget::DeniedPermission | WebWidget::KeepAskingForPermission);
 }
 
 QUrl PermissionBarWidget::getUrl() const

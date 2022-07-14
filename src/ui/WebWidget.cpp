@@ -615,7 +615,7 @@ void WebWidget::setStatusMessageOverride(const QString &message)
 
 void WebWidget::setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies)
 {
-	if (policies.testFlag(KeepAskingPermission))
+	if (policies.testFlag(KeepAskingForPermission))
 	{
 		return;
 	}
@@ -1651,7 +1651,7 @@ WebWidget::PermissionPolicy WebWidget::getPermission(FeaturePermission feature, 
 				}
 			}
 
-			return KeepAskingPermission;
+			return KeepAskingForPermission;
 		case PlaybackAudioFeature:
 			value = getOption(SettingsManager::Permissions_EnableMediaPlaybackAudioOption, url).toString();
 
@@ -1670,7 +1670,7 @@ WebWidget::PermissionPolicy WebWidget::getPermission(FeaturePermission feature, 
 		return DeniedPermission;
 	}
 
-	return KeepAskingPermission;
+	return KeepAskingForPermission;
 }
 
 SessionsManager::OpenHints WebWidget::mapOpenActionToOpenHints(int identifier)

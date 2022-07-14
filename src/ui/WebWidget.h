@@ -98,7 +98,7 @@ public:
 	{
 		DeniedPermission = 0,
 		GrantedPermission,
-		KeepAskingPermission
+		KeepAskingForPermission
 	};
 
 	Q_DECLARE_FLAGS(PermissionPolicies, PermissionPolicy)
