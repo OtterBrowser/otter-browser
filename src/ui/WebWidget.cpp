@@ -825,7 +825,7 @@ QString WebWidget::suggestSaveFileName(const QString &extension) const
 		fileName = QLatin1String("file") + extension;
 	}
 
-	if (!fileName.contains(QLatin1Char('.')) && !extension.isEmpty())
+	if (!extension.isEmpty() && !fileName.contains(QLatin1Char('.')))
 	{
 		fileName.append(extension);
 	}
