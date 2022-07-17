@@ -1097,7 +1097,7 @@ void AdvancedPreferencesPage::load()
 
 	m_ui->mimeTypesItemView->setModel(mimeTypesModel);
 	m_ui->mimeTypesItemView->sortByColumn(0, Qt::AscendingOrder);
-	m_ui->mimeTypesFilePathWidget->setOpenMode(FilePathWidget::DirectoryMode);
+	m_ui->mimeTypesFilePathWidget->setOpenMode(FilePathWidget::ExistingDirectoryMode);
 	m_ui->mimeTypesApplicationComboBoxWidget->setAlwaysShowDefaultApplication(true);
 
 	QStandardItemModel *protocolsModel(new QStandardItemModel(this));

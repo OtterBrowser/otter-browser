@@ -112,7 +112,7 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 			m_widget = m_filePathWidget = new FilePathWidget(this);
 
 			m_filePathWidget->setPath(value.toString());
-			m_filePathWidget->setOpenMode(FilePathWidget::DirectoryMode);
+			m_filePathWidget->setOpenMode(FilePathWidget::ExistingDirectoryMode);
 
 			connect(m_filePathWidget, &FilePathWidget::pathChanged, this, &OptionWidget::markAsModified);
 

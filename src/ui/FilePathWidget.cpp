@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -50,7 +50,7 @@ FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 	m_browseButton(new QPushButton(tr("Browse…"), this)),
 	m_lineEditWidget(new LineEditWidget(this)),
 	m_completer(nullptr),
-	m_openMode(FileMode)
+	m_openMode(ExistingFileMode)
 {
 	QHBoxLayout *layout(new QHBoxLayout(this));
 	layout->addWidget(m_lineEditWidget);
@@ -66,7 +66,23 @@ FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 	connect(m_browseButton, &QPushButton::clicked, this, [&]()
 	{
 		const QString directory(m_lineEditWidget->text().isEmpty() ? QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0) : m_lineEditWidget->text());
-		const QString path((m_openMode == FileMode) ? QFileDialog::getOpenFileName(this, tr("Select File"), directory, m_filter) : QFileDialog::getExistingDirectory(this, tr("Select Directory"), directory));
+		QString path;
+
+		switch (m_openMode)
+		{
+			case ExistingDirectoryMode:
+				path = QFileDialog::getExistingDirectory(this, tr("Select Directory"), directory);
+
+				break;
+			case ExistingFileMode:
+				path = QFileDialog::getOpenFileName(this, tr("Select File"), directory, m_filter);
+
+				break;
+			case NewFileMode:
+				path = QFileDialog::getSaveFileName(this, tr("Select File"), directory, m_filter);
+
+				break;
+		}
 
 		if (!path.isEmpty())
 		{
@@ -113,7 +129,7 @@ void FilePathWidget::updateCompleter()
 	m_completer = new QCompleter(this);
 
 	FileSystemCompleterModel *model(new FileSystemCompleterModel(m_completer));
-	model->setFilter((m_openMode == FileMode) ? (QDir::AllDirs | QDir::Files) : QDir::AllDirs);
+	model->setFilter((m_openMode == ExistingFileMode) ? (QDir::AllDirs | QDir::Files) : QDir::AllDirs);
 
 	m_completer->setModel(model);
 

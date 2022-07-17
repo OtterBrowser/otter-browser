@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -46,8 +46,9 @@ class FilePathWidget final : public QWidget
 public:
 	enum OpenMode
 	{
-		DirectoryMode = 0,
-		FileMode
+		ExistingDirectoryMode = 0,
+		ExistingFileMode,
+		NewFileMode
 	};
 
 	explicit FilePathWidget(QWidget *parent = nullptr);
