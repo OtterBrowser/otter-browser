@@ -20,6 +20,7 @@
 
 #include "DataExchangerDialog.h"
 #include "../core/ThemesManager.h"
+#include "../modules/exporters/html/HtmlBookmarksExportDataExchanger.h"
 #include "../modules/exporters/xbel/XbelBookmarksExportDataExchanger.h"
 #include "../modules/importers/html/HtmlBookmarksImportDataExchanger.h"
 #include "../modules/importers/opera/OperaBookmarksImportDataExchanger.h"
@@ -45,6 +46,7 @@ DataExchangerDialog::DataExchangerDialog(ExportDataExchanger *exporter, QWidget 
 	m_ui->stackedWidget->setCurrentWidget(m_ui->exportOptionsPage);
 	m_ui->exportPathWidget->setFilters(exporter->getFileFilters());
 	m_ui->exportPathWidget->setPath(exporter->getSuggestedPath());
+	m_ui->exportPathWidget->setOpenMode(FilePathWidget::NewFileMode);
 
 	exporter->setParent(this);
 
@@ -79,6 +81,7 @@ DataExchangerDialog::DataExchangerDialog(ImportDataExchanger *importer, QWidget 
 	m_ui->stackedWidget->setCurrentWidget(m_ui->importOptionsPage);
 	m_ui->importPathWidget->setFilters(importer->getFileFilters());
 	m_ui->importPathWidget->setPath(importer->getSuggestedPath());
+	m_ui->importPathWidget->setOpenMode(FilePathWidget::ExistingFileMode);
 
 	importer->setParent(this);
 
@@ -143,7 +146,11 @@ void DataExchangerDialog::createDialog(const QString &exchangerName, QWidget *pa
 	ExportDataExchanger *exportExchanger(nullptr);
 	ImportDataExchanger *importExchanger(nullptr);
 
-	if (exchangerName == QLatin1String("XbelBookmarksExport"))
+	if (exchangerName == QLatin1String("HtmlBookmarksExport"))
+	{
+		exportExchanger = new HtmlBookmarksExportDataExchanger();
+	}
+	else if (exchangerName == QLatin1String("XbelBookmarksExport"))
 	{
 		exportExchanger = new XbelBookmarksExportDataExchanger();
 	}
