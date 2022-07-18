@@ -31,6 +31,7 @@
 
 #include "ui_DataExchangerDialog.h"
 
+#include <QtCore/QStandardPaths>
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QMessageBox>
 
@@ -45,7 +46,7 @@ DataExchangerDialog::DataExchangerDialog(ExportDataExchanger *exporter, QWidget 
 	m_ui->setupUi(this);
 	m_ui->stackedWidget->setCurrentWidget(m_ui->exportOptionsPage);
 	m_ui->exportPathWidget->setFilters(exporter->getFileFilters());
-	m_ui->exportPathWidget->setPath(exporter->getSuggestedPath());
+	m_ui->exportPathWidget->setPath(exporter->getSuggestedPath(QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0)));
 	m_ui->exportPathWidget->setOpenMode(FilePathWidget::NewFileMode);
 
 	exporter->setParent(this);
