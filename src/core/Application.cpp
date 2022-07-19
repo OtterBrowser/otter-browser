@@ -1703,6 +1703,10 @@ ActionsManager::ActionDefinition::State Application::getActionState(int identifi
 				{
 					state.text = translate("actions", "Import OPML Feeds…");
 				}
+				else if (exchanger == QLatin1String("HtmlBookmarksExport"))
+				{
+					state.text = translate("actions", "Export Bookmarks as HTML…");
+				}
 				else if (exchanger == QLatin1String("XbelBookmarksExport"))
 				{
 					state.text = translate("actions", "Export Bookmarks as XBEL…");
