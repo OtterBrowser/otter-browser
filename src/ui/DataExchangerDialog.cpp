@@ -60,15 +60,11 @@ DataExchangerDialog::DataExchangerDialog(ExportDataExchanger *exporter, QWidget 
 	setObjectName(exporter->metaObject()->className());
 	adjustSize();
 
-	connect(m_ui->exportPathWidget, &FilePathWidget::pathChanged, this, [&](const QString &path)
-	{
-		m_path = path;
-	});
 	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, [&]()
 	{
 		setupResults(m_exporter);
 
-		m_exporter->exportData(m_path);
+		m_exporter->exportData(m_ui->exportPathWidget->getPath());
 	});
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::reject);
 }
@@ -95,15 +91,11 @@ DataExchangerDialog::DataExchangerDialog(ImportDataExchanger *importer, QWidget 
 	setObjectName(importer->metaObject()->className());
 	adjustSize();
 
-	connect(m_ui->importPathWidget, &FilePathWidget::pathChanged, this, [&](const QString &path)
-	{
-		m_path = path;
-	});
 	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, [&]()
 	{
 		setupResults(m_importer);
 
-		m_importer->importData(m_path);
+		m_importer->importData(m_ui->importPathWidget->getPath());
 	});
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::reject);
 }

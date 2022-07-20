@@ -59,7 +59,6 @@ protected slots:
 private:
 	ExportDataExchanger *m_exporter;
 	ImportDataExchanger *m_importer;
-	QString m_path;
 	Ui::DataExchangerDialog *m_ui;
 };
 
