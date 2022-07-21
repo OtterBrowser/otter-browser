@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2021 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "XbelBookmarksExportDataExchanger.h"
+#include "../../../core/BookmarksManager.h"
 #include "../../../core/SessionsManager.h"
 
 #include <QtCore/QDir>
@@ -82,7 +83,15 @@ DataExchanger::ExchangeType XbelBookmarksExportDataExchanger::getExchangeType() 
 
 bool XbelBookmarksExportDataExchanger::exportData(const QString &path)
 {
-	return QFile::copy(SessionsManager::getWritableDataPath(QLatin1String("bookmarks.xbel")), path);
+	const int amount(BookmarksManager::getModel()->getCount());
+
+	emit exchangeStarted(BookmarksExchange, amount);
+
+	const bool result(QFile::copy(SessionsManager::getWritableDataPath(QLatin1String("bookmarks.xbel")), path));
+
+	emit exchangeFinished(BookmarksExchange, (result ? SuccessfullOperation : FailedOperation), amount);
+
+	return result;
 }
 
 }
