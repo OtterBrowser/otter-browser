@@ -89,7 +89,7 @@ bool XbelBookmarksExportDataExchanger::exportData(const QString &path)
 
 	const bool result(QFile::copy(SessionsManager::getWritableDataPath(QLatin1String("bookmarks.xbel")), path));
 
-	emit exchangeFinished(BookmarksExchange, (result ? SuccessfullOperation : FailedOperation), amount);
+	emit exchangeFinished(BookmarksExchange, (result ? SuccessfullOperation : FailedOperation), (result ? amount : 0));
 
 	return result;
 }
