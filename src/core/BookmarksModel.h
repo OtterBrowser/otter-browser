@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -128,6 +128,7 @@ public:
 	QVector<Bookmark*> findUrls(const QUrl &url, QStandardItem *branch = nullptr) const;
 	QVector<Bookmark*> getBookmarks(const QUrl &url) const;
 	FormatMode getFormatMode() const;
+	int getCount() const;
 	bool moveBookmark(Bookmark *bookmark, Bookmark *newParent, int newRow = -1);
 	bool canDropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) const override;
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;

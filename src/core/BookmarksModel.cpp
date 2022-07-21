@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -1388,6 +1388,11 @@ QVector<BookmarksModel::Bookmark*> BookmarksModel::getBookmarks(const QUrl &url)
 BookmarksModel::FormatMode BookmarksModel::getFormatMode() const
 {
 	return m_mode;
+}
+
+int BookmarksModel::getCount() const
+{
+	return m_identifiers.count();
 }
 
 bool BookmarksModel::moveBookmark(Bookmark *bookmark, Bookmark *newParent, int newRow)
