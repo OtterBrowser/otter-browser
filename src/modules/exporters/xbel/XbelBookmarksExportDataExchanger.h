@@ -43,7 +43,7 @@ public:
 	ExchangeType getExchangeType() const override;
 
 public slots:
-	bool exportData(const QString &path) override;
+	bool exportData(const QString &path, bool canOverwriteExisting) override;
 };
 
 }

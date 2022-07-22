@@ -81,11 +81,16 @@ DataExchanger::ExchangeType XbelBookmarksExportDataExchanger::getExchangeType() 
 	return BookmarksExchange;
 }
 
-bool XbelBookmarksExportDataExchanger::exportData(const QString &path)
+bool XbelBookmarksExportDataExchanger::exportData(const QString &path, bool canOverwriteExisting)
 {
 	const int amount(BookmarksManager::getModel()->getCount());
 
 	emit exchangeStarted(BookmarksExchange, amount);
+
+	if (QFile::exists(path) && canOverwriteExisting)
+	{
+		QFile::remove(path);
+	}
 
 	const bool result(QFile::copy(SessionsManager::getWritableDataPath(QLatin1String("bookmarks.xbel")), path));
 

@@ -64,7 +64,7 @@ DataExchangerDialog::DataExchangerDialog(ExportDataExchanger *exporter, QWidget 
 	{
 		setupResults(m_exporter);
 
-		m_exporter->exportData(m_ui->exportPathWidget->getPath());
+		m_exporter->exportData(m_ui->exportPathWidget->getPath(), m_ui->exportPathWidget->isManuallySpecified());
 	});
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::reject);
 }

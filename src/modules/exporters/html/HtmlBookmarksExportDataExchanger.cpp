@@ -78,9 +78,10 @@ DataExchanger::ExchangeType HtmlBookmarksExportDataExchanger::getExchangeType() 
 	return BookmarksExchange;
 }
 
-bool HtmlBookmarksExportDataExchanger::exportData(const QString &path)
+bool HtmlBookmarksExportDataExchanger::exportData(const QString &path, bool canOverwriteExisting)
 {
 	Q_UNUSED(path)
+	Q_UNUSED(canOverwriteExisting)
 
 	return false;
 }
