@@ -50,7 +50,8 @@ FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 	m_browseButton(new QPushButton(tr("Browse…"), this)),
 	m_lineEditWidget(new LineEditWidget(this)),
 	m_completer(nullptr),
-	m_openMode(ExistingFileMode)
+	m_openMode(ExistingFileMode),
+	m_isManuallySpecified(false)
 {
 	QHBoxLayout *layout(new QHBoxLayout(this));
 	layout->addWidget(m_lineEditWidget);
@@ -87,6 +88,7 @@ FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 		if (!path.isEmpty())
 		{
 			m_lineEditWidget->setText(QDir::toNativeSeparators(path));
+			m_isManuallySpecified = true;
 		}
 	});
 }
@@ -158,6 +160,8 @@ void FilePathWidget::setPath(const QString &path)
 		m_lineEditWidget->setText(path);
 		m_lineEditWidget->blockSignals(false);
 
+		m_isManuallySpecified = false;
+
 		emit pathChanged(path);
 	}
 }
@@ -170,6 +174,11 @@ QString FilePathWidget::getPath() const
 FilePathWidget::OpenMode FilePathWidget::getOpenMode() const
 {
 	return m_openMode;
+}
+
+bool FilePathWidget::isManuallySpecified() const
+{
+	return m_isManuallySpecified;
 }
 
 }

@@ -58,6 +58,7 @@ public:
 	void setPath(const QString &path);
 	QString getPath() const;
 	OpenMode getOpenMode() const;
+	bool isManuallySpecified() const;
 
 protected:
 	void changeEvent(QEvent *event) override;
@@ -74,6 +75,7 @@ private:
 	QString m_filter;
 	QString m_initialPath;
 	OpenMode m_openMode;
+	bool m_isManuallySpecified;
 
 signals:
 	void pathChanged(const QString &path);
