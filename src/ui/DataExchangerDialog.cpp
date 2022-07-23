@@ -62,9 +62,21 @@ DataExchangerDialog::DataExchangerDialog(ExportDataExchanger *exporter, QWidget 
 
 	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, [&]()
 	{
-		setupResults(m_exporter);
+		const QString path(m_ui->exportPathWidget->getPath());
+		const bool isManuallySpecified(m_ui->exportPathWidget->isManuallySpecified());
+		bool canExport(isManuallySpecified);
 
-		m_exporter->exportData(m_ui->exportPathWidget->getPath(), m_ui->exportPathWidget->isManuallySpecified());
+		if (!isManuallySpecified && QFile::exists(path))
+		{
+			canExport = QMessageBox::warning(this, tr("Warning"), tr("%1 already exists.\nDo you want to replace it?").arg(QFileInfo(path).fileName()), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::Yes;
+		}
+
+		if (canExport)
+		{
+			setupResults(m_exporter);
+
+			m_exporter->exportData(path, true);
+		}
 	});
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::reject);
 }
