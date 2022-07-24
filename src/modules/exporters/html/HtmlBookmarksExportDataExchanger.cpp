@@ -20,12 +20,72 @@
 #include "HtmlBookmarksExportDataExchanger.h"
 
 #include <QtCore/QDir>
+#include <QtCore/QFile>
+#include <QtCore/QTextStream>
 
 namespace Otter
 {
 
 HtmlBookmarksExportDataExchanger::HtmlBookmarksExportDataExchanger(QObject *parent) : ExportDataExchanger(parent)
 {
+}
+
+void HtmlBookmarksExportDataExchanger::writeBookmark(QTextStream *stream, BookmarksModel::Bookmark *bookmark)
+{
+	const BookmarksModel::BookmarkType type(bookmark->getType());
+
+	switch (type)
+	{
+		case BookmarksModel::FeedBookmark:
+		case BookmarksModel::UrlBookmark:
+			*stream << "<DT><A HREF=\"" << bookmark->getUrl().toString().toHtmlEscaped() << "\" ADD_DATE=\"" << bookmark->getTimeAdded().toTime_t() << "\"";
+
+			if (bookmark->getTimeModified().isValid())
+			{
+				*stream << " LAST_MODIFIED=\"" << bookmark->getTimeModified().toTime_t() << "\"";
+			}
+
+			if (bookmark->getTimeVisited().isValid())
+			{
+				*stream << " LAST_VISITED=\"" << bookmark->getTimeVisited().toTime_t() << "\"";
+			}
+
+			if (type == BookmarksModel::FeedBookmark)
+			{
+				*stream << " FEEDURL=\"" << bookmark->getUrl().toString().toHtmlEscaped() << "\"";
+			}
+
+			if (!bookmark->getKeyword().isEmpty())
+			{
+				*stream << " SHORTCUTURL=\"" << bookmark->getKeyword().toHtmlEscaped() << "\"";
+			}
+
+			*stream << ">" << bookmark->getTitle().toHtmlEscaped() << "</A>\n";
+
+			if (!bookmark->getDescription().isEmpty())
+			{
+				*stream << "<DD>" << bookmark->getDescription().toHtmlEscaped() << "</DD>\n";
+			}
+
+			break;
+		case BookmarksModel::FolderBookmark:
+		case BookmarksModel::RootBookmark:
+			*stream << "<DT><H3 ADD_DATE=\"0\" LAST_MODIFIED=\"0\">" << bookmark->getTitle().toHtmlEscaped() << "</H3>\n";
+			*stream << "<DL><P>\n";
+
+			for (int i = 0; i < bookmark->rowCount(); ++i)
+			{
+				writeBookmark(stream, bookmark->getChild(i));
+			}
+
+			*stream << "</DL><P>\n";
+
+			break;
+		default:
+			*stream << "<HR>\n";
+
+			break;
+	}
 }
 
 QString HtmlBookmarksExportDataExchanger::getName() const
@@ -80,10 +140,44 @@ DataExchanger::ExchangeType HtmlBookmarksExportDataExchanger::getExchangeType() 
 
 bool HtmlBookmarksExportDataExchanger::exportData(const QString &path, bool canOverwriteExisting)
 {
-	Q_UNUSED(path)
-	Q_UNUSED(canOverwriteExisting)
+	const int amount(BookmarksManager::getModel()->getCount());
 
-	return false;
+	emit exchangeStarted(BookmarksExchange, amount);
+
+	if (!canOverwriteExisting && QFile::exists(path))
+	{
+		emit exchangeFinished(BookmarksExchange, FailedOperation, 0);
+
+		return false;
+	}
+
+	QFile file(path);
+
+	if (!file.open(QIODevice::WriteOnly))
+	{
+		emit exchangeFinished(BookmarksExchange, FailedOperation, 0);
+
+		return false;
+	}
+
+	QTextStream stream(&file);
+	stream.setCodec("UTF-8");
+	stream << "<!DOCTYPE NETSCAPE-Bookmark-file-1>\n";
+	stream << "<!-- This is an automatically generated file.\n";
+	stream << "     It will be read and overwritten.\n";
+	stream << "     DO NOT EDIT! -->\n";
+	stream << "<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=utf-8\">\n";
+	stream << "<TITLE>Bookmarks</TITLE>\n";
+	stream << "<H1>Bookmarks</H1>\n";
+	stream << "<DL><P>\n";
+
+	writeBookmark(&stream, BookmarksManager::getModel()->getRootItem());
+
+	file.close();
+
+	emit exchangeFinished(BookmarksExchange, SuccessfullOperation, amount);
+
+	return true;
 }
 
 }

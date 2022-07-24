@@ -21,6 +21,7 @@
 #define OTTER_HTMLBOOKMARKSEXPORTDATAEXCHANGER_H
 
 #include "../../../core/DataExchanger.h"
+#include "../../../core/BookmarksManager.h"
 
 namespace Otter
 {
@@ -44,6 +45,9 @@ public:
 
 public slots:
 	bool exportData(const QString &path, bool canOverwriteExisting) override;
+
+protected:
+	void writeBookmark(QTextStream *stream, BookmarksModel::Bookmark *bookmark);
 };
 
 }
