@@ -64,9 +64,10 @@ DataExchangerDialog::DataExchangerDialog(ExportDataExchanger *exporter, QWidget 
 	{
 		const QString path(m_ui->exportPathWidget->getPath());
 		const bool isManuallySpecified(m_ui->exportPathWidget->isManuallySpecified());
-		bool canExport(isManuallySpecified);
+		const bool exists(QFile::exists(path));
+		bool canExport(isManuallySpecified || !exists);
 
-		if (!isManuallySpecified && QFile::exists(path))
+		if (exists && !isManuallySpecified)
 		{
 			canExport = QMessageBox::warning(this, tr("Warning"), tr("%1 already exists.\nDo you want to replace it?").arg(QFileInfo(path).fileName()), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::Yes;
 		}
