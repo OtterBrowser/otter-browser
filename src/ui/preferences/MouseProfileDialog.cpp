@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -297,38 +297,40 @@ MouseProfile MouseProfileDialog::getProfile() const
 		const QModelIndex contextIndex(m_ui->gesturesViewWidget->getIndex(i, 0));
 		const int gestureAmount(m_ui->gesturesViewWidget->getRowCount(contextIndex));
 
-		if (gestureAmount > 0)
+		if (gestureAmount == 0)
 		{
-			QVector<MouseProfile::Gesture> gestures;
-			gestures.reserve(gestureAmount);
+			continue;
+		}
 
-			for (int j = 0; j < gestureAmount; ++j)
+		QVector<MouseProfile::Gesture> gestures;
+		gestures.reserve(gestureAmount);
+
+		for (int j = 0; j < gestureAmount; ++j)
+		{
+			const QModelIndex actionIndex(m_ui->gesturesViewWidget->getIndex(j, 0, contextIndex));
+			const QStringList steps(actionIndex.sibling(actionIndex.row(), 2).data(Qt::DisplayRole).toString().split(QLatin1String(", "), QString::SkipEmptyParts));
+			const int action(actionIndex.data(IdentifierRole).toInt());
+
+			if (!steps.isEmpty() && action >= 0)
 			{
-				const QModelIndex actionIndex(m_ui->gesturesViewWidget->getIndex(j, 0, contextIndex));
-				const QStringList steps(actionIndex.sibling(actionIndex.row(), 2).data(Qt::DisplayRole).toString().split(QLatin1String(", "), QString::SkipEmptyParts));
-				const int action(actionIndex.data(IdentifierRole).toInt());
+				MouseProfile::Gesture gesture;
+				gesture.action = action;
+				gesture.parameters = actionIndex.data(ParametersRole).toMap();
 
-				if (!steps.isEmpty() && action >= 0)
+				for (int k = 0; k < steps.count(); ++k)
 				{
-					MouseProfile::Gesture gesture;
-					gesture.action = action;
-					gesture.parameters = actionIndex.data(ParametersRole).toMap();
-
-					for (int k = 0; k < steps.count(); ++k)
-					{
-						gesture.steps.append(MouseProfile::Gesture::Step::fromString(steps.at(k)));
-					}
-
-					gestures.append(gesture);
+					gesture.steps.append(MouseProfile::Gesture::Step::fromString(steps.at(k)));
 				}
-			}
 
-			gestures.squeeze();
-
-			if (gestures.count() > 0)
-			{
-				definitions[static_cast<GesturesManager::GesturesContext>(contextIndex.data(ContextRole).toInt())] = gestures;
+				gestures.append(gesture);
 			}
+		}
+
+		gestures.squeeze();
+
+		if (gestures.count() > 0)
+		{
+			definitions[static_cast<GesturesManager::GesturesContext>(contextIndex.data(ContextRole).toInt())] = gestures;
 		}
 	}
 
