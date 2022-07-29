@@ -21,6 +21,7 @@
 #include "MouseProfileDialog.h"
 #include "../ActionComboBoxWidget.h"
 #include "../../core/ActionsManager.h"
+#include "../../core/ItemModel.h"
 #include "../../core/ThemesManager.h"
 
 #include "ui_MouseProfileDialog.h"
@@ -49,17 +50,9 @@ void GestureActionDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
 
 	model->setData(index, definition.getText(true), Qt::DisplayRole);
 	model->setData(index, QStringLiteral("%1 (%2)").arg(definition.getText(true), name), Qt::ToolTipRole);
+	model->setData(index, ItemModel::createDecoration(definition.defaultState.icon), Qt::DecorationRole);
 	model->setData(index, widget->getActionIdentifier(), MouseProfileDialog::IdentifierRole);
 	model->setData(index, name, MouseProfileDialog::NameRole);
-
-	if (definition.defaultState.icon.isNull())
-	{
-		model->setData(index, QColor(Qt::transparent), Qt::DecorationRole);
-	}
-	else
-	{
-		model->setData(index, definition.defaultState.icon, Qt::DecorationRole);
-	}
 }
 
 QWidget* GestureActionDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
