@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #include "ActionComboBoxWidget.h"
 #include "ItemViewWidget.h"
 #include "LineEditWidget.h"
+#include "../core/ItemModel.h"
 
 #include <QtCore/QTimer>
 #include <QtWidgets/QStylePainter>
@@ -109,16 +110,11 @@ void ActionComboBoxWidget::addDefinition(const ActionsManager::ActionDefinition 
 {
 	const QString name(ActionsManager::getActionName(definition.identifier));
 	QStandardItem *item(new QStandardItem(definition.getText(true)));
-	item->setData(QColor(Qt::transparent), Qt::DecorationRole);
+	item->setData(ItemModel::createDecoration(definition.defaultState.icon), Qt::DecorationRole);
 	item->setData(definition.identifier, IdentifierRole);
 	item->setData(name, NameRole);
 	item->setToolTip(QStringLiteral("%1 (%2)").arg(item->text(), name));
 	item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
-
-	if (!definition.defaultState.icon.isNull())
-	{
-		item->setIcon(definition.defaultState.icon);
-	}
 
 	m_model->appendRow(item);
 }
