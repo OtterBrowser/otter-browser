@@ -183,17 +183,9 @@ void SearchPreferencesPage::editSearchEngine()
 
 	m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::DisplayRole);
 	m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::ToolTipRole);
+	m_ui->searchViewWidget->setData(index, ItemModel::createDecoration(searchEngine.icon), Qt::DecorationRole);
 	m_ui->searchViewWidget->setData(m_ui->searchViewWidget->getIndex(index.row(), 1), searchEngine.keyword, Qt::DisplayRole);
 	m_ui->searchViewWidget->setData(m_ui->searchViewWidget->getIndex(index.row(), 1), searchEngine.keyword, Qt::ToolTipRole);
-
-	if (searchEngine.icon.isNull())
-	{
-		m_ui->searchViewWidget->setData(index, QColor(Qt::transparent), Qt::DecorationRole);
-	}
-	else
-	{
-		m_ui->searchViewWidget->setData(index, searchEngine.icon, Qt::DecorationRole);
-	}
 
 	emit settingsModified();
 }
@@ -240,15 +232,7 @@ void SearchPreferencesPage::updateSearchEngine()
 				{
 					m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::DisplayRole);
 					m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::ToolTipRole);
-
-					if (searchEngine.icon.isNull())
-					{
-						m_ui->searchViewWidget->setData(index, QColor(Qt::transparent), Qt::DecorationRole);
-					}
-					else
-					{
-						m_ui->searchViewWidget->setData(index, searchEngine.icon, Qt::DecorationRole);
-					}
+					m_ui->searchViewWidget->setData(index, ItemModel::createDecoration(searchEngine.icon), Qt::DecorationRole);
 				}
 
 				m_ui->searchViewWidget->setData(index, false, IsUpdatingRole);

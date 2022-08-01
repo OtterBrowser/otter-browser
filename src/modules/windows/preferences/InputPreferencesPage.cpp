@@ -21,6 +21,7 @@
 
 #include "InputPreferencesPage.h"
 #include "../../../core/GesturesManager.h"
+#include "../../../core/ItemModel.h"
 #include "../../../core/SessionsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/ActionComboBoxWidget.h"
@@ -98,17 +99,9 @@ void ActionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, co
 
 	model->setData(index, definition.getText(true), Qt::DisplayRole);
 	model->setData(index, QStringLiteral("%1 (%2)").arg(definition.getText(true), name), Qt::ToolTipRole);
+	model->setData(index, ItemModel::createDecoration(definition.defaultState.icon), Qt::DecorationRole);
 	model->setData(index, widget->getActionIdentifier(), InputPreferencesPage::IdentifierRole);
 	model->setData(index, name, InputPreferencesPage::NameRole);
-
-	if (definition.defaultState.icon.isNull())
-	{
-		model->setData(index, QColor(Qt::transparent), Qt::DecorationRole);
-	}
-	else
-	{
-		model->setData(index, definition.defaultState.icon, Qt::DecorationRole);
-	}
 }
 
 QWidget* ActionDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -295,7 +288,7 @@ void InputPreferencesPage::addKeyboardShortcuts(QStandardItemModel *model, int i
 		QList<QStandardItem*> items({new QStandardItem(), new QStandardItem(text), new QStandardItem(parameters), new QStandardItem(shortcut.toString())});
 		items[0]->setData(NormalStatus, StatusRole);
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
-		items[1]->setData(QColor(Qt::transparent), Qt::DecorationRole);
+		items[1]->setData(ItemModel::createDecoration(icon), Qt::DecorationRole);
 		items[1]->setData(identifier, IdentifierRole);
 		items[1]->setData(name, NameRole);
 		items[1]->setData(rawParameters, ParametersRole);
@@ -305,11 +298,6 @@ void InputPreferencesPage::addKeyboardShortcuts(QStandardItemModel *model, int i
 		items[2]->setToolTip(parameters);
 		items[3]->setData(areShortcutsDisabled, IsDisabledRole);
 		items[3]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
-
-		if (!icon.isNull())
-		{
-			items[1]->setIcon(icon);
-		}
 
 		model->appendRow(items);
 
