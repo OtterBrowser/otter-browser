@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2019 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "ActionsContentsWidget.h"
+#include "../../../core/ItemModel.h"
 #include "../../../core/ThemesManager.h"
 
 #include "ui_ActionsContentsWidget.h"
@@ -80,18 +81,13 @@ void ActionsContentsWidget::populateActions()
 
 		const QString actionName(ActionsManager::getActionName(definitions.at(i).identifier));
 		QList<QStandardItem*> items({new QStandardItem(definitions.at(i).getText(true)), new QStandardItem(QKeySequence::listToString(ActionsManager::getActionShortcuts(definitions.at(i).identifier).toList(), QKeySequence::NativeText)), new QStandardItem()});
-		items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
+		items[0]->setData(ItemModel::createDecoration(definitions.at(i).defaultState.icon), Qt::DecorationRole);
 		items[0]->setData(definitions.at(i).identifier, IdentifierRole);
 		items[0]->setData(actionName, ActionRole);
 		items[0]->setToolTip(QStringLiteral("%1 (%2)").arg(items[0]->text(), actionName));
 		items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
 		items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
 		items[2]->setFlags(items[2]->flags() | Qt::ItemNeverHasChildren);
-
-		if (!definitions.at(i).defaultState.icon.isNull())
-		{
-			items[0]->setIcon(definitions.at(i).defaultState.icon);
-		}
 
 		m_model->appendRow(items);
 	}
