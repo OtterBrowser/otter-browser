@@ -101,7 +101,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 				}
 
 				QList<QStandardItem*> items({new QStandardItem(action.getText(true)), new QStandardItem(parameters), new QStandardItem(steps.join(QLatin1String(", ")))});
-				items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
+				items[0]->setData(ItemModel::createDecoration(action.defaultState.icon), Qt::DecorationRole);
 				items[0]->setData(action.identifier, IdentifierRole);
 				items[0]->setData(name, NameRole);
 				items[0]->setData(gestures.at(j).parameters, ParametersRole);
@@ -110,11 +110,6 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 				items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 				items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 				items[2]->setToolTip(parameters);
-
-				if (!action.defaultState.icon.isNull())
-				{
-					items[0]->setIcon(action.defaultState.icon);
-				}
 
 				item->appendRow(items);
 			}
