@@ -68,7 +68,7 @@ public:
 	QVariant data(const QModelIndex &index, int role) const override;
 	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 	static QVariant getItemData(QStandardItem *item, int role);
-	static QVariant createDecoration(const QVariant &icon);
+	static QVariant createDecoration(const QVariant &icon = {});
 	QVariantList getAllData(int role, int column = -1, const QModelIndex &parent = {}) const;
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
 	bool isExclusive() const;
