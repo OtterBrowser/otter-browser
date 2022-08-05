@@ -649,7 +649,7 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 
 QMap<int, QVariant> ToolBarDialog::createEntryData(const QString &identifier, const QVariantMap &options, const QVariantMap &parameters) const
 {
-	QMap<int, QVariant> entryData({{Qt::DecorationRole, QColor(Qt::transparent)}, {IdentifierRole, identifier}, {OptionsRole, options}, {ParametersRole, parameters}});
+	QMap<int, QVariant> entryData({{Qt::DecorationRole, ItemModel::createDecoration()}, {IdentifierRole, identifier}, {OptionsRole, options}, {ParametersRole, parameters}});
 
 	if (identifier == QLatin1String("separator"))
 	{
