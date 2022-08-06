@@ -24,6 +24,7 @@
 #include "InlineListWidget.h"
 #include "LineEditWidget.h"
 #include "FilePathWidget.h"
+#include "../core/ItemModel.h"
 #include "../core/ThemesManager.h"
 #include "../core/Utils.h"
 
@@ -326,7 +327,7 @@ void OptionWidget::setChoices(const QVector<SettingsManager::OptionDefinition::C
 
 			if (hasIcons && choices.at(i).icon.isNull())
 			{
-				m_comboBox->setItemData(i, QColor(Qt::transparent), Qt::DecorationRole);
+				m_comboBox->setItemData(i, ItemModel::createDecoration(), Qt::DecorationRole);
 			}
 		}
 		else
