@@ -604,7 +604,7 @@ QList<QStandardItem*> SearchPreferencesPage::createRow(const SearchEnginesManage
 
 	if (searchEngine.icon.isNull())
 	{
-		items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
+		items[0]->setData(ItemModel::createDecoration(), Qt::DecorationRole);
 	}
 
 	return items;
