@@ -21,6 +21,7 @@
 #include "../../../core/Application.h"
 #include "../../../core/BookmarksManager.h"
 #include "../../../core/HandlersManager.h"
+#include "../../../core/ItemModel.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/Animation.h"
@@ -578,7 +579,7 @@ void FeedsContentsWidget::updateFeedModel()
 
 				if (applications.at(i).icon.isNull())
 				{
-					m_ui->applicationComboBox->setItemData((i + 2), QColor(Qt::transparent), Qt::DecorationRole);
+					m_ui->applicationComboBox->setItemData((i + 2), ItemModel::createDecoration(), Qt::DecorationRole);
 				}
 			}
 		}
