@@ -54,7 +54,7 @@ void FeedEntryDelegate::initStyleOption(QStyleOptionViewItem *option, const QMod
 	}
 }
 
-FeedDelegate::FeedDelegate(QObject *parent) : ItemDelegate({{ItemDelegate::ProgressHasErrorRole, FeedsModel::HasErrorRole}, {ItemDelegate::ProgressHasIndicatorRole, FeedsModel::IsShowingProgressIndicatorRole}, {ItemDelegate::ProgressValueRole, FeedsModel::UpdateProgressValueRole}}, parent)
+FeedDelegate::FeedDelegate(QObject *parent) : ItemDelegate({{ProgressHasErrorRole, FeedsModel::HasErrorRole}, {ProgressHasIndicatorRole, FeedsModel::IsShowingProgressIndicatorRole}, {ProgressValueRole, FeedsModel::UpdateProgressValueRole}}, parent)
 {
 }
 
