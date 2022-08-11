@@ -280,18 +280,20 @@ void FeedsContentsWidget::feedProperties()
 {
 	FeedsModel::Entry *entry(FeedsManager::getModel()->getEntry(m_ui->feedsViewWidget->currentIndex()));
 
-	if (entry)
+	if (!entry)
 	{
-		FeedsModel::Entry *folder(findFolder(m_ui->feedsViewWidget->currentIndex()));
-		FeedPropertiesDialog dialog(entry->getFeed(), folder, this);
-
-		if (dialog.exec() == QDialog::Accepted && dialog.getFolder() != folder)
-		{
-			FeedsManager::getModel()->moveEntry(entry, dialog.getFolder());
-		}
-
-		updateActions();
+		return;
 	}
+
+	FeedsModel::Entry *folder(findFolder(m_ui->feedsViewWidget->currentIndex()));
+	FeedPropertiesDialog dialog(entry->getFeed(), folder, this);
+
+	if (dialog.exec() == QDialog::Accepted && dialog.getFolder() != folder)
+	{
+		FeedsManager::getModel()->moveEntry(entry, dialog.getFolder());
+	}
+
+	updateActions();
 }
 
 void FeedsContentsWidget::openEntry()
