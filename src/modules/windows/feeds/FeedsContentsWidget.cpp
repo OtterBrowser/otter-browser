@@ -325,17 +325,6 @@ void FeedsContentsWidget::removeEntry()
 	}
 }
 
-void FeedsContentsWidget::selectCategory()
-{
-	const QToolButton *toolButton(qobject_cast<QToolButton*>(sender()));
-
-	if (toolButton)
-	{
-		m_categories = QStringList({toolButton->objectName()});
-
-		updateFeedModel();
-	}
-}
 
 void FeedsContentsWidget::handleFeedModified(const QUrl &url)
 {
@@ -520,11 +509,15 @@ void FeedsContentsWidget::updateEntry()
 			const QString label(feedCategories.value(entryCategories.at(i)));
 			QToolButton *toolButton(new QToolButton(m_ui->entryWidget));
 			toolButton->setText(label.isEmpty() ? QString(entryCategories.at(i)).replace(QLatin1Char('_'), QLatin1Char(' ')) : label);
-			toolButton->setObjectName(entryCategories.at(i));
 
 			m_ui->categoriesLayout->addWidget(toolButton);
 
-			connect(toolButton, &QToolButton::clicked, this, &FeedsContentsWidget::selectCategory);
+			connect(toolButton, &QToolButton::clicked, toolButton, [=]()
+			{
+				m_categories = QStringList({entryCategories.at(i)});
+
+				updateFeedModel();
+			});
 		}
 	}
 

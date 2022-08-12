@@ -102,7 +102,6 @@ protected slots:
 	void feedProperties();
 	void openEntry();
 	void removeEntry();
-	void selectCategory();
 	void handleFeedModified(const QUrl &url);
 	void showEntriesContextMenu(const QPoint &position);
 	void showFeedsContextMenu(const QPoint &position);
