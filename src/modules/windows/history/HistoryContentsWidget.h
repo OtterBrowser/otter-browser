@@ -72,7 +72,6 @@ protected slots:
 	void removeDomainEntries();
 	void openEntry();
 	void bookmarkEntry();
-	void copyEntryLink();
 	void handleEntryAdded(HistoryModel::Entry *entry);
 	void handleEntryModified(HistoryModel::Entry *entry);
 	void handleEntryRemoved(HistoryModel::Entry *entry);

@@ -247,16 +247,6 @@ void HistoryContentsWidget::bookmarkEntry()
 	}
 }
 
-void HistoryContentsWidget::copyEntryLink()
-{
-	const QStandardItem *entryItem(findEntry(getEntry(m_ui->historyViewWidget->currentIndex())));
-
-	if (entryItem)
-	{
-		QApplication::clipboard()->setText(entryItem->text());
-	}
-}
-
 void HistoryContentsWidget::handleEntryAdded(HistoryModel::Entry *entry)
 {
 	if (!entry || !entry->isValid() || findEntry(entry->getIdentifier()))
@@ -376,7 +366,15 @@ void HistoryContentsWidget::showContextMenu(const QPoint &position)
 		menu.addAction(QCoreApplication::translate("actions", "Open in New Background Window"), this, &HistoryContentsWidget::openEntry)->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
 		menu.addSeparator();
 		menu.addAction(tr("Add to Bookmarks…"), this, &HistoryContentsWidget::bookmarkEntry);
-		menu.addAction(tr("Copy Link to Clipboard"), this, &HistoryContentsWidget::copyEntryLink);
+		menu.addAction(tr("Copy Link to Clipboard"), this, [&]()
+		{
+			const QStandardItem *entryItem(findEntry(getEntry(m_ui->historyViewWidget->currentIndex())));
+
+			if (entryItem)
+			{
+				QApplication::clipboard()->setText(entryItem->text());
+			}
+		});
 		menu.addSeparator();
 		menu.addAction(tr("Remove Entry"), this, &HistoryContentsWidget::removeEntry);
 		menu.addAction(tr("Remove All Entries from This Domain"), this, &HistoryContentsWidget::removeDomainEntries);
