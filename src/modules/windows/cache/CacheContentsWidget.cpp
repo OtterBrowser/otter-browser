@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -142,16 +142,6 @@ void CacheContentsWidget::populateCache()
 		connect(cache, &NetworkCache::entryRemoved, this, &CacheContentsWidget::handleEntryRemoved);
 		connect(m_model, &QStandardItemModel::modelReset, this, &CacheContentsWidget::updateActions);
 		connect(m_ui->cacheViewWidget, &ItemViewWidget::needsActionsUpdate, this, &CacheContentsWidget::updateActions);
-	}
-}
-
-void CacheContentsWidget::removeEntry()
-{
-	const QUrl entry(getEntry(m_ui->cacheViewWidget->currentIndex()));
-
-	if (entry.isValid())
-	{
-		NetworkManagerFactory::getCache()->remove(entry);
 	}
 }
 
@@ -354,7 +344,15 @@ void CacheContentsWidget::showContextMenu(const QPoint &position)
 			}
 		});
 		menu.addSeparator();
-		menu.addAction(tr("Remove Entry"), this, &CacheContentsWidget::removeEntry);
+		menu.addAction(tr("Remove Entry"), this, [&]()
+		{
+			const QUrl url(getEntry(m_ui->cacheViewWidget->currentIndex()));
+
+			if (url.isValid())
+			{
+				NetworkManagerFactory::getCache()->remove(url);
+			}
+		});
 	}
 
 	if (entry.isValid() || (index.isValid() && index.parent() == m_model->invisibleRootItem()->index()))
