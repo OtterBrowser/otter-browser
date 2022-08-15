@@ -127,22 +127,24 @@ void CacheContentsWidget::populateCache()
 
 	m_model->sort(0);
 
-	if (m_isLoading)
+	if (!m_isLoading)
 	{
-		m_ui->cacheViewWidget->setModel(m_model);
-		m_ui->cacheViewWidget->setLayoutDirection(Qt::LeftToRight);
-		m_ui->cacheViewWidget->setFilterRoles({Qt::DisplayRole, Qt::UserRole});
-
-		m_isLoading = false;
-
-		emit loadingStateChanged(WebWidget::FinishedLoadingState);
-
-		connect(cache, &NetworkCache::cleared, this, &CacheContentsWidget::populateCache);
-		connect(cache, &NetworkCache::entryAdded, this, &CacheContentsWidget::handleEntryAdded);
-		connect(cache, &NetworkCache::entryRemoved, this, &CacheContentsWidget::handleEntryRemoved);
-		connect(m_model, &QStandardItemModel::modelReset, this, &CacheContentsWidget::updateActions);
-		connect(m_ui->cacheViewWidget, &ItemViewWidget::needsActionsUpdate, this, &CacheContentsWidget::updateActions);
+		return;
 	}
+
+	m_ui->cacheViewWidget->setModel(m_model);
+	m_ui->cacheViewWidget->setLayoutDirection(Qt::LeftToRight);
+	m_ui->cacheViewWidget->setFilterRoles({Qt::DisplayRole, Qt::UserRole});
+
+	m_isLoading = false;
+
+	emit loadingStateChanged(WebWidget::FinishedLoadingState);
+
+	connect(cache, &NetworkCache::cleared, this, &CacheContentsWidget::populateCache);
+	connect(cache, &NetworkCache::entryAdded, this, &CacheContentsWidget::handleEntryAdded);
+	connect(cache, &NetworkCache::entryRemoved, this, &CacheContentsWidget::handleEntryRemoved);
+	connect(m_model, &QStandardItemModel::modelReset, this, &CacheContentsWidget::updateActions);
+	connect(m_ui->cacheViewWidget, &ItemViewWidget::needsActionsUpdate, this, &CacheContentsWidget::updateActions);
 }
 
 void CacheContentsWidget::removeDomainEntries()
