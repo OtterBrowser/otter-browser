@@ -39,6 +39,12 @@ class CacheContentsWidget final : public ContentsWidget
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		UrlRole = Qt::UserRole,
+		SizeRole
+	};
+
 	explicit CacheContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
 	~CacheContentsWidget();
 

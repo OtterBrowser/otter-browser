@@ -161,7 +161,7 @@ void CacheContentsWidget::removeDomainEntries()
 
 	for (int i = (domainItem->rowCount() - 1); i >= 0; --i)
 	{
-		cache->remove(ItemModel::getItemData(domainItem->child(i, 0), Qt::UserRole).toUrl());
+		cache->remove(ItemModel::getItemData(domainItem->child(i, 0), UrlRole).toUrl());
 	}
 }
 
@@ -211,7 +211,7 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &entry)
 	{
 		for (int i = 0; i < domainItem->rowCount(); ++i)
 		{
-			if (ItemModel::getItemData(domainItem->child(i, 0), Qt::UserRole).toUrl() == entry)
+			if (ItemModel::getItemData(domainItem->child(i, 0), UrlRole).toUrl() == entry)
 			{
 				return;
 			}
@@ -249,10 +249,10 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &entry)
 
 	const QMimeType mimeType((device && type.isEmpty()) ? QMimeDatabase().mimeTypeForData(device) : QMimeDatabase().mimeTypeForName(type));
 	QList<QStandardItem*> entryItems({new QStandardItem(entry.path()), new QStandardItem(mimeType.name()), new QStandardItem(device ? Utils::formatUnit(device->size()) : QString()), new QStandardItem(Utils::formatDateTime(metaData.lastModified())), new QStandardItem(Utils::formatDateTime(metaData.expirationDate()))});
-	entryItems[0]->setData(entry, Qt::UserRole);
+	entryItems[0]->setData(entry, UrlRole);
 	entryItems[0]->setFlags(entryItems[0]->flags() | Qt::ItemNeverHasChildren);
 	entryItems[1]->setFlags(entryItems[1]->flags() | Qt::ItemNeverHasChildren);
-	entryItems[2]->setData((device ? device->size() : 0), Qt::UserRole);
+	entryItems[2]->setData((device ? device->size() : 0), SizeRole);
 	entryItems[2]->setFlags(entryItems[2]->flags() | Qt::ItemNeverHasChildren);
 	entryItems[3]->setFlags(entryItems[3]->flags() | Qt::ItemNeverHasChildren);
 	entryItems[4]->setFlags(entryItems[4]->flags() | Qt::ItemNeverHasChildren);
@@ -263,8 +263,8 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &entry)
 
 		if (sizeItem)
 		{
-			sizeItem->setData((sizeItem->data(Qt::UserRole).toLongLong() + device->size()), Qt::UserRole);
-			sizeItem->setText(Utils::formatUnit(sizeItem->data(Qt::UserRole).toLongLong()));
+			sizeItem->setData((sizeItem->data(SizeRole).toLongLong() + device->size()), SizeRole);
+			sizeItem->setText(Utils::formatUnit(sizeItem->data(SizeRole).toLongLong()));
 		}
 
 		device->deleteLater();
@@ -292,9 +292,9 @@ void CacheContentsWidget::handleEntryRemoved(const QUrl &entry)
 	{
 		QStandardItem *entryItem(domainItem->child(i, 0));
 
-		if (entryItem && entryItem->data(Qt::UserRole).toUrl() == entry)
+		if (entryItem && entryItem->data(UrlRole).toUrl() == entry)
 		{
-			const qint64 size(ItemModel::getItemData(domainItem->child(entryItem->row(), 2), Qt::UserRole).toLongLong());
+			const qint64 size(ItemModel::getItemData(domainItem->child(entryItem->row(), 2), SizeRole).toLongLong());
 
 			m_model->removeRow(entryItem->row(), domainItem->index());
 
@@ -308,8 +308,8 @@ void CacheContentsWidget::handleEntryRemoved(const QUrl &entry)
 
 				if (domainSizeItem && size > 0)
 				{
-					domainSizeItem->setData((domainSizeItem->data(Qt::UserRole).toLongLong() - size), Qt::UserRole);
-					domainSizeItem->setText(Utils::formatUnit(domainSizeItem->data(Qt::UserRole).toLongLong()));
+					domainSizeItem->setData((domainSizeItem->data(SizeRole).toLongLong() - size), SizeRole);
+					domainSizeItem->setText(Utils::formatUnit(domainSizeItem->data(SizeRole).toLongLong()));
 				}
 
 				domainItem->setText(QStringLiteral("%1 (%2)").arg(entry.host()).arg(domainItem->rowCount()));
@@ -477,14 +477,14 @@ void CacheContentsWidget::updateActions()
 			if (sizeItem && sizeItem->text().isEmpty())
 			{
 				sizeItem->setText(Utils::formatUnit(device->size()));
-				sizeItem->setData(device->size(), Qt::UserRole);
+				sizeItem->setData(device->size(), SizeRole);
 
 				QStandardItem *domainSizeItem(sizeItem->parent() ? m_model->item(sizeItem->parent()->row(), 2) : nullptr);
 
 				if (domainSizeItem)
 				{
-					domainSizeItem->setData((domainSizeItem->data(Qt::UserRole).toLongLong() + device->size()), Qt::UserRole);
-					domainSizeItem->setText(Utils::formatUnit(domainSizeItem->data(Qt::UserRole).toLongLong()));
+					domainSizeItem->setData((domainSizeItem->data(SizeRole).toLongLong() + device->size()), SizeRole);
+					domainSizeItem->setText(Utils::formatUnit(domainSizeItem->data(SizeRole).toLongLong()));
 				}
 			}
 
@@ -545,7 +545,7 @@ QIcon CacheContentsWidget::getIcon() const
 
 QUrl CacheContentsWidget::getEntry(const QModelIndex &index) const
 {
-	return ((index.isValid() && index.parent().isValid() && index.parent().parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::UserRole).toUrl() : QUrl());
+	return ((index.isValid() && index.parent().isValid() && index.parent().parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(UrlRole).toUrl() : QUrl());
 }
 
 ActionsManager::ActionDefinition::State CacheContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
@@ -601,7 +601,7 @@ bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 			}
 
 			MainWindow *mainWindow(MainWindow::findMainWindow(this));
-			const QUrl url(entryIndex.sibling(entryIndex.row(), 0).data(Qt::UserRole).toUrl());
+			const QUrl url(entryIndex.sibling(entryIndex.row(), 0).data(UrlRole).toUrl());
 
 			if (mainWindow && url.isValid())
 			{
