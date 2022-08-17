@@ -70,8 +70,8 @@ protected slots:
 	void removeDomainEntries();
 	void removeDomainEntriesOrEntry();
 	void openEntry();
-	void handleEntryAdded(const QUrl &entry);
-	void handleEntryRemoved(const QUrl &entry);
+	void handleEntryAdded(const QUrl &url);
+	void handleEntryRemoved(const QUrl &url);
 	void showContextMenu(const QPoint &position);
 	void updateActions();
 

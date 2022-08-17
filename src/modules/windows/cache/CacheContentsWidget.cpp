@@ -167,11 +167,11 @@ void CacheContentsWidget::removeDomainEntries()
 
 void CacheContentsWidget::removeDomainEntriesOrEntry()
 {
-	const QUrl entry(getEntry(m_ui->cacheViewWidget->currentIndex()));
+	const QUrl url(getEntry(m_ui->cacheViewWidget->currentIndex()));
 
-	if (entry.isValid())
+	if (url.isValid())
 	{
-		NetworkManagerFactory::getCache()->remove(entry);
+		NetworkManagerFactory::getCache()->remove(url);
 	}
 	else
 	{
@@ -202,16 +202,16 @@ void CacheContentsWidget::openEntry()
 	}
 }
 
-void CacheContentsWidget::handleEntryAdded(const QUrl &entry)
+void CacheContentsWidget::handleEntryAdded(const QUrl &url)
 {
-	const QString domain(entry.host());
+	const QString domain(url.host());
 	QStandardItem *domainItem(findDomainItem(domain));
 
 	if (domainItem)
 	{
 		for (int i = 0; i < domainItem->rowCount(); ++i)
 		{
-			if (ItemModel::getItemData(domainItem->child(i, 0), UrlRole).toUrl() == entry)
+			if (ItemModel::getItemData(domainItem->child(i, 0), UrlRole).toUrl() == url)
 			{
 				return;
 			}
@@ -232,8 +232,8 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &entry)
 	}
 
 	NetworkCache *cache(NetworkManagerFactory::getCache());
-	QIODevice *device(cache->data(entry));
-	const QNetworkCacheMetaData metaData(cache->metaData(entry));
+	QIODevice *device(cache->data(url));
+	const QNetworkCacheMetaData metaData(cache->metaData(url));
 	const QList<QPair<QByteArray, QByteArray> > headers(metaData.rawHeaders());
 	QString type;
 
@@ -248,8 +248,8 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &entry)
 	}
 
 	const QMimeType mimeType((device && type.isEmpty()) ? QMimeDatabase().mimeTypeForData(device) : QMimeDatabase().mimeTypeForName(type));
-	QList<QStandardItem*> entryItems({new QStandardItem(entry.path()), new QStandardItem(mimeType.name()), new QStandardItem(device ? Utils::formatUnit(device->size()) : QString()), new QStandardItem(Utils::formatDateTime(metaData.lastModified())), new QStandardItem(Utils::formatDateTime(metaData.expirationDate()))});
-	entryItems[0]->setData(entry, UrlRole);
+	QList<QStandardItem*> entryItems({new QStandardItem(url.path()), new QStandardItem(mimeType.name()), new QStandardItem(device ? Utils::formatUnit(device->size()) : QString()), new QStandardItem(Utils::formatDateTime(metaData.lastModified())), new QStandardItem(Utils::formatDateTime(metaData.expirationDate()))});
+	entryItems[0]->setData(url, UrlRole);
 	entryItems[0]->setFlags(entryItems[0]->flags() | Qt::ItemNeverHasChildren);
 	entryItems[1]->setFlags(entryItems[1]->flags() | Qt::ItemNeverHasChildren);
 	entryItems[2]->setData((device ? device->size() : 0), SizeRole);
@@ -279,9 +279,9 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &entry)
 	}
 }
 
-void CacheContentsWidget::handleEntryRemoved(const QUrl &entry)
+void CacheContentsWidget::handleEntryRemoved(const QUrl &url)
 {
-	QStandardItem *domainItem(findDomainItem(Utils::extractHost(entry)));
+	QStandardItem *domainItem(findDomainItem(Utils::extractHost(url)));
 
 	if (!domainItem)
 	{
@@ -292,7 +292,7 @@ void CacheContentsWidget::handleEntryRemoved(const QUrl &entry)
 	{
 		QStandardItem *entryItem(domainItem->child(i, 0));
 
-		if (entryItem && entryItem->data(UrlRole).toUrl() == entry)
+		if (entryItem && entryItem->data(UrlRole).toUrl() == url)
 		{
 			const qint64 size(ItemModel::getItemData(domainItem->child(entryItem->row(), 2), SizeRole).toLongLong());
 
@@ -312,7 +312,7 @@ void CacheContentsWidget::handleEntryRemoved(const QUrl &entry)
 					domainSizeItem->setText(Utils::formatUnit(domainSizeItem->data(SizeRole).toLongLong()));
 				}
 
-				domainItem->setText(QStringLiteral("%1 (%2)").arg(entry.host()).arg(domainItem->rowCount()));
+				domainItem->setText(QStringLiteral("%1 (%2)").arg(url.host()).arg(domainItem->rowCount()));
 			}
 
 			break;
@@ -324,10 +324,10 @@ void CacheContentsWidget::showContextMenu(const QPoint &position)
 {
 	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 	const QModelIndex index(m_ui->cacheViewWidget->indexAt(position));
-	const QUrl entry(getEntry(index));
+	const QUrl url(getEntry(index));
 	QMenu menu(this);
 
-	if (entry.isValid())
+	if (url.isValid())
 	{
 		menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open"), this, &CacheContentsWidget::openEntry);
 		menu.addAction(QCoreApplication::translate("actions", "Open in New Tab"), this, &CacheContentsWidget::openEntry)->setData(SessionsManager::NewTabOpen);
@@ -357,7 +357,7 @@ void CacheContentsWidget::showContextMenu(const QPoint &position)
 		});
 	}
 
-	if (entry.isValid() || (index.isValid() && index.parent() == m_model->invisibleRootItem()->index()))
+	if (url.isValid() || (index.isValid() && index.parent() == m_model->invisibleRootItem()->index()))
 	{
 		menu.addAction(tr("Remove All Entries from This Domain"), this, &CacheContentsWidget::removeDomainEntries);
 		menu.addSeparator();
