@@ -601,7 +601,7 @@ bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 			}
 
 			MainWindow *mainWindow(MainWindow::findMainWindow(this));
-			const QUrl url(entryIndex.sibling(entryIndex.row(), 0).data(UrlRole).toUrl());
+			const QUrl url(getEntry(entryIndex));
 
 			if (mainWindow && url.isValid())
 			{
