@@ -91,6 +91,13 @@ void HistoryContentsWidget::changeEvent(QEvent *event)
 	{
 		m_ui->retranslateUi(this);
 
+		const QStringList groups({tr("Today"), tr("Yesterday"), tr("Earlier This Week"), tr("Previous Week"), tr("Earlier This Month"), tr("Earlier This Year"), tr("Older")});
+
+		for (int i = 0; i < groups.count(); ++i)
+		{
+			m_model->setData(m_model->index(i, 0), groups.at(i), Qt::DisplayRole);
+		}
+
 		m_model->setHorizontalHeaderLabels({tr("Address"), tr("Title"), tr("Date")});
 	}
 }
