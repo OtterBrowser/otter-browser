@@ -244,16 +244,6 @@ void HistoryContentsWidget::openEntry()
 	}
 }
 
-void HistoryContentsWidget::bookmarkEntry()
-{
-	const QStandardItem *entryItem(findEntry(getEntry(m_ui->historyViewWidget->currentIndex())));
-
-	if (entryItem)
-	{
-		Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), entryItem->text()}, {QLatin1String("title"), m_ui->historyViewWidget->currentIndex().sibling(m_ui->historyViewWidget->currentIndex().row(), 1).data(Qt::DisplayRole).toString()}}, parentWidget());
-	}
-}
-
 void HistoryContentsWidget::handleEntryAdded(HistoryModel::Entry *entry)
 {
 	if (!entry || !entry->isValid() || findEntry(entry->getIdentifier()))
@@ -372,7 +362,15 @@ void HistoryContentsWidget::showContextMenu(const QPoint &position)
 		menu.addAction(QCoreApplication::translate("actions", "Open in New Window"), this, &HistoryContentsWidget::openEntry)->setData(SessionsManager::NewWindowOpen);
 		menu.addAction(QCoreApplication::translate("actions", "Open in New Background Window"), this, &HistoryContentsWidget::openEntry)->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
 		menu.addSeparator();
-		menu.addAction(tr("Add to Bookmarks…"), this, &HistoryContentsWidget::bookmarkEntry);
+		menu.addAction(tr("Add to Bookmarks…"), this, [&]()
+		{
+			const QStandardItem *entryItem(findEntry(getEntry(m_ui->historyViewWidget->currentIndex())));
+
+			if (entryItem)
+			{
+				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), entryItem->text()}, {QLatin1String("title"), m_ui->historyViewWidget->currentIndex().sibling(m_ui->historyViewWidget->currentIndex().row(), 1).data(Qt::DisplayRole).toString()}}, parentWidget());
+			}
+		});
 		menu.addAction(tr("Copy Link to Clipboard"), this, [&]()
 		{
 			const QStandardItem *entryItem(findEntry(getEntry(m_ui->historyViewWidget->currentIndex())));
