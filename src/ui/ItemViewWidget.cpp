@@ -983,6 +983,32 @@ void ItemViewWidget::setRowsMovable(bool areMovable)
 	m_areRowsMovable = areMovable;
 }
 
+void ItemViewWidget::paintEvent(QPaintEvent *event)
+{
+	QTreeView::paintEvent(event);
+
+	if (indexAt({5, 5}).isValid())
+	{
+		return;
+	}
+
+	QFont font(this->font());
+
+	if (font.pixelSize() > 0)
+	{
+		font.setPixelSize(font.pixelSize() * 2);
+	}
+	else
+	{
+		font.setPointSize(font.pointSize() * 2);
+	}
+
+	QPainter painter(viewport());
+	painter.setPen(palette().placeholderText().color());
+	painter.setFont(font);
+	painter.drawText(rect(), Qt::AlignCenter, tr("No items"));
+}
+
 void ItemViewWidget::setData(const QModelIndex &index, const QVariant &value, int role)
 {
 	if (m_sourceModel)

@@ -158,6 +158,7 @@ public slots:
 	void setRowsMovable(bool areMovable);
 
 protected:
+	void paintEvent(QPaintEvent *event) override;
 	void showEvent(QShowEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
 	void keyPressEvent(QKeyEvent *event) override;
