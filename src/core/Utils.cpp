@@ -579,6 +579,20 @@ QPixmap loadPixmapFromDataUri(const QString &data)
 	return QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8())));
 }
 
+QFont multiplyFontSize(QFont font, qreal multiplier)
+{
+	if (font.pixelSize() > 0)
+	{
+		font.setPixelSize(font.pixelSize() * 2);
+	}
+	else
+	{
+		font.setPointSize(font.pointSize() * 2);
+	}
+
+	return font;
+}
+
 QStringList getOpenPaths(const QStringList &fileNames, QStringList filters, bool selectMultiple)
 {
 	Q_UNUSED(fileNames)

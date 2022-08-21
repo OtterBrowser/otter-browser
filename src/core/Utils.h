@@ -125,6 +125,7 @@ QUrl expandUrl(const QUrl &url);
 QUrl normalizeUrl(QUrl url);
 QLocale createLocale(const QString &name);
 QPixmap loadPixmapFromDataUri(const QString &data);
+QFont multiplyFontSize(QFont font, qreal multiplier);
 SaveInformation getSavePath(const QString &fileName, const QString &directory = {}, QStringList filters = {}, bool forceAsk = false);
 QStringList getOpenPaths(const QStringList &fileNames = {}, QStringList filters = {}, bool selectMultiple = false);
 QVector<QUrl> extractUrls(const QMimeData *mimeData);

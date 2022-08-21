@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "CategoriesTabWidget.h"
+#include "../core/Utils.h"
 
 #include <QtCore/QEvent>
 #include <QtWidgets/QScrollArea>
@@ -77,19 +78,8 @@ void CategoriesTabWidget::addPage(CategoryPage *page)
 
 void CategoriesTabWidget::updateStyle()
 {
-	QFont font(this->font());
-
-	if (font.pixelSize() > 0)
-	{
-		font.setPixelSize(font.pixelSize() * 1.5);
-	}
-	else
-	{
-		font.setPointSize(font.pointSize() * 1.5);
-	}
-
 	setTabPosition(isLeftToRight() ? QTabWidget::West : QTabWidget::East);
-	tabBar()->setFont(font);
+	tabBar()->setFont(Utils::multiplyFontSize(font(), 1.5));
 }
 
 CategoryPage* CategoriesTabWidget::getPage(int index)

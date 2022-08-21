@@ -992,20 +992,9 @@ void ItemViewWidget::paintEvent(QPaintEvent *event)
 		return;
 	}
 
-	QFont font(this->font());
-
-	if (font.pixelSize() > 0)
-	{
-		font.setPixelSize(font.pixelSize() * 2);
-	}
-	else
-	{
-		font.setPointSize(font.pointSize() * 2);
-	}
-
 	QPainter painter(viewport());
 	painter.setPen(palette().placeholderText().color());
-	painter.setFont(font);
+	painter.setFont(Utils::multiplyFontSize(font(), 2));
 	painter.drawText(rect(), Qt::AlignCenter, tr("No items"));
 }
 
