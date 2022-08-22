@@ -73,23 +73,25 @@ void ViewportWidget::updateDirtyIndexesList()
 
 	m_dirtyIndexes = m_view->model()->match(m_view->model()->index(0, 0), m_updateDataRole, true, -1, (Qt::MatchExactly | Qt::MatchRecursive)).toVector();
 
-	if (previousDirtyIndexes != m_dirtyIndexes)
+	if (previousDirtyIndexes == m_dirtyIndexes)
 	{
-		update();
+		return;
+	}
 
-		if (m_dirtyIndexes.isEmpty() && m_updateTimer > 0)
-		{
-			killTimer(m_recheckTimer);
-			killTimer(m_updateTimer);
+	update();
 
-			m_recheckTimer = 0;
-			m_updateTimer = 0;
-		}
-		else if (previousDirtyIndexes.isEmpty() && m_updateTimer == 0)
-		{
-			m_recheckTimer = startTimer(1000);
-			m_updateTimer = startTimer(15);
-		}
+	if (m_dirtyIndexes.isEmpty() && m_updateTimer > 0)
+	{
+		killTimer(m_recheckTimer);
+		killTimer(m_updateTimer);
+
+		m_recheckTimer = 0;
+		m_updateTimer = 0;
+	}
+	else if (previousDirtyIndexes.isEmpty() && m_updateTimer == 0)
+	{
+		m_recheckTimer = startTimer(1000);
+		m_updateTimer = startTimer(15);
 	}
 }
 
