@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -173,16 +173,6 @@ void TransfersContentsWidget::openTransfer()
 	if (transfer)
 	{
 		transfer->openTarget();
-	}
-}
-
-void TransfersContentsWidget::openTransferFolder()
-{
-	const Transfer *transfer(getTransfer(m_ui->transfersViewWidget->currentIndex()));
-
-	if (transfer)
-	{
-		Utils::runApplication({}, QUrl::fromLocalFile(QFileInfo(transfer->getTarget()).dir().canonicalPath()));
 	}
 }
 
@@ -375,7 +365,15 @@ void TransfersContentsWidget::showContextMenu(const QPoint &position)
 		openWithMenu->setMenuOptions({{QLatin1String("mimeType"), transfer->getMimeType().name()}});
 
 		menu.addMenu(openWithMenu);
-		menu.addAction(tr("Open Folder"), this, &TransfersContentsWidget::openTransferFolder)->setEnabled(canOpen || QFileInfo(transfer->getTarget()).dir().exists());
+		menu.addAction(tr("Open Folder"), this, [&]()
+		{
+			const Transfer *transfer(getTransfer(m_ui->transfersViewWidget->currentIndex()));
+
+			if (transfer)
+			{
+				Utils::runApplication({}, QUrl::fromLocalFile(QFileInfo(transfer->getTarget()).dir().canonicalPath()));
+			}
+		})->setEnabled(canOpen || QFileInfo(transfer->getTarget()).dir().exists());
 		menu.addSeparator();
 		menu.addAction(((transfer->getState() == Transfer::ErrorState) ? tr("Resume") : tr("Stop")), this, &TransfersContentsWidget::stopResumeTransfer)->setEnabled(transfer->getState() == Transfer::RunningState || transfer->getState() == Transfer::ErrorState);
 		menu.addAction(tr("Redownload"), this, &TransfersContentsWidget::redownloadTransfer);
