@@ -279,41 +279,41 @@ void TransfersContentsWidget::handleTransferChanged(Transfer *transfer)
 
 		switch (i)
 		{
-			case 0:
+			case DecorationColumn:
 				m_model->setData(index, ThemesManager::createIcon(iconName), Qt::DecorationRole);
 				m_model->setData(index, transfer->getState(), StateRole);
 
 				break;
-			case 1:
+			case FilenameColumn:
 				m_model->setData(index, QFileInfo(transfer->getTarget()).fileName(), Qt::DisplayRole);
 
 				break;
-			case 2:
+			case SizeColumn:
 				m_model->setData(index, Utils::formatUnit(transfer->getBytesTotal(), false, 1), Qt::DisplayRole);
 				m_model->setData(index, transfer->getBytesTotal(), BytesTotalRole);
 
 				break;
-			case 3:
+			case ProgressColumn:
 				m_model->setData(index, transfer->getBytesReceived(), BytesReceivedRole);
 				m_model->setData(index, transfer->getBytesTotal(), BytesTotalRole);
 				m_model->setData(index, ((transfer->getBytesTotal() > 0) ? qFloor(Utils::calculatePercent(transfer->getBytesReceived(), transfer->getBytesTotal())) : -1), ProgressRole);
 				m_model->setData(index, transfer->getState(), StateRole);
 
 				break;
-			case 4:
+			case TimeElapsedColumn:
 				m_model->setData(index, ((isIndeterminate || transfer->getRemainingTime() <= 0) ? QString() : Utils::formatElapsedTime(transfer->getRemainingTime())), Qt::DisplayRole);
 
 				break;
-			case 5:
+			case SpeedColumn:
 				m_model->setData(index, ((transfer->getState() == Transfer::RunningState) ? Utils::formatUnit(transfer->getSpeed(), true, 1) : QString()), Qt::DisplayRole);
 
 				break;
-			case 6:
+			case TimeStartedColumn:
 				m_model->setData(index, Utils::formatDateTime(transfer->getTimeStarted()), Qt::DisplayRole);
 				m_model->setData(index, transfer->getTimeStarted(), TimeStartedRole);
 
 				break;
-			case 7:
+			case TimeFinishedColumn:
 				m_model->setData(index, Utils::formatDateTime(transfer->getTimeFinished()), Qt::DisplayRole);
 				m_model->setData(index, transfer->getTimeFinished(), TimeFinishedRole);
 

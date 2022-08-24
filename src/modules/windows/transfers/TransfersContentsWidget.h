@@ -61,6 +61,18 @@ public:
 		TimeStartedRole
 	};
 
+	enum ColumnRole
+	{
+		DecorationColumn = 0,
+		FilenameColumn,
+		SizeColumn,
+		ProgressColumn,
+		TimeElapsedColumn,
+		SpeedColumn,
+		TimeStartedColumn,
+		TimeFinishedColumn
+	};
+
 	explicit TransfersContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
 	~TransfersContentsWidget();
 
