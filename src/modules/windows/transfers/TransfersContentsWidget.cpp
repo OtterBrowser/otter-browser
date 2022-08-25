@@ -238,7 +238,7 @@ void TransfersContentsWidget::handleTransferAdded(Transfer *transfer)
 
 	m_model->appendRow(items);
 
-	m_ui->transfersViewWidget->openPersistentEditor(items[3]->index());
+	m_ui->transfersViewWidget->openPersistentEditor(items[ProgressColumn]->index());
 
 	handleTransferChanged(transfer);
 }
