@@ -43,7 +43,7 @@ ProgressBarDelegate::ProgressBarDelegate(QObject *parent) : ItemDelegate(parent)
 
 void ProgressBarDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-	ProgressBarWidget *progressBar(qobject_cast<ProgressBarWidget*>(editor));
+	ProgressBarWidget *progressBar(qobject_cast<ProgressBarWidget*>(editor->findChild<ProgressBarWidget*>()));
 
 	if (progressBar)
 	{
@@ -62,12 +62,20 @@ QWidget* ProgressBarDelegate::createEditor(QWidget *parent, const QStyleOptionVi
 {
 	Q_UNUSED(option)
 
-	ProgressBarWidget *editor(new ProgressBarWidget(parent));
+	QWidget *widget(new QWidget(parent));
+	QHBoxLayout *layout(new QHBoxLayout(widget));
+	layout->setContentsMargins(0, 3, 0, 3);
+
+	widget->setLayout(layout);
+
+	ProgressBarWidget *editor(new ProgressBarWidget(widget));
 	editor->setAlignment(Qt::AlignCenter);
+
+	layout->addWidget(editor);
 
 	setEditorData(editor, index);
 
-	return editor;
+	return widget;
 }
 
 TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
