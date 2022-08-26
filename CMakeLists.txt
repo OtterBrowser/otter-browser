@@ -255,6 +255,7 @@ set(otter_src
 	src/modules/windows/actions/ActionsContentsWidget.cpp
 	src/modules/windows/addons/AddonsContentsWidget.cpp
 	src/modules/windows/addons/AddonsPage.cpp
+	src/modules/windows/addons/DictionariesPage.cpp
 	src/modules/windows/addons/UserScriptsPage.cpp
 	src/modules/windows/bookmarks/BookmarksContentsWidget.cpp
 	src/modules/windows/cache/CacheContentsWidget.cpp

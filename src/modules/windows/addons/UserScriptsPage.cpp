@@ -169,6 +169,7 @@ void UserScriptsPage::addAddon()
 		QMessageBox::critical(this, tr("Error"), tr("Failed to import following User Script file(s):\n%1", "", failedPaths.count()).arg(failedPaths.join(QLatin1Char('\n'))), QMessageBox::Close);
 	}
 
+///TODO apply changes later, take removed addons into account?
 	save();
 
 	AddonsManager::loadUserScripts();
@@ -277,6 +278,7 @@ void UserScriptsPage::save()
 		model->removeRow(indexesToRemove.at(i).row(), indexesToRemove.at(i).parent());
 	}
 
+	m_addonsToAdd.clear();
 	m_addonsToRemove.clear();
 }
 

@@ -1,7 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,27 +17,20 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_USERSCRIPTSPAGE_H
-#define OTTER_USERSCRIPTSPAGE_H
+#ifndef OTTER_DICTIONARIESPAGE_H
+#define OTTER_DICTIONARIESPAGE_H
 
 #include "AddonsPage.h"
 
 namespace Otter
 {
 
-class UserScriptsPage final : public AddonsPage
+class DictionariesPage final : public AddonsPage
 {
 	Q_OBJECT
 
 public:
-	enum ReplaceMode
-	{
-		UnknownMode = 0,
-		ReplaceAllMode,
-		IgnoreAllMode
-	};
-
-	explicit UserScriptsPage(QWidget *parent);
+	explicit DictionariesPage(QWidget *parent);
 
 	QString getTitle() const override;
 
@@ -48,9 +40,7 @@ public slots:
 
 protected:
 	void delayedLoad() override;
-	QIcon getFallbackIcon() const override;
 	QVariant getAddonIdentifier(Addon *addon) const override;
-	QVector<UserScript*> getSelectedUserScripts() const;
 	bool canOpenAddons() const override;
 	bool canReloadAddons() const override;
 
@@ -58,10 +48,6 @@ protected slots:
 	void openAddons() override;
 	void reloadAddons() override;
 	void removeAddons() override;
-
-private:
-	QStringList m_addonsToAdd;
-	QStringList m_addonsToRemove;
 };
 
 }
