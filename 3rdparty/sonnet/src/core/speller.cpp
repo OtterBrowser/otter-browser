@@ -167,6 +167,14 @@ QString Speller::language() const
     return d->dict->language();
 }
 
+QStringList Speller::paths() const
+{
+    if (!d->isValid()) {
+        return QStringList();
+    }
+    return d->dict->paths();
+}
+
 void Speller::save()
 {
     if (d->settings) {

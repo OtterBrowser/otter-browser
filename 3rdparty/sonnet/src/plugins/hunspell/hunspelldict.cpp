@@ -29,7 +29,7 @@
 using namespace Sonnet;
 
 HunspellDict::HunspellDict(const QString &lang)
-    : SpellerPlugin(QFileInfo(lang).baseName())
+	: SpellerPlugin(QFileInfo(lang).baseName(), {lang, lang.left(lang.length() - 4) + QLatin1String(".dic")})
     , m_speller(0)
     , m_codec(0)
 {

@@ -88,8 +88,13 @@ public:
      */
     QString language() const;
 
+    /**
+     * Returns dictionary paths of this speller.
+     */
+    QStringList paths() const;
+
 protected:
-    SpellerPlugin(const QString &lang);
+    SpellerPlugin(const QString &lang, const QStringList &paths);
 private:
     SpellerPluginPrivate *const d;
 };

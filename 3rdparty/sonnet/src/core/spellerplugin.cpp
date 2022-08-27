@@ -25,13 +25,15 @@ namespace Sonnet
 class SpellerPluginPrivate
 {
 public:
-    QString language;
+	QString language;
+	QStringList paths;
 };
 
-SpellerPlugin::SpellerPlugin(const QString &lang)
+SpellerPlugin::SpellerPlugin(const QString &lang, const QStringList &paths)
     : d(new SpellerPluginPrivate)
 {
     d->language = lang;
+	d->paths = paths;
 }
 
 SpellerPlugin::~SpellerPlugin()
@@ -42,6 +44,11 @@ SpellerPlugin::~SpellerPlugin()
 QString SpellerPlugin::language() const
 {
     return d->language;
+}
+
+QStringList SpellerPlugin::paths() const
+{
+    return d->paths;
 }
 
 bool SpellerPlugin::isMisspelled(const QString &word) const

@@ -55,6 +55,10 @@ public:
      * Returns language supported by this speller.
      */
     QString language() const;
+    /**
+     * Returns dictionary paths of this speller.
+     */
+    QStringList paths() const;
 
     /**
      * Checks the given word.
