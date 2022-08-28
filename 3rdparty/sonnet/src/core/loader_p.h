@@ -20,6 +20,8 @@
 #ifndef SONNET_LOADER_P_H
 #define SONNET_LOADER_P_H
 
+#include "speller.h"
+
 #include <QtCore/QObject>
 #include <QtCore/QStringList>
 #include <QtCore/QString>
@@ -110,11 +112,16 @@ public:
     QStringList languageNames() const;
 
     /**
+     * Returns a list of supported dictionaries.
+     */
+    QVector<Speller::Dictionary> dictionaries() const;
+
+    /**
      * @param langCode the dictionary name/language code, e.g. en_gb
      * @return the localized language name, e.g. "British English"
      * @since 4.2
      */
-    QString languageNameForCode(const QString &langCode) const;
+    static QString languageNameForCode(const QString &langCode);
 
     /**
      * Returns the Settings object used by the loader.

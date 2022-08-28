@@ -21,6 +21,7 @@
 #include "hunspellclient.h"
 #include "hunspelldict.h"
 #include "hunspelldebug.h"
+#include "../../core/loader_p.h"
 
 #include <QCoreApplication>
 #include <QDir>
@@ -94,3 +95,19 @@ QStringList HunspellClient::languages() const
     return m_dictionaries.keys();
 }
 
+QVector<Speller::Dictionary> HunspellClient::dictionaries() const
+{
+    QVector<Speller::Dictionary> dicts;
+    QHash<QString, QString>::const_iterator iterator;
+
+    for (iterator = m_dictionaries.constBegin(); iterator != m_dictionaries.constEnd(); ++iterator) {
+        Speller::Dictionary dict;
+        dict.name = Loader::languageNameForCode(iterator.key());
+        dict.langCode = iterator.key();
+        dict.paths = QStringList({iterator.value(), iterator.value().left(iterator.value().length() - 4) + QLatin1String(".dic")});
+
+        dicts.append(dict);
+    }
+
+    return dicts;
+}

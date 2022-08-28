@@ -33,7 +33,7 @@ namespace Otter
 
 SpellCheckManager* SpellCheckManager::m_instance(nullptr);
 QString SpellCheckManager::m_defaultDictionary;
-QMap<QString, QString> SpellCheckManager::m_dictionaries;
+QVector<SpellCheckManager::DictionaryInformation> SpellCheckManager::m_dictionaries;
 
 SpellCheckManager::SpellCheckManager(QObject *parent) : QObject(parent)
 {
@@ -47,7 +47,20 @@ SpellCheckManager::SpellCheckManager(QObject *parent) : QObject(parent)
 
 	qputenv("OTTER_DICTIONARIES", dictionariesPath.toLatin1());
 
-	m_dictionaries = Sonnet::Speller().availableDictionaries();
+	const QVector<Sonnet::Speller::Dictionary> dictionaries(Sonnet::Speller().availableDictionaries());
+
+	m_dictionaries.reserve(dictionaries.count());
+
+	for (int i = 0; i < dictionaries.count(); ++i)
+	{
+		Sonnet::Speller::Dictionary dictionary(dictionaries.at(i));
+		DictionaryInformation information;
+		information.name = dictionary.langCode;
+		information.title = dictionary.name;
+		information.paths = dictionary.paths;
+
+		m_dictionaries.append(information);
+	}
 #endif
 }
 
@@ -61,7 +74,14 @@ void SpellCheckManager::createInstance()
 
 void SpellCheckManager::updateDefaultDictionary()
 {
-	const QStringList dictionaries(m_dictionaries.values());
+	QStringList dictionaries;
+	dictionaries.reserve(m_dictionaries.count());
+
+	for (int i = 0; i < m_dictionaries.count(); ++i)
+	{
+		dictionaries.append(m_dictionaries.at(i).name);
+	}
+
 	const QString defaultLanguage(QLocale().bcp47Name());
 
 	if (dictionaries.contains(defaultLanguage))
@@ -114,21 +134,7 @@ QString SpellCheckManager::getDefaultDictionary()
 
 QVector<SpellCheckManager::DictionaryInformation> SpellCheckManager::getDictionaries()
 {
-	QVector<DictionaryInformation> dictionaries;
-	dictionaries.reserve(m_dictionaries.count());
-
-	QMap<QString, QString>::const_iterator iterator;
-
-	for (iterator = m_dictionaries.constBegin(); iterator != m_dictionaries.constEnd(); ++iterator)
-	{
-		DictionaryInformation dictionary;
-		dictionary.name = iterator.value();
-		dictionary.title = iterator.key();
-
-		dictionaries.append(dictionary);
-	}
-
-	return dictionaries;
+	return m_dictionaries;
 }
 
 bool SpellCheckManager::event(QEvent *event)

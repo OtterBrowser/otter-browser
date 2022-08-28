@@ -20,6 +20,8 @@
 #ifndef SONNET_CLIENT_P_H
 #define SONNET_CLIENT_P_H
 
+#include "speller.h"
+
 #include <QtCore/QObject>
 #include <QtCore/QStringList>
 #include <QtCore/QString>
@@ -61,10 +63,15 @@ public:
      */
     virtual SpellerPlugin *createSpeller(const QString &language) = 0;
 
-    /**
+	/**
      * @returns a list of supported languages.
      */
     virtual QStringList languages() const = 0;
+
+	/**
+     * @returns a list of supported dictionaries.
+     */
+    virtual QVector<Speller::Dictionary> dictionaries() const = 0;
 
     /**
      * @returns the name of the implementating class.

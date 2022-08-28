@@ -48,6 +48,8 @@ public:
 
     virtual QStringList languages() const;
 
+    virtual QVector<Sonnet::Speller::Dictionary> dictionaries() const;
+
     virtual QString name() const
     {
         return QStringLiteral("Hunspell");

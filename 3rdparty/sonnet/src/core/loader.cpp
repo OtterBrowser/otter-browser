@@ -42,6 +42,7 @@ public:
 
     // <language, Clients with that language >
     QMap<QString, QVector<Client *> > languageClients;
+    QVector<Client *> clientInstances;
     QStringList clients;
 
     QStringList languagesNameCache;
@@ -134,7 +135,7 @@ QStringList Loader::languages() const
     return d->languageClients.keys();
 }
 
-QString Loader::languageNameForCode(const QString &langCode) const
+QString Loader::languageNameForCode(const QString &langCode)
 {
     QString currentDictionary = langCode,   // e.g. en_GB-ize-wo_accents
             isoCode,            // locale ISO name
@@ -244,6 +245,17 @@ QStringList Loader::languageNames() const
     return allLocalizedDictionaries;
 }
 
+QVector<Speller::Dictionary> Loader::dictionaries() const
+{
+   QVector<Speller::Dictionary> dicts;
+
+   for (int i = 0; i < d->clientInstances.count(); ++i) {
+      dicts.append(d->clientInstances.at(i)->dictionaries());
+   }
+
+   return dicts;
+}
+
 Settings *Loader::settings() const
 {
     return d->settings;
@@ -261,6 +273,7 @@ void Loader::loadPlugin(const QString &pluginPath)
     Client *client = new HunspellClient(this);
     const QStringList languages = client->languages();
     d->clients.append(client->name());
+    d->clientInstances.append(client);
 
     Q_FOREACH (const QString &language, languages) {
         QVector<Client *> &languageClients = d->languageClients[language];

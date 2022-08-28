@@ -34,6 +34,7 @@ public:
 	{
 		QString name;
 		QString title;
+		QStringList paths;
 	};
 
 	static void createInstance();
@@ -50,7 +51,7 @@ protected:
 private:
 	static SpellCheckManager *m_instance;
 	static QString m_defaultDictionary;
-	static QMap<QString, QString> m_dictionaries;
+	static QVector<DictionaryInformation> m_dictionaries;
 };
 
 }
