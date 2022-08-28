@@ -55,7 +55,7 @@ SpellCheckManager::SpellCheckManager(QObject *parent) : QObject(parent)
 	{
 		Sonnet::Speller::Dictionary dictionary(dictionaries.at(i));
 		DictionaryInformation information;
-		information.name = dictionary.langCode;
+		information.language = dictionary.langCode;
 		information.title = dictionary.name;
 		information.paths = dictionary.paths;
 
@@ -79,7 +79,7 @@ void SpellCheckManager::updateDefaultDictionary()
 
 	for (int i = 0; i < m_dictionaries.count(); ++i)
 	{
-		dictionaries.append(m_dictionaries.at(i).name);
+		dictionaries.append(m_dictionaries.at(i).language);
 	}
 
 	const QString defaultLanguage(QLocale().bcp47Name());

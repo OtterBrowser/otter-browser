@@ -1412,7 +1412,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 					for (int i = 0; i < dictionaries.count(); ++i)
 					{
-						if (dictionaries.at(i).name == dictionary)
+						if (dictionaries.at(i).language == dictionary)
 						{
 							state.text = dictionaries.at(i).title;
 

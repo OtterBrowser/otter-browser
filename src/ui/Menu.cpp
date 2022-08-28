@@ -1061,7 +1061,7 @@ void Menu::populateDictionariesMenu()
 
 	for (int i = 0; i < dictionaries.count(); ++i)
 	{
-		Action *action(new MenuAction(ActionsManager::CheckSpellingAction, {{QLatin1String("dictionary"), dictionaries.at(i).name}}, m_executor, this));
+		Action *action(new MenuAction(ActionsManager::CheckSpellingAction, {{QLatin1String("dictionary"), dictionaries.at(i).language}}, m_executor, this));
 
 		addAction(action);
 
