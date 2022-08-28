@@ -59,6 +59,16 @@ SpellCheckManager::SpellCheckManager(QObject *parent) : QObject(parent)
 		information.title = dictionary.name;
 		information.paths = dictionary.paths;
 
+		for (int j = 0; j < information.paths.count(); ++j)
+		{
+			QFileInfo pathInformation(information.paths.at(j));
+
+			if (pathInformation.isRelative())
+			{
+				information.paths[j] = pathInformation.absoluteFilePath();
+			}
+		}
+
 		m_dictionaries.append(information);
 	}
 #endif
