@@ -35,6 +35,11 @@ public:
 		QString language;
 		QString title;
 		QStringList paths;
+
+		bool isValid()
+		{
+			return !language.isEmpty();
+		}
 	};
 
 	static void createInstance();
