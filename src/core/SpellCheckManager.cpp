@@ -142,6 +142,19 @@ QString SpellCheckManager::getDefaultDictionary()
 	return m_defaultDictionary;
 }
 
+SpellCheckManager::DictionaryInformation SpellCheckManager::getDictionary(const QString &language)
+{
+	for (int i = 0; i < m_dictionaries.count(); ++i)
+	{
+		if (m_dictionaries.at(i).language == language)
+		{
+			return m_dictionaries.at(i);
+		}
+	}
+
+	return {};
+}
+
 QVector<SpellCheckManager::DictionaryInformation> SpellCheckManager::getDictionaries()
 {
 	return m_dictionaries;

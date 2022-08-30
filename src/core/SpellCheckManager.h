@@ -45,6 +45,7 @@ public:
 	static void createInstance();
 	static SpellCheckManager* getInstance();
 	static QString getDefaultDictionary();
+	static DictionaryInformation getDictionary(const QString &language);
 	static QVector<DictionaryInformation> getDictionaries();
 	bool event(QEvent *event) override;
 
