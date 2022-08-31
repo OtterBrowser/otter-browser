@@ -37,6 +37,20 @@ QVector<SpellCheckManager::DictionaryInformation> SpellCheckManager::m_dictionar
 
 SpellCheckManager::SpellCheckManager(QObject *parent) : QObject(parent)
 {
+}
+
+void SpellCheckManager::createInstance()
+{
+	if (!m_instance)
+	{
+		m_instance = new SpellCheckManager(QCoreApplication::instance());
+
+		loadDictionaries();
+	}
+}
+
+void SpellCheckManager::loadDictionaries()
+{
 #ifdef OTTER_ENABLE_SPELLCHECK
 	QString dictionariesPath(SessionsManager::getWritableDataPath(QLatin1String("dictionaries")));
 
@@ -49,6 +63,7 @@ SpellCheckManager::SpellCheckManager(QObject *parent) : QObject(parent)
 
 	const QVector<Sonnet::Speller::Dictionary> dictionaries(Sonnet::Speller().availableDictionaries());
 
+	m_dictionaries.clear();
 	m_dictionaries.reserve(dictionaries.count());
 
 	for (int i = 0; i < dictionaries.count(); ++i)
@@ -71,15 +86,9 @@ SpellCheckManager::SpellCheckManager(QObject *parent) : QObject(parent)
 
 		m_dictionaries.append(information);
 	}
-#endif
-}
 
-void SpellCheckManager::createInstance()
-{
-	if (!m_instance)
-	{
-		m_instance = new SpellCheckManager(QCoreApplication::instance());
-	}
+	emit m_instance->dictionariesChanged();
+#endif
 }
 
 void SpellCheckManager::updateDefaultDictionary()

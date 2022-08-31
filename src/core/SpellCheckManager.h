@@ -53,11 +53,15 @@ protected:
 	explicit SpellCheckManager(QObject *parent);
 
 	static void updateDefaultDictionary();
+	static void loadDictionaries();
 
 private:
 	static SpellCheckManager *m_instance;
 	static QString m_defaultDictionary;
 	static QVector<DictionaryInformation> m_dictionaries;
+
+signals:
+	void dictionariesChanged();
 };
 
 }
