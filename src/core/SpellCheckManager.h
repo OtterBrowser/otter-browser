@@ -20,7 +20,7 @@
 #ifndef OTTER_SPELLCHECKMANAGER_H
 #define OTTER_SPELLCHECKMANAGER_H
 
-#include <QtCore/QObject>
+#include "AddonsManager.h"
 
 namespace Otter
 {
@@ -62,6 +62,24 @@ private:
 
 signals:
 	void dictionariesChanged();
+};
+
+class Dictionary final : public QObject, public Addon
+{
+public:
+	explicit Dictionary(const SpellCheckManager::DictionaryInformation &information, QObject *parent);
+
+	QString getLanguage() const;
+	QString getName() const override;
+	QString getTitle() const override;
+	QStringList getPaths() const;
+	AddonType getType() const override;
+	bool isEnabled() const override;
+	bool canRemove() const override;
+	bool remove() override;
+
+private:
+	SpellCheckManager::DictionaryInformation m_information;
 };
 
 }

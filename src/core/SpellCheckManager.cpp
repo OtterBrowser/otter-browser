@@ -179,4 +179,69 @@ bool SpellCheckManager::event(QEvent *event)
 	return QObject::event(event);
 }
 
+Dictionary::Dictionary(const SpellCheckManager::DictionaryInformation &information, QObject *parent) : QObject(parent),
+	m_information(information)
+{
+}
+
+QString Dictionary::getLanguage() const
+{
+	return m_information.language;
+}
+
+QString Dictionary::getName() const
+{
+	return m_information.language;
+}
+
+QString Dictionary::getTitle() const
+{
+	return m_information.title;
+}
+
+QStringList Dictionary::getPaths() const
+{
+	return m_information.paths;
+}
+
+Addon::AddonType Dictionary::getType() const
+{
+	return DictionaryType;
+}
+
+bool Dictionary::isEnabled() const
+{
+	return true;
+}
+
+bool Dictionary::canRemove() const
+{
+	bool canRemove(true);
+
+	for (int i = 0; i < m_information.paths.count(); ++i)
+	{
+		if (!QFileInfo(m_information.paths.at(i)).isWritable())
+		{
+			canRemove = false;
+		}
+	}
+
+	return canRemove;
+}
+
+bool Dictionary::remove()
+{
+	if (!canRemove())
+	{
+		return false;
+	}
+
+	for (int i = 0; i < m_information.paths.count(); ++i)
+	{
+		QFile::remove(m_information.paths.at(i));
+	}
+
+	return true;
+}
+
 }

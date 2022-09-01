@@ -47,6 +47,7 @@ public:
 	{
 		UnknownType = 0,
 		ColorSchemeType,
+		DictionaryType,
 		ExporterType,
 		ExtensionType,
 		ImporterType,
