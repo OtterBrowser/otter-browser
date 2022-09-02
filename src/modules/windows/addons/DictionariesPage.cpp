@@ -18,17 +18,49 @@
 **************************************************************************/
 
 #include "DictionariesPage.h"
+#include "../../../core/SpellCheckManager.h"
 
 namespace Otter
 {
 
 DictionariesPage::DictionariesPage(QWidget *parent) : AddonsPage(parent)
 {
+	connect(this, &AddonsPage::needsActionsUpdate, this, [&]()
+	{
+		const QModelIndexList indexes(getSelectedIndexes());
+
+ 		if (indexes.isEmpty())
+ 		{
+ 			emit currentAddonChanged(nullptr);
+ 		}
+ 		else
+ 		{
+			SpellCheckManager::DictionaryInformation information(SpellCheckManager::getDictionary(indexes.first().data(IdentifierRole).toString()));
+
+			if (information.isValid())
+			{
+				Dictionary dictionary(information, this);
+
+				emit currentAddonChanged(&dictionary);
+			}
+			else
+			{
+				emit currentAddonChanged(nullptr);
+			}
+ 		}
+	});
 }
 
 void DictionariesPage::delayedLoad()
 {
+	const QVector<SpellCheckManager::DictionaryInformation> dictionaries(SpellCheckManager::getDictionaries());
 
+	for (int i = 0; i < dictionaries.count(); ++i)
+	{
+		Dictionary dictionary(dictionaries.at(i), this);
+
+		addAddonEntry(&dictionary);
+	}
 }
 
 void DictionariesPage::addAddon()
@@ -63,7 +95,7 @@ QString DictionariesPage::getTitle() const
 
 QVariant DictionariesPage::getAddonIdentifier(Addon *addon) const
 {
-	return {};
+	return addon->getName();
 }
 
 bool DictionariesPage::canOpenAddons() const
