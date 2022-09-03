@@ -97,6 +97,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Browser_ReuseCurrentTabOption, BooleanType, false);
 	registerOption(Browser_ShowSelectionContextMenuOnDoubleClickOption, BooleanType, false);
 	registerOption(Browser_SpellCheckDictionaryOption, StringType, QString());
+	registerOption(Browser_SpellCheckIgnoreDctionariesOption, StringType, QStringList());
 	registerOption(Browser_StartupBehaviorOption, EnumerationType, QLatin1String("continuePrevious"), {QLatin1String("continuePrevious"), QLatin1String("showDialog"), QLatin1String("startHomePage"), QLatin1String("startStartPage"), QLatin1String("startEmpty")});
 	registerOption(Browser_TransferStartingActionOption, EnumerationType, QLatin1String("doNothing"), {QLatin1String("openTab"), QLatin1String("openBackgroundTab"), QLatin1String("openPanel"), QLatin1String("doNothing")});
 	registerOption(Browser_ValidatorsOrderOption, ListType, QStringList({QLatin1String("w3c-markup"), QLatin1String("w3c-css")}));

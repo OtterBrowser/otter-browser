@@ -73,6 +73,7 @@ public:
 		Browser_ReuseCurrentTabOption,
 		Browser_ShowSelectionContextMenuOnDoubleClickOption,
 		Browser_SpellCheckDictionaryOption,
+		Browser_SpellCheckIgnoreDctionariesOption,
 		Browser_StartupBehaviorOption,
 		Browser_TransferStartingActionOption,
 		Browser_ValidatorsOrderOption,
