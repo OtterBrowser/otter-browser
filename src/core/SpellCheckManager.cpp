@@ -66,9 +66,17 @@ void SpellCheckManager::loadDictionaries()
 	m_dictionaries.clear();
 	m_dictionaries.reserve(dictionaries.count());
 
+	const QStringList ignoredDictionaries(SettingsManager::getOption(SettingsManager::Browser_SpellCheckIgnoreDctionariesOption).toStringList());
+
 	for (int i = 0; i < dictionaries.count(); ++i)
 	{
 		Sonnet::Speller::Dictionary dictionary(dictionaries.at(i));
+
+		if (ignoredDictionaries.contains(dictionary.langCode))
+		{
+			continue;
+		}
+
 		DictionaryInformation information;
 		information.language = dictionary.langCode;
 		information.title = dictionary.name;
