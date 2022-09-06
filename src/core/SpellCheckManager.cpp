@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -37,6 +37,13 @@ QVector<SpellCheckManager::DictionaryInformation> SpellCheckManager::m_dictionar
 
 SpellCheckManager::SpellCheckManager(QObject *parent) : QObject(parent)
 {
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, [&](int identifier)
+	{
+		if (identifier == SettingsManager::Browser_SpellCheckIgnoreDctionariesOption)
+		{
+			loadDictionaries();
+		}
+	});
 }
 
 void SpellCheckManager::createInstance()
