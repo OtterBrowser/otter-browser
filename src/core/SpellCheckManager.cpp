@@ -109,6 +109,13 @@ void SpellCheckManager::loadDictionaries()
 
 void SpellCheckManager::updateDefaultDictionary()
 {
+	if (m_dictionaries.isEmpty())
+	{
+		m_defaultDictionary = QLatin1String("en_US");
+
+		return;
+	}
+
 	QStringList dictionaries;
 	dictionaries.reserve(m_dictionaries.count());
 
