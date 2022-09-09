@@ -138,16 +138,20 @@ void SpellCheckManager::updateDefaultDictionary()
 
 	for (int i = 0; i < locales.count(); ++i)
 	{
-		if (dictionaries.contains(locales.at(i).name()))
+		const QString localeName(locales.at(i).name());
+
+		if (dictionaries.contains(localeName))
 		{
-			m_defaultDictionary = locales.at(i).name();
+			m_defaultDictionary = localeName;
 
 			break;
 		}
 
-		if (dictionaries.contains(locales.at(i).bcp47Name()))
+		const QString localeBcp47Name(locales.at(i).bcp47Name());
+
+		if (dictionaries.contains(localeBcp47Name))
 		{
-			m_defaultDictionary = locales.at(i).bcp47Name();
+			m_defaultDictionary = localeBcp47Name;
 
 			break;
 		}
