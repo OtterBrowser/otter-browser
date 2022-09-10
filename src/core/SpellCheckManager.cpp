@@ -103,6 +103,11 @@ void SpellCheckManager::loadDictionaries()
 		m_dictionaries.append(information);
 	}
 
+	if (!m_defaultDictionary.isEmpty())
+	{
+		updateDefaultDictionary();
+	}
+
 	emit m_instance->dictionariesChanged();
 #endif
 }
