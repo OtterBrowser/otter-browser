@@ -114,9 +114,11 @@ void SpellCheckManager::loadDictionaries()
 
 void SpellCheckManager::updateDefaultDictionary()
 {
+	const QString fallbackDictionary(QLatin1String("en_US"));
+
 	if (m_dictionaries.isEmpty())
 	{
-		m_defaultDictionary = QLatin1String("en_US");
+		m_defaultDictionary = fallbackDictionary;
 
 		return;
 	}
@@ -164,7 +166,7 @@ void SpellCheckManager::updateDefaultDictionary()
 
 	if (m_defaultDictionary.isEmpty())
 	{
-		m_defaultDictionary = QLatin1String("en_US");
+		m_defaultDictionary = fallbackDictionary;
 	}
 }
 
