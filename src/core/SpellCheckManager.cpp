@@ -245,7 +245,7 @@ Addon::AddonType Dictionary::getType() const
 
 bool Dictionary::isEnabled() const
 {
-	return true;
+	return !SettingsManager::getOption(SettingsManager::Browser_SpellCheckIgnoreDctionariesOption).toStringList().contains(m_information.language);
 }
 
 bool Dictionary::canRemove() const
