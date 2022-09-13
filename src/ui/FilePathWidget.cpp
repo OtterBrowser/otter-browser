@@ -154,16 +154,18 @@ void FilePathWidget::setOpenMode(OpenMode mode)
 
 void FilePathWidget::setPath(const QString &path)
 {
-	if (path != m_lineEditWidget->text())
+	if (path == m_lineEditWidget->text())
 	{
-		m_lineEditWidget->blockSignals(true);
-		m_lineEditWidget->setText(path);
-		m_lineEditWidget->blockSignals(false);
-
-		m_isManuallySpecified = false;
-
-		emit pathChanged(path);
+		return;
 	}
+
+	m_lineEditWidget->blockSignals(true);
+	m_lineEditWidget->setText(path);
+	m_lineEditWidget->blockSignals(false);
+
+	m_isManuallySpecified = false;
+
+	emit pathChanged(path);
 }
 
 QString FilePathWidget::getPath() const
