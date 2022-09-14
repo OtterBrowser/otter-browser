@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -101,7 +101,6 @@ protected slots:
 	void scheduleBookmarksReload();
 	void loadBookmarks();
 	void toggleVisibility();
-	void notifyWindowChanged(quint64 identifier);
 	void handleToolBarModified(int identifier);
 	void handleToolBarRemoved(int identifier);
 	void handleBookmarkModified(BookmarksModel::Bookmark *bookmark);
