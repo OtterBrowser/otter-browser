@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -482,7 +482,7 @@ QString StartPageContentsWidget::getPixmapCachePrefix() const
 			break;
 	}
 
-	return (prefix.isEmpty() ? QString() : prefix + QLatin1Char('-') + QString::number(width()) + QLatin1Char('-') + QString::number(height()));
+	return (prefix.isEmpty() ? prefix : prefix + QLatin1Char('-') + QString::number(width()) + QLatin1Char('-') + QString::number(height()));
 }
 
 StartPageWidget::StartPageWidget(Window *parent) : QScrollArea(parent),
