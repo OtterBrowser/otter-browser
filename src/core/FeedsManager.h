@@ -146,7 +146,6 @@ protected:
 
 protected slots:
 	void scheduleSave();
-	void handleFeedModified(Feed *feed);
 
 private:
 	int m_saveTimer;
