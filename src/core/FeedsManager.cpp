@@ -780,14 +780,11 @@ Feed* FeedsManager::createFeed(const QUrl &url, const QString &title, const QIco
 
 	m_feeds.append(feed);
 
-	connect(feed, &Feed::feedModified, m_instance, [&](Feed *feed)
+	connect(feed, &Feed::feedModified, m_instance, [=]()
 	{
-		if (feed)
-		{
-			emit m_instance->feedModified(feed->getUrl());
-		}
-
 		m_instance->scheduleSave();
+
+		emit m_instance->feedModified(feed->getUrl());
 	});
 
 	return feed;
