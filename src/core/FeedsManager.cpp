@@ -167,29 +167,31 @@ void Feed::setEntries(const QVector<Feed::Entry> &entries)
 
 void Feed::setUpdateInterval(int interval)
 {
-	if (interval != m_updateInterval)
+	if (interval == m_updateInterval)
 	{
-		m_updateInterval = interval;
-
-		if (interval <= 0 && m_updateTimer)
-		{
-			m_updateTimer->deleteLater();
-			m_updateTimer = nullptr;
-		}
-		else
-		{
-			if (!m_updateTimer)
-			{
-				m_updateTimer = new LongTermTimer(this);
-
-				connect(m_updateTimer, &LongTermTimer::timeout, this, &Feed::update);
-			}
-
-			m_updateTimer->start(static_cast<quint64>(interval) * 60000);
-		}
-
-		emit feedModified(this);
+		return;
 	}
+
+	m_updateInterval = interval;
+
+	if (interval <= 0 && m_updateTimer)
+	{
+		m_updateTimer->deleteLater();
+		m_updateTimer = nullptr;
+	}
+	else
+	{
+		if (!m_updateTimer)
+		{
+			m_updateTimer = new LongTermTimer(this);
+
+			connect(m_updateTimer, &LongTermTimer::timeout, this, &Feed::update);
+		}
+
+		m_updateTimer->start(static_cast<quint64>(interval) * 60000);
+	}
+
+	emit feedModified(this);
 }
 
 void Feed::update()
