@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -194,15 +194,15 @@ void StartPageModel::handleBookmarkRemoved(BookmarksModel::Bookmark *bookmark, B
 
 void StartPageModel::handleThumbnailCreated(quint64 identifier, const QPixmap &thumbnail, const QString &title)
 {
-	if (!m_reloads.contains(identifier))
+	if (!m_tileReloads.contains(identifier))
 	{
 		return;
 	}
 
-	const bool needsTitleUpdate(m_reloads[identifier]);
+	const bool needsTitleUpdate(m_tileReloads[identifier]);
 	BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(identifier));
 
-	m_reloads.remove(identifier);
+	m_tileReloads.remove(identifier);
 
 	if (!SessionsManager::isReadOnly() && !thumbnail.isNull() && bookmark)
 	{
@@ -271,7 +271,7 @@ QVariant StartPageModel::data(const QModelIndex &index, int role) const
 {
 	if (role == IsReloadingRole)
 	{
-		return m_reloads.contains(index.data(BookmarksModel::IdentifierRole).toULongLong());
+		return m_tileReloads.contains(index.data(BookmarksModel::IdentifierRole).toULongLong());
 	}
 
 	return QStandardItemModel::data(index, role);
@@ -333,7 +333,7 @@ bool StartPageModel::requestThumbnail(const QUrl &url, quint64 identifier, bool 
 			handleThumbnailCreated(identifier, job->getThumbnail(), job->getTitle());
 		});
 
-		m_reloads[identifier] = needsTitleUpdate;
+		m_tileReloads[identifier] = needsTitleUpdate;
 
 		job->start();
 
@@ -378,7 +378,7 @@ bool StartPageModel::reloadTile(const QModelIndex &index, bool needsTitleUpdate)
 
 		information.icon.paint(&painter, {{0, 0}, size});
 
-		m_reloads[identifier] = needsTitleUpdate;
+		m_tileReloads[identifier] = needsTitleUpdate;
 
 		handleThumbnailCreated(identifier, thumbnail, information.getTitle());
 
