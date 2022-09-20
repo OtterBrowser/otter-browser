@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -126,7 +126,12 @@ public:
 
 		bool operator ==(const ToolBarDefinition &other) const
 		{
-			return (title == other.title && bookmarksPath == other.bookmarksPath && currentPanel == other.currentPanel && panels == other.panels && entries == other.entries && type == other.type && normalVisibility == other.normalVisibility && fullScreenVisibility == other.fullScreenVisibility && location == other.location && buttonStyle == other.buttonStyle && identifier == other.identifier && iconSize == other.iconSize && maximumButtonSize == other.maximumButtonSize && panelSize == other.panelSize && row == other.row && hasToggle == other.hasToggle);
+			return !(*this != other);
+		}
+
+		bool operator !=(const ToolBarDefinition &other) const
+		{
+			return (title != other.title || bookmarksPath != other.bookmarksPath || currentPanel != other.currentPanel || panels != other.panels || entries != other.entries || type != other.type || normalVisibility != other.normalVisibility || fullScreenVisibility != other.fullScreenVisibility || location != other.location || buttonStyle != other.buttonStyle || identifier != other.identifier || iconSize != other.iconSize || maximumButtonSize != other.maximumButtonSize || panelSize != other.panelSize || row != other.row || hasToggle != other.hasToggle);
 		}
 
 		bool canReset() const
