@@ -273,11 +273,12 @@ void ToolBarsManager::ensureInitialized()
 		}
 	}
 
+	const QVector<ToolBarDefinition::Entry> menuBarEntries(m_definitions[MenuBar].entries);
 	bool hasMenuBar(false);
 
-	for (int i = 0; i < m_definitions[MenuBar].entries.count(); ++i)
+	for (int i = 0; i < menuBarEntries.count(); ++i)
 	{
-		if (m_definitions[MenuBar].entries.at(i).action == QLatin1String("MenuBarWidget"))
+		if (menuBarEntries.at(i).action == QLatin1String("MenuBarWidget"))
 		{
 			hasMenuBar = true;
 
@@ -293,11 +294,12 @@ void ToolBarsManager::ensureInitialized()
 		m_definitions[MenuBar].entries.prepend(definition);
 	}
 
+	const QVector<ToolBarDefinition::Entry> tabBarEntries(m_definitions[TabBar].entries);
 	bool hasTabBar(false);
 
-	for (int i = 0; i < m_definitions[TabBar].entries.count(); ++i)
+	for (int i = 0; i < tabBarEntries.count(); ++i)
 	{
-		if (m_definitions[TabBar].entries.at(i).action == QLatin1String("TabBarWidget"))
+		if (tabBarEntries.at(i).action == QLatin1String("TabBarWidget"))
 		{
 			hasTabBar = true;
 
