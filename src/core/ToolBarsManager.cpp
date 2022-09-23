@@ -82,38 +82,40 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 
 		for (int i = 0; i < m_definitions.count(); ++i)
 		{
-			if (m_definitions.at(i).isDefault || m_definitions.at(i).wasRemoved)
+			const ToolBarDefinition definition(m_definitions.at(i));
+
+			if (definition.isDefault || definition.wasRemoved)
 			{
 				continue;
 			}
 
-			const QString identifier(getToolBarName(m_definitions.at(i).identifier));
+			const QString identifier(getToolBarName(definition.identifier));
 
 			if (identifier.isEmpty())
 			{
 				continue;
 			}
 
-			QJsonObject definitionObject({{QLatin1String("identifier"), QJsonValue(identifier)}, {QLatin1String("title"), QJsonValue(m_definitions.at(i).title)}, {QLatin1String("normalVisibility"), QJsonValue(visibilityModes.value(m_definitions.at(i).normalVisibility))}, {QLatin1String("fullScreenVisibility"), QJsonValue(visibilityModes.value(m_definitions.at(i).fullScreenVisibility))}});
+			QJsonObject definitionObject({{QLatin1String("identifier"), QJsonValue(identifier)}, {QLatin1String("title"), QJsonValue(definition.title)}, {QLatin1String("normalVisibility"), QJsonValue(visibilityModes.value(definition.normalVisibility))}, {QLatin1String("fullScreenVisibility"), QJsonValue(visibilityModes.value(definition.fullScreenVisibility))}});
 			QString location;
 			QString buttonStyle;
 
-			switch (m_definitions.at(i).type)
+			switch (definition.type)
 			{
 				case BookmarksBarType:
-					definitionObject.insert(QLatin1String("bookmarksPath"), QJsonValue(m_definitions.at(i).bookmarksPath));
+					definitionObject.insert(QLatin1String("bookmarksPath"), QJsonValue(definition.bookmarksPath));
 
 					break;
 				case SideBarType:
-					definitionObject.insert(QLatin1String("currentPanel"), QJsonValue(m_definitions.at(i).currentPanel));
-					definitionObject.insert(QLatin1String("panels"), QJsonArray::fromStringList(m_definitions.at(i).panels));
+					definitionObject.insert(QLatin1String("currentPanel"), QJsonValue(definition.currentPanel));
+					definitionObject.insert(QLatin1String("panels"), QJsonArray::fromStringList(definition.panels));
 
 					break;
 				default:
 					break;
 			}
 
-			switch (m_definitions.at(i).location)
+			switch (definition.location)
 			{
 				case Qt::LeftToolBarArea:
 					location = QLatin1String("left");
@@ -140,7 +142,7 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 				definitionObject.insert(QLatin1String("location"), location);
 			}
 
-			switch (m_definitions.at(i).buttonStyle)
+			switch (definition.buttonStyle)
 			{
 				case Qt::ToolButtonTextOnly:
 					buttonStyle = QLatin1String("textOnly");
@@ -166,35 +168,35 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 
 			definitionObject.insert(QLatin1String("buttonStyle"), buttonStyle);
 
-			if (m_definitions.at(i).iconSize > 0)
+			if (definition.iconSize > 0)
 			{
-				definitionObject.insert(QLatin1String("iconSize"), QJsonValue(m_definitions.at(i).iconSize));
+				definitionObject.insert(QLatin1String("iconSize"), QJsonValue(definition.iconSize));
 			}
 
-			if (m_definitions.at(i).maximumButtonSize > 0)
+			if (definition.maximumButtonSize > 0)
 			{
-				definitionObject.insert(QLatin1String("maximumButtonSize"), QJsonValue(m_definitions.at(i).maximumButtonSize));
+				definitionObject.insert(QLatin1String("maximumButtonSize"), QJsonValue(definition.maximumButtonSize));
 			}
 
-			if (m_definitions.at(i).panelSize > 0)
+			if (definition.panelSize > 0)
 			{
-				definitionObject.insert(QLatin1String("panelSize"), QJsonValue(m_definitions.at(i).panelSize));
+				definitionObject.insert(QLatin1String("panelSize"), QJsonValue(definition.panelSize));
 			}
 
-			definitionObject.insert(QLatin1String("row"), QJsonValue(m_definitions.at(i).row));
+			definitionObject.insert(QLatin1String("row"), QJsonValue(definition.row));
 
-			if (m_definitions.at(i).hasToggle)
+			if (definition.hasToggle)
 			{
 				definitionObject.insert(QLatin1String("hasToggle"), QJsonValue(true));
 			}
 
-			if (!m_definitions.at(i).entries.isEmpty())
+			if (!definition.entries.isEmpty())
 			{
 				QJsonArray actionsArray;
 
-				for (int j = 0; j < m_definitions.at(i).entries.count(); ++j)
+				for (int j = 0; j < definition.entries.count(); ++j)
 				{
-					actionsArray.append(encodeEntry(m_definitions.at(i).entries.at(j)));
+					actionsArray.append(encodeEntry(definition.entries.at(j)));
 				}
 
 				definitionObject.insert(QLatin1String("actions"), actionsArray);
