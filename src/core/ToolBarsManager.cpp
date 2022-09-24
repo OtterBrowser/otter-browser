@@ -465,7 +465,8 @@ void ToolBarsManager::setToolBar(ToolBarsManager::ToolBarDefinition definition)
 	}
 	else
 	{
-		const bool wasMoved(definition.location != m_definitions[identifier].location || definition.row != m_definitions[identifier].row);
+		const ToolBarsManager::ToolBarDefinition oldDefinition(m_definitions[identifier]);
+		const bool wasMoved(definition.location != oldDefinition.location || definition.row != oldDefinition.row);
 
 		m_definitions[identifier] = definition;
 
