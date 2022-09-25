@@ -249,10 +249,7 @@ void ToolBarsManager::ensureInitialized()
 					ToolBarDefinition definition(iterator.value());
 					definition.identifier = identifier;
 
-					if (m_definitions[identifier] != definition)
-					{
-						m_definitions[identifier] = definition;
-					}
+					m_definitions[identifier] = definition;
 				}
 				else
 				{
