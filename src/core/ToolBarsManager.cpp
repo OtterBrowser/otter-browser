@@ -370,9 +370,7 @@ void ToolBarsManager::removeToolBar(int identifier)
 {
 	if (identifier >= 0 && identifier < m_definitions.count() && identifier >= OtherToolBar && QMessageBox::question(nullptr, tr("Remove Toolbar"), tr("Do you really want to remove this toolbar?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 	{
-		m_definitions[identifier].wasRemoved = true;
-		m_definitions[identifier].title.clear();
-		m_definitions[identifier].entries.clear();
+		m_definitions[identifier].markAsRemoved();
 
 		m_instance->scheduleSave();
 

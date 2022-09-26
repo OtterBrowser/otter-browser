@@ -102,6 +102,13 @@ public:
 		bool isDefault = false;
 		bool wasRemoved = false;
 
+		void markAsRemoved()
+		{
+			title.clear();
+			entries.clear();
+			wasRemoved = true;
+		}
+
 		void setVisibility(ToolBarsMode mode, ToolBarVisibility visibility)
 		{
 			if (mode == FullScreenMode)
