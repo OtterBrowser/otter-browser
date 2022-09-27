@@ -182,7 +182,6 @@ protected:
 
 protected slots:
 	void scheduleSave();
-	void handleOptionChanged(int identifier, const QVariant &value);
 
 private:
 	int m_saveTimer;

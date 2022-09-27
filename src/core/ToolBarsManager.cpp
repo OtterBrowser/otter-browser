@@ -51,7 +51,15 @@ ToolBarsManager::ToolBarsManager(QObject *parent) : QObject(parent),
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Status Bar"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Error Console"))
 
-	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &ToolBarsManager::handleOptionChanged);
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, [&](int identifier, const QVariant &value)
+	{
+		if (identifier == SettingsManager::Interface_LockToolBarsOption)
+		{
+			m_areToolBarsLocked = value.toBool();
+
+			emit toolBarsLockedChanged(m_areToolBarsLocked);
+		}
+	});
 }
 
 void ToolBarsManager::createInstance()
@@ -410,16 +418,6 @@ void ToolBarsManager::resetToolBars()
 	emit m_instance->toolBarMoved(TabBar);
 
 	m_instance->scheduleSave();
-}
-
-void ToolBarsManager::handleOptionChanged(int identifier, const QVariant &value)
-{
-	if (identifier == SettingsManager::Interface_LockToolBarsOption)
-	{
-		m_areToolBarsLocked = value.toBool();
-
-		emit toolBarsLockedChanged(m_areToolBarsLocked);
-	}
 }
 
 void ToolBarsManager::setToolBar(ToolBarsManager::ToolBarDefinition definition)
