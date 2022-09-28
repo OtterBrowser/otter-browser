@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -598,7 +598,22 @@ bool GesturesManager::m_afterScroll(false);
 GesturesManager::GesturesManager(QObject *parent) : QObject(parent),
 	m_reloadTimer(0)
 {
-	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &GesturesManager::handleOptionChanged);
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, [&](int identifier)
+	{
+		switch (identifier)
+		{
+			case SettingsManager::Browser_EnableMouseGesturesOption:
+			case SettingsManager::Browser_MouseProfilesOrderOption:
+				if (m_reloadTimer == 0)
+				{
+					m_reloadTimer = startTimer(250);
+				}
+
+				break;
+			default:
+				break;
+		}
+	});
 }
 
 void GesturesManager::createInstance()
@@ -763,23 +778,6 @@ void GesturesManager::releaseTrackedObject()
 void GesturesManager::endGesture()
 {
 	cancelGesture();
-}
-
-void GesturesManager::handleOptionChanged(int identifier)
-{
-	switch (identifier)
-	{
-		case SettingsManager::Browser_EnableMouseGesturesOption:
-		case SettingsManager::Browser_MouseProfilesOrderOption:
-			if (m_reloadTimer == 0)
-			{
-				m_reloadTimer = startTimer(250);
-			}
-
-			break;
-		default:
-			break;
-	}
 }
 
 GesturesManager* GesturesManager::getInstance()
