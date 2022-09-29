@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -175,7 +175,13 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 	setForwardUnsupportedContent(true);
 	handleFrameCreation(mainFrame());
 
-	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &QtWebKitPage::handleOptionChanged);
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, [&](int identifier)
+	{
+		if (identifier == SettingsManager::Interface_ShowScrollBarsOption || SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Content/")))
+		{
+			updateStyleSheets();
+		}
+	});
 	connect(this, &QtWebKitPage::frameCreated, this, &QtWebKitPage::handleFrameCreation);
 	connect(this, &QtWebKitPage::consoleMessageReceived, this, &QtWebKitPage::handleConsoleMessage);
 	connect(this, &QtWebKitPage::saveFrameStateRequested, this, &QtWebKitPage::saveState);
@@ -324,14 +330,6 @@ void QtWebKitPage::markAsDisplayingErrorPage()
 void QtWebKitPage::markAsPopup()
 {
 	m_isPopup = true;
-}
-
-void QtWebKitPage::handleOptionChanged(int identifier)
-{
-	if (identifier == SettingsManager::Interface_ShowScrollBarsOption || SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Content/")))
-	{
-		updateStyleSheets();
-	}
 }
 
 void QtWebKitPage::handleFrameCreation(QWebFrame *frame)
