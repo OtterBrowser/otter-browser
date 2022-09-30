@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -92,16 +92,13 @@ void ToolButtonWidget::actionEvent(QActionEvent *event)
 
 	if (event->type() == QEvent::ActionChanged || event->type() == QEvent::ActionAdded)
 	{
-		setText(getText());
-		setIcon(getIcon());
+		updateAction();
 	}
 }
 
 void ToolButtonWidget::showEvent(QShowEvent *event)
 {
-	setText(getText());
-	setToolTip(getToolTip());
-	setIcon(getIcon());
+	updateAction();
 
 	QToolButton::showEvent(event);
 }
@@ -178,6 +175,13 @@ void ToolButtonWidget::addMenu(Menu *menu, const QVector<ToolBarsManager::ToolBa
 			addMenu(subMenu, entry.entries);
 		}
 	}
+}
+
+void ToolButtonWidget::updateAction()
+{
+	setText(getText());
+	setToolTip(getToolTip());
+	setIcon(getIcon());
 }
 
 void ToolButtonWidget::setOptions(const QVariantMap &options)
