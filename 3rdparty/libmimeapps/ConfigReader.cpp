@@ -132,6 +132,12 @@ std::string ConfigReader::unescape(const std::string &string)
 		if (string.at(i) == '\\')
 		{
 			++i;
+
+			if (i >= string.length())
+			{
+				break;
+			}
+
 			switch (string.at(i))
 			{
 			case 's':
