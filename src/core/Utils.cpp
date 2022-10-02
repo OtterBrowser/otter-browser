@@ -26,6 +26,7 @@
 
 #include <QtCore/QBuffer>
 #include <QtCore/QCoreApplication>
+#include <QtCore/QCryptographicHash>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
@@ -562,6 +563,13 @@ QUrl normalizeUrl(QUrl url)
 	}
 
 	return url;
+}
+
+QColor createColor(const QUrl &url)
+{
+	QByteArray hash(QCryptographicHash::hash(url.host().toUtf8(), QCryptographicHash::Md5));
+
+	return QColor(hash.at(0), hash.at(1), hash.at(2));
 }
 
 QLocale createLocale(const QString &name)

@@ -123,6 +123,7 @@ QString normalizeObjectName(QString name, const QString &suffix = {});
 QString normalizePath(const QString &path);
 QUrl expandUrl(const QUrl &url);
 QUrl normalizeUrl(QUrl url);
+QColor createColor(const QUrl &url);
 QLocale createLocale(const QString &name);
 QPixmap loadPixmapFromDataUri(const QString &data);
 QFont multiplyFontSize(QFont font, qreal multiplier);
