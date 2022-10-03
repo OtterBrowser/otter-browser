@@ -1023,9 +1023,10 @@ QUrl WebWidget::getRequestedUrl() const
 
 QPixmap WebWidget::createThumbnail(const QSize &size)
 {
-	Q_UNUSED(size)
+	QPixmap pixmap(size);
+	pixmap.fill(Qt::white);
 
-	return {};
+	return pixmap;
 }
 
 QPoint WebWidget::getClickPosition() const
