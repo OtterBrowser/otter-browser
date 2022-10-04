@@ -349,8 +349,8 @@ QSize TileDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 }
 
 StartPageContentsWidget::StartPageContentsWidget(QWidget *parent) : QWidget(parent),
-	m_color(Qt::transparent),
-	m_mode(DefaultBackground)
+	m_backgroundColor(Qt::transparent),
+	m_backgroundMode(DefaultBackground)
 {
 	handleOptionChanged(SettingsManager::StartPage_BackgroundPathOption);
 	setAutoFillBackground(true);
@@ -364,9 +364,9 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 	Q_UNUSED(event)
 
 	QPainter painter(this);
-	painter.fillRect(contentsRect(), m_color);
+	painter.fillRect(contentsRect(), m_backgroundColor);
 
-	if (m_mode == NoBackground || m_path.isEmpty() || !QFile::exists(m_path))
+	if (m_backgroundMode == NoBackground || m_backgroundPath.isEmpty() || !QFile::exists(m_backgroundPath))
 	{
 		return;
 	}
@@ -381,14 +381,14 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 		return;
 	}
 
-	const QPixmap pixmap(m_path);
+	const QPixmap pixmap(m_backgroundPath);
 
 	if (pixmap.isNull())
 	{
 		return;
 	}
 
-	switch (m_mode)
+	switch (m_backgroundMode)
 	{
 		case DefaultBackground:
 		case BestFitBackground:
@@ -439,23 +439,23 @@ void StartPageContentsWidget::setBackgroundMode(BackgroundMode mode)
 	switch (mode)
 	{
 		case DefaultBackground:
-			m_path = QLatin1String(":/style/start-page.svgz");
-			m_color = QColor(Qt::transparent);
+			m_backgroundPath = QLatin1String(":/style/start-page.svgz");
+			m_backgroundColor = QColor(Qt::transparent);
 
 			break;
 		case NoBackground:
-			m_path = QString();
-			m_color = QColor(Qt::transparent);
+			m_backgroundPath = QString();
+			m_backgroundColor = QColor(Qt::transparent);
 
 			break;
 		default:
-			m_path = SettingsManager::getOption(SettingsManager::StartPage_BackgroundPathOption).toString();
-			m_color = (color.isEmpty() ? QColor(Qt::transparent) : QColor(color));
+			m_backgroundPath = SettingsManager::getOption(SettingsManager::StartPage_BackgroundPathOption).toString();
+			m_backgroundColor = (color.isEmpty() ? QColor(Qt::transparent) : QColor(color));
 
 			break;
 	}
 
-	m_mode = mode;
+	m_backgroundMode = mode;
 
 	update();
 }
@@ -464,7 +464,7 @@ QString StartPageContentsWidget::getPixmapCachePrefix() const
 {
 	QString prefix;
 
-	switch (m_mode)
+	switch (m_backgroundMode)
 	{
 		case DefaultBackground:
 			prefix = QLatin1String("start-page-standard");

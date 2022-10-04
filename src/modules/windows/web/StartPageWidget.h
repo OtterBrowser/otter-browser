@@ -98,9 +98,9 @@ protected slots:
 	void handleOptionChanged(int identifier);
 
 private:
-	QString m_path;
-	QColor m_color;
-	BackgroundMode m_mode;
+	QString m_backgroundPath;
+	QColor m_backgroundColor;
+	BackgroundMode m_backgroundMode;
 };
 
 class StartPageWidget final : public QScrollArea
