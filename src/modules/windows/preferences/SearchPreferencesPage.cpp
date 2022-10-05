@@ -129,7 +129,7 @@ void SearchPreferencesPage::createSearchEngine()
 	searchEngine = dialog.getSearchEngine();
 	searchEngine.identifier = searchEngine.createIdentifier(m_searchEngines.keys());
 
-	m_searchEngines[searchEngine.identifier] = {true, searchEngine};
+	m_searchEngines[searchEngine.identifier] = SearchEngine(searchEngine, true);
 
 	m_ui->searchViewWidget->insertRow(createRow(searchEngine));
 
@@ -165,7 +165,7 @@ void SearchPreferencesPage::editSearchEngine()
 	}
 
 	const QStringList keywords(getKeywords(m_ui->searchViewWidget->getSourceModel(), m_ui->searchViewWidget->getCurrentRow()));
-	SearchEnginePropertiesDialog dialog(m_searchEngines[identifier].second, keywords, this);
+	SearchEnginePropertiesDialog dialog(m_searchEngines[identifier].definition, keywords, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
@@ -179,7 +179,7 @@ void SearchPreferencesPage::editSearchEngine()
 		searchEngine.keyword.clear();
 	}
 
-	m_searchEngines[identifier] = {true, searchEngine};
+	m_searchEngines[identifier] = SearchEngine(searchEngine, true);
 
 	m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::DisplayRole);
 	m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::ToolTipRole);
@@ -218,7 +218,7 @@ void SearchPreferencesPage::updateSearchEngine()
 		m_ui->searchViewWidget->setData(index, true, IsUpdatingRole);
 		m_ui->searchViewWidget->update();
 
-		SearchEngineFetchJob *job(new SearchEngineFetchJob(m_searchEngines[identifier].second.selfUrl, identifier, false, this));
+		SearchEngineFetchJob *job(new SearchEngineFetchJob(m_searchEngines[identifier].definition.selfUrl, identifier, false, this));
 
 		m_updateJobs[identifier] = job;
 
@@ -255,9 +255,9 @@ void SearchPreferencesPage::updateSearchEngine()
 
 			if (m_searchEngines.contains(identifier))
 			{
-				searchEngine.keyword = m_searchEngines[identifier].second.keyword;
+				searchEngine.keyword = m_searchEngines[identifier].definition.keyword;
 
-				m_searchEngines[identifier] = {true, searchEngine};
+				m_searchEngines[identifier] = SearchEngine(searchEngine, true);
 			}
 		});
 
@@ -352,7 +352,7 @@ void SearchPreferencesPage::addSearchEngine(const QString &path, const QString &
 		searchEngine.keyword.clear();
 	}
 
-	m_searchEngines[identifier] = {false, searchEngine};
+	m_searchEngines[identifier] = SearchEngine(searchEngine);
 
 	m_ui->searchViewWidget->insertRow(createRow(searchEngine));
 
@@ -377,7 +377,7 @@ void SearchPreferencesPage::updateSearchEngineActions()
 	}
 
 	m_ui->editSearchButton->setEnabled(isSelected);
-	m_ui->updateSearchButton->setEnabled(isSelected && m_searchEngines.contains(identifier) && m_searchEngines[identifier].second.selfUrl.isValid());
+	m_ui->updateSearchButton->setEnabled(isSelected && m_searchEngines.contains(identifier) && m_searchEngines[identifier].definition.selfUrl.isValid());
 	m_ui->removeSearchButton->setEnabled(isSelected);
 }
 
@@ -443,7 +443,7 @@ void SearchPreferencesPage::load()
 
 		if (searchEngine.isValid())
 		{
-			m_searchEngines[searchEngine.identifier] = {false, searchEngine};
+			m_searchEngines[searchEngine.identifier] = SearchEngine(searchEngine);
 
 			searchEnginesModel->appendRow(createRow(searchEngine, (searchEngine.identifier == defaultSearchEngine)));
 		}
@@ -516,20 +516,20 @@ void SearchPreferencesPage::save()
 			}
 		}
 
-		if (m_searchEngines.contains(identifier) && m_searchEngines[identifier].second.keyword != keyword)
+		if (m_searchEngines.contains(identifier) && m_searchEngines[identifier].definition.keyword != keyword)
 		{
-			m_searchEngines[identifier].first = true;
-			m_searchEngines[identifier].second.keyword = keyword;
+			m_searchEngines[identifier].definition.keyword = keyword;
+			m_searchEngines[identifier].isModified = true;
 		}
 	}
 
-	QHash<QString, QPair<bool, SearchEnginesManager::SearchEngineDefinition> >::iterator searchEnginesIterator;
+	QHash<QString, SearchEngine>::iterator searchEnginesIterator;
 
 	for (searchEnginesIterator = m_searchEngines.begin(); searchEnginesIterator != m_searchEngines.end(); ++searchEnginesIterator)
 	{
-		if (searchEnginesIterator.value().first)
+		if (searchEnginesIterator.value().isModified)
 		{
-			SearchEnginesManager::saveSearchEngine(searchEnginesIterator.value().second);
+			SearchEnginesManager::saveSearchEngine(searchEnginesIterator.value().definition);
 		}
 	}
 

@@ -77,6 +77,18 @@ public slots:
 	void save() override;
 
 protected:
+	struct SearchEngine final
+	{
+		explicit SearchEngine(const SearchEnginesManager::SearchEngineDefinition &definitionValue = {}, bool isModifiedValue = false)
+		{
+			definition = definitionValue;
+			isModified = isModifiedValue;
+		}
+
+		SearchEnginesManager::SearchEngineDefinition definition;
+		bool isModified = false;
+	};
+
 	void changeEvent(QEvent *event) override;
 	void addSearchEngine(const QString &path, const QString &identifier, bool isReadding);
 	void updateReaddSearchEngineMenu();
@@ -94,7 +106,7 @@ protected slots:
 private:
 	QStringList m_filesToRemove;
 	QHash<QString, SearchEngineFetchJob*> m_updateJobs;
-	QHash<QString, QPair<bool, SearchEnginesManager::SearchEngineDefinition> > m_searchEngines;
+	QHash<QString, SearchEngine> m_searchEngines;
 	Ui::SearchPreferencesPage *m_ui;
 
 	static Animation* m_updateAnimation;
