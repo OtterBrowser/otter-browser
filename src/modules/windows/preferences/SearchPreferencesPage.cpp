@@ -516,10 +516,15 @@ void SearchPreferencesPage::save()
 			}
 		}
 
-		if (m_searchEngines.contains(identifier) && m_searchEngines[identifier].definition.keyword != keyword)
+		if (m_searchEngines.contains(identifier))
 		{
-			m_searchEngines[identifier].definition.keyword = keyword;
-			m_searchEngines[identifier].isModified = true;
+			SearchEngine *searchEngine(&m_searchEngines[identifier]);
+
+			if (searchEngine->definition.keyword != keyword)
+			{
+				searchEngine->definition.keyword = keyword;
+				searchEngine->isModified = true;
+			}
 		}
 	}
 
