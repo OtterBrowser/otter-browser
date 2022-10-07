@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -201,24 +201,26 @@ void LinksContentsWidget::updateLinks()
 
 	Window *window(getActiveWindow());
 
-	if (window && window->getWebWidget())
+	if (!window || !window->getWebWidget())
 	{
-		const QVector<WebWidget::LinkUrl> links(window->getWebWidget()->getLinks());
-
-		addLink(window->getTitle(), window->getUrl());
-
-		if (!links.isEmpty())
-		{
-			m_ui->linksViewWidget->getSourceModel()->appendRow(new ItemModel::Item(ItemModel::SeparatorType));
-
-			for (int i = 0; i < links.count(); ++i)
-			{
-				addLink(links.at(i).title, links.at(i).url);
-			}
-		}
-
-		m_ui->linksViewWidget->expandAll();
+		return;
 	}
+
+	const QVector<WebWidget::LinkUrl> links(window->getWebWidget()->getLinks());
+
+	addLink(window->getTitle(), window->getUrl());
+
+	if (!links.isEmpty())
+	{
+		m_ui->linksViewWidget->getSourceModel()->appendRow(new ItemModel::Item(ItemModel::SeparatorType));
+
+		for (int i = 0; i < links.count(); ++i)
+		{
+			addLink(links.at(i).title, links.at(i).url);
+		}
+	}
+
+	m_ui->linksViewWidget->expandAll();
 }
 
 void LinksContentsWidget::showContextMenu(const QPoint &position)
