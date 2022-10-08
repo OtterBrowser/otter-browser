@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,10 @@ SearchBarWidget::SearchBarWidget(QWidget *parent) : QWidget(parent),
 	connect(m_ui->caseSensitiveButton, &QPushButton::clicked, this, &SearchBarWidget::notifyFlagsChanged);
 	connect(m_ui->highlightButton, &QPushButton::clicked, this, &SearchBarWidget::notifyFlagsChanged);
 	connect(m_ui->nextButton, &QPushButton::clicked, this, &SearchBarWidget::notifyRequestedSearch);
-	connect(m_ui->previousButton, &QPushButton::clicked, this, &SearchBarWidget::notifyRequestedSearch);
+	connect(m_ui->previousButton, &QPushButton::clicked, this, [&]()
+	{
+		emit requestedSearch(getFlags() | WebWidget::BackwardFind);
+	});
 	connect(m_ui->closeButton, &QPushButton::clicked, this, &SearchBarWidget::hide);
 }
 
@@ -76,14 +79,7 @@ void SearchBarWidget::keyPressEvent(QKeyEvent *event)
 
 void SearchBarWidget::notifyRequestedSearch()
 {
-	WebWidget::FindFlags flags(getFlags());
-
-	if (sender() && sender()->objectName() == QLatin1String("previousButton"))
-	{
-		flags |= WebWidget::BackwardFind;
-	}
-
-	emit requestedSearch(flags);
+	emit requestedSearch(getFlags());
 }
 
 void SearchBarWidget::notifyFlagsChanged()
