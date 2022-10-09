@@ -56,7 +56,6 @@ protected:
 protected slots:
 	void showTab(int tab);
 	void markAsModified();
-	void save();
 
 private:
 	QVector<bool> m_loadedTabs;

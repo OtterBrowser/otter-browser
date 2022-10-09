@@ -79,8 +79,18 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(false);
 
 	connect(m_ui->tabWidget, &QTabWidget::currentChanged, this, &PreferencesDialog::showTab);
-	connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &PreferencesDialog::save);
-	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &PreferencesDialog::save);
+	connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, [&]()
+	{
+		m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(false);
+
+		emit requestedSave();
+	});
+	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, [&]()
+	{
+		close();
+
+		emit requestedSave();
+	});
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::close);
 	connect(m_ui->allSettingsButton, &QPushButton::clicked, this,[&]()
 	{
@@ -240,20 +250,6 @@ void PreferencesDialog::showTab(int tab)
 void PreferencesDialog::markAsModified()
 {
 	m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
-}
-
-void PreferencesDialog::save()
-{
-	emit requestedSave();
-
-	if (sender() == m_ui->buttonBox)
-	{
-		close();
-	}
-	else
-	{
-		m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(false);
-	}
 }
 
 }
