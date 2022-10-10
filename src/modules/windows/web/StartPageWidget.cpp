@@ -38,7 +38,6 @@
 
 #include <QtCore/QtMath>
 #include <QtGui/QDrag>
-#include <QtGui/QGuiApplication>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
 #include <QtGui/QPainterPath>
