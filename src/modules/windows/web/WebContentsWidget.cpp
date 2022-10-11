@@ -485,7 +485,15 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				m_layout->insertWidget(0, m_searchBarWidget);
 
 				connect(m_searchBarWidget, &SearchBarWidget::requestedSearch, this, &WebContentsWidget::findInPage);
-				connect(m_searchBarWidget, &SearchBarWidget::flagsChanged, this, &WebContentsWidget::updateFindHighlight);
+				connect(m_searchBarWidget, &SearchBarWidget::flagsChanged, this, [&](WebWidget::FindFlags flags)
+				{
+					if (m_searchBarWidget)
+					{
+						m_webWidget->findInPage({}, (flags | WebWidget::HighlightAllFind));
+						m_webWidget->findInPage(m_searchBarWidget->getQuery(), flags);
+					}
+				}
+);
 				connect(m_webWidget, &WebWidget::findInPageResultsChanged, m_searchBarWidget, &SearchBarWidget::updateResults);
 
 				if (SettingsManager::getOption(SettingsManager::Search_EnableFindInPageAsYouTypeOption).toBool())
@@ -1055,15 +1063,6 @@ void WebContentsWidget::notifyRequestedNewWindow(WebWidget *widget, SessionsMana
 	}
 
 	emit requestedNewWindow(new WebContentsWidget({{QLatin1String("hints"), QVariant(hints)}}, widget->getOptions(), widget, nullptr, nullptr), hints, parameters);
-}
-
-void WebContentsWidget::updateFindHighlight(WebWidget::FindFlags flags)
-{
-	if (m_searchBarWidget)
-	{
-		m_webWidget->findInPage({}, (flags | WebWidget::HighlightAllFind));
-		m_webWidget->findInPage(m_searchBarWidget->getQuery(), flags);
-	}
 }
 
 void WebContentsWidget::setScrollMode(ScrollMode mode)

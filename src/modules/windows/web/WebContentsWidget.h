@@ -124,7 +124,6 @@ protected slots:
 	void handleFindInPageQueryChanged();
 	void notifyPermissionChanged(WebWidget::PermissionPolicies policies);
 	void notifyRequestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints, const QVariantMap &parameters);
-	void updateFindHighlight(WebWidget::FindFlags flags);
 
 private:
 	QPointer<WebsiteInformationDialog> m_websiteInformationDialog;
