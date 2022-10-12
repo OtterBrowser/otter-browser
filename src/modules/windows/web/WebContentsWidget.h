@@ -123,7 +123,6 @@ protected slots:
 	void handleLoadingStateChange(WebWidget::LoadingState state);
 	void handleFindInPageQueryChanged();
 	void notifyPermissionChanged(WebWidget::PermissionPolicies policies);
-	void notifyRequestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints, const QVariantMap &parameters);
 
 private:
 	QPointer<WebsiteInformationDialog> m_websiteInformationDialog;

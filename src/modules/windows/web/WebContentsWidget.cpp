@@ -1055,16 +1055,6 @@ void WebContentsWidget::notifyPermissionChanged(WebWidget::PermissionPolicies po
 	}
 }
 
-void WebContentsWidget::notifyRequestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints, const QVariantMap &parameters)
-{
-	if (isPrivate())
-	{
-		hints |= SessionsManager::PrivateOpen;
-	}
-
-	emit requestedNewWindow(new WebContentsWidget({{QLatin1String("hints"), QVariant(hints)}}, widget->getOptions(), widget, nullptr, nullptr), hints, parameters);
-}
-
 void WebContentsWidget::setScrollMode(ScrollMode mode)
 {
 	if (m_scrollMode == NoScroll && mode != NoScroll)
@@ -1208,7 +1198,15 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 	connect(m_webWidget, &WebWidget::aboutToNavigate, this, &WebContentsWidget::aboutToNavigate);
 	connect(m_webWidget, &WebWidget::aboutToNavigate, this, &WebContentsWidget::closePopupsBar);
 	connect(m_webWidget, &WebWidget::needsAttention, this, &WebContentsWidget::needsAttention);
-	connect(m_webWidget, &WebWidget::requestedNewWindow, this, &WebContentsWidget::notifyRequestedNewWindow);
+	connect(m_webWidget, &WebWidget::requestedNewWindow, this, [&](WebWidget *widget, SessionsManager::OpenHints hints, const QVariantMap &parameters)
+	{
+		if (isPrivate())
+		{
+			hints |= SessionsManager::PrivateOpen;
+		}
+
+		emit requestedNewWindow(new WebContentsWidget({{QLatin1String("hints"), QVariant(hints)}}, widget->getOptions(), widget, nullptr, nullptr), hints, parameters);
+	});
 	connect(m_webWidget, &WebWidget::requestedPopupWindow, this, &WebContentsWidget::handlePopupWindowRequest);
 	connect(m_webWidget, &WebWidget::requestedPermission, this, &WebContentsWidget::handlePermissionRequest);
 	connect(m_webWidget, &WebWidget::requestedSavePassword, this, &WebContentsWidget::handleSavePasswordRequest);
