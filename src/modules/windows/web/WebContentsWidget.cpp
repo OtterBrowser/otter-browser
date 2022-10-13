@@ -953,9 +953,18 @@ void WebContentsWidget::handlePermissionRequest(WebWidget::FeaturePermission fea
 
 		m_permissionBarWidgets.append(widget);
 
-		emit needsAttention();
+		connect(widget, &PermissionBarWidget::permissionChanged, this, [=](WebWidget::PermissionPolicies policies)
+		{
+			m_webWidget->setPermission(feature, url, policies);
 
-		connect(widget, &PermissionBarWidget::permissionChanged, this, &WebContentsWidget::notifyPermissionChanged);
+			m_permissionBarWidgets.removeAll(widget);
+
+			m_layout->removeWidget(widget);
+
+			widget->deleteLater();
+		});
+
+		emit needsAttention();
 	}
 }
 
@@ -1037,22 +1046,6 @@ void WebContentsWidget::handleLoadingStateChange(WebWidget::LoadingState state)
 void WebContentsWidget::handleFindInPageQueryChanged()
 {
 	findInPage(m_searchBarWidget ? m_searchBarWidget->getFlags() : WebWidget::HighlightAllFind);
-}
-
-void WebContentsWidget::notifyPermissionChanged(WebWidget::PermissionPolicies policies)
-{
-	PermissionBarWidget *widget(qobject_cast<PermissionBarWidget*>(sender()));
-
-	if (widget)
-	{
-		m_webWidget->setPermission(widget->getFeature(), widget->getUrl(), policies);
-
-		m_permissionBarWidgets.removeAll(widget);
-
-		m_layout->removeWidget(widget);
-
-		widget->deleteLater();
-	}
 }
 
 void WebContentsWidget::setScrollMode(ScrollMode mode)

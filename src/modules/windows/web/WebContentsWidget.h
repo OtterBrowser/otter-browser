@@ -122,7 +122,6 @@ protected slots:
 	void handleInspectorVisibilityChangeRequest(bool isVisible);
 	void handleLoadingStateChange(WebWidget::LoadingState state);
 	void handleFindInPageQueryChanged();
-	void notifyPermissionChanged(WebWidget::PermissionPolicies policies);
 
 private:
 	QPointer<WebsiteInformationDialog> m_websiteInformationDialog;
