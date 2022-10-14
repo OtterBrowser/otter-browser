@@ -38,8 +38,6 @@ public:
 	explicit PermissionBarWidget(WebWidget::FeaturePermission feature, const QUrl &url, QWidget *parent = nullptr);
 	~PermissionBarWidget();
 
-	QUrl getUrl() const;
-	WebWidget::FeaturePermission getFeature() const;
 	bool hasMatch(WebWidget::FeaturePermission feature, const QUrl &url) const;
 
 protected:

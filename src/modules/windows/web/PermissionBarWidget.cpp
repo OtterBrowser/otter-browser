@@ -132,16 +132,6 @@ void PermissionBarWidget::handlePermissionDenied()
 	emit permissionChanged(WebWidget::DeniedPermission | WebWidget::KeepAskingForPermission);
 }
 
-QUrl PermissionBarWidget::getUrl() const
-{
-	return m_url;
-}
-
-WebWidget::FeaturePermission PermissionBarWidget::getFeature() const
-{
-	return m_feature;
-}
-
 bool PermissionBarWidget::hasMatch(WebWidget::FeaturePermission feature, const QUrl &url) const
 {
 	return (m_feature == feature && m_url == url);
