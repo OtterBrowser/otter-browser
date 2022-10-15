@@ -72,16 +72,6 @@ void UpdateCheckerDialog::changeEvent(QEvent *event)
 	}
 }
 
-void UpdateCheckerDialog::handleButtonClicked(QAbstractButton *button)
-{
-	if (m_ui->buttonBox->buttonRole(button) == QDialogButtonBox::AcceptRole)
-	{
-		Updater::installUpdate();
-	}
-
-	close();
-}
-
 void UpdateCheckerDialog::handleUpdateCheckFinished(const QVector<UpdateChecker::UpdateInformation> &availableUpdates)
 {
 	m_ui->progressBar->hide();
@@ -169,7 +159,15 @@ void UpdateCheckerDialog::handleReadyToInstall()
 
 	m_ui->gridLayout->addWidget(informationLabel);
 
-	connect(m_ui->buttonBox, &QDialogButtonBox::clicked, this, &UpdateCheckerDialog::handleButtonClicked);
+	connect(m_ui->buttonBox, &QDialogButtonBox::clicked, this, [&](QAbstractButton *button)
+	{
+		if (m_ui->buttonBox->buttonRole(button) == QDialogButtonBox::AcceptRole)
+		{
+			Updater::installUpdate();
+		}
+
+		close();
+	});
 }
 
 void UpdateCheckerDialog::handleUpdateProgress(int progress)
