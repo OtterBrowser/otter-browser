@@ -145,7 +145,11 @@ void UpdateCheckerDialog::downloadUpdate()
 
 	Updater *updater(new Updater(updateInformation.value<UpdateChecker::UpdateInformation>(), this));
 
-	connect(updater, &Updater::progress, this, &UpdateCheckerDialog::handleUpdateProgress);
+	connect(updater, &Updater::progress, this, [&](int progress)
+	{
+		m_ui->progressBar->setValue(progress);
+		m_ui->progressBar->setFormat(QString::number(progress) + QLatin1Char('%'));
+	});
 	connect(updater, &Updater::finished, this, &UpdateCheckerDialog::handleTransferFinished);
 }
 
@@ -168,12 +172,6 @@ void UpdateCheckerDialog::handleReadyToInstall()
 
 		close();
 	});
-}
-
-void UpdateCheckerDialog::handleUpdateProgress(int progress)
-{
-	m_ui->progressBar->setValue(progress);
-	m_ui->progressBar->setFormat(QString::number(progress) + QLatin1Char('%'));
 }
 
 void UpdateCheckerDialog::handleTransferFinished(bool isSuccess)

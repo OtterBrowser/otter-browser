@@ -49,7 +49,6 @@ protected slots:
 	void downloadUpdate();
 	void handleReadyToInstall();
 	void handleUpdateCheckFinished(const QVector<UpdateChecker::UpdateInformation> &availableUpdates);
-	void handleUpdateProgress(int progress);
 	void handleTransferFinished(bool isSuccess);
 	void showDetails();
 
