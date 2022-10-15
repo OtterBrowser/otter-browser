@@ -89,28 +89,52 @@ void UpdateCheckerDialog::handleUpdateCheckFinished(const QVector<UpdateChecker:
 
 	for (int i = 0; i < availableUpdates.count(); ++i)
 	{
+		const UpdateChecker::UpdateInformation updateInformation(availableUpdates.at(i));
 		QPushButton *detailsButton(new QPushButton(tr("Details…"), this));
-		detailsButton->setProperty("detailsUrl", availableUpdates.at(i).detailsUrl);
-
 		QPushButton *updateButton(new QPushButton(tr("Download"), this));
 
-		if (availableUpdates.at(i).isAvailable)
-		{
-			updateButton->setProperty("updateInformation", QVariant::fromValue<UpdateChecker::UpdateInformation>(availableUpdates.at(i)));
-		}
-		else
+		if (!updateInformation.isAvailable)
 		{
 			hasMissingPackages = true;
 
 			updateButton->setDisabled(true);
 		}
 
-		m_ui->gridLayout->addWidget(new QLabel(tr("Version %1 from %2 channel").arg(availableUpdates.at(i).version, availableUpdates.at(i).channel), this), i, 0);
+		m_ui->gridLayout->addWidget(new QLabel(tr("Version %1 from %2 channel").arg(availableUpdates.at(i).version, updateInformation.channel), this), i, 0);
 		m_ui->gridLayout->addWidget(detailsButton, i, 1);
 		m_ui->gridLayout->addWidget(updateButton, i, 2);
 
-		connect(detailsButton, &QPushButton::clicked, this, &UpdateCheckerDialog::showDetails);
-		connect(updateButton, &QPushButton::clicked, this, &UpdateCheckerDialog::downloadUpdate);
+		connect(detailsButton, &QPushButton::clicked, this, [=]()
+		{
+			if (!SessionsManager::hasUrl(updateInformation.detailsUrl, true))
+			{
+				Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), updateInformation.detailsUrl}}, this);
+
+				close();
+			}
+		});
+		connect(updateButton, &QPushButton::clicked, this, [=]()
+		{
+			for (int j = 0; j < m_ui->gridLayout->count(); ++j)
+			{
+				m_ui->gridLayout->itemAt(j)->widget()->setVisible(false);
+				m_ui->gridLayout->itemAt(j)->widget()->deleteLater();
+			}
+
+			m_ui->label->setText(tr("Downloading:"));
+			m_ui->progressBar->setRange(0, 100);
+			m_ui->progressBar->show();
+			m_ui->buttonBox->setDisabled(true);
+
+			Updater *updater(new Updater(updateInformation, this));
+
+			connect(updater, &Updater::progress, this, [&](int progress)
+			{
+				m_ui->progressBar->setValue(progress);
+				m_ui->progressBar->setFormat(QString::number(progress) + QLatin1Char('%'));
+			});
+			connect(updater, &Updater::finished, this, &UpdateCheckerDialog::handleTransferFinished);
+		});
 	}
 
 	if (hasMissingPackages)
@@ -120,37 +144,6 @@ void UpdateCheckerDialog::handleUpdateCheckFinished(const QVector<UpdateChecker:
 
 		m_ui->gridLayout->addWidget(packageWarning, m_ui->gridLayout->rowCount(), 0, m_ui->gridLayout->columnCount(), 0);
 	}
-}
-
-void UpdateCheckerDialog::downloadUpdate()
-{
-	const QPushButton *button(qobject_cast<QPushButton*>(sender()));
-	const QVariant updateInformation(button ? button->property("updateInformation") : QVariant());
-
-	if (updateInformation.isNull())
-	{
-		return;
-	}
-
-	for (int i = 0; i < m_ui->gridLayout->count(); ++i)
-	{
-		m_ui->gridLayout->itemAt(i)->widget()->setVisible(false);
-		m_ui->gridLayout->itemAt(i)->widget()->deleteLater();
-	}
-
-	m_ui->label->setText(tr("Downloading:"));
-	m_ui->progressBar->setRange(0, 100);
-	m_ui->progressBar->show();
-	m_ui->buttonBox->setDisabled(true);
-
-	Updater *updater(new Updater(updateInformation.value<UpdateChecker::UpdateInformation>(), this));
-
-	connect(updater, &Updater::progress, this, [&](int progress)
-	{
-		m_ui->progressBar->setValue(progress);
-		m_ui->progressBar->setFormat(QString::number(progress) + QLatin1Char('%'));
-	});
-	connect(updater, &Updater::finished, this, &UpdateCheckerDialog::handleTransferFinished);
 }
 
 void UpdateCheckerDialog::handleReadyToInstall()
@@ -191,23 +184,6 @@ void UpdateCheckerDialog::handleTransferFinished(bool isSuccess)
 	}
 
 	m_ui->buttonBox->setEnabled(true);
-}
-
-void UpdateCheckerDialog::showDetails()
-{
-	const QPushButton *button(qobject_cast<QPushButton*>(sender()));
-
-	if (button)
-	{
-		const QUrl url(button->property("detailsUrl").toUrl());
-
-		if (url.isValid() && !SessionsManager::hasUrl(url, true))
-		{
-			Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, this);
-
-			close();
-		}
-	}
 }
 
 }

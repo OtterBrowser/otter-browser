@@ -46,11 +46,9 @@ protected:
 	void changeEvent(QEvent *event) override;
 
 protected slots:
-	void downloadUpdate();
 	void handleReadyToInstall();
 	void handleUpdateCheckFinished(const QVector<UpdateChecker::UpdateInformation> &availableUpdates);
 	void handleTransferFinished(bool isSuccess);
-	void showDetails();
 
 private:
 	Ui::UpdateCheckerDialog *m_ui;
