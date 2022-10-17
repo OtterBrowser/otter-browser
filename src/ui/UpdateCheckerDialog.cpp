@@ -83,7 +83,7 @@ void UpdateCheckerDialog::handleUpdateCheckFinished(const QVector<UpdateChecker:
 		return;
 	}
 
-	bool hasMissingPackages(false);
+	bool hasUnavailableUpdates(false);
 
 	m_ui->label->setText(tr("Available updates:"));
 
@@ -95,7 +95,7 @@ void UpdateCheckerDialog::handleUpdateCheckFinished(const QVector<UpdateChecker:
 
 		if (!updateInformation.isAvailable)
 		{
-			hasMissingPackages = true;
+			hasUnavailableUpdates = true;
 
 			updateButton->setDisabled(true);
 		}
@@ -137,7 +137,7 @@ void UpdateCheckerDialog::handleUpdateCheckFinished(const QVector<UpdateChecker:
 		});
 	}
 
-	if (hasMissingPackages)
+	if (hasUnavailableUpdates)
 	{
 		QLabel *packageWarning(new QLabel(tr("Some of the updates do not contain packages for your platform. Try to check for updates later or visit details page for more info."), this));
 		packageWarning->setWordWrap(true);
