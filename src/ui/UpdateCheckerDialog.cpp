@@ -133,7 +133,25 @@ void UpdateCheckerDialog::handleUpdateCheckFinished(const QVector<UpdateChecker:
 				m_ui->progressBar->setValue(progress);
 				m_ui->progressBar->setFormat(QString::number(progress) + QLatin1Char('%'));
 			});
-			connect(updater, &Updater::finished, this, &UpdateCheckerDialog::handleTransferFinished);
+			connect(updater, &Updater::finished, this, [&](bool isSuccess)
+			{
+				if (isSuccess)
+				{
+					handleReadyToInstall();
+				}
+				else
+				{
+					m_ui->label->setText(tr("Download failed!"));
+
+					QLabel *informationLabel(new QLabel(tr("Check Error Console for more information."), this));
+					informationLabel->setWordWrap(true);
+
+					m_ui->gridLayout->addWidget(informationLabel);
+				}
+
+				m_ui->buttonBox->setEnabled(true);
+			}
+);
 		});
 	}
 
@@ -165,25 +183,6 @@ void UpdateCheckerDialog::handleReadyToInstall()
 
 		close();
 	});
-}
-
-void UpdateCheckerDialog::handleTransferFinished(bool isSuccess)
-{
-	if (isSuccess)
-	{
-		handleReadyToInstall();
-	}
-	else
-	{
-		m_ui->label->setText(tr("Download failed!"));
-
-		QLabel *informationLabel(new QLabel(tr("Check Error Console for more information."), this));
-		informationLabel->setWordWrap(true);
-
-		m_ui->gridLayout->addWidget(informationLabel);
-	}
-
-	m_ui->buttonBox->setEnabled(true);
 }
 
 }

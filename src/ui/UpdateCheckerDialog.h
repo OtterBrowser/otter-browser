@@ -48,7 +48,6 @@ protected:
 protected slots:
 	void handleReadyToInstall();
 	void handleUpdateCheckFinished(const QVector<UpdateChecker::UpdateInformation> &availableUpdates);
-	void handleTransferFinished(bool isSuccess);
 
 private:
 	Ui::UpdateCheckerDialog *m_ui;
