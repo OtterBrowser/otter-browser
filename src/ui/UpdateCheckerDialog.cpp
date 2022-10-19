@@ -141,7 +141,7 @@ void UpdateCheckerDialog::handleUpdateCheckFinished(const QVector<UpdateChecker:
 				}
 				else
 				{
-					m_ui->label->setText(tr("Download failed!"));
+					m_ui->label->setText(tr("Download failed."));
 
 					QLabel *informationLabel(new QLabel(tr("Check Error Console for more information."), this));
 					informationLabel->setWordWrap(true);
@@ -166,7 +166,7 @@ void UpdateCheckerDialog::handleUpdateCheckFinished(const QVector<UpdateChecker:
 
 void UpdateCheckerDialog::handleReadyToInstall()
 {
-	m_ui->label->setText(tr("Download finished!"));
+	m_ui->label->setText(tr("Download finished."));
 	m_ui->buttonBox->addButton(tr("Install"), QDialogButtonBox::AcceptRole);
 
 	QLabel *informationLabel(new QLabel(tr("New version of Otter Browser is ready to install.\nClick Install button to restart browser and install the update or close this dialog to install the update during next browser restart."), this));
