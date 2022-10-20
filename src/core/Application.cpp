@@ -1183,7 +1183,7 @@ void Application::handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInf
 	}
 
 	Notification::Message message;
-	message.message = tr("New update %1 from %2 channel is available!").arg(availableUpdates.at(latestVersionIndex).version, availableUpdates.at(latestVersionIndex).channel);
+	message.message = tr("New update %1 from %2 channel is available.").arg(availableUpdates.at(latestVersionIndex).version, availableUpdates.at(latestVersionIndex).channel);
 	message.icon = windowIcon();
 	message.event = NotificationsManager::UpdateAvailableEvent;
 
