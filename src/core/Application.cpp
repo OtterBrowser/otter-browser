@@ -449,7 +449,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	if (!QSslSocket::supportsSsl() || (webBackend && !webBackend->hasSslSupport()))
 	{
-		QMessageBox::warning(nullptr, tr("Warning"), tr("SSL support is not available or incomplete.\nSome websites may work incorrectly or do not work at all."), QMessageBox::Close);
+		QMessageBox::warning(nullptr, tr("Warning"), tr("SSL support is not available or is incomplete.\nSome websites may work incorrectly or do not work at all."), QMessageBox::Close);
 	}
 
 	if (SettingsManager::getOption(SettingsManager::Browser_EnableTrayIconOption).toBool())
