@@ -510,6 +510,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	setStyle(style);
 	setStyleSheet(styleSheet);
 
+	QDesktopServices::setUrlHandler(QLatin1String("feed"), this, "openUrl");
 	QDesktopServices::setUrlHandler(QLatin1String("ftp"), this, "openUrl");
 	QDesktopServices::setUrlHandler(QLatin1String("http"), this, "openUrl");
 	QDesktopServices::setUrlHandler(QLatin1String("https"), this, "openUrl");
