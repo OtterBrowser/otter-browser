@@ -482,13 +482,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	{
 		connect(new UpdateChecker(this), &UpdateChecker::finished, this, &Application::handleUpdateCheckResult);
 
-		if (!m_updateCheckTimer)
-		{
-			m_updateCheckTimer = new LongTermTimer(this);
-			m_updateCheckTimer->start(static_cast<quint64>(updateCheckInterval * 1000 * SECONDS_IN_DAY));
-
-			connect(m_updateCheckTimer, &LongTermTimer::timeout, this, &Application::periodicUpdateCheck);
-		}
+		scheduleUpdateCheck(updateCheckInterval);
 	}
 
 	Style *style(ThemesManager::createStyle(SettingsManager::getOption(SettingsManager::Interface_WidgetStyleOption).toString()));
@@ -908,6 +902,17 @@ void Application::removeWindow(MainWindow *mainWindow)
 	}
 }
 
+void Application::scheduleUpdateCheck(int interval)
+{
+	if (!m_updateCheckTimer)
+	{
+		m_updateCheckTimer = new LongTermTimer(this);
+		m_updateCheckTimer->start(static_cast<quint64>(interval * 1000 * SECONDS_IN_DAY));
+
+		connect(m_updateCheckTimer, &LongTermTimer::timeout, this, &Application::periodicUpdateCheck);
+	}
+}
+
 void Application::periodicUpdateCheck()
 {
 	UpdateChecker *updateChecker(new UpdateChecker(this));
@@ -916,12 +921,9 @@ void Application::periodicUpdateCheck()
 
 	const int interval(SettingsManager::getOption(SettingsManager::Updates_CheckIntervalOption).toInt());
 
-	if (!m_updateCheckTimer && interval > 0 && !SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList().isEmpty())
+	if (interval > 0 && !SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList().isEmpty())
 	{
-		m_updateCheckTimer = new LongTermTimer(this);
-		m_updateCheckTimer->start(static_cast<quint64>(interval * 1000 * SECONDS_IN_DAY));
-
-		connect(m_updateCheckTimer, &LongTermTimer::timeout, this, &Application::periodicUpdateCheck);
+		scheduleUpdateCheck(interval);
 	}
 }
 

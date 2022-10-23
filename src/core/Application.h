@@ -90,6 +90,7 @@ public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
 
 protected:
+	void scheduleUpdateCheck(int interval);
 	static void setLocale(const QString &locale);
 
 protected slots:
