@@ -95,7 +95,6 @@ protected:
 
 protected slots:
 	void openUrl(const QUrl &url);
-	void periodicUpdateCheck();
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleAboutToQuit();
 	void handleNewConnection();

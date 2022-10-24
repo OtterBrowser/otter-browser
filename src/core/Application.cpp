@@ -909,21 +909,19 @@ void Application::scheduleUpdateCheck(int interval)
 		m_updateCheckTimer = new LongTermTimer(this);
 		m_updateCheckTimer->start(static_cast<quint64>(interval * 1000 * SECONDS_IN_DAY));
 
-		connect(m_updateCheckTimer, &LongTermTimer::timeout, this, &Application::periodicUpdateCheck);
-	}
-}
+		connect(m_updateCheckTimer, &LongTermTimer::timeout, this, [&]()
+		{
+			UpdateChecker *updateChecker(new UpdateChecker(this));
 
-void Application::periodicUpdateCheck()
-{
-	UpdateChecker *updateChecker(new UpdateChecker(this));
+			connect(updateChecker, &UpdateChecker::finished, this, &Application::handleUpdateCheckResult);
 
-	connect(updateChecker, &UpdateChecker::finished, this, &Application::handleUpdateCheckResult);
+			const int interval(SettingsManager::getOption(SettingsManager::Updates_CheckIntervalOption).toInt());
 
-	const int interval(SettingsManager::getOption(SettingsManager::Updates_CheckIntervalOption).toInt());
-
-	if (interval > 0 && !SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList().isEmpty())
-	{
-		scheduleUpdateCheck(interval);
+			if (interval > 0 && !SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList().isEmpty())
+			{
+				scheduleUpdateCheck(interval);
+			}
+		});
 	}
 }
 
