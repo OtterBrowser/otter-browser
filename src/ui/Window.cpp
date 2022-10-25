@@ -257,18 +257,6 @@ void Window::markAsActive(bool updateLastActivity)
 	emit activated();
 }
 
-void Window::handleSearchRequest(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints)
-{
-	if ((getType() == QLatin1String("web") && Utils::isUrlEmpty(getUrl())) || (hints == SessionsManager::DefaultOpen || hints == SessionsManager::CurrentTabOpen))
-	{
-		search(query, searchEngine);
-	}
-	else
-	{
-		emit requestedSearch(query, searchEngine, hints);
-	}
-}
-
 void Window::handleGeometryChangeRequest(const QRect &geometry)
 {
 	setWindowFlags(Qt::SubWindow);
