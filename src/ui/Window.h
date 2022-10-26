@@ -98,10 +98,6 @@ protected:
 	void updateFocus();
 	void setContentsWidget(ContentsWidget *widget);
 
-protected slots:
-	void handleGeometryChangeRequest(const QRect &geometry);
-	void handleToolBarStateChanged(int identifier, const Session::MainWindow::ToolBarState &state);
-
 private:
 	Q_DISABLE_COPY(Window)
 

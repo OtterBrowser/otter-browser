@@ -82,7 +82,13 @@ Window::Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow
 	}
 
 	connect(this, &Window::titleChanged, this, &Window::setWindowTitle);
-	connect(mainWindow, &MainWindow::toolBarStateChanged, this, &Window::handleToolBarStateChanged);
+	connect(mainWindow, &MainWindow::toolBarStateChanged, this, [&](int identifier, const Session::MainWindow::ToolBarState &state)
+	{
+		if (m_addressBarWidget && identifier == ToolBarsManager::AddressBar)
+		{
+			m_addressBarWidget->setState(state);
+		}
+	});
 }
 
 void Window::timerEvent(QTimerEvent *event)
@@ -255,22 +261,6 @@ void Window::markAsActive(bool updateLastActivity)
 	}
 
 	emit activated();
-}
-
-void Window::handleGeometryChangeRequest(const QRect &geometry)
-{
-	setWindowFlags(Qt::SubWindow);
-	showNormal();
-	resize(geometry.size() + (this->geometry().size() - m_contentsWidget->size()));
-	move(geometry.topLeft());
-}
-
-void Window::handleToolBarStateChanged(int identifier, const Session::MainWindow::ToolBarState &state)
-{
-	if (m_addressBarWidget && identifier == ToolBarsManager::AddressBar)
-	{
-		m_addressBarWidget->setState(state);
-	}
 }
 
 void Window::updateFocus()
@@ -486,7 +476,13 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	connect(m_contentsWidget, &ContentsWidget::needsAttention, this, &Window::needsAttention);
 	connect(m_contentsWidget, &ContentsWidget::requestedNewWindow, this, &Window::requestedNewWindow);
 	connect(m_contentsWidget, &ContentsWidget::requestedSearch, this, &Window::requestedSearch);
-	connect(m_contentsWidget, &ContentsWidget::requestedGeometryChange, this, &Window::handleGeometryChangeRequest);
+	connect(m_contentsWidget, &ContentsWidget::requestedGeometryChange, this, [&](const QRect &geometry)
+	{
+		setWindowFlags(Qt::SubWindow);
+		showNormal();
+		resize(geometry.size() + (this->geometry().size() - m_contentsWidget->size()));
+		move(geometry.topLeft());
+	});
 	connect(m_contentsWidget, &ContentsWidget::statusMessageChanged, this, &Window::statusMessageChanged);
 	connect(m_contentsWidget, &ContentsWidget::titleChanged, this, &Window::titleChanged);
 	connect(m_contentsWidget, &ContentsWidget::urlChanged, this, [&](const QUrl &url)
