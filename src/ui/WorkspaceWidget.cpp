@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -684,57 +684,54 @@ void WorkspaceWidget::showContextMenu(const QPoint &position)
 
 void WorkspaceWidget::setActiveWindow(Window *window, bool force)
 {
-	if (!force && !m_isRestored && window && window->isMinimized())
+	if (!force && (window == m_activeWindow || (!m_isRestored && window && window->isMinimized())))
 	{
 		return;
 	}
 
-	if (force || window != m_activeWindow)
+	if (m_mdi)
 	{
-		if (m_mdi)
+		MdiWindow *subWindow(nullptr);
+
+		if (window)
 		{
-			MdiWindow *subWindow(nullptr);
+			subWindow = qobject_cast<MdiWindow*>(window->parentWidget());
 
-			if (window)
+			if (subWindow)
 			{
-				subWindow = qobject_cast<MdiWindow*>(window->parentWidget());
-
-				if (subWindow)
+				if (subWindow->isMinimized())
 				{
-					if (subWindow->isMinimized())
-					{
-						subWindow->restoreState();
-					}
-
-					if (!m_activeWindow)
-					{
-						subWindow->raise();
-					}
-
-					QTimer::singleShot(0, subWindow, static_cast<void(MdiWindow::*)()>(&MdiWindow::setFocus));
+					subWindow->restoreState();
 				}
-			}
 
-			m_mdi->setActiveSubWindow(subWindow);
+				if (!m_activeWindow)
+				{
+					subWindow->raise();
+				}
+
+				QTimer::singleShot(0, subWindow, static_cast<void(MdiWindow::*)()>(&MdiWindow::setFocus));
+			}
 		}
-		else
+
+		m_mdi->setActiveSubWindow(subWindow);
+	}
+	else
+	{
+		if (window)
 		{
-			if (window)
-			{
-				window->resize(size());
-				window->show();
-			}
-
-			if (m_activeWindow && m_activeWindow != window)
-			{
-				m_activeWindow->hide();
-			}
+			window->resize(size());
+			window->show();
 		}
 
-		if (window != m_peekedWindow)
+		if (m_activeWindow && m_activeWindow != window)
 		{
-			m_activeWindow = window;
+			m_activeWindow->hide();
 		}
+	}
+
+	if (window != m_peekedWindow)
+	{
+		m_activeWindow = window;
 	}
 }
 
