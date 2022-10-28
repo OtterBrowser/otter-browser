@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -257,58 +257,6 @@ void TabSwitcherWidget::handleWindowRemoved(quint64 identifier)
 	}
 }
 
-void TabSwitcherWidget::setTitle(const QString &title)
-{
-	const Window *window(qobject_cast<Window*>(sender()));
-
-	if (window)
-	{
-		const int row(findRow(window->getIdentifier()));
-
-		if (row >= 0)
-		{
-			m_model->setData(m_model->index(row, 0), title, Qt::DisplayRole);
-		}
-	}
-}
-
-void TabSwitcherWidget::setIcon(const QIcon &icon)
-{
-	const Window *window(qobject_cast<Window*>(sender()));
-
-	if (window)
-	{
-		const int row(findRow(window->getIdentifier()));
-
-		if (row >= 0)
-		{
-			m_model->setData(m_model->index(row, 0), icon, Qt::DecorationRole);
-		}
-	}
-}
-
-void TabSwitcherWidget::setLoadingState(WebWidget::LoadingState state)
-{
-	const Window *window(qobject_cast<Window*>(sender()));
-
-	if (window)
-	{
-		const int row(findRow(window->getIdentifier()));
-
-		if (row >= 0)
-		{
-			QColor color(palette().color(QPalette::Text));
-
-			if (state == WebWidget::DeferredLoadingState)
-			{
-				color.setAlpha(150);
-			}
-
-			m_model->setData(m_model->index(row, 0), color, Qt::TextColorRole);
-		}
-	}
-}
-
 QStandardItem* TabSwitcherWidget::createRow(Window *window, const QVariant &index) const
 {
 	QColor color(palette().color(QPalette::Text));
@@ -324,9 +272,40 @@ QStandardItem* TabSwitcherWidget::createRow(Window *window, const QVariant &inde
 	item->setData(index, OrderRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-	connect(window, &Window::titleChanged, this, &TabSwitcherWidget::setTitle);
-	connect(window, &Window::iconChanged, this, &TabSwitcherWidget::setIcon);
-	connect(window, &Window::loadingStateChanged, this, &TabSwitcherWidget::setLoadingState);
+	connect(window, &Window::titleChanged, this, [&](const QString &title)
+	{
+		const int row(findRow(window->getIdentifier()));
+
+		if (row >= 0)
+		{
+			m_model->setData(m_model->index(row, 0), title, Qt::DisplayRole);
+		}
+	});
+	connect(window, &Window::iconChanged, this, [&](const QIcon &icon)
+	{
+		const int row(findRow(window->getIdentifier()));
+
+		if (row >= 0)
+		{
+			m_model->setData(m_model->index(row, 0), icon, Qt::DecorationRole);
+		}
+	});
+	connect(window, &Window::loadingStateChanged, this, [&](WebWidget::LoadingState state)
+	{
+		const int row(findRow(window->getIdentifier()));
+
+		if (row >= 0)
+		{
+			QColor color(palette().color(QPalette::Text));
+
+			if (state == WebWidget::DeferredLoadingState)
+			{
+				color.setAlpha(150);
+			}
+
+			m_model->setData(m_model->index(row, 0), color, Qt::TextColorRole);
+		}
+	});
 
 	return item;
 }
