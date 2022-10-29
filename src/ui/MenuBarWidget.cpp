@@ -228,7 +228,7 @@ void MenuBarWidget::updateGeometries()
 		}
 	}
 
-	if (m_rightToolBar && width() > (size + (m_leftToolBar ? m_leftToolBar->sizeHint().width() : 0) + (m_rightToolBar ? m_rightToolBar->sizeHint().width() : 0)))
+	if (m_rightToolBar && width() > (size + (m_leftToolBar ? m_leftToolBar->sizeHint().width() : 0) + m_rightToolBar->sizeHint().width()))
 	{
 		const int offset(size - (m_leftToolBar ? m_leftToolBar->sizeHint().width() : 0));
 		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(m_rightToolBar));
