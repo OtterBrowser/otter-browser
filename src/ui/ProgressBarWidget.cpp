@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ void ProgressBarWidget::paintEvent(QPaintEvent *event)
 	Application::getStyle()->drawThinProgressBar(&option, &painter);
 }
 
-void ProgressBarWidget::setMode(ProgressBarWidget::StyleMode mode)
+void ProgressBarWidget::setMode(StyleMode mode)
 {
 	m_mode = mode;
 
