@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -161,22 +161,24 @@ void ColorWidget::drawThumbnail(QPainter *painter, const QColor &color, const QP
 
 void ColorWidget::setColor(const QColor &color)
 {
-	if (color != m_color)
+	if (color == m_color)
 	{
-		const QString text(color.isValid() ? color.name((color.alpha() < 255) ? QColor::HexArgb : QColor::HexRgb).toUpper() : QString());
-
-		if (!m_lineEditWidget->hasFocus())
-		{
-			m_lineEditWidget->setText(text);
-		}
-
-		setToolTip(text.isEmpty() ? tr("Invalid") : text);
-		update();
-
-		m_color = color;
-
-		emit colorChanged(color);
+		return;
 	}
+
+	const QString text(color.isValid() ? color.name((color.alpha() < 255) ? QColor::HexArgb : QColor::HexRgb).toUpper() : QString());
+
+	if (!m_lineEditWidget->hasFocus())
+	{
+		m_lineEditWidget->setText(text);
+	}
+
+	setToolTip(text.isEmpty() ? tr("Invalid") : text);
+	update();
+
+	m_color = color;
+
+	emit colorChanged(color);
 }
 
 QColor ColorWidget::getColor() const
