@@ -33,6 +33,7 @@ public:
 	explicit CategoriesTabWidget(QWidget *parent = nullptr);
 
 	void addPage(CategoryPage *page);
+	void addPage(const QString &title);
 	CategoryPage* getPage(int index);
 
 protected:

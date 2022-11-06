@@ -76,6 +76,14 @@ void CategoriesTabWidget::addPage(CategoryPage *page)
 	addTab(scrollArea, page->getTitle());
 }
 
+void CategoriesTabWidget::addPage(const QString &title)
+{
+	m_pages.append(nullptr);
+
+	addTab(new QWidget(this), title);
+	setTabEnabled((m_pages.count() - 1), false);
+}
+
 void CategoriesTabWidget::updateStyle()
 {
 	setTabPosition(isLeftToRight() ? QTabWidget::West : QTabWidget::East);
