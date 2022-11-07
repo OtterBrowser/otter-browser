@@ -56,6 +56,7 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event) override;
+	void addPage(AddonsPage *page);
 
 protected slots:
 	void updateDetails(Addon *addon);

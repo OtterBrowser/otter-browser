@@ -33,13 +33,12 @@ AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window
 	m_ui(new Ui::AddonsContentsWidget)
 {
 	m_ui->setupUi(this);
-	m_ui->categoriesTabWidget->addPage(m_currentPage);
-	m_ui->categoriesTabWidget->tabBar()->addTab(tr("User Styles"));
-	m_ui->categoriesTabWidget->tabBar()->setTabEnabled(1, false);
-	m_ui->categoriesTabWidget->tabBar()->addTab(tr("Dictionaries"));
-	m_ui->categoriesTabWidget->tabBar()->setTabEnabled(2, false);
-	m_ui->categoriesTabWidget->tabBar()->addTab(tr("Translations"));
-	m_ui->categoriesTabWidget->tabBar()->setTabEnabled(3, false);
+
+	addPage(m_currentPage);
+
+	m_ui->categoriesTabWidget->addPage(tr("User Styles"));
+	m_ui->categoriesTabWidget->addPage(tr("Dictionaries"));
+	m_ui->categoriesTabWidget->addPage(tr("Translations"));
 
 	if (isSidebarPanel())
 	{
@@ -59,14 +58,6 @@ AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window
 		m_ui->saveButton->setEnabled(false);
 	});
 	connect(m_ui->addButton, &QPushButton::clicked, m_currentPage, &AddonsPage::addAddon);
-	connect(m_currentPage, &AddonsPage::settingsModified, this, [&]()
-	{
-		m_ui->saveButton->setEnabled(true);
-	});
-	connect(m_currentPage, &AddonsPage::needsActionsUpdate, [&]()
-	{
-		emit arbitraryActionsStateChanged({ActionsManager::DeleteAction});
-	});
 }
 
 AddonsContentsWidget::~AddonsContentsWidget()
@@ -109,6 +100,20 @@ void AddonsContentsWidget::triggerAction(int identifier, const QVariantMap &para
 
 			break;
 	}
+}
+
+void AddonsContentsWidget::addPage(AddonsPage *page)
+{
+	m_ui->categoriesTabWidget->addPage(page);
+
+	connect(page, &AddonsPage::settingsModified, this, [&]()
+	{
+		m_ui->saveButton->setEnabled(true);
+	});
+	connect(page, &AddonsPage::needsActionsUpdate, [&]()
+	{
+		emit arbitraryActionsStateChanged({ActionsManager::DeleteAction});
+	});
 }
 
 void AddonsContentsWidget::updateDetails(Addon *addon)
