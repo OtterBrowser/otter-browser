@@ -51,13 +51,28 @@ AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window
 		connect(m_currentPage, &AddonsPage::currentAddonChanged, this, &AddonsContentsWidget::updateDetails);
 	}
 
+	connect(m_ui->categoriesTabWidget, &CategoriesTabWidget::currentChanged, this, [&](int index)
+	{
+		CategoryPage *page(m_ui->categoriesTabWidget->getPage(index));
+
+		if (m_currentPage)
+		{
+			disconnect(m_ui->addButton, &QPushButton::clicked, m_currentPage, &AddonsPage::addAddon);
+		}
+
+		m_currentPage = qobject_cast<AddonsPage*>(page);
+
+		if (page)
+		{
+			connect(m_ui->addButton, &QPushButton::clicked, m_currentPage, &AddonsPage::addAddon);
+		}
+	});
 	connect(m_ui->saveButton, &QPushButton::clicked, this, [&]()
 	{
 		m_currentPage->save();
 
 		m_ui->saveButton->setEnabled(false);
 	});
-	connect(m_ui->addButton, &QPushButton::clicked, m_currentPage, &AddonsPage::addAddon);
 }
 
 AddonsContentsWidget::~AddonsContentsWidget()
