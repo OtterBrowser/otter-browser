@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "AddonsContentsWidget.h"
+#include "DictionariesPage.h"
 #include "UserScriptsPage.h"
 #include "../../../core/ThemesManager.h"
 
@@ -29,16 +30,20 @@ namespace Otter
 {
 
 AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
-	m_currentPage(new UserScriptsPage(this)),
+	m_currentPage(nullptr),
 	m_ui(new Ui::AddonsContentsWidget)
 {
 	m_ui->setupUi(this);
 
-	addPage(m_currentPage);
+	addPage(new UserScriptsPage(this));
 
 	m_ui->categoriesTabWidget->addPage(tr("User Styles"));
-	m_ui->categoriesTabWidget->addPage(tr("Dictionaries"));
+
+	addPage(new DictionariesPage(this));
+
 	m_ui->categoriesTabWidget->addPage(tr("Translations"));
+
+	m_currentPage = qobject_cast<AddonsPage*>(m_ui->categoriesTabWidget->getPage(0));
 
 	if (isSidebarPanel())
 	{
