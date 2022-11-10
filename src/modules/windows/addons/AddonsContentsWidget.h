@@ -40,6 +40,16 @@ class AddonsContentsWidget final : public ContentsWidget
 	Q_OBJECT
 
 public:
+	enum TabIndex
+	{
+		UserScriptsTab = 0,
+		UserStylesTab = 1,
+		DictionariesTab = 2,
+		TranslationsTab = 3
+	};
+
+	Q_ENUM(TabIndex)
+
 	explicit AddonsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
 	~AddonsContentsWidget();
 
