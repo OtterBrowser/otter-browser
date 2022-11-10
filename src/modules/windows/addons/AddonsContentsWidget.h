@@ -73,6 +73,7 @@ protected slots:
 
 private:
 	AddonsPage *m_currentPage;
+	int m_tabIndexEnumerator;
 	Ui::AddonsContentsWidget *m_ui;
 };
 

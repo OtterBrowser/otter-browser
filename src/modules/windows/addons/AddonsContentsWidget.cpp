@@ -31,6 +31,7 @@ namespace Otter
 
 AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
 	m_currentPage(nullptr),
+	m_tabIndexEnumerator(metaObject()->indexOfEnumerator(QLatin1String("TabIndex").data())),
 	m_ui(new Ui::AddonsContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -71,6 +72,8 @@ AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window
 		{
 			connect(m_ui->addButton, &QPushButton::clicked, m_currentPage, &AddonsPage::addAddon);
 		}
+
+		emit urlChanged(getUrl());
 	});
 	connect(m_ui->saveButton, &QPushButton::clicked, this, [&]()
 	{
@@ -160,7 +163,14 @@ QLatin1String AddonsContentsWidget::getType() const
 
 QUrl AddonsContentsWidget::getUrl() const
 {
-	return QUrl(QLatin1String("about:addons"));
+	QUrl url(QLatin1String("about:addons"));
+
+	if (m_ui->categoriesTabWidget->currentIndex() != 0)
+	{
+		url.setFragment(EnumeratorMapper(staticMetaObject.enumerator(m_tabIndexEnumerator), QLatin1String("Tab")).mapToName(m_ui->categoriesTabWidget->currentIndex()));
+	}
+
+	return url;
 }
 
 QIcon AddonsContentsWidget::getIcon() const
