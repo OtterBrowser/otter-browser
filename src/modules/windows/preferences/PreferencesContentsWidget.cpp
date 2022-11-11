@@ -50,7 +50,7 @@ PreferencesContentsWidget::PreferencesContentsWidget(const QVariantMap &paramete
 	addPage(new AdvancedPreferencesPage(this));
 
 	connect(this, &PreferencesContentsWidget::isModifiedChanged, m_ui->saveButton, &QPushButton::setEnabled);
-	connect(m_ui->categoriesTabWidget, &QTabWidget::currentChanged, this, [&]()
+	connect(m_ui->categoriesTabWidget, &CategoriesTabWidget::currentChanged, this, [&]()
 	{
 		emit urlChanged(getUrl());
 	});
@@ -119,7 +119,7 @@ QUrl PreferencesContentsWidget::getUrl() const
 {
 	QUrl url(QLatin1String("about:preferences"));
 
-	if (m_ui->categoriesTabWidget->currentIndex() != GeneralTab)
+	if (m_ui->categoriesTabWidget->currentIndex() != 0)
 	{
 		url.setFragment(EnumeratorMapper(staticMetaObject.enumerator(m_tabIndexEnumerator), QLatin1String("Tab")).mapToName(m_ui->categoriesTabWidget->currentIndex()));
 	}
