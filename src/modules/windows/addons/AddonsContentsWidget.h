@@ -63,6 +63,7 @@ public:
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
+	void setUrl(const QUrl &url, bool isTypedIn = true) override;
 
 protected:
 	void changeEvent(QEvent *event) override;

@@ -151,6 +151,18 @@ void AddonsContentsWidget::updateDetails(Addon *addon)
 	}
 }
 
+void AddonsContentsWidget::setUrl(const QUrl &url, bool isTypedIn)
+{
+	Q_UNUSED(isTypedIn)
+
+	const QString section(url.fragment());
+
+	if (!section.isEmpty())
+	{
+		m_ui->categoriesTabWidget->setCurrentIndex(qMax(0, EnumeratorMapper(staticMetaObject.enumerator(m_tabIndexEnumerator), QLatin1String("Tab")).mapToValue(section)));
+	}
+}
+
 QString AddonsContentsWidget::getTitle() const
 {
 	return tr("Addons");
