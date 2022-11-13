@@ -96,7 +96,6 @@ void AddonsContentsWidget::changeEvent(QEvent *event)
 	{
 		m_ui->retranslateUi(this);
 		m_ui->categoriesTabWidget->tabBar()->setTabText(1, tr("User Styles"));
-		m_ui->categoriesTabWidget->tabBar()->setTabText(2, tr("Dictionaries"));
 		m_ui->categoriesTabWidget->tabBar()->setTabText(3, tr("Translations"));
 	}
 }
