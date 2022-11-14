@@ -73,6 +73,7 @@ AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window
 			connect(m_ui->addButton, &QPushButton::clicked, m_currentPage, &AddonsPage::addAddon);
 		}
 
+		emit titleChanged(getTitle());
 		emit urlChanged(getUrl());
 	});
 	connect(m_ui->saveButton, &QPushButton::clicked, this, [&]()
@@ -164,6 +165,11 @@ void AddonsContentsWidget::setUrl(const QUrl &url, bool isTypedIn)
 
 QString AddonsContentsWidget::getTitle() const
 {
+	if (m_currentPage)
+	{
+		return QStringLiteral("%1 / %2").arg(tr("Addons")).arg(m_currentPage->getTitle());
+	}
+
 	return tr("Addons");
 }
 
