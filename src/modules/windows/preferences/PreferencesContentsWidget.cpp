@@ -52,6 +52,7 @@ PreferencesContentsWidget::PreferencesContentsWidget(const QVariantMap &paramete
 	connect(this, &PreferencesContentsWidget::isModifiedChanged, m_ui->saveButton, &QPushButton::setEnabled);
 	connect(m_ui->categoriesTabWidget, &CategoriesTabWidget::currentChanged, this, [&]()
 	{
+		emit titleChanged(getTitle());
 		emit urlChanged(getUrl());
 	});
 	connect(m_ui->saveButton, &QPushButton::clicked, this, [&]()
@@ -107,6 +108,13 @@ void PreferencesContentsWidget::setUrl(const QUrl &url, bool isTypedIn)
 
 QString PreferencesContentsWidget::getTitle() const
 {
+	CategoryPage *page(m_ui->categoriesTabWidget->getPage(m_ui->categoriesTabWidget->currentIndex()));
+
+	if (page)
+	{
+		return QStringLiteral("%1 / %2").arg(tr("Preferences")).arg(page->getTitle());
+	}
+
 	return tr("Preferences");
 }
 
