@@ -165,9 +165,11 @@ void AddonsContentsWidget::setUrl(const QUrl &url, bool isTypedIn)
 
 QString AddonsContentsWidget::getTitle() const
 {
-	if (m_currentPage)
+	CategoryPage *page(m_ui->categoriesTabWidget->getPage(m_ui->categoriesTabWidget->currentIndex()));
+
+	if (page)
 	{
-		return QStringLiteral("%1 / %2").arg(tr("Addons")).arg(m_currentPage->getTitle());
+		return QStringLiteral("%1 / %2").arg(tr("Addons")).arg(page->getTitle());
 	}
 
 	return tr("Addons");
