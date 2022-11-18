@@ -73,7 +73,7 @@ AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window
 			connect(m_ui->addButton, &QPushButton::clicked, m_currentPage, &AddonsPage::addAddon);
 		}
 
-		updateDetails(nullptr);
+		updateDetails(m_currentPage ? m_currentPage->getCurrentAddon() : nullptr);
 
 		emit titleChanged(getTitle());
 		emit urlChanged(getUrl());
