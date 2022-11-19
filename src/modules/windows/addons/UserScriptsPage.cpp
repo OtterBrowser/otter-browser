@@ -282,6 +282,18 @@ void UserScriptsPage::save()
 	m_addonsToRemove.clear();
 }
 
+Addon* UserScriptsPage::getCurrentAddon() const
+{
+	const QVector<UserScript*> scripts(getSelectedUserScripts());
+
+	if (scripts.isEmpty() || scripts.length() > 1)
+	{
+		return nullptr;
+	}
+
+	return scripts.at(0);
+}
+
 QString UserScriptsPage::getTitle() const
 {
 	return tr("User Scripts");

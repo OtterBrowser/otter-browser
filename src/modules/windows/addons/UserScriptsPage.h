@@ -40,6 +40,7 @@ public:
 
 	explicit UserScriptsPage(QWidget *parent);
 
+	Addon* getCurrentAddon() const override;
 	QString getTitle() const override;
 
 public slots:
