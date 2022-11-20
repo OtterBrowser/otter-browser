@@ -317,11 +317,16 @@ QVector<UserScript*> UserScriptsPage::getSelectedUserScripts() const
 
 	for (int i = 0; i < indexes.count(); ++i)
 	{
-		UserScript *script(AddonsManager::getUserScript(indexes.at(i).data(IdentifierRole).toString()));
+		const QString identifier(indexes.at(i).data(IdentifierRole).toString());
 
-		if (script)
+		if (!identifier.isEmpty())
 		{
-			userScripts.append(script);
+			UserScript *script(AddonsManager::getUserScript(identifier));
+
+			if (script)
+			{
+				userScripts.append(script);
+			}
 		}
 	}
 
