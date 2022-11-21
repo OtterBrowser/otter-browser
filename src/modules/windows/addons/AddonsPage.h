@@ -43,7 +43,7 @@ public:
 		IdentifierRole = Qt::UserRole,
 	};
 
-	explicit AddonsPage(QWidget *parent);
+	explicit AddonsPage(bool needsDetails, QWidget *parent);
 	~AddonsPage();
 
 	void print(QPrinter *printer);
@@ -78,6 +78,7 @@ protected slots:
 private:
 	int m_loadingTimer;
 	bool m_isLoading;
+	bool m_needsDetails;
 	Ui::AddonsPage *m_ui;
 
 signals:

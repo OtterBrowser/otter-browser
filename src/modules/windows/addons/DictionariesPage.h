@@ -30,7 +30,7 @@ class DictionariesPage final : public AddonsPage
 	Q_OBJECT
 
 public:
-	explicit DictionariesPage(QWidget *parent);
+	explicit DictionariesPage(bool needsDetails, QWidget *parent);
 
 	QString getTitle() const override;
 

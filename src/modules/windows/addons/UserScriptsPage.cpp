@@ -33,7 +33,7 @@
 namespace Otter
 {
 
-UserScriptsPage::UserScriptsPage(QWidget *parent) : AddonsPage(parent)
+UserScriptsPage::UserScriptsPage(bool needsDetails, QWidget *parent) : AddonsPage(needsDetails, parent)
 {
 	connect(this, &AddonsPage::needsActionsUpdate, this, [&]()
 	{

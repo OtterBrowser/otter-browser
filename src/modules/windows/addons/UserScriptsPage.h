@@ -38,7 +38,7 @@ public:
 		IgnoreAllMode
 	};
 
-	explicit UserScriptsPage(QWidget *parent);
+	explicit UserScriptsPage(bool needsDetails, QWidget *parent);
 
 	Addon* getCurrentAddon() const override;
 	QString getTitle() const override;

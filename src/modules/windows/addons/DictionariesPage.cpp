@@ -23,7 +23,7 @@
 namespace Otter
 {
 
-DictionariesPage::DictionariesPage(QWidget *parent) : AddonsPage(parent)
+DictionariesPage::DictionariesPage(bool needsDetails, QWidget *parent) : AddonsPage(needsDetails, parent)
 {
 	connect(this, &AddonsPage::needsActionsUpdate, this, [&]()
 	{

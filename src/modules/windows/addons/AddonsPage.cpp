@@ -27,9 +27,10 @@
 namespace Otter
 {
 
-AddonsPage::AddonsPage(QWidget *parent) : CategoryPage(parent),
+AddonsPage::AddonsPage(bool needsDetails, QWidget *parent) : CategoryPage(parent),
 	m_loadingTimer(0),
 	m_isLoading(true),
+	m_needsDetails(needsDetails),
 	m_ui(new Ui::AddonsPage)
 {
 	QStandardItemModel *model(new QStandardItemModel(this));
