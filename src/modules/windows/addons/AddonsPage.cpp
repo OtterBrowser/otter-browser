@@ -42,6 +42,7 @@ AddonsPage::AddonsPage(bool needsDetails, QWidget *parent) : CategoryPage(parent
 	m_ui->addonsViewWidget->setModel(model);
 	m_ui->addonsViewWidget->setViewMode(ItemViewWidget::ListView);
 	m_ui->addonsViewWidget->installEventFilter(this);
+	m_ui->detailsWidget->setVisible(m_needsDetails);
 
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->addonsViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->addonsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &AddonsPage::showContextMenu);
