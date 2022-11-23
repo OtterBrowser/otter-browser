@@ -69,9 +69,6 @@ protected:
 	void changeEvent(QEvent *event) override;
 	void addPage(AddonsPage *page);
 
-protected slots:
-	void updateDetails(Addon *addon);
-
 private:
 	AddonsPage *m_currentPage;
 	int m_tabIndexEnumerator;

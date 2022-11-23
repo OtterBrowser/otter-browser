@@ -46,43 +46,12 @@ AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window
 
 	m_currentPage = qobject_cast<AddonsPage*>(m_ui->categoriesTabWidget->getPage(0));
 
-	if (isSidebarPanel())
-	{
-		m_ui->detailsWidget->hide();
-	}
-	else
-	{
-		updateDetails(m_currentPage->getCurrentAddon());
-
-		connect(m_currentPage, &AddonsPage::currentAddonChanged, this, &AddonsContentsWidget::updateDetails);
-	}
-
 	connect(m_ui->categoriesTabWidget, &CategoriesTabWidget::currentChanged, this, [&](int index)
 	{
-		CategoryPage *page(m_ui->categoriesTabWidget->getPage(index));
-
-		if (m_currentPage)
-		{
-			disconnect(m_ui->addButton, &QPushButton::clicked, m_currentPage, &AddonsPage::addAddon);
-		}
-
-		m_currentPage = qobject_cast<AddonsPage*>(page);
-
-		if (page)
-		{
-			connect(m_ui->addButton, &QPushButton::clicked, m_currentPage, &AddonsPage::addAddon);
-		}
-
-		updateDetails(m_currentPage ? m_currentPage->getCurrentAddon() : nullptr);
+		m_currentPage = qobject_cast<AddonsPage*>(m_ui->categoriesTabWidget->getPage(index));
 
 		emit titleChanged(getTitle());
 		emit urlChanged(getUrl());
-	});
-	connect(m_ui->saveButton, &QPushButton::clicked, this, [&]()
-	{
-		m_currentPage->save();
-
-		m_ui->saveButton->setEnabled(false);
 	});
 }
 
@@ -131,26 +100,10 @@ void AddonsContentsWidget::addPage(AddonsPage *page)
 {
 	m_ui->categoriesTabWidget->addPage(page);
 
-	connect(page, &AddonsPage::settingsModified, this, [&]()
-	{
-		m_ui->saveButton->setEnabled(true);
-	});
 	connect(page, &AddonsPage::needsActionsUpdate, [&]()
 	{
 		emit arbitraryActionsStateChanged({ActionsManager::DeleteAction});
 	});
-}
-
-void AddonsContentsWidget::updateDetails(Addon *addon)
-{
-	m_ui->titleLabelWidget->clear();
-	m_ui->updateUrlLabelWidget->clear();
-
-	if (addon)
-	{
-		m_ui->titleLabelWidget->setText(addon->getTitle());
-		m_ui->updateUrlLabelWidget->setText(addon->getUpdateUrl().toString());
-	}
 }
 
 void AddonsContentsWidget::setUrl(const QUrl &url, bool isTypedIn)

@@ -44,9 +44,20 @@ AddonsPage::AddonsPage(bool needsDetails, QWidget *parent) : CategoryPage(parent
 	m_ui->addonsViewWidget->installEventFilter(this);
 	m_ui->detailsWidget->setVisible(m_needsDetails);
 
+	connect(this, &AddonsPage::settingsModified, this, [&]()
+	{
+		m_ui->saveButton->setEnabled(true);
+	});
+	connect(m_ui->addButton, &QPushButton::clicked, this, &AddonsPage::addAddon);
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->addonsViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->addonsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &AddonsPage::showContextMenu);
 	connect(m_ui->addonsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &AddonsPage::needsActionsUpdate);
+	connect(m_ui->saveButton, &QPushButton::clicked, this, [&]()
+	{
+		save();
+
+		m_ui->saveButton->setEnabled(false);
+	});
 }
 
 AddonsPage::~AddonsPage()
