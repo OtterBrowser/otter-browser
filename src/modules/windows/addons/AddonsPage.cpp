@@ -51,7 +51,12 @@ AddonsPage::AddonsPage(bool needsDetails, QWidget *parent) : CategoryPage(parent
 	connect(m_ui->addButton, &QPushButton::clicked, this, &AddonsPage::addAddon);
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->addonsViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->addonsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &AddonsPage::showContextMenu);
-	connect(m_ui->addonsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &AddonsPage::needsActionsUpdate);
+	connect(m_ui->addonsViewWidget, &ItemViewWidget::needsActionsUpdate, this, [&]()
+	{
+		updateDetails();
+
+		emit needsActionsUpdate();
+	});
 	connect(m_ui->saveButton, &QPushButton::clicked, this, [&]()
 	{
 		save();
@@ -91,6 +96,8 @@ void AddonsPage::changeEvent(QEvent *event)
 	{
 		m_ui->retranslateUi(this);
 		m_ui->addonsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Title"), tr("Version")});
+
+		updateDetails();
 	}
 }
 
@@ -164,6 +171,10 @@ void AddonsPage::openAddons()
 }
 
 void AddonsPage::reloadAddons()
+{
+}
+
+void AddonsPage::updateDetails()
 {
 }
 

@@ -73,6 +73,7 @@ protected slots:
 	virtual void openAddons();
 	virtual void reloadAddons();
 	virtual void removeAddons() = 0;
+	virtual void updateDetails();
 	void showContextMenu(const QPoint &position);
 
 private:
