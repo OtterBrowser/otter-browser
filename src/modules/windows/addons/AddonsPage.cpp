@@ -53,7 +53,10 @@ AddonsPage::AddonsPage(bool needsDetails, QWidget *parent) : CategoryPage(parent
 	connect(m_ui->addonsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &AddonsPage::showContextMenu);
 	connect(m_ui->addonsViewWidget, &ItemViewWidget::needsActionsUpdate, this, [&]()
 	{
-		updateDetails();
+		if (m_needsDetails)
+		{
+			updateDetails();
+		}
 
 		emit needsActionsUpdate();
 	});
@@ -97,7 +100,10 @@ void AddonsPage::changeEvent(QEvent *event)
 		m_ui->retranslateUi(this);
 		m_ui->addonsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Title"), tr("Version")});
 
-		updateDetails();
+		if (m_needsDetails)
+		{
+			updateDetails();
+		}
 	}
 }
 
