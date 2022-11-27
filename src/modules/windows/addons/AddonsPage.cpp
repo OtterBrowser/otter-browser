@@ -283,4 +283,9 @@ bool AddonsPage::canReloadAddons() const
 	return false;
 }
 
+bool AddonsPage::needsDetails() const
+{
+	return m_needsDetails;
+}
+
 }

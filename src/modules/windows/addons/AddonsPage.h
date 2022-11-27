@@ -68,6 +68,7 @@ protected:
 	QModelIndexList getSelectedIndexes() const;
 	virtual bool canOpenAddons() const;
 	virtual bool canReloadAddons() const;
+	bool needsDetails() const;
 
 protected slots:
 	virtual void openAddons();
