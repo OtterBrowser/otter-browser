@@ -230,11 +230,6 @@ QStandardItemModel* AddonsPage::getModel() const
 	return m_ui->addonsViewWidget->getSourceModel();
 }
 
-Addon* AddonsPage::getCurrentAddon() const
-{
-	return nullptr;
-}
-
 QIcon AddonsPage::getFallbackIcon() const
 {
 	return ThemesManager::createIcon(QLatin1String("unknown"), false);
