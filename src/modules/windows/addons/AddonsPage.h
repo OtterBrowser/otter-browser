@@ -55,6 +55,13 @@ public slots:
 	virtual void addAddon() = 0;
 
 protected:
+	struct DetailsEntry
+	{
+		QString label;
+		QString value;
+		bool isUrl = false;
+	};
+
 	void timerEvent(QTimerEvent *event) override;
 	void changeEvent(QEvent *event) override;
 	void addAddonEntry(Addon *addon, const QMap<int, QVariant> &metaData = {});
