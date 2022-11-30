@@ -19,9 +19,11 @@
 
 #include "AddonsPage.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../ui/TextLabelWidget.h"
 
 #include "ui_AddonsPage.h"
 
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMenu>
 
 namespace Otter
@@ -136,6 +138,11 @@ void AddonsPage::triggerAction(int identifier, const QVariantMap &parameters, Ac
 	}
 }
 
+void AddonsPage::print(QPrinter *printer)
+{
+	m_ui->addonsViewWidget->render(printer);
+}
+
 void AddonsPage::addAddonEntry(Addon *addon, const QMap<int, QVariant> &metaData)
 {
 	QList<QStandardItem*> items({new QStandardItem((addon->getIcon().isNull() ? getFallbackIcon() : addon->getIcon()), addon->getTitle()), new QStandardItem(addon->getVersion())});
@@ -220,9 +227,55 @@ void AddonsPage::showContextMenu(const QPoint &position)
 	menu.exec(m_ui->addonsViewWidget->mapToGlobal(position));
 }
 
-void AddonsPage::print(QPrinter *printer)
+void AddonsPage::setDetails(const QVector<AddonsPage::DetailsEntry> &details)
 {
-	m_ui->addonsViewWidget->render(printer);
+	if (m_ui->formLayout->rowCount() > 0)
+	{
+		for (int i = 0; i < details.count(); ++i)
+		{
+			const DetailsEntry entry(details.at(i));
+			QLayoutItem *labelItem(m_ui->formLayout->itemAt(i, QFormLayout::LabelRole));
+			QLayoutItem *fieldItem(m_ui->formLayout->itemAt(i, QFormLayout::FieldRole));
+
+			if (!labelItem || !fieldItem)
+			{
+				continue;
+			}
+
+			QLabel *label(qobject_cast<QLabel*>(labelItem->widget()));
+			TextLabelWidget *textWidget(qobject_cast<TextLabelWidget*>(fieldItem->widget()));
+
+			if (!label || !textWidget)
+			{
+				continue;
+			}
+
+			label->setText(entry.label);
+
+			textWidget->setText(entry.value);
+
+			if (entry.isUrl)
+			{
+				textWidget->setUrl({entry.value});
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < details.count(); ++i)
+		{
+			const DetailsEntry entry(details.at(i));
+			TextLabelWidget *textWidget(new TextLabelWidget(m_ui->detailsWidget));
+			textWidget->setText(entry.value);
+
+			if (entry.isUrl)
+			{
+				textWidget->setUrl({entry.value});
+			}
+
+			m_ui->formLayout->addRow(entry.label, textWidget);
+		}
+	}
 }
 
 QStandardItemModel* AddonsPage::getModel() const

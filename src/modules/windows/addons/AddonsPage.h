@@ -82,6 +82,7 @@ protected slots:
 	virtual void removeAddons() = 0;
 	virtual void updateDetails();
 	void showContextMenu(const QPoint &position);
+	void setDetails(const QVector<DetailsEntry> &details);
 
 private:
 	int m_loadingTimer;
