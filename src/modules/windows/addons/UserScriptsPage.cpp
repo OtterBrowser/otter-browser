@@ -234,6 +234,30 @@ void UserScriptsPage::removeAddons()
 	}
 }
 
+void UserScriptsPage::updateDetails()
+{
+	const QVector<UserScript*> selectedUserScripts(getSelectedUserScripts());
+	DetailsEntry titleEntry;
+	titleEntry.label = tr("Title:");
+
+	DetailsEntry homePageEntry;
+	homePageEntry.label = tr("Homepage:");
+
+	if (selectedUserScripts.count() == 1)
+	{
+		UserScript *script(selectedUserScripts.first());
+
+		if (script)
+		{
+			titleEntry.value = script->getTitle();
+			homePageEntry.value = script->getHomePage().toDisplayString();
+			homePageEntry.isUrl = !script->getHomePage().isEmpty();
+		}
+	}
+
+	setDetails({titleEntry, homePageEntry});
+}
+
 void UserScriptsPage::save()
 {
 	for (int i = 0; i < m_addonsToRemove.count(); ++i)
