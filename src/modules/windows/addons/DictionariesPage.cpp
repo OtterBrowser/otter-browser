@@ -83,6 +83,38 @@ void DictionariesPage::removeAddons()
 
 }
 
+void DictionariesPage::updateDetails()
+{
+	const QModelIndexList indexes(getSelectedIndexes());
+	QStringList selectedDictionaries;
+	selectedDictionaries.reserve(indexes.count());
+
+	for (int i = 0; i < indexes.count(); ++i)
+	{
+		const QString identifier(indexes.at(i).data(IdentifierRole).toString());
+
+		if (!identifier.isEmpty())
+		{
+			selectedDictionaries.append(identifier);
+		}
+	}
+
+	DetailsEntry titleEntry;
+	titleEntry.label = tr("Title:");
+
+	if (selectedDictionaries.count() == 1)
+	{
+		SpellCheckManager::DictionaryInformation information(SpellCheckManager::getDictionary(selectedDictionaries.first()));
+
+		if (information.isValid())
+		{
+			titleEntry.value = Dictionary(information, this).getTitle();
+		}
+	}
+
+	setDetails({titleEntry});
+}
+
 void DictionariesPage::save()
 {
 
