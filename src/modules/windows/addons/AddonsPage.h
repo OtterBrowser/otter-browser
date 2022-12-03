@@ -64,8 +64,8 @@ protected:
 
 	void timerEvent(QTimerEvent *event) override;
 	void changeEvent(QEvent *event) override;
-	void addAddonEntry(Addon *addon, const QMap<int, QVariant> &metaData = {});
-	void updateAddonEntry(Addon *addon);
+	virtual void addAddonEntry(Addon *addon, const QMap<int, QVariant> &metaData = {});
+	virtual void updateAddonEntry(Addon *addon);
 	void load() final override;
 	virtual void delayedLoad() = 0;	void markAsFullyLoaded();
 	QStandardItemModel* getModel() const;
