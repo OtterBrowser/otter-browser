@@ -28,6 +28,8 @@
 namespace Otter
 {
 
+class ItemViewWidget;
+
 namespace Ui
 {
 	class AddonsPage;
@@ -68,6 +70,7 @@ protected:
 	virtual void updateAddonEntry(Addon *addon);
 	void load() final override;
 	virtual void delayedLoad() = 0;	void markAsFullyLoaded();
+	ItemViewWidget* getViewWidget() const;
 	QStandardItemModel* getModel() const;
 	virtual QIcon getFallbackIcon() const;
 	virtual QVariant getAddonIdentifier(Addon *addon) const = 0;

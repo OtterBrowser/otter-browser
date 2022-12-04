@@ -278,6 +278,11 @@ void AddonsPage::setDetails(const QVector<AddonsPage::DetailsEntry> &details)
 	}
 }
 
+ItemViewWidget* AddonsPage::getViewWidget() const
+{
+	return m_ui->addonsViewWidget;
+}
+
 QStandardItemModel* AddonsPage::getModel() const
 {
 	return m_ui->addonsViewWidget->getSourceModel();
