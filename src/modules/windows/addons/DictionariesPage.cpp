@@ -19,12 +19,15 @@
 
 #include "DictionariesPage.h"
 #include "../../../core/SpellCheckManager.h"
+#include "../../../ui/ItemViewWidget.h"
 
 namespace Otter
 {
 
 DictionariesPage::DictionariesPage(bool needsDetails, QWidget *parent) : AddonsPage(needsDetails, parent)
 {
+	getModel()->setHorizontalHeaderLabels({tr("Title")});
+
 	connect(this, &AddonsPage::needsActionsUpdate, this, [&]()
 	{
 		const QModelIndexList indexes(getSelectedIndexes());
@@ -49,6 +52,48 @@ DictionariesPage::DictionariesPage(bool needsDetails, QWidget *parent) : AddonsP
 			}
  		}
 	});
+}
+
+void DictionariesPage::changeEvent(QEvent *event)
+{
+	AddonsPage::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		getModel()->setHorizontalHeaderLabels({tr("Title")});
+	}
+}
+
+void DictionariesPage::addAddonEntry(Addon *addon, const QMap<int, QVariant> &metaData)
+{
+	QStandardItem* item(new QStandardItem((addon->getIcon().isNull() ? getFallbackIcon() : addon->getIcon()), addon->getTitle()));
+	item->setData(getAddonIdentifier(addon), IdentifierRole);
+	item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+	item->setCheckable(true);
+	item->setCheckState(addon->isEnabled() ? Qt::Checked : Qt::Unchecked);
+	item->setToolTip(addon->getDescription());
+
+	getModel()->appendRow(item);
+	getModel()->setItemData(item->index(), metaData);
+}
+
+void DictionariesPage::updateAddonEntry(Addon *addon)
+{
+	const QVariant identifier(getAddonIdentifier(addon));
+
+	for (int i = 0; i < getModel()->rowCount(); ++i)
+	{
+		const QModelIndex index(getModel()->index(i, 0));
+
+		if (index.data(IdentifierRole) == identifier)
+		{
+			getModel()->setData(index, (addon->getIcon().isNull() ? getFallbackIcon() : addon->getIcon()), Qt::DecorationRole);
+			getModel()->setData(index, addon->getTitle(), Qt::DisplayRole);
+			getModel()->setData(index, addon->getDescription(), Qt::ToolTipRole);
+
+			return;
+		}
+	}
 }
 
 void DictionariesPage::delayedLoad()
