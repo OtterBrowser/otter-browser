@@ -57,6 +57,12 @@ public slots:
 	virtual void addAddon() = 0;
 
 protected:
+	struct ModelColumn
+	{
+		QString label;
+		int width = 0;
+	};
+
 	struct DetailsEntry
 	{
 		QString label;
