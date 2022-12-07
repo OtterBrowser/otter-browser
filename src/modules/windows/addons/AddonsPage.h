@@ -81,6 +81,7 @@ protected:
 	virtual QIcon getFallbackIcon() const;
 	virtual QVariant getAddonIdentifier(Addon *addon) const = 0;
 	QModelIndexList getSelectedIndexes() const;
+	virtual QVector<ModelColumn> getModelColumns() const;
 	virtual bool canOpenAddons() const;
 	virtual bool canReloadAddons() const;
 	bool needsDetails() const;
