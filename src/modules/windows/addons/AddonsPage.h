@@ -76,6 +76,7 @@ protected:
 	virtual void updateAddonEntry(Addon *addon);
 	void load() final override;
 	virtual void delayedLoad() = 0;	void markAsFullyLoaded();
+	void updateModelColumns();
 	ItemViewWidget* getViewWidget() const;
 	QStandardItemModel* getModel() const;
 	virtual QIcon getFallbackIcon() const;

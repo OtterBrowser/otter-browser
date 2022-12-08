@@ -100,7 +100,8 @@ void AddonsPage::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-		m_ui->addonsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Title"), tr("Version")});
+
+		updateModelColumns();
 
 		if (m_needsDetails)
 		{
@@ -208,6 +209,20 @@ void AddonsPage::markAsFullyLoaded()
 	m_isLoading = false;
 
 	emit loadingStateChanged(WebWidget::FinishedLoadingState);
+}
+
+void AddonsPage::updateModelColumns()
+{
+	const QVector<ModelColumn> columns(getModelColumns());
+	QStringList labels;
+	labels.reserve(columns.count());
+
+	for (int i = 0; i < columns.count(); ++i)
+	{
+		labels.append(columns.at(i).label);
+	}
+
+	m_ui->addonsViewWidget->getSourceModel()->setHorizontalHeaderLabels(labels);
 }
 
 void AddonsPage::showContextMenu(const QPoint &position)
