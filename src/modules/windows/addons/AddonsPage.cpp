@@ -36,8 +36,6 @@ AddonsPage::AddonsPage(bool needsDetails, QWidget *parent) : CategoryPage(parent
 	m_ui(new Ui::AddonsPage)
 {
 	QStandardItemModel *model(new QStandardItemModel(this));
-	model->setHorizontalHeaderLabels({tr("Title"), tr("Version")});
-	model->setHeaderData(0, Qt::Horizontal, 250, HeaderViewWidget::WidthRole);
 
 	m_ui->setupUi(this);
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
@@ -194,14 +192,30 @@ void AddonsPage::updateDetails()
 
 void AddonsPage::load()
 {
-	if (!wasLoaded())
+	if (wasLoaded())
 	{
-		emit loadingStateChanged(WebWidget::OngoingLoadingState);
-
-		m_loadingTimer = startTimer(200);
-
-		markAsLoaded();
+		return;
 	}
+
+	emit loadingStateChanged(WebWidget::OngoingLoadingState);
+
+	updateModelColumns();
+
+	const QVector<ModelColumn> columns(getModelColumns());
+
+	for (int i = 0; i < columns.count(); ++i)
+	{
+		const int width(columns.at(i).width);
+
+		if (width > 0)
+		{
+			getModel()->setHeaderData(i, Qt::Horizontal, width, HeaderViewWidget::WidthRole);
+		}
+	}
+
+	m_loadingTimer = startTimer(200);
+
+	markAsLoaded();
 }
 
 void AddonsPage::markAsFullyLoaded()
