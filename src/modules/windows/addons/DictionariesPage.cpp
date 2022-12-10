@@ -175,6 +175,14 @@ QVariant DictionariesPage::getAddonIdentifier(Addon *addon) const
 	return addon->getName();
 }
 
+QVector<AddonsPage::ModelColumn> DictionariesPage::getModelColumns() const
+{
+	ModelColumn titleColumn;
+	titleColumn.label = tr("Title");
+
+	return {titleColumn};
+}
+
 bool DictionariesPage::canOpenAddons() const
 {
 	return true;
