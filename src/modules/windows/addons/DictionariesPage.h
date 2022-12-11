@@ -39,7 +39,6 @@ public slots:
 	void save() override;
 
 protected:
-	void changeEvent(QEvent *event) override;
 	void addAddonEntry(Addon *addon, const QMap<int, QVariant> &metaData = {}) override;
 	void updateAddonEntry(Addon *addon) override;
 	void delayedLoad() override;

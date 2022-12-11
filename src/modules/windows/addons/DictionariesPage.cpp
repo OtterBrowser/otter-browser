@@ -54,16 +54,6 @@ DictionariesPage::DictionariesPage(bool needsDetails, QWidget *parent) : AddonsP
 	});
 }
 
-void DictionariesPage::changeEvent(QEvent *event)
-{
-	AddonsPage::changeEvent(event);
-
-	if (event->type() == QEvent::LanguageChange)
-	{
-		getModel()->setHorizontalHeaderLabels({tr("Title")});
-	}
-}
-
 void DictionariesPage::addAddonEntry(Addon *addon, const QMap<int, QVariant> &metaData)
 {
 	QStandardItem* item(new QStandardItem((addon->getIcon().isNull() ? getFallbackIcon() : addon->getIcon()), addon->getTitle()));
