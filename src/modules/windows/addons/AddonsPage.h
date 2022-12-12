@@ -96,6 +96,7 @@ protected slots:
 	void setDetails(const QVector<DetailsEntry> &details);
 
 private:
+	QStandardItemModel *m_model;
 	int m_loadingTimer;
 	bool m_isLoading;
 	bool m_needsDetails;

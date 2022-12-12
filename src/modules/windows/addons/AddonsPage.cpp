@@ -30,16 +30,15 @@ namespace Otter
 {
 
 AddonsPage::AddonsPage(bool needsDetails, QWidget *parent) : CategoryPage(parent),
+	m_model(new QStandardItemModel(this)),
 	m_loadingTimer(0),
 	m_isLoading(true),
 	m_needsDetails(needsDetails),
 	m_ui(new Ui::AddonsPage)
 {
-	QStandardItemModel *model(new QStandardItemModel(this));
-
 	m_ui->setupUi(this);
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
-	m_ui->addonsViewWidget->setModel(model);
+	m_ui->addonsViewWidget->setModel(m_model);
 	m_ui->addonsViewWidget->setViewMode(ItemViewWidget::ListView);
 	m_ui->addonsViewWidget->installEventFilter(this);
 	m_ui->detailsWidget->setVisible(m_needsDetails);
@@ -153,8 +152,8 @@ void AddonsPage::addAddonEntry(Addon *addon, const QMap<int, QVariant> &metaData
 	items[1]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
 	items[1]->setToolTip(addon->getDescription());
 
-	m_ui->addonsViewWidget->getSourceModel()->appendRow(items);
-	m_ui->addonsViewWidget->getSourceModel()->setItemData(items[0]->index(), metaData);
+	m_model->appendRow(items);
+	m_model->setItemData(items[0]->index(), metaData);
 }
 
 void AddonsPage::updateAddonEntry(Addon *addon)
@@ -236,7 +235,7 @@ void AddonsPage::updateModelColumns()
 		labels.append(columns.at(i).label);
 	}
 
-	m_ui->addonsViewWidget->getSourceModel()->setHorizontalHeaderLabels(labels);
+	m_model->setHorizontalHeaderLabels(labels);
 }
 
 void AddonsPage::showContextMenu(const QPoint &position)
@@ -314,7 +313,7 @@ ItemViewWidget* AddonsPage::getViewWidget() const
 
 QStandardItemModel* AddonsPage::getModel() const
 {
-	return m_ui->addonsViewWidget->getSourceModel();
+	return m_model;
 }
 
 QIcon AddonsPage::getFallbackIcon() const
