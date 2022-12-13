@@ -69,17 +69,18 @@ void DictionariesPage::addAddonEntry(Addon *addon, const QMap<int, QVariant> &me
 
 void DictionariesPage::updateAddonEntry(Addon *addon)
 {
+	QStandardItemModel *model(getModel());
 	const QVariant identifier(getAddonIdentifier(addon));
 
-	for (int i = 0; i < getModel()->rowCount(); ++i)
+	for (int i = 0; i < model->rowCount(); ++i)
 	{
-		const QModelIndex index(getModel()->index(i, 0));
+		const QModelIndex index(model->index(i, 0));
 
 		if (index.data(IdentifierRole) == identifier)
 		{
-			getModel()->setData(index, (addon->getIcon().isNull() ? getFallbackIcon() : addon->getIcon()), Qt::DecorationRole);
-			getModel()->setData(index, addon->getTitle(), Qt::DisplayRole);
-			getModel()->setData(index, addon->getDescription(), Qt::ToolTipRole);
+			model->setData(index, (addon->getIcon().isNull() ? getFallbackIcon() : addon->getIcon()), Qt::DecorationRole);
+			model->setData(index, addon->getTitle(), Qt::DisplayRole);
+			model->setData(index, addon->getDescription(), Qt::ToolTipRole);
 
 			return;
 		}
