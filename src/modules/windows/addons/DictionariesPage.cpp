@@ -26,8 +26,6 @@ namespace Otter
 
 DictionariesPage::DictionariesPage(bool needsDetails, QWidget *parent) : AddonsPage(needsDetails, parent)
 {
-	getModel()->setHorizontalHeaderLabels({tr("Title")});
-
 	connect(this, &AddonsPage::needsActionsUpdate, this, [&]()
 	{
 		const QModelIndexList indexes(getSelectedIndexes());
