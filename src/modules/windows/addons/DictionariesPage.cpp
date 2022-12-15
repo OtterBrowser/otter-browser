@@ -119,20 +119,7 @@ void DictionariesPage::removeAddons()
 
 void DictionariesPage::updateDetails()
 {
-	const QModelIndexList indexes(getSelectedIndexes());
-	QStringList selectedDictionaries;
-	selectedDictionaries.reserve(indexes.count());
-
-	for (int i = 0; i < indexes.count(); ++i)
-	{
-		const QString identifier(indexes.at(i).data(IdentifierRole).toString());
-
-		if (!identifier.isEmpty())
-		{
-			selectedDictionaries.append(identifier);
-		}
-	}
-
+	const QStringList selectedDictionaries(getSelectedDictionaries());
 	DetailsEntry titleEntry;
 	titleEntry.label = tr("Title:");
 
@@ -162,6 +149,25 @@ QString DictionariesPage::getTitle() const
 QVariant DictionariesPage::getAddonIdentifier(Addon *addon) const
 {
 	return addon->getName();
+}
+
+QStringList DictionariesPage::getSelectedDictionaries() const
+{
+	const QModelIndexList indexes(getSelectedIndexes());
+	QStringList selectedDictionaries;
+	selectedDictionaries.reserve(indexes.count());
+
+	for (int i = 0; i < indexes.count(); ++i)
+	{
+		const QString identifier(indexes.at(i).data(IdentifierRole).toString());
+
+		if (!identifier.isEmpty())
+		{
+			selectedDictionaries.append(identifier);
+		}
+	}
+
+	return selectedDictionaries;
 }
 
 QVector<AddonsPage::ModelColumn> DictionariesPage::getModelColumns() const

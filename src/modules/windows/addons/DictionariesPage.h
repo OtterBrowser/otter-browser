@@ -43,6 +43,7 @@ protected:
 	void updateAddonEntry(Addon *addon) override;
 	void delayedLoad() override;
 	QVariant getAddonIdentifier(Addon *addon) const override;
+	QStringList getSelectedDictionaries() const;
 	QVector<ModelColumn> getModelColumns() const override;
 	bool canOpenAddons() const override;
 	bool canReloadAddons() const override;
