@@ -104,7 +104,18 @@ void DictionariesPage::addAddon()
 
 void DictionariesPage::openAddons()
 {
+	const QStringList selectedDictionaries(getSelectedDictionaries());
+	QStringList paths;
 
+	for (int i = 0; i < selectedDictionaries.count(); ++i)
+	{
+		paths.append(SpellCheckManager::getDictionary(selectedDictionaries.at(i)).paths);
+	}
+
+	for (int i = 0; i < paths.count(); ++i)
+	{
+		Utils::runApplication({}, paths.at(i));
+	}
 }
 
 void DictionariesPage::reloadAddons()
