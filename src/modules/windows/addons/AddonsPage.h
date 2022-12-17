@@ -103,7 +103,6 @@ private:
 	Ui::AddonsPage *m_ui;
 
 signals:
-	void currentAddonChanged(Addon *addon);
 	void loadingStateChanged(WebWidget::LoadingState state);
 	void needsActionsUpdate();
 };

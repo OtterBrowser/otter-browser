@@ -26,30 +26,6 @@ namespace Otter
 
 DictionariesPage::DictionariesPage(bool needsDetails, QWidget *parent) : AddonsPage(needsDetails, parent)
 {
-	connect(this, &AddonsPage::needsActionsUpdate, this, [&]()
-	{
-		const QModelIndexList indexes(getSelectedIndexes());
-
- 		if (indexes.isEmpty())
- 		{
- 			emit currentAddonChanged(nullptr);
- 		}
- 		else
- 		{
-			SpellCheckManager::DictionaryInformation information(SpellCheckManager::getDictionary(indexes.first().data(IdentifierRole).toString()));
-
-			if (information.isValid())
-			{
-				Dictionary dictionary(information, this);
-
-				emit currentAddonChanged(&dictionary);
-			}
-			else
-			{
-				emit currentAddonChanged(nullptr);
-			}
- 		}
-	});
 }
 
 void DictionariesPage::addAddonEntry(Addon *addon, const QMap<int, QVariant> &metaData)
