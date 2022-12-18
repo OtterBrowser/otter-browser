@@ -37,8 +37,9 @@ void DictionariesPage::addAddonEntry(Addon *addon, const QMap<int, QVariant> &me
 	item->setCheckState(addon->isEnabled() ? Qt::Checked : Qt::Unchecked);
 	item->setToolTip(addon->getDescription());
 
-	getModel()->appendRow(item);
-	getModel()->setItemData(item->index(), metaData);
+	QStandardItemModel *model(getModel());
+	model->appendRow(item);
+	model->setItemData(item->index(), metaData);
 }
 
 void DictionariesPage::updateAddonEntry(Addon *addon)
