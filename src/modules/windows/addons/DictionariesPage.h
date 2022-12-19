@@ -21,6 +21,7 @@
 #define OTTER_DICTIONARIESPAGE_H
 
 #include "AddonsPage.h"
+#include "../../../core/SpellCheckManager.h"
 
 namespace Otter
 {
@@ -53,6 +54,9 @@ protected slots:
 	void reloadAddons() override;
 	void removeAddons() override;
 	void updateDetails() override;
+
+private:
+	QVector<SpellCheckManager::DictionaryInformation> m_dictionriesToAdd;
 };
 
 }

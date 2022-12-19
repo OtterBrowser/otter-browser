@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "DictionariesPage.h"
-#include "../../../core/SpellCheckManager.h"
 #include "../../../ui/ItemViewWidget.h"
 
 namespace Otter
