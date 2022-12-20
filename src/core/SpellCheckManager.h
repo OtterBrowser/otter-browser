@@ -35,6 +35,7 @@ public:
 		QString language;
 		QString title;
 		QStringList paths;
+		bool isSystemDictionary = false;
 
 		bool isValid()
 		{
