@@ -38,14 +38,7 @@ QVector<SpellCheckManager::DictionaryInformation> SpellCheckManager::m_dictionar
 SpellCheckManager::SpellCheckManager(QObject *parent) : QObject(parent)
 {
 #ifdef OTTER_ENABLE_SPELLCHECK
-	QString dictionariesPath(SessionsManager::getWritableDataPath(QLatin1String("dictionaries")));
-
-	if (!QFile::exists(dictionariesPath))
-	{
-		dictionariesPath = QDir::toNativeSeparators(Application::getApplicationDirectoryPath() + QDir::separator() + QLatin1String("dictionaries"));;
-	}
-
-	qputenv("OTTER_DICTIONARIES", dictionariesPath.toLatin1());
+	qputenv("OTTER_DICTIONARIES", getDictionariesPath().toLatin1());
 #endif
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, [&](int identifier)
 	{
@@ -183,6 +176,18 @@ QString SpellCheckManager::getDefaultDictionary()
 	}
 
 	return m_defaultDictionary;
+}
+
+QString SpellCheckManager::getDictionariesPath()
+{
+	QString dictionariesPath(SessionsManager::getWritableDataPath(QLatin1String("dictionaries")));
+
+	if (!QFile::exists(dictionariesPath))
+	{
+		dictionariesPath = QDir::toNativeSeparators(Application::getApplicationDirectoryPath() + QDir::separator() + QLatin1String("dictionaries"));;
+	}
+
+	return dictionariesPath;
 }
 
 SpellCheckManager::DictionaryInformation SpellCheckManager::getDictionary(const QString &language)
