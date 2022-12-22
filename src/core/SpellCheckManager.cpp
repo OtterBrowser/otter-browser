@@ -67,6 +67,7 @@ void SpellCheckManager::loadDictionaries()
 	m_dictionaries.clear();
 	m_dictionaries.reserve(dictionaries.count());
 
+	const QDir dictionariesDirectory(getDictionariesPath());
 	const QStringList ignoredDictionaries(SettingsManager::getOption(SettingsManager::Browser_SpellCheckIgnoreDctionariesOption).toStringList());
 
 	for (int i = 0; i < dictionaries.count(); ++i)
@@ -90,6 +91,11 @@ void SpellCheckManager::loadDictionaries()
 			if (pathInformation.isRelative())
 			{
 				information.paths[j] = pathInformation.absoluteFilePath();
+			}
+
+			if (pathInformation.dir() == dictionariesDirectory)
+			{
+				information.isSystemDictionary = false;
 			}
 		}
 
