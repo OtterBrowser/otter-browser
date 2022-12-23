@@ -93,9 +93,9 @@ void SpellCheckManager::loadDictionaries()
 				information.paths[j] = pathInformation.absoluteFilePath();
 			}
 
-			if (pathInformation.dir() == dictionariesDirectory)
+			if (pathInformation.dir() != dictionariesDirectory)
 			{
-				information.isSystemDictionary = false;
+				information.isLocalDictionary = false;
 			}
 		}
 
