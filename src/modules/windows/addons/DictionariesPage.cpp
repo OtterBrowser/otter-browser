@@ -20,6 +20,8 @@
 #include "DictionariesPage.h"
 #include "../../../ui/ItemViewWidget.h"
 
+#include <QtCore/QFileInfo>
+
 namespace Otter
 {
 
@@ -110,6 +112,9 @@ void DictionariesPage::updateDetails()
 	DetailsEntry titleEntry;
 	titleEntry.label = tr("Title:");
 
+	DetailsEntry locationEntry;
+	locationEntry.label = tr("Location:");
+
 	if (selectedDictionaries.count() == 1)
 	{
 		SpellCheckManager::DictionaryInformation information(SpellCheckManager::getDictionary(selectedDictionaries.first()));
@@ -117,10 +122,11 @@ void DictionariesPage::updateDetails()
 		if (information.isValid())
 		{
 			titleEntry.value = Dictionary(information, this).getTitle();
+			locationEntry.value = QFileInfo(information.paths.at(0)).absolutePath();
 		}
 	}
 
-	setDetails({titleEntry});
+	setDetails({titleEntry, locationEntry});
 }
 
 void DictionariesPage::save()
