@@ -56,6 +56,7 @@ protected slots:
 	void updateDetails() override;
 
 private:
+	QStringList m_filesToRemove;
 	QVector<SpellCheckManager::DictionaryInformation> m_dictionariesToAdd;
 };
 

@@ -131,7 +131,14 @@ void DictionariesPage::updateDetails()
 
 void DictionariesPage::save()
 {
+///TODO
 
+	for (int i = 0; i < m_filesToRemove.count(); ++i)
+	{
+		QFile::remove(m_filesToRemove.at(i));
+	}
+
+	m_filesToRemove.clear();
 }
 
 QString DictionariesPage::getTitle() const
