@@ -112,6 +112,9 @@ void DictionariesPage::updateDetails()
 	DetailsEntry titleEntry;
 	titleEntry.label = tr("Title:");
 
+	DetailsEntry codeEntry;
+	codeEntry.label = tr("Language Code:");
+
 	DetailsEntry locationEntry;
 	locationEntry.label = tr("Location:");
 
@@ -122,11 +125,12 @@ void DictionariesPage::updateDetails()
 		if (information.isValid())
 		{
 			titleEntry.value = Dictionary(information, this).getTitle();
+			codeEntry.value = information.language;
 			locationEntry.value = QFileInfo(information.paths.at(0)).absolutePath();
 		}
 	}
 
-	setDetails({titleEntry, locationEntry});
+	setDetails({titleEntry, codeEntry, locationEntry});
 }
 
 void DictionariesPage::save()
