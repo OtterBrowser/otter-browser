@@ -96,11 +96,6 @@ void DictionariesPage::openAddons()
 	}
 }
 
-void DictionariesPage::reloadAddons()
-{
-
-}
-
 void DictionariesPage::removeAddons()
 {
 
@@ -183,11 +178,6 @@ QVector<AddonsPage::ModelColumn> DictionariesPage::getModelColumns() const
 }
 
 bool DictionariesPage::canOpenAddons() const
-{
-	return true;
-}
-
-bool DictionariesPage::canReloadAddons() const
 {
 	return true;
 }

@@ -47,11 +47,9 @@ protected:
 	QStringList getSelectedDictionaries() const;
 	QVector<ModelColumn> getModelColumns() const override;
 	bool canOpenAddons() const override;
-	bool canReloadAddons() const override;
 
 protected slots:
 	void openAddons() override;
-	void reloadAddons() override;
 	void removeAddons() override;
 	void updateDetails() override;
 
