@@ -25,6 +25,7 @@
 
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -364,6 +365,19 @@ QVector<AddonsPage::ModelColumn> AddonsPage::getModelColumns() const
 WebWidget::LoadingState AddonsPage::getLoadingState() const
 {
 	return (m_isLoading ? WebWidget::OngoingLoadingState : WebWidget::FinishedLoadingState);
+}
+
+bool AddonsPage::confirmAddonsRemoval(int amount) const
+{
+	QMessageBox messageBox;
+	messageBox.setWindowTitle(tr("Question"));
+	messageBox.setText(tr("You are about to irreversibly remove %n addon(s).", "", amount));
+	messageBox.setInformativeText(tr("Do you want to continue?"));
+	messageBox.setIcon(QMessageBox::Question);
+	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+	messageBox.setDefaultButton(QMessageBox::Yes);
+
+	return (messageBox.exec() == QMessageBox::Yes);
 }
 
 bool AddonsPage::canOpenAddons() const

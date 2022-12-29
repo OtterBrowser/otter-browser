@@ -194,15 +194,8 @@ void UserScriptsPage::removeAddons()
 	}
 
 	bool hasAddonsToRemove(false);
-	QMessageBox messageBox;
-	messageBox.setWindowTitle(tr("Question"));
-	messageBox.setText(tr("You are about to irreversibly remove %n addon(s).", "", addons.count()));
-	messageBox.setInformativeText(tr("Do you want to continue?"));
-	messageBox.setIcon(QMessageBox::Question);
-	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
-	messageBox.setDefaultButton(QMessageBox::Yes);
 
-	if (messageBox.exec() == QMessageBox::Yes)
+	if (confirmAddonsRemoval(addons.count()))
 	{
 		for (int i = 0; i < addons.count(); ++i)
 		{

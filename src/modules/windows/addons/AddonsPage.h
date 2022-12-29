@@ -83,6 +83,7 @@ protected:
 	virtual QVariant getAddonIdentifier(Addon *addon) const = 0;
 	QModelIndexList getSelectedIndexes() const;
 	virtual QVector<ModelColumn> getModelColumns() const;
+	bool confirmAddonsRemoval(int amount) const;
 	virtual bool canOpenAddons() const;
 	virtual bool canReloadAddons() const;
 	bool needsDetails() const;
