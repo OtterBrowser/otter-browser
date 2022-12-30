@@ -188,23 +188,20 @@ void UserScriptsPage::removeAddons()
 {
 	const QVector<UserScript*> addons(getSelectedUserScripts());
 
-	if (addons.isEmpty())
+	if (addons.isEmpty() || !confirmAddonsRemoval(addons.count()))
 	{
 		return;
 	}
 
 	bool hasAddonsToRemove(false);
 
-	if (confirmAddonsRemoval(addons.count()))
+	for (int i = 0; i < addons.count(); ++i)
 	{
-		for (int i = 0; i < addons.count(); ++i)
+		if (addons.at(i)->canRemove())
 		{
-			if (addons.at(i)->canRemove())
-			{
-				m_addonsToRemove.append(addons.at(i)->getName());
+			m_addonsToRemove.append(addons.at(i)->getName());
 
-				hasAddonsToRemove = true;
-			}
+			hasAddonsToRemove = true;
 		}
 	}
 
