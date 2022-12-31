@@ -98,7 +98,31 @@ void DictionariesPage::openAddons()
 
 void DictionariesPage::removeAddons()
 {
+	const QStringList dictionaries(getSelectedDictionaries());
 
+	if (dictionaries.isEmpty() || !confirmAddonsRemoval(dictionaries.count()))
+	{
+		return;
+	}
+
+	bool hasAddonsToRemove(false);
+
+	for (int i = 0; i < dictionaries.count(); ++i)
+	{
+		const SpellCheckManager::DictionaryInformation information(SpellCheckManager::getDictionary(dictionaries.at(i)));
+
+		if (information.isLocalDictionary)
+		{
+			m_filesToRemove.append(information.paths);
+
+			hasAddonsToRemove = true;
+		}
+	}
+
+	if (hasAddonsToRemove)
+	{
+		emit settingsModified();
+	}
 }
 
 void DictionariesPage::updateDetails()
