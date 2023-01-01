@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2022 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #include "DictionariesPage.h"
 #include "../../../ui/ItemViewWidget.h"
 
+#include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 
 namespace Otter
@@ -154,6 +155,8 @@ void DictionariesPage::updateDetails()
 
 void DictionariesPage::save()
 {
+	QDir().mkpath(SpellCheckManager::getDictionariesPath());
+
 ///TODO
 
 	for (int i = 0; i < m_filesToRemove.count(); ++i)
