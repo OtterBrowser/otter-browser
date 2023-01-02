@@ -155,9 +155,9 @@ void DictionariesPage::updateDetails()
 
 void DictionariesPage::save()
 {
-	QDir().mkpath(SpellCheckManager::getDictionariesPath());
+	const QString dictionariesPath(SpellCheckManager::getDictionariesPath());
 
-///TODO
+	QDir().mkpath(dictionariesPath);
 
 	for (int i = 0; i < m_filesToRemove.count(); ++i)
 	{
@@ -165,6 +165,19 @@ void DictionariesPage::save()
 	}
 
 	m_filesToRemove.clear();
+
+	for (int i = 0; i < m_dictionariesToAdd.count(); ++i)
+	{
+		const QString language(m_dictionariesToAdd.at(i).language);
+		const QStringList paths(m_dictionariesToAdd.at(i).paths);
+
+		for (int j = 0; j < paths.count(); ++j)
+		{
+			const QString path(paths.at(j));
+
+			QFile::copy(path, QDir(dictionariesPath).filePath(language + QFileInfo(path).suffix()));
+		}
+	}
 }
 
 QString DictionariesPage::getTitle() const
