@@ -156,6 +156,7 @@ void DictionariesPage::updateDetails()
 void DictionariesPage::save()
 {
 	const QString dictionariesPath(SpellCheckManager::getDictionariesPath());
+	const QDir dictionariesDirectory(dictionariesPath);
 
 	QDir().mkpath(dictionariesPath);
 
@@ -175,7 +176,7 @@ void DictionariesPage::save()
 		{
 			const QString path(paths.at(j));
 
-			QFile::copy(path, QDir(dictionariesPath).filePath(language + QFileInfo(path).suffix()));
+			QFile::copy(path, dictionariesDirectory.filePath(language + QFileInfo(path).suffix()));
 		}
 	}
 }
