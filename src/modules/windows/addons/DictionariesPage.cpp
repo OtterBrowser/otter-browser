@@ -22,6 +22,8 @@
 
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
+#include <QtCore/QStandardPaths>
+#include <QtWidgets/QFileDialog>
 
 namespace Otter
 {
@@ -78,7 +80,14 @@ void DictionariesPage::delayedLoad()
 
 void DictionariesPage::addAddon()
 {
+	const QStringList sourcePaths(QFileDialog::getOpenFileNames(this, tr("Select Files"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), Utils::formatFileTypes({tr("Hunspell dictionary files (*.aff *.dic)")})));
 
+	if (sourcePaths.count() != 2)
+	{
+		return;
+	}
+
+///TODO
 }
 
 void DictionariesPage::openAddons()
