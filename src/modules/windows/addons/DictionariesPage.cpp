@@ -87,6 +87,28 @@ void DictionariesPage::addAddon()
 		return;
 	}
 
+	bool hasAff(false);
+	bool hasDic(false);
+
+	for (int i = 0; i < sourcePaths.count(); ++i)
+	{
+		const QString suffix(QFileInfo(sourcePaths.at(i)).suffix().toLower());
+
+		if (suffix == QLatin1String("aff"))
+		{
+			hasAff = true;
+		}
+		else if (suffix == QLatin1String("dic"))
+		{
+			hasDic = true;
+		}
+	}
+
+	if (!hasAff || !hasDic)
+	{
+		return;
+	}
+
 ///TODO
 }
 
