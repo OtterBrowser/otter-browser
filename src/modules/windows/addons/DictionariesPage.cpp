@@ -87,12 +87,14 @@ void DictionariesPage::addAddon()
 		return;
 	}
 
+	QString language;
 	bool hasAff(false);
 	bool hasDic(false);
 
 	for (int i = 0; i < sourcePaths.count(); ++i)
 	{
-		const QString suffix(QFileInfo(sourcePaths.at(i)).suffix().toLower());
+		const QFileInfo fileInformation(sourcePaths.at(i));
+		const QString suffix(fileInformation.suffix().toLower());
 
 		if (suffix == QLatin1String("aff"))
 		{
@@ -100,6 +102,7 @@ void DictionariesPage::addAddon()
 		}
 		else if (suffix == QLatin1String("dic"))
 		{
+			language = fileInformation.baseName();
 			hasDic = true;
 		}
 	}
@@ -109,7 +112,11 @@ void DictionariesPage::addAddon()
 		return;
 	}
 
-///TODO
+	SpellCheckManager::DictionaryInformation dictionary;
+	dictionary.language = language;
+	dictionary.paths = sourcePaths;
+
+	m_dictionariesToAdd.append(dictionary);
 }
 
 void DictionariesPage::openAddons()
