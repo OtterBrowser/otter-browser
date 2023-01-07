@@ -107,16 +107,14 @@ void DictionariesPage::addAddon()
 		}
 	}
 
-	if (!hasAff || !hasDic)
+	if (hasAff && hasDic)
 	{
-		return;
+		SpellCheckManager::DictionaryInformation dictionary;
+		dictionary.language = language;
+		dictionary.paths = sourcePaths;
+
+		m_dictionariesToAdd.append(dictionary);
 	}
-
-	SpellCheckManager::DictionaryInformation dictionary;
-	dictionary.language = language;
-	dictionary.paths = sourcePaths;
-
-	m_dictionariesToAdd.append(dictionary);
 }
 
 void DictionariesPage::openAddons()
