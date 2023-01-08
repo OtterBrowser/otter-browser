@@ -39,7 +39,7 @@ void DictionariesPage::addAddonEntry(Addon *addon, const QMap<int, QVariant> &me
 	item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 	item->setCheckable(true);
 	item->setCheckState(addon->isEnabled() ? Qt::Checked : Qt::Unchecked);
-	item->setToolTip(addon->getDescription());
+	item->setToolTip(addon->getTitle());
 
 	QStandardItemModel *model(getModel());
 	model->appendRow(item);
@@ -59,7 +59,7 @@ void DictionariesPage::updateAddonEntry(Addon *addon)
 		{
 			model->setData(index, (addon->getIcon().isNull() ? getFallbackIcon() : addon->getIcon()), Qt::DecorationRole);
 			model->setData(index, addon->getTitle(), Qt::DisplayRole);
-			model->setData(index, addon->getDescription(), Qt::ToolTipRole);
+			model->setData(index, addon->getTitle(), Qt::ToolTipRole);
 
 			return;
 		}
