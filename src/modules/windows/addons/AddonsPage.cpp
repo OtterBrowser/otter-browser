@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2022 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -144,7 +144,7 @@ void AddonsPage::print(QPrinter *printer)
 
 void AddonsPage::addAddonEntry(Addon *addon, const QMap<int, QVariant> &metaData)
 {
-	QList<QStandardItem*> items({new QStandardItem((addon->getIcon().isNull() ? getFallbackIcon() : addon->getIcon()), addon->getTitle()), new QStandardItem(addon->getVersion())});
+	QList<QStandardItem*> items({new QStandardItem(getAddonIcon(addon), addon->getTitle()), new QStandardItem(addon->getVersion())});
 	items[0]->setData(getAddonIdentifier(addon), IdentifierRole);
 	items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
 	items[0]->setCheckable(true);
@@ -167,7 +167,7 @@ void AddonsPage::updateAddonEntry(Addon *addon)
 
 		if (index.data(IdentifierRole) == identifier)
 		{
-			m_ui->addonsViewWidget->setData(index, (addon->getIcon().isNull() ? getFallbackIcon() : addon->getIcon()), Qt::DecorationRole);
+			m_ui->addonsViewWidget->setData(index, getAddonIcon(addon), Qt::DecorationRole);
 			m_ui->addonsViewWidget->setData(index, addon->getTitle(), Qt::DisplayRole);
 			m_ui->addonsViewWidget->setData(index, addon->getDescription(), Qt::ToolTipRole);
 			m_ui->addonsViewWidget->setData(index.sibling(i, 1), addon->getVersion(), Qt::DisplayRole);
@@ -320,6 +320,11 @@ QStandardItemModel* AddonsPage::getModel() const
 QIcon AddonsPage::getFallbackIcon() const
 {
 	return ThemesManager::createIcon(QLatin1String("unknown"), false);
+}
+
+QIcon AddonsPage::getAddonIcon(Addon *addon) const
+{
+	return (addon->getIcon().isNull() ? getFallbackIcon() : addon->getIcon());
 }
 
 ActionsManager::ActionDefinition::State AddonsPage::getActionState(int identifier, const QVariantMap &parameters) const

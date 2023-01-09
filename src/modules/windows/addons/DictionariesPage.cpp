@@ -34,7 +34,7 @@ DictionariesPage::DictionariesPage(bool needsDetails, QWidget *parent) : AddonsP
 
 void DictionariesPage::addAddonEntry(Addon *addon, const QMap<int, QVariant> &metaData)
 {
-	QStandardItem* item(new QStandardItem((addon->getIcon().isNull() ? getFallbackIcon() : addon->getIcon()), addon->getTitle()));
+	QStandardItem* item(new QStandardItem(getAddonIcon(addon), addon->getTitle()));
 	item->setData(getAddonIdentifier(addon), IdentifierRole);
 	item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 	item->setCheckable(true);
@@ -57,7 +57,7 @@ void DictionariesPage::updateAddonEntry(Addon *addon)
 
 		if (index.data(IdentifierRole) == identifier)
 		{
-			model->setData(index, (addon->getIcon().isNull() ? getFallbackIcon() : addon->getIcon()), Qt::DecorationRole);
+			model->setData(index, getAddonIcon(addon), Qt::DecorationRole);
 			model->setData(index, addon->getTitle(), Qt::DisplayRole);
 			model->setData(index, addon->getTitle(), Qt::ToolTipRole);
 
