@@ -151,7 +151,7 @@ void AddonsPage::addAddonEntry(Addon *addon, const QMap<int, QVariant> &metaData
 	items[0]->setCheckState(addon->isEnabled() ? Qt::Checked : Qt::Unchecked);
 	items[0]->setToolTip(addon->getDescription());
 	items[1]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
-	items[1]->setToolTip(addon->getDescription());
+	items[1]->setToolTip(getAddonToolTip(addon));
 
 	m_model->appendRow(items);
 	m_model->setItemData(items[0]->index(), metaData);
@@ -171,7 +171,7 @@ void AddonsPage::updateAddonEntry(Addon *addon)
 			m_ui->addonsViewWidget->setData(index, addon->getTitle(), Qt::DisplayRole);
 			m_ui->addonsViewWidget->setData(index, addon->getDescription(), Qt::ToolTipRole);
 			m_ui->addonsViewWidget->setData(index.sibling(i, 1), addon->getVersion(), Qt::DisplayRole);
-			m_ui->addonsViewWidget->setData(index.sibling(i, 1), addon->getDescription(), Qt::ToolTipRole);
+			m_ui->addonsViewWidget->setData(index.sibling(i, 1), getAddonToolTip(addon), Qt::ToolTipRole);
 
 			return;
 		}
@@ -315,6 +315,13 @@ ItemViewWidget* AddonsPage::getViewWidget() const
 QStandardItemModel* AddonsPage::getModel() const
 {
 	return m_model;
+}
+
+QString AddonsPage::getAddonToolTip(Addon *addon)
+{
+	const QString description(addon->getDescription());
+
+	return (description.isEmpty() ? addon->getTitle() : description);
 }
 
 QIcon AddonsPage::getFallbackIcon() const

@@ -79,6 +79,7 @@ protected:
 	void updateModelColumns();
 	ItemViewWidget* getViewWidget() const;
 	QStandardItemModel* getModel() const;
+	QString getAddonToolTip(Addon *addon);
 	virtual QIcon getFallbackIcon() const;
 	QIcon getAddonIcon(Addon *addon) const;
 	virtual QVariant getAddonIdentifier(Addon *addon) const = 0;
