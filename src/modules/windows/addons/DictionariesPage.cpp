@@ -121,6 +121,7 @@ void DictionariesPage::openAddons()
 {
 	const QStringList selectedDictionaries(getSelectedDictionaries());
 	QStringList paths;
+	paths.reserve(selectedDictionaries.count() * 2);
 
 	for (int i = 0; i < selectedDictionaries.count(); ++i)
 	{
