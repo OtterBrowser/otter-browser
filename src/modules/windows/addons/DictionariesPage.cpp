@@ -145,6 +145,8 @@ void DictionariesPage::removeAddons()
 
 	bool hasAddonsToRemove(false);
 
+	m_filesToRemove.reserve(m_filesToRemove.count() + (dictionaries.count() * 2));
+
 	for (int i = 0; i < dictionaries.count(); ++i)
 	{
 		const SpellCheckManager::DictionaryInformation information(SpellCheckManager::getDictionary(dictionaries.at(i)));
