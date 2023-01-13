@@ -218,6 +218,21 @@ void DictionariesPage::save()
 			QFile::copy(path, dictionariesDirectory.filePath(language + QFileInfo(path).suffix()));
 		}
 	}
+
+	QStandardItemModel *model(getModel());
+	QStringList disabledDictionaries;
+
+	for (int i = 0; i < model->rowCount(); ++i)
+	{
+		const QModelIndex index(model->index(i, 0));
+
+		if (static_cast<Qt::CheckState>(index.data(Qt::CheckStateRole).toInt()) != Qt::Checked)
+		{
+			disabledDictionaries.append(index.data(IdentifierRole).toString());
+		}
+	}
+
+	SettingsManager::setOption(SettingsManager::Browser_SpellCheckIgnoreDctionariesOption, disabledDictionaries);
 }
 
 QString DictionariesPage::getTitle() const
