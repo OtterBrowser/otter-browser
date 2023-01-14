@@ -250,12 +250,13 @@
 %1</source>
         <translation><numerusform>Falha ao importar o seguinte ficheiro de script:
 %1</numerusform><numerusform>Falha ao importar os seguintes ficheiros de script:
+%1</numerusform><numerusform>Falha ao importar os seguintes ficheiros de script:
 %1</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="366"/>
         <source>You are about to irreversibly remove %n addon(s).</source>
-        <translation><numerusform>Está prestes a remover %n extra.</numerusform><numerusform>Está prestes a remover %n extras.</numerusform></translation>
+        <translation><numerusform>Está prestes a remover %n extra.</numerusform><numerusform>Está prestes a remover %n extras.</numerusform><numerusform>Está prestes a remover %n extras.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="367"/>
@@ -486,7 +487,7 @@ Tem a certeza de que deseja restaurar esta sessão?</translation>
     <message numerus="yes">
         <location filename="../../src/core/Application.cpp" line="1642"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
-        <translation><numerusform>Está prestes a sair mas %n ficheiro ainda está a ser descarregado.</numerusform><numerusform>Está prestes a sair mas %n ficheiros ainda estão a ser descarregados.</numerusform></translation>
+        <translation><numerusform>Está prestes a sair mas %n ficheiro ainda está a ser descarregado.</numerusform><numerusform>Está prestes a sair mas %n ficheiros ainda estão a ser descarregados.</numerusform><numerusform>Está prestes a sair mas %n ficheiros ainda estão a ser descarregados.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1649"/>
@@ -1669,7 +1670,7 @@ Guardar?</translation>
     <message numerus="yes">
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="166"/>
         <source>%n day(s)</source>
-        <translation><numerusform>%n dia</numerusform><numerusform>%n dia(s)</numerusform></translation>
+        <translation><numerusform>%n dia</numerusform><numerusform>%n dia(s)</numerusform><numerusform>%n dia(s)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1707,7 +1708,7 @@ Guardar?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="81"/>
         <source> days</source>
-        <translation>dias</translation>
+        <translation> dias</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="91"/>
@@ -2001,7 +2002,7 @@ Guardar?</translation>
     <message numerus="yes">
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="202"/>
         <source>You are about to delete %n cookie(s).</source>
-        <translation><numerusform>Está prestes a apagar %n cookie.</numerusform><numerusform>Está prestes a apagar %n cookies.</numerusform></translation>
+        <translation><numerusform>Está prestes a apagar %n cookie.</numerusform><numerusform>Está prestes a apagar %n cookies.</numerusform><numerusform>Está prestes a apagar %n cookies.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="203"/>
@@ -2793,7 +2794,7 @@ Guardar?</translation>
     <message numerus="yes">
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="70"/>
         <source>%1 x %2 pixels @ %3 bits per pixel in %n frame(s)</source>
-        <translation><numerusform>%1 x %2 pixeis @ %3 bits por pixel em %n frame</numerusform><numerusform>%1 x %2 pixeis @ %3 bits por pixel em %n frames</numerusform></translation>
+        <translation><numerusform>%1 x %2 pixeis @ %3 bits por pixel em %n frame</numerusform><numerusform>%1 x %2 pixeis @ %3 bits por pixel em %n frames</numerusform><numerusform>%1 x %2 pixeis @ %3 bits por pixel em %n frames</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="74"/>
@@ -3169,7 +3170,7 @@ Guardar?</translation>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="833"/>
         <source>You are about to open %n bookmark(s).</source>
-        <translation><numerusform>Está prestes a abrir %n separador.</numerusform><numerusform>Está prestes a abrir %n separadores.</numerusform></translation>
+        <translation><numerusform>Está prestes a abrir %n separador.</numerusform><numerusform>Está prestes a abrir %n separadores.</numerusform><numerusform>Está prestes a abrir %n separadores.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="834"/>
@@ -3232,7 +3233,7 @@ Guardar?</translation>
     <message numerus="yes">
         <location filename="../../src/ui/Menu.cpp" line="1188"/>
         <source>%1 (%n tab(s))</source>
-        <translation><numerusform>%1 (%n separador)</numerusform><numerusform>%1 (%n separadores)</numerusform></translation>
+        <translation><numerusform>%1 (%n separador)</numerusform><numerusform>%1 (%n separadores)</numerusform><numerusform>%1 (%n separadores)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3768,7 +3769,7 @@ Deseja continuar?</translation>
     <message numerus="yes">
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="174"/>
         <source>%1 (%n blocked)</source>
-        <translation><numerusform>%1 (%n bloqueado)</numerusform><numerusform>%1 (%n bloqueados)</numerusform></translation>
+        <translation><numerusform>%1 (%n bloqueado)</numerusform><numerusform>%1 (%n bloqueados)</numerusform><numerusform>%1 (%n bloqueados)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="181"/>
@@ -3881,7 +3882,7 @@ Deseja continuar?</translation>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="180"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="236"/>
         <source>You are about to delete %n password(s).</source>
-        <translation><numerusform>Está prestes a apagar %n palavra-passe.</numerusform><numerusform>Está prestes a apagar %n palavras-passe.</numerusform></translation>
+        <translation><numerusform>Está prestes a apagar %n palavra-passe.</numerusform><numerusform>Está prestes a apagar %n palavras-passe.</numerusform><numerusform>Está prestes a apagar %n palavras-passe.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="181"/>
@@ -4018,7 +4019,7 @@ Deseja continuar?</translation>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="62"/>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="70"/>
         <source>%1 wants to open %n pop-up window(s).</source>
-        <translation><numerusform>%1 quer abrir %n janela pop-up.</numerusform><numerusform>%1 quer abrir %n janelas pop-up.</numerusform></translation>
+        <translation><numerusform>%1 quer abrir %n janela pop-up.</numerusform><numerusform>%1 quer abrir %n janelas pop-up.</numerusform><numerusform>%1 quer abrir %n janelas pop-up.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="104"/>
@@ -6141,12 +6142,12 @@ Deseja substituir a sessão?</translation>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
         <source>%n window(s) (%1)</source>
-        <translation><numerusform>%n janela (%1)</numerusform><numerusform>%n janelas (%1)</numerusform></translation>
+        <translation><numerusform>%n janela (%1)</numerusform><numerusform>%n janelas (%1)</numerusform><numerusform>%n janelas (%1)</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
         <source>%n tab(s)</source>
-        <translation><numerusform>%n separador</numerusform><numerusform>%n separadores</numerusform></translation>
+        <translation><numerusform>%n separador</numerusform><numerusform>%n separadores</numerusform><numerusform>%n separadores</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="106"/>
@@ -6501,7 +6502,7 @@ Endereço: %2</translation>
     <message numerus="yes">
         <location filename="../../src/ui/TabBarWidget.cpp" line="1087"/>
         <source>You are about to open %n URL(s).</source>
-        <translation><numerusform>Está prestes a abrir %n URL.</numerusform><numerusform>Está prestes a abrir %n URL.</numerusform></translation>
+        <translation><numerusform>Está prestes a abrir %n URL.</numerusform><numerusform>Está prestes a abrir %n URL.</numerusform><numerusform>Está prestes a abrir %n URL.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="1088"/>
@@ -7636,7 +7637,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message numerus="yes">
         <location filename="../../src/ui/WebWidget.cpp" line="1187"/>
         <source>Reload Every: %n second(s)</source>
-        <translation><numerusform>Recarregar a cada: %n segundo</numerusform><numerusform>Recarregar a cada: %n segundos</numerusform></translation>
+        <translation><numerusform>Recarregar a cada: %n segundo</numerusform><numerusform>Recarregar a cada: %n segundos</numerusform><numerusform>Recarregar a cada: %n segundos</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7846,7 +7847,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message numerus="yes">
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="87"/>
         <source>%1 (%n blocked)</source>
-        <translation><numerusform>%1 (%n bloqueado)</numerusform><numerusform>%1 (%n bloqueados)</numerusform></translation>
+        <translation><numerusform>%1 (%n bloqueado)</numerusform><numerusform>%1 (%n bloqueados)</numerusform><numerusform>%1 (%n bloqueados)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="94"/>
