@@ -219,6 +219,8 @@ void DictionariesPage::save()
 		}
 	}
 
+	m_dictionariesToAdd.clear();
+
 	QStandardItemModel *model(getModel());
 	QStringList disabledDictionaries;
 
