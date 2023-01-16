@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -261,7 +261,7 @@ void UserScriptsPage::save()
 
 			if (!name.isEmpty() && AddonsManager::getUserScript(name))
 			{
-				settingsObject.insert(name, QJsonObject({{QLatin1String("isEnabled"), QJsonValue(index.data(Qt::CheckStateRole).toInt() == Qt::Checked)}}));
+				settingsObject.insert(name, QJsonObject({{QLatin1String("isEnabled"), QJsonValue(static_cast<Qt::CheckState>(index.data(Qt::CheckStateRole).toInt()) == Qt::Checked)}}));
 			}
 			else
 			{
