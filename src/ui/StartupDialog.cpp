@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -171,7 +171,7 @@ SessionInformation StartupDialog::getSession() const
 				continue;
 			}
 
-			if (mainWindowIndex.flags().testFlag(Qt::ItemIsUserCheckable) && mainWindowIndex.data(Qt::CheckStateRole).toInt() == Qt::Unchecked)
+			if (mainWindowIndex.flags().testFlag(Qt::ItemIsUserCheckable) && static_cast<Qt::CheckState>(mainWindowIndex.data(Qt::CheckStateRole).toInt()) == Qt::Unchecked)
 			{
 				session.windows.removeAt(i);
 
@@ -182,7 +182,7 @@ SessionInformation StartupDialog::getSession() const
 			{
 				const QModelIndex windowIndex(m_windowsModel->index(j, 0, mainWindowIndex));
 
-				if (windowIndex.isValid() && windowIndex.flags().testFlag(Qt::ItemIsUserCheckable) && windowIndex.data(Qt::CheckStateRole).toInt() == Qt::Unchecked && j < session.windows.at(i).windows.count())
+				if (windowIndex.isValid() && windowIndex.flags().testFlag(Qt::ItemIsUserCheckable) && static_cast<Qt::CheckState>(windowIndex.data(Qt::CheckStateRole).toInt()) == Qt::Unchecked && j < session.windows.at(i).windows.count())
 				{
 					session.windows[i].windows.removeAt(j);
 				}
