@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -103,7 +103,7 @@ void ItemModel::resetCheckState(const QModelIndex &parent)
 	{
 		const QModelIndex index(this->index(i, 0, parent));
 
-		if (index.data(Qt::CheckStateRole).toInt() != Qt::Unchecked)
+		if (static_cast<Qt::CheckState>(index.data(Qt::CheckStateRole).toInt()) != Qt::Unchecked)
 		{
 			setData(index, Qt::Unchecked, Qt::CheckStateRole);
 		}
