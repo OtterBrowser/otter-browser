@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -852,7 +852,7 @@ void ContentFiltersViewWidget::save()
 		{
 			const QModelIndex entryIndex(getIndex(j, 0, categoryIndex));
 
-			if (entryIndex.data(Qt::CheckStateRole).toInt() == Qt::Checked)
+			if (static_cast<Qt::CheckState>(entryIndex.data(Qt::CheckStateRole).toInt()) == Qt::Checked)
 			{
 				profiles.append(entryIndex.data(NameRole).toString());
 			}
