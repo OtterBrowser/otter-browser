@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2015 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -272,7 +272,9 @@ void HeaderViewWidget::mouseReleaseEvent(QMouseEvent *event)
 
 	if (column == m_clickedCheckBox && model()->headerData(column, orientation(), IsShowingCheckBoxIndicatorRole).toBool() && getCheckBoxRectangle(column).contains(event->pos()))
 	{
-		model()->setHeaderData(column, orientation(), ((model()->headerData(column, orientation(), Qt::CheckStateRole).toInt() == Qt::Checked) ? Qt::Unchecked : Qt::Checked), Qt::CheckStateRole);
+		const bool wasChecked((static_cast<Qt::CheckState>(model()->headerData(column, orientation(), Qt::CheckStateRole).toInt()) == Qt::Checked));
+
+		model()->setHeaderData(column, orientation(), (wasChecked ? Qt::Unchecked : Qt::Checked), Qt::CheckStateRole);
 
 		updateSection(column);
 	}
@@ -299,7 +301,7 @@ void HeaderViewWidget::paintSection(QPainter *painter, const QRect &rectangle, i
 	checkBoxOption.initFrom(this);
 	checkBoxOption.rect = getCheckBoxRectangle(column);
 
-	switch (model()->headerData(column, orientation(), Qt::CheckStateRole).toInt())
+	switch (static_cast<Qt::CheckState>(model()->headerData(column, orientation(), Qt::CheckStateRole).toInt()))
 	{
 		case Qt::Checked:
 			checkBoxOption.state = QStyle::State_On;
@@ -1139,7 +1141,7 @@ QModelIndex ItemViewWidget::getCheckedIndex(const QModelIndex &parent) const
 	{
 		const QModelIndex index(m_sourceModel->index(i, 0, parent));
 
-		if (index.data(Qt::CheckStateRole).toInt() == Qt::Checked)
+		if (static_cast<Qt::CheckState>(index.data(Qt::CheckStateRole).toInt()) == Qt::Checked)
 		{
 			return index;
 		}
