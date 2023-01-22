@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -510,7 +510,7 @@ void SearchPreferencesPage::save()
 		{
 			searchEnginesOrder.append(identifier);
 
-			if (m_ui->searchViewWidget->getIndex(i, 0).data(Qt::CheckStateRole) == Qt::Checked)
+			if (static_cast<Qt::CheckState>(m_ui->searchViewWidget->getIndex(i, 0).data(Qt::CheckStateRole).toInt()) == Qt::Checked)
 			{
 				defaultSearchEngine = identifier;
 			}
