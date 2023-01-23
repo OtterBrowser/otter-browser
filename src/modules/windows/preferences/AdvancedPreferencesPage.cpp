@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -763,7 +763,7 @@ void AdvancedPreferencesPage::updateUpdateChannelsActions()
 
 	for (int i = 0; i < m_ui->updateChannelsItemView->getRowCount(); ++i)
 	{
-		if (m_ui->updateChannelsItemView->getIndex(i, 0).data(Qt::CheckStateRole).toInt() == Qt::Checked)
+		if (static_cast<Qt::CheckState>(m_ui->updateChannelsItemView->getIndex(i, 0).data(Qt::CheckStateRole).toInt()) == Qt::Checked)
 		{
 			hasSelectedUpdateChannels = true;
 
