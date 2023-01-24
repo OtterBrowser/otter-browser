@@ -261,7 +261,9 @@ void UserScriptsPage::save()
 
 			if (!name.isEmpty() && AddonsManager::getUserScript(name))
 			{
-				settingsObject.insert(name, QJsonObject({{QLatin1String("isEnabled"), QJsonValue(static_cast<Qt::CheckState>(index.data(Qt::CheckStateRole).toInt()) == Qt::Checked)}}));
+				const bool isEnabled(static_cast<Qt::CheckState>(index.data(Qt::CheckStateRole).toInt()) == Qt::Checked);
+
+				settingsObject.insert(name, QJsonObject({{QLatin1String("isEnabled"), QJsonValue(isEnabled)}}));
 			}
 			else
 			{
