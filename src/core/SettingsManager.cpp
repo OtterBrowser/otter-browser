@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -20,12 +20,12 @@
 **************************************************************************/
 
 #include "SettingsManager.h"
+#include "Utils.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 #include <QtCore/QMetaEnum>
 #include <QtCore/QSettings>
-#include <QtCore/QStandardPaths>
 #include <QtCore/QTextStream>
 #include <QtCore/QVector>
 
@@ -174,7 +174,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Network_UserAgentOption, EnumerationType, QLatin1String("default"), QStringList(QLatin1String("default")));
 	registerOption(Network_WorkOfflineOption, BooleanType, false);
 	registerOption(Paths_DownloadsOption, PathType, QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
-	registerOption(Paths_OpenFileOption, PathType, QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0));
+	registerOption(Paths_OpenFileOption, PathType, Utils::getStandardLocation(QStandardPaths::HomeLocation));
 	registerOption(Paths_SaveFileOption, PathType, QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
 	registerOption(Permissions_EnableFullScreenOption, EnumerationType, QLatin1String("ask"), QStringList({QLatin1String("ask"), QLatin1String("allow"), QLatin1String("disallow")}));
 	registerOption(Permissions_EnableGeolocationOption, EnumerationType, QLatin1String("ask"), QStringList({QLatin1String("ask"), QLatin1String("allow"), QLatin1String("disallow")}));
