@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2014 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@
 #include "OperaSessionImportDataExchanger.h"
 #include "../../../core/IniSettings.h"
 #include "../../../core/SessionsManager.h"
+#include "../../../core/Utils.h"
 
 #include <QtCore/QDir>
-#include <QtCore/QStandardPaths>
 
 namespace Otter
 {
@@ -64,7 +64,7 @@ QString OperaSessionImportDataExchanger::getSuggestedPath(const QString &path) c
 		return path;
 	}
 #if !defined(Q_OS_DARWIN) && defined(Q_OS_UNIX)
-	const QString homePath(QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0));
+	const QString homePath(Utils::getStandardLocation(QStandardPaths::HomeLocation));
 
 	if (!homePath.isEmpty())
 	{
