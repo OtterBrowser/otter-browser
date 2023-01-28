@@ -25,7 +25,6 @@
 #include "../../../core/UserScript.h"
 
 #include <QtCore/QJsonObject>
-#include <QtCore/QStandardPaths>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
@@ -63,7 +62,7 @@ void UserScriptsPage::delayedLoad()
 
 void UserScriptsPage::addAddon()
 {
-	const QStringList sourcePaths(QFileDialog::getOpenFileNames(this, tr("Select Files"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), Utils::formatFileTypes({tr("User Script files (*.js)")})));
+	const QStringList sourcePaths(QFileDialog::getOpenFileNames(this, tr("Select Files"), Utils::getStandardLocation(QStandardPaths::HomeLocation), Utils::formatFileTypes({tr("User Script files (*.js)")})));
 
 	if (sourcePaths.isEmpty())
 	{

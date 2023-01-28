@@ -138,7 +138,7 @@ void SearchPreferencesPage::createSearchEngine()
 
 void SearchPreferencesPage::importSearchEngine()
 {
-	const QString path(QFileDialog::getOpenFileName(this, tr("Select File"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), Utils::formatFileTypes({tr("Open Search files (*.xml)")})));
+	const QString path(QFileDialog::getOpenFileName(this, tr("Select File"), Utils::getStandardLocation(QStandardPaths::HomeLocation), Utils::formatFileTypes({tr("Open Search files (*.xml)")})));
 
 	if (!path.isEmpty())
 	{
