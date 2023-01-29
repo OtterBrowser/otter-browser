@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2022 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@
 
 #include "ui_QuickResponseCodeDialog.h"
 
-#include <QtCore/QStandardPaths>
 #include <QtWidgets/QFileDialog>
 
 namespace Otter
@@ -62,7 +61,7 @@ void QuickResponseCodeDialog::handleButtonClicked(QAbstractButton *button)
 			{
 				const QUrl url(m_ui->messageLineEdit->text());
 				const QString fileName(((url.isValid() && !url.host().isEmpty()) ? url.host() : QLatin1String("qr")) + QLatin1String(".png"));
-				const QString path(QFileDialog::getSaveFileName(this, tr("Select File"), QDir(QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0)).filePath(fileName), Utils::formatFileTypes({tr("PNG images (*.png)")})));
+				const QString path(QFileDialog::getSaveFileName(this, tr("Select File"), QDir(Utils::getStandardLocation(QStandardPaths::HomeLocation)).filePath(fileName), Utils::formatFileTypes({tr("PNG images (*.png)")})));
 
 				if (!path.isEmpty())
 				{

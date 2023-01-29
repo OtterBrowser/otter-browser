@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,6 @@
 #include "../core/Utils.h"
 
 #include <QtCore/QEvent>
-#include <QtCore/QStandardPaths>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QHBoxLayout>
 
@@ -66,7 +65,7 @@ FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 	connect(m_lineEditWidget, &LineEditWidget::textChanged, this, &FilePathWidget::pathChanged);
 	connect(m_browseButton, &QPushButton::clicked, this, [&]()
 	{
-		const QString directory(m_lineEditWidget->text().isEmpty() ? QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0) : m_lineEditWidget->text());
+		const QString directory(m_lineEditWidget->text().isEmpty() ? Utils::getStandardLocation(QStandardPaths::HomeLocation) : m_lineEditWidget->text());
 		QString path;
 
 		switch (m_openMode)
