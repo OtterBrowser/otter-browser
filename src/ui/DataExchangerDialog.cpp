@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 
 #include "DataExchangerDialog.h"
 #include "../core/ThemesManager.h"
+#include "../core/Utils.h"
 #include "../modules/exporters/html/HtmlBookmarksExportDataExchanger.h"
 #include "../modules/exporters/xbel/XbelBookmarksExportDataExchanger.h"
 #include "../modules/importers/html/HtmlBookmarksImportDataExchanger.h"
@@ -31,7 +32,6 @@
 
 #include "ui_DataExchangerDialog.h"
 
-#include <QtCore/QStandardPaths>
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QMessageBox>
 
@@ -46,7 +46,7 @@ DataExchangerDialog::DataExchangerDialog(ExportDataExchanger *exporter, QWidget 
 	m_ui->setupUi(this);
 	m_ui->stackedWidget->setCurrentWidget(m_ui->exportOptionsPage);
 	m_ui->exportPathWidget->setFilters(exporter->getFileFilters());
-	m_ui->exportPathWidget->setPath(exporter->getSuggestedPath(QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0)));
+	m_ui->exportPathWidget->setPath(exporter->getSuggestedPath(Utils::getStandardLocation(QStandardPaths::HomeLocation)));
 	m_ui->exportPathWidget->setOpenMode(FilePathWidget::NewFileMode);
 
 	exporter->setParent(this);
