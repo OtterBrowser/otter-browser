@@ -26,7 +26,6 @@
 #include "../core/Utils.h"
 
 #include <QtCore/QFileInfo>
-#include <QtCore/QStandardPaths>
 #include <QtCore/QTimer>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QFileDialog>
@@ -401,7 +400,7 @@ void ContentFiltersViewWidget::addProfile()
 
 void ContentFiltersViewWidget::importProfileFromFile()
 {
-	const QString path(QFileDialog::getOpenFileName(this, tr("Select File"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), tr("AdBlock files (*.txt)")));
+	const QString path(QFileDialog::getOpenFileName(this, tr("Select File"), Utils::getStandardLocation(QStandardPaths::HomeLocation), tr("AdBlock files (*.txt)")));
 
 	if (path.isEmpty())
 	{
