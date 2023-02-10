@@ -37,12 +37,6 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
       </spacer>
      </item>
     </layout>
@@ -206,12 +200,6 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
          </spacer>
         </item>
        </layout>
@@ -223,12 +211,6 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Otter::TextLabelWidget</class>
-   <extends>QWidget</extends>
-   <header>src/ui/TextLabelWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>Otter::ItemViewWidget</class>
    <extends>QTreeView</extends>
    <header>src/ui/ItemViewWidget.h</header>
@@ -237,6 +219,12 @@
    <class>Otter::LineEditWidget</class>
    <extends>QLineEdit</extends>
    <header>src/ui/LineEditWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Otter::TextLabelWidget</class>
+   <extends>QWidget</extends>
+   <header>src/ui/TextLabelWidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>
