@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>304</height>
+    <height>320</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -64,12 +64,6 @@
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
         </spacer>
        </item>
       </layout>
@@ -125,12 +119,6 @@
         <spacer name="rejectedHostsSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
          </property>
         </spacer>
        </item>

@@ -88,12 +88,6 @@
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
         </spacer>
        </item>
        <item>
@@ -115,12 +109,6 @@
            </property>
            <property name="sizeType">
             <enum>QSizePolicy::Minimum</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
            </property>
           </spacer>
          </item>
