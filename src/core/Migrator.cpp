@@ -116,7 +116,7 @@ bool Migrator::run()
 
 	if (possibleMigrations.isEmpty())
 	{
-		SettingsManager::setOption(SettingsManager::Browser_MigrationsOption, QVariant(processedMigrations));
+		SettingsManager::setOption(SettingsManager::Browser_MigrationsOption, processedMigrations);
 
 		return true;
 	}
