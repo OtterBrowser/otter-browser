@@ -314,7 +314,7 @@ QVector<ApplicationInformation> FreeDesktopOrgPlatformIntegration::getApplicatio
 #ifdef OTTER_ENABLE_DBUS
 bool FreeDesktopOrgPlatformIntegration::canShowNotifications() const
 {
-	return m_notificationsInterface->isValid();
+	return (m_notificationsInterface ? m_notificationsInterface->isValid() : true);
 }
 #endif
 
