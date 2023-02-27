@@ -26,7 +26,7 @@
 				let request = new XMLHttpRequest();
 				request.open('GET', '/otter-message', true);
 				request.setRequestHeader('X-Otter-Token', '%1');
-				request.setRequestHeader('X-Otter-Type', 'save-password');
+				request.setRequestHeader('X-Otter-Action', 'save-password');
 				request.setRequestHeader('X-Otter-Data', btoa(JSON.stringify({ url: window.location.href, fields: fields })));
 				request.send(null);
 			}

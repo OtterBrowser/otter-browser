@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -582,10 +582,10 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 	{
 		if (QString::fromLatin1(request.rawHeader(QByteArrayLiteral("X-Otter-Token"))) == m_widget->getMessageToken())
 		{
-			const QString type(QString::fromLatin1(request.rawHeader(QByteArrayLiteral("X-Otter-Type"))));
+			const QString action(QString::fromLatin1(request.rawHeader(QByteArrayLiteral("X-Otter-Action"))));
 			const QJsonObject payloadObject(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArrayLiteral("X-Otter-Data")))).object());
 
-			if (type == QLatin1String("add-ssl-error-exception"))
+			if (action == QLatin1String("add-ssl-error-exception"))
 			{
 				const QString digest(payloadObject.value(QLatin1String("digest")).toString());
 				const QUrl url(m_widget->getUrl());
@@ -598,7 +598,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 					SettingsManager::setOption(SettingsManager::Security_IgnoreSslErrorsOption, exceptions, Utils::extractHost(url));
 				}
 			}
-			else if (type == QLatin1String("add-content-blocking-exception"))
+			else if (action == QLatin1String("add-content-blocking-exception"))
 			{
 				const QUrl url(m_widget->getUrl());
 				const QString host(Utils::extractHost(url));
@@ -616,7 +616,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 					m_widget->setOption(SettingsManager::ContentBlocking_IgnoreHostsOption, ignoredHosts);
 				}
 			}
-			else if (type == QLatin1String("save-password"))
+			else if (action == QLatin1String("save-password"))
 			{
 				const QJsonArray fieldsArray(payloadObject.value(QLatin1String("fields")).toArray());
 				PasswordsManager::PasswordInformation password;

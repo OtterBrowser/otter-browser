@@ -17,7 +17,7 @@
 			});
 			request.open('GET', '/otter-message', true);
 			request.setRequestHeader('X-Otter-Token', '%1');
-			request.setRequestHeader('X-Otter-Type', 'add-ssl-error-exception');
+			request.setRequestHeader('X-Otter-Action', 'add-ssl-error-exception');
 			request.setRequestHeader('X-Otter-Data', btoa(JSON.stringify({ url: window.location.href, digest: '%2' })));
 			request.send(null);
 		});
@@ -40,7 +40,7 @@
 			});
 			request.open('GET', '/otter-message', true);
 			request.setRequestHeader('X-Otter-Token', '%1');
-			request.setRequestHeader('X-Otter-Type', 'add-content-blocking-exception');
+			request.setRequestHeader('X-Otter-Action', 'add-content-blocking-exception');
 			request.setRequestHeader('X-Otter-Data', btoa(JSON.stringify({ url: window.location.href })));
 			request.send(null);
 		});
