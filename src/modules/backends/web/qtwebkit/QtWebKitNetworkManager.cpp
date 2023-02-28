@@ -115,6 +115,10 @@ void QtWebKitNetworkManager::timerEvent(QTimerEvent *event)
 	{
 		updateLoadingSpeed();
 	}
+	else
+	{
+		QNetworkAccessManager::timerEvent(event);
+	}
 }
 
 void QtWebKitNetworkManager::addContentBlockingException(const QUrl &url, NetworkManager::ResourceType resourceType)
