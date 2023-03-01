@@ -203,13 +203,13 @@ void QtWebKitNetworkManager::handleDownloadProgress(qint64 bytesReceived, qint64
 		setPageInformation(WebWidget::LoadingMessageInformation, tr("Receiving data from %1…").arg(Utils::extractHost(reply->url())));
 	}
 
-	const qint64 difference(bytesReceived - m_replies[reply].first);
+	const qint64 difference(bytesReceived - m_replies[reply].bytesReceived);
 
-	m_replies[reply].first = bytesReceived;
+	m_replies[reply].bytesReceived = bytesReceived;
 
-	if (!m_replies[reply].second && bytesTotal > 0)
+	if (!m_replies[reply].hasTotalBytes && bytesTotal > 0)
 	{
-		m_replies[reply].second = true;
+		m_replies[reply].hasTotalBytes = true;
 
 		m_pageInformation[WebWidget::TotalBytesTotalInformation] = (m_pageInformation[WebWidget::TotalBytesTotalInformation].toLongLong() + bytesTotal);
 	}
@@ -793,7 +793,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 		}
 	}
 
-	m_replies[reply] = {0, false};
+	m_replies[reply] = {};
 
 	connect(reply, &QNetworkReply::downloadProgress, this, &QtWebKitNetworkManager::handleDownloadProgress);
 

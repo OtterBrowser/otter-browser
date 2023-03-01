@@ -51,6 +51,12 @@ public:
 	WebWidget::ContentStates getContentState() const;
 
 protected:
+	struct ReplyInformation final
+	{
+		qint64 bytesReceived = 0;
+		bool hasTotalBytes = false;
+	};
+
 	void timerEvent(QTimerEvent *event) override;
 	void addContentBlockingException(const QUrl &url, NetworkManager::ResourceType resourceType);
 	void resetStatistics();
@@ -92,7 +98,7 @@ private:
 	QVector<NetworkManager::ResourceInformation> m_blockedRequests;
 	QVector<int> m_contentBlockingProfiles;
 	QSet<QUrl> m_contentBlockingExceptions;
-	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
+	QHash<QNetworkReply*, ReplyInformation> m_replies;
 	QMap<QByteArray, QByteArray> m_headers;
 	QMap<WebWidget::PageInformation, QVariant> m_pageInformation;
 	WebWidget::ContentStates m_contentState;
