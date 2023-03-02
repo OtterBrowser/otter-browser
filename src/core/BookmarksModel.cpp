@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -464,8 +464,11 @@ void BookmarksModel::trashBookmark(Bookmark *bookmark)
 		else
 		{
 			Bookmark *previousParent(static_cast<Bookmark*>(bookmark->parent()));
+			BookmarkLocation location;
+			location.parent = bookmark->parent()->index();
+			location.row = bookmark->row();
 
-			m_trash[bookmark] = {bookmark->parent()->index(), bookmark->row()};
+			m_trash[bookmark] = location;
 
 			m_trashItem->appendRow(bookmark->parent()->takeRow(bookmark->row()));
 			m_trashItem->setEnabled(true);
@@ -486,7 +489,7 @@ void BookmarksModel::restoreBookmark(Bookmark *bookmark)
 		return;
 	}
 
-	Bookmark *formerParent(m_trash.contains(bookmark) ? getBookmark(m_trash[bookmark].first) : m_rootItem);
+	Bookmark *formerParent(m_trash.contains(bookmark) ? getBookmark(m_trash[bookmark].parent) : m_rootItem);
 
 	if (!formerParent || formerParent->getType() != FolderBookmark)
 	{
@@ -495,7 +498,7 @@ void BookmarksModel::restoreBookmark(Bookmark *bookmark)
 
 	if (m_trash.contains(bookmark))
 	{
-		formerParent->insertRow(m_trash[bookmark].second, bookmark->parent()->takeRow(bookmark->row()));
+		formerParent->insertRow(m_trash[bookmark].row, bookmark->parent()->takeRow(bookmark->row()));
 
 		m_trash.remove(bookmark);
 	}

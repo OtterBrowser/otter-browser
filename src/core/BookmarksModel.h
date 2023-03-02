@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -142,6 +142,12 @@ public slots:
 	void emptyTrash();
 
 protected:
+	struct BookmarkLocation final
+	{
+		QModelIndex parent;
+		int row = -1;
+	};
+
 	void readBookmark(QXmlStreamReader *reader, Bookmark *parent);
 	void writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark) const;
 	void removeBookmarkUrl(Bookmark *bookmark);
@@ -159,7 +165,7 @@ private:
 	Bookmark *m_rootItem;
 	Bookmark *m_trashItem;
 	Bookmark *m_importTargetItem;
-	QHash<Bookmark*, QPair<QModelIndex, int> > m_trash;
+	QHash<Bookmark*, BookmarkLocation> m_trash;
 	QHash<QUrl, QVector<Bookmark*> > m_feeds;
 	QHash<QUrl, QVector<Bookmark*> > m_urls;
 	QHash<QString, Bookmark*> m_keywords;
