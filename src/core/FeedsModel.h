@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -114,6 +114,11 @@ public slots:
 	void emptyTrash();
 
 protected:
+	struct EntryLocation final
+	{
+		QModelIndex parent;
+		int row = -1;
+	};
 	void readEntry(QXmlStreamReader *reader, Entry *parent);
 	void writeEntry(QXmlStreamWriter *writer, Entry *entry) const;
 	void removeEntryUrl(Entry *entry);
@@ -125,7 +130,7 @@ private:
 	Entry *m_rootEntry;
 	Entry *m_trashEntry;
 	Entry *m_importTargetEntry;
-	QHash<Entry*, QPair<QModelIndex, int> > m_trash;
+	QHash<Entry*, EntryLocation> m_trash;
 	QHash<QUrl, QVector<Entry*> > m_urls;
 	QMap<quint64, Entry*> m_identifiers;
 
