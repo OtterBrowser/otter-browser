@@ -119,6 +119,7 @@ protected:
 		QModelIndex parent;
 		int row = -1;
 	};
+
 	void readEntry(QXmlStreamReader *reader, Entry *parent);
 	void writeEntry(QXmlStreamWriter *writer, Entry *entry) const;
 	void removeEntryUrl(Entry *entry);
