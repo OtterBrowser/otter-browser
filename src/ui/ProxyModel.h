@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,12 @@ class ProxyModel final : public QIdentityProxyModel
 	Q_OBJECT
 
 public:
+	struct Column final
+	{
+		QString title;
+		int role = -1;
+	};
+
 	explicit ProxyModel(QStandardItemModel *model, const QVector<QPair<QString, int> > &mapping, QObject *parent = nullptr);
 
 	QMimeData* mimeData(const QModelIndexList &indexes) const override;
