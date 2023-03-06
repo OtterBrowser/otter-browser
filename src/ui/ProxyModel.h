@@ -21,6 +21,7 @@
 #ifndef OTTER_PROXYMODEL_H
 #define OTTER_PROXYMODEL_H
 
+#include <QtCore/QCoreApplication>
 #include <QtCore/QIdentityProxyModel>
 #include <QtGui/QStandardItemModel>
 
@@ -36,6 +37,11 @@ public:
 	{
 		QString title;
 		int role = -1;
+
+		QString getTitle() const
+		{
+			return QCoreApplication::translate("views", title.toUtf8().constData());
+		}
 	};
 
 	explicit ProxyModel(QStandardItemModel *model, const QVector<QPair<QString, int> > &mapping, QObject *parent = nullptr);

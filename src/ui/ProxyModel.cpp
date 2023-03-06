@@ -21,7 +21,6 @@
 #include "ProxyModel.h"
 #include "../core/Utils.h"
 
-#include <QtCore/QCoreApplication>
 #include <QtCore/QDateTime>
 
 namespace Otter
