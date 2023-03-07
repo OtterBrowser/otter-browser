@@ -38,6 +38,12 @@ public:
 		QString title;
 		int role = -1;
 
+		explicit Column(const QString titleValue, int roleValue) :
+			title(titleValue),
+			role(roleValue)
+		{
+		}
+
 		QString getTitle() const
 		{
 			return QCoreApplication::translate("views", title.toUtf8().constData());
