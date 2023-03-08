@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-ProxyModel::ProxyModel(QStandardItemModel *model, const QVector<QPair<QString, int> > &mapping, QObject *parent) : QIdentityProxyModel(parent),
+ProxyModel::ProxyModel(QStandardItemModel *model, const QVector<ProxyModel::Column> &mapping, QObject *parent) : QIdentityProxyModel(parent),
 	m_model(model),
 	m_mapping(mapping)
 {
@@ -54,7 +54,7 @@ QVariant ProxyModel::data(const QModelIndex &index, int role) const
 {
 	if (role == Qt::DisplayRole && index.column() < m_mapping.count())
 	{
-		const QVariant data(mapToSource(index.sibling(index.row(), 0)).data(m_mapping.at(index.column()).second));
+		const QVariant data(mapToSource(index.sibling(index.row(), 0)).data(m_mapping.at(index.column()).role));
 
 		if (data.type() == QVariant::DateTime)
 		{
@@ -78,7 +78,7 @@ QVariant ProxyModel::headerData(int section, Qt::Orientation orientation, int ro
 	{
 		if (role == Qt::DisplayRole)
 		{
-			return QCoreApplication::translate("views", m_mapping[section].first.toUtf8().constData());
+			return m_mapping[section].getTitle();
 		}
 
 		if (m_headerData.contains(section) && m_headerData[section].contains(role))
