@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -545,7 +545,12 @@ QIcon CacheContentsWidget::getIcon() const
 
 QUrl CacheContentsWidget::getEntry(const QModelIndex &index) const
 {
-	return ((index.isValid() && index.parent().isValid() && index.parent().parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(UrlRole).toUrl() : QUrl());
+	if (index.isValid() && index.parent().isValid() && index.parent().parent() == m_model->invisibleRootItem()->index())
+	{
+		return index.sibling(index.row(), 0).data(UrlRole).toUrl();
+	}
+
+	return {};
 }
 
 ActionsManager::ActionDefinition::State CacheContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
