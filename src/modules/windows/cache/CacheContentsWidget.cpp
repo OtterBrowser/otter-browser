@@ -197,7 +197,14 @@ void CacheContentsWidget::openEntry()
 
 		if (mainWindow)
 		{
-			mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen)}});
+			SessionsManager::OpenHints hints(SessionsManager::DefaultOpen);
+
+			if (action)
+			{
+				hints = static_cast<SessionsManager::OpenHints>(action->data().toInt());
+			}
+
+			mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}});
 		}
 	}
 }
