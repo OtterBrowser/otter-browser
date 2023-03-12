@@ -331,18 +331,20 @@ void HistoryContentsWidget::handleEntryRemoved(HistoryModel::Entry *entry)
 
 	QStandardItem *entryItem(findEntry(entry->getIdentifier()));
 
-	if (entryItem)
+	if (!entryItem)
 	{
-		QStandardItem *groupItem(entryItem->parent());
+		return;
+	}
 
-		if (groupItem)
+	QStandardItem *groupItem(entryItem->parent());
+
+	if (groupItem)
+	{
+		m_model->removeRow(entryItem->row(), groupItem->index());
+
+		if (groupItem->rowCount() == 0)
 		{
-			m_model->removeRow(entryItem->row(), groupItem->index());
-
-			if (groupItem->rowCount() == 0)
-			{
-				m_ui->historyViewWidget->setRowHidden(groupItem->row(), m_model->invisibleRootItem()->index(), true);
-			}
+			m_ui->historyViewWidget->setRowHidden(groupItem->row(), m_model->invisibleRootItem()->index(), true);
 		}
 	}
 }
