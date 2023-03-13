@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -45,17 +45,19 @@ void ProgressBarDelegate::setEditorData(QWidget *editor, const QModelIndex &inde
 {
 	ProgressBarWidget *progressBar(qobject_cast<ProgressBarWidget*>(editor->findChild<ProgressBarWidget*>()));
 
-	if (progressBar)
+	if (!progressBar)
 	{
-		const Transfer::TransferState state(static_cast<Transfer::TransferState>(index.data(TransfersContentsWidget::StateRole).toInt()));
-		const bool isIndeterminate(index.data(TransfersContentsWidget::BytesTotalRole).toLongLong() <= 0);
-		const bool hasError(state == Transfer::UnknownState || state == Transfer::ErrorState);
-
-		progressBar->setHasError(hasError);
-		progressBar->setRange(0, ((isIndeterminate && !hasError) ? 0 : 100));
-		progressBar->setValue(isIndeterminate ? (hasError ? 0 : -1) : index.data(TransfersContentsWidget::ProgressRole).toInt());
-		progressBar->setFormat(isIndeterminate ? tr("Unknown") : QLatin1String("%p%"));
+		return;
 	}
+
+	const Transfer::TransferState state(static_cast<Transfer::TransferState>(index.data(TransfersContentsWidget::StateRole).toInt()));
+	const bool isIndeterminate(index.data(TransfersContentsWidget::BytesTotalRole).toLongLong() <= 0);
+	const bool hasError(state == Transfer::UnknownState || state == Transfer::ErrorState);
+
+	progressBar->setHasError(hasError);
+	progressBar->setRange(0, ((isIndeterminate && !hasError) ? 0 : 100));
+	progressBar->setValue(isIndeterminate ? (hasError ? 0 : -1) : index.data(TransfersContentsWidget::ProgressRole).toInt());
+	progressBar->setFormat(isIndeterminate ? tr("Unknown") : QLatin1String("%p%"));
 }
 
 QWidget* ProgressBarDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
