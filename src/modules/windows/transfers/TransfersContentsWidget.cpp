@@ -200,24 +200,26 @@ void TransfersContentsWidget::stopResumeTransfer()
 {
 	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->getCurrentIndex()));
 
-	if (transfer)
+	if (!transfer)
 	{
-		switch (transfer->getState())
-		{
-			case Transfer::RunningState:
-				transfer->stop();
-
-				break;
-			case Transfer::ErrorState:
-				transfer->resume();
-
-				break;
-			default:
-				break;
-		}
-
-		updateActions();
+		return;
 	}
+
+	switch (transfer->getState())
+	{
+		case Transfer::RunningState:
+			transfer->stop();
+
+			break;
+		case Transfer::ErrorState:
+			transfer->resume();
+
+			break;
+		default:
+			break;
+	}
+
+	updateActions();
 }
 
 void TransfersContentsWidget::redownloadTransfer()
