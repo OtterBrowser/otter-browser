@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -47,30 +47,32 @@ void EntryItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
 {
 	ItemDelegate::paint(painter, option, index);
 
-	if (index.data(SessionModel::IsAudibleRole).toBool() || index.data(SessionModel::IsAudioMutedRole).toBool())
+	if (!index.data(SessionModel::IsAudibleRole).toBool() && !index.data(SessionModel::IsAudioMutedRole).toBool())
 	{
-		QStyleOptionViewItem mutableOption(option);
-		mutableOption.features |= QStyleOptionViewItem::HasDecoration;
+		return;
+	}
 
-		QRect rectangle(QApplication::style()->subElementRect(QStyle::SE_ItemViewItemText, &mutableOption));
-		const int availableWidth(rectangle.width());
-		const int decorationWidth(calculateDecorationWidth(&mutableOption, index));
+	QStyleOptionViewItem mutableOption(option);
+	mutableOption.features |= QStyleOptionViewItem::HasDecoration;
 
-		if (availableWidth > (decorationWidth + 100))
+	QRect rectangle(QApplication::style()->subElementRect(QStyle::SE_ItemViewItemText, &mutableOption));
+	const int availableWidth(rectangle.width());
+	const int decorationWidth(calculateDecorationWidth(&mutableOption, index));
+
+	if (availableWidth > (decorationWidth + 100))
+	{
+		const int offset((decorationWidth - option.decorationSize.width()) / 2);
+
+		if (option.direction == Qt::RightToLeft)
 		{
-			const int offset((decorationWidth - option.decorationSize.width()) / 2);
-
-			if (option.direction == Qt::RightToLeft)
-			{
-				rectangle.setWidth(decorationWidth);
-			}
-			else
-			{
-				rectangle.setLeft(rectangle.right() - decorationWidth);
-			}
-
-			ThemesManager::createIcon(index.data(SessionModel::IsAudioMutedRole).toBool() ? QLatin1String("audio-volume-muted") : QLatin1String("audio-volume-medium")).paint(painter, rectangle.adjusted(offset, 0, -offset, 0));
+			rectangle.setWidth(decorationWidth);
 		}
+		else
+		{
+			rectangle.setLeft(rectangle.right() - decorationWidth);
+		}
+
+		ThemesManager::createIcon(index.data(SessionModel::IsAudioMutedRole).toBool() ? QLatin1String("audio-volume-muted") : QLatin1String("audio-volume-medium")).paint(painter, rectangle.adjusted(offset, 0, -offset, 0));
 	}
 }
 
