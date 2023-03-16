@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -115,21 +115,23 @@ void ConfigurationOptionDelegate::setModelData(QWidget *editor, QAbstractItemMod
 {
 	const OptionWidget *widget(qobject_cast<OptionWidget*>(editor));
 
-	if (widget)
+	if (!widget)
 	{
-		const QModelIndex optionIndex(index.sibling(index.row(), 0));
-
-		if (m_shouldMarkAsModified)
-		{
-			QFont font(optionIndex.data(Qt::FontRole).value<QFont>());
-			font.setBold(widget->getValue() != widget->getDefaultValue());
-
-			model->setData(optionIndex, font, Qt::FontRole);
-		}
-
-		model->setData(optionIndex, true, ConfigurationContentsWidget::IsModifiedRole);
-		model->setData(index, widget->getValue(), Qt::EditRole);
+		return;
 	}
+
+	const QModelIndex optionIndex(index.sibling(index.row(), 0));
+
+	if (m_shouldMarkAsModified)
+	{
+		QFont font(optionIndex.data(Qt::FontRole).value<QFont>());
+		font.setBold(widget->getValue() != widget->getDefaultValue());
+
+		model->setData(optionIndex, font, Qt::FontRole);
+	}
+
+	model->setData(optionIndex, true, ConfigurationContentsWidget::IsModifiedRole);
+	model->setData(index, widget->getValue(), Qt::EditRole);
 }
 
 QWidget* ConfigurationOptionDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
