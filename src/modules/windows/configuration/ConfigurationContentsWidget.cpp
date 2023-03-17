@@ -590,16 +590,16 @@ QIcon ConfigurationContentsWidget::getIcon() const
 
 bool ConfigurationContentsWidget::canClose()
 {
-	const int result(QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel));
-
-	if (result == QMessageBox::Cancel)
+	switch (QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel))
 	{
-		return false;
-	}
+		case QMessageBox::Cancel:
+			return false;
+		case QMessageBox::Yes:
+			saveAll(false);
 
-	if (result == QMessageBox::Yes)
-	{
-		saveAll(false);
+			break;
+		default:
+			break;
 	}
 
 	return true;
