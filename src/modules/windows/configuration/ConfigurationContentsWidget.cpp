@@ -172,8 +172,9 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 
 	for (int i = 0; i < options.count(); ++i)
 	{
-		const int identifier(SettingsManager::getOptionIdentifier(options.at(i)));
-		const QStringList option(options.at(i).split(QLatin1Char('/')));
+		const QString name(options.at(i));
+		const int identifier(SettingsManager::getOptionIdentifier(name));
+		const QStringList option(name.split(QLatin1Char('/')));
 		const QVariant value(SettingsManager::getOption(identifier));
 		const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(identifier));
 
@@ -199,7 +200,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 		optionItems[3]->setData(value, Qt::EditRole);
 		optionItems[3]->setData(QSize(-1, 30), Qt::SizeHintRole);
 		optionItems[3]->setData(identifier, IdentifierRole);
-		optionItems[3]->setData(options.at(i), NameRole);
+		optionItems[3]->setData(name, NameRole);
 		optionItems[3]->setFlags(optionItems[2]->flags() | Qt::ItemNeverHasChildren);
 
 		if (definition.flags.testFlag(SettingsManager::OptionDefinition::RequiresRestartFlag))
@@ -222,7 +223,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 
 		groupItem->appendRow(optionItems);
 
-		if (!fragment.isEmpty() && fragment == options.at(i))
+		if (!fragment.isEmpty() && fragment == name)
 		{
 			selectedIndex = optionItems[0]->index();
 		}
