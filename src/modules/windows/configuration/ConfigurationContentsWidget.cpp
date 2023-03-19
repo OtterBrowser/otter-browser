@@ -173,8 +173,8 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	for (int i = 0; i < options.count(); ++i)
 	{
 		const QString name(options.at(i));
+		const QStringList nameParts(name.split(QLatin1Char('/')));
 		const int identifier(SettingsManager::getOptionIdentifier(name));
-		const QStringList option(name.split(QLatin1Char('/')));
 		const QVariant value(SettingsManager::getOption(identifier));
 		const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(identifier));
 
@@ -183,9 +183,9 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 			continue;
 		}
 
-		if (!groupItem || groupItem->text() != option.value(0))
+		if (!groupItem || groupItem->text() != nameParts.value(0))
 		{
-			groupItem = new QStandardItem(ThemesManager::createIcon(QLatin1String("inode-directory")), option.value(0));
+			groupItem = new QStandardItem(ThemesManager::createIcon(QLatin1String("inode-directory")), nameParts.value(0));
 
 			m_model->appendRow(groupItem);
 		}
@@ -193,7 +193,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 		QString type(metaEnum.valueToKey(definition.type));
 		type.chop(4);
 
-		QList<QStandardItem*> optionItems({new QStandardItem(option.last()), new QStandardItem(type.toLower()), new QStandardItem(QString::number(SettingsManager::getOverridesCount(identifier))), new QStandardItem()});
+		QList<QStandardItem*> optionItems({new QStandardItem(nameParts.last()), new QStandardItem(type.toLower()), new QStandardItem(QString::number(SettingsManager::getOverridesCount(identifier))), new QStandardItem()});
 		optionItems[0]->setFlags(optionItems[0]->flags() | Qt::ItemNeverHasChildren);
 		optionItems[1]->setFlags(optionItems[1]->flags() | Qt::ItemNeverHasChildren);
 		optionItems[2]->setFlags(optionItems[2]->flags() | Qt::ItemNeverHasChildren);
