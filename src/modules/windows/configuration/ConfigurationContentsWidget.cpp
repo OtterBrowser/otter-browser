@@ -23,6 +23,7 @@
 #include "../../../core/NetworkManagerFactory.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../core/Utils.h"
 #include "../../../ui/ColorWidget.h"
 #include "../../../ui/OptionWidget.h"
 
@@ -164,6 +165,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	NetworkManagerFactory::initialize();
 
 	const QMetaEnum metaEnum(SettingsManager::getInstance()->metaObject()->enumerator(SettingsManager::getInstance()->metaObject()->indexOfEnumerator(QLatin1String("OptionType").data())));
+	const EnumeratorMapper enumeratorMapper(metaEnum, QLatin1String("Type"));
 	const QStringList options(SettingsManager::getOptions());
 	QStandardItem *groupItem(nullptr);
 	const QString fragment(parameters.value(QLatin1String("url")).toUrl().fragment());
@@ -190,10 +192,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 			m_model->appendRow(groupItem);
 		}
 
-		QString type(metaEnum.valueToKey(definition.type));
-		type.chop(4);
-
-		QList<QStandardItem*> optionItems({new QStandardItem(nameParts.last()), new QStandardItem(type.toLower()), new QStandardItem(QString::number(SettingsManager::getOverridesCount(identifier))), new QStandardItem()});
+		QList<QStandardItem*> optionItems({new QStandardItem(nameParts.last()), new QStandardItem(enumeratorMapper.mapToName(definition.type)), new QStandardItem(QString::number(SettingsManager::getOverridesCount(identifier))), new QStandardItem()});
 		optionItems[0]->setFlags(optionItems[0]->flags() | Qt::ItemNeverHasChildren);
 		optionItems[1]->setFlags(optionItems[1]->flags() | Qt::ItemNeverHasChildren);
 		optionItems[2]->setFlags(optionItems[2]->flags() | Qt::ItemNeverHasChildren);
