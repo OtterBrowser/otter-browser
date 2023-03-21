@@ -175,15 +175,15 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	for (int i = 0; i < options.count(); ++i)
 	{
 		const QString name(options.at(i));
-		const QStringList nameParts(name.split(QLatin1Char('/')));
 		const int identifier(SettingsManager::getOptionIdentifier(name));
-		const QVariant value(SettingsManager::getOption(identifier));
 		const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(identifier));
 
 		if (!definition.flags.testFlag(SettingsManager::OptionDefinition::IsEnabledFlag) || !definition.flags.testFlag(SettingsManager::OptionDefinition::IsVisibleFlag))
 		{
 			continue;
 		}
+
+		const QStringList nameParts(name.split(QLatin1Char('/')));
 
 		if (!groupItem || groupItem->text() != nameParts.value(0))
 		{
@@ -192,6 +192,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 			m_model->appendRow(groupItem);
 		}
 
+		const QVariant value(SettingsManager::getOption(identifier));
 		QList<QStandardItem*> optionItems({new QStandardItem(nameParts.last()), new QStandardItem(enumeratorMapper.mapToName(definition.type)), new QStandardItem(QString::number(SettingsManager::getOverridesCount(identifier))), new QStandardItem()});
 		optionItems[0]->setFlags(optionItems[0]->flags() | Qt::ItemNeverHasChildren);
 		optionItems[1]->setFlags(optionItems[1]->flags() | Qt::ItemNeverHasChildren);
