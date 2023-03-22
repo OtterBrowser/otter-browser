@@ -223,7 +223,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 
 		groupItem->appendRow(optionItems);
 
-		if (!fragment.isEmpty() && fragment == name)
+		if (!selectedIndex.isValid() && !fragment.isEmpty() && fragment == name)
 		{
 			selectedIndex = optionItems[0]->index();
 		}
