@@ -427,8 +427,7 @@ void ConfigurationContentsWidget::saveAll(bool reset)
 
 void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVariant &value)
 {
-	const QString name(SettingsManager::getOptionName(identifier));
-	const QString group(name.mid(0, name.indexOf(QLatin1Char('/'))));
+	const QString group(SettingsManager::getOptionName(identifier).section(QLatin1Char('/'), 0, 0));
 	const bool wasModified(m_ui->configurationViewWidget->isModified());
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
@@ -474,8 +473,7 @@ void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVar
 
 void ConfigurationContentsWidget::handleHostOptionChanged(int identifier)
 {
-	const QString name(SettingsManager::getOptionName(identifier));
-	const QString group(name.mid(0, name.indexOf(QLatin1Char('/'))));
+	const QString group(SettingsManager::getOptionName(identifier).section(QLatin1Char('/'), 0, 0));
 	const bool isModified(m_ui->configurationViewWidget->isModified());
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
