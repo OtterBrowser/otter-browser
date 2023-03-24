@@ -427,39 +427,28 @@ void ConfigurationContentsWidget::saveAll(bool reset)
 
 void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVariant &value)
 {
-	const QString group(SettingsManager::getOptionName(identifier).section(QLatin1Char('/'), 0, 0));
+	const QModelIndex groupIndex(findGroup(identifier));
+	const int optionAmount(m_model->rowCount(groupIndex));
 	const bool wasModified(m_ui->configurationViewWidget->isModified());
 
-	for (int i = 0; i < m_model->rowCount(); ++i)
+	for (int i = 0; i < optionAmount; ++i)
 	{
-		const QModelIndex groupIndex(m_model->index(i, 0));
+		const QModelIndex valueIndex(m_model->index(i, 3, groupIndex));
 
-		if (groupIndex.data(Qt::DisplayRole).toString() != group)
+		if (valueIndex.data(IdentifierRole).toInt() == identifier)
 		{
-			continue;
-		}
+			const QModelIndex optionIndex(m_model->index(i, 0, groupIndex));
 
-		const int optionAmount(m_model->rowCount(groupIndex));
-
-		for (int j = 0; j < optionAmount; ++j)
-		{
-			const QModelIndex valueIndex(m_model->index(j, 3, groupIndex));
-
-			if (valueIndex.data(IdentifierRole).toInt() == identifier)
+			if (!optionIndex.data(IsModifiedRole).toBool())
 			{
-				const QModelIndex optionIndex(m_model->index(j, 0, groupIndex));
+				QFont font(optionIndex.data(Qt::FontRole).isNull() ? m_ui->configurationViewWidget->font() : optionIndex.data(Qt::FontRole).value<QFont>());
+				font.setBold(value != SettingsManager::getOptionDefinition(identifier).defaultValue);
 
-				if (!optionIndex.data(IsModifiedRole).toBool())
-				{
-					QFont font(optionIndex.data(Qt::FontRole).isNull() ? m_ui->configurationViewWidget->font() : optionIndex.data(Qt::FontRole).value<QFont>());
-					font.setBold(value != SettingsManager::getOptionDefinition(identifier).defaultValue);
-
-					m_model->setData(optionIndex, font, Qt::FontRole);
-					m_model->setData(valueIndex, value, Qt::EditRole);
-				}
-
-				break;
+				m_model->setData(optionIndex, font, Qt::FontRole);
+				m_model->setData(valueIndex, value, Qt::EditRole);
 			}
+
+			break;
 		}
 	}
 
@@ -473,30 +462,19 @@ void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVar
 
 void ConfigurationContentsWidget::handleHostOptionChanged(int identifier)
 {
-	const QString group(SettingsManager::getOptionName(identifier).section(QLatin1Char('/'), 0, 0));
+	const QModelIndex groupIndex(findGroup(identifier));
+	const int optionAmount(m_model->rowCount(groupIndex));
 	const bool isModified(m_ui->configurationViewWidget->isModified());
 
-	for (int i = 0; i < m_model->rowCount(); ++i)
+	for (int i = 0; i < optionAmount; ++i)
 	{
-		const QModelIndex groupIndex(m_model->index(i, 0));
+		const QModelIndex valueIndex(m_model->index(i, 3, groupIndex));
 
-		if (groupIndex.data(Qt::DisplayRole).toString() != group)
+		if (valueIndex.data(IdentifierRole).toInt() == identifier)
 		{
-			continue;
-		}
+			m_model->setData(m_model->index(i, 2, groupIndex), QString::number(SettingsManager::getOverridesCount(identifier)), Qt::DisplayRole);
 
-		const int optionAmount(m_model->rowCount(groupIndex));
-
-		for (int j = 0; j < optionAmount; ++j)
-		{
-			const QModelIndex valueIndex(m_model->index(j, 3, groupIndex));
-
-			if (valueIndex.data(IdentifierRole).toInt() == identifier)
-			{
-				m_model->setData(m_model->index(j, 2, groupIndex), QString::number(SettingsManager::getOverridesCount(identifier)), Qt::DisplayRole);
-
-				break;
-			}
+			break;
 		}
 	}
 
@@ -585,6 +563,23 @@ QUrl ConfigurationContentsWidget::getUrl() const
 QIcon ConfigurationContentsWidget::getIcon() const
 {
 	return ThemesManager::createIcon(QLatin1String("configuration"), false);
+}
+
+QModelIndex ConfigurationContentsWidget::findGroup(int identifier) const
+{
+	const QString group(SettingsManager::getOptionName(identifier).section(QLatin1Char('/'), 0, 0));
+
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		const QModelIndex groupIndex(m_model->index(i, 0));
+
+		if (groupIndex.data(Qt::DisplayRole).toString() == group)
+		{
+			return groupIndex;
+		}
+	}
+
+	return {};
 }
 
 bool ConfigurationContentsWidget::canClose()

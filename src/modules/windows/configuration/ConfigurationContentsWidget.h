@@ -80,6 +80,7 @@ public slots:
 protected:
 	void changeEvent(QEvent *event) override;
 	void saveAll(bool reset);
+	QModelIndex findGroup(int identifier) const;
 	bool canClose() override;
 
 protected slots:
