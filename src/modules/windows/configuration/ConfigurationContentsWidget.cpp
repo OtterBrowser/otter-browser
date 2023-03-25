@@ -464,7 +464,7 @@ void ConfigurationContentsWidget::handleHostOptionChanged(int identifier)
 {
 	const QModelIndex groupIndex(findGroup(identifier));
 	const int optionAmount(m_model->rowCount(groupIndex));
-	const bool isModified(m_ui->configurationViewWidget->isModified());
+	const bool wasModified(m_ui->configurationViewWidget->isModified());
 
 	for (int i = 0; i < optionAmount; ++i)
 	{
@@ -478,7 +478,7 @@ void ConfigurationContentsWidget::handleHostOptionChanged(int identifier)
 		}
 	}
 
-	if (!isModified)
+	if (!wasModified)
 	{
 		m_ui->configurationViewWidget->setModified(false);
 	}
