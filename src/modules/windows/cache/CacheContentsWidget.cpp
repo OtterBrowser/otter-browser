@@ -299,31 +299,33 @@ void CacheContentsWidget::handleEntryRemoved(const QUrl &url)
 	{
 		QStandardItem *entryItem(domainItem->child(i, 0));
 
-		if (entryItem && entryItem->data(UrlRole).toUrl() == url)
+		if (!entryItem || entryItem->data(UrlRole).toUrl() != url)
 		{
-			const qint64 size(ItemModel::getItemData(domainItem->child(entryItem->row(), 2), SizeRole).toLongLong());
-
-			m_model->removeRow(entryItem->row(), domainItem->index());
-
-			if (domainItem->rowCount() == 0)
-			{
-				m_model->invisibleRootItem()->removeRow(domainItem->row());
-			}
-			else
-			{
-				QStandardItem *domainSizeItem(m_model->item(domainItem->row(), 2));
-
-				if (domainSizeItem && size > 0)
-				{
-					domainSizeItem->setData((domainSizeItem->data(SizeRole).toLongLong() - size), SizeRole);
-					domainSizeItem->setText(Utils::formatUnit(domainSizeItem->data(SizeRole).toLongLong()));
-				}
-
-				domainItem->setText(QStringLiteral("%1 (%2)").arg(url.host()).arg(domainItem->rowCount()));
-			}
-
-			break;
+			continue;
 		}
+
+		const qint64 size(ItemModel::getItemData(domainItem->child(entryItem->row(), 2), SizeRole).toLongLong());
+
+		m_model->removeRow(entryItem->row(), domainItem->index());
+
+		if (domainItem->rowCount() == 0)
+		{
+			m_model->invisibleRootItem()->removeRow(domainItem->row());
+		}
+		else
+		{
+			QStandardItem *domainSizeItem(m_model->item(domainItem->row(), 2));
+
+			if (domainSizeItem && size > 0)
+			{
+				domainSizeItem->setData((domainSizeItem->data(SizeRole).toLongLong() - size), SizeRole);
+				domainSizeItem->setText(Utils::formatUnit(domainSizeItem->data(SizeRole).toLongLong()));
+			}
+
+			domainItem->setText(QStringLiteral("%1 (%2)").arg(url.host()).arg(domainItem->rowCount()));
+		}
+
+		break;
 	}
 }
 
