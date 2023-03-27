@@ -388,119 +388,7 @@ void CacheContentsWidget::updateActions()
 	m_ui->previewLabel->setPixmap({});
 	m_ui->deleteButton->setEnabled(!domain.isEmpty());
 
-	if (url.isValid())
-	{
-		NetworkCache *cache(NetworkManagerFactory::getCache());
-		QIODevice *device(cache->data(url));
-		const QNetworkCacheMetaData metaData(cache->metaData(url));
-		QMimeType mimeType;
-
-		if (device)
-		{
-			mimeType = QMimeDatabase().mimeTypeForData(device);
-		}
-
-		if (!mimeType.isValid())
-		{
-			const QList<QPair<QByteArray, QByteArray> > headers(metaData.rawHeaders());
-
-			for (int i = 0; i < headers.count(); ++i)
-			{
-				if (headers.at(i).first == QByteArrayLiteral("Content-Type"))
-				{
-					mimeType = QMimeDatabase().mimeTypeForName(QString::fromLatin1(headers.at(i).second));
-
-					break;
-				}
-			}
-
-			if (!mimeType.isValid())
-			{
-				mimeType = QMimeDatabase().mimeTypeForUrl(url);
-			}
-		}
-
-		QPixmap preview;
-		const int size(m_ui->formWidget->contentsRect().height() - 10);
-
-		if (device && mimeType.name().startsWith(QLatin1String("image")))
-		{
-			QImage image;
-			image.load(device, "");
-
-			if (image.size().width() > size || image.height() > size)
-			{
-				image = image.scaled(size, size, Qt::KeepAspectRatio);
-			}
-
-			preview = QPixmap::fromImage(image);
-		}
-
-		if (preview.isNull() && QIcon::hasThemeIcon(mimeType.iconName()))
-		{
-			preview = QIcon::fromTheme(mimeType.iconName(), ThemesManager::createIcon(QLatin1String("unknown"))).pixmap(64, 64);
-		}
-
-		const QUrl localUrl(cache->getPathForUrl(url));
-
-		m_ui->addressLabelWidget->setText(url.toString(QUrl::FullyDecoded | QUrl::PreferLocalFile));
-		m_ui->addressLabelWidget->setUrl(url);
-		m_ui->locationLabelWidget->setText(localUrl.toString(QUrl::FullyDecoded | QUrl::PreferLocalFile));
-		m_ui->locationLabelWidget->setUrl(localUrl);
-		m_ui->typeLabelWidget->setText(mimeType.name());
-		m_ui->sizeLabelWidget->setText(device ? Utils::formatUnit(device->size(), false, 2) : tr("Unknown"));
-		m_ui->lastModifiedLabelWidget->setText(Utils::formatDateTime(metaData.lastModified()));
-		m_ui->expiresLabelWidget->setText(Utils::formatDateTime(metaData.expirationDate()));
-
-		if (!preview.isNull())
-		{
-			m_ui->previewLabel->show();
-			m_ui->previewLabel->setPixmap(preview);
-		}
-
-		QStandardItem *typeItem(m_model->itemFromIndex(index.sibling(index.row(), 1)));
-
-		if (typeItem && typeItem->text().isEmpty())
-		{
-			typeItem->setText(mimeType.name());
-		}
-
-		QStandardItem *lastModifiedItem(m_model->itemFromIndex(index.sibling(index.row(), 3)));
-
-		if (lastModifiedItem && lastModifiedItem->text().isEmpty())
-		{
-			lastModifiedItem->setText(metaData.lastModified().toString());
-		}
-
-		QStandardItem *expiresItem(m_model->itemFromIndex(index.sibling(index.row(), 4)));
-
-		if (expiresItem && expiresItem->text().isEmpty())
-		{
-			expiresItem->setText(metaData.expirationDate().toString());
-		}
-
-		if (device)
-		{
-			QStandardItem *sizeItem(m_model->itemFromIndex(index.sibling(index.row(), 2)));
-
-			if (sizeItem && sizeItem->text().isEmpty())
-			{
-				sizeItem->setText(Utils::formatUnit(device->size()));
-				sizeItem->setData(device->size(), SizeRole);
-
-				QStandardItem *domainSizeItem(sizeItem->parent() ? m_model->item(sizeItem->parent()->row(), 2) : nullptr);
-
-				if (domainSizeItem)
-				{
-					domainSizeItem->setData((domainSizeItem->data(SizeRole).toLongLong() + device->size()), SizeRole);
-					domainSizeItem->setText(Utils::formatUnit(domainSizeItem->data(SizeRole).toLongLong()));
-				}
-			}
-
-			device->deleteLater();
-		}
-	}
-	else
+	if (!url.isEmpty())
 	{
 		m_ui->addressLabelWidget->setText({});
 		m_ui->typeLabelWidget->setText({});
@@ -512,6 +400,120 @@ void CacheContentsWidget::updateActions()
 		{
 			m_ui->addressLabelWidget->setText(domain);
 		}
+
+		emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::EditingCategory});
+
+		return;
+	}
+
+	NetworkCache *cache(NetworkManagerFactory::getCache());
+	QIODevice *device(cache->data(url));
+	const QNetworkCacheMetaData metaData(cache->metaData(url));
+	QMimeType mimeType;
+
+	if (device)
+	{
+		mimeType = QMimeDatabase().mimeTypeForData(device);
+	}
+
+	if (!mimeType.isValid())
+	{
+		const QList<QPair<QByteArray, QByteArray> > headers(metaData.rawHeaders());
+
+		for (int i = 0; i < headers.count(); ++i)
+		{
+			if (headers.at(i).first == QByteArrayLiteral("Content-Type"))
+			{
+				mimeType = QMimeDatabase().mimeTypeForName(QString::fromLatin1(headers.at(i).second));
+
+				break;
+			}
+		}
+
+		if (!mimeType.isValid())
+		{
+			mimeType = QMimeDatabase().mimeTypeForUrl(url);
+		}
+	}
+
+	QPixmap preview;
+	const int size(m_ui->formWidget->contentsRect().height() - 10);
+
+	if (device && mimeType.name().startsWith(QLatin1String("image")))
+	{
+		QImage image;
+		image.load(device, "");
+
+		if (image.size().width() > size || image.height() > size)
+		{
+			image = image.scaled(size, size, Qt::KeepAspectRatio);
+		}
+
+		preview = QPixmap::fromImage(image);
+	}
+
+	if (preview.isNull() && QIcon::hasThemeIcon(mimeType.iconName()))
+	{
+		preview = QIcon::fromTheme(mimeType.iconName(), ThemesManager::createIcon(QLatin1String("unknown"))).pixmap(64, 64);
+	}
+
+	const QUrl localUrl(cache->getPathForUrl(url));
+
+	m_ui->addressLabelWidget->setText(url.toString(QUrl::FullyDecoded | QUrl::PreferLocalFile));
+	m_ui->addressLabelWidget->setUrl(url);
+	m_ui->locationLabelWidget->setText(localUrl.toString(QUrl::FullyDecoded | QUrl::PreferLocalFile));
+	m_ui->locationLabelWidget->setUrl(localUrl);
+	m_ui->typeLabelWidget->setText(mimeType.name());
+	m_ui->sizeLabelWidget->setText(device ? Utils::formatUnit(device->size(), false, 2) : tr("Unknown"));
+	m_ui->lastModifiedLabelWidget->setText(Utils::formatDateTime(metaData.lastModified()));
+	m_ui->expiresLabelWidget->setText(Utils::formatDateTime(metaData.expirationDate()));
+
+	if (!preview.isNull())
+	{
+		m_ui->previewLabel->show();
+		m_ui->previewLabel->setPixmap(preview);
+	}
+
+	QStandardItem *typeItem(m_model->itemFromIndex(index.sibling(index.row(), 1)));
+
+	if (typeItem && typeItem->text().isEmpty())
+	{
+		typeItem->setText(mimeType.name());
+	}
+
+	QStandardItem *lastModifiedItem(m_model->itemFromIndex(index.sibling(index.row(), 3)));
+
+	if (lastModifiedItem && lastModifiedItem->text().isEmpty())
+	{
+		lastModifiedItem->setText(metaData.lastModified().toString());
+	}
+
+	QStandardItem *expiresItem(m_model->itemFromIndex(index.sibling(index.row(), 4)));
+
+	if (expiresItem && expiresItem->text().isEmpty())
+	{
+		expiresItem->setText(metaData.expirationDate().toString());
+	}
+
+	if (device)
+	{
+		QStandardItem *sizeItem(m_model->itemFromIndex(index.sibling(index.row(), 2)));
+
+		if (sizeItem && sizeItem->text().isEmpty())
+		{
+			sizeItem->setText(Utils::formatUnit(device->size()));
+			sizeItem->setData(device->size(), SizeRole);
+
+			QStandardItem *domainSizeItem(sizeItem->parent() ? m_model->item(sizeItem->parent()->row(), 2) : nullptr);
+
+			if (domainSizeItem)
+			{
+				domainSizeItem->setData((domainSizeItem->data(SizeRole).toLongLong() + device->size()), SizeRole);
+				domainSizeItem->setText(Utils::formatUnit(domainSizeItem->data(SizeRole).toLongLong()));
+			}
+		}
+
+		device->deleteLater();
 	}
 
 	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::EditingCategory});
