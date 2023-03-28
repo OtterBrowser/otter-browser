@@ -409,11 +409,12 @@ void CacheContentsWidget::updateActions()
 	NetworkCache *cache(NetworkManagerFactory::getCache());
 	QIODevice *device(cache->data(url));
 	const QNetworkCacheMetaData metaData(cache->metaData(url));
+	const QMimeDatabase mimeDatabase;
 	QMimeType mimeType;
 
 	if (device)
 	{
-		mimeType = QMimeDatabase().mimeTypeForData(device);
+		mimeType = mimeDatabase.mimeTypeForData(device);
 	}
 
 	if (!mimeType.isValid())
@@ -424,7 +425,7 @@ void CacheContentsWidget::updateActions()
 		{
 			if (headers.at(i).first == QByteArrayLiteral("Content-Type"))
 			{
-				mimeType = QMimeDatabase().mimeTypeForName(QString::fromLatin1(headers.at(i).second));
+				mimeType = mimeDatabase.mimeTypeForName(QString::fromLatin1(headers.at(i).second));
 
 				break;
 			}
@@ -432,7 +433,7 @@ void CacheContentsWidget::updateActions()
 
 		if (!mimeType.isValid())
 		{
-			mimeType = QMimeDatabase().mimeTypeForUrl(url);
+			mimeType = mimeDatabase.mimeTypeForUrl(url);
 		}
 	}
 
