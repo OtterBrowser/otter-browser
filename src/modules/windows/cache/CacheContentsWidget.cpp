@@ -190,22 +190,24 @@ void CacheContentsWidget::openEntry()
 
 	const QUrl url(getEntry(index));
 
-	if (url.isValid())
+	if (!url.isValid())
 	{
-		const QAction *action(qobject_cast<QAction*>(sender()));
-		MainWindow *mainWindow(MainWindow::findMainWindow(this));
+		return;
+	}
 
-		if (mainWindow)
+	const QAction *action(qobject_cast<QAction*>(sender()));
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+	if (mainWindow)
+	{
+		SessionsManager::OpenHints hints(SessionsManager::DefaultOpen);
+
+		if (action)
 		{
-			SessionsManager::OpenHints hints(SessionsManager::DefaultOpen);
-
-			if (action)
-			{
-				hints = static_cast<SessionsManager::OpenHints>(action->data().toInt());
-			}
-
-			mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}});
+			hints = static_cast<SessionsManager::OpenHints>(action->data().toInt());
 		}
+
+		mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}});
 	}
 }
 
