@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -126,14 +126,16 @@ void CookiesContentsWidget::removeCookies()
 
 	for (int i = 0; i < indexes.count(); ++i)
 	{
-		if (!indexes.at(i).isValid())
+		const QModelIndex index(indexes.at(i));
+
+		if (!index.isValid())
 		{
 			continue;
 		}
 
-		if (indexes.at(i).parent() == m_model->invisibleRootItem()->index())
+		if (index.parent() == m_model->invisibleRootItem()->index())
 		{
-			const QStandardItem *domainItem(m_model->itemFromIndex(indexes.at(i)));
+			const QStandardItem *domainItem(m_model->itemFromIndex(index));
 
 			if (!domainItem)
 			{
@@ -147,7 +149,7 @@ void CookiesContentsWidget::removeCookies()
 		}
 		else
 		{
-			const QStandardItem *cookieItem(m_model->itemFromIndex(indexes.at(i)));
+			const QStandardItem *cookieItem(m_model->itemFromIndex(index));
 
 			if (cookieItem)
 			{
