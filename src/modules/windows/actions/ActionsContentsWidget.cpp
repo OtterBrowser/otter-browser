@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2019 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2019 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -74,7 +74,9 @@ void ActionsContentsWidget::populateActions()
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		if (definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag) || definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters))
+		const ActionsManager::ActionDefinition::ActionFlags flags(definitions.at(i).flags);
+
+		if (flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag) || flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters))
 		{
 			continue;
 		}
