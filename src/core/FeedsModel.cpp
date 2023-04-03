@@ -911,31 +911,31 @@ bool FeedsModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int 
 {
 	const EntryType type(static_cast<EntryType>(parent.data(TypeRole).toInt()));
 
-	if (type == FolderEntry || type == RootEntry || type == TrashEntry)
+	if (type != FolderEntry && type != RootEntry && type != TrashEntry)
 	{
-		const QModelIndex index(data->property("x-item-index").toModelIndex());
-
-		if (index.isValid())
-		{
-			return moveEntry(getEntry(index), getEntry(parent), row);
-		}
-
-		if (data->hasUrls())
-		{
-			const QVector<QUrl> urls(Utils::extractUrls(data));
-
-			for (int i = 0; i < urls.count(); ++i)
-			{
-				addEntry(FeedEntry, {{UrlRole, urls.at(i)}, {TitleRole, (data->property("x-url-title").toString().isEmpty() ? urls.at(i).toString() : data->property("x-url-title").toString())}}, getEntry(parent), row);
-			}
-
-			return true;
-		}
-
-		return QStandardItemModel::dropMimeData(data, action, row, column, parent);
+		return false;
 	}
 
-	return false;
+	const QModelIndex index(data->property("x-item-index").toModelIndex());
+
+	if (index.isValid())
+	{
+		return moveEntry(getEntry(index), getEntry(parent), row);
+	}
+
+	if (data->hasUrls())
+	{
+		const QVector<QUrl> urls(Utils::extractUrls(data));
+
+		for (int i = 0; i < urls.count(); ++i)
+		{
+			addEntry(FeedEntry, {{UrlRole, urls.at(i)}, {TitleRole, (data->property("x-url-title").toString().isEmpty() ? urls.at(i).toString() : data->property("x-url-title").toString())}}, getEntry(parent), row);
+		}
+
+		return true;
+	}
+
+	return QStandardItemModel::dropMimeData(data, action, row, column, parent);
 }
 
 bool FeedsModel::save(const QString &path) const
