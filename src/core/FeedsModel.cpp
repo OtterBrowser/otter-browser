@@ -387,25 +387,25 @@ void FeedsModel::trashEntry(Entry *entry)
 		if (entry->data(IsTrashedRole).toBool())
 		{
 			removeEntry(entry);
+
+			return;
 		}
-		else
-		{
-			Entry *previousParent(static_cast<Entry*>(entry->parent()));
-			EntryLocation location;
-			location.parent = entry->parent()->index();
-			location.row = entry->row();
 
-			m_trash[entry] = location;
+		Entry *previousParent(static_cast<Entry*>(entry->parent()));
+		EntryLocation location;
+		location.parent = entry->parent()->index();
+		location.row = entry->row();
 
-			m_trashEntry->appendRow(entry->parent()->takeRow(entry->row()));
-			m_trashEntry->setEnabled(true);
+		m_trash[entry] = location;
 
-			removeEntryUrl(entry);
+		m_trashEntry->appendRow(entry->parent()->takeRow(entry->row()));
+		m_trashEntry->setEnabled(true);
 
-			emit entryModified(entry);
-			emit entryTrashed(entry, previousParent);
-			emit modelModified();
-		}
+		removeEntryUrl(entry);
+
+		emit entryModified(entry);
+		emit entryTrashed(entry, previousParent);
+		emit modelModified();
 	}
 }
 
