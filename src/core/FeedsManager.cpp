@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -83,20 +83,22 @@ void Feed::markAllEntriesAsRead()
 
 void Feed::markEntryAsRemoved(const QString &identifier)
 {
-	if (!m_removedEntries.contains(identifier))
+	if (m_removedEntries.contains(identifier))
 	{
-		for (int i = 0; i < m_entries.count(); ++i)
+		return;
+	}
+
+	for (int i = 0; i < m_entries.count(); ++i)
+	{
+		if (m_entries.at(i).identifier == identifier)
 		{
-			if (m_entries.at(i).identifier == identifier)
-			{
-				m_entries.removeAt(i);
+			m_entries.removeAt(i);
 
-				m_removedEntries.append(identifier);
+			m_removedEntries.append(identifier);
 
-				emit feedModified(this);
+			emit feedModified(this);
 
-				break;
-			}
+			break;
 		}
 	}
 }
