@@ -440,35 +440,35 @@ QStringList Feed::getRemovedEntries() const
 
 QVector<Feed::Entry> Feed::getEntries(const QStringList &categories) const
 {
-	if (!categories.isEmpty())
+	if (categories.isEmpty())
 	{
-		QVector<Entry> entries;
-		entries.reserve(entries.count() / 2);
+		return m_entries;
+	}
 
-		for (int i = 0; i < m_entries.count(); ++i)
+	QVector<Entry> entries;
+	entries.reserve(entries.count() / 2);
+
+	for (int i = 0; i < m_entries.count(); ++i)
+	{
+		const Feed::Entry entry(m_entries.at(i));
+
+		if (!entry.categories.isEmpty())
 		{
-			const Feed::Entry entry(m_entries.at(i));
-
-			if (!entry.categories.isEmpty())
+			for (int j = 0; j < categories.count(); ++j)
 			{
-				for (int j = 0; j < categories.count(); ++j)
+				if (entry.categories.contains(categories.at(j)))
 				{
-					if (entry.categories.contains(categories.at(j)))
-					{
-						entries.append(entry);
+					entries.append(entry);
 
-						break;
-					}
+					break;
 				}
 			}
 		}
-
-		entries.squeeze();
-
-		return entries;
 	}
 
-	return m_entries;
+	entries.squeeze();
+
+	return entries;
 }
 
 Feed::FeedError Feed::getError() const
