@@ -218,161 +218,7 @@ void Feed::update()
 	});
 	connect(dataJob, &DataFetchJob::jobFinished, this, [=](bool isDataFetchSuccess)
 	{
-		if (isDataFetchSuccess)
-		{
-			m_parser = FeedParser::createParser(this, dataJob);
-
-			if (m_parser)
-			{
-				m_parser->moveToThread(&m_parserThread);
-
-				connect(m_parser, &FeedParser::parsingFinished, m_parser, [&](bool isParsingSuccess)
-				{
-					const FeedParser::FeedInformation information(m_parser->getInformation());
-
-					if (!isParsingSuccess)
-					{
-						m_error = ParseError;
-					}
-
-					if (m_icon.isNull() && information.icon.isValid())
-					{
-						IconFetchJob *iconJob(new IconFetchJob(information.icon, this));
-
-						connect(iconJob, &IconFetchJob::jobFinished, this, [=](bool isIconFetchSuccess)
-						{
-							if (isIconFetchSuccess)
-							{
-								setIcon(iconJob->getIcon());
-							}
-						});
-
-						iconJob->start();
-					}
-
-					if (m_title.isEmpty())
-					{
-						m_title = information.title;
-					}
-
-					if (m_description.isEmpty())
-					{
-						m_description = information.description;
-					}
-
-					if (!information.entries.isEmpty())
-					{
-						QStringList existingRemovedEntries;
-						int amount(0);
-
-						for (int i = (information.entries.count() - 1); i >= 0; --i)
-						{
-							Feed::Entry entry(information.entries.at(i));
-
-							if (m_removedEntries.contains(entry.identifier))
-							{
-								existingRemovedEntries.append(entry.identifier);
-							}
-							else
-							{
-								bool hasEntry(false);
-
-								for (int j = 0; j < m_entries.count(); ++j)
-								{
-									const Feed::Entry existingEntry(m_entries.at(j));
-
-									if (existingEntry.identifier == entry.identifier)
-									{
-										if ((entry.publicationTime.isValid() && existingEntry.publicationTime != entry.publicationTime) || (entry.updateTime.isValid() && existingEntry.updateTime != entry.updateTime))
-										{
-											++amount;
-										}
-
-										entry.lastReadTime = existingEntry.lastReadTime;
-										entry.publicationTime = normalizeTime(entry.publicationTime);
-
-										if (entry.updateTime.isValid())
-										{
-											entry.updateTime = normalizeTime(entry.updateTime);
-										}
-
-										m_entries[j] = entry;
-
-										hasEntry = true;
-
-										break;
-									}
-								}
-
-								if (!hasEntry)
-								{
-									++amount;
-
-									entry.publicationTime = normalizeTime(entry.publicationTime);
-									entry.updateTime = normalizeTime(entry.updateTime);
-
-									m_entries.prepend(entry);
-								}
-							}
-						}
-
-						m_removedEntries = existingRemovedEntries;
-
-						if (amount > 0)
-						{
-							Notification::Message message;
-							message.message = getTitle() + QLatin1Char('\n') + tr("%n new message(s)", nullptr, amount);
-							message.icon = getIcon();
-							message.event = NotificationsManager::FeedUpdatedEvent;
-
-							if (message.icon.isNull())
-							{
-								message.icon = ThemesManager::createIcon(QLatin1String("application-rss+xml"));
-							}
-
-							connect(NotificationsManager::createNotification(message, this), &Notification::clicked, this, [&]()
-							{
-								Application::getInstance()->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), FeedsManager::createFeedReaderUrl(getUrl())}});
-							});
-						}
-
-						emit entriesModified(this);
-					}
-
-					m_mimeType = information.mimeType;
-					m_lastSynchronizationTime = QDateTime::currentDateTimeUtc();
-					m_lastUpdateTime = information.lastUpdateTime;
-					m_categories = information.categories;
-
-					m_parserThread.exit();
-
-					m_parser->deleteLater();
-					m_parser = nullptr;
-
-					m_isUpdating = false;
-
-					emit feedModified(this);
-				});
-
-				m_parserThread.start();
-
-				m_parser->parse(dataJob);
-
-				m_updateProgress = -1;
-
-				emit updateProgressChanged(-1);
-			}
-			else
-			{
-				m_error = ParseError;
-				m_isUpdating = false;
-
-				Console::addMessage(tr("Failed to parse feed: unknown feed format"), Console::NetworkCategory, Console::ErrorLevel, m_url.toDisplayString());
-
-				emit feedModified(this);
-			}
-		}
-		else
+		if (!isDataFetchSuccess)
 		{
 			m_error = DownloadError;
 			m_isUpdating = false;
@@ -380,7 +226,161 @@ void Feed::update()
 			Console::addMessage(tr("Failed to download feed"), Console::NetworkCategory, Console::ErrorLevel, m_url.toDisplayString());
 
 			emit feedModified(this);
+
+			return;
 		}
+
+		m_parser = FeedParser::createParser(this, dataJob);
+
+		if (!m_parser)
+		{
+			m_error = ParseError;
+			m_isUpdating = false;
+
+			Console::addMessage(tr("Failed to parse feed: unknown feed format"), Console::NetworkCategory, Console::ErrorLevel, m_url.toDisplayString());
+
+			emit feedModified(this);
+
+			return;
+		}
+
+		m_parser->moveToThread(&m_parserThread);
+
+		connect(m_parser, &FeedParser::parsingFinished, m_parser, [&](bool isParsingSuccess)
+		{
+			const FeedParser::FeedInformation information(m_parser->getInformation());
+
+			if (!isParsingSuccess)
+			{
+				m_error = ParseError;
+			}
+
+			if (m_icon.isNull() && information.icon.isValid())
+			{
+				IconFetchJob *iconJob(new IconFetchJob(information.icon, this));
+
+				connect(iconJob, &IconFetchJob::jobFinished, this, [=](bool isIconFetchSuccess)
+				{
+					if (isIconFetchSuccess)
+					{
+						setIcon(iconJob->getIcon());
+					}
+				});
+
+				iconJob->start();
+			}
+
+			if (m_title.isEmpty())
+			{
+				m_title = information.title;
+			}
+
+			if (m_description.isEmpty())
+			{
+				m_description = information.description;
+			}
+
+			if (!information.entries.isEmpty())
+			{
+				QStringList existingRemovedEntries;
+				int amount(0);
+
+				for (int i = (information.entries.count() - 1); i >= 0; --i)
+				{
+					Feed::Entry entry(information.entries.at(i));
+
+					if (m_removedEntries.contains(entry.identifier))
+					{
+						existingRemovedEntries.append(entry.identifier);
+					}
+					else
+					{
+						bool hasEntry(false);
+
+						for (int j = 0; j < m_entries.count(); ++j)
+						{
+							const Feed::Entry existingEntry(m_entries.at(j));
+
+							if (existingEntry.identifier == entry.identifier)
+							{
+								if ((entry.publicationTime.isValid() && existingEntry.publicationTime != entry.publicationTime) || (entry.updateTime.isValid() && existingEntry.updateTime != entry.updateTime))
+								{
+									++amount;
+								}
+
+								entry.lastReadTime = existingEntry.lastReadTime;
+								entry.publicationTime = normalizeTime(entry.publicationTime);
+
+								if (entry.updateTime.isValid())
+								{
+									entry.updateTime = normalizeTime(entry.updateTime);
+								}
+
+								m_entries[j] = entry;
+
+								hasEntry = true;
+
+								break;
+							}
+						}
+
+						if (!hasEntry)
+						{
+							++amount;
+
+							entry.publicationTime = normalizeTime(entry.publicationTime);
+							entry.updateTime = normalizeTime(entry.updateTime);
+
+							m_entries.prepend(entry);
+						}
+					}
+				}
+
+				m_removedEntries = existingRemovedEntries;
+
+				if (amount > 0)
+				{
+					Notification::Message message;
+					message.message = getTitle() + QLatin1Char('\n') + tr("%n new message(s)", nullptr, amount);
+					message.icon = getIcon();
+					message.event = NotificationsManager::FeedUpdatedEvent;
+
+					if (message.icon.isNull())
+					{
+						message.icon = ThemesManager::createIcon(QLatin1String("application-rss+xml"));
+					}
+
+					connect(NotificationsManager::createNotification(message, this), &Notification::clicked, this, [&]()
+					{
+						Application::getInstance()->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), FeedsManager::createFeedReaderUrl(getUrl())}});
+					});
+				}
+
+				emit entriesModified(this);
+			}
+
+			m_mimeType = information.mimeType;
+			m_lastSynchronizationTime = QDateTime::currentDateTimeUtc();
+			m_lastUpdateTime = information.lastUpdateTime;
+			m_categories = information.categories;
+
+			m_parserThread.exit();
+
+			m_parser->deleteLater();
+			m_parser = nullptr;
+
+			m_isUpdating = false;
+
+			emit feedModified(this);
+		});
+
+		m_parserThread.start();
+
+		m_parser->parse(dataJob);
+
+		m_updateProgress = -1;
+
+		emit updateProgressChanged(-1);
 	});
 
 	dataJob->start();
