@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -293,7 +293,7 @@ MouseProfile::Gesture::Step MouseProfile::Gesture::Step::fromString(const QStrin
 		{
 			const int number(QRegularExpression(QLatin1String("Extra(\\d{1,2})$")).match(event).captured(1).toInt());
 
-			if (1 <= number && number <= 24)
+			if (number > 0 && number < 25)
 			{
 				step.button = static_cast<Qt::MouseButton>(Qt::ExtraButton1 << (number - 1));
 			}
