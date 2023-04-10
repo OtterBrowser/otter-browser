@@ -831,16 +831,17 @@ MouseProfile::Gesture GesturesManager::matchGesture()
 
 		for (int j = 0; j < gestures.count(); ++j)
 		{
-			const int difference(calculateGesturesDifference(gestures.at(j).steps));
+			const MouseProfile::Gesture gesture(gestures.at(j));
+			const int difference(calculateGesturesDifference(gesture.steps));
 
 			if (difference == 0)
 			{
-				return gestures.at(j);
+				return gesture;
 			}
 
 			if (difference < lowestDifference)
 			{
-				bestGesture = gestures.at(j);
+				bestGesture = gesture;
 				lowestDifference = difference;
 			}
 		}
