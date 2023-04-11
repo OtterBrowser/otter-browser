@@ -872,15 +872,15 @@ int GesturesManager::calculateLastMoveDistance(bool measureFinished)
 
 	for (; index > 0 && m_events.at(index - 1)->type() == QEvent::MouseMove; --index)
 	{
-		const QMouseEvent *current(static_cast<QMouseEvent*>(m_events.at(index)));
-		const QMouseEvent *previous(static_cast<QMouseEvent*>(m_events.at(index - 1)));
+		const QMouseEvent *currentEvent(static_cast<QMouseEvent*>(m_events.at(index)));
+		const QMouseEvent *previousEvent(static_cast<QMouseEvent*>(m_events.at(index - 1)));
 
-		if (!current || !previous)
+		if (!currentEvent || !previousEvent)
 		{
 			break;
 		}
 
-		result += (previous->pos() - current->pos()).manhattanLength();
+		result += (previousEvent->pos() - currentEvent->pos()).manhattanLength();
 	}
 
 	return result;
