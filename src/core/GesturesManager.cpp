@@ -893,6 +893,7 @@ int GesturesManager::calculateGesturesDifference(const QVector<MouseProfile::Ges
 		return std::numeric_limits<int>::max();
 	}
 
+	const QHash<Qt::KeyboardModifier, int> modifierDifferences({{Qt::MetaModifier, 1}, {Qt::AltModifier, 2}, {Qt::ShiftModifier, 4}, {Qt::ControlModifier, 8}});
 	int difference(0);
 
 	for (int i = 0; i < steps.count(); ++i)
@@ -908,24 +909,14 @@ int GesturesManager::calculateGesturesDifference(const QVector<MouseProfile::Ges
 
 		if (recordedStep.type == matchedStep.type && (matchedStep.type == QEvent::MouseButtonPress || matchedStep.type == QEvent::MouseButtonRelease || matchedStep.type == QEvent::MouseButtonDblClick) && recordedStep.button == matchedStep.button && (recordedStep.modifiers | matchedStep.modifiers) == recordedStep.modifiers)
 		{
-			if (recordedStep.modifiers.testFlag(Qt::ControlModifier) && !matchedStep.modifiers.testFlag(Qt::ControlModifier))
-			{
-				stepDifference += 8;
-			}
+			QHash<Qt::KeyboardModifier, int>::const_iterator iterator;
 
-			if (recordedStep.modifiers.testFlag(Qt::ShiftModifier) && !matchedStep.modifiers.testFlag(Qt::ShiftModifier))
+			for (iterator = modifierDifferences.begin(); iterator != modifierDifferences.end(); ++iterator)
 			{
-				stepDifference += 4;
-			}
-
-			if (recordedStep.modifiers.testFlag(Qt::AltModifier) && !matchedStep.modifiers.testFlag(Qt::AltModifier))
-			{
-				stepDifference += 2;
-			}
-
-			if (recordedStep.modifiers.testFlag(Qt::MetaModifier) && !matchedStep.modifiers.testFlag(Qt::MetaModifier))
-			{
-				stepDifference += 1;
+				if (recordedStep.modifiers.testFlag(iterator.key()) && !matchedStep.modifiers.testFlag(iterator.key()))
+				{
+					stepDifference += iterator.value();
+				}
 			}
 		}
 
