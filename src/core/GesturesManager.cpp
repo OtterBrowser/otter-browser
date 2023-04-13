@@ -69,11 +69,11 @@ MouseProfile::Gesture::Step::Step(const QInputEvent *event) : type(event->type()
 
 				if (qAbs(delta.x()) > qAbs(delta.y()))
 				{
-					direction = (delta.x() > 0) ? MouseGestures::MoveRightMouseAction : MouseGestures::MoveLeftMouseAction;
+					direction = ((delta.x() > 0) ? MouseGestures::MoveRightMouseAction : MouseGestures::MoveLeftMouseAction);
 				}
 				else if (qAbs(delta.y()) > 0)
 				{
-					direction = (delta.y() > 0) ? MouseGestures::MoveUpMouseAction : MouseGestures::MoveDownMouseAction;
+					direction = ((delta.y() > 0) ? MouseGestures::MoveUpMouseAction : MouseGestures::MoveDownMouseAction);
 				}
 			}
 
