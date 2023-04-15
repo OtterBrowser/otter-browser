@@ -262,8 +262,6 @@ QVariantList ItemModel::getAllData(int role, int column, const QModelIndex &pare
 
 bool ItemModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
-	Q_UNUSED(column)
-
 	if (static_cast<ItemType>(parent.data(TypeRole).toInt()) != FolderType)
 	{
 		return QStandardItemModel::dropMimeData(data, action, row, 0, parent);
