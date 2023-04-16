@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -2493,27 +2493,27 @@ Session::MainWindow MainWindow::getSession() const
 	if (isPrivate())
 	{
 		session.index = -1;
+
+		return session;
 	}
-	else
+
+	session.windows.reserve(m_windows.count());
+
+	for (int i = 0; i < m_windows.count(); ++i)
 	{
-		session.windows.reserve(m_windows.count());
+		const Window *window(getWindowByIndex(i));
 
-		for (int i = 0; i < m_windows.count(); ++i)
+		if (window && !window->isPrivate())
 		{
-			const Window *window(getWindowByIndex(i));
-
-			if (window && !window->isPrivate())
-			{
-				session.windows.append(window->getSession());
-			}
-			else if (i <= session.index)
-			{
-				--session.index;
-			}
+			session.windows.append(window->getSession());
 		}
-
-		session.windows.squeeze();
+		else if (i <= session.index)
+		{
+			--session.index;
+		}
 	}
+
+	session.windows.squeeze();
 
 	return session;
 }
