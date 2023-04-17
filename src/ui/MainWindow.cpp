@@ -282,6 +282,8 @@ void MainWindow::timerEvent(QTimerEvent *event)
 			}
 		}
 	}
+
+	QMainWindow::timerEvent(event);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
