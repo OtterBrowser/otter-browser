@@ -877,7 +877,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 								SettingsManager::setOption(SettingsManager::Choices_WarnOpenBookmarkFolderOption, !messageBox.checkBox()->isChecked());
 							}
 
-							if (urls.isEmpty() || !canOpen)
+							if (!canOpen || urls.isEmpty())
 							{
 								break;
 							}
