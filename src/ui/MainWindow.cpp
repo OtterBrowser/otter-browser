@@ -1832,19 +1832,21 @@ void MainWindow::handleToolBarAdded(int identifier)
 
 void MainWindow::handleToolBarRemoved(int identifier)
 {
-	if (m_toolBars.contains(identifier))
+	if (!m_toolBars.contains(identifier))
 	{
-		ToolBarWidget *toolBar(m_toolBars.take(identifier));
-
-		removeToolBarBreak(toolBar);
-		removeToolBar(toolBar);
-
-		toolBar->deleteLater();
-
-		SessionsManager::markSessionAsModified();
-
-		emit arbitraryActionsStateChanged({ActionsManager::ShowToolBarAction});
+		return;
 	}
+
+	ToolBarWidget *toolBar(m_toolBars.take(identifier));
+
+	removeToolBarBreak(toolBar);
+	removeToolBar(toolBar);
+
+	toolBar->deleteLater();
+
+	SessionsManager::markSessionAsModified();
+
+	emit arbitraryActionsStateChanged({ActionsManager::ShowToolBarAction});
 }
 
 void MainWindow::handleTransferStarted()
