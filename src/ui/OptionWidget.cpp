@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -284,13 +284,15 @@ void OptionWidget::setChoices(const QStringList &choices)
 
 	for (int i = 0; i < choices.count(); ++i)
 	{
-		if (choices.at(i).isEmpty())
+		const QString choice(choices.at(i));
+
+		if (choice.isEmpty())
 		{
 			m_comboBox->insertSeparator(i);
 		}
 		else
 		{
-			m_comboBox->addItem(choices.at(i), choices.at(i));
+			m_comboBox->addItem(choice, choice);
 		}
 	}
 
