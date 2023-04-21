@@ -208,23 +208,25 @@ void OptionWidget::setDefaultValue(const QVariant &value)
 		}
 	}
 
-	if (!m_resetButton)
+	if (m_resetButton)
 	{
-		m_resetButton = new QPushButton(tr("Defaults"), this);
-		m_resetButton->setEnabled(m_defaultValue != getValue());
-
-		layout()->addWidget(m_resetButton);
-
-		connect(m_resetButton, &QPushButton::clicked, this, [&]()
-		{
-			setValue(getDefaultValue());
-
-			if (m_resetButton)
-			{
-				m_resetButton->setEnabled(false);
-			}
-		});
+		return;
 	}
+
+	m_resetButton = new QPushButton(tr("Defaults"), this);
+	m_resetButton->setEnabled(m_defaultValue != getValue());
+
+	layout()->addWidget(m_resetButton);
+
+	connect(m_resetButton, &QPushButton::clicked, this, [&]()
+	{
+		setValue(getDefaultValue());
+
+		if (m_resetButton)
+		{
+			m_resetButton->setEnabled(false);
+		}
+	});
 }
 
 void OptionWidget::setValue(const QVariant &value)
