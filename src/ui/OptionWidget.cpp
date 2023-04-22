@@ -325,11 +325,13 @@ void OptionWidget::setChoices(const QVector<SettingsManager::OptionDefinition::C
 
 	for (int i = 0; i < choices.count(); ++i)
 	{
-		if (choices.at(i).isValid())
-		{
-			m_comboBox->addItem(choices.at(i).icon, choices.at(i).getTitle(), (choices.at(i).value.isEmpty() ? QVariant() : choices.at(i).value));
+		const SettingsManager::OptionDefinition::Choice choice(choices.at(i));
 
-			if (hasIcons && choices.at(i).icon.isNull())
+		if (choice.isValid())
+		{
+			m_comboBox->addItem(choice.icon, choice.getTitle(), (choice.value.isEmpty() ? QVariant() : choice.value));
+
+			if (hasIcons && choice.icon.isNull())
 			{
 				m_comboBox->setItemData(i, ItemModel::createDecoration(), Qt::DecorationRole);
 			}
