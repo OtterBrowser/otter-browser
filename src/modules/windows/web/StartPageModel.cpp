@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -326,21 +326,21 @@ bool StartPageModel::requestThumbnail(const QUrl &url, quint64 identifier, bool 
 
 	WebPageThumbnailJob *job(AddonsManager::getWebBackend()->createPageThumbnailJob(url, {SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt(), SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt()}));
 
-	if (job)
+	if (!job)
 	{
-		connect(job, &WebPageThumbnailJob::jobFinished, this, [=]()
-		{
-			handleThumbnailCreated(identifier, job->getThumbnail(), job->getTitle());
-		});
-
-		m_tileReloads[identifier] = needsTitleUpdate;
-
-		job->start();
-
-		return true;
+		return false;
 	}
 
-	return false;
+	connect(job, &WebPageThumbnailJob::jobFinished, this, [=]()
+	{
+		handleThumbnailCreated(identifier, job->getThumbnail(), job->getTitle());
+	});
+
+	m_tileReloads[identifier] = needsTitleUpdate;
+
+	job->start();
+
+	return true;
 }
 
 bool StartPageModel::reloadTile(const QModelIndex &index, bool needsTitleUpdate)
