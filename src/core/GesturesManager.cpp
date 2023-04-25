@@ -1182,13 +1182,13 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 					break;
 				}
 
-				m_events.append(new QWheelEvent(wheelEvent->pos(), wheelEvent->globalPos(), wheelEvent->pixelDelta(), wheelEvent->angleDelta(), wheelEvent->delta(), wheelEvent->orientation(), wheelEvent->buttons(), wheelEvent->modifiers()));
+				m_events.append(new QWheelEvent(wheelEvent->position(), wheelEvent->globalPosition(), wheelEvent->pixelDelta(), wheelEvent->angleDelta(), wheelEvent->buttons(), wheelEvent->modifiers(), wheelEvent->phase(), wheelEvent->inverted(), wheelEvent->source()));
 
 				recognizeMoveStep(wheelEvent);
 
 				m_steps.append(MouseProfile::Gesture::Step(wheelEvent));
 
-				m_lastClick = wheelEvent->pos();
+				m_lastClick = wheelEvent->position().toPoint();
 
 				if (m_recognizer)
 				{

@@ -71,7 +71,7 @@ bool GesturesFilter::eventFilter(QObject *object, QEvent *event)
 
 			break;
 		case QEvent::Wheel:
-			position = static_cast<QWheelEvent*>(event)->pos();
+			position = static_cast<QWheelEvent*>(event)->position().toPoint();
 
 			break;
 		default:
