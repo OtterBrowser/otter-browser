@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -1126,7 +1126,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		if (event->type() == QEvent::Wheel)
 		{
-			m_currentIndex = m_listView->indexAt(m_listView->mapFromGlobal(static_cast<QWheelEvent*>(event)->globalPos()));
+			m_currentIndex = m_listView->indexAt(m_listView->mapFromGlobal(static_cast<QWheelEvent*>(event)->globalPosition().toPoint()));
 		}
 		else
 		{
