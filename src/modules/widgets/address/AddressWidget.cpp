@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -228,7 +228,7 @@ QVector<AddressDelegate::TextSegment> AddressDelegate::highlightSegments(const Q
 	for (int i = 0; i < segments.count(); ++i)
 	{
 		const TextSegment segment(segments.at(i));
-		const QStringList subSegments(segment.text.split(highlight, QString::KeepEmptyParts, Qt::CaseInsensitive));
+		const QStringList subSegments(segment.text.split(highlight, Qt::KeepEmptyParts, Qt::CaseInsensitive));
 		int highlightAmount(0);
 
 		for (int j = 0; j < subSegments.count(); ++j)
