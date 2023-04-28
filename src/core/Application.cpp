@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -159,7 +159,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 		if (file.open(QIODevice::ReadOnly))
 		{
-			QStringList temporaryArguments(QString::fromLatin1(file.readAll()).trimmed().split(QLatin1Char(' '), QString::SkipEmptyParts));
+			QStringList temporaryArguments(QString::fromLatin1(file.readAll()).trimmed().split(QLatin1Char(' '), Qt::SkipEmptyParts));
 
 			if (!temporaryArguments.isEmpty())
 			{
