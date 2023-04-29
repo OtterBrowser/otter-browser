@@ -1,3 +1,11 @@
+otter-browser (1.0.03-1) UNRELEASED; urgency=medium
+
+  * New upstream release.
+  * d/control: switch to debhelper 13, using debhelper-compat.
+  * New dependency on libqt5xmlpatterns5-dev.
+
+ -- Martin Quinson <mquinson@debian.org>  Sat, 29 Apr 2023 18:24:12 +0200
+
 otter-browser (0.9.06.01-1~vivid~ppa4) vivid; urgency=medium
 
   * Update package description and dependencies
