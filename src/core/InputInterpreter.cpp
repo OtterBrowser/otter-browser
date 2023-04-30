@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -125,7 +125,6 @@ InputInterpreter::InterpreterResult InputInterpreter::interpret(const QString &t
 		return result;
 	}
 
-#if QT_VERSION >= 0x050900
 	if (!flags.testFlag(NoHostLookupFlag))
 	{
 		const int lookupTimeout(SettingsManager::getOption(SettingsManager::AddressField_HostLookupTimeoutOption).toInt());
@@ -167,7 +166,6 @@ InputInterpreter::InterpreterResult InputInterpreter::interpret(const QString &t
 			}
 		}
 	}
-#endif
 
 	result.searchQuery = text;
 	result.type = InterpreterResult::SearchType;
