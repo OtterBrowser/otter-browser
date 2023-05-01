@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -214,11 +214,7 @@ NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 	{
 		if (QFile::exists(paths.at(i)))
 		{
-#if QT_VERSION >= 0x050F00
 			configuration.addCaCertificates(QDir(paths.at(i)).filePath(QLatin1String("*")), QSsl::Pem, QSslCertificate::PatternSyntax::Wildcard);
-#else
-			QSslSocket::addDefaultCaCertificates(QDir(paths.at(i)).filePath(QLatin1String("*")), QSsl::Pem, QRegExp::Wildcard);
-#endif
 		}
 	}
 

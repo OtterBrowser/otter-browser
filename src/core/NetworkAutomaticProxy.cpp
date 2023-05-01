@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2014 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -25,9 +25,7 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDate>
 #include <QtCore/QFile>
-#if QT_VERSION >= 0x050C00
 #include <QtCore/QRegularExpression>
-#endif
 #include <QtNetwork/QHostInfo>
 #include <QtNetwork/QNetworkInterface>
 
@@ -127,11 +125,7 @@ bool PacUtils::dnsDomainIs(const QString &host, const QString &domain) const
 
 bool PacUtils::shExpMatch(const QString &string, const QString &expression) const
 {
-#if QT_VERSION >= 0x050C00
 	return QRegularExpression(QRegularExpression::wildcardToRegularExpression(expression)).match(string).hasMatch();
-#else
-	return QRegExp(expression, Qt::CaseInsensitive, QRegExp::Wildcard).exactMatch(string);
-#endif
 }
 
 bool PacUtils::weekdayRange(QString fromDay, QString toDay, const QString &gmt) const

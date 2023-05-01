@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -116,15 +116,9 @@ BookmarksModel::Bookmark* BookmarksImportJob::getImportFolder() const
 
 QDateTime BookmarksImportJob::getDateTime(const QString &timestamp) const
 {
-#if QT_VERSION < 0x050800
-	const uint seconds(timestamp.toUInt());
-
-	return ((seconds > 0) ? QDateTime::fromTime_t(seconds) : QDateTime());
-#else
 	const qint64 seconds(timestamp.toLongLong());
 
 	return ((seconds != 0) ? QDateTime::fromSecsSinceEpoch(seconds) : QDateTime());
-#endif
 }
 
 bool BookmarksImportJob::areDuplicatesAllowed() const
