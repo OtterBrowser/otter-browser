@@ -997,14 +997,7 @@ void ItemViewWidget::paintEvent(QPaintEvent *event)
 	}
 
 	QPainter painter(viewport());
-#if QT_VERSION >= 0x050C00
 	painter.setPen(palette().placeholderText().color());
-#else
-	QColor placeholderColor(palette().text().color());
-	placeholderColor.setAlpha(128);
-
-	painter.setPen(placeholderColor);
-#endif
 	painter.setFont(Utils::multiplyFontSize(font(), 2));
 	painter.drawText(rect(), Qt::AlignCenter, tr("No items"));
 }

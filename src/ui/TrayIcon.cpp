@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -143,11 +143,7 @@ void TrayIcon::updateMenu()
 
 void TrayIcon::showMessage(const Notification::Message &message)
 {
-#if QT_VERSION >= 0x050900
 	m_trayIcon->showMessage(message.getTitle(), message.message, message.getIcon());
-#else
-	m_trayIcon->showMessage(message.getTitle(), message.message);
-#endif
 
 	const int visibilityDuration(SettingsManager::getOption(SettingsManager::Interface_NotificationVisibilityDurationOption).toInt());
 
