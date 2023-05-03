@@ -88,11 +88,7 @@ QDBusArgument& operator<<(QDBusArgument &argument, const QImage &image)
 
 	argument << (target.depth() / channels);
 	argument << channels;
-#if QT_VERSION >= 0x050A00
 	argument << QByteArray(reinterpret_cast<const char*>(target.bits()), target.sizeInBytes());
-#else
-	argument << QByteArray(reinterpret_cast<const char*>(target.bits()), target.byteCount());
-#endif
 	argument.endStructure();
 
 	return argument;
@@ -113,9 +109,7 @@ namespace Otter
 FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(QObject *parent) : PlatformIntegration(parent),
 	m_notificationsInterface(nullptr)
 {
-#if QT_VERSION >= 0x050700
 	QGuiApplication::setDesktopFileName(QLatin1String(DESKTOP_ENTRY_NAME) + QLatin1String(".desktop"));
-#endif
 
 	QTimer::singleShot(250, this, [&]()
 	{

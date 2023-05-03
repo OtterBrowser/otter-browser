@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -23,11 +23,7 @@
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/ToolBarWidget.h"
 
-#if QT_VERSION >= 0x050900
 #include <QtCore/QOperatingSystemVersion>
-#else
-#include <QtCore/QSysInfo>
-#endif
 #include <QtGui/QPainter>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QStyleOption>
@@ -38,11 +34,7 @@ namespace Otter
 {
 
 WindowsPlatformStyle::WindowsPlatformStyle(const QString &name) : Style(name),
-#if QT_VERSION >= 0x050900
 	m_isModernStyle(QOperatingSystemVersion::current() >= QOperatingSystemVersion::Windows10)
-#else
-	m_isModernStyle(QSysInfo::windowsVersion() >= QSysInfo::WV_10_0)
-#endif
 {
 	checkForModernStyle();
 
@@ -204,11 +196,7 @@ void WindowsPlatformStyle::drawPrimitive(PrimitiveElement element, const QStyleO
 
 void WindowsPlatformStyle::checkForModernStyle()
 {
-#if QT_VERSION >= 0x050900
 	if (QOperatingSystemVersion::current() >= QOperatingSystemVersion::Windows10)
-#else
-	if (QSysInfo::windowsVersion() >= QSysInfo::WV_10_0)
-#endif
 	{
 		HIGHCONTRAST information;
 		information.cbSize = sizeof(HIGHCONTRAST);

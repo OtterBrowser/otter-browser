@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2016 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -34,9 +34,7 @@
 
 #include <QtCore/QDir>
 #include <QtCore/QMimeData>
-#if QT_VERSION >= 0x050900
 #include <QtCore/QOperatingSystemVersion>
-#endif
 #include <QtCore/QTemporaryDir>
 #include <QtCore/QtMath>
 #include <QtGui/QDesktopServices>
@@ -62,16 +60,10 @@ WindowsPlatformIntegration::WindowsPlatformIntegration(QObject *parent) : Platfo
 	m_registrationPairs({{QLatin1String("http"), ProtocolType}, {QLatin1String("https"), ProtocolType}, {QLatin1String("ftp"), ProtocolType}, {QLatin1String(".htm"), ExtensionType}, {QLatin1String(".html"), ExtensionType}, {QLatin1String(".xhtml"), ExtensionType}}),
 	m_cleanupTimer(0)
 {
-#if QT_VERSION >= 0x050900
 	const QOperatingSystemVersion systemVersion(QOperatingSystemVersion::current());
 
 	m_is7OrNewer = (systemVersion >= QOperatingSystemVersion::Windows7);
 	m_is10OrNewer = (systemVersion >= QOperatingSystemVersion::Windows10);
-#else
-	m_isVistaOrNewer = (QSysInfo::windowsVersion() >= QSysInfo::WV_VISTA);
-	m_is7OrNewer = (QSysInfo::windowsVersion() >= QSysInfo::WV_WINDOWS7);
-	m_is10OrNewer = (QSysInfo::windowsVersion() >= QSysInfo::WV_WINDOWS10);
-#endif
 
 	if (m_is7OrNewer)
 	{
