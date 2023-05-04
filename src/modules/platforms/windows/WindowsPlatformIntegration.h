@@ -121,7 +121,6 @@ private:
 	int m_cleanupTimer;
 
 	static QProcessEnvironment m_environment;
-	static bool m_isVistaOrNewer;
 	static bool m_is7OrNewer;
 	static bool m_is10OrNewer;
 };
