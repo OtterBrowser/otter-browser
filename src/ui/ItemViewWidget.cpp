@@ -593,7 +593,7 @@ void ItemViewWidget::ensureInitialized()
 
 	setSort(settings.getValue(QLatin1String("sortColumn"), -1).toInt(), ((settings.getValue(QLatin1String("sortOrder"), QLatin1String("ascending")).toString() == QLatin1String("ascending")) ? Qt::AscendingOrder : Qt::DescendingOrder));
 
-	const QStringList columns(settings.getValue(QLatin1String("columns")).toString().split(QLatin1Char(','), QString::SkipEmptyParts));
+	const QStringList columns(settings.getValue(QLatin1String("columns")).toString().split(QLatin1Char(','), Qt::SkipEmptyParts));
 	bool shouldStretchLastSection(true);
 
 	if (!columns.isEmpty())
