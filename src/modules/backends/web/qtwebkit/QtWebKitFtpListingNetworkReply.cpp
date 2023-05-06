@@ -86,7 +86,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 		setError(ContentNotFoundError, tr("Unknown command"));
 
-		emit error(ContentNotFoundError);
+		emit errorOccurred(ContentNotFoundError);
 
 		return;
 	}

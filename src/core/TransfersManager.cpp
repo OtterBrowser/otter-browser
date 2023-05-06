@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -213,7 +213,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 	{
 		connect(m_reply, &QNetworkReply::downloadProgress, this, &Transfer::handleDownloadProgress);
 		connect(m_reply, &QNetworkReply::finished, this, &Transfer::handleDownloadFinished);
-		connect(m_reply, static_cast<void(QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), this, &Transfer::handleDownloadError);
+		connect(m_reply, &QNetworkReply::errorOccurred, this, &Transfer::handleDownloadError);
 	}
 	else
 	{
@@ -810,7 +810,7 @@ bool Transfer::resume()
 	connect(m_reply, &QNetworkReply::downloadProgress, this, &Transfer::handleDownloadProgress);
 	connect(m_reply, &QNetworkReply::readyRead, this, &Transfer::handleDataAvailable);
 	connect(m_reply, &QNetworkReply::finished, this, &Transfer::handleDownloadFinished);
-	connect(m_reply, static_cast<void(QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), this, &Transfer::handleDownloadError);
+	connect(m_reply, &QNetworkReply::errorOccurred, this, &Transfer::handleDownloadError);
 
 	if (m_updateTimer == 0 && m_updateInterval > 0)
 	{
@@ -853,7 +853,7 @@ bool Transfer::restart()
 	connect(m_reply, &QNetworkReply::downloadProgress, this, &Transfer::handleDownloadProgress);
 	connect(m_reply, &QNetworkReply::readyRead, this, &Transfer::handleDataAvailable);
 	connect(m_reply, &QNetworkReply::finished, this, &Transfer::handleDownloadFinished);
-	connect(m_reply, static_cast<void(QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), this, &Transfer::handleDownloadError);
+	connect(m_reply, &QNetworkReply::errorOccurred, this, &Transfer::handleDownloadError);
 
 	if (m_updateTimer == 0 && m_updateInterval > 0)
 	{
