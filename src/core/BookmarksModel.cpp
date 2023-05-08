@@ -1141,7 +1141,7 @@ BookmarksModel::Bookmark* BookmarksModel::getBookmarkByPath(const QString &path,
 	}
 
 	Bookmark *bookmark(m_rootItem);
-	const QStringList directories(path.split(QLatin1Char('/'), QString::SkipEmptyParts));
+	const QStringList directories(path.split(QLatin1Char('/'), Qt::SkipEmptyParts));
 
 	for (int i = 0; i < directories.count(); ++i)
 	{
