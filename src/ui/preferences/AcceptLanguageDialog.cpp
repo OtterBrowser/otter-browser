@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 	m_ui->languagesViewWidget->setModel(m_model);
 	m_ui->languagesViewWidget->setRowsMovable(true);
 
-	const QStringList chosenLanguages(languages.split(QLatin1Char(','), QString::SkipEmptyParts));
+	const QStringList chosenLanguages(languages.split(QLatin1Char(','), Qt::SkipEmptyParts));
 
 	for (int i = 0; i < chosenLanguages.count(); ++i)
 	{
