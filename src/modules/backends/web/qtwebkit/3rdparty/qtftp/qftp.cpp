@@ -329,7 +329,7 @@ void QFtpDTP::connectToHost(const QString & host, quint16 port)
     socket->setObjectName(QLatin1String("QFtpDTP Passive state socket"));
     connect(socket, &QTcpSocket::connected, this, &QFtpDTP::socketConnected);
     connect(socket, &QTcpSocket::readyRead, this, &QFtpDTP::socketReadyRead);
-    connect(socket, static_cast<void(QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &QFtpDTP::socketError);
+    connect(socket, &QTcpSocket::errorOccurred, this, &QFtpDTP::socketError);
     connect(socket, &QTcpSocket::disconnected, this, &QFtpDTP::socketConnectionClosed);
     connect(socket, &QTcpSocket::bytesWritten, this, &QFtpDTP::socketBytesWritten);
 
@@ -774,7 +774,7 @@ void QFtpDTP::setupSocket()
     socket->setObjectName(QLatin1String("QFtpDTP Active state socket"));
     connect(socket, &QTcpSocket::connected, this, &QFtpDTP::socketConnected);
     connect(socket, &QTcpSocket::readyRead, this, &QFtpDTP::socketReadyRead);
-    connect(socket, static_cast<void(QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &QFtpDTP::socketError);
+    connect(socket, &QTcpSocket::errorOccurred, this, &QFtpDTP::socketError);
     connect(socket, &QTcpSocket::disconnected, this, &QFtpDTP::socketConnectionClosed);
     connect(socket, &QTcpSocket::bytesWritten, this, &QFtpDTP::socketBytesWritten);
 
@@ -808,7 +808,7 @@ QFtpPI::QFtpPI(QObject *parent) :
     connect(&commandSocket, &QTcpSocket::connected, this, &QFtpPI::connected);
     connect(&commandSocket, &QTcpSocket::disconnected, this, &QFtpPI::connectionClosed);
     connect(&commandSocket, &QTcpSocket::readyRead, this, &QFtpPI::readyRead);
-    connect(&commandSocket, static_cast<void(QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, static_cast<void(QFtpPI::*)(QAbstractSocket::SocketError)>(&QFtpPI::error));
+    connect(&commandSocket, &QTcpSocket::errorOccurred, this, static_cast<void(QFtpPI::*)(QAbstractSocket::SocketError)>(&QFtpPI::error));
     connect(&dtp, &QFtpDTP::connectState, this, &QFtpPI::dtpConnectState);
 }
 
