@@ -748,15 +748,6 @@ qreal calculatePercent(qint64 amount, qint64 total, int multiplier)
 	return ((static_cast<qreal>(amount) / static_cast<qreal>(total)) * multiplier);
 }
 
-int calculateCharacterWidth(QChar character, const QFontMetrics &fontMetrics)
-{
-#if QT_VERSION >= 0x050B00
-	return fontMetrics.horizontalAdvance(character);
-#else
-	return fontMetrics.width(character);
-#endif
-}
-
 int calculateTextWidth(const QString &text, const QFontMetrics &fontMetrics)
 {
 #if QT_VERSION >= 0x050B00

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -112,7 +112,7 @@ void ToolButtonWidget::paintEvent(QPaintEvent *event)
 
 	initStyleOption(&option);
 
-	option.text = option.fontMetrics.elidedText(option.text, (isLeftToRight() ? Qt::ElideRight : Qt::ElideLeft), (option.rect.width() - (Utils::calculateCharacterWidth(QLatin1Char(' '), option.fontMetrics) * 2) - ((toolButtonStyle() == Qt::ToolButtonTextBesideIcon) ? iconSize().width() : 0)));
+	option.text = option.fontMetrics.elidedText(option.text, (isLeftToRight() ? Qt::ElideRight : Qt::ElideLeft), (option.rect.width() - (option.fontMetrics.horizontalAdvance(QLatin1Char(' ')) * 2) - ((toolButtonStyle() == Qt::ToolButtonTextBesideIcon) ? iconSize().width() : 0)));
 
 	painter.drawComplexControl(QStyle::CC_ToolButton, option);
 }
