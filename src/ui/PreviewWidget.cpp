@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 
 #include "PreviewWidget.h"
 #include "../core/SettingsManager.h"
-#include "../core/Utils.h"
 
 #include <QtGui/QGuiApplication>
 #include <QtWidgets/QVBoxLayout>
@@ -89,7 +88,7 @@ void PreviewWidget::setPreview(const QString &text, const QPixmap &pixmap, bool 
 		m_pixmapLabel->show();
 	}
 
-	const int width(Utils::calculateTextWidth(text, m_textLabel->fontMetrics()) + 8);
+	const int width(m_textLabel->fontMetrics().horizontalAdvance(text) + 8);
 
 	m_textLabel->setFixedWidth(((showFullText || pixmap.isNull()) && width < 260) ? width : 260);
 	m_textLabel->setText(showFullText ? text : m_textLabel->fontMetrics().elidedText(text, (isLeftToRight() ? Qt::ElideRight : Qt::ElideLeft), m_textLabel->width()));

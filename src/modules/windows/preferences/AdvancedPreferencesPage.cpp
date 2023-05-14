@@ -1540,7 +1540,7 @@ void AdvancedPreferencesPage::updatePageSwitcher()
 
 	for (int i = 0; i < m_ui->advancedViewWidget->model()->rowCount(); ++i)
 	{
-		const int itemWidth(Utils::calculateTextWidth(m_ui->advancedViewWidget->model()->index(i, 0).data(Qt::DisplayRole).toString(), m_ui->advancedViewWidget->fontMetrics()) + 10);
+		const int itemWidth(m_ui->advancedViewWidget->fontMetrics().horizontalAdvance(m_ui->advancedViewWidget->model()->index(i, 0).data(Qt::DisplayRole).toString()) + 10);
 
 		if (itemWidth > maximumWidth)
 		{

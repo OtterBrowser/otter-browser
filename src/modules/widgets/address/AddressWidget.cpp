@@ -184,14 +184,14 @@ void AddressDelegate::drawCompletionText(QPainter *painter, const QFont &font, c
 
 	const QFontMetrics fontMetrics(font);
 	const QFontMetrics highlightFontMetrics(highlightFont);
-	const int xLength(Utils::calculateTextWidth(QString(QLatin1Char('X')), highlightFontMetrics));
+	const int xLength(highlightFontMetrics.horizontalAdvance(QLatin1Char('X')));
 
 	for (int i = 0; i < segments.count(); ++i)
 	{
 		const TextSegment segment(segments.at(i));
 		const QFontMetrics segmentFontMetrics(segment.isHighlighted ? highlightFontMetrics : fontMetrics);
 		const int maximumLength(availableRectangle.width() - xLength);
-		const int length(Utils::calculateTextWidth(segment.text, segmentFontMetrics));
+		const int length(segmentFontMetrics.horizontalAdvance(segment.text));
 
 		painter->setFont(segment.isHighlighted ? highlightFont : font);
 		painter->setPen(segment.color);

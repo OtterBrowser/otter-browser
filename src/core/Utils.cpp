@@ -748,15 +748,6 @@ qreal calculatePercent(qint64 amount, qint64 total, int multiplier)
 	return ((static_cast<qreal>(amount) / static_cast<qreal>(total)) * multiplier);
 }
 
-int calculateTextWidth(const QString &text, const QFontMetrics &fontMetrics)
-{
-#if QT_VERSION >= 0x050B00
-	return fontMetrics.horizontalAdvance(text);
-#else
-	return fontMetrics.width(text);
-#endif
-}
-
 bool isUrl(const QString &text)
 {
 	return QRegularExpression(QLatin1String(R"(^[^\s]+\.[^\s]{2,}$)")).match(text).hasMatch();
