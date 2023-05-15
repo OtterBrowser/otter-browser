@@ -316,7 +316,7 @@ bool AddonsManager::isSpecialPage(const QUrl &url)
 
 	const QString identifier(url.path());
 
-	return (m_specialPages.contains(identifier) && m_specialPages[identifier].types & SpecialPageInformation::StandaloneType);
+	return (m_specialPages.contains(identifier) && m_specialPages[identifier].types.testFlag(SpecialPageInformation::StandaloneType));
 }
 
 }
