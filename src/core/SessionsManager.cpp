@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -367,12 +367,26 @@ SessionInformation SessionsManager::getSession(const QString &path)
 
 				if (toolBarObject.contains(QLatin1String("normalVisibility")))
 				{
-					toolBarState.normalVisibility = ((toolBarObject.value(QLatin1String("normalVisibility")).toString() == QLatin1String("hidden")) ? Session::MainWindow::ToolBarState::AlwaysHiddenToolBar : Session::MainWindow::ToolBarState::AlwaysVisibleToolBar);
+					if (toolBarObject.value(QLatin1String("normalVisibility")).toString() == QLatin1String("hidden"))
+					{
+						toolBarState.normalVisibility = Session::MainWindow::ToolBarState::AlwaysHiddenToolBar;
+					}
+					else
+					{
+						toolBarState.normalVisibility = Session::MainWindow::ToolBarState::AlwaysVisibleToolBar;
+					}
 				}
 
 				if (toolBarObject.contains(QLatin1String("fullScreenVisibility")))
 				{
-					toolBarState.fullScreenVisibility = ((toolBarObject.value(QLatin1String("fullScreenVisibility")).toString() == QLatin1String("hidden")) ? Session::MainWindow::ToolBarState::AlwaysHiddenToolBar : Session::MainWindow::ToolBarState::AlwaysVisibleToolBar);
+					if (toolBarObject.value(QLatin1String("fullScreenVisibility")).toString() == QLatin1String("hidden"))
+					{
+						toolBarState.fullScreenVisibility = Session::MainWindow::ToolBarState::AlwaysHiddenToolBar;
+					}
+					else
+					{
+						toolBarState.fullScreenVisibility = Session::MainWindow::ToolBarState::AlwaysVisibleToolBar;
+					}
 				}
 
 				if (toolBarObject.contains(QLatin1String("row")))
