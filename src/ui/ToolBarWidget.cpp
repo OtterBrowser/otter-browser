@@ -1263,46 +1263,46 @@ void TabBarToolBarWidget::populateEntries()
 			if (m_tabBar && definition.entries.at(i).action == QLatin1String("TabBarWidget"))
 			{
 				addWidget(m_tabBar);
+
+				continue;
 			}
-			else
+
+			const bool isTabBar(definition.entries.at(i).action == QLatin1String("TabBarWidget"));
+
+			if (isTabBar && m_tabBar)
 			{
-				const bool isTabBar(definition.entries.at(i).action == QLatin1String("TabBarWidget"));
+				continue;
+			}
 
-				if (isTabBar && m_tabBar)
+			QWidget *widget(WidgetFactory::createToolBarItem(definition.entries.at(i), getWindow(), this));
+
+			if (widget)
+			{
+				addWidget(widget);
+
+				if (isTabBar)
 				{
-					continue;
+					m_tabBar = qobject_cast<TabBarWidget*>(widget);
+
+					if (m_tabBar)
+					{
+						connect(m_tabBar, &TabBarWidget::tabsAmountChanged, this, &TabBarToolBarWidget::updateVisibility);
+
+						updateVisibility();
+					}
 				}
-
-				QWidget *widget(WidgetFactory::createToolBarItem(definition.entries.at(i), getWindow(), this));
-
-				if (widget)
+				else
 				{
-					addWidget(widget);
-
-					if (isTabBar)
+					if (definition.entries.at(i).action == QLatin1String("AddressWidget"))
 					{
-						m_tabBar = qobject_cast<TabBarWidget*>(widget);
-
-						if (m_tabBar)
-						{
-							connect(m_tabBar, &TabBarWidget::tabsAmountChanged, this, &TabBarToolBarWidget::updateVisibility);
-
-							updateVisibility();
-						}
+						addressFields.append(widget);
 					}
-					else
+					else if (definition.entries.at(i).action == QLatin1String("SearchWidget"))
 					{
-						if (definition.entries.at(i).action == QLatin1String("AddressWidget"))
-						{
-							addressFields.append(widget);
-						}
-						else if (definition.entries.at(i).action == QLatin1String("SearchWidget"))
-						{
-							searchFields.append(widget);
-						}
-
-						layout()->setAlignment(widget, (isHorizontal ? Qt::AlignVCenter : Qt::AlignHCenter));
+						searchFields.append(widget);
 					}
+
+					layout()->setAlignment(widget, (isHorizontal ? Qt::AlignVCenter : Qt::AlignHCenter));
 				}
 			}
 		}
