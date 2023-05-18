@@ -1257,54 +1257,56 @@ void TabBarToolBarWidget::populateEntries()
 		if (definition.entries.at(i).action == QLatin1String("separator"))
 		{
 			addSeparator();
+
+			continue;
+		}
+
+		if (m_tabBar && definition.entries.at(i).action == QLatin1String("TabBarWidget"))
+		{
+			addWidget(m_tabBar);
+
+			continue;
+		}
+
+		const bool isTabBar(definition.entries.at(i).action == QLatin1String("TabBarWidget"));
+
+		if (isTabBar && m_tabBar)
+		{
+			continue;
+		}
+
+		QWidget *widget(WidgetFactory::createToolBarItem(definition.entries.at(i), getWindow(), this));
+
+		if (!widget)
+		{
+			continue;
+		}
+
+		addWidget(widget);
+
+		if (isTabBar)
+		{
+			m_tabBar = qobject_cast<TabBarWidget*>(widget);
+
+			if (m_tabBar)
+			{
+				connect(m_tabBar, &TabBarWidget::tabsAmountChanged, this, &TabBarToolBarWidget::updateVisibility);
+
+				updateVisibility();
+			}
 		}
 		else
 		{
-			if (m_tabBar && definition.entries.at(i).action == QLatin1String("TabBarWidget"))
+			if (definition.entries.at(i).action == QLatin1String("AddressWidget"))
 			{
-				addWidget(m_tabBar);
-
-				continue;
+				addressFields.append(widget);
+			}
+			else if (definition.entries.at(i).action == QLatin1String("SearchWidget"))
+			{
+				searchFields.append(widget);
 			}
 
-			const bool isTabBar(definition.entries.at(i).action == QLatin1String("TabBarWidget"));
-
-			if (isTabBar && m_tabBar)
-			{
-				continue;
-			}
-
-			QWidget *widget(WidgetFactory::createToolBarItem(definition.entries.at(i), getWindow(), this));
-
-			if (widget)
-			{
-				addWidget(widget);
-
-				if (isTabBar)
-				{
-					m_tabBar = qobject_cast<TabBarWidget*>(widget);
-
-					if (m_tabBar)
-					{
-						connect(m_tabBar, &TabBarWidget::tabsAmountChanged, this, &TabBarToolBarWidget::updateVisibility);
-
-						updateVisibility();
-					}
-				}
-				else
-				{
-					if (definition.entries.at(i).action == QLatin1String("AddressWidget"))
-					{
-						addressFields.append(widget);
-					}
-					else if (definition.entries.at(i).action == QLatin1String("SearchWidget"))
-					{
-						searchFields.append(widget);
-					}
-
-					layout()->setAlignment(widget, (isHorizontal ? Qt::AlignVCenter : Qt::AlignHCenter));
-				}
-			}
+			layout()->setAlignment(widget, (isHorizontal ? Qt::AlignVCenter : Qt::AlignHCenter));
 		}
 	}
 
