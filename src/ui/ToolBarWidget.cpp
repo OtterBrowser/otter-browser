@@ -445,21 +445,23 @@ void ToolBarWidget::populateEntries()
 				{
 					QWidget *widget(WidgetFactory::createToolBarItem(definition.entries.at(i), m_window, this));
 
-					if (widget)
+					if (!widget)
 					{
-						addWidget(widget);
-
-						if (definition.entries.at(i).action == QLatin1String("AddressWidget"))
-						{
-							m_addressFields.append(widget);
-						}
-						else if (definition.entries.at(i).action == QLatin1String("SearchWidget"))
-						{
-							m_searchFields.append(widget);
-						}
-
-						layout()->setAlignment(widget, (isHorizontal ? Qt::AlignVCenter : Qt::AlignHCenter));
+						continue;
 					}
+
+					addWidget(widget);
+
+					if (definition.entries.at(i).action == QLatin1String("AddressWidget"))
+					{
+						m_addressFields.append(widget);
+					}
+					else if (definition.entries.at(i).action == QLatin1String("SearchWidget"))
+					{
+						m_searchFields.append(widget);
+					}
+
+					layout()->setAlignment(widget, (isHorizontal ? Qt::AlignVCenter : Qt::AlignHCenter));
 				}
 			}
 
