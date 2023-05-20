@@ -162,67 +162,71 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 		QToolBar::paintEvent(event);
 	}
 
-	if (getDefinition().type == ToolBarsManager::BookmarksBarType && m_dropIndex >= 0)
+	if (getDefinition().type != ToolBarsManager::BookmarksBarType || m_dropIndex < 0)
 	{
-		const QWidget *widget(widgetForAction(actions().value(m_dropIndex)));
-		const int spacing(style()->pixelMetric(QStyle::PM_ToolBarItemSpacing));
-		int position(-1);
+		return;
+	}
 
-		if (widget)
+	const QWidget *widget(widgetForAction(actions().value(m_dropIndex)));
+	const int spacing(style()->pixelMetric(QStyle::PM_ToolBarItemSpacing));
+	int position(-1);
+
+	if (widget)
+	{
+		switch (m_area)
 		{
-			switch (m_area)
-			{
-				case Qt::LeftToolBarArea:
-				case Qt::RightToolBarArea:
-					position = (widget->geometry().top() - spacing);
+			case Qt::LeftToolBarArea:
+			case Qt::RightToolBarArea:
+				position = (widget->geometry().top() - spacing);
 
-					break;
-				default:
-					if (isLeftToRight())
-					{
-						position = (widget->geometry().left() - spacing);
-					}
-					else
-					{
-						position = (widget->geometry().right() + spacing);
-					}
+				break;
+			default:
+				if (isLeftToRight())
+				{
+					position = (widget->geometry().left() - spacing);
+				}
+				else
+				{
+					position = (widget->geometry().right() + spacing);
+				}
 
-					break;
-			}
+				break;
 		}
-		else if (m_dropIndex > 0)
+	}
+	else if (m_dropIndex > 0)
+	{
+		switch (m_area)
 		{
-			switch (m_area)
-			{
-				case Qt::LeftToolBarArea:
-				case Qt::RightToolBarArea:
-					position = (childrenRect().bottom() + spacing);
+			case Qt::LeftToolBarArea:
+			case Qt::RightToolBarArea:
+				position = (childrenRect().bottom() + spacing);
 
-					break;
-				default:
-					position = (isLeftToRight() ? (childrenRect().right() + spacing) : (childrenRect().left() - spacing));
+				break;
+			default:
+				position = (isLeftToRight() ? (childrenRect().right() + spacing) : (childrenRect().left() - spacing));
 
-					break;
-			}
+				break;
 		}
+	}
 
-		if (position >= 0)
-		{
-			QPainter painter(this);
+	if (position < 0)
+	{
+		return;
+	}
 
-			switch (m_area)
-			{
-				case Qt::LeftToolBarArea:
-				case Qt::RightToolBarArea:
-					Application::getStyle()->drawDropZone(QLine(0, position, width(), position), &painter);
+	QPainter painter(this);
 
-					break;
-				default:
-					Application::getStyle()->drawDropZone(QLine(position, 0, position, height()), &painter);
+	switch (m_area)
+	{
+		case Qt::LeftToolBarArea:
+		case Qt::RightToolBarArea:
+			Application::getStyle()->drawDropZone(QLine(0, position, width(), position), &painter);
 
-					break;
-			}
-		}
+			break;
+		default:
+			Application::getStyle()->drawDropZone(QLine(position, 0, position, height()), &painter);
+
+			break;
 	}
 }
 
