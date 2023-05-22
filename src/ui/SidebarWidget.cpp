@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -360,25 +360,27 @@ void SidebarWidget::updatePanels()
 	{
 		const QString &panel(currentPanels.at(i));
 
-		if (!panels.contains(panel))
+		if (panels.contains(panel))
 		{
-			ContentsWidget *widget(m_panels[panel]);
-			widget->hide();
-
-			if (panel == m_currentPanel)
-			{
-				m_currentPanel.clear();
-
-				m_ui->containerLayout->removeWidget(widget);
-				m_ui->containerWidget->hide();
-
-				m_resizerWidget->hide();
-			}
-
-			widget->deleteLater();
-
-			m_panels.remove(panel);
+			continue;
 		}
+
+		ContentsWidget *widget(m_panels[panel]);
+		widget->hide();
+
+		if (panel == m_currentPanel)
+		{
+			m_currentPanel.clear();
+
+			m_ui->containerLayout->removeWidget(widget);
+			m_ui->containerWidget->hide();
+
+			m_resizerWidget->hide();
+		}
+
+		widget->deleteLater();
+
+		m_panels.remove(panel);
 	}
 
 	const QStringList specialPages(AddonsManager::getSpecialPages(AddonsManager::SpecialPageInformation::SidebarPanelType));
