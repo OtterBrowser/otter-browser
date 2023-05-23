@@ -348,12 +348,11 @@ void SidebarWidget::updatePanels()
 		return;
 	}
 
-	const QStringList panels(definition.panels);
-
 	qDeleteAll(m_buttons.begin(), m_buttons.end());
 
 	m_buttons.clear();
 
+	const QStringList panels(definition.panels);
 	const QStringList currentPanels(m_panels.keys());
 
 	for (int i = 0; i < currentPanels.count(); ++i)
