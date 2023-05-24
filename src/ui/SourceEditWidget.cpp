@@ -134,7 +134,7 @@ void MarginWidget::mouseReleaseEvent(QMouseEvent *event)
 
 void MarginWidget::updateNumbers(const QRect &rectangle, int offset)
 {
-	if (offset)
+	if (offset != 0)
 	{
 		scroll(0, offset);
 	}
