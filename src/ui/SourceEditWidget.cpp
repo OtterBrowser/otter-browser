@@ -417,23 +417,25 @@ void SourceEditWidget::updateSelection()
 		{
 			textCursor = document()->find(m_findText, textCursor, nativeFlags);
 
-			if (!textCursor.isNull())
+			if (textCursor.isNull())
 			{
-				if (textCursor == m_findTextSelection)
-				{
-					findTextActiveResult = (findTextMatchesAmount + 1);
-				}
-				else
-				{
-					QTextEdit::ExtraSelection extraResultSelection;
-					extraResultSelection.format.setBackground(QColor(255, 255, 0));
-					extraResultSelection.cursor = textCursor;
-
-					extraSelections.append(extraResultSelection);
-				}
-
-				++findTextMatchesAmount;
+				continue;
 			}
+
+			if (textCursor == m_findTextSelection)
+			{
+				findTextActiveResult = (findTextMatchesAmount + 1);
+			}
+			else
+			{
+				QTextEdit::ExtraSelection extraResultSelection;
+				extraResultSelection.format.setBackground(QColor(255, 255, 0));
+				extraResultSelection.cursor = textCursor;
+
+				extraSelections.append(extraResultSelection);
+			}
+
+			++findTextMatchesAmount;
 		}
 	}
 
