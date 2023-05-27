@@ -461,21 +461,23 @@ void SourceEditWidget::setSyntax(SyntaxHighlighter::HighlightingSyntax syntax)
 
 void SourceEditWidget::setZoom(int zoom)
 {
-	if (zoom != m_zoom)
+	if (zoom == m_zoom)
 	{
-		m_zoom = zoom;
-
-		const QFont font(Utils::multiplyFontSize(QFontDatabase::systemFont(QFontDatabase::FixedFont), (static_cast<qreal>(zoom) / 100)));
-
-		setFont(font);
-
-		if (m_marginWidget)
-		{
-			m_marginWidget->setFont(font);
-		}
-
-		emit zoomChanged(zoom);
+		return;
 	}
+
+	m_zoom = zoom;
+
+	const QFont font(Utils::multiplyFontSize(QFontDatabase::systemFont(QFontDatabase::FixedFont), (static_cast<qreal>(zoom) / 100)));
+
+	setFont(font);
+
+	if (m_marginWidget)
+	{
+		m_marginWidget->setFont(font);
+	}
+
+	emit zoomChanged(zoom);
 }
 
 ActionsManager::ActionDefinition::State SourceEditWidget::getActionState(int identifier, const QVariantMap &parameters) const
