@@ -419,7 +419,7 @@ void SourceEditWidget::updateSelection()
 
 			if (textCursor.isNull())
 			{
-				continue;
+				break;
 			}
 
 			if (textCursor == m_findTextSelection)
