@@ -180,16 +180,18 @@ void CookiesContentsWidget::removeDomainCookies()
 	{
 		const QStandardItem *domainItem((indexes.at(i).isValid() && indexes.at(i).parent() == m_model->invisibleRootItem()->index()) ? findDomainItem(indexes.at(i).sibling(indexes.at(i).row(), 0).data(Qt::ToolTipRole).toString()) : m_model->itemFromIndex(indexes.at(i).parent()));
 
-		if (domainItem)
+		if (!domainItem)
 		{
-			for (int j = 0; j < domainItem->rowCount(); ++j)
-			{
-				const QNetworkCookie cookie(getCookie(ItemModel::getItemData(domainItem->child(j, 0), CookieRole)));
+			continue;
+		}
 
-				if (!cookies.contains(cookie))
-				{
-					cookies.append(cookie);
-				}
+		for (int j = 0; j < domainItem->rowCount(); ++j)
+		{
+			const QNetworkCookie cookie(getCookie(ItemModel::getItemData(domainItem->child(j, 0), CookieRole)));
+
+			if (!cookies.contains(cookie))
+			{
+				cookies.append(cookie);
 			}
 		}
 	}
