@@ -598,11 +598,11 @@ QFont multiplyFontSize(QFont font, qreal multiplier)
 {
 	if (font.pixelSize() > 0)
 	{
-		font.setPixelSize(font.pixelSize() * 2);
+		font.setPixelSize(font.pixelSize() * multiplier);
 	}
 	else
 	{
-		font.setPointSize(font.pointSize() * 2);
+		font.setPointSize(font.pointSize() * multiplier);
 	}
 
 	return font;
