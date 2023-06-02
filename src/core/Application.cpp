@@ -1249,7 +1249,17 @@ void Application::setLocale(const QString &locale)
 		installTranslator(m_applicationTranslator);
 	}
 
-	const QString identifier(locale.endsWith(QLatin1String(".qm")) ? QFileInfo(locale).baseName().remove(QLatin1String("otter-browser_")) : ((locale == QLatin1String("system")) ? QLocale::system().name() : locale));
+	QString identifier(locale);
+
+	if (locale.endsWith(QLatin1String(".qm")))
+	{
+		identifier = QFileInfo(locale).baseName().remove(QLatin1String("otter-browser_"));
+	}
+	else if (locale == QLatin1String("system"))
+	{
+		identifier = QLocale::system().name();
+	}
+
 	const bool useSystemLocale(locale.isEmpty() || locale == QLatin1String("system"));
 
 	m_qtTranslator->load(QLatin1String("qt_") + (useSystemLocale ? QLocale::system().name() : identifier), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
