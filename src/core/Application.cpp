@@ -1086,7 +1086,7 @@ void Application::handlePositionalArguments(QCommandLineParser *parser, bool for
 		openHints = SessionsManager::NewTabOpen;
 	}
 
-	const QStringList urls((openHints == SessionsManager::DefaultOpen || !parser->positionalArguments().isEmpty()) ? parser->positionalArguments() : QStringList({}));
+	const QStringList urls((openHints == SessionsManager::DefaultOpen || !parser->positionalArguments().isEmpty()) ? parser->positionalArguments() : QStringList());
 
 	if (!forceOpen && urls.isEmpty())
 	{
