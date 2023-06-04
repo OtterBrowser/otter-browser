@@ -1692,7 +1692,11 @@ ActionsManager::ActionDefinition::State Application::getActionState(int identifi
 					const WebBackend *webBackend(AddonsManager::getWebBackend());
 
 					state.text = translate("actions", "Import HTML Bookmarks…");
-					state.isEnabled = (webBackend && webBackend->hasCapability(WebBackend::BookmarksImportCapability));
+
+					if (!webBackend || !webBackend->hasCapability(WebBackend::BookmarksImportCapability))
+					{
+						state.isEnabled = false;
+					}
 				}
 				else if (exchanger == QLatin1String("OperaBookmarksImport"))
 				{
