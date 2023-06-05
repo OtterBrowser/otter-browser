@@ -904,25 +904,27 @@ void Application::removeWindow(MainWindow *mainWindow)
 
 void Application::scheduleUpdateCheck(int interval)
 {
-	if (!m_updateCheckTimer)
+	if (m_updateCheckTimer)
 	{
-		m_updateCheckTimer = new LongTermTimer(this);
-		m_updateCheckTimer->start(static_cast<quint64>(interval * 1000 * SECONDS_IN_DAY));
-
-		connect(m_updateCheckTimer, &LongTermTimer::timeout, this, [&]()
-		{
-			UpdateChecker *updateChecker(new UpdateChecker(this));
-
-			connect(updateChecker, &UpdateChecker::finished, this, &Application::handleUpdateCheckResult);
-
-			const int interval(SettingsManager::getOption(SettingsManager::Updates_CheckIntervalOption).toInt());
-
-			if (interval > 0 && !SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList().isEmpty())
-			{
-				scheduleUpdateCheck(interval);
-			}
-		});
+		return;
 	}
+
+	m_updateCheckTimer = new LongTermTimer(this);
+	m_updateCheckTimer->start(static_cast<quint64>(interval * 1000 * SECONDS_IN_DAY));
+
+	connect(m_updateCheckTimer, &LongTermTimer::timeout, this, [&]()
+	{
+		UpdateChecker *updateChecker(new UpdateChecker(this));
+
+		connect(updateChecker, &UpdateChecker::finished, this, &Application::handleUpdateCheckResult);
+
+		const int interval(SettingsManager::getOption(SettingsManager::Updates_CheckIntervalOption).toInt());
+
+		if (interval > 0 && !SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList().isEmpty())
+		{
+			scheduleUpdateCheck(interval);
+		}
+	});
 }
 
 void Application::handleOptionChanged(int identifier, const QVariant &value)
