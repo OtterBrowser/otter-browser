@@ -715,6 +715,7 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 			break;
 		case ActionsManager::ActivateWindowAction:
+			if (parameters.contains(QLatin1String("window")))
 			{
 				const quint64 windowIdentifier(parameters.value(QLatin1String("window")).toULongLong());
 
