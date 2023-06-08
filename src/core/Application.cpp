@@ -745,7 +745,10 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 			return;
 		case ActionsManager::ExchangeDataAction:
-			DataExchangerDialog::createDialog(parameters.value(QLatin1String("exchanger")).toString(), m_activeWindow);
+			if (parameters.contains(QLatin1String("exchanger")))
+			{
+				DataExchangerDialog::createDialog(parameters.value(QLatin1String("exchanger")).toString(), m_activeWindow);
+			}
 
 			return;
 		case ActionsManager::SwitchApplicationLanguageAction:
@@ -1686,6 +1689,7 @@ ActionsManager::ActionDefinition::State Application::getActionState(int identifi
 
 			break;
 		case ActionsManager::ExchangeDataAction:
+			if (parameters.contains(QLatin1String("exchanger")))
 			{
 				const QString exchanger(parameters.value(QLatin1String("exchanger")).toString());
 
