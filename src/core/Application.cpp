@@ -1757,20 +1757,9 @@ bool Application::canClose()
 {
 	if (TransfersManager::hasRunningTransfers() && SettingsManager::getOption(SettingsManager::Choices_WarnQuitTransfersOption).toBool())
 	{
-		const QVector<Transfer*> transfers(TransfersManager::getTransfers());
-		int runningTransfers(0);
-
-		for (int i = 0; i < transfers.count(); ++i)
-		{
-			if (transfers.at(i)->getState() == Transfer::RunningState)
-			{
-				++runningTransfers;
-			}
-		}
-
 		QMessageBox messageBox;
 		messageBox.setWindowTitle(tr("Question"));
-		messageBox.setText(tr("You are about to quit while %n files are still being downloaded.", "", runningTransfers));
+		messageBox.setText(tr("You are about to quit while %n files are still being downloaded.", "", TransfersManager::getRunningTransfersCount()));
 		messageBox.setInformativeText(tr("Do you want to continue?"));
 		messageBox.setIcon(QMessageBox::Question);
 		messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);

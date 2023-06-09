@@ -161,6 +161,7 @@ public:
 	static Transfer* startTransfer(QNetworkReply *reply, const QString &target = {}, Transfer::TransferOptions options = Transfer::CanAskForPathOption);
 	static QVector<Transfer*> getTransfers();
 	static ActiveTransfersInformation getActiveTransfersInformation();
+	static int getRunningTransfersCount();
 	static bool removeTransfer(Transfer *transfer, bool keepFile = true);
 	static bool isDownloading(const QString &source, const QString &target = {});
 	static bool hasRunningTransfers();

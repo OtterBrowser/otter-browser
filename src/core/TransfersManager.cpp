@@ -1314,6 +1314,21 @@ TransfersManager::ActiveTransfersInformation TransfersManager::getActiveTransfer
 	return information;
 }
 
+int TransfersManager::getRunningTransfersCount()
+{
+	int runningTransfers(0);
+
+	for (int i = 0; i < m_transfers.count(); ++i)
+	{
+		if (m_transfers.at(i)->getState() == Transfer::RunningState)
+		{
+			++runningTransfers;
+		}
+	}
+
+	return runningTransfers;
+}
+
 bool TransfersManager::removeTransfer(Transfer *transfer, bool keepFile)
 {
 	if (!transfer || !m_transfers.contains(transfer))
