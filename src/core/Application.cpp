@@ -1463,7 +1463,7 @@ QString Application::createReport(ReportOptions options)
 		stream.setFieldWidth(0);
 		stream << QLatin1String("\n\t");
 		stream.setFieldWidth(30);
-		stream << QLatin1String("Current CPU Architecture");
+		stream << QLatin1String("Runtime CPU Architecture");
 		stream << QSysInfo::currentCpuArchitecture();
 		stream.setFieldWidth(0);
 		stream << QLatin1String("\n\t");
@@ -1473,7 +1473,7 @@ QString Application::createReport(ReportOptions options)
 		stream.setFieldWidth(0);
 		stream << QLatin1String("\n\t");
 		stream.setFieldWidth(30);
-		stream << QLatin1String("Current Qt Version");
+		stream << QLatin1String("Runtime Qt Version");
 		stream << qVersion();
 		stream.setFieldWidth(0);
 		stream << QLatin1String("\n\t");
