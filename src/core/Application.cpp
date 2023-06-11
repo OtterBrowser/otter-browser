@@ -1483,7 +1483,7 @@ QString Application::createReport(ReportOptions options)
 		stream.setFieldWidth(0);
 		stream << QLatin1String("\n\t");
 		stream.setFieldWidth(30);
-		stream << QLatin1String("Locale");
+		stream << QLatin1String("System Locale");
 		stream << QLocale::system().name();
 		stream.setFieldWidth(0);
 		stream << QLatin1String("\n\n");
