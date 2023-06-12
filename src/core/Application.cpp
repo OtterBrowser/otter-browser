@@ -1379,6 +1379,7 @@ QString Application::createReport(ReportOptions options)
 	AddonsManager::createInstance();
 
 	const WebBackend *webBackend(AddonsManager::getWebBackend());
+	const QString gitBranch(QStringLiteral(OTTER_GIT_BRANCH).trimmed());
 	QString report;
 	QTextStream stream(&report);
 	stream.setFieldAlignment(QTextStream::AlignLeft);
@@ -1416,7 +1417,7 @@ QString Application::createReport(ReportOptions options)
 	stream.setFieldWidth(20);
 	stream << QLatin1String("Git Branch");
 
-	if (QStringLiteral(OTTER_GIT_BRANCH).trimmed().isEmpty() || QStringLiteral(OTTER_GIT_BRANCH) == QLatin1String("unknown"))
+	if (gitBranch.isEmpty() || gitBranch == QLatin1String("unknown"))
 	{
 		stream << QLatin1Char('-');
 	}
