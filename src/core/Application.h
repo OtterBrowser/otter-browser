@@ -57,6 +57,12 @@ public:
 
 	Q_DECLARE_FLAGS(ReportOptions, ReportOption)
 
+	struct ReportSection final
+	{
+		QString label;
+		QVector<QStringList> records;
+	};
+
 	explicit Application(int &argc, char **argv);
 	~Application();
 
