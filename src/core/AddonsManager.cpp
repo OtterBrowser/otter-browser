@@ -189,23 +189,23 @@ void AddonsManager::loadUserScripts()
 	{
 		const QString path(QDir(scripts.at(i).absoluteFilePath()).filePath(scripts.at(i).fileName() + QLatin1String(".js")));
 
-		if (QFile::exists(path))
-		{
-			const QJsonObject scriptObject(metaData.value(scripts.at(i).fileName()));
-			UserScript *script(new UserScript(path, QUrl(scriptObject.value(QLatin1String("downloadUrl")).toString()), m_instance));
-			script->setEnabled(scriptObject.value(QLatin1String("isEnabled")).toBool(false));
-
-			m_userScripts[scripts.at(i).fileName()] = script;
-
-			connect(script, &UserScript::metaDataChanged, m_instance, [=]()
-			{
-				emit m_instance->userScriptModified(script->getName());
-			});
-		}
-		else
+		if (!QFile::exists(path))
 		{
 			Console::addMessage(QCoreApplication::translate("main", "Failed to find User Script file: %1").arg(path), Console::OtherCategory, Console::WarningLevel);
+
+			continue;
 		}
+
+		const QJsonObject scriptObject(metaData.value(scripts.at(i).fileName()));
+		UserScript *script(new UserScript(path, QUrl(scriptObject.value(QLatin1String("downloadUrl")).toString()), m_instance));
+		script->setEnabled(scriptObject.value(QLatin1String("isEnabled")).toBool(false));
+
+		m_userScripts[scripts.at(i).fileName()] = script;
+
+		connect(script, &UserScript::metaDataChanged, m_instance, [=]()
+		{
+			emit m_instance->userScriptModified(script->getName());
+		});
 	}
 
 	m_areUserScriptsInitialized = true;
