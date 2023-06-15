@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Otter::ReportDialog</class>
- <widget class="QDialog" name="Otter::ReportDialog">
+ <class>Otter::DiagnosticReportDialog</class>
+ <widget class="QDialog" name="Otter::DiagnosticReportDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -60,7 +60,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>Otter::ReportDialog</receiver>
+   <receiver>Otter::DiagnosticReportDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -76,7 +76,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>Otter::ReportDialog</receiver>
+   <receiver>Otter::DiagnosticReportDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

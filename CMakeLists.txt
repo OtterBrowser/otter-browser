@@ -162,6 +162,7 @@ set(otter_src
 	src/ui/CookiePropertiesDialog.cpp
 	src/ui/DataExchangerDialog.cpp
 	src/ui/DateTimeTextLabelWidget.cpp
+	src/ui/DiagnosticReportDialog.cpp
 	src/ui/Dialog.cpp
 	src/ui/FeedPropertiesDialog.cpp
 	src/ui/FeedsComboBoxWidget.cpp
@@ -191,7 +192,6 @@ set(otter_src
 	src/ui/QuickResponseCodeDialog.cpp
 	src/ui/QuickResponseCodeWidget.cpp
 	src/ui/ReloadTimeDialog.cpp
-	src/ui/ReportDialog.cpp
 	src/ui/ResizerWidget.cpp
 	src/ui/SaveSessionDialog.cpp
 	src/ui/SearchEnginePropertiesDialog.cpp
@@ -310,6 +310,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/ContentBlockingProfileDialog.ui
 	src/ui/CookiePropertiesDialog.ui
 	src/ui/DataExchangerDialog.ui
+	src/ui/DiagnosticReportDialog.ui
 	src/ui/FeedPropertiesDialog.ui
 	src/ui/ImagePropertiesDialog.ui
 	src/ui/LocaleDialog.ui
@@ -321,7 +322,6 @@ qt5_wrap_ui(otter_ui
 	src/ui/PreferencesDialog.ui
 	src/ui/QuickResponseCodeDialog.ui
 	src/ui/ReloadTimeDialog.ui
-	src/ui/ReportDialog.ui
 	src/ui/SaveSessionDialog.ui
 	src/ui/SearchEnginePropertiesDialog.ui
 	src/ui/SessionsManagerDialog.ui

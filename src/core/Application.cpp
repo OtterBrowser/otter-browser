@@ -51,10 +51,10 @@
 #include "../modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.h"
 #endif
 #include "../ui/DataExchangerDialog.h"
+#include "../ui/DiagnosticReportDialog.h"
 #include "../ui/LocaleDialog.h"
 #include "../ui/MainWindow.h"
 #include "../ui/NotificationDialog.h"
-#include "../ui/ReportDialog.h"
 #include "../ui/SaveSessionDialog.h"
 #include "../ui/SessionsManagerDialog.h"
 #include "../ui/Style.h"
@@ -265,7 +265,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 		if (rawReportOptions.contains(QLatin1String("dialog")))
 		{
-			ReportDialog dialog(reportOptions);
+			DiagnosticReportDialog dialog(reportOptions);
 			dialog.exec();
 		}
 		else
@@ -768,7 +768,7 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 			return;
 		case ActionsManager::DiagnosticReportAction:
 			{
-				ReportDialog *dialog(new ReportDialog(Application::StandardReport, m_activeWindow));
+				DiagnosticReportDialog *dialog(new DiagnosticReportDialog(Application::StandardReport, m_activeWindow));
 				dialog->setAttribute(Qt::WA_DeleteOnClose, true);
 				dialog->show();
 			}

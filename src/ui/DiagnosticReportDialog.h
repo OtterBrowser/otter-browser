@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_REPORTDIALOG_H
-#define OTTER_REPORTDIALOG_H
+#ifndef OTTER_DIAGNOSTICREPORTDIALOG_H
+#define OTTER_DIAGNOSTICREPORTDIALOG_H
 
 #include "Dialog.h"
 #include "../core/Application.h"
@@ -28,22 +28,22 @@ namespace Otter
 
 namespace Ui
 {
-	class ReportDialog;
+	class DiagnosticReportDialog;
 }
 
-class ReportDialog final : public Dialog
+class DiagnosticReportDialog final : public Dialog
 {
 	Q_OBJECT
 
 public:
-	explicit ReportDialog(Application::ReportOptions options = Application::StandardReport, QWidget *parent = nullptr);
-	~ReportDialog();
+	explicit DiagnosticReportDialog(Application::ReportOptions options = Application::StandardReport, QWidget *parent = nullptr);
+	~DiagnosticReportDialog();
 
 protected:
 	void changeEvent(QEvent *event) override;
 
 private:
-	Ui::ReportDialog *m_ui;
+	Ui::DiagnosticReportDialog *m_ui;
 };
 
 }
