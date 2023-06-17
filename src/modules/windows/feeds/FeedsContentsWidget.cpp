@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -312,16 +312,18 @@ void FeedsContentsWidget::openEntry()
 
 void FeedsContentsWidget::removeEntry()
 {
-	if (m_feed)
+	if (!m_feed)
 	{
-		const QModelIndex index(m_ui->entriesViewWidget->currentIndex().sibling(m_ui->entriesViewWidget->currentIndex().row(), 0));
+		return;
+	}
 
-		if (index.isValid() && !index.data(IdentifierRole).isNull())
-		{
-			m_feed->markEntryAsRemoved(index.data(IdentifierRole).toString());
+	const QModelIndex index(m_ui->entriesViewWidget->currentIndex().sibling(m_ui->entriesViewWidget->currentIndex().row(), 0));
 
-			m_ui->entriesViewWidget->removeRow();
-		}
+	if (index.isValid() && !index.data(IdentifierRole).isNull())
+	{
+		m_feed->markEntryAsRemoved(index.data(IdentifierRole).toString());
+
+		m_ui->entriesViewWidget->removeRow();
 	}
 }
 
