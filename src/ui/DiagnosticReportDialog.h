@@ -43,6 +43,7 @@ protected:
 	void changeEvent(QEvent *event) override;
 
 private:
+	QPushButton *m_copyButton;
 	Ui::DiagnosticReportDialog *m_ui;
 };
 

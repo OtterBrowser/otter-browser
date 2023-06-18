@@ -31,14 +31,17 @@ namespace Otter
 {
 
 DiagnosticReportDialog::DiagnosticReportDialog(Application::ReportOptions options, QWidget *parent) : Dialog(parent),
+	m_copyButton(nullptr),
 	m_ui(new Ui::DiagnosticReportDialog)
 {
 	m_ui->setupUi(this);
 	m_ui->reportLabel->setText(QLatin1String("<div style=\"white-space:pre;\">") + Application::createReport(options).trimmed() + QLatin1String("</div>"));
 	m_ui->reportLabel->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
 
+	m_copyButton = m_ui->buttonBox->addButton(tr("Copy"), QDialogButtonBox::ActionRole);
+
 	connect(this, &DiagnosticReportDialog::finished, this, &DiagnosticReportDialog::deleteLater);
-	connect(m_ui->buttonBox->addButton(tr("Copy"), QDialogButtonBox::ActionRole), &QPushButton::clicked, this, [&]()
+	connect(m_copyButton, &QPushButton::clicked, this, [&]()
 	{
 		QGuiApplication::clipboard()->setText(m_ui->reportLabel->text().remove(QRegularExpression(QLatin1String("<[^>]*>"))));
 	});
@@ -56,6 +59,8 @@ void DiagnosticReportDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+
+		m_copyButton->setText(tr("Copy"));
 	}
 }
 
