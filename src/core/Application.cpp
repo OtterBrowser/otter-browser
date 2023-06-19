@@ -272,6 +272,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		{
 			QTextStream stream(stdout);
 			stream << createReport(reportOptions);
+			stream.flush();
 		}
 
 		return;
