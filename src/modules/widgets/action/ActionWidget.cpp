@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -145,33 +145,31 @@ void ActionWidget::dragEnterEvent(QDragEnterEvent *event)
 
 void ActionWidget::dropEvent(QDropEvent *event)
 {
-	if (event->mimeData()->hasUrls())
-	{
-		QVariantMap parameters(getParameters());
-		const QVector<QUrl> urls(Utils::extractUrls(event->mimeData()));
-		SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(((m_action->getIdentifier() == ActionsManager::NewWindowAction || m_action->getIdentifier() == ActionsManager::NewWindowPrivateAction) ? SessionsManager::NewWindowOpen : SessionsManager::NewTabOpen), Qt::LeftButton, event->keyboardModifiers()));
-
-		if (m_action->getIdentifier() == ActionsManager::NewTabPrivateAction || m_action->getIdentifier() == ActionsManager::NewWindowPrivateAction)
-		{
-			hints |= SessionsManager::PrivateOpen;
-		}
-
-		parameters[QLatin1String("hints")] = QVariant(hints);
-
-		for (int i = 0; i < urls.count(); ++i)
-		{
-			QVariantMap actionParameters(parameters);
-			actionParameters[QLatin1String("url")] = urls.at(i);
-
-			Application::triggerAction(ActionsManager::OpenUrlAction, actionParameters, this);
-		}
-
-		event->accept();
-	}
-	else
+	if (!event->mimeData()->hasUrls())
 	{
 		event->ignore();
 	}
+
+	QVariantMap parameters(getParameters());
+	const QVector<QUrl> urls(Utils::extractUrls(event->mimeData()));
+	SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(((m_action->getIdentifier() == ActionsManager::NewWindowAction || m_action->getIdentifier() == ActionsManager::NewWindowPrivateAction) ? SessionsManager::NewWindowOpen : SessionsManager::NewTabOpen), Qt::LeftButton, event->keyboardModifiers()));
+
+	if (m_action->getIdentifier() == ActionsManager::NewTabPrivateAction || m_action->getIdentifier() == ActionsManager::NewWindowPrivateAction)
+	{
+		hints |= SessionsManager::PrivateOpen;
+	}
+
+	parameters[QLatin1String("hints")] = QVariant(hints);
+
+	for (int i = 0; i < urls.count(); ++i)
+	{
+		QVariantMap actionParameters(parameters);
+		actionParameters[QLatin1String("url")] = urls.at(i);
+
+		Application::triggerAction(ActionsManager::OpenUrlAction, actionParameters, this);
+	}
+
+	event->accept();
 }
 
 void ActionWidget::setWindow(Window *window)
