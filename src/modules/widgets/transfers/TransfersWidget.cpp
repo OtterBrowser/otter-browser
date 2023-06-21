@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -72,17 +72,19 @@ TransfersWidget::TransfersWidget(const ToolBarsManager::ToolBarDefinition::Entry
 		{
 			const QWidgetAction *widgetAction(qobject_cast<QWidgetAction*>(actions.at(i)));
 
-			if (widgetAction && widgetAction->defaultWidget())
+			if (!widgetAction || !widgetAction->defaultWidget())
 			{
-				const TransferActionWidget *transferActionWidget(qobject_cast<TransferActionWidget*>(widgetAction->defaultWidget()));
+				continue;
+			}
 
-				if (transferActionWidget && transferActionWidget->getTransfer() == transfer)
-				{
-					menu()->removeAction(actions.at(i));
-					menu()->removeAction(actions.value(i + 1));
+			const TransferActionWidget *transferActionWidget(qobject_cast<TransferActionWidget*>(widgetAction->defaultWidget()));
 
-					break;
-				}
+			if (transferActionWidget && transferActionWidget->getTransfer() == transfer)
+			{
+				menu()->removeAction(actions.at(i));
+				menu()->removeAction(actions.value(i + 1));
+
+				break;
 			}
 		}
 
