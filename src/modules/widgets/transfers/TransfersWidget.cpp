@@ -132,27 +132,11 @@ void TransfersWidget::populateMenu()
 
 void TransfersWidget::updateState()
 {
-	const QVector<Transfer*> transfers(TransfersManager::getTransfers());
-	qint64 bytesTotal(0);
-	qint64 bytesReceived(0);
-	qint64 transfersAmount(0);
-
-	for (int i = 0; i < transfers.count(); ++i)
-	{
-		Transfer *transfer(transfers.at(i));
-
-		if (transfer->getState() == Transfer::RunningState && transfer->getBytesTotal() > 0)
-		{
-			++transfersAmount;
-
-			bytesTotal += transfer->getBytesTotal();
-			bytesReceived += transfer->getBytesReceived();
-		}
-	}
+	const TransfersManager::ActiveTransfersInformation information(TransfersManager::getActiveTransfersInformation());
 
 	m_icon = ThemesManager::createIcon(QLatin1String("transfers"));
 
-	if (transfersAmount > 0)
+	if (information.activeTransfersAmount - information.unknownProgressTransfersAmount > 0)
 	{
 		const int iconSize(this->iconSize().width());
 		QPixmap pixmap(m_icon.pixmap(iconSize, iconSize));
@@ -161,7 +145,7 @@ void TransfersWidget::updateState()
 		progressBarOption.palette = palette();
 		progressBarOption.minimum = 0;
 		progressBarOption.maximum = 100;
-		progressBarOption.progress = static_cast<int>(Utils::calculatePercent(bytesReceived, bytesTotal));
+		progressBarOption.progress = static_cast<int>(Utils::calculatePercent(information.bytesReceived, information.bytesTotal));
 		progressBarOption.rect = pixmap.rect();
 		progressBarOption.rect.setTop(progressBarOption.rect.bottom() - (iconSize / 8));
 
