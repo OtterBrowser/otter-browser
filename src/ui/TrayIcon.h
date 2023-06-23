@@ -43,10 +43,10 @@ public slots:
 	void hide();
 
 protected:
+	void timerEvent(QTimerEvent *event) override;
 	void showMessage(const Notification::Message &message);
 
 protected slots:
-	void timerEvent(QTimerEvent *event) override;
 	void toggleWindowsVisibility();
 	void handleMessageClicked();
 	void handleMessageIgnored();
