@@ -390,7 +390,7 @@ void CacheContentsWidget::updateActions()
 	m_ui->previewLabel->setPixmap({});
 	m_ui->deleteButton->setEnabled(!domain.isEmpty());
 
-	if (!url.isEmpty())
+	if (!url.isValid())
 	{
 		m_ui->addressLabelWidget->setText({});
 		m_ui->typeLabelWidget->setText({});
