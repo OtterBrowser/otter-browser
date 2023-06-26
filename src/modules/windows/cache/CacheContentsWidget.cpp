@@ -440,7 +440,7 @@ void CacheContentsWidget::updateActions()
 	}
 
 	QPixmap preview;
-	const int size(m_ui->formWidget->contentsRect().height() - 10);
+	const int size(m_ui->propertiesWidget->contentsRect().height() - 10);
 
 	if (device && mimeType.name().startsWith(QLatin1String("image")))
 	{
