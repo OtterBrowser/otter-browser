@@ -21,7 +21,9 @@
 #include "QtWebKitWebWidget.h"
 #include "QtWebKitNetworkManager.h"
 #include "QtWebKitPage.h"
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 #include "QtWebKitPluginFactory.h"
+#endif
 #include "QtWebKitWebBackend.h"
 #include "../../../../core/Application.h"
 #include "../../../../core/BookmarksManager.h"
@@ -103,9 +105,13 @@ QtWebKitWebWidget::QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *
 	m_networkManager(networkManager),
 	m_formRequestOperation(QNetworkAccessManager::GetOperation),
 	m_loadingState(FinishedLoadingState),
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 	m_amountOfDeferredPlugins(0),
+#endif
 	m_transfersTimer(0),
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 	m_canLoadPlugins(false),
+#endif
 	m_isAudioMuted(false),
 	m_isFullScreen(false),
 	m_isTypedIn(false),
@@ -1007,6 +1013,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			}
 
 			break;
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 		case ActionsManager::LoadPluginsAction:
 			{
 				m_canLoadPlugins = true;
@@ -1032,6 +1039,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			}
 
 			break;
+#endif
 		case ActionsManager::ViewSourceAction:
 			if (canViewSource())
 			{
@@ -1161,6 +1169,7 @@ void QtWebKitWebWidget::print(QPrinter *printer)
 	m_page->mainFrame()->print(printer);
 }
 
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 void QtWebKitWebWidget::clearPluginToken()
 {
 	QList<QWebFrame*> frames({m_page->mainFrame()});
@@ -1184,6 +1193,7 @@ void QtWebKitWebWidget::clearPluginToken()
 
 	m_pluginToken.clear();
 }
+#endif
 
 void QtWebKitWebWidget::resetSpellCheck(QWebElement element)
 {
@@ -1391,7 +1401,9 @@ void QtWebKitWebWidget::handleLoadStarted()
 
 	m_thumbnail = {};
 	m_messageToken = QUuid::createUuid().toString();
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 	m_canLoadPlugins = (getOption(SettingsManager::Permissions_EnablePluginsOption, getUrl()).toString() == QLatin1String("enabled"));
+#endif
 	m_loadingState = OngoingLoadingState;
 
 	setStatusMessage({});
@@ -1424,7 +1436,9 @@ void QtWebKitWebWidget::handleLoadFinished(bool result)
 	m_thumbnail = {};
 	m_loadingState = FinishedLoadingState;
 
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 	updateAmountOfDeferredPlugins();
+#endif
 	handleHistory();
 	startReloadTimer();
 
@@ -1647,6 +1661,7 @@ void QtWebKitWebWidget::notifySavePasswordRequested(const PasswordsManager::Pass
 	emit requestedSavePassword(password, isUpdate);
 }
 
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 void QtWebKitWebWidget::updateAmountOfDeferredPlugins()
 {
 	const int amountOfDeferredPlugins(m_canLoadPlugins ? 0 : findChildren<QtWebKitPluginWidget*>().count());
@@ -1663,16 +1678,21 @@ void QtWebKitWebWidget::updateAmountOfDeferredPlugins()
 		}
 	}
 }
+#endif
 
 void QtWebKitWebWidget::updateOptions(const QUrl &url)
 {
 	const QString encoding(getOption(SettingsManager::Content_DefaultCharacterEncodingOption, url).toString());
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 	const bool arePluginsEnabled(getOption(SettingsManager::Permissions_EnablePluginsOption, url).toString() != QLatin1String("disabled"));
+#endif
 	QWebSettings *settings(m_page->settings());
 	settings->setAttribute(QWebSettings::AutoLoadImages, (getOption(SettingsManager::Permissions_EnableImagesOption, url).toString() != QLatin1String("onlyCached")));
 	settings->setAttribute(QWebSettings::DnsPrefetchEnabled, getOption(SettingsManager::Network_EnableDnsPrefetchOption, url).toBool());
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 	settings->setAttribute(QWebSettings::PluginsEnabled, arePluginsEnabled);
 	settings->setAttribute(QWebSettings::JavaEnabled, arePluginsEnabled);
+#endif
 	settings->setAttribute(QWebSettings::JavascriptEnabled, (m_page->isDisplayingErrorPage() || m_page->isViewingMedia() || getOption(SettingsManager::Permissions_EnableJavaScriptOption, url).toBool()));
 	settings->setAttribute(QWebSettings::JavascriptCanAccessClipboard, getOption(SettingsManager::Permissions_ScriptsCanAccessClipboardOption, url).toBool());
 	settings->setAttribute(QWebSettings::JavascriptCanOpenWindows, (getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, url).toString() != QLatin1String("blockAll")));
@@ -1708,7 +1728,9 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 
 	m_networkManager->updateOptions(url);
 
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 	m_canLoadPlugins = (getOption(SettingsManager::Permissions_EnablePluginsOption, url).toString() == QLatin1String("enabled"));
+#endif
 }
 
 void QtWebKitWebWidget::clearOptions()
@@ -2041,10 +2063,12 @@ QString QtWebKitWebWidget::getMessageToken() const
 	return m_messageToken;
 }
 
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 QString QtWebKitWebWidget::getPluginToken() const
 {
 	return m_pluginToken;
 }
+#endif
 
 QVariant QtWebKitWebWidget::getPageInformation(PageInformation key) const
 {
@@ -2562,6 +2586,7 @@ int QtWebKitWebWidget::getZoom() const
 	return static_cast<int>(m_page->mainFrame()->zoomFactor() * 100);
 }
 
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 int QtWebKitWebWidget::getAmountOfDeferredPlugins() const
 {
 	return m_amountOfDeferredPlugins;
@@ -2571,6 +2596,7 @@ bool QtWebKitWebWidget::canLoadPlugins() const
 {
 	return m_canLoadPlugins;
 }
+#endif
 
 bool QtWebKitWebWidget::canGoBack() const
 {
@@ -2692,6 +2718,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 		if (event->type() == QEvent::MouseButtonPress && mouseEvent && mouseEvent->button() == Qt::LeftButton && SettingsManager::getOption(SettingsManager::Permissions_EnablePluginsOption, Utils::extractHost(getUrl())).toString() == QLatin1String("onDemand"))
 		{
 			const QWidget *widget(childAt(mouseEvent->pos()));
@@ -2714,9 +2741,11 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				}
 			}
 		}
+#endif
 
 		switch (event->type())
 		{
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 			case QEvent::ChildAdded:
 			case QEvent::ChildRemoved:
 				if (!m_canLoadPlugins && m_loadingState == FinishedLoadingState)
@@ -2725,6 +2754,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				}
 
 				break;
+#endif
 			case QEvent::ContextMenu:
 				{
 					const QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));

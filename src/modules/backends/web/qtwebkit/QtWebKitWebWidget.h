@@ -117,7 +117,9 @@ protected:
 	void showEvent(QShowEvent *event) override;
 	void hideEvent(QHideEvent *event) override;
 	void focusInEvent(QFocusEvent *event) override;
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 	void clearPluginToken();
+#endif
 	void resetSpellCheck(QWebElement element);
 	void muteAudio(QWebFrame *frame, bool isMuted);
 	void openRequest(const QNetworkRequest &request, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
@@ -129,11 +131,15 @@ protected:
 	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = {}) override;
 	QtWebKitPage* getPage() const;
 	QString getMessageToken() const;
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 	QString getPluginToken() const;
+#endif
 	QUrl resolveUrl(QWebFrame *frame, const QUrl &url) const;
 	QVector<LinkUrl> getLinks(const QString &query) const;
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 	int getAmountOfDeferredPlugins() const override;
 	bool canLoadPlugins() const;
+#endif
 	bool canGoBack() const override;
 	bool canGoForward() const override;
 	bool canFastForward() const override;
@@ -165,7 +171,9 @@ protected slots:
 	void notifyIconChanged();
 	void notifyPermissionRequested(QWebFrame *frame, QWebPage::Feature nativeFeature, bool cancel);
 	void notifySavePasswordRequested(const PasswordsManager::PasswordInformation &password, bool isUpdate);
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 	void updateAmountOfDeferredPlugins();
+#endif
 	void updateOptions(const QUrl &url);
 
 private:
@@ -174,7 +182,9 @@ private:
 	QtWebKitInspectorWidget *m_inspectorWidget;
 	QtWebKitNetworkManager *m_networkManager;
 	QString m_messageToken;
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 	QString m_pluginToken;
+#endif
 	QPixmap m_thumbnail;
 	QNetworkRequest m_formRequest;
 	QByteArray m_formRequestBody;
@@ -182,9 +192,13 @@ private:
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
 	QNetworkAccessManager::Operation m_formRequestOperation;
 	LoadingState m_loadingState;
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 	int m_amountOfDeferredPlugins;
+#endif
 	int m_transfersTimer;
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 	bool m_canLoadPlugins;
+#endif
 	bool m_isAudioMuted;
 	bool m_isFullScreen;
 	bool m_isTypedIn;
@@ -195,7 +209,9 @@ signals:
 
 friend class QtWebKitFrame;
 friend class QtWebKitNetworkManager;
+#ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 friend class QtWebKitPluginFactory;
+#endif
 friend class QtWebKitWebBackend;
 friend class QtWebKitPage;
 };
