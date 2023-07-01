@@ -185,6 +185,8 @@ QStringList IniSettings::getKeys() const
 	}
 
 	QStringList keys;
+	keys.reserve(m_data.count());
+
 	QMap<QString, QVariantMap>::const_iterator iterator;
 
 	for (iterator = m_data.constBegin(); iterator != m_data.constEnd(); ++iterator)
