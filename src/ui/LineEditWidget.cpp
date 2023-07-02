@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -642,28 +642,30 @@ void LineEditWidget::hidePopup()
 
 void LineEditWidget::setCompletion(const QString &completion)
 {
-	if (completion != m_completion)
+	if (completion == m_completion)
 	{
-		m_completion = completion;
-
-		if (m_shouldIgnoreCompletion)
-		{
-			m_shouldIgnoreCompletion = false;
-
-			return;
-		}
-
-		if (!m_completer)
-		{
-			m_completer = new QCompleter(this);
-			m_completer->setCompletionMode(QCompleter::InlineCompletion);
-
-			setCompleter(m_completer);
-		}
-
-		m_completer->setModel(new QStringListModel({completion}, m_completer));
-		m_completer->complete();
+		return;
 	}
+
+	m_completion = completion;
+
+	if (m_shouldIgnoreCompletion)
+	{
+		m_shouldIgnoreCompletion = false;
+
+		return;
+	}
+
+	if (!m_completer)
+	{
+		m_completer = new QCompleter(this);
+		m_completer->setCompletionMode(QCompleter::InlineCompletion);
+
+		setCompleter(m_completer);
+	}
+
+	m_completer->setModel(new QStringListModel({completion}, m_completer));
+	m_completer->complete();
 }
 
 void LineEditWidget::setDropMode(LineEditWidget::DropMode mode)
