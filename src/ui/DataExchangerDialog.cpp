@@ -201,13 +201,6 @@ void DataExchangerDialog::createDialog(const QString &exchangerName, QWidget *pa
 	}
 }
 
-void DataExchangerDialog::handleExchangeStarted(DataExchanger::ExchangeType type, int total)
-{
-	handleExchangeProgress(type, total, 0);
-
-	m_ui->messageTextLabel->setText(tr("Processing…"));
-}
-
 void DataExchangerDialog::handleExchangeProgress(DataExchanger::ExchangeType type, int total, int amount)
 {
 	Q_UNUSED(type)
@@ -300,7 +293,12 @@ void DataExchangerDialog::setupResults(DataExchanger *exchanger)
 	}
 
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, exchanger, &DataExchanger::cancel);
-	connect(exchanger, &DataExchanger::exchangeStarted, this, &DataExchangerDialog::handleExchangeStarted);
+	connect(exchanger, &DataExchanger::exchangeStarted, this, [&](DataExchanger::ExchangeType type, int total)
+	{
+		handleExchangeProgress(type, total, 0);
+
+		m_ui->messageTextLabel->setText(tr("Processing…"));
+	});
 	connect(exchanger, &DataExchanger::exchangeProgress, this, &DataExchangerDialog::handleExchangeProgress);
 	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &DataExchangerDialog::reject);
 }
