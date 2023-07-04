@@ -221,7 +221,18 @@ void DataExchangerDialog::handleExchangeFinished(DataExchanger::ExchangeType typ
 {
 	handleExchangeProgress(type, total, total);
 
-	m_ui->messageIconLabel->setPixmap(ThemesManager::createIcon((result == DataExchanger::SuccessfullOperation) ? QLatin1String("task-complete") : QLatin1String("task-reject")).pixmap(32, 32));
+	QString iconName;
+
+	if (result == DataExchanger::SuccessfullOperation)
+	{
+		iconName = QLatin1String("task-complete");
+	}
+	else
+	{
+		iconName = QLatin1String("task-reject");
+	}
+
+	m_ui->messageIconLabel->setPixmap(ThemesManager::createIcon(iconName).pixmap(32, 32));
 	m_ui->buttonBox->clear();
 	m_ui->buttonBox->addButton(QDialogButtonBox::Close);
 	m_ui->buttonBox->setEnabled(true);
