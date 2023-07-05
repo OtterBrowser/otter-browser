@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -83,13 +83,13 @@ void IconWidget::populateMenu()
 		}
 	});
 
-	if (!m_defaultIcon.isEmpty())
+	if (!m_defaultIconName.isEmpty())
 	{
 		menu()->addSeparator();
 		menu()->addAction(tr("Reset"), this, [&]()
 		{
-			setIcon(m_defaultIcon);
-		})->setEnabled(Utils::savePixmapAsDataUri(icon().pixmap(16, 16)) != m_defaultIcon);
+			setIcon(m_defaultIconName);
+		})->setEnabled(Utils::savePixmapAsDataUri(icon().pixmap(16, 16)) != m_defaultIconName);
 	}
 
 	menu()->addSeparator();
@@ -99,37 +99,37 @@ void IconWidget::populateMenu()
 	})->setEnabled(!icon().isNull());
 }
 
-void IconWidget::setIcon(const QString &icon)
+void IconWidget::setIcon(const QString &name)
 {
-	m_icon = icon;
+	m_iconName = name;
 
-	QToolButton::setIcon(ThemesManager::createIcon(icon));
+	QToolButton::setIcon(ThemesManager::createIcon(name));
 
-	emit iconChanged(m_icon);
+	emit iconChanged(m_iconName);
 }
 
 void IconWidget::setIcon(const QIcon &icon)
 {
-	m_icon = Utils::savePixmapAsDataUri(icon.pixmap(icon.availableSizes().value(0, {16, 16})));
+	m_iconName = Utils::savePixmapAsDataUri(icon.pixmap(icon.availableSizes().value(0, {16, 16})));
 
 	QToolButton::setIcon(icon);
 
-	emit iconChanged(m_icon);
+	emit iconChanged(m_iconName);
 }
 
-void IconWidget::setDefaultIcon(const QString &icon)
+void IconWidget::setDefaultIcon(const QString &name)
 {
-	m_defaultIcon = icon;
+	m_defaultIconName = name;
 
-	if (icon.isEmpty())
+	if (name.isEmpty())
 	{
-		setIcon(ThemesManager::createIcon(icon));
+		setIcon(ThemesManager::createIcon(name));
 	}
 }
 
 QString IconWidget::getIcon() const
 {
-	return m_icon;
+	return m_iconName;
 }
 
 int IconWidget::heightForWidth(int width) const
