@@ -123,7 +123,7 @@ void IconWidget::setDefaultIcon(const QString &name)
 
 	if (name.isEmpty())
 	{
-		setIcon(ThemesManager::createIcon(name));
+		setIcon(QIcon());
 	}
 }
 
