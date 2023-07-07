@@ -80,7 +80,19 @@ SidebarWidget::SidebarWidget(ToolBarWidget *parent) : QWidget(parent),
 
 	connect(parent, &ToolBarWidget::toolBarModified, this, &SidebarWidget::updateLayout);
 	connect(parent, &ToolBarWidget::toolBarModified, this, &SidebarWidget::updatePanels);
-	connect(m_resizerWidget, &ResizerWidget::finished, this, &SidebarWidget::saveSize);
+	connect(m_resizerWidget, &ResizerWidget::finished, [&]()
+	{
+		ToolBarsManager::ToolBarDefinition definition(m_parentToolBarWidget->getDefinition());
+		const int maximumSize(m_ui->containerWidget->maximumWidth());
+		const int panelSize((maximumSize == QWIDGETSIZE_MAX) ? -1 : maximumSize);
+
+		if (panelSize != definition.panelSize)
+		{
+			definition.panelSize = panelSize;
+
+			ToolBarsManager::setToolBar(definition);
+		}
+	});
 }
 
 SidebarWidget::~SidebarWidget()
@@ -282,20 +294,6 @@ void SidebarWidget::selectPanel(const QString &identifier)
 	if (m_currentPanel != definition.currentPanel)
 	{
 		definition.currentPanel = m_currentPanel;
-
-		ToolBarsManager::setToolBar(definition);
-	}
-}
-
-void SidebarWidget::saveSize()
-{
-	ToolBarsManager::ToolBarDefinition definition(m_parentToolBarWidget->getDefinition());
-	const int maximumSize(m_ui->containerWidget->maximumWidth());
-	const int panelSize((maximumSize == QWIDGETSIZE_MAX) ? -1 : maximumSize);
-
-	if (panelSize != definition.panelSize)
-	{
-		definition.panelSize = panelSize;
 
 		ToolBarsManager::setToolBar(definition);
 	}
