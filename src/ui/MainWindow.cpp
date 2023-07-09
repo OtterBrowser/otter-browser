@@ -1987,7 +1987,7 @@ void MainWindow::setActiveWindowByIdentifier(quint64 identifier, bool updateLast
 
 void MainWindow::setActiveWindow(Window *window)
 {
-	const Window *previousWindow((m_activeWindow && m_activeWindow->isAboutToClose()) ? nullptr : m_activeWindow);
+	const Window *previousWindow((m_activeWindow && !m_activeWindow->isAboutToClose()) ? m_activeWindow : nullptr);
 
 	m_activeWindow = window;
 
