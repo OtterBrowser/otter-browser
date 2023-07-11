@@ -890,7 +890,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 								break;
 							}
 
-							const SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters));
+							SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters));
 							int index(parameters.value(QLatin1String("index"), -1).toInt());
 
 							if (index < 0)
@@ -904,7 +904,12 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 
 							triggerAction(ActionsManager::OpenUrlAction, mutableParameters, trigger);
 
-							mutableParameters[QLatin1String("hints")] = QVariant((hints == SessionsManager::DefaultOpen || hints.testFlag(SessionsManager::CurrentTabOpen)) ? SessionsManager::NewTabOpen : hints);
+							if (hints == SessionsManager::DefaultOpen || hints.testFlag(SessionsManager::CurrentTabOpen))
+							{
+								hints = SessionsManager::NewTabOpen;
+							}
+
+							mutableParameters[QLatin1String("hints")] = QVariant(hints);
 
 							for (int i = 1; i < urls.count(); ++i)
 							{
