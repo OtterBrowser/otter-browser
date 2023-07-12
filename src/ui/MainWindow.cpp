@@ -895,7 +895,14 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 
 							if (index < 0)
 							{
-								index = ((!hints.testFlag(SessionsManager::EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (getCurrentWindowIndex() + 1) : (m_windows.count() - 1));
+								if (!hints.testFlag(SessionsManager::EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool())
+								{
+									index = (getCurrentWindowIndex() + 1);
+								}
+								else
+								{
+									index = (m_windows.count() - 1);
+								}
 							}
 
 							mutableParameters[QLatin1String("url")] = urls.at(0);
