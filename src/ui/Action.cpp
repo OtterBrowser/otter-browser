@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -192,13 +192,14 @@ void Action::setExecutor(ActionExecutor::Object executor)
 	const QMetaMethod updateStateMethod(metaObject()->method(metaObject()->indexOfMethod("updateState()")));
 	const QMetaMethod handleArbitraryActionsStateChangedMethod(metaObject()->method(metaObject()->indexOfMethod("handleArbitraryActionsStateChanged(QVector<int>)")));
 	const QMetaMethod handleCategorizedActionsStateChangeddMethod(metaObject()->method(metaObject()->indexOfMethod("handleCategorizedActionsStateChanged(QVector<int>)")));
+	const bool isExecutorValid(executor.isValid());
 
 	if (m_executor.isValid())
 	{
 		m_executor.disconnectSignals(this, &updateStateMethod, &handleArbitraryActionsStateChangedMethod, &handleCategorizedActionsStateChangeddMethod);
 	}
 
-	if (executor.isValid())
+	if (isExecutorValid)
 	{
 		switch (definition.scope)
 		{
@@ -234,7 +235,7 @@ void Action::setExecutor(ActionExecutor::Object executor)
 
 	updateState();
 
-	if (executor.isValid())
+	if (isExecutorValid)
 	{
 		m_executor.connectSignals(this, &updateStateMethod, &handleArbitraryActionsStateChangedMethod, &handleCategorizedActionsStateChangeddMethod);
 	}
