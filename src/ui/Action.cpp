@@ -83,19 +83,21 @@ void Action::initialize()
 
 void Action::triggerAction(bool isChecked)
 {
-	if (m_executor.isValid())
+	if (!m_executor.isValid())
 	{
-		if (m_identifier > 0 && getDefinition().flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
-		{
-			QVariantMap parameters(m_parameters);
-			parameters[QLatin1String("isChecked")] = isChecked;
+		return;
+	}
 
-			m_executor.triggerAction(m_identifier, parameters);
-		}
-		else
-		{
-			m_executor.triggerAction(m_identifier, m_parameters);
-		}
+	if (m_identifier > 0 && getDefinition().flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
+	{
+		QVariantMap parameters(m_parameters);
+		parameters[QLatin1String("isChecked")] = isChecked;
+
+		m_executor.triggerAction(m_identifier, parameters);
+	}
+	else
+	{
+		m_executor.triggerAction(m_identifier, m_parameters);
 	}
 }
 
