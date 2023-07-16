@@ -253,11 +253,11 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 				if (parsedDomains.at(j).startsWith(QLatin1Char('~')))
 				{
 					definition->allowedDomains.append(parsedDomains.at(j).mid(1));
-
-					continue;
 				}
-
-				definition->blockedDomains.append(parsedDomains.at(j));
+				else
+				{
+					definition->blockedDomains.append(parsedDomains.at(j));
+				}
 			}
 		}
 		else
