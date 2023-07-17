@@ -56,7 +56,7 @@ AdblockContentFiltersProfile::AdblockContentFiltersProfile(const ContentFiltersP
 		{
 			const QLocale::Language language(QLocale(languages.at(i)).language());
 
-			if (language != QLocale::AnyLanguage)
+			if (language != QLocale::AnyLanguage && !m_languages.contains(language))
 			{
 				m_languages.append(language);
 			}
