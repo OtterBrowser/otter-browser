@@ -422,18 +422,20 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 
 	for (int i = 0; i < node->children.count(); ++i)
 	{
-		if (node->children.at(i)->value == QLatin1Char('^'))
+		if (node->children.at(i)->value != QLatin1Char('^'))
 		{
-			currentResult = evaluateNodeRules(node, currentRule, request);
+			continue;
+		}
 
-			if (currentResult.isBlocked)
-			{
-				result = currentResult;
-			}
-			else if (currentResult.isException)
-			{
-				return currentResult;
-			}
+		currentResult = evaluateNodeRules(node, currentRule, request);
+
+		if (currentResult.isBlocked)
+		{
+			result = currentResult;
+		}
+		else if (currentResult.isException)
+		{
+			return currentResult;
 		}
 	}
 
