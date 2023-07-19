@@ -519,20 +519,22 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 		{
 			const bool supportsException(iterator.value() != WebSocketOption && iterator.value() != PopupOption);
 
-			if (rule->ruleOptions.testFlag(iterator.value()) || (supportsException && rule->ruleExceptions.testFlag(iterator.value())))
+			if (!rule->ruleOptions.testFlag(iterator.value()) && !(supportsException && rule->ruleExceptions.testFlag(iterator.value())))
 			{
-				if (request.resourceType == iterator.key())
-				{
-					isBlocked = (isBlocked ? rule->ruleOptions.testFlag(iterator.value()) : isBlocked);
-				}
-				else if (supportsException)
-				{
-					isBlocked = (isBlocked ? rule->ruleExceptions.testFlag(iterator.value()) : isBlocked);
-				}
-				else
-				{
-					isBlocked = false;
-				}
+				continue;
+			}
+
+			if (request.resourceType == iterator.key())
+			{
+				isBlocked = (isBlocked ? rule->ruleOptions.testFlag(iterator.value()) : isBlocked);
+			}
+			else if (supportsException)
+			{
+				isBlocked = (isBlocked ? rule->ruleExceptions.testFlag(iterator.value()) : isBlocked);
+			}
+			else
+			{
+				isBlocked = false;
 			}
 		}
 	}
