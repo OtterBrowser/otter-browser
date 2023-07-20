@@ -543,34 +543,34 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 		isBlocked = false;
 	}
 
-	if (isBlocked)
+	if (!isBlocked)
 	{
-		ContentFiltersManager::CheckResult result;
-		result.rule = rule->rule;
+		return {};
+	}
 
-		if (rule->isException)
+	ContentFiltersManager::CheckResult result;
+	result.rule = rule->rule;
+
+	if (rule->isException)
+	{
+		result.isBlocked = false;
+		result.isException = true;
+
+		if (rule->ruleOptions.testFlag(ElementHideOption))
 		{
-			result.isBlocked = false;
-			result.isException = true;
-
-			if (rule->ruleOptions.testFlag(ElementHideOption))
-			{
-				result.comesticFiltersMode = ContentFiltersManager::NoFilters;
-			}
-			else if (rule->ruleOptions.testFlag(GenericHideOption))
-			{
-				result.comesticFiltersMode = ContentFiltersManager::DomainOnlyFilters;
-			}
-
-			return result;
+			result.comesticFiltersMode = ContentFiltersManager::NoFilters;
 		}
-
-		result.isBlocked = true;
+		else if (rule->ruleOptions.testFlag(GenericHideOption))
+		{
+			result.comesticFiltersMode = ContentFiltersManager::DomainOnlyFilters;
+		}
 
 		return result;
 	}
 
-	return {};
+	result.isBlocked = true;
+
+	return result;
 }
 
 void AdblockContentFiltersProfile::raiseError(const QString &message, ProfileError error)
