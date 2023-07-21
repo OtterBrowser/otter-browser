@@ -757,18 +757,20 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::evaluateNodeRul
 
 	for (int i = 0; i < node->rules.count(); ++i)
 	{
-		if (node->rules.at(i))
+		if (!node->rules.at(i))
 		{
-			ContentFiltersManager::CheckResult currentResult(checkRuleMatch(node->rules.at(i), currentRule, request));
+			continue;
+		}
 
-			if (currentResult.isBlocked)
-			{
-				result = currentResult;
-			}
-			else if (currentResult.isException)
-			{
-				return currentResult;
-			}
+		ContentFiltersManager::CheckResult currentResult(checkRuleMatch(node->rules.at(i), currentRule, request));
+
+		if (currentResult.isBlocked)
+		{
+			result = currentResult;
+		}
+		else if (currentResult.isException)
+		{
+			return currentResult;
 		}
 	}
 
