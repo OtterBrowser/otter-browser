@@ -982,7 +982,7 @@ bool AdblockContentFiltersProfile::create(const QUrl &url, bool canOverwriteExis
 
 	if (QMessageBox::question(QApplication::activeWindow(), tr("Question"), tr("Do you want to add content blocking profile from this URL?\n\n%1").arg(url.toString()), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
 	{
-		return  false;
+		return false;
 	}
 
 	ContentFiltersProfile::ProfileSummary profileSummary;
