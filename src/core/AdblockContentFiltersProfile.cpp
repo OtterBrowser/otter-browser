@@ -1001,7 +1001,7 @@ bool AdblockContentFiltersProfile::create(const QUrl &url, bool canOverwriteExis
 
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
-		QMessageBox::critical(QApplication::activeWindow(), tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
+		QMessageBox::critical(QApplication::activeWindow(), tr("Error"), tr("Failed to create content blocking profile file."), QMessageBox::Close);
 
 		return false;
 	}
@@ -1012,7 +1012,7 @@ bool AdblockContentFiltersProfile::create(const QUrl &url, bool canOverwriteExis
 
 	if (!result)
 	{
-		QMessageBox::critical(QApplication::activeWindow(), tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
+		QMessageBox::critical(QApplication::activeWindow(), tr("Error"), tr("Failed to create content blocking profile file."), QMessageBox::Close);
 	}
 
 	file.close();
