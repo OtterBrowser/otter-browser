@@ -803,7 +803,7 @@ AdblockContentFiltersProfile::HeaderInformation AdblockContentFiltersProfile::lo
 		{
 			information.title = line.section(QLatin1Char(':'), 1).trimmed();
 
-			continue;
+			break;
 		}
 
 		if (lineNumber > 50)
