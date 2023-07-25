@@ -826,7 +826,7 @@ QHash<AdblockContentFiltersProfile::RuleType, quint32> AdblockContentFiltersProf
 
 	while (!stream.atEnd())
 	{
-		const QString line(stream.readLine().simplified());
+		const QString line(stream.readLine().trimmed());
 
 		if (line.isEmpty() || line.startsWith(QLatin1Char('!')))
 		{
