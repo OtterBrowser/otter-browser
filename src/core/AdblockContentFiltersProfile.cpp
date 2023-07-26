@@ -1047,7 +1047,7 @@ bool AdblockContentFiltersProfile::loadRules()
 
 	QTextStream stream(&file);
 	stream.setCodec("UTF-8");
-	stream.readLine(); // header
+	stream.readLine(); // skip header
 
 	m_root = new Node();
 
