@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -419,20 +419,22 @@ ContentFiltersManager::CheckResult ContentFiltersManager::checkUrl(const QVector
 
 	for (int i = 0; i < profiles.count(); ++i)
 	{
-		if (profiles.at(i) >= 0 && profiles.at(i) < m_contentBlockingProfiles.count())
+		if (profiles.at(i) < 0 || profiles.at(i) >= m_contentBlockingProfiles.count())
 		{
-			CheckResult currentResult(m_contentBlockingProfiles.at(profiles.at(i))->checkUrl(baseUrl, requestUrl, resourceType));
-			currentResult.profile = profiles.at(i);
-			currentResult.isFraud = result.isFraud;
+			continue;
+		}
 
-			if (currentResult.isBlocked)
-			{
-				result = currentResult;
-			}
-			else if (currentResult.isException)
-			{
-				return currentResult;
-			}
+		CheckResult currentResult(m_contentBlockingProfiles.at(profiles.at(i))->checkUrl(baseUrl, requestUrl, resourceType));
+		currentResult.profile = profiles.at(i);
+		currentResult.isFraud = result.isFraud;
+
+		if (currentResult.isBlocked)
+		{
+			result = currentResult;
+		}
+		else if (currentResult.isException)
+		{
+			return currentResult;
 		}
 	}
 
