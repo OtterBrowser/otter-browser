@@ -117,7 +117,7 @@ void BookmarksManager::updateVisits(const QUrl &url)
 
 void BookmarksManager::setLastUsedFolder(BookmarksModel::Bookmark *folder)
 {
-	if (folder)
+	if (folder && folder->isFolder())
 	{
 		m_lastUsedFolder = folder->getIdentifier();
 	}
