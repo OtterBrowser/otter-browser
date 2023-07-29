@@ -92,6 +92,7 @@ public:
 		quint64 getIdentifier() const;
 		BookmarkType getType() const;
 		int getVisits() const;
+		bool isFolder() const;
 		bool isAncestorOf(Bookmark *child) const;
 		bool operator<(const QStandardItem &other) const override;
 

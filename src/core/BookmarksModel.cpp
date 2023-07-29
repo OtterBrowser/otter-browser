@@ -310,6 +310,21 @@ int BookmarksModel::Bookmark::getVisits() const
 	return QStandardItem::data(VisitsRole).toInt();
 }
 
+bool BookmarksModel::Bookmark::isFolder() const
+{
+	switch (getType())
+	{
+		case RootBookmark:
+		case TrashBookmark:
+		case FolderBookmark:
+			return true;
+		default:
+			return false;
+	}
+
+	return false;
+}
+
 bool BookmarksModel::Bookmark::isAncestorOf(Bookmark *child) const
 {
 	if (child == nullptr || child == this)
