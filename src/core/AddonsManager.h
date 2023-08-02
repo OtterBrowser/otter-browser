@@ -126,8 +126,9 @@ public:
 
 		QUrl url;
 		PageTypes types;
+		bool isSingleton = false;
 
-		explicit SpecialPageInformation(const QString &titleValue, const QString &descriptionValue, const QUrl &urlValue, const QIcon &iconValue, PageTypes typesValue) : AddonInformation(titleValue, descriptionValue, iconValue), url(urlValue), types(typesValue)
+		explicit SpecialPageInformation(const QString &titleValue, const QString &descriptionValue, const QUrl &urlValue, const QIcon &iconValue, PageTypes typesValue, bool isSingletonValue = false) : AddonInformation(titleValue, descriptionValue, iconValue), url(urlValue), types(typesValue), isSingleton(isSingletonValue)
 		{
 		}
 
