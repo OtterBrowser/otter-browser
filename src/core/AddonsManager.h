@@ -128,7 +128,7 @@ public:
 		PageTypes types;
 		bool isSingleton = true;
 
-		explicit SpecialPageInformation(const QString &titleValue, const QString &descriptionValue, const QUrl &urlValue, const QIcon &iconValue, PageTypes typesValue, bool isSingletonValue = false) : AddonInformation(titleValue, descriptionValue, iconValue), url(urlValue), types(typesValue), isSingleton(isSingletonValue)
+		explicit SpecialPageInformation(const QString &titleValue, const QString &descriptionValue, const QUrl &urlValue, const QIcon &iconValue, PageTypes typesValue, bool isSingletonValue = true) : AddonInformation(titleValue, descriptionValue, iconValue), url(urlValue), types(typesValue), isSingleton(isSingletonValue)
 		{
 		}
 
