@@ -69,7 +69,7 @@ DataExchangerDialog::DataExchangerDialog(ExportDataExchanger *exporter, QWidget 
 
 		if (exists && !isManuallySpecified)
 		{
-			canExport = QMessageBox::warning(this, tr("Warning"), tr("%1 already exists.\nDo you want to replace it?").arg(QFileInfo(path).fileName()), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::Yes;
+			canExport = QMessageBox::warning(this, tr("Warning"), tr("File \"%1\" already exists.\nDo you want to replace it?").arg(QFileInfo(path).fileName()), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::Yes;
 		}
 
 		if (canExport)
