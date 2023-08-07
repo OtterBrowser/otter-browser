@@ -402,24 +402,20 @@ bool StartPageModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 
 	if (index.isValid())
 	{
-		BookmarksModel::Bookmark *newParent(nullptr);
+		BookmarksModel::Bookmark *parentBookmark(nullptr);
+		BookmarksModel::Bookmark *targetBookmark(BookmarksManager::getModel()->getBookmark(parent));
 
-		switch (static_cast<BookmarksModel::BookmarkType>(parent.data(BookmarksModel::TypeRole).toInt()))
+		if (targetBookmark && targetBookmark->isFolder())
 		{
-			case BookmarksModel::FolderBookmark:
-			case BookmarksModel::RootBookmark:
-			case BookmarksModel::TrashBookmark:
-				newParent = BookmarksManager::getModel()->getBookmark(parent);
-
-				break;
-			default:
-				newParent = m_bookmark;
-				row = (parent.row() + ((index.row() < parent.row()) ? 1 : 0));
-
-				break;
+			parentBookmark = targetBookmark;
+		}
+		else
+		{
+			parentBookmark = m_bookmark;
+			row = (parent.row() + ((index.row() < parent.row()) ? 1 : 0));
 		}
 
-		return BookmarksManager::getModel()->moveBookmark(BookmarksManager::getModel()->getBookmark(index), newParent, row);
+		return BookmarksManager::getModel()->moveBookmark(BookmarksManager::getModel()->getBookmark(index), parentBookmark, row);
 	}
 
 	if (data->hasUrls())
