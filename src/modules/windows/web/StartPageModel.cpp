@@ -60,34 +60,36 @@ void StartPageModel::reloadModel()
 		{
 			const BookmarksModel::Bookmark *bookmark(m_bookmark->getChild(i));
 
-			if (bookmark)
+			if (!bookmark)
 			{
-				const BookmarksModel::BookmarkType type(bookmark->getType());
-
-				if (type != BookmarksModel::UrlBookmark && type != BookmarksModel::FolderBookmark)
-				{
-					continue;
-				}
-
-				const quint64 identifier(bookmark->getIdentifier());
-				const QUrl url(bookmark->getUrl());
-				QStandardItem *item(bookmark->clone());
-				item->setData(identifier, BookmarksModel::IdentifierRole);
-				item->setData(bookmark->getTitle(), Qt::ToolTipRole);
-				item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
-
-				if (type == BookmarksModel::FolderBookmark && bookmark->rowCount() == 0)
-				{
-					item->setData(true, IsEmptyRole);
-				}
-
-				if (url.isValid() && !QFile::exists(getThumbnailPath(identifier)))
-				{
-					requestThumbnail(url, identifier);
-				}
-
-				appendRow(item);
+				continue;
 			}
+
+			const BookmarksModel::BookmarkType type(bookmark->getType());
+
+			if (type != BookmarksModel::UrlBookmark && type != BookmarksModel::FolderBookmark)
+			{
+				continue;
+			}
+
+			const quint64 identifier(bookmark->getIdentifier());
+			const QUrl url(bookmark->getUrl());
+			QStandardItem *item(bookmark->clone());
+			item->setData(identifier, BookmarksModel::IdentifierRole);
+			item->setData(bookmark->getTitle(), Qt::ToolTipRole);
+			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+
+			if (type == BookmarksModel::FolderBookmark && bookmark->rowCount() == 0)
+			{
+				item->setData(true, IsEmptyRole);
+			}
+
+			if (url.isValid() && !QFile::exists(getThumbnailPath(identifier)))
+			{
+				requestThumbnail(url, identifier);
+			}
+
+			appendRow(item);
 		}
 	}
 
