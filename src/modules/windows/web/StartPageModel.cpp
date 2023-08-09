@@ -54,7 +54,7 @@ void StartPageModel::reloadModel()
 
 	clear();
 
-	if (m_bookmark)
+	if (m_bookmark && m_bookmark->isFolder())
 	{
 		for (int i = 0; i < m_bookmark->rowCount(); ++i)
 		{
