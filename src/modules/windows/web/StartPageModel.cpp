@@ -50,7 +50,7 @@ StartPageModel::StartPageModel(QObject *parent) : QStandardItemModel(parent),
 
 void StartPageModel::reloadModel()
 {
-	m_bookmark = BookmarksManager::getModel()->getBookmarkByPath(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString());
+	m_bookmark = getRootBookmark();
 
 	clear();
 
@@ -144,7 +144,7 @@ void StartPageModel::handleBookmarkModified(BookmarksModel::Bookmark *bookmark)
 {
 	if (!m_bookmark)
 	{
-		m_bookmark = BookmarksManager::getModel()->getBookmarkByPath(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString());
+		m_bookmark = getRootBookmark();
 	}
 
 	if (m_bookmark && (bookmark == m_bookmark || m_bookmark->isAncestorOf(bookmark)))
@@ -157,7 +157,7 @@ void StartPageModel::handleBookmarkMoved(BookmarksModel::Bookmark *bookmark, Boo
 {
 	if (!m_bookmark)
 	{
-		m_bookmark = BookmarksManager::getModel()->getBookmarkByPath(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString());
+		m_bookmark = getRootBookmark();
 	}
 
 	if (m_bookmark)
@@ -255,6 +255,11 @@ QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const
 	connect(mimeData, &QMimeData::destroyed, this, &StartPageModel::handleDragEnded);
 
 	return mimeData;
+}
+
+BookmarksModel::Bookmark *StartPageModel::getRootBookmark() const
+{
+	return BookmarksManager::getModel()->getBookmarkByPath(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString());
 }
 
 BookmarksModel::Bookmark* StartPageModel::getBookmark(const QModelIndex &index)

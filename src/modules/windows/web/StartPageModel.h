@@ -53,6 +53,7 @@ public slots:
 	QModelIndex addTile(const QUrl &url);
 
 protected:
+	BookmarksModel::Bookmark* getRootBookmark() const;
 	bool requestThumbnail(const QUrl &url, quint64 identifier, bool needsTitleUpdate = false);
 
 protected slots:
