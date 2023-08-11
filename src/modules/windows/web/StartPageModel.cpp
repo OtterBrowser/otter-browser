@@ -208,7 +208,7 @@ void StartPageModel::handleThumbnailCreated(quint64 identifier, const QPixmap &t
 
 	m_tileReloads.remove(identifier);
 
-	if (!SessionsManager::isReadOnly() && !thumbnail.isNull() && bookmark)
+	if (!bookmark && SessionsManager::isReadOnly() && !thumbnail.isNull())
 	{
 		QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")));
 
