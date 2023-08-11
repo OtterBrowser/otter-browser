@@ -160,22 +160,24 @@ void StartPageModel::handleBookmarkMoved(BookmarksModel::Bookmark *bookmark, Boo
 		m_bookmark = getRootBookmark();
 	}
 
-	if (m_bookmark)
+	if (!m_bookmark)
 	{
-		if (bookmark->parent() != m_bookmark)
-		{
-			const QString path(getThumbnailPath(bookmark->getIdentifier()));
+		return;
+	}
 
-			if (QFile::exists(path))
-			{
-				QFile::remove(path);
-			}
-		}
+	if (bookmark->parent() != m_bookmark)
+	{
+		const QString path(getThumbnailPath(bookmark->getIdentifier()));
 
-		if (bookmark == m_bookmark || previousParent == m_bookmark || m_bookmark->isAncestorOf(bookmark) || m_bookmark->isAncestorOf(previousParent))
+		if (QFile::exists(path))
 		{
-			reloadModel();
+			QFile::remove(path);
 		}
+	}
+
+	if (bookmark == m_bookmark || previousParent == m_bookmark || m_bookmark->isAncestorOf(bookmark) || m_bookmark->isAncestorOf(previousParent))
+	{
+		reloadModel();
 	}
 }
 
