@@ -368,33 +368,33 @@ bool StartPageModel::reloadTile(const QModelIndex &index, bool needsTitleUpdate)
 
 	const quint64 identifier(index.data(BookmarksModel::IdentifierRole).toULongLong());
 
-	if (url.scheme() == QLatin1String("about"))
+	if (url.scheme() != QLatin1String("about"))
 	{
-		const AddonsManager::SpecialPageInformation information(AddonsManager::getSpecialPage(url.path()));
-
-		if (SessionsManager::isReadOnly())
-		{
-			handleThumbnailCreated(identifier, {}, information.getTitle());
-
-			return false;
-		}
-
-		const QSize size(SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt(), SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt());
-		QPixmap thumbnail(size);
-		thumbnail.fill(Qt::white);
-
-		QPainter painter(&thumbnail);
-
-		information.icon.paint(&painter, {{0, 0}, size});
-
-		m_tileReloads[identifier] = needsTitleUpdate;
-
-		handleThumbnailCreated(identifier, thumbnail, information.getTitle());
-
-		return true;
+		return requestThumbnail(url, identifier, needsTitleUpdate);
 	}
 
-	return requestThumbnail(url, identifier, needsTitleUpdate);
+	const AddonsManager::SpecialPageInformation information(AddonsManager::getSpecialPage(url.path()));
+
+	if (SessionsManager::isReadOnly())
+	{
+		handleThumbnailCreated(identifier, {}, information.getTitle());
+
+		return false;
+	}
+
+	const QSize size(SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt(), SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt());
+	QPixmap thumbnail(size);
+	thumbnail.fill(Qt::white);
+
+	QPainter painter(&thumbnail);
+
+	information.icon.paint(&painter, {{0, 0}, size});
+
+	m_tileReloads[identifier] = needsTitleUpdate;
+
+	handleThumbnailCreated(identifier, thumbnail, information.getTitle());
+
+	return true;
 }
 
 bool StartPageModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
