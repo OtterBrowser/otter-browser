@@ -402,14 +402,9 @@ bool StartPageModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 	Q_UNUSED(action)
 	Q_UNUSED(column)
 
-	if (!m_bookmark)
-	{
-		return false;
-	}
-
 	const QModelIndex index(data->property("x-item-index").toModelIndex());
 
-	if (index.isValid())
+	if (m_bookmark && index.isValid())
 	{
 		BookmarksModel::Bookmark *parentBookmark(nullptr);
 		BookmarksModel::Bookmark *targetBookmark(BookmarksManager::getModel()->getBookmark(parent));
