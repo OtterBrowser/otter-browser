@@ -310,6 +310,11 @@ int BookmarksModel::Bookmark::getVisits() const
 	return QStandardItem::data(VisitsRole).toInt();
 }
 
+bool BookmarksModel::Bookmark::hasChildren() const
+{
+	return (rowCount() > 0);
+}
+
 bool BookmarksModel::Bookmark::isFolder() const
 {
 	switch (getType())
