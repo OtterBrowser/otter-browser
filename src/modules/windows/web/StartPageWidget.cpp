@@ -795,7 +795,7 @@ void StartPageWidget::openTile()
 	{
 		const BookmarksModel::Bookmark *bookmark(StartPageModel::getBookmark(m_currentIndex));
 
-		if (bookmark && bookmark->rowCount() > 0)
+		if (bookmark && bookmark->hasChildren())
 		{
 			m_urlOpenTime = QTime::currentTime();
 
@@ -1168,7 +1168,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 					{
 						const BookmarksModel::Bookmark *bookmark(StartPageModel::getBookmark(m_currentIndex));
 
-						if (bookmark && bookmark->rowCount() > 0)
+						if (bookmark && bookmark->hasChildren())
 						{
 							m_isIgnoringEnter = true;
 
@@ -1239,7 +1239,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 				{
 					const BookmarksModel::Bookmark *bookmark(StartPageModel::getBookmark(m_currentIndex));
 
-					if (bookmark && bookmark->rowCount() > 0)
+					if (bookmark && bookmark->hasChildren())
 					{
 						m_isIgnoringEnter = true;
 
