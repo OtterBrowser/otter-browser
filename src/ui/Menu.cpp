@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -699,7 +699,7 @@ void Menu::populateBookmarksMenu()
 
 					if (type != BookmarksModel::UrlBookmark)
 					{
-						if (bookmark->rowCount() > 0)
+						if (bookmark->hasChildren())
 						{
 							Menu *menu(new Menu(BookmarksMenu, this));
 							menu->setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
@@ -1159,7 +1159,7 @@ void Menu::populateNotesMenu()
 
 					if (type == BookmarksModel::FolderBookmark)
 					{
-						if (bookmark->rowCount() > 0)
+						if (bookmark->hasChildren())
 						{
 							Menu *menu(new Menu(NotesMenu, this));
 							menu->setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
@@ -1577,7 +1577,7 @@ void Menu::clearNotesMenu()
 	{
 		const BookmarksModel::Bookmark *bookmark(NotesManager::getModel()->getBookmark(m_menuOptions.value(QLatin1String("bookmark")).toULongLong()));
 
-		menuAction()->setEnabled(bookmark && bookmark->rowCount() > 0);
+		menuAction()->setEnabled(bookmark && bookmark->hasChildren());
 	}
 
 	connect(this, &Menu::aboutToShow, this, &Menu::populateNotesMenu);
