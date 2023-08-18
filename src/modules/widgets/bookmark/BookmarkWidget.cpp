@@ -110,16 +110,9 @@ QString BookmarkWidget::getText() const
 
 QString BookmarkWidget::getToolTip() const
 {
-	const BookmarksModel::BookmarkType type(m_bookmark->getType());
-
-	switch (type)
+	if (m_bookmark->isFolder())
 	{
-		case BookmarksModel::RootBookmark:
-		case BookmarksModel::TrashBookmark:
-		case BookmarksModel::FolderBookmark:
-			return m_bookmark->getTitle();
-		default:
-			break;
+		return m_bookmark->getTitle();
 	}
 
 	QStringList toolTip;
@@ -135,7 +128,7 @@ QString BookmarkWidget::getToolTip() const
 		toolTip.append(tr("Description: %1").arg(m_bookmark->getDescription()));
 	}
 
-	if (type == BookmarksModel::FeedBookmark)
+	if (m_bookmark->getType() == BookmarksModel::FeedBookmark)
 	{
 		Feed *feed(FeedsManager::getFeed(m_bookmark->getUrl()));
 
