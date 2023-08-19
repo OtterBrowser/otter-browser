@@ -529,7 +529,7 @@ void BookmarksModel::restoreBookmark(Bookmark *bookmark)
 
 	readdBookmarkUrl(bookmark);
 
-	m_trashItem->setEnabled(m_trashItem->rowCount() > 0);
+	m_trashItem->setEnabled(m_trashItem->hasChildren());
 
 	emit bookmarkModified(bookmark);
 	emit bookmarkRestored(bookmark);
@@ -961,7 +961,7 @@ void BookmarksModel::setupFeed(Bookmark *bookmark)
 
 void BookmarksModel::emptyTrash()
 {
-	if (m_trashItem->rowCount() > 0)
+	if (m_trashItem->hasChildren())
 	{
 		m_trashItem->removeRows(0, m_trashItem->rowCount());
 		m_trashItem->setEnabled(false);
