@@ -270,7 +270,7 @@ QVector<QUrl> BookmarksModel::Bookmark::getUrls() const
 
 	for (int i = 0; i < rowCount(); ++i)
 	{
-		const Bookmark *bookmark(static_cast<Bookmark*>(child(i, 0)));
+		const Bookmark *bookmark(getChild(i));
 
 		if (!bookmark)
 		{
@@ -483,7 +483,7 @@ void BookmarksModel::trashBookmark(Bookmark *bookmark)
 		}
 		else
 		{
-			Bookmark *previousParent(static_cast<Bookmark*>(bookmark->parent()));
+			Bookmark *previousParent(bookmark->getParent());
 			BookmarkLocation location;
 			location.parent = bookmark->parent()->index();
 			location.row = bookmark->row();
@@ -557,7 +557,7 @@ void BookmarksModel::removeBookmark(Bookmark *bookmark)
 		m_keywords.remove(bookmark->data(KeywordRole).toString());
 	}
 
-	emit bookmarkRemoved(bookmark, static_cast<Bookmark*>(bookmark->parent()));
+	emit bookmarkRemoved(bookmark, bookmark->getParent());
 
 	bookmark->parent()->removeRow(bookmark->row());
 
@@ -1425,7 +1425,7 @@ bool BookmarksModel::moveBookmark(Bookmark *bookmark, Bookmark *newParent, int n
 		return false;
 	}
 
-	Bookmark *previousParent(static_cast<Bookmark*>(bookmark->parent()));
+	Bookmark *previousParent(bookmark->getParent());
 
 	if (!previousParent)
 	{
