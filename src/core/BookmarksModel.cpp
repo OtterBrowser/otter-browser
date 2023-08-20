@@ -1352,7 +1352,7 @@ QVector<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QStri
 	return allMatches;
 }
 
-QVector<BookmarksModel::Bookmark*> BookmarksModel::findUrls(const QUrl &url, QStandardItem *branch) const
+QVector<BookmarksModel::Bookmark*> BookmarksModel::findUrls(const QUrl &url, Bookmark *branch) const
 {
 	if (!branch)
 	{
@@ -1364,7 +1364,7 @@ QVector<BookmarksModel::Bookmark*> BookmarksModel::findUrls(const QUrl &url, QSt
 
 	for (int i = 0; i < branch->rowCount(); ++i)
 	{
-		Bookmark *bookmark(static_cast<Bookmark*>(branch->child(i)));
+		Bookmark *bookmark(branch->getChild(i));
 
 		if (bookmark)
 		{

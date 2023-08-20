@@ -127,7 +127,7 @@ public:
 	QStringList mimeTypes() const override;
 	QStringList getKeywords() const;
 	QVector<BookmarkMatch> findBookmarks(const QString &prefix) const;
-	QVector<Bookmark*> findUrls(const QUrl &url, QStandardItem *branch = nullptr) const;
+	QVector<Bookmark*> findUrls(const QUrl &url, Bookmark *branch = nullptr) const;
 	QVector<Bookmark*> getBookmarks(const QUrl &url) const;
 	FormatMode getFormatMode() const;
 	int getCount() const;
