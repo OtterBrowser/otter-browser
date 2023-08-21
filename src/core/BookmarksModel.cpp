@@ -1366,24 +1366,26 @@ QVector<BookmarksModel::Bookmark*> BookmarksModel::findUrls(const QUrl &url, Boo
 	{
 		Bookmark *bookmark(branch->getChild(i));
 
-		if (bookmark)
+		if (!bookmark)
 		{
-			switch (bookmark->getType())
-			{
-				case FolderBookmark:
-					bookmarks.append(findUrls(url, bookmark));
+			continue;
+		}
 
-					break;
-				case UrlBookmark:
-					if (normalizedUrl == Utils::normalizeUrl(bookmark->getUrl()))
-					{
-						bookmarks.append(bookmark);
-					}
+		switch (bookmark->getType())
+		{
+			case FolderBookmark:
+				bookmarks.append(findUrls(url, bookmark));
 
-					break;
-				default:
-					break;
-			}
+				break;
+			case UrlBookmark:
+				if (normalizedUrl == Utils::normalizeUrl(bookmark->getUrl()))
+				{
+					bookmarks.append(bookmark);
+				}
+
+				break;
+			default:
+				break;
 		}
 	}
 
