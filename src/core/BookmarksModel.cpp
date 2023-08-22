@@ -1491,31 +1491,31 @@ bool BookmarksModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 {
 	const BookmarkType type(static_cast<BookmarkType>(parent.data(TypeRole).toInt()));
 
-	if (type == FolderBookmark || type == RootBookmark || type == TrashBookmark)
+	if (type != FolderBookmark && type != RootBookmark && type != TrashBookmark)
 	{
-		const QModelIndex index(data->property("x-item-index").toModelIndex());
-
-		if (index.isValid())
-		{
-			return moveBookmark(getBookmark(index), getBookmark(parent), row);
-		}
-
-		if (data->hasUrls())
-		{
-			const QVector<QUrl> urls(Utils::extractUrls(data));
-
-			for (int i = 0; i < urls.count(); ++i)
-			{
-				addBookmark(UrlBookmark, {{UrlRole, urls.at(i)}, {TitleRole, (data->property("x-url-title").toString().isEmpty() ? urls.at(i).toString() : data->property("x-url-title").toString())}}, getBookmark(parent), row);
-			}
-
-			return true;
-		}
-
-		return QStandardItemModel::dropMimeData(data, action, row, column, parent);
+		return false;
 	}
 
-	return false;
+	const QModelIndex index(data->property("x-item-index").toModelIndex());
+
+	if (index.isValid())
+	{
+		return moveBookmark(getBookmark(index), getBookmark(parent), row);
+	}
+
+	if (data->hasUrls())
+	{
+		const QVector<QUrl> urls(Utils::extractUrls(data));
+
+		for (int i = 0; i < urls.count(); ++i)
+		{
+			addBookmark(UrlBookmark, {{UrlRole, urls.at(i)}, {TitleRole, (data->property("x-url-title").toString().isEmpty() ? urls.at(i).toString() : data->property("x-url-title").toString())}}, getBookmark(parent), row);
+		}
+
+		return true;
+	}
+
+	return QStandardItemModel::dropMimeData(data, action, row, column, parent);
 }
 
 bool BookmarksModel::save(const QString &path) const
