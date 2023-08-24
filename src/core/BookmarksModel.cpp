@@ -781,7 +781,7 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark)
 				writer->writeAttribute(QLatin1String("modified"), bookmark->getRawData(TimeModifiedRole).toDateTime().toString(Qt::ISODate));
 			}
 
-			if (m_mode != NotesMode)
+			if (m_mode == BookmarksMode)
 			{
 				if (bookmark->getRawData(TimeVisitedRole).toDateTime().isValid())
 				{
