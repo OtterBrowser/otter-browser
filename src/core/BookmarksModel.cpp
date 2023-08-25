@@ -1580,9 +1580,14 @@ bool BookmarksModel::setData(const QModelIndex &index, const QVariant &value, in
 
 			break;
 		case UrlRole:
-			if (value.toUrl() != index.data(UrlRole).toUrl())
 			{
-				handleUrlChanged(bookmark, Utils::normalizeUrl(value.toUrl()), Utils::normalizeUrl(index.data(UrlRole).toUrl()));
+				const QUrl oldUrl(Utils::normalizeUrl(index.data(UrlRole).toUrl()));
+				const QUrl newUrl(Utils::normalizeUrl(value.toUrl()));
+
+				if (oldUrl != newUrl)
+				{
+					handleUrlChanged(bookmark, newUrl, oldUrl);
+				}
 			}
 
 			break;
