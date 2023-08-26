@@ -1573,9 +1573,14 @@ bool BookmarksModel::setData(const QModelIndex &index, const QVariant &value, in
 
 			break;
 		case KeywordRole:
-			if (value.toString() != index.data(KeywordRole).toString())
 			{
-				handleKeywordChanged(bookmark, value.toString(), index.data(KeywordRole).toString());
+				const QString oldKeyword(index.data(KeywordRole).toString());
+				const QString newKeyword(value.toString());
+
+				if (newKeyword != oldKeyword)
+				{
+					handleKeywordChanged(bookmark, newKeyword, oldKeyword);
+				}
 			}
 
 			break;
