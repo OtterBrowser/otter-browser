@@ -117,18 +117,18 @@ void BookmarksManager::updateVisits(const QUrl &url)
 	m_instance->scheduleSave();
 }
 
-void BookmarksManager::setLastUsedFolder(BookmarksModel::Bookmark *folder)
+void BookmarksManager::setLastUsedFolder(BookmarksModel::Bookmark *bookmark)
 {
-	if (folder)
+	if (bookmark)
 	{
-		if (!folder->isFolder())
+		if (!bookmark->isFolder())
 		{
-			folder = folder->getParent();
+			bookmark = bookmark->getParent();
 		}
 
-		if (folder->isFolder())
+		if (bookmark->isFolder())
 		{
-			m_lastUsedFolder = folder->getIdentifier();
+			m_lastUsedFolder = bookmark->getIdentifier();
 		}
 	}
 }
