@@ -89,23 +89,25 @@ void PopupViewWidget::changeEvent(QEvent *event)
 {
 	ItemViewWidget::changeEvent(event);
 
-	if (m_removeButton)
+	if (!m_removeButton)
 	{
-		switch (event->type())
-		{
-			case QEvent::LanguageChange:
-				m_removeButton->setToolTip(tr("Remove Entry"));
+		return;
+	}
 
-				updateRemoveButton(currentIndex());
+	switch (event->type())
+	{
+		case QEvent::LanguageChange:
+			m_removeButton->setToolTip(tr("Remove Entry"));
 
-				break;
-			case QEvent::LayoutDirectionChange:
-				updateRemoveButton(currentIndex());
+			updateRemoveButton(currentIndex());
 
-				break;
-			default:
-				break;
-		}
+			break;
+		case QEvent::LayoutDirectionChange:
+			updateRemoveButton(currentIndex());
+
+			break;
+		default:
+			break;
 	}
 }
 
