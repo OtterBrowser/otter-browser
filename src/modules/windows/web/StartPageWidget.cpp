@@ -272,20 +272,22 @@ void TileDelegate::drawBlurBehind(QPainter *painter, const QRect &rectangle) con
 
 void TileDelegate::drawFocusIndicator(QPainter *painter, const QPainterPath &path, const QStyleOptionViewItem &option, QPalette::ColorGroup colorGroup) const
 {
-	if (option.state.testFlag(QStyle::State_MouseOver) || option.state.testFlag(QStyle::State_HasFocus))
+	if (!option.state.testFlag(QStyle::State_MouseOver) && !option.state.testFlag(QStyle::State_HasFocus))
 	{
-		QColor highlightColor(QGuiApplication::palette().color(colorGroup, QPalette::Highlight));
-
-		if (option.state.testFlag(QStyle::State_MouseOver))
-		{
-			highlightColor.setAlpha(150);
-		}
-
-		painter->setPen(QPen(highlightColor, 3));
-		painter->setClipping(false);
-		painter->setBrush(Qt::transparent);
-		painter->drawPath(path);
+		return;
 	}
+
+	QColor highlightColor(QGuiApplication::palette().color(colorGroup, QPalette::Highlight));
+
+	if (option.state.testFlag(QStyle::State_MouseOver))
+	{
+		highlightColor.setAlpha(150);
+	}
+
+	painter->setPen(QPen(highlightColor, 3));
+	painter->setClipping(false);
+	painter->setBrush(Qt::transparent);
+	painter->drawPath(path);
 }
 
 void TileDelegate::handleOptionChanged(int identifier, const QVariant &value)
