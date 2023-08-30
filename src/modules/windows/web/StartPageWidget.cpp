@@ -59,8 +59,10 @@ QPointer<StartPagePreferencesDialog> StartPageWidget::m_preferencesDialog(nullpt
 
 TileDelegate::TileDelegate(QWidget *parent) : QStyledItemDelegate(parent),
 	m_widget(parent),
-	m_mode(NoBackground),
-	m_needsBlur(true)
+	m_mode(NoBackground)
+#ifdef OTTER_ENABLE_STARTPAGEBLUR
+	, m_needsBlur(true)
+#endif
 {
 	handleOptionChanged(SettingsManager::StartPage_BackgroundModeOption, SettingsManager::getOption(SettingsManager::StartPage_BackgroundModeOption));
 	handleOptionChanged(SettingsManager::StartPage_TileBackgroundModeOption, SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption));
@@ -129,7 +131,9 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	{
 		pixmapPainter.setBrush(QColor(179, 229, 252, 192));
 
+#ifdef OTTER_ENABLE_STARTPAGEBLUR
 		drawBlurBehind(&pixmapPainter, tileRectangle);
+#endif
 
 		pixmapPainter.drawPath(path);
 
@@ -146,6 +150,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 	pixmapPainter.setClipPath(path);
 
+#ifdef OTTER_ENABLE_STARTPAGEBLUR
 	if (type == BookmarksModel::FolderBookmark || m_mode != ThumbnailBackground)
 	{
 		drawBlurBehind(&pixmapPainter, tileRectangle);
@@ -154,6 +159,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	{
 		drawBlurBehind(&pixmapPainter, textRectangle);
 	}
+#endif
 
 	pixmapPainter.fillRect(tileRectangle, QColor(179, 229, 252, 128));
 
@@ -233,9 +239,9 @@ void TileDelegate::drawAnimation(QPainter *painter, const QRect &rectangle) cons
 	}
 }
 
+#ifdef OTTER_ENABLE_STARTPAGEBLUR
 void TileDelegate::drawBlurBehind(QPainter *painter, const QRect &rectangle) const
 {
-#ifdef OTTER_ENABLE_STARTPAGEBLUR
 	if (!m_needsBlur)
 	{
 		return;
@@ -264,11 +270,8 @@ void TileDelegate::drawBlurBehind(QPainter *painter, const QRect &rectangle) con
 	blurredRectangle.moveTo(8, 8);
 
 	painter->drawPixmap(rectangle, blurredPixmap, blurredRectangle);
-#else
-	Q_UNUSED(painter)
-	Q_UNUSED(rectangle)
-#endif
 }
+#endif
 
 void TileDelegate::drawFocusIndicator(QPainter *painter, const QPainterPath &path, const QStyleOptionViewItem &option, QPalette::ColorGroup colorGroup) const
 {
@@ -294,6 +297,7 @@ void TileDelegate::handleOptionChanged(int identifier, const QVariant &value)
 {
 	switch (identifier)
 	{
+#ifdef OTTER_ENABLE_STARTPAGEBLUR
 		case SettingsManager::StartPage_BackgroundModeOption:
 		case SettingsManager::StartPage_BackgroundPathOption:
 			{
@@ -303,6 +307,7 @@ void TileDelegate::handleOptionChanged(int identifier, const QVariant &value)
 			}
 
 			break;
+#endif
 		case SettingsManager::StartPage_TileBackgroundModeOption:
 			{
 				const QString mode(value.toString());

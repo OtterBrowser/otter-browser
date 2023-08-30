@@ -58,7 +58,9 @@ public:
 
 protected:
 	void drawAnimation(QPainter *painter, const QRect &rectangle) const;
+#ifdef OTTER_ENABLE_STARTPAGEBLUR
 	void drawBlurBehind(QPainter *painter, const QRect &rectangle) const;
+#endif
 	void drawFocusIndicator(QPainter *painter, const QPainterPath &path, const QStyleOptionViewItem &option, QPalette::ColorGroup colorGroup) const;
 
 protected slots:
@@ -68,7 +70,9 @@ private:
 	QWidget *m_widget;
 	QString m_pixmapCachePrefix;
 	BackgroundMode m_mode;
+#ifdef OTTER_ENABLE_STARTPAGEBLUR
 	bool m_needsBlur;
+#endif
 };
 
 class StartPageContentsWidget final : public QWidget
