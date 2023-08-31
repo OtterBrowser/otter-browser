@@ -327,6 +327,8 @@ void TileDelegate::handleOptionChanged(int identifier, const QVariant &value)
 			}
 
 			break;
+		default:
+			break;
 	}
 }
 
