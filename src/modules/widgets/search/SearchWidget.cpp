@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -242,14 +242,16 @@ void SearchWidget::paintEvent(QPaintEvent *event)
 		style()->drawPrimitive(QStyle::PE_IndicatorArrowDown, &dropdownArrowOption, &painter, this);
 	}
 
+	const QIcon::Mode iconMode(isEnabled() ? QIcon::Active : QIcon::Disabled);
+
 	if (m_addButtonRectangle.isValid())
 	{
-		painter.drawPixmap(m_addButtonRectangle, ThemesManager::createIcon(QLatin1String("list-add")).pixmap(m_addButtonRectangle.size(), (isEnabled() ? QIcon::Active : QIcon::Disabled)));
+		painter.drawPixmap(m_addButtonRectangle, ThemesManager::createIcon(QLatin1String("list-add")).pixmap(m_addButtonRectangle.size(), iconMode));
 	}
 
 	if (m_searchButtonRectangle.isValid())
 	{
-		painter.drawPixmap(m_searchButtonRectangle, ThemesManager::createIcon(QLatin1String("edit-find")).pixmap(m_searchButtonRectangle.size(), (isEnabled() ? QIcon::Active : QIcon::Disabled)));
+		painter.drawPixmap(m_searchButtonRectangle, ThemesManager::createIcon(QLatin1String("edit-find")).pixmap(m_searchButtonRectangle.size(), iconMode));
 	}
 }
 
