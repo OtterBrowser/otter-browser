@@ -711,16 +711,11 @@ void SearchWidget::setSearchEngine(const QModelIndex &index, bool canSendRequest
 void SearchWidget::setOptions(const QVariantMap &options)
 {
 	m_options = options;
+	m_isSearchEngineLocked = m_options.contains(QLatin1String("searchEngine"));
 
-	if (m_options.contains(QLatin1String("searchEngine")))
+	if (m_isSearchEngineLocked)
 	{
-		m_isSearchEngineLocked = true;
-
 		setSearchEngine(m_options[QLatin1String("searchEngine")].toString());
-	}
-	else
-	{
-		m_isSearchEngineLocked = false;
 	}
 
 	resize(size());
