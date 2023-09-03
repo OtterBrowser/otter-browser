@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -104,32 +104,34 @@ void ColorWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	QWidget::mouseReleaseEvent(event);
 
-	if (event->button() == Qt::LeftButton && m_buttonRectangle.contains(event->pos()))
+	if (event->button() != Qt::LeftButton || !m_buttonRectangle.contains(event->pos()))
 	{
-		QMenu menu(this);
-		menu.addAction(tr("Select Color…"), this, [&]()
-		{
-			QColorDialog dialog(this);
-			dialog.setOption(QColorDialog::ShowAlphaChannel);
-			dialog.setCurrentColor(m_color);
-
-			if (dialog.exec() == QDialog::Accepted)
-			{
-				setColor(dialog.currentColor());
-			}
-		});
-		menu.addAction(tr("Copy Color"), this, [&]()
-		{
-			QApplication::clipboard()->setText(m_color.name((m_color.alpha() < 255) ? QColor::HexArgb : QColor::HexRgb).toUpper());
-		});
-		menu.addSeparator();
-		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-clear")), tr("Clear"), this, [&]()
-		{
-			setColor({});
-		});
-
-		menu.exec(mapToGlobal(isLeftToRight() ? m_buttonRectangle.bottomLeft() : m_buttonRectangle.bottomRight()));
+		return;
 	}
+
+	QMenu menu(this);
+	menu.addAction(tr("Select Color…"), this, [&]()
+	{
+		QColorDialog dialog(this);
+		dialog.setOption(QColorDialog::ShowAlphaChannel);
+		dialog.setCurrentColor(m_color);
+
+		if (dialog.exec() == QDialog::Accepted)
+		{
+			setColor(dialog.currentColor());
+		}
+	});
+	menu.addAction(tr("Copy Color"), this, [&]()
+	{
+		QApplication::clipboard()->setText(m_color.name((m_color.alpha() < 255) ? QColor::HexArgb : QColor::HexRgb).toUpper());
+	});
+	menu.addSeparator();
+	menu.addAction(ThemesManager::createIcon(QLatin1String("edit-clear")), tr("Clear"), this, [&]()
+	{
+		setColor({});
+	});
+
+	menu.exec(mapToGlobal(isLeftToRight() ? m_buttonRectangle.bottomLeft() : m_buttonRectangle.bottomRight()));
 }
 
 void ColorWidget::drawThumbnail(QPainter *painter, const QColor &color, const QPalette &palette, const QRect &rectangle)
