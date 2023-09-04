@@ -130,7 +130,6 @@ void ColorWidget::mouseReleaseEvent(QMouseEvent *event)
 	{
 		setColor({});
 	});
-
 	menu.exec(mapToGlobal(isLeftToRight() ? m_buttonRectangle.bottomLeft() : m_buttonRectangle.bottomRight()));
 }
 
