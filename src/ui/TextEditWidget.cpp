@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -290,85 +290,87 @@ ActionsManager::ActionDefinition::State TextEditWidget::getActionState(int ident
 	ActionsManager::ActionDefinition::State state(definition.getDefaultState());
 	state.isEnabled = false;
 
-	if (definition.scope == ActionsManager::ActionDefinition::EditorScope)
+	if (definition.scope != ActionsManager::ActionDefinition::EditorScope)
 	{
-		switch (definition.identifier)
-		{
-			case ActionsManager::UndoAction:
-				state.isEnabled = (!isReadOnly() && document() && document()->isUndoAvailable());
+		return state;
+	}
 
-				break;
-			case ActionsManager::RedoAction:
-				state.isEnabled = (!isReadOnly() && document() && document()->isRedoAvailable());
+	switch (definition.identifier)
+	{
+		case ActionsManager::UndoAction:
+			state.isEnabled = (!isReadOnly() && document() && document()->isUndoAvailable());
 
-				break;
-			case ActionsManager::CutAction:
-				state.isEnabled = (!isReadOnly() && hasSelection());
+			break;
+		case ActionsManager::RedoAction:
+			state.isEnabled = (!isReadOnly() && document() && document()->isRedoAvailable());
 
-				break;
-			case ActionsManager::CopyAction:
-				state.isEnabled = hasSelection();
+			break;
+		case ActionsManager::CutAction:
+			state.isEnabled = (!isReadOnly() && hasSelection());
 
-				break;
-			case ActionsManager::CopyToNoteAction:
-				state.isEnabled = hasSelection();
+			break;
+		case ActionsManager::CopyAction:
+			state.isEnabled = hasSelection();
 
-				break;
-			case ActionsManager::PasteAction:
-				state.isEnabled = (!isReadOnly() && (parameters.contains(QLatin1String("note")) || parameters.contains(QLatin1String("text")) || canPaste()));
+			break;
+		case ActionsManager::CopyToNoteAction:
+			state.isEnabled = hasSelection();
 
-				break;
-			case ActionsManager::DeleteAction:
-				state.isEnabled = (!isReadOnly() && hasSelection());
+			break;
+		case ActionsManager::PasteAction:
+			state.isEnabled = (!isReadOnly() && (parameters.contains(QLatin1String("note")) || parameters.contains(QLatin1String("text")) || canPaste()));
 
-				break;
-			case ActionsManager::SelectAllAction:
-				state.isEnabled = (document() && !document()->isEmpty());
+			break;
+		case ActionsManager::DeleteAction:
+			state.isEnabled = (!isReadOnly() && hasSelection());
 
-				break;
-			case ActionsManager::UnselectAction:
-				state.isEnabled = hasSelection();
+			break;
+		case ActionsManager::SelectAllAction:
+			state.isEnabled = (document() && !document()->isEmpty());
 
-				break;
-			case ActionsManager::ClearAllAction:
-				state.isEnabled = (!isReadOnly() && document() && !document()->isEmpty());
+			break;
+		case ActionsManager::UnselectAction:
+			state.isEnabled = hasSelection();
 
-				break;
-			case ActionsManager::CheckSpellingAction:
+			break;
+		case ActionsManager::ClearAllAction:
+			state.isEnabled = (!isReadOnly() && document() && !document()->isEmpty());
+
+			break;
+		case ActionsManager::CheckSpellingAction:
 #ifdef OTTER_ENABLE_SPELLCHECK
+			{
+				state.isEnabled = m_isSpellCheckingEnabled;
+
+				if (parameters.contains(QLatin1String("dictionary")))
 				{
-					state.isEnabled = m_isSpellCheckingEnabled;
+					const QString dictionary(parameters[QLatin1String("dictionary")].toString());
+					const QVector<SpellCheckManager::DictionaryInformation> dictionaries(SpellCheckManager::getDictionaries());
 
-					if (parameters.contains(QLatin1String("dictionary")))
+					state.text = dictionary;
+					state.isChecked = (dictionary == (SettingsManager::getOption(SettingsManager::Browser_SpellCheckDictionaryOption).isNull() ? SpellCheckManager::getDefaultDictionary() : SettingsManager::getOption(SettingsManager::Browser_SpellCheckDictionaryOption).toString()));
+
+					for (int i = 0; i < dictionaries.count(); ++i)
 					{
-						const QString dictionary(parameters[QLatin1String("dictionary")].toString());
-						const QVector<SpellCheckManager::DictionaryInformation> dictionaries(SpellCheckManager::getDictionaries());
-
-						state.text = dictionary;
-						state.isChecked = (dictionary == (SettingsManager::getOption(SettingsManager::Browser_SpellCheckDictionaryOption).isNull() ? SpellCheckManager::getDefaultDictionary() : SettingsManager::getOption(SettingsManager::Browser_SpellCheckDictionaryOption).toString()));
-
-						for (int i = 0; i < dictionaries.count(); ++i)
+						if (dictionaries.at(i).language == dictionary)
 						{
-							if (dictionaries.at(i).language == dictionary)
-							{
-								state.text = dictionaries.at(i).title;
+							state.text = dictionaries.at(i).title;
 
-								break;
-							}
+							break;
 						}
 					}
-					else
-					{
-						state.isChecked = (m_highlighter && m_highlighter->isActive());
-					}
 				}
+				else
+				{
+					state.isChecked = (m_highlighter && m_highlighter->isActive());
+				}
+			}
 #else
-				state.isEnabled = false;
+			state.isEnabled = false;
 #endif
-				break;
-			default:
-				break;
-		}
+			break;
+		default:
+			break;
 	}
 
 	return state;
