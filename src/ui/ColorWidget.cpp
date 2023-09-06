@@ -22,9 +22,9 @@
 #include "../core/ThemesManager.h"
 
 #include <QtGui/QClipboard>
+#include <QtGui/QGuiApplication>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
-#include <QtWidgets/QApplication>
 #include <QtWidgets/QColorDialog>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QMenu>
@@ -123,7 +123,7 @@ void ColorWidget::mouseReleaseEvent(QMouseEvent *event)
 	});
 	menu.addAction(tr("Copy Color"), this, [&]()
 	{
-		QApplication::clipboard()->setText(m_color.name((m_color.alpha() < 255) ? QColor::HexArgb : QColor::HexRgb).toUpper());
+		QGuiApplication::clipboard()->setText(m_color.name((m_color.alpha() < 255) ? QColor::HexArgb : QColor::HexRgb).toUpper());
 	});
 	menu.addSeparator();
 	menu.addAction(ThemesManager::createIcon(QLatin1String("edit-clear")), tr("Clear"), this, [&]()

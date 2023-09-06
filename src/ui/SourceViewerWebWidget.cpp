@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QTextCodec>
 #include <QtGui/QClipboard>
-#include <QtWidgets/QApplication>
+#include <QtGui/QGuiApplication>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QScrollBar>
 #include <QtWidgets/QVBoxLayout>
@@ -210,7 +210,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 			break;
 		case ActionsManager::CopyAddressAction:
-			QApplication::clipboard()->setText(getUrl().toString());
+			QGuiApplication::clipboard()->setText(getUrl().toString());
 
 			break;
 		case ActionsManager::CopyToNoteAction:

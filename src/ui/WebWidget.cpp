@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2017 Piktas Zuikis <piktas.zuikis@inbox.lt>
@@ -1377,13 +1377,13 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 				}
 				else
 				{
-					state.isEnabled = (parameters.contains(QLatin1String("text")) || (QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText()));
+					state.isEnabled = (parameters.contains(QLatin1String("text")) || (QGuiApplication::clipboard()->mimeData() && QGuiApplication::clipboard()->mimeData()->hasText()));
 				}
 			}
 
 			break;
 		case ActionsManager::PasteAndGoAction:
-			state.isEnabled = (QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText());
+			state.isEnabled = (QGuiApplication::clipboard()->mimeData() && QGuiApplication::clipboard()->mimeData()->hasText());
 
 			break;
 		case ActionsManager::DeleteAction:
