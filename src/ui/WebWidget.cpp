@@ -1377,13 +1377,19 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 				}
 				else
 				{
-					state.isEnabled = (parameters.contains(QLatin1String("text")) || (QGuiApplication::clipboard()->mimeData() && QGuiApplication::clipboard()->mimeData()->hasText()));
+					const QClipboard *clipboard(QGuiApplication::clipboard());
+
+					state.isEnabled = (parameters.contains(QLatin1String("text")) || (clipboard->mimeData() && clipboard->mimeData()->hasText()));
 				}
 			}
 
 			break;
 		case ActionsManager::PasteAndGoAction:
-			state.isEnabled = (QGuiApplication::clipboard()->mimeData() && QGuiApplication::clipboard()->mimeData()->hasText());
+			{
+				const QClipboard *clipboard(QGuiApplication::clipboard());
+
+				state.isEnabled = (clipboard->mimeData() && clipboard->mimeData()->hasText());
+			}
 
 			break;
 		case ActionsManager::DeleteAction:
