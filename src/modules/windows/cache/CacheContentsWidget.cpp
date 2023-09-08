@@ -28,7 +28,6 @@
 
 #include "ui_CacheContentsWidget.h"
 
-#include <QtCore/QCoreApplication>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
@@ -353,7 +352,7 @@ void CacheContentsWidget::showContextMenu(const QPoint &position)
 
 			if (url.isValid())
 			{
-				QApplication::clipboard()->setText(url.toDisplayString());
+				QGuiApplication::clipboard()->setText(url.toDisplayString());
 			}
 		});
 		menu.addSeparator();

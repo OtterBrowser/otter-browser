@@ -381,7 +381,7 @@ void HistoryContentsWidget::showContextMenu(const QPoint &position)
 
 			if (entryItem)
 			{
-				QApplication::clipboard()->setText(entryItem->text());
+				QGuiApplication::clipboard()->setText(entryItem->text());
 			}
 		});
 		menu.addSeparator();

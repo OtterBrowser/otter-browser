@@ -192,7 +192,7 @@ void TransfersContentsWidget::copyTransferInformation()
 
 	if (index.isValid() && index.data(Qt::ToolTipRole).isValid())
 	{
-		QApplication::clipboard()->setText(index.data(Qt::ToolTipRole).toString().remove(QRegularExpression(QLatin1String("<[^>]*>"))));
+		QGuiApplication::clipboard()->setText(index.data(Qt::ToolTipRole).toString().remove(QRegularExpression(QLatin1String("<[^>]*>"))));
 	}
 }
 

@@ -497,14 +497,14 @@ void ConfigurationContentsWidget::showContextMenu(const QPoint &position)
 		{
 			if (valueIndex.isValid())
 			{
-				QApplication::clipboard()->setText(valueIndex.data(NameRole).toString());
+				QGuiApplication::clipboard()->setText(valueIndex.data(NameRole).toString());
 			}
 		});
 		menu.addAction(tr("Copy Option Value"), this, [&]()
 		{
 			if (valueIndex.isValid())
 			{
-				QApplication::clipboard()->setText(valueIndex.data(Qt::EditRole).toString());
+				QGuiApplication::clipboard()->setText(valueIndex.data(Qt::EditRole).toString());
 			}
 		});
 		menu.addSeparator();

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -450,14 +450,14 @@ void PasswordsContentsWidget::showContextMenu(const QPoint &position)
 				{
 					if (valueIndex.isValid())
 					{
-						QApplication::clipboard()->setText(valueIndex.data(Qt::DisplayRole).toString());
+						QGuiApplication::clipboard()->setText(valueIndex.data(Qt::DisplayRole).toString());
 					}
 				});
 				menu.addAction(tr("Copy Field Value"), this, [&]()
 				{
 					if (valueIndex.isValid())
 					{
-						QApplication::clipboard()->setText(valueIndex.data(Qt::DisplayRole).toString());
+						QGuiApplication::clipboard()->setText(valueIndex.data(Qt::DisplayRole).toString());
 					}
 				});
 				menu.addSeparator();
