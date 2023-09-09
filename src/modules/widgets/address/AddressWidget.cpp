@@ -711,9 +711,9 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 	{
 		showCompletion(true);
 	}
-	else if (event->button() == Qt::MiddleButton && text().isEmpty() && !QApplication::clipboard()->text().isEmpty() && SettingsManager::getOption(SettingsManager::AddressField_PasteAndGoOnMiddleClickOption).toBool())
+	else if (event->button() == Qt::MiddleButton && text().isEmpty() && !QGuiApplication::clipboard()->text().isEmpty() && SettingsManager::getOption(SettingsManager::AddressField_PasteAndGoOnMiddleClickOption).toBool())
 	{
-		handleUserInput(QApplication::clipboard()->text().trimmed(), SessionsManager::CurrentTabOpen);
+		handleUserInput(QGuiApplication::clipboard()->text().trimmed(), SessionsManager::CurrentTabOpen);
 
 		event->accept();
 	}
@@ -781,7 +781,7 @@ void AddressWidget::showCompletion(bool isTypedHistory)
 			QMenu menu(this);
 			menu.addAction(ThemesManager::createIcon(QLatin1String("edit-copy")), QCoreApplication::translate("actons", "Copy"), this, [&]()
 			{
-				QApplication::clipboard()->setText(index.data(AddressCompletionModel::UrlRole).toUrl().toString());
+				QGuiApplication::clipboard()->setText(index.data(AddressCompletionModel::UrlRole).toUrl().toString());
 			});
 
 			if (isTypedHistory && index.data(AddressCompletionModel::IsRemovableRole).toBool() && type == AddressCompletionModel::CompletionEntry::TypedHistoryType)

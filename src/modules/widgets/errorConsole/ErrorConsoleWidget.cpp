@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -270,7 +270,7 @@ void ErrorConsoleWidget::showContextMenu(const QPoint &position)
 	QMenu menu(m_ui->consoleView);
 	menu.addAction(ThemesManager::createIcon(QLatin1String("edit-copy")), tr("Copy"), this, [&]()
 	{
-		QApplication::clipboard()->setText(m_ui->consoleView->currentIndex().data(Qt::DisplayRole).toString());
+		QGuiApplication::clipboard()->setText(m_ui->consoleView->currentIndex().data(Qt::DisplayRole).toString());
 	});
 	menu.addSeparator();
 	menu.addAction(tr("Expand All"), m_ui->consoleView, &QTreeView::expandAll);
