@@ -1172,8 +1172,6 @@ void AddressWidget::updateGeometries()
 
 	for (int i = 0; i < m_layout.count(); ++i)
 	{
-		const EntryDefinition definition(m_entries.value(m_layout.at(i)));
-
 		if (m_layout.at(i) == AddressEntry)
 		{
 			isLeading = !isLeading;
@@ -1195,6 +1193,8 @@ void AddressWidget::updateGeometries()
 
 				break;
 		}
+
+		const EntryDefinition definition(m_entries.value(m_layout.at(i)));
 
 		if (isLeading)
 		{
