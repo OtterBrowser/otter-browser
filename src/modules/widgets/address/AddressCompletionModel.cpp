@@ -266,33 +266,35 @@ void AddressCompletionModel::setTypes(CompletionTypes types, bool force)
 
 QVariant AddressCompletionModel::data(const QModelIndex &index, int role) const
 {
-	if (index.column() == 0 && index.row() >= 0 && index.row() < m_completions.count())
+	if (index.column() != 0 || !(index.row() >= 0 && index.row() < m_completions.count()))
 	{
-		switch (role)
-		{
-			case Qt::DecorationRole:
-				return m_completions.at(index.row()).icon;
-			case HistoryIdentifierRole:
-				return (m_completions.at(index.row()).historyIdentifier);
-			case IsRemovableRole:
-				return (m_completions.at(index.row()).type == CompletionEntry::TypedHistoryType);
-			case TextRole:
-				return (m_completions.at(index.row()).text.isEmpty() ? m_completions.at(index.row()).url.toString() : m_completions.at(index.row()).text);
-			case UrlRole:
-				return m_completions.at(index.row()).url;
-			case TitleRole:
-				return m_completions.at(index.row()).title;
-			case KeywordRole:
-				return m_completions.at(index.row()).keyword;
-			case MatchRole:
-				return (m_completions.at(index.row()).match.isEmpty() ? m_completions.at(index.row()).url.toString() : m_completions.at(index.row()).match);
-			case TimeVisitedRole:
-				return m_completions.at(index.row()).timeVisited;
-			case TypeRole:
-				return static_cast<int>(m_completions.at(index.row()).type);
-			default:
-				return {};
-		}
+		return {};
+	}
+
+	switch (role)
+	{
+		case Qt::DecorationRole:
+			return m_completions.at(index.row()).icon;
+		case HistoryIdentifierRole:
+			return (m_completions.at(index.row()).historyIdentifier);
+		case IsRemovableRole:
+			return (m_completions.at(index.row()).type == CompletionEntry::TypedHistoryType);
+		case TextRole:
+			return (m_completions.at(index.row()).text.isEmpty() ? m_completions.at(index.row()).url.toString() : m_completions.at(index.row()).text);
+		case UrlRole:
+			return m_completions.at(index.row()).url;
+		case TitleRole:
+			return m_completions.at(index.row()).title;
+		case KeywordRole:
+			return m_completions.at(index.row()).keyword;
+		case MatchRole:
+			return (m_completions.at(index.row()).match.isEmpty() ? m_completions.at(index.row()).url.toString() : m_completions.at(index.row()).match);
+		case TimeVisitedRole:
+			return m_completions.at(index.row()).timeVisited;
+		case TypeRole:
+			return static_cast<int>(m_completions.at(index.row()).type);
+		default:
+			return {};
 	}
 
 	return {};
