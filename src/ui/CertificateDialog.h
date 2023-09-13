@@ -67,7 +67,7 @@ public:
 		ExtensionNameRole
 	};
 
-	explicit CertificateDialog(QVector<QSslCertificate> certificates, QWidget *parent = nullptr);
+	explicit CertificateDialog(const QVector<QSslCertificate> &certificates, QWidget *parent = nullptr);
 	~CertificateDialog();
 
 protected:
