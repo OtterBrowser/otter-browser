@@ -115,33 +115,35 @@ void CertificateDialog::exportCertificate()
 	QString filter;
 	const QString path(QFileDialog::getSaveFileName(this, tr("Select File"), Utils::getStandardLocation(QStandardPaths::HomeLocation), Utils::formatFileTypes({tr("DER encoded X.509 certificates (*.der)"), tr("PEM encoded X.509 certificates (*.pem)"), tr("Text files (*.txt)")}), &filter));
 
-	if (!path.isEmpty())
+	if (path.isEmpty())
 	{
-		QFile file(path);
-
-		if (!file.open(QIODevice::WriteOnly))
-		{
-			QMessageBox::critical(this, tr("Error"), tr("Failed to open file for writing."), QMessageBox::Close);
-
-			return;
-		}
-
-		if (filter.contains(QLatin1String(".der")))
-		{
-			file.write(certificate.toDer());
-		}
-		else if (filter.contains(QLatin1String(".pem")))
-		{
-			file.write(certificate.toPem());
-		}
-		else
-		{
-			QTextStream stream(&file);
-			stream << certificate.toText();
-		}
-
-		file.close();
+		return;
 	}
+
+	QFile file(path);
+
+	if (!file.open(QIODevice::WriteOnly))
+	{
+		QMessageBox::critical(this, tr("Error"), tr("Failed to open file for writing."), QMessageBox::Close);
+
+		return;
+	}
+
+	if (filter.contains(QLatin1String(".der")))
+	{
+		file.write(certificate.toDer());
+	}
+	else if (filter.contains(QLatin1String(".pem")))
+	{
+		file.write(certificate.toPem());
+	}
+	else
+	{
+		QTextStream stream(&file);
+		stream << certificate.toText();
+	}
+
+	file.close();
 }
 
 void CertificateDialog::updateCertificate()
