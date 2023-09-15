@@ -260,15 +260,17 @@ void CertificateDialog::updateCertificate()
 	m_ui->detailsItemView->expandAll();
 	m_ui->valueTextEditWidget->clear();
 
-	if (!field.isNull())
+	if (field.isNull())
 	{
-		const bool isExtension(static_cast<CertificateField>(field.toInt()) == ExtensionField);
-		const QModelIndexList indexes(m_ui->detailsItemView->getSourceModel()->match(m_ui->detailsItemView->getSourceModel()->index(0, 0), (isExtension ? ExtensionNameRole : CertificateFieldRole), (isExtension ? extension : field), 1, (Qt::MatchExactly | Qt::MatchRecursive | Qt::MatchWrap)));
+		return;
+	}
 
-		if (!indexes.isEmpty())
-		{
-			m_ui->detailsItemView->setCurrentIndex(indexes.value(0));
-		}
+	const bool isExtension(static_cast<CertificateField>(field.toInt()) == ExtensionField);
+	const QModelIndexList indexes(m_ui->detailsItemView->getSourceModel()->match(m_ui->detailsItemView->getSourceModel()->index(0, 0), (isExtension ? ExtensionNameRole : CertificateFieldRole), (isExtension ? extension : field), 1, (Qt::MatchExactly | Qt::MatchRecursive | Qt::MatchWrap)));
+
+	if (!indexes.isEmpty())
+	{
+		m_ui->detailsItemView->setCurrentIndex(indexes.value(0));
 	}
 }
 
