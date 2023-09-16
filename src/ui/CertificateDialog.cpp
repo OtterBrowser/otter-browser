@@ -283,11 +283,6 @@ void CertificateDialog::updateValue()
 
 	switch (field)
 	{
-		case ValidityField:
-		case PublicKeyField:
-		case ExtensionsField:
-		case DigestField:
-			break;
 		case VersionField:
 			m_ui->valueTextEditWidget->setPlainText(QString::fromLatin1(certificate.version()));
 
