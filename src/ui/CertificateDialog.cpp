@@ -501,29 +501,31 @@ QString CertificateDialog::formatHex(const QString &source, QChar separator)
 
 	for (int i = 0; i < source.length(); ++i)
 	{
-		if (source.at(i).isLetterOrNumber())
+		if (!source.at(i).isLetterOrNumber())
 		{
-			result.append(source.at(i));
+			continue;
+		}
 
-			++characterCount;
+		result.append(source.at(i));
 
-			if (characterCount == 2)
+		++characterCount;
+
+		if (characterCount == 2)
+		{
+			++pairCount;
+
+			if (pairCount == 16)
 			{
-				++pairCount;
+				result.append(QLatin1Char('\n'));
 
-				if (pairCount == 16)
-				{
-					result.append(QLatin1Char('\n'));
-
-					pairCount = 0;
-				}
-				else
-				{
-					result.append(separator);
-				}
-
-				characterCount = 0;
+				pairCount = 0;
 			}
+			else
+			{
+				result.append(separator);
+			}
+
+			characterCount = 0;
 		}
 	}
 
