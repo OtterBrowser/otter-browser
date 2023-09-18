@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -82,25 +82,29 @@ void OpenAddressDialog::handleUserInput()
 {
 	const QString text(m_addressWidget->text().trimmed());
 
-	if (!text.isEmpty())
+	if (text.isEmpty())
 	{
-		m_result = InputInterpreter::interpret(text, InputInterpreter::NoBookmarkKeywordsFlag);
+		close();
 
-		if (m_result.isValid() && m_executor.isValid())
+		return;
+	}
+
+	m_result = InputInterpreter::interpret(text, InputInterpreter::NoBookmarkKeywordsFlag);
+
+	if (m_result.isValid() && m_executor.isValid())
+	{
+		switch (m_result.type)
 		{
-			switch (m_result.type)
-			{
-				case InputInterpreter::InterpreterResult::BookmarkType:
-					m_executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), m_result.bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::CurrentTabOpen))}});
+			case InputInterpreter::InterpreterResult::BookmarkType:
+				m_executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), m_result.bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::CurrentTabOpen))}});
 
-					break;
-				case InputInterpreter::InterpreterResult::UrlType:
-					m_executor.triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), m_result.url}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::CurrentTabOpen))}});
+				break;
+			case InputInterpreter::InterpreterResult::UrlType:
+				m_executor.triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), m_result.url}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::CurrentTabOpen))}});
 
-					break;
-				default:
-					break;
-			}
+				break;
+			default:
+				break;
 		}
 	}
 
