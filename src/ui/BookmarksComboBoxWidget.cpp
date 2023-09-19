@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -73,20 +73,22 @@ void BookmarksComboBoxWidget::updateBranch(const QModelIndex &parent)
 	{
 		const QModelIndex index(m_model->index(i, 0, parent));
 
-		if (index.isValid())
+		if (!index.isValid())
 		{
-			switch (static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()))
-			{
-				case BookmarksModel::RootBookmark:
-				case BookmarksModel::FolderBookmark:
-					updateBranch(index);
+			continue;
+		}
 
-					break;
-				default:
-					getView()->setRowHidden(i, parent, true);
+		switch (static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()))
+		{
+			case BookmarksModel::RootBookmark:
+			case BookmarksModel::FolderBookmark:
+				updateBranch(index);
 
-					break;
-			}
+				break;
+			default:
+				getView()->setRowHidden(i, parent, true);
+
+				break;
 		}
 	}
 
