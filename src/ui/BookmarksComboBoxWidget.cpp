@@ -49,21 +49,23 @@ void BookmarksComboBoxWidget::createFolder()
 {
 	const QString title(QInputDialog::getText(this, tr("Folder Name"), tr("Select name of new folder:")));
 
-	if (!title.isEmpty())
+	if (title.isEmpty())
 	{
-		switch (m_model->getFormatMode())
-		{
-			case BookmarksModel::BookmarksMode:
-				setCurrentFolder(BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, title}}, getCurrentFolder()));
+		return;
+	}
 
-				break;
-			case BookmarksModel::NotesMode:
-				setCurrentFolder(NotesManager::addNote(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, title}}, getCurrentFolder()));
+	switch (m_model->getFormatMode())
+	{
+		case BookmarksModel::BookmarksMode:
+			setCurrentFolder(BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, title}}, getCurrentFolder()));
 
-				break;
-			default:
-				break;
-		}
+			break;
+		case BookmarksModel::NotesMode:
+			setCurrentFolder(NotesManager::addNote(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, title}}, getCurrentFolder()));
+
+			break;
+		default:
+			break;
 	}
 }
 
