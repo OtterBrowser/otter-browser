@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -146,44 +146,48 @@ void BookmarkPropertiesDialog::changeEvent(QEvent *event)
 
 void BookmarkPropertiesDialog::saveBookmark()
 {
-	if (m_ui->folderComboBox->isEnabled())
+	if (!m_ui->folderComboBox->isEnabled())
 	{
-		const QString keyword(m_ui->keywordLineEditWidget->text());
+		accept();
 
-		if (!keyword.isEmpty() && (!m_bookmark || m_bookmark->getKeyword() != keyword) && BookmarksManager::getModel()->getBookmarkByKeyword(keyword))
-		{
-			QMessageBox::critical(this, tr("Error"), tr("Bookmark with this keyword already exists."), QMessageBox::Close);
-
-			return;
-		}
-
-		BookmarksModel::Bookmark *folderBookmark(m_ui->folderComboBox->getCurrentFolder());
-
-		if (!m_bookmark)
-		{
-			QMap<int, QVariant> metaData({{BookmarksModel::TitleRole, m_ui->titleLineEditWidget->text()}});
-			const bool isUrl(m_ui->addressLineEditWidget->isVisible());
-
-			if (isUrl)
-			{
-				metaData[BookmarksModel::UrlRole] = QUrl(m_ui->addressLineEditWidget->text());
-			}
-
-			m_bookmark = BookmarksManager::addBookmark((isUrl ? BookmarksModel::UrlBookmark : BookmarksModel::FolderBookmark), metaData, folderBookmark, m_index);
-		}
-
-		m_bookmark->setData(m_ui->addressLineEditWidget->text(), BookmarksModel::UrlRole);
-		m_bookmark->setData(m_ui->titleLineEditWidget->text(), BookmarksModel::TitleRole);
-		m_bookmark->setData(m_ui->descriptionTextEditWidget->toPlainText(), BookmarksModel::DescriptionRole);
-		m_bookmark->setData(keyword, BookmarksModel::KeywordRole);
-
-		if (m_bookmark->parent() != folderBookmark)
-		{
-			BookmarksManager::getModel()->moveBookmark(m_bookmark, folderBookmark);
-		}
-
-		BookmarksManager::setLastUsedFolder(folderBookmark);
+		return;
 	}
+
+	const QString keyword(m_ui->keywordLineEditWidget->text());
+
+	if (!keyword.isEmpty() && (!m_bookmark || m_bookmark->getKeyword() != keyword) && BookmarksManager::getModel()->getBookmarkByKeyword(keyword))
+	{
+		QMessageBox::critical(this, tr("Error"), tr("Bookmark with this keyword already exists."), QMessageBox::Close);
+
+		return;
+	}
+
+	BookmarksModel::Bookmark *folderBookmark(m_ui->folderComboBox->getCurrentFolder());
+
+	if (!m_bookmark)
+	{
+		QMap<int, QVariant> metaData({{BookmarksModel::TitleRole, m_ui->titleLineEditWidget->text()}});
+		const bool isUrl(m_ui->addressLineEditWidget->isVisible());
+
+		if (isUrl)
+		{
+			metaData[BookmarksModel::UrlRole] = QUrl(m_ui->addressLineEditWidget->text());
+		}
+
+		m_bookmark = BookmarksManager::addBookmark((isUrl ? BookmarksModel::UrlBookmark : BookmarksModel::FolderBookmark), metaData, folderBookmark, m_index);
+	}
+
+	m_bookmark->setData(m_ui->addressLineEditWidget->text(), BookmarksModel::UrlRole);
+	m_bookmark->setData(m_ui->titleLineEditWidget->text(), BookmarksModel::TitleRole);
+	m_bookmark->setData(m_ui->descriptionTextEditWidget->toPlainText(), BookmarksModel::DescriptionRole);
+	m_bookmark->setData(keyword, BookmarksModel::KeywordRole);
+
+	if (m_bookmark->parent() != folderBookmark)
+	{
+		BookmarksManager::getModel()->moveBookmark(m_bookmark, folderBookmark);
+	}
+
+	BookmarksManager::setLastUsedFolder(folderBookmark);
 
 	accept();
 }
