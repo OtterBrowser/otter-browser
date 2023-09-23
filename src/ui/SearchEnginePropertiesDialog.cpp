@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -117,26 +117,28 @@ bool SearchEnginePropertiesDialog::eventFilter(QObject *object, QEvent *event)
 	{
 		LineEditWidget *lineEditWidget(qobject_cast<LineEditWidget*>(object));
 
-		if (lineEditWidget)
+		if (!lineEditWidget)
 		{
-			m_currentLineEditWidget = lineEditWidget;
-
-			QMenu *contextMenu(lineEditWidget->createStandardContextMenu());
-			contextMenu->addSeparator();
-
-			QMenu *placeholdersMenu(contextMenu->addMenu(tr("Placeholders")));
-			placeholdersMenu->addAction(tr("Search Terms"))->setData(QLatin1String("searchTerms"));
-			placeholdersMenu->addAction(tr("Language"))->setData(QLatin1String("language"));
-
-			connect(placeholdersMenu, &QMenu::triggered, this, &SearchEnginePropertiesDialog::insertPlaceholder);
-
-			contextMenu->exec(static_cast<QContextMenuEvent*>(event)->globalPos());
-			contextMenu->deleteLater();
-
-			m_currentLineEditWidget = nullptr;
-
-			return true;
+			return QDialog::eventFilter(object, event);
 		}
+
+		m_currentLineEditWidget = lineEditWidget;
+
+		QMenu *contextMenu(lineEditWidget->createStandardContextMenu());
+		contextMenu->addSeparator();
+
+		QMenu *placeholdersMenu(contextMenu->addMenu(tr("Placeholders")));
+		placeholdersMenu->addAction(tr("Search Terms"))->setData(QLatin1String("searchTerms"));
+		placeholdersMenu->addAction(tr("Language"))->setData(QLatin1String("language"));
+
+		connect(placeholdersMenu, &QMenu::triggered, this, &SearchEnginePropertiesDialog::insertPlaceholder);
+
+		contextMenu->exec(static_cast<QContextMenuEvent*>(event)->globalPos());
+		contextMenu->deleteLater();
+
+		m_currentLineEditWidget = nullptr;
+
+		return true;
 	}
 
 	return QDialog::eventFilter(object, event);
