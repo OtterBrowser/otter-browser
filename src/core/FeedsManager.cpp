@@ -301,27 +301,29 @@ void Feed::update()
 						{
 							const Feed::Entry existingEntry(m_entries.at(j));
 
-							if (existingEntry.identifier == entry.identifier)
+							if (existingEntry.identifier != entry.identifier)
 							{
-								if ((entry.publicationTime.isValid() && existingEntry.publicationTime != entry.publicationTime) || (entry.updateTime.isValid() && existingEntry.updateTime != entry.updateTime))
-								{
-									++amount;
-								}
-
-								entry.lastReadTime = existingEntry.lastReadTime;
-								entry.publicationTime = normalizeTime(entry.publicationTime);
-
-								if (entry.updateTime.isValid())
-								{
-									entry.updateTime = normalizeTime(entry.updateTime);
-								}
-
-								m_entries[j] = entry;
-
-								hasEntry = true;
-
-								break;
+								continue;
 							}
+
+							if ((entry.publicationTime.isValid() && existingEntry.publicationTime != entry.publicationTime) || (entry.updateTime.isValid() && existingEntry.updateTime != entry.updateTime))
+							{
+								++amount;
+							}
+
+							entry.lastReadTime = existingEntry.lastReadTime;
+							entry.publicationTime = normalizeTime(entry.publicationTime);
+
+							if (entry.updateTime.isValid())
+							{
+								entry.updateTime = normalizeTime(entry.updateTime);
+							}
+
+							m_entries[j] = entry;
+
+							hasEntry = true;
+
+							break;
 						}
 
 						if (!hasEntry)
