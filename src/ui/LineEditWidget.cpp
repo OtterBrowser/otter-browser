@@ -717,53 +717,55 @@ ActionsManager::ActionDefinition::State LineEditWidget::getActionState(int ident
 	ActionsManager::ActionDefinition::State state(definition.getDefaultState());
 	state.isEnabled = false;
 
-	if (definition.scope == ActionsManager::ActionDefinition::EditorScope)
+	if (definition.scope != ActionsManager::ActionDefinition::EditorScope)
 	{
-		switch (definition.identifier)
-		{
-			case ActionsManager::UndoAction:
-				state.isEnabled = (!isReadOnly() && isUndoAvailable());
+		return state;
+	}
 
-				break;
-			case ActionsManager::RedoAction:
-				state.isEnabled = (!isReadOnly() && isRedoAvailable());
+	switch (definition.identifier)
+	{
+		case ActionsManager::UndoAction:
+			state.isEnabled = (!isReadOnly() && isUndoAvailable());
 
-				break;
-			case ActionsManager::CutAction:
-				state.isEnabled = (!isReadOnly() && hasSelectedText());
+			break;
+		case ActionsManager::RedoAction:
+			state.isEnabled = (!isReadOnly() && isRedoAvailable());
 
-				break;
-			case ActionsManager::CopyAction:
-				state.isEnabled = hasSelectedText();
+			break;
+		case ActionsManager::CutAction:
+			state.isEnabled = (!isReadOnly() && hasSelectedText());
 
-				break;
-			case ActionsManager::CopyToNoteAction:
-				state.isEnabled = hasSelectedText();
+			break;
+		case ActionsManager::CopyAction:
+			state.isEnabled = hasSelectedText();
 
-				break;
-			case ActionsManager::PasteAction:
-				state.isEnabled = (!isReadOnly() && (parameters.contains(QLatin1String("note")) || parameters.contains(QLatin1String("text")) || (QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText())));
+			break;
+		case ActionsManager::CopyToNoteAction:
+			state.isEnabled = hasSelectedText();
 
-				break;
-			case ActionsManager::DeleteAction:
-				state.isEnabled = (!isReadOnly() && hasSelectedText());
+			break;
+		case ActionsManager::PasteAction:
+			state.isEnabled = (!isReadOnly() && (parameters.contains(QLatin1String("note")) || parameters.contains(QLatin1String("text")) || (QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText())));
 
-				break;
-			case ActionsManager::SelectAllAction:
-				state.isEnabled = !text().isEmpty();
+			break;
+		case ActionsManager::DeleteAction:
+			state.isEnabled = (!isReadOnly() && hasSelectedText());
 
-				break;
-			case ActionsManager::UnselectAction:
-				state.isEnabled = hasSelectedText();
+			break;
+		case ActionsManager::SelectAllAction:
+			state.isEnabled = !text().isEmpty();
 
-				break;
-			case ActionsManager::ClearAllAction:
-				state.isEnabled = (!isReadOnly() && !text().isEmpty());
+			break;
+		case ActionsManager::UnselectAction:
+			state.isEnabled = hasSelectedText();
 
-				break;
-			default:
-				break;
-		}
+			break;
+		case ActionsManager::ClearAllAction:
+			state.isEnabled = (!isReadOnly() && !text().isEmpty());
+
+			break;
+		default:
+			break;
 	}
 
 	return state;
