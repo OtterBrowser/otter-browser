@@ -553,6 +553,8 @@ void FeedsManager::ensureInitialized()
 	{
 		const QJsonArray feedsArray(QJsonDocument::fromJson(file.readAll()).array());
 
+		file.close();
+
 		for (int i = 0; i < feedsArray.count(); ++i)
 		{
 			const QJsonObject feedObject(feedsArray.at(i).toObject());
