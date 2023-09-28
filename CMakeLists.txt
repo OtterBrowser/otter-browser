@@ -520,7 +520,7 @@ if (WIN32)
 		src/modules/platforms/windows/WindowsPlatformStyle.cpp
 	)
 elseif (APPLE)
-	find_package(Qt5 5.6.0 QUIET COMPONENTS MacExtras)
+	find_package(Qt5 5.15.0 QUIET COMPONENTS MacExtras)
 
 	set(CMAKE_OSX_DEPLOYMENT_TARGET 10.13)
 	set(MACOSX_BUNDLE_BUNDLE_NAME "Otter Browser")
