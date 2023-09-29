@@ -539,7 +539,7 @@ elseif (APPLE)
 
 	set_source_files_properties(resources/icons/otter-browser.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 elseif (UNIX)
-	find_package(Qt5 5.6.0 QUIET COMPONENTS DBus)
+	find_package(Qt5 5.15.0 QUIET COMPONENTS DBus)
 
 	if (TARGET Qt5::DBus AND ENABLE_DBUS)
 		add_definitions(-DOTTER_ENABLE_DBUS)
