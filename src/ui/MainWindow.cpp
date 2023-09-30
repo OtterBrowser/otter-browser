@@ -666,7 +666,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 					return;
 				}
 
-				if (AddonsManager::isSpecialPage(url) && SessionsManager::hasUrl(url, true))
+				if (AddonsManager::isSpecialPage(url) && (AddonsManager::getSpecialPage(url.path()).isSingleton && SessionsManager::hasUrl(url, true)))
 				{
 					return;
 				}
