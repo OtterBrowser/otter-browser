@@ -95,18 +95,20 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 		{
 			const QVector<ToolBarsManager::ToolBarDefinition> definitions(ToolBarsManager::getToolBarDefinitions(areas.at(i)));
 
-			if (!definitions.isEmpty())
+			if (definitions.isEmpty())
 			{
-				QVector<Session::MainWindow::ToolBarState> states;
-				states.reserve(definitions.length());
-
-				for (int j = 0; j < definitions.count(); ++j)
-				{
-					states.append(Session::MainWindow::ToolBarState(definitions.at(j).identifier, ToolBarsManager::getToolBarDefinition(definitions.at(j).identifier)));
-				}
-
-				toolBarStates[areas.at(i)] = states;
+				continue;
 			}
+
+			QVector<Session::MainWindow::ToolBarState> states;
+			states.reserve(definitions.length());
+
+			for (int j = 0; j < definitions.count(); ++j)
+			{
+				states.append(Session::MainWindow::ToolBarState(definitions.at(j).identifier, ToolBarsManager::getToolBarDefinition(definitions.at(j).identifier)));
+			}
+
+			toolBarStates[areas.at(i)] = states;
 		}
 	}
 	else if (!session.toolBars.isEmpty())
