@@ -205,9 +205,11 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 
 	if (session.geometry.isEmpty())
 	{
-		if (Application::getActiveWindow())
+		MainWindow *activeWindow(Application::getActiveWindow());
+
+		if (activeWindow)
 		{
-			resize(Application::getActiveWindow()->size());
+			resize(activeWindow->size());
 		}
 		else
 		{
