@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -36,24 +36,26 @@ GenericAnimation::GenericAnimation(const QString &path, QObject *parent) : Anima
 	m_path(path),
 	m_format(UnknownFormat)
 {
-	if (!path.isEmpty())
+	if (path.isEmpty())
 	{
-		m_gifMovie = new QMovie(path, QByteArrayLiteral("gif"), this);
+		return;
+	}
 
-		if (m_gifMovie->isValid())
-		{
-			m_format = GifFormat;
+	m_gifMovie = new QMovie(path, QByteArrayLiteral("gif"), this);
 
-			connect(m_gifMovie, &QMovie::frameChanged, m_gifMovie, [&]()
-			{
-				emit frameChanged();
-			});
-		}
-		else
+	if (m_gifMovie->isValid())
+	{
+		m_format = GifFormat;
+
+		connect(m_gifMovie, &QMovie::frameChanged, m_gifMovie, [&]()
 		{
-			m_gifMovie->deleteLater();
-			m_gifMovie = nullptr;
-		}
+			emit frameChanged();
+		});
+	}
+	else
+	{
+		m_gifMovie->deleteLater();
+		m_gifMovie = nullptr;
 	}
 }
 
