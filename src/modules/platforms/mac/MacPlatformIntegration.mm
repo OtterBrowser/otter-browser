@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -192,29 +192,31 @@ MacPlatformIntegration::MacPlatformIntegration(QObject *parent) : PlatformIntegr
 		}
 		else
 		{
+			Action *action(new Action(actions.at(i), {}, executor, menu));
+
 			switch (actions.at(i))
 			{
 				case ActionsManager::BookmarksAction:
-					menu->addAction(new Action(actions.at(i), {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Bookmarks")}}, executor, menu));
+					action->setTextOverride(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
 
 					break;
 				case ActionsManager::TransfersAction:
-					menu->addAction(new Action(actions.at(i), {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Transfers")}}, executor, menu));
+					action->setTextOverride(QT_TRANSLATE_NOOP("actions", "Transfers"));
 
 					break;
 				case ActionsManager::HistoryAction:
-					menu->addAction(new Action(actions.at(i), {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "History")}}, executor, menu));
+					action->setTextOverride(QT_TRANSLATE_NOOP("actions", "History"));
 
 					break;
 				case ActionsManager::NotesAction:
-					menu->addAction(new Action(actions.at(i), {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Notes")}}, executor, menu));
+					action->setTextOverride(QT_TRANSLATE_NOOP("actions", "Notes"));
 
 					break;
 				default:
-					menu->addAction(new Action(actions.at(i), {}, executor, menu));
-
 					break;
 			}
+
+			menu->addAction(action);
 		}
 	}
 
