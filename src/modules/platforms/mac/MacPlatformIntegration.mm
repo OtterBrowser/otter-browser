@@ -200,10 +200,6 @@ MacPlatformIntegration::MacPlatformIntegration(QObject *parent) : PlatformIntegr
 					action->setTextOverride(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
 
 					break;
-				case ActionsManager::TransfersAction:
-					action->setTextOverride(QT_TRANSLATE_NOOP("actions", "Transfers"));
-
-					break;
 				case ActionsManager::HistoryAction:
 					action->setTextOverride(QT_TRANSLATE_NOOP("actions", "History"));
 
