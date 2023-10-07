@@ -293,41 +293,38 @@ void Menu::mousePressEvent(QMouseEvent *event)
 
 void Menu::mouseReleaseEvent(QMouseEvent *event)
 {
-	if (m_role == BookmarksMenu && (event->button() == Qt::LeftButton || event->button() == Qt::MiddleButton))
+	const Action *action(qobject_cast<Action*>(actionAt(event->pos())));
+
+	if (m_role != BookmarksMenu || !(event->button() == Qt::LeftButton || event->button() == Qt::MiddleButton) || !action || action != m_clickedAction || !action->isEnabled() || action->getIdentifier() != ActionsManager::OpenBookmarkAction)
 	{
-		const Action *action(qobject_cast<Action*>(actionAt(event->pos())));
+		m_clickedAction = nullptr;
 
-		if (action && action == m_clickedAction && action->isEnabled() && action->getIdentifier() == ActionsManager::OpenBookmarkAction)
+		QMenu::mouseReleaseEvent(event);
+
+		return;
+	}
+
+	QWidget *menu(this);
+
+	while (menu)
+	{
+		menu->close();
+		menu = menu->parentWidget();
+
+		if (!menu || !menu->inherits("QMenu"))
 		{
-			QWidget *menu(this);
-
-			while (menu)
-			{
-				menu->close();
-				menu = menu->parentWidget();
-
-				if (!menu || !menu->inherits("QMenu"))
-				{
-					break;
-				}
-			}
-
-			const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(action->getParameters().value(QLatin1String("bookmark")).toULongLong()));
-
-			if (bookmark)
-			{
-				Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen, event->button(), event->modifiers()))}}, parentWidget());
-			}
-
-			m_clickedAction = nullptr;
-
-			return;
+			break;
 		}
 	}
 
-	m_clickedAction = nullptr;
+	const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(action->getParameters().value(QLatin1String("bookmark")).toULongLong()));
 
-	QMenu::mouseReleaseEvent(event);
+	if (bookmark)
+	{
+		Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen, event->button(), event->modifiers()))}}, parentWidget());
+	}
+
+	m_clickedAction = nullptr;
 }
 
 void Menu::contextMenuEvent(QContextMenuEvent *event)
