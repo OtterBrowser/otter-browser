@@ -652,7 +652,7 @@ void Menu::populateBookmarksMenu()
 {
 	const BookmarksModel::Bookmark *folderBookmark(BookmarksManager::getModel()->getBookmark(m_menuOptions.value(QLatin1String("bookmark")).toULongLong()));
 
-	if (!actions().isEmpty() && !(folderBookmark->getType() == BookmarksModel::RootBookmark && actions().count() == 3))
+	if (!isEmpty() && !(folderBookmark->getType() == BookmarksModel::RootBookmark && actions().count() == 3))
 	{
 		return;
 	}
@@ -720,7 +720,7 @@ void Menu::populateBookmarksMenu()
 
 void Menu::populateBookmarkSelectorMenu()
 {
-	if (!actions().isEmpty())
+	if (!isEmpty())
 	{
 		return;
 	}
@@ -926,7 +926,7 @@ void Menu::populateCharacterEncodingMenu()
 		}
 	}
 
-	if (actions().isEmpty())
+	if (isEmpty())
 	{
 		return;
 	}
@@ -1065,7 +1065,7 @@ void Menu::populateDictionariesMenu()
 
 void Menu::populateFeedsMenu()
 {
-	if (!actions().isEmpty())
+	if (!isEmpty())
 	{
 		return;
 	}
@@ -1124,7 +1124,7 @@ void Menu::populateFeedsMenu()
 
 void Menu::populateNotesMenu()
 {
-	if (!actions().isEmpty())
+	if (!isEmpty())
 	{
 		return;
 	}
@@ -1500,7 +1500,7 @@ void Menu::populateUserAgentMenu()
 
 void Menu::populateWindowsMenu()
 {
-	if (actions().isEmpty())
+	if (isEmpty())
 	{
 		const MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
