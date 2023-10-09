@@ -94,7 +94,7 @@ protected slots:
 	void populateNotesMenu();
 	void populateOpenInApplicationMenu();
 	void populateProxiesMenu();
-	void populateSearchMenu();
+	void populateSearchEnginesMenu();
 	void populateSessionsMenu();
 	void populateStyleSheetsMenu();
 	void populateToolBarsMenu();

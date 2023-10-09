@@ -199,7 +199,7 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 		case SearchMenu:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Search Using"));
 
-			connect(this, &Menu::aboutToShow, this, &Menu::populateSearchMenu);
+			connect(this, &Menu::aboutToShow, this, &Menu::populateSearchEnginesMenu);
 
 			break;
 		case SessionsMenu:
@@ -253,7 +253,7 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 		case ValidateMenu:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Validate Using"));
 
-			connect(this, &Menu::aboutToShow, this, &Menu::populateSearchMenu);
+			connect(this, &Menu::aboutToShow, this, &Menu::populateSearchEnginesMenu);
 
 			break;
 		case WindowsMenu:
@@ -1269,7 +1269,7 @@ void Menu::populateProxiesMenu()
 	}
 }
 
-void Menu::populateSearchMenu()
+void Menu::populateSearchEnginesMenu()
 {
 	clear();
 
