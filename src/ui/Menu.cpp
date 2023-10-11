@@ -1389,7 +1389,7 @@ void Menu::populateToolBarsMenu()
 {
 	clear();
 
-	ActionExecutor::Object executor(getExecutor());
+	const ActionExecutor::Object executor(getExecutor());
 	const QVector<ToolBarsManager::ToolBarDefinition> definitions(ToolBarsManager::getToolBarDefinitions());
 
 	for (int i = 0; i < definitions.count(); ++i)
