@@ -1543,9 +1543,10 @@ void Menu::clearBookmarksMenu()
 
 	for (int i = (actions().count() - 1); i >= offset; --i)
 	{
-		actions().at(i)->deleteLater();
+		QAction *action(actions().at(i));
+		action->deleteLater();
 
-		removeAction(actions().at(i));
+		removeAction(action);
 	}
 
 	connect(this, &Menu::aboutToShow, this, &Menu::populateBookmarksMenu);
