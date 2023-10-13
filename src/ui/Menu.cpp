@@ -1519,20 +1519,22 @@ void Menu::populateWindowsMenu()
 	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 	const MainWindowSessionItem *mainWindowItem(SessionsManager::getModel()->getMainWindowItem(mainWindow));
 
-	if (mainWindowItem)
+	if (!mainWindowItem)
 	{
-		ActionExecutor::Object executor(mainWindow, mainWindow);
+		return;
+	}
 
-		for (int i = 0; i < mainWindowItem->rowCount(); ++i)
+	ActionExecutor::Object executor(mainWindow, mainWindow);
+
+	for (int i = 0; i < mainWindowItem->rowCount(); ++i)
+	{
+		const WindowSessionItem *windowItem(static_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
+
+		if (windowItem)
 		{
-			const WindowSessionItem *windowItem(static_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
+			const QVariantMap paramaters({{QLatin1String("tab"), windowItem->getActiveWindow()->getIdentifier()}});
 
-			if (windowItem)
-			{
-				const QVariantMap paramaters({{QLatin1String("tab"), windowItem->getActiveWindow()->getIdentifier()}});
-
-				addAction(new MenuAction(ActionsManager::ActivateTabAction, paramaters, executor, this));
-			}
+			addAction(new MenuAction(ActionsManager::ActivateTabAction, paramaters, executor, this));
 		}
 	}
 }
