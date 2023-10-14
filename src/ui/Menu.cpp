@@ -1500,10 +1500,10 @@ void Menu::populateUserAgentMenu()
 
 void Menu::populateWindowsMenu()
 {
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
 	if (isEmpty())
 	{
-		const MainWindow *mainWindow(MainWindow::findMainWindow(this));
-
 		if (mainWindow)
 		{
 			connect(mainWindow, &MainWindow::titleChanged, this, &Menu::populateWindowsMenu);
@@ -1516,7 +1516,6 @@ void Menu::populateWindowsMenu()
 
 	clear();
 
-	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 	const MainWindowSessionItem *mainWindowItem(SessionsManager::getModel()->getMainWindowItem(mainWindow));
 
 	if (!mainWindowItem)
