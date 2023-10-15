@@ -1024,7 +1024,17 @@ void Menu::populateClosedWindowsMenu()
 		}
 	}
 
-	connect(clearAction, &QAction::triggered, this, &Menu::clearClosedWindows);
+	connect(clearAction, &QAction::triggered, this, [&]()
+	{
+		MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+
+		if (mainWindow)
+		{
+			mainWindow->clearClosedWindows();
+		}
+
+		SessionsManager::clearClosedWindows();
+	});
 }
 
 void Menu::populateDictionariesMenu()
@@ -1551,18 +1561,6 @@ void Menu::clearBookmarksMenu()
 	}
 
 	connect(this, &Menu::aboutToShow, this, &Menu::populateBookmarksMenu);
-}
-
-void Menu::clearClosedWindows()
-{
-	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-
-	if (mainWindow)
-	{
-		mainWindow->clearClosedWindows();
-	}
-
-	SessionsManager::clearClosedWindows();
 }
 
 void Menu::clearNotesMenu()
