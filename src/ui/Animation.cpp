@@ -72,11 +72,7 @@ void GenericAnimation::createSvgRenderer()
 		m_svgRenderer = nullptr;
 	}
 
-	if (!m_color.isValid())
-	{
-		m_svgRenderer = new QSvgRenderer(m_path, this);
-	}
-	else
+	if (m_color.isValid())
 	{
 		QFile file(m_path);
 
@@ -94,6 +90,10 @@ void GenericAnimation::createSvgRenderer()
 
 			return;
 		}
+	}
+	else
+	{
+		m_svgRenderer = new QSvgRenderer(m_path, this);
 	}
 
 	if (m_svgRenderer->isValid())
