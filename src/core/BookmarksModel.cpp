@@ -237,7 +237,7 @@ QVariant BookmarksModel::Bookmark::data(int role) const
 
 			if (type == RootBookmark)
 			{
-				break;
+				return false;
 			}
 
 			if (type == TrashBookmark)
