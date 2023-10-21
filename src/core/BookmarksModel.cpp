@@ -53,9 +53,11 @@ void BookmarksModel::Bookmark::remove()
 
 void BookmarksModel::Bookmark::setData(const QVariant &value, int role)
 {
-	if (model() && qobject_cast<BookmarksModel*>(model()))
+	QStandardItemModel *model(this->model());
+
+	if (model && qobject_cast<BookmarksModel*>(model))
 	{
-		model()->setData(index(), value, role);
+		model->setData(index(), value, role);
 	}
 	else
 	{
