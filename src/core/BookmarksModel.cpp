@@ -485,25 +485,25 @@ void BookmarksModel::trashBookmark(Bookmark *bookmark)
 	if (type == SeparatorBookmark || bookmark->data(IsTrashedRole).toBool())
 	{
 		bookmark->remove();
+
+		return;
 	}
-	else
-	{
-		Bookmark *previousParent(bookmark->getParent());
-		BookmarkLocation location;
-		location.parent = bookmark->parent()->index();
-		location.row = bookmark->row();
 
-		m_trash[bookmark] = location;
+	Bookmark *previousParent(bookmark->getParent());
+	BookmarkLocation location;
+	location.parent = bookmark->parent()->index();
+	location.row = bookmark->row();
 
-		m_trashItem->appendRow(bookmark->parent()->takeRow(bookmark->row()));
-		m_trashItem->setEnabled(true);
+	m_trash[bookmark] = location;
 
-		removeBookmarkUrl(bookmark);
+	m_trashItem->appendRow(bookmark->parent()->takeRow(bookmark->row()));
+	m_trashItem->setEnabled(true);
 
-		emit bookmarkModified(bookmark);
-		emit bookmarkTrashed(bookmark, previousParent);
-		emit modelModified();
-	}
+	removeBookmarkUrl(bookmark);
+
+	emit bookmarkModified(bookmark);
+	emit bookmarkTrashed(bookmark, previousParent);
+	emit modelModified();
 }
 
 void BookmarksModel::restoreBookmark(Bookmark *bookmark)
