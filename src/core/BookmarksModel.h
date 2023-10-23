@@ -93,6 +93,7 @@ public:
 		BookmarkType getType() const;
 		int getVisits() const;
 		bool hasChildren() const;
+		static bool isFolder(BookmarkType type);
 		bool isFolder() const;
 		bool isAncestorOf(Bookmark *child) const;
 		bool operator<(const QStandardItem &other) const override;

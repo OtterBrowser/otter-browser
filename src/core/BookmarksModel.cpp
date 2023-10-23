@@ -317,9 +317,9 @@ bool BookmarksModel::Bookmark::hasChildren() const
 	return (rowCount() > 0);
 }
 
-bool BookmarksModel::Bookmark::isFolder() const
+bool BookmarksModel::Bookmark::isFolder(BookmarksModel::BookmarkType type)
 {
-	switch (getType())
+	switch (type)
 	{
 		case RootBookmark:
 		case TrashBookmark:
@@ -330,6 +330,11 @@ bool BookmarksModel::Bookmark::isFolder() const
 	}
 
 	return false;
+}
+
+bool BookmarksModel::Bookmark::isFolder() const
+{
+	return isFolder(getType());
 }
 
 bool BookmarksModel::Bookmark::isAncestorOf(Bookmark *child) const
@@ -1493,9 +1498,7 @@ bool BookmarksModel::canDropMimeData(const QMimeData *data, Qt::DropAction actio
 
 bool BookmarksModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
-	const BookmarkType type(static_cast<BookmarkType>(parent.data(TypeRole).toInt()));
-
-	if (type != FolderBookmark && type != RootBookmark && type != TrashBookmark)
+	if (!Bookmark::isFolder(static_cast<BookmarkType>(parent.data(TypeRole).toInt())))
 	{
 		return false;
 	}
