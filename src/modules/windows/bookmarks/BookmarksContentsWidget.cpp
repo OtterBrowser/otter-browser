@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -335,9 +335,7 @@ BookmarksContentsWidget::BookmarkLocation BookmarksContentsWidget::getBookmarkCr
 		return location;
 	}
 
-	const BookmarksModel::BookmarkType type(item->getType());
-
-	location.folder = ((type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark) ? item : item->getParent());
+	location.folder = (item->isFolder() ? item : item->getParent());
 	location.row = ((location.folder && location.folder->index() == index) ? -1 : (index.row() + 1));
 
 	return location;
