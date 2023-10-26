@@ -325,17 +325,17 @@ BookmarksModel::Bookmark* BookmarksContentsWidget::getBookmark(const QModelIndex
 BookmarksContentsWidget::BookmarkLocation BookmarksContentsWidget::getBookmarkCreationLocation()
 {
 	const QModelIndex index(m_model->mapToSource(m_ui->bookmarksViewWidget->currentIndex()));
-	BookmarksModel::Bookmark *item(BookmarksManager::getModel()->getBookmark(index));
+	BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(index));
 	BookmarkLocation location;
 
-	if (!item || item == BookmarksManager::getModel()->getRootItem() || item == BookmarksManager::getModel()->getTrashItem())
+	if (!bookmark || bookmark == BookmarksManager::getModel()->getRootItem() || bookmark == BookmarksManager::getModel()->getTrashItem())
 	{
 		location.folder = BookmarksManager::getModel()->getRootItem();
 
 		return location;
 	}
 
-	location.folder = (item->isFolder() ? item : item->getParent());
+	location.folder = (bookmark->isFolder() ? bookmark : bookmark->getParent());
 	location.row = ((location.folder && location.folder->index() == index) ? -1 : (index.row() + 1));
 
 	return location;
