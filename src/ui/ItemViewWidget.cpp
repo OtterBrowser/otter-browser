@@ -1268,6 +1268,11 @@ bool ItemViewWidget::isExclusive() const
 	return m_isExclusive;
 }
 
+bool ItemViewWidget::isModified() const
+{
+	return m_isModified;
+}
+
 bool ItemViewWidget::applyFilter(const QModelIndex &index, bool parentHasMatch)
 {
 	if (!model())
@@ -1343,11 +1348,6 @@ bool ItemViewWidget::applyFilter(const QModelIndex &index, bool parentHasMatch)
 	}
 
 	return hasMatch;
-}
-
-bool ItemViewWidget::isModified() const
-{
-	return m_isModified;
 }
 
 }
