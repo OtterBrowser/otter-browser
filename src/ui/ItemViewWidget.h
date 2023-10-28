@@ -139,6 +139,7 @@ public:
 	bool areRowsMovable() const;
 	bool canMoveRowUp() const;
 	bool canMoveRowDown() const;
+	bool hasSelection() const;
 	bool isExclusive() const;
 	bool isModified() const;
 

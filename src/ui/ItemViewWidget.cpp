@@ -1258,6 +1258,11 @@ bool ItemViewWidget::canMoveRowDown() const
 	return (currentRow >= 0 && rowCount > 1 && currentRow < (rowCount - 1));
 }
 
+bool ItemViewWidget::hasSelection() const
+{
+	return !selectionModel()->selectedIndexes().isEmpty();
+}
+
 bool ItemViewWidget::isExclusive() const
 {
 	return m_isExclusive;
