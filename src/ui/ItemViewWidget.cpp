@@ -1260,7 +1260,7 @@ bool ItemViewWidget::canMoveRowDown() const
 
 bool ItemViewWidget::hasSelection() const
 {
-	return !selectionModel()->selectedIndexes().isEmpty();
+	return (selectionModel() && !selectionModel()->selectedIndexes().isEmpty());
 }
 
 bool ItemViewWidget::isExclusive() const
