@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 20232 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -271,7 +271,7 @@ void NotesContentsWidget::updateActions()
 	m_ui->addressLabelWidget->setText(isUrlBookmark ? index.data(BookmarksModel::UrlRole).toString() : QString());
 	m_ui->addressLabelWidget->setUrl(isUrlBookmark ? index.data(BookmarksModel::UrlRole).toUrl() : QUrl());
 	m_ui->dateLabelWidget->setText(isUrlBookmark ? Utils::formatDateTime(index.data(BookmarksModel::TimeAddedRole).toDateTime()) : QString());
-	m_ui->deleteButton->setEnabled(!m_ui->notesViewWidget->selectionModel()->selectedIndexes().isEmpty() && type != BookmarksModel::RootBookmark && type != BookmarksModel::TrashBookmark);
+	m_ui->deleteButton->setEnabled(m_ui->notesViewWidget->hasSelection() && type != BookmarksModel::RootBookmark && type != BookmarksModel::TrashBookmark);
 
 	if (!m_ui->textEditWidget->hasFocus() || m_ui->textEditWidget->toPlainText() != text)
 	{

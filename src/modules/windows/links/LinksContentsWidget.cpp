@@ -228,7 +228,7 @@ void LinksContentsWidget::showContextMenu(const QPoint &position)
 	ActionExecutor::Object executor(this, this);
 	QMenu menu(this);
 
-	if (!m_ui->linksViewWidget->selectionModel()->selectedIndexes().isEmpty())
+	if (m_ui->linksViewWidget->hasSelection())
 	{
 		menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open"), this, &LinksContentsWidget::openLink);
 		menu.addAction(QCoreApplication::translate("actions", "Open in New Tab"), this, &LinksContentsWidget::openLink)->setData(SessionsManager::NewTabOpen);
@@ -285,7 +285,7 @@ ActionsManager::ActionDefinition::State LinksContentsWidget::getActionState(int 
 	{
 		case ActionsManager::CopyLinkToClipboardAction:
 		case ActionsManager::BookmarkLinkAction:
-			state.isEnabled = !m_ui->linksViewWidget->selectionModel()->selectedIndexes().isEmpty();
+			state.isEnabled = m_ui->linksViewWidget->hasSelection();
 
 			return state;
 		case ActionsManager::ReloadAction:

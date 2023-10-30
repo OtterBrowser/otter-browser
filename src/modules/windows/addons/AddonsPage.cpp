@@ -347,7 +347,7 @@ ActionsManager::ActionDefinition::State AddonsPage::getActionState(int identifie
 
 			break;
 		case ActionsManager::DeleteAction:
-			state.isEnabled = (m_ui->addonsViewWidget->selectionModel() && !m_ui->addonsViewWidget->selectionModel()->selectedIndexes().isEmpty());
+			state.isEnabled = m_ui->addonsViewWidget->hasSelection();
 
 			break;
 		default:

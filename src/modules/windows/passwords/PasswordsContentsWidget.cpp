@@ -524,7 +524,7 @@ ActionsManager::ActionDefinition::State PasswordsContentsWidget::getActionState(
 
 			return state;
 		case ActionsManager::DeleteAction:
-			state.isEnabled = (m_ui->passwordsViewWidget->selectionModel() && !m_ui->passwordsViewWidget->selectionModel()->selectedIndexes().isEmpty());
+			state.isEnabled = m_ui->passwordsViewWidget->hasSelection();
 
 			return state;
 		default:
