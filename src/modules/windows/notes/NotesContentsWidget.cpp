@@ -311,14 +311,14 @@ void NotesContentsWidget::updateText()
 
 BookmarksModel::Bookmark* NotesContentsWidget::findFolder(const QModelIndex &index)
 {
-	BookmarksModel::Bookmark *item(NotesManager::getModel()->getBookmark(index));
+	BookmarksModel::Bookmark *bookmark(NotesManager::getModel()->getBookmark(index));
 
-	if (!item || item == NotesManager::getModel()->getRootItem() || item == NotesManager::getModel()->getTrashItem())
+	if (!bookmark || bookmark == NotesManager::getModel()->getRootItem() || bookmark == NotesManager::getModel()->getTrashItem())
 	{
 		return NotesManager::getModel()->getRootItem();
 	}
 
-	return (item->isFolder() ? item : item->getParent());
+	return (bookmark->isFolder() ? bookmark : bookmark->getParent());
 }
 
 QString NotesContentsWidget::getTitle() const
