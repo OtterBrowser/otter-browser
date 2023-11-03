@@ -440,57 +440,59 @@ void ItemViewWidget::keyPressEvent(QKeyEvent *event)
 {
 	const int rowCount(getRowCount());
 
-	if ((event->key() == Qt::Key_Down || event->key() == Qt::Key_Up) && rowCount > 1 && moveCursor(((event->key() == Qt::Key_Up) ? MoveUp : MoveDown), event->modifiers()) == currentIndex())
+	if (!(event->key() == Qt::Key_Down || event->key() == Qt::Key_Up) || rowCount <= 0 || moveCursor(((event->key() == Qt::Key_Up) ? MoveUp : MoveDown), event->modifiers()) != currentIndex())
 	{
-		QModelIndex newIndex;
+		QTreeView::keyPressEvent(event);
+	}
 
-		if (event->key() == Qt::Key_Down)
+	QModelIndex newIndex;
+
+	if (event->key() == Qt::Key_Down)
+	{
+		for (int i = 0; i < rowCount; ++i)
 		{
-			for (int i = 0; i < rowCount; ++i)
+			const QModelIndex index(getIndex(i, 0));
+
+			if (index.flags().testFlag(Qt::ItemIsSelectable))
 			{
-				const QModelIndex index(getIndex(i, 0));
+				newIndex = index;
 
-				if (index.flags().testFlag(Qt::ItemIsSelectable))
-				{
-					newIndex = index;
-
-					break;
-				}
+				break;
 			}
 		}
-		else
+	}
+	else
+	{
+		for (int i = (rowCount - 1); i >= 0; --i)
 		{
-			for (int i = (rowCount - 1); i >= 0; --i)
+			const QModelIndex index(getIndex(i, 0));
+
+			if (index.flags().testFlag(Qt::ItemIsSelectable))
 			{
-				const QModelIndex index(getIndex(i, 0));
+				newIndex = index;
 
-				if (index.flags().testFlag(Qt::ItemIsSelectable))
-				{
-					newIndex = index;
-
-					break;
-				}
+				break;
 			}
 		}
+	}
 
-		if (newIndex.isValid())
+	if (newIndex.isValid())
+	{
+		const QItemSelectionModel::SelectionFlags command(selectionCommand(newIndex, event));
+
+		if (command != QItemSelectionModel::NoUpdate || style()->styleHint(QStyle::SH_ItemView_MovementWithoutUpdatingSelection, nullptr, this))
 		{
-			const QItemSelectionModel::SelectionFlags command(selectionCommand(newIndex, event));
-
-			if (command != QItemSelectionModel::NoUpdate || style()->styleHint(QStyle::SH_ItemView_MovementWithoutUpdatingSelection, nullptr, this))
+			if (event->key() == Qt::Key_Down)
 			{
-				if (event->key() == Qt::Key_Down)
-				{
-					scrollTo(getIndex(0, 0));
-				}
-
-				selectionModel()->setCurrentIndex(newIndex, command);
+				scrollTo(getIndex(0, 0));
 			}
 
-			event->accept();
-
-			return;
+			selectionModel()->setCurrentIndex(newIndex, command);
 		}
+
+		event->accept();
+
+		return;
 	}
 
 	QTreeView::keyPressEvent(event);
