@@ -220,7 +220,9 @@ NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 
 	QSslConfiguration::setDefaultConfiguration(configuration);
 
+#if QT_VERSION < 0x060000
 	connect(new QNetworkConfigurationManager(this), &QNetworkConfigurationManager::onlineStateChanged, this, &NetworkManagerFactory::onlineStateChanged);
+#endif
 }
 
 void NetworkManagerFactory::createInstance()

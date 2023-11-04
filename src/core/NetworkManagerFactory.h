@@ -240,7 +240,9 @@ private:
 
 signals:
 	void authenticated(QAuthenticator *authenticator, bool wasAccepted);
+#if QT_VERSION < 0x060000
 	void onlineStateChanged(bool isOnline);
+#endif
 
 friend class NetworkManager;
 };
