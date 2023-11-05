@@ -112,16 +112,20 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 
 	for (int i = 0; i < errors.count(); ++i)
 	{
-		if (errors.at(i).error() != QSslError::NoError)
+		const QSslError error(errors.at(i));
+
+		if (error.error() == QSslError::NoError)
 		{
-			if (exceptions.contains(QString::fromLatin1(errors.at(i).certificate().digest().toBase64())))
-			{
-				errorsToIgnore.append(errors.at(i));
-			}
-			else
-			{
-				messages.append(errors.at(i).errorString());
-			}
+			continue;
+		}
+
+		if (exceptions.contains(QString::fromLatin1(error.certificate().digest().toBase64())))
+		{
+			errorsToIgnore.append(error);
+		}
+		else
+		{
+			messages.append(error.errorString());
 		}
 	}
 

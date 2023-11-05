@@ -376,20 +376,24 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 
 	for (int i = 0; i < errors.count(); ++i)
 	{
-		if (errors.at(i).error() != QSslError::NoError)
+		const QSslError error(errors.at(i));
+
+		if (error.error() == QSslError::NoError)
 		{
-			m_sslInformation.errors.append({errors.at(i), reply->url()});
+			continue;
+		}
 
-			if (exceptions.contains(QString::fromLatin1(errors.at(i).certificate().digest().toBase64())))
-			{
-				Console::addMessage(QStringLiteral("[accepted] The page at %1 was allowed to display insecure content from %2").arg(firstPartyUrl, thirdPartyUrl), Console::SecurityCategory, Console::WarningLevel, thirdPartyUrl, -1, m_widget->getWindowIdentifier());
+		m_sslInformation.errors.append({error, reply->url()});
 
-				errorsToIgnore.append(errors.at(i));
-			}
-			else
-			{
-				Console::addMessage(QStringLiteral("[blocked] The page at %1 was not allowed to display insecure content from %2").arg(firstPartyUrl, thirdPartyUrl), Console::SecurityCategory, Console::WarningLevel, thirdPartyUrl, -1, m_widget->getWindowIdentifier());
-			}
+		if (exceptions.contains(QString::fromLatin1(error.certificate().digest().toBase64())))
+		{
+			Console::addMessage(QStringLiteral("[accepted] The page at %1 was allowed to display insecure content from %2").arg(firstPartyUrl, thirdPartyUrl), Console::SecurityCategory, Console::WarningLevel, thirdPartyUrl, -1, m_widget->getWindowIdentifier());
+
+			errorsToIgnore.append(error);
+		}
+		else
+		{
+			Console::addMessage(QStringLiteral("[blocked] The page at %1 was not allowed to display insecure content from %2").arg(firstPartyUrl, thirdPartyUrl), Console::SecurityCategory, Console::WarningLevel, thirdPartyUrl, -1, m_widget->getWindowIdentifier());
 		}
 	}
 
