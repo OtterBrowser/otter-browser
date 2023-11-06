@@ -1295,19 +1295,21 @@ TransfersManager::ActiveTransfersInformation TransfersManager::getActiveTransfer
 	{
 		const Transfer *transfer(m_transfers.at(i));
 
-		if (transfer->getState() == Transfer::RunningState)
+		if (transfer->getState() != Transfer::RunningState)
 		{
-			if (transfer->getBytesTotal() > 0)
-			{
-				++information.activeTransfersAmount;
+			continue;
+		}
 
-				information.bytesTotal += transfer->getBytesTotal();
-				information.bytesReceived += transfer->getBytesReceived();
-			}
-			else
-			{
-				++information.unknownProgressTransfersAmount;
-			}
+		if (transfer->getBytesTotal() > 0)
+		{
+			++information.activeTransfersAmount;
+
+			information.bytesTotal += transfer->getBytesTotal();
+			information.bytesReceived += transfer->getBytesReceived();
+		}
+		else
+		{
+			++information.unknownProgressTransfersAmount;
 		}
 	}
 
