@@ -101,36 +101,38 @@ void Transfer::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() == m_updateTimer)
 	{
-		const qint64 oldSpeed(m_speed);
+		const qint64 previousSpeed(m_speed);
 
 		m_speed = (m_bytesReceivedDifference * 2);
 		m_bytesReceivedDifference = 0;
 
-		if (m_speed != oldSpeed)
+		if (m_speed == previousSpeed)
 		{
-			m_speeds.enqueue(m_speed);
-
-			if (m_speeds.count() > 10)
-			{
-				m_speeds.dequeue();
-			}
-
-			if (m_bytesTotal > 0)
-			{
-				qint64 speedSum(0);
-
-				for (int i = 0; i < m_speeds.count(); ++i)
-				{
-					speedSum += m_speeds.at(i);
-				}
-
-				speedSum /= m_speeds.count();
-
-				m_remainingTime = qRound(static_cast<qreal>(m_bytesTotal - m_bytesReceived) / static_cast<qreal>(speedSum));
-			}
-
-			emit changed();
+			return;
 		}
+
+		m_speeds.enqueue(m_speed);
+
+		if (m_speeds.count() > 10)
+		{
+			m_speeds.dequeue();
+		}
+
+		if (m_bytesTotal > 0)
+		{
+			qint64 speedSum(0);
+
+			for (int i = 0; i < m_speeds.count(); ++i)
+			{
+				speedSum += m_speeds.at(i);
+			}
+
+			speedSum /= m_speeds.count();
+
+			m_remainingTime = qRound(static_cast<qreal>(m_bytesTotal - m_bytesReceived) / static_cast<qreal>(speedSum));
+		}
+
+		emit changed();
 	}
 }
 
