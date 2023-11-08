@@ -118,23 +118,25 @@ void CookieJar::clearCookies(int period)
 
 void CookieJar::scheduleSave()
 {
-	if (!m_path.isEmpty())
+	if (m_path.isEmpty())
 	{
-		if (Application::isAboutToQuit())
-		{
-			if (m_saveTimer != 0)
-			{
-				killTimer(m_saveTimer);
+		return;
+	}
 
-				m_saveTimer = 0;
-			}
-
-			save();
-		}
-		else if (m_saveTimer == 0)
+	if (Application::isAboutToQuit())
+	{
+		if (m_saveTimer != 0)
 		{
-			m_saveTimer = startTimer(500);
+			killTimer(m_saveTimer);
+
+			m_saveTimer = 0;
 		}
+
+		save();
+	}
+	else if (m_saveTimer == 0)
+	{
+		m_saveTimer = startTimer(500);
 	}
 }
 
