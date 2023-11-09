@@ -195,9 +195,11 @@ void CookieJar::save()
 
 	for (int i = 0; i < cookies.count(); ++i)
 	{
-		if (!cookies.at(i).isSessionCookie())
+		const QNetworkCookie cookie(cookies.at(i));
+
+		if (!cookie.isSessionCookie())
 		{
-			stream << cookies.at(i).toRawForm();
+			stream << cookie.toRawForm();
 		}
 	}
 
@@ -236,9 +238,11 @@ QVector<QNetworkCookie> CookieJar::getCookies(const QString &domain) const
 
 	for (int i = 0; i < cookies.count(); ++i)
 	{
-		if (cookies.at(i).domain() == domain || (cookies.at(i).domain().startsWith(QLatin1Char('.')) && domain.endsWith(cookies.at(i).domain())))
+		const QNetworkCookie cookie(cookies.at(i));
+
+		if (cookie.domain() == domain || (cookie.domain().startsWith(QLatin1Char('.')) && domain.endsWith(cookie.domain())))
 		{
-			domainCookies.append(cookies.at(i));
+			domainCookies.append(cookie);
 		}
 	}
 
