@@ -359,7 +359,7 @@ bool CookieJar::hasCookie(const QNetworkCookie &cookie) const
 
 	for (int i = 0; i < cookies.count(); ++i)
 	{
-		if (cookies.at(i).domain() == cookie.domain() && cookies.at(i).name() == cookie.name())
+		if (cookie.hasSameIdentifier(cookies.at(i)))
 		{
 			return true;
 		}
