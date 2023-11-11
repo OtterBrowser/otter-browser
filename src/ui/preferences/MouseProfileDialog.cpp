@@ -89,22 +89,23 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 
 			for (int j = 0; j < gestures.count(); ++j)
 			{
-				const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(gestures.at(j).action));
-				const QString name(ActionsManager::getActionName(gestures.at(j).action));
-				const QString parameters(gestures.at(j).parameters.isEmpty() ? QString() : QString::fromLatin1(QJsonDocument(QJsonObject::fromVariantMap(gestures.at(j).parameters)).toJson(QJsonDocument::Compact)));
+				const MouseProfile::Gesture gesture(gestures.at(j));
+				const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(gesture.action));
+				const QString name(ActionsManager::getActionName(gesture.action));
+				const QString parameters(gesture.parameters.isEmpty() ? QString() : QString::fromLatin1(QJsonDocument(QJsonObject::fromVariantMap(gesture.parameters)).toJson(QJsonDocument::Compact)));
 				QStringList steps;
-				steps.reserve(gestures.at(j).steps.count());
+				steps.reserve(gesture.steps.count());
 
-				for (int k = 0; k < gestures.at(j).steps.count(); ++k)
+				for (int k = 0; k < gesture.steps.count(); ++k)
 				{
-					steps.append(gestures.at(j).steps.at(k).toString());
+					steps.append(gesture.steps.at(k).toString());
 				}
 
 				QList<QStandardItem*> items({new QStandardItem(action.getText(true)), new QStandardItem(parameters), new QStandardItem(steps.join(QLatin1String(", ")))});
 				items[0]->setData(ItemModel::createDecoration(action.defaultState.icon), Qt::DecorationRole);
 				items[0]->setData(action.identifier, IdentifierRole);
 				items[0]->setData(name, NameRole);
-				items[0]->setData(gestures.at(j).parameters, ParametersRole);
+				items[0]->setData(gesture.parameters, ParametersRole);
 				items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsEditable);
 				items[0]->setToolTip(QStringLiteral("%1 (%2)").arg(action.getText(true), name));
 				items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
