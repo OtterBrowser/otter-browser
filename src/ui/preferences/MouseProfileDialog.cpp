@@ -189,19 +189,21 @@ void MouseProfileDialog::addGesture()
 		item = item->parent();
 	}
 
-	if (item)
+	if (!item)
 	{
-		QList<QStandardItem*> items({new QStandardItem(tr("Select Action")), new QStandardItem(), new QStandardItem()});
-		items[0]->setData(ItemModel::createDecoration(), Qt::DecorationRole);
-		items[0]->setData(-1, IdentifierRole);
-		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsEditable);
-		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
-		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
-
-		item->appendRow(items);
-
-		m_ui->gesturesViewWidget->setCurrentIndex(items[0]->index());
+		return;
 	}
+
+	QList<QStandardItem*> items({new QStandardItem(tr("Select Action")), new QStandardItem(), new QStandardItem()});
+	items[0]->setData(ItemModel::createDecoration(), Qt::DecorationRole);
+	items[0]->setData(-1, IdentifierRole);
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsEditable);
+	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+	items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+
+	item->appendRow(items);
+
+	m_ui->gesturesViewWidget->setCurrentIndex(items[0]->index());
 }
 
 void MouseProfileDialog::removeGesture()
