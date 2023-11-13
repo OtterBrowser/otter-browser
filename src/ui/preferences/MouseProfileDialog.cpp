@@ -302,19 +302,21 @@ MouseProfile MouseProfileDialog::getProfile() const
 			const QStringList steps(actionIndex.sibling(actionIndex.row(), 2).data(Qt::DisplayRole).toString().split(QLatin1String(", "), Qt::SkipEmptyParts));
 			const int action(actionIndex.data(IdentifierRole).toInt());
 
-			if (!steps.isEmpty() && action >= 0)
+			if (steps.isEmpty() || action == 0)
 			{
-				MouseProfile::Gesture gesture;
-				gesture.action = action;
-				gesture.parameters = actionIndex.data(ParametersRole).toMap();
-
-				for (int k = 0; k < steps.count(); ++k)
-				{
-					gesture.steps.append(MouseProfile::Gesture::Step::fromString(steps.at(k)));
-				}
-
-				gestures.append(gesture);
+				continue;
 			}
+
+			MouseProfile::Gesture gesture;
+			gesture.action = action;
+			gesture.parameters = actionIndex.data(ParametersRole).toMap();
+
+			for (int k = 0; k < steps.count(); ++k)
+			{
+				gesture.steps.append(MouseProfile::Gesture::Step::fromString(steps.at(k)));
+			}
+
+			gestures.append(gesture);
 		}
 
 		gestures.squeeze();
