@@ -154,13 +154,15 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 
 				for (int i = 0; i < exchangers.count(); ++i)
 				{
-					if (exchangers.at(i).isEmpty())
+					const QString exchanger(exchangers.at(i));
+
+					if (exchanger.isEmpty())
 					{
 						addSeparator();
 					}
 					else
 					{
-						addAction(new MenuAction(ActionsManager::ExchangeDataAction, {{QLatin1String("exchanger"), exchangers.at(i)}}, executor, this));
+						addAction(new MenuAction(ActionsManager::ExchangeDataAction, {{QLatin1String("exchanger"), exchanger}}, executor, this));
 					}
 				}
 			});
