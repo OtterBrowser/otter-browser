@@ -71,25 +71,27 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 			{
 				const QString path(Utils::getSavePath(suggestSaveFileName(SingleFileSaveFormat)).path);
 
-				if (!path.isEmpty())
+				if (path.isEmpty())
 				{
-					QFile file(path);
+					break;
+				}
 
-					if (file.open(QIODevice::WriteOnly))
-					{
-						QTextStream stream(&file);
-						stream << m_sourceEditWidget->toPlainText();
+				QFile file(path);
 
-						m_sourceEditWidget->markAsSaved();
+				if (file.open(QIODevice::WriteOnly))
+				{
+					QTextStream stream(&file);
+					stream << m_sourceEditWidget->toPlainText();
 
-						file.close();
-					}
-					else
-					{
-						Console::addMessage(tr("Failed to save file: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, path);
+					m_sourceEditWidget->markAsSaved();
 
-						QMessageBox::warning(nullptr, tr("Error"), tr("Failed to save file."), QMessageBox::Close);
-					}
+					file.close();
+				}
+				else
+				{
+					Console::addMessage(tr("Failed to save file: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, path);
+
+					QMessageBox::warning(nullptr, tr("Error"), tr("Failed to save file."), QMessageBox::Close);
 				}
 			}
 
