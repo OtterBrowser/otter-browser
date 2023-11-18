@@ -127,21 +127,21 @@ int ProxyModel::rowCount(const QModelIndex &parent) const
 
 bool ProxyModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
 {
-	if (orientation == Qt::Horizontal)
+	if (orientation == Qt::Vertical)
 	{
-		if (!m_headerData.contains(section))
-		{
-			m_headerData[section] = {};
-		}
-
-		m_headerData[section][role] = value;
-
-		emit headerDataChanged(orientation, section, section);
-
-		return true;
+		return false;
 	}
 
-	return false;
+	if (!m_headerData.contains(section))
+	{
+		m_headerData[section] = {};
+	}
+
+	m_headerData[section][role] = value;
+
+	emit headerDataChanged(orientation, section, section);
+
+	return true;
 }
 
 }
