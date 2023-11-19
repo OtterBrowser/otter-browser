@@ -1303,16 +1303,18 @@ QVector<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QStri
 
 	for (keywordsIterator = m_keywords.constBegin(); keywordsIterator != m_keywords.constEnd(); ++keywordsIterator)
 	{
-		if (keywordsIterator.key().startsWith(prefix, Qt::CaseInsensitive))
+		if (!keywordsIterator.key().startsWith(prefix, Qt::CaseInsensitive))
 		{
-			BookmarkMatch match;
-			match.bookmark = keywordsIterator.value();
-			match.match = keywordsIterator.key();
-
-			matchesMap.insert(match.bookmark->getTimeVisited(), match);
-
-			matchedBookmarks.append(match.bookmark);
+			continue;
 		}
+
+		BookmarkMatch match;
+		match.bookmark = keywordsIterator.value();
+		match.match = keywordsIterator.key();
+
+		matchesMap.insert(match.bookmark->getTimeVisited(), match);
+
+		matchedBookmarks.append(match.bookmark);
 	}
 
 	currentMatches = matchesMap.values().toVector();
