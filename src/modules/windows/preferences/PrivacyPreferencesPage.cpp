@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -49,25 +49,27 @@ void PrivacyPreferencesPage::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
-	if (event->type() == QEvent::LanguageChange && wasLoaded())
+	if (event->type() != QEvent::LanguageChange || !wasLoaded())
 	{
-		m_ui->retranslateUi(this);
-		m_ui->doNotTrackComboBox->setItemText(0, tr("Inform websites that I do not want to be tracked"));
-		m_ui->doNotTrackComboBox->setItemText(1, tr("Inform websites that I allow tracking"));
-		m_ui->doNotTrackComboBox->setItemText(2, tr("Do not inform websites about my preference"));
-
-		m_ui->cookiesPolicyComboBox->setItemText(0, tr("Always"));
-		m_ui->cookiesPolicyComboBox->setItemText(1, tr("Only existing"));
-		m_ui->cookiesPolicyComboBox->setItemText(2, tr("Only read existing"));
-
-		m_ui->keepCookiesModeComboBox->setItemText(0, tr("Expires"));
-		m_ui->keepCookiesModeComboBox->setItemText(1, tr("Current session is closed"));
-		m_ui->keepCookiesModeComboBox->setItemText(2, tr("Always ask"));
-
-		m_ui->thirdPartyCookiesPolicyComboBox->setItemText(0, tr("Always"));
-		m_ui->thirdPartyCookiesPolicyComboBox->setItemText(1, tr("Only existing"));
-		m_ui->thirdPartyCookiesPolicyComboBox->setItemText(2, tr("Never"));
+		return;
 	}
+
+	m_ui->retranslateUi(this);
+	m_ui->doNotTrackComboBox->setItemText(0, tr("Inform websites that I do not want to be tracked"));
+	m_ui->doNotTrackComboBox->setItemText(1, tr("Inform websites that I allow tracking"));
+	m_ui->doNotTrackComboBox->setItemText(2, tr("Do not inform websites about my preference"));
+
+	m_ui->cookiesPolicyComboBox->setItemText(0, tr("Always"));
+	m_ui->cookiesPolicyComboBox->setItemText(1, tr("Only existing"));
+	m_ui->cookiesPolicyComboBox->setItemText(2, tr("Only read existing"));
+
+	m_ui->keepCookiesModeComboBox->setItemText(0, tr("Expires"));
+	m_ui->keepCookiesModeComboBox->setItemText(1, tr("Current session is closed"));
+	m_ui->keepCookiesModeComboBox->setItemText(2, tr("Always ask"));
+
+	m_ui->thirdPartyCookiesPolicyComboBox->setItemText(0, tr("Always"));
+	m_ui->thirdPartyCookiesPolicyComboBox->setItemText(1, tr("Only existing"));
+	m_ui->thirdPartyCookiesPolicyComboBox->setItemText(2, tr("Never"));
 }
 
 void PrivacyPreferencesPage::load()
