@@ -209,10 +209,10 @@ void SearchWidget::changeEvent(QEvent *event)
 	{
 		case QEvent::LanguageChange:
 			{
-				const QString title(SearchEnginesManager::getSearchEngine(m_searchEngine).title);
+				const QString text(tr("Search using %1").arg(SearchEnginesManager::getSearchEngine(m_searchEngine).title));
 
-				setToolTip(tr("Search using %1").arg(title));
-				setPlaceholderText(tr("Search using %1").arg(title));
+				setToolTip(text);
+				setPlaceholderText(text);
 			}
 
 			break;
