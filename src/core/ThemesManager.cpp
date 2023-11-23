@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -60,24 +60,26 @@ ColorScheme::ColorScheme(const QString &name, QObject *parent) : QObject(parent)
 
 	QFile file(path);
 
-	if (file.open(QIODevice::ReadOnly))
+	if (!file.open(QIODevice::ReadOnly))
 	{
-		const EnumeratorMapper enumeratorMapper(staticMetaObject.enumerator(m_colorRoleEnumerator), QLatin1String("Role"));
-		const QJsonArray colorsArray(QJsonDocument::fromJson(file.readAll()).array());
-
-		for (int i = 0; i < colorsArray.count(); ++i)
-		{
-			const QJsonObject colorRoleObject(colorsArray.at(i).toObject());
-			ColorRoleInformation colorRoleInformation;
-			colorRoleInformation.active = QColor(colorRoleObject.value(QLatin1String("active")).toString());
-			colorRoleInformation.disabled = QColor(colorRoleObject.value(QLatin1String("disabled")).toString());
-			colorRoleInformation.inactive = QColor(colorRoleObject.value(QLatin1String("inactive")).toString());
-
-			m_colors[static_cast<ColorRole>(enumeratorMapper.mapToValue(colorRoleObject.value(QLatin1String("role")).toString()))] = colorRoleInformation;
-		}
-
-		file.close();
+		return;
 	}
+
+	const EnumeratorMapper enumeratorMapper(staticMetaObject.enumerator(m_colorRoleEnumerator), QLatin1String("Role"));
+	const QJsonArray colorsArray(QJsonDocument::fromJson(file.readAll()).array());
+
+	for (int i = 0; i < colorsArray.count(); ++i)
+	{
+		const QJsonObject colorRoleObject(colorsArray.at(i).toObject());
+		ColorRoleInformation colorRoleInformation;
+		colorRoleInformation.active = QColor(colorRoleObject.value(QLatin1String("active")).toString());
+		colorRoleInformation.disabled = QColor(colorRoleObject.value(QLatin1String("disabled")).toString());
+		colorRoleInformation.inactive = QColor(colorRoleObject.value(QLatin1String("inactive")).toString());
+
+		m_colors[static_cast<ColorRole>(enumeratorMapper.mapToValue(colorRoleObject.value(QLatin1String("role")).toString()))] = colorRoleInformation;
+	}
+
+	file.close();
 }
 
 QString ColorScheme::getName() const
