@@ -174,14 +174,16 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
-		if (actions.at(i).flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag) || actions.at(i).flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters))
+		const ActionsManager::ActionDefinition action(actions.at(i));
+
+		if (action.flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag) || action.flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters))
 		{
 			continue;
 		}
 
-		const QString name(ActionsManager::getActionName(actions.at(i).identifier) + QLatin1String("Action"));
-		QStandardItem *item(new QStandardItem(actions.at(i).getText(true)));
-		item->setData(ItemModel::createDecoration(actions.at(i).defaultState.icon), Qt::DecorationRole);
+		const QString name(ActionsManager::getActionName(action.identifier) + QLatin1String("Action"));
+		QStandardItem *item(new QStandardItem(action.getText(true)));
+		item->setData(ItemModel::createDecoration(action.defaultState.icon), Qt::DecorationRole);
 		item->setData(name, IdentifierRole);
 		item->setData(true, HasOptionsRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
