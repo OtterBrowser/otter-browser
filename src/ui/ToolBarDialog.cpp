@@ -157,15 +157,17 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 
 	for (int i = 0; i < widgets.count(); ++i)
 	{
-		availableEntriesModel->appendRow(createEntry(widgets.at(i)));
+		const QString widget(widgets.at(i));
 
-		if (widgets.at(i) == QLatin1String("SearchWidget"))
+		availableEntriesModel->appendRow(createEntry(widget));
+
+		if (widget == QLatin1String("SearchWidget"))
 		{
 			const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
 
 			for (int j = 0; j < searchEngines.count(); ++j)
 			{
-				availableEntriesModel->appendRow(createEntry(widgets.at(i), {{QLatin1String("searchEngine"), searchEngines.at(j)}}));
+				availableEntriesModel->appendRow(createEntry(widget, {{QLatin1String("searchEngine"), searchEngines.at(j)}}));
 			}
 		}
 	}
