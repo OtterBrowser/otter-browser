@@ -1240,9 +1240,11 @@ void TabBarToolBarWidget::clearEntries()
 
 	for (int i = (actions().count() - 1); i >= 0; --i)
 	{
-		if (m_tabBar && widgetForAction(actions().at(i)) != m_tabBar)
+		QAction *action(actions().at(i));
+
+		if (m_tabBar && widgetForAction(action) != m_tabBar)
 		{
-			removeAction(actions().at(i));
+			removeAction(action);
 		}
 	}
 
