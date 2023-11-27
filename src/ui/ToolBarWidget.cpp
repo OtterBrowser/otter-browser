@@ -82,7 +82,9 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 		{
 			for (int i = 0; i < definition.entries.count(); ++i)
 			{
-				if (definition.entries.at(i).action == QLatin1String("AddressWidget") || definition.entries.at(i).action == QLatin1String("SearchWidget"))
+				const QString action(definition.entries.at(i).action);
+
+				if (action == QLatin1String("AddressWidget") || action == QLatin1String("SearchWidget"))
 				{
 					QTimer::singleShot(0, this, &ToolBarWidget::reload);
 
