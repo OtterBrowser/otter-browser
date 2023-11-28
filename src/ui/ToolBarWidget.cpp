@@ -500,22 +500,22 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 			{
 				const QPoint adjustedPosition(position.x(), center.y());
 
-				action = (actionAt(adjustedPosition + QPoint(spacing, 0)));
+				action = actionAt(adjustedPosition + QPoint(spacing, 0));
 
 				if (!action)
 				{
-					action = (actionAt(adjustedPosition - QPoint(spacing, 0)));
+					action = actionAt(adjustedPosition - QPoint(spacing, 0));
 				}
 			}
 			else
 			{
 				const QPoint adjustedPosition(center.x(), position.y());
 
-				action = (actionAt(adjustedPosition + QPoint(0, spacing)));
+				action = actionAt(adjustedPosition + QPoint(0, spacing));
 
 				if (!action)
 				{
-					action = (actionAt(adjustedPosition - QPoint(0, spacing)));
+					action = actionAt(adjustedPosition - QPoint(0, spacing));
 				}
 			}
 		}
