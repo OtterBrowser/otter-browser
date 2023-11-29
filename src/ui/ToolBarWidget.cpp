@@ -1063,7 +1063,7 @@ bool ToolBarWidget::isDragHandle(const QPoint &position) const
 	QStyleOptionToolBar option;
 	initStyleOption(&option);
 
-	return (style()->subElementRect(QStyle::SE_ToolBarHandle, &option, this).contains(position));
+	return style()->subElementRect(QStyle::SE_ToolBarHandle, &option, this).contains(position);
 }
 
 bool ToolBarWidget::shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const
