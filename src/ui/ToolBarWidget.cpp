@@ -99,20 +99,22 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 		connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarsLockedChanged, this, &ToolBarWidget::setToolBarLocked);
 	}
 
-	if (m_mainWindow)
+	if (!m_mainWindow)
 	{
-		if (definition.isGlobal())
-		{
-			connect(m_mainWindow, &MainWindow::activeWindowChanged, this, [&](quint64 identifier)
-			{
-				m_window = m_mainWindow->getWindowByIdentifier(identifier);
-
-				emit windowChanged(m_window);
-			});
-		}
-
-		connect(m_mainWindow, &MainWindow::fullScreenStateChanged, this, &ToolBarWidget::handleFullScreenStateChanged);
+		return;
 	}
+
+	if (definition.isGlobal())
+	{
+		connect(m_mainWindow, &MainWindow::activeWindowChanged, this, [&](quint64 identifier)
+		{
+			m_window = m_mainWindow->getWindowByIdentifier(identifier);
+
+			emit windowChanged(m_window);
+		});
+	}
+
+	connect(m_mainWindow, &MainWindow::fullScreenStateChanged, this, &ToolBarWidget::handleFullScreenStateChanged);
 }
 
 void ToolBarWidget::timerEvent(QTimerEvent *event)
