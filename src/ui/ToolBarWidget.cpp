@@ -1193,7 +1193,8 @@ void TabBarToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		SettingsManager::setOption(SettingsManager::TabBar_EnableThumbnailsOption, areEnabled);
 	});
 
-	ActionExecutor::Object executor(getMainWindow(), getMainWindow());
+	MainWindow *mainWindow(getMainWindow());
+	ActionExecutor::Object executor(mainWindow, mainWindow);
 	QMenu menu(this);
 	menu.addAction(new Action(ActionsManager::NewTabAction, {}, executor, &menu));
 	menu.addAction(new Action(ActionsManager::NewTabPrivateAction, {}, executor, &menu));
@@ -1216,10 +1217,11 @@ void TabBarToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 void TabBarToolBarWidget::findTabBar()
 {
 	TabBarWidget *tabBar(m_tabBar ? m_tabBar : findChild<TabBarWidget*>());
+	MainWindow *mainWindow(getMainWindow());
 
-	if (!tabBar && getMainWindow())
+	if (!tabBar && mainWindow)
 	{
-		tabBar = getMainWindow()->getTabBar();
+		tabBar = mainWindow->getTabBar();
 
 		if (tabBar)
 		{
@@ -1353,7 +1355,9 @@ void TabBarToolBarWidget::populateEntries()
 
 void TabBarToolBarWidget::updateVisibility()
 {
-	setVisible(shouldBeVisible((getMainWindow() ? getMainWindow()->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
+	MainWindow *mainWindow(getMainWindow());
+
+	setVisible(shouldBeVisible((mainWindow ? mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
 }
 
 bool TabBarToolBarWidget::shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const
