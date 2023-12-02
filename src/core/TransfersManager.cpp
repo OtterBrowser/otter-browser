@@ -730,7 +730,7 @@ int Transfer::getRemainingTime() const
 
 bool Transfer::verifyHashes() const
 {
-	if (getState() != FinishedState)
+	if (m_state != FinishedState)
 	{
 		return false;
 	}
