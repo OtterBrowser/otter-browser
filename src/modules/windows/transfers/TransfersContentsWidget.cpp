@@ -163,17 +163,14 @@ void TransfersContentsWidget::removeTransfer()
 {
 	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->currentIndex()));
 
-	if (transfer)
+	if (!transfer || (transfer->getState() == Transfer::RunningState && QMessageBox::warning(this, tr("Warning"), tr("This file is still being downloaded.\nDo you really want to remove it?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel))
 	{
-		if (transfer->getState() == Transfer::RunningState && QMessageBox::warning(this, tr("Warning"), tr("This file is still being downloaded.\nDo you really want to remove it?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel)
-		{
-			return;
-		}
-
-		m_model->removeRow(m_ui->transfersViewWidget->currentIndex().row());
-
-		TransfersManager::removeTransfer(transfer);
+		return;
 	}
+
+	m_model->removeRow(m_ui->transfersViewWidget->currentIndex().row());
+
+	TransfersManager::removeTransfer(transfer);
 }
 
 void TransfersContentsWidget::openTransfer()
