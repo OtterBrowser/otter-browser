@@ -383,31 +383,33 @@ void ConfigurationContentsWidget::saveAll(bool reset)
 			const QModelIndex optionIndex(m_model->index(j, 0, groupIndex));
 			const bool isModified(optionIndex.data(IsModifiedRole).toBool());
 
-			if (reset || isModified)
+			if (!reset && !isModified)
 			{
-				const QModelIndex valueIndex(m_model->index(j, 3, groupIndex));
-				const int identifier(valueIndex.data(IdentifierRole).toInt());
-				const QVariant defaultValue(SettingsManager::getOptionDefinition(identifier).defaultValue);
+				continue;
+			}
 
-				if (reset && identifier != SettingsManager::Browser_MigrationsOption && valueIndex.data(Qt::EditRole) != defaultValue)
-				{
-					SettingsManager::setOption(identifier, defaultValue);
+			const QModelIndex valueIndex(m_model->index(j, 3, groupIndex));
+			const int identifier(valueIndex.data(IdentifierRole).toInt());
+			const QVariant defaultValue(SettingsManager::getOptionDefinition(identifier).defaultValue);
 
-					QFont font(optionIndex.data(Qt::FontRole).isNull() ? m_ui->configurationViewWidget->font() : optionIndex.data(Qt::FontRole).value<QFont>());
-					font.setBold(false);
+			if (reset && identifier != SettingsManager::Browser_MigrationsOption && valueIndex.data(Qt::EditRole) != defaultValue)
+			{
+				SettingsManager::setOption(identifier, defaultValue);
 
-					m_model->setData(optionIndex, font, Qt::FontRole);
-					m_model->setData(valueIndex, defaultValue, Qt::EditRole);
-				}
-				else if (!reset && isModified)
-				{
-					SettingsManager::setOption(identifier, valueIndex.data(Qt::EditRole));
-				}
+				QFont font(optionIndex.data(Qt::FontRole).isNull() ? m_ui->configurationViewWidget->font() : optionIndex.data(Qt::FontRole).value<QFont>());
+				font.setBold(false);
 
-				if (isModified)
-				{
-					m_model->setData(optionIndex, false, IsModifiedRole);
-				}
+				m_model->setData(optionIndex, font, Qt::FontRole);
+				m_model->setData(valueIndex, defaultValue, Qt::EditRole);
+			}
+			else if (!reset && isModified)
+			{
+				SettingsManager::setOption(identifier, valueIndex.data(Qt::EditRole));
+			}
+
+			if (isModified)
+			{
+				m_model->setData(optionIndex, false, IsModifiedRole);
 			}
 		}
 	}
