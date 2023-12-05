@@ -437,21 +437,23 @@ void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVar
 	{
 		const QModelIndex valueIndex(m_model->index(i, 3, groupIndex));
 
-		if (valueIndex.data(IdentifierRole).toInt() == identifier)
+		if (valueIndex.data(IdentifierRole).toInt() != identifier)
 		{
-			const QModelIndex optionIndex(m_model->index(i, 0, groupIndex));
-
-			if (!optionIndex.data(IsModifiedRole).toBool())
-			{
-				QFont font(optionIndex.data(Qt::FontRole).isNull() ? m_ui->configurationViewWidget->font() : optionIndex.data(Qt::FontRole).value<QFont>());
-				font.setBold(value != SettingsManager::getOptionDefinition(identifier).defaultValue);
-
-				m_model->setData(optionIndex, font, Qt::FontRole);
-				m_model->setData(valueIndex, value, Qt::EditRole);
-			}
-
-			break;
+			continue;
 		}
+
+		const QModelIndex optionIndex(m_model->index(i, 0, groupIndex));
+
+		if (!optionIndex.data(IsModifiedRole).toBool())
+		{
+			QFont font(optionIndex.data(Qt::FontRole).isNull() ? m_ui->configurationViewWidget->font() : optionIndex.data(Qt::FontRole).value<QFont>());
+			font.setBold(value != SettingsManager::getOptionDefinition(identifier).defaultValue);
+
+			m_model->setData(optionIndex, font, Qt::FontRole);
+			m_model->setData(valueIndex, value, Qt::EditRole);
+		}
+
+		break;
 	}
 
 	if (!wasModified)
