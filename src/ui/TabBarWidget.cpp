@@ -732,7 +732,7 @@ void TabBarWidget::paintEvent(QPaintEvent *event)
 		lineOffset = tabRect(dropIndex).left();
 	}
 
-	Application::getStyle()->drawDropZone(((shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth) ? QLine(lineOffset, 0, lineOffset, height()) : QLine(0, lineOffset, width(), lineOffset)), &painter);
+	Application::getStyle()->drawDropZone((isHorizontal() ? QLine(lineOffset, 0, lineOffset, height()) : QLine(0, lineOffset, width(), lineOffset)), &painter);
 }
 
 void TabBarWidget::enterEvent(QEvent *event)
@@ -1656,7 +1656,7 @@ QStyleOptionTab TabBarWidget::createStyleOptionTab(int index) const
 	{
 		const QPoint position(widget->mapToParent(widget->rect().topLeft()));
 
-		if (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth)
+		if (isHorizontal())
 		{
 			tabOption.rect.moveTo(position.x(), tabOption.rect.y());
 		}
@@ -1671,7 +1671,7 @@ QStyleOptionTab TabBarWidget::createStyleOptionTab(int index) const
 
 QSize TabBarWidget::tabSizeHint(int index) const
 {
-	if (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth)
+	if (isHorizontal())
 	{
 		const Window *window(getWindow(index));
 		const int tabHeight(qBound(m_minimumTabSize.height(), qMax((m_areThumbnailsEnabled ? 200 : 0), (parentWidget() ? parentWidget()->height() : height())), m_maximumTabSize.height()));
@@ -1699,7 +1699,7 @@ QSize TabBarWidget::minimumSizeHint() const
 
 QSize TabBarWidget::sizeHint() const
 {
-	if (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth)
+	if (isHorizontal())
 	{
 		int size(0);
 
@@ -1729,7 +1729,7 @@ int TabBarWidget::getDropIndex() const
 	}
 
 	int index(tabAt(m_dragMovePosition));
-	const bool isHorizontal((shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth));
+	const bool isHorizontal(this->isHorizontal());
 
 	if (index >= 0)
 	{
@@ -1766,6 +1766,11 @@ bool TabBarWidget::isCloseButtonEnabled()
 bool TabBarWidget::isUrlIconEnabled()
 {
 	return m_isUrlIconEnabled;
+}
+
+bool TabBarWidget::isHorizontal() const
+{
+	return (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
 }
 
 bool TabBarWidget::event(QEvent *event)

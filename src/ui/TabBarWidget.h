@@ -97,6 +97,7 @@ public:
 	static bool isLayoutReversed();
 	static bool isCloseButtonEnabled();
 	static bool isUrlIconEnabled();
+	bool isHorizontal() const;
 
 public slots:
 	void updateSize();
