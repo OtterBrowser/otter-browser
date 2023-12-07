@@ -705,30 +705,34 @@ void TabBarWidget::paintEvent(QPaintEvent *event)
 		}
 	}
 
-	if (!m_dragMovePosition.isNull())
+	if (m_dragMovePosition.isNull())
 	{
-		const int dropIndex(getDropIndex());
-
-		if (dropIndex >= 0)
-		{
-			int lineOffset(0);
-
-			if (count() == 0)
-			{
-				lineOffset = 0;
-			}
-			else if (dropIndex >= count())
-			{
-				lineOffset = tabRect(count() - 1).right();
-			}
-			else
-			{
-				lineOffset = tabRect(dropIndex).left();
-			}
-
-			Application::getStyle()->drawDropZone(((shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth) ? QLine(lineOffset, 0, lineOffset, height()) : QLine(0, lineOffset, width(), lineOffset)), &painter);
-		}
+		return;
 	}
+
+	const int dropIndex(getDropIndex());
+
+	if (dropIndex < 0)
+	{
+		return;
+	}
+
+	int lineOffset(0);
+
+	if (count() == 0)
+	{
+		lineOffset = 0;
+	}
+	else if (dropIndex >= count())
+	{
+		lineOffset = tabRect(count() - 1).right();
+	}
+	else
+	{
+		lineOffset = tabRect(dropIndex).left();
+	}
+
+	Application::getStyle()->drawDropZone(((shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth) ? QLine(lineOffset, 0, lineOffset, height()) : QLine(0, lineOffset, width(), lineOffset)), &painter);
 }
 
 void TabBarWidget::enterEvent(QEvent *event)
