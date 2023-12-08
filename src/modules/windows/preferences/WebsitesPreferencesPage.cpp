@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2021 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2021 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -63,18 +63,20 @@ void WebsitesPreferencesPage::addWebsite()
 
 	const QString host(dialog.getHost());
 
-	if (!host.isEmpty())
+	if (host.isEmpty())
 	{
-		const QModelIndexList indexes(m_ui->websitesItemView->getSourceModel()->match(m_ui->websitesItemView->getSourceModel()->index(0, 0), Qt::DisplayRole, host));
+		return;
+	}
 
-		if (indexes.isEmpty())
-		{
-			QStandardItem *item(new QStandardItem(HistoryManager::getIcon(host), host));
-			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+	const QModelIndexList indexes(m_ui->websitesItemView->getSourceModel()->match(m_ui->websitesItemView->getSourceModel()->index(0, 0), Qt::DisplayRole, host));
 
-			m_ui->websitesItemView->insertRow({item});
-			m_ui->websitesItemView->sortByColumn(0, Qt::AscendingOrder);
-		}
+	if (indexes.isEmpty())
+	{
+		QStandardItem *item(new QStandardItem(HistoryManager::getIcon(host), host));
+		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+
+		m_ui->websitesItemView->insertRow({item});
+		m_ui->websitesItemView->sortByColumn(0, Qt::AscendingOrder);
 	}
 }
 
