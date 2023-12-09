@@ -457,33 +457,35 @@ void AdvancedPreferencesPage::saveUserAgents(QJsonArray *userAgents, const QStan
 	{
 		const QStandardItem *item(parent->child(i, 0));
 
-		if (item)
+		if (!item)
 		{
-			const ItemModel::ItemType type(static_cast<ItemModel::ItemType>(item->data(ItemModel::TypeRole).toInt()));
+			continue;
+		}
 
-			if (type == ItemModel::FolderType || type == ItemModel::EntryType)
+		const ItemModel::ItemType type(static_cast<ItemModel::ItemType>(item->data(ItemModel::TypeRole).toInt()));
+
+		if (type == ItemModel::FolderType || type == ItemModel::EntryType)
+		{
+			QJsonObject userAgentObject({{QLatin1String("identifier"), item->data(UserAgentsModel::IdentifierRole).toString()}, {QLatin1String("title"), item->data(UserAgentsModel::TitleRole).toString()}});
+
+			if (type == ItemModel::FolderType)
 			{
-				QJsonObject userAgentObject({{QLatin1String("identifier"), item->data(UserAgentsModel::IdentifierRole).toString()}, {QLatin1String("title"), item->data(UserAgentsModel::TitleRole).toString()}});
+				QJsonArray userAgentsArray;
 
-				if (type == ItemModel::FolderType)
-				{
-					QJsonArray userAgentsArray;
+				saveUserAgents(&userAgentsArray, item);
 
-					saveUserAgents(&userAgentsArray, item);
-
-					userAgentObject.insert(QLatin1String("children"), userAgentsArray);
-				}
-				else
-				{
-					userAgentObject.insert(QLatin1String("value"), item->index().sibling(i, 1).data(Qt::DisplayRole).toString());
-				}
-
-				userAgents->append(userAgentObject);
+				userAgentObject.insert(QLatin1String("children"), userAgentsArray);
 			}
 			else
 			{
-				userAgents->append(QJsonValue(QLatin1String("separator")));
+				userAgentObject.insert(QLatin1String("value"), item->index().sibling(i, 1).data(Qt::DisplayRole).toString());
 			}
+
+			userAgents->append(userAgentObject);
+		}
+		else
+		{
+			userAgents->append(QJsonValue(QLatin1String("separator")));
 		}
 	}
 }
