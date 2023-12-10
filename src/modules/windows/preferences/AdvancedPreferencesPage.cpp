@@ -630,96 +630,98 @@ void AdvancedPreferencesPage::saveProxies(QJsonArray *proxies, const QStandardIt
 	{
 		const QStandardItem *item(parent->child(i, 0));
 
-		if (item)
+		if (!item)
 		{
-			const ItemModel::ItemType type(static_cast<ItemModel::ItemType>(item->data(ItemModel::TypeRole).toInt()));
+			continue;
+		}
 
-			if (type == ItemModel::FolderType)
+		const ItemModel::ItemType type(static_cast<ItemModel::ItemType>(item->data(ItemModel::TypeRole).toInt()));
+
+		if (type == ItemModel::FolderType)
+		{
+			QJsonArray proxiesArray;
+
+			saveProxies(&proxiesArray, item);
+
+			proxies->append(QJsonObject({{QLatin1String("identifier"), item->data(ProxiesModel::IdentifierRole).toString()}, {QLatin1String("title"), item->data(ProxiesModel::TitleRole).toString()}, {QLatin1String("children"), proxiesArray}}));
+		}
+		else if (type == ItemModel::EntryType)
+		{
+			const QString identifier(item->data(ProxiesModel::IdentifierRole).toString());
+			const ProxyDefinition proxy(m_proxies.value(identifier, NetworkManagerFactory::getProxy(identifier)));
+			QJsonObject proxyObject({{QLatin1String("identifier"), identifier}, {QLatin1String("title"), item->data(ProxiesModel::TitleRole).toString()}});
+
+			switch (proxy.type)
 			{
-				QJsonArray proxiesArray;
+				case ProxyDefinition::NoProxy:
+					proxyObject.insert(QLatin1String("type"), QLatin1String("noProxy"));
 
-				saveProxies(&proxiesArray, item);
+					break;
+				case ProxyDefinition::ManualProxy:
+					{
+						QJsonArray serversArray;
+						QHash<ProxyDefinition::ProtocolType, ProxyDefinition::ProxyServer>::const_iterator iterator;
 
-				proxies->append(QJsonObject({{QLatin1String("identifier"), item->data(ProxiesModel::IdentifierRole).toString()}, {QLatin1String("title"), item->data(ProxiesModel::TitleRole).toString()}, {QLatin1String("children"), proxiesArray}}));
-			}
-			else if (type == ItemModel::EntryType)
-			{
-				const QString identifier(item->data(ProxiesModel::IdentifierRole).toString());
-				const ProxyDefinition proxy(m_proxies.value(identifier, NetworkManagerFactory::getProxy(identifier)));
-				QJsonObject proxyObject({{QLatin1String("identifier"), identifier}, {QLatin1String("title"), item->data(ProxiesModel::TitleRole).toString()}});
-
-				switch (proxy.type)
-				{
-					case ProxyDefinition::NoProxy:
-						proxyObject.insert(QLatin1String("type"), QLatin1String("noProxy"));
-
-						break;
-					case ProxyDefinition::ManualProxy:
+						for (iterator = proxy.servers.constBegin(); iterator != proxy.servers.constEnd(); ++iterator)
 						{
-							QJsonArray serversArray;
-							QHash<ProxyDefinition::ProtocolType, ProxyDefinition::ProxyServer>::const_iterator iterator;
+							QString protocol(QLatin1String("any"));
 
-							for (iterator = proxy.servers.constBegin(); iterator != proxy.servers.constEnd(); ++iterator)
+							switch (iterator.key())
 							{
-								QString protocol(QLatin1String("any"));
+								case ProxyDefinition::HttpProtocol:
+									protocol = QLatin1String("http");
 
-								switch (iterator.key())
-								{
-									case ProxyDefinition::HttpProtocol:
-										protocol = QLatin1String("http");
+									break;
+								case ProxyDefinition::HttpsProtocol:
+									protocol = QLatin1String("https");
 
-										break;
-									case ProxyDefinition::HttpsProtocol:
-										protocol = QLatin1String("https");
+									break;
+								case ProxyDefinition::FtpProtocol:
+									protocol = QLatin1String("ftp");
 
-										break;
-									case ProxyDefinition::FtpProtocol:
-										protocol = QLatin1String("ftp");
+									break;
+								case ProxyDefinition::SocksProtocol:
+									protocol = QLatin1String("socks");
 
-										break;
-									case ProxyDefinition::SocksProtocol:
-										protocol = QLatin1String("socks");
-
-										break;
-									default:
-										break;
-								}
-
-								serversArray.append(QJsonObject({{QLatin1String("protocol"), protocol}, {QLatin1String("hostName"), iterator.value().hostName}, {QLatin1String("port"), iterator.value().port}}));
+									break;
+								default:
+									break;
 							}
 
-							proxyObject.insert(QLatin1String("type"), QLatin1String("manualProxy"));
-							proxyObject.insert(QLatin1String("servers"), serversArray);
+							serversArray.append(QJsonObject({{QLatin1String("protocol"), protocol}, {QLatin1String("hostName"), iterator.value().hostName}, {QLatin1String("port"), iterator.value().port}}));
 						}
 
-						break;
-					case ProxyDefinition::AutomaticProxy:
-						proxyObject.insert(QLatin1String("type"), QLatin1String("automaticProxy"));
-						proxyObject.insert(QLatin1String("path"), proxy.path);
+						proxyObject.insert(QLatin1String("type"), QLatin1String("manualProxy"));
+						proxyObject.insert(QLatin1String("servers"), serversArray);
+					}
 
-						break;
-					default:
-						proxyObject.insert(QLatin1String("type"), QLatin1String("systemProxy"));
+					break;
+				case ProxyDefinition::AutomaticProxy:
+					proxyObject.insert(QLatin1String("type"), QLatin1String("automaticProxy"));
+					proxyObject.insert(QLatin1String("path"), proxy.path);
 
-						break;
-				}
+					break;
+				default:
+					proxyObject.insert(QLatin1String("type"), QLatin1String("systemProxy"));
 
-				if (!proxy.exceptions.isEmpty())
-				{
-					proxyObject.insert(QLatin1String("exceptions"), QJsonArray::fromStringList(proxy.exceptions));
-				}
-
-				if (proxy.usesSystemAuthentication)
-				{
-					proxyObject.insert(QLatin1String("usesSystemAuthentication"), true);
-				}
-
-				proxies->append(proxyObject);
+					break;
 			}
-			else
+
+			if (!proxy.exceptions.isEmpty())
 			{
-				proxies->append(QJsonValue(QLatin1String("separator")));
+				proxyObject.insert(QLatin1String("exceptions"), QJsonArray::fromStringList(proxy.exceptions));
 			}
+
+			if (proxy.usesSystemAuthentication)
+			{
+				proxyObject.insert(QLatin1String("usesSystemAuthentication"), true);
+			}
+
+			proxies->append(proxyObject);
+		}
+		else
+		{
+			proxies->append(QJsonValue(QLatin1String("separator")));
 		}
 	}
 }
