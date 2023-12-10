@@ -165,7 +165,6 @@ void AdvancedPreferencesPage::updateNotificationsActions()
 	m_ui->notificationsPlaySoundFilePathWidget->setPath(path);
 	m_ui->notificationsShowAlertCheckBox->setChecked(index.data(ShouldShowAlertRole).toBool());
 	m_ui->notificationsShowNotificationCheckBox->setChecked(index.data(ShouldShowNotificationRole).toBool());
-
 	m_ui->notificationsPlaySoundFilePathWidget->blockSignals(false);
 	m_ui->notificationsShowAlertCheckBox->blockSignals(false);
 	m_ui->notificationsShowNotificationCheckBox->blockSignals(false);
