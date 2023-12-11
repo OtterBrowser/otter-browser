@@ -758,23 +758,25 @@ QHash<int, QVector<KeyboardProfile::Action> > InputPreferencesPage::getKeyboardD
 
 			for (int j = 0; j < actionVariants.count(); ++j)
 			{
-				if (actionVariants.at(j).parameters == parameters)
+				if (actionVariants.at(j).parameters != parameters)
 				{
-					if (isDisabled)
-					{
-						actionVariants[j].disabledShortcuts.append(shortcut);
-					}
-					else
-					{
-						actionVariants[j].shortcuts.append(shortcut);
-					}
-
-					actions[action] = actionVariants;
-
-					hasMatch = true;
-
-					break;
+					continue;
 				}
+
+				if (isDisabled)
+				{
+					actionVariants[j].disabledShortcuts.append(shortcut);
+				}
+				else
+				{
+					actionVariants[j].shortcuts.append(shortcut);
+				}
+
+				actions[action] = actionVariants;
+
+				hasMatch = true;
+
+				break;
 			}
 		}
 		else
