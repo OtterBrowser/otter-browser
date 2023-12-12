@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -1341,38 +1341,40 @@ QString WebContentsWidget::parseQuery(const QString &query) const
 	{
 		const QString placeholder(QLatin1Char('{') + placeholders.at(i) + QLatin1Char('}'));
 
-		if (mutableQuery.contains(placeholder))
+		if (!mutableQuery.contains(placeholder))
 		{
-			if (placeholders.at(i) == QLatin1String("clipboard"))
+			continue;
+		}
+
+		if (placeholders.at(i) == QLatin1String("clipboard"))
+		{
+			mutableQuery.replace(placeholder, QGuiApplication::clipboard()->text());
+		}
+		else if (m_webWidget)
+		{
+			if (placeholders.at(i) == QLatin1String("frameUrl"))
 			{
-				mutableQuery.replace(placeholder, QGuiApplication::clipboard()->text());
+				mutableQuery.replace(placeholder, m_webWidget->getActiveFrame().url.toString());
 			}
-			else if (m_webWidget)
+			else if (placeholders.at(i) == QLatin1String("imageUrl"))
 			{
-				if (placeholders.at(i) == QLatin1String("frameUrl"))
-				{
-					mutableQuery.replace(placeholder, m_webWidget->getActiveFrame().url.toString());
-				}
-				else if (placeholders.at(i) == QLatin1String("imageUrl"))
-				{
-					mutableQuery.replace(placeholder, m_webWidget->getActiveImage().url.toString());
-				}
-				else if (placeholders.at(i) == QLatin1String("linkUrl"))
-				{
-					mutableQuery.replace(placeholder, m_webWidget->getActiveLink().url.toString());
-				}
-				else if (placeholders.at(i) == QLatin1String("mediaUrl"))
-				{
-					mutableQuery.replace(placeholder, m_webWidget->getActiveMedia().url.toString());
-				}
-				else if (placeholders.at(i) == QLatin1String("pageUrl"))
-				{
-					mutableQuery.replace(placeholder, m_webWidget->getUrl().toString());
-				}
-				else if (placeholders.at(i) == QLatin1String("selection"))
-				{
-					mutableQuery.replace(placeholder, m_webWidget->getSelectedText());
-				}
+				mutableQuery.replace(placeholder, m_webWidget->getActiveImage().url.toString());
+			}
+			else if (placeholders.at(i) == QLatin1String("linkUrl"))
+			{
+				mutableQuery.replace(placeholder, m_webWidget->getActiveLink().url.toString());
+			}
+			else if (placeholders.at(i) == QLatin1String("mediaUrl"))
+			{
+				mutableQuery.replace(placeholder, m_webWidget->getActiveMedia().url.toString());
+			}
+			else if (placeholders.at(i) == QLatin1String("pageUrl"))
+			{
+				mutableQuery.replace(placeholder, m_webWidget->getUrl().toString());
+			}
+			else if (placeholders.at(i) == QLatin1String("selection"))
+			{
+				mutableQuery.replace(placeholder, m_webWidget->getSelectedText());
 			}
 		}
 	}
