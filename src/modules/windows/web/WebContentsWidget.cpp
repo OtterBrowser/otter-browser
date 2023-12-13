@@ -925,11 +925,13 @@ void WebContentsWidget::handlePermissionRequest(WebWidget::FeaturePermission fea
 	{
 		for (int i = 0; i < m_permissionBarWidgets.count(); ++i)
 		{
-			if (m_permissionBarWidgets.at(i)->hasMatch(feature, url))
-			{
-				m_layout->removeWidget(m_permissionBarWidgets.at(i));
+			PermissionBarWidget *widget(m_permissionBarWidgets.at(i));
 
-				m_permissionBarWidgets.at(i)->deleteLater();
+			if (widget->hasMatch(feature, url))
+			{
+				m_layout->removeWidget(widget);
+
+				widget->deleteLater();
 
 				m_permissionBarWidgets.removeAt(i);
 
