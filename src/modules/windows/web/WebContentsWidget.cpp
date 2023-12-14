@@ -1341,42 +1341,43 @@ QString WebContentsWidget::parseQuery(const QString &query) const
 
 	for (int i = 0; i < placeholders.count(); ++i)
 	{
-		const QString placeholder(QLatin1Char('{') + placeholders.at(i) + QLatin1Char('}'));
+		const QString placeholder(placeholders.at(i));
+		const QString token(QLatin1Char('{') + placeholder + QLatin1Char('}'));
 
-		if (!mutableQuery.contains(placeholder))
+		if (!mutableQuery.contains(token))
 		{
 			continue;
 		}
 
-		if (placeholders.at(i) == QLatin1String("clipboard"))
+		if (placeholder == QLatin1String("clipboard"))
 		{
-			mutableQuery.replace(placeholder, QGuiApplication::clipboard()->text());
+			mutableQuery.replace(token, QGuiApplication::clipboard()->text());
 		}
 		else if (m_webWidget)
 		{
-			if (placeholders.at(i) == QLatin1String("frameUrl"))
+			if (placeholder == QLatin1String("frameUrl"))
 			{
-				mutableQuery.replace(placeholder, m_webWidget->getActiveFrame().url.toString());
+				mutableQuery.replace(token, m_webWidget->getActiveFrame().url.toString());
 			}
-			else if (placeholders.at(i) == QLatin1String("imageUrl"))
+			else if (placeholder == QLatin1String("imageUrl"))
 			{
-				mutableQuery.replace(placeholder, m_webWidget->getActiveImage().url.toString());
+				mutableQuery.replace(token, m_webWidget->getActiveImage().url.toString());
 			}
-			else if (placeholders.at(i) == QLatin1String("linkUrl"))
+			else if (placeholder == QLatin1String("linkUrl"))
 			{
-				mutableQuery.replace(placeholder, m_webWidget->getActiveLink().url.toString());
+				mutableQuery.replace(token, m_webWidget->getActiveLink().url.toString());
 			}
-			else if (placeholders.at(i) == QLatin1String("mediaUrl"))
+			else if (placeholder == QLatin1String("mediaUrl"))
 			{
-				mutableQuery.replace(placeholder, m_webWidget->getActiveMedia().url.toString());
+				mutableQuery.replace(token, m_webWidget->getActiveMedia().url.toString());
 			}
-			else if (placeholders.at(i) == QLatin1String("pageUrl"))
+			else if (placeholder == QLatin1String("pageUrl"))
 			{
-				mutableQuery.replace(placeholder, m_webWidget->getUrl().toString());
+				mutableQuery.replace(token, m_webWidget->getUrl().toString());
 			}
-			else if (placeholders.at(i) == QLatin1String("selection"))
+			else if (placeholder == QLatin1String("selection"))
 			{
-				mutableQuery.replace(placeholder, m_webWidget->getSelectedText());
+				mutableQuery.replace(token, m_webWidget->getSelectedText());
 			}
 		}
 	}
