@@ -580,9 +580,11 @@ void NetworkManagerFactory::updateProxiesOption()
 
 	for (iterator = m_proxies.begin(); iterator != m_proxies.end(); ++iterator)
 	{
-		if (!iterator.value().isFolder && !iterator.value().identifier.isEmpty())
+		const ProxyDefinition proxy(iterator.value());
+
+		if (!proxy.isFolder && !proxy.identifier.isEmpty())
 		{
-			proxiesOption.choices.append({iterator.value().getTitle(), iterator.value().identifier, {}});
+			proxiesOption.choices.append({proxy.getTitle(), proxy.identifier, {}});
 		}
 	}
 
@@ -601,9 +603,11 @@ void NetworkManagerFactory::updateUserAgentsOption()
 
 	for (iterator = m_userAgents.begin(); iterator != m_userAgents.end(); ++iterator)
 	{
-		if (!iterator.value().isFolder && !iterator.value().identifier.isEmpty() && iterator.value().identifier != QLatin1String("default"))
+		const UserAgentDefinition userAgent(iterator.value());
+
+		if (!userAgent.isFolder && !userAgent.identifier.isEmpty() && userAgent.identifier != QLatin1String("default"))
 		{
-			userAgentsOption.choices.append({iterator.value().getTitle(), iterator.value().identifier, {}});
+			userAgentsOption.choices.append({userAgent.getTitle(), userAgent.identifier, {}});
 		}
 	}
 
