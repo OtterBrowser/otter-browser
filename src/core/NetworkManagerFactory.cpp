@@ -250,7 +250,9 @@ void NetworkManagerFactory::initialize()
 
 	for (int i = (m_defaultCiphers.count() - 1); i >= 0; --i)
 	{
-		if (m_defaultCiphers.at(i).isNull() || (m_defaultCiphers.at(i).keyExchangeMethod() == QLatin1String("DH") && m_defaultCiphers.at(i).supportedBits() < 1024) || m_defaultCiphers.at(i).supportedBits() < 128 || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("PSK") || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("EXP") || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("nullptr") || m_defaultCiphers.at(i).encryptionMethod().startsWith(QLatin1String("RC4(")) || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("ADH"))
+		const QSslCipher cipher(m_defaultCiphers.at(i));
+
+		if (cipher.isNull() || (cipher.keyExchangeMethod() == QLatin1String("DH") && cipher.supportedBits() < 1024) || cipher.supportedBits() < 128 || cipher.authenticationMethod() == QLatin1String("PSK") || cipher.authenticationMethod() == QLatin1String("EXP") || cipher.authenticationMethod() == QLatin1String("nullptr") || cipher.encryptionMethod().startsWith(QLatin1String("RC4(")) || cipher.authenticationMethod() == QLatin1String("ADH"))
 		{
 			m_defaultCiphers.removeAt(i);
 		}
