@@ -252,7 +252,7 @@ void NetworkManagerFactory::initialize()
 	{
 		const QSslCipher cipher(m_defaultCiphers.at(i));
 
-		if (cipher.isNull() || (cipher.keyExchangeMethod() == QLatin1String("DH") && cipher.supportedBits() < 1024) || cipher.supportedBits() < 128 || cipher.authenticationMethod() == QLatin1String("PSK") || cipher.authenticationMethod() == QLatin1String("EXP") || cipher.authenticationMethod() == QLatin1String("nullptr") || cipher.encryptionMethod().startsWith(QLatin1String("RC4(")) || cipher.authenticationMethod() == QLatin1String("ADH"))
+		if (cipher.isNull() || cipher.supportedBits() < 128 || (cipher.keyExchangeMethod() == QLatin1String("DH") && cipher.supportedBits() < 1024) || cipher.authenticationMethod() == QLatin1String("PSK") || cipher.authenticationMethod() == QLatin1String("EXP") || cipher.authenticationMethod() == QLatin1String("nullptr") || cipher.encryptionMethod().startsWith(QLatin1String("RC4(")) || cipher.authenticationMethod() == QLatin1String("ADH"))
 		{
 			m_defaultCiphers.removeAt(i);
 		}
