@@ -302,12 +302,12 @@ void NetworkManagerFactory::loadProxies()
 		return;
 	}
 
-	const QJsonArray proxies(QJsonDocument::fromJson(file.readAll()).array());
+	const QJsonArray proxiesArray(QJsonDocument::fromJson(file.readAll()).array());
 	ProxyDefinition root;
 
-	for (int i = 0; i < proxies.count(); ++i)
+	for (int i = 0; i < proxiesArray.count(); ++i)
 	{
-		readProxy(proxies.at(i), &root);
+		readProxy(proxiesArray.at(i), &root);
 	}
 
 	file.close();
@@ -330,12 +330,12 @@ void NetworkManagerFactory::loadUserAgents()
 		return;
 	}
 
-	const QJsonArray userAgents(QJsonDocument::fromJson(file.readAll()).array());
+	const QJsonArray userAgentsArray(QJsonDocument::fromJson(file.readAll()).array());
 	UserAgentDefinition root;
 
-	for (int i = 0; i < userAgents.count(); ++i)
+	for (int i = 0; i < userAgentsArray.count(); ++i)
 	{
-		readUserAgent(userAgents.at(i), &root);
+		readUserAgent(userAgentsArray.at(i), &root);
 	}
 
 	file.close();
