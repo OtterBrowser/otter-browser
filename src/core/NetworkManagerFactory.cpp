@@ -673,7 +673,9 @@ QString NetworkManagerFactory::getAcceptLanguage()
 
 QString NetworkManagerFactory::getUserAgent()
 {
-	return AddonsManager::getWebBackend()->getUserAgent();
+	const WebBackend *webBackend(AddonsManager::getWebBackend());
+
+	return (webBackend ? webBackend->getUserAgent() : QString());
 }
 
 QStringList NetworkManagerFactory::getProxies()
