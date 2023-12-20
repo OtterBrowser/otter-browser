@@ -244,10 +244,12 @@ QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const
 
 	for (int i = 0; i < indexes.count(); ++i)
 	{
-		if (indexes.at(i).isValid() && static_cast<BookmarksModel::BookmarkType>(indexes.at(i).data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
+		const QModelIndex index(indexes.at(i));
+
+		if (index.isValid() && static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
 		{
-			texts.append(indexes.at(i).data(BookmarksModel::UrlRole).toString());
-			urls.append(indexes.at(i).data(BookmarksModel::UrlRole).toUrl());
+			texts.append(index.data(BookmarksModel::UrlRole).toString());
+			urls.append(index.data(BookmarksModel::UrlRole).toUrl());
 		}
 	}
 
