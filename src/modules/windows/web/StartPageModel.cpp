@@ -36,7 +36,6 @@ namespace Otter
 StartPageModel::StartPageModel(QObject *parent) : QStandardItemModel(parent),
 	m_bookmark(nullptr)
 {
-	handleOptionChanged(SettingsManager::Backends_WebOption);
 	reloadModel();
 
 	connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkAdded, this, &StartPageModel::handleBookmarkModified);
