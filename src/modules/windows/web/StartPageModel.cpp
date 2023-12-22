@@ -95,8 +95,6 @@ void StartPageModel::reloadModel()
 	if (SettingsManager::getOption(SettingsManager::StartPage_ShowAddTileOption).toBool())
 	{
 		QStandardItem *item(new QStandardItem());
-		item->setData(tr("Add Tile…"), Qt::ToolTipRole);
-		item->setData(tr("Add Tile…"), Qt::StatusTipRole);
 		item->setData(QLatin1String("add"), Qt::AccessibleDescriptionRole);
 		item->setDragEnabled(false);
 		item->setDropEnabled(false);
@@ -282,6 +280,11 @@ QVariant StartPageModel::data(const QModelIndex &index, int role) const
 	if (role == IsReloadingRole)
 	{
 		return m_tileReloads.contains(index.data(BookmarksModel::IdentifierRole).toULongLong());
+	}
+
+	if ((role == Qt::ToolTipRole || role == Qt::StatusTipRole) && index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
+	{
+		return tr("Add Tile…");
 	}
 
 	return QStandardItemModel::data(index, role);
