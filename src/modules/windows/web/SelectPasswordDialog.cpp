@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -39,12 +39,14 @@ SelectPasswordDialog::SelectPasswordDialog(const QVector<PasswordsManager::Passw
 
 	for (int i = 0; i < passwords.count(); ++i)
 	{
+		const PasswordsManager::PasswordInformation password(passwords.at(i));
 		QStandardItem *setItem(new QStandardItem(tr("Set #%1").arg(i + 1)));
 		setItem->setData(i, Qt::UserRole);
 
-		for (int j = 0; j < passwords.at(i).fields.count(); ++j)
+		for (int j = 0; j < password.fields.count(); ++j)
 		{
-			QList<QStandardItem*> fieldItems({new QStandardItem(passwords.at(i).fields.at(j).name), new QStandardItem((passwords.at(i).fields.at(j).type == PasswordsManager::PasswordField) ? QLatin1String("*****") : passwords.at(i).fields.at(j).value)});
+			const PasswordsManager::PasswordInformation::Field field(password.fields.at(j));
+			QList<QStandardItem*> fieldItems({new QStandardItem(field.name), new QStandardItem((field.type == PasswordsManager::PasswordField) ? QLatin1String("*****") : field.value)});
 			fieldItems[0]->setFlags(fieldItems[0]->flags() | Qt::ItemNeverHasChildren);
 			fieldItems[1]->setFlags(fieldItems[1]->flags() | Qt::ItemNeverHasChildren);
 
