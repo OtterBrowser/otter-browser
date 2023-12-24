@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -129,26 +129,29 @@ void FilePasswordsStorageBackend::save()
 
 		for (int i = 0; i < passwords.count(); ++i)
 		{
+			const PasswordsManager::PasswordInformation password(passwords.at(i));
 			QJsonArray fieldsArray;
 
-			for (int j = 0; j < passwords.at(i).fields.count(); ++j)
+			for (int j = 0; j < password.fields.count(); ++j)
 			{
-				fieldsArray.append(QJsonObject({{QLatin1String("name"), passwords.at(i).fields.at(j).name}, {QLatin1String("value"), passwords.at(i).fields.at(j).value}, {QLatin1String("type"), ((passwords.at(i).fields.at(j).type == PasswordsManager::PasswordField) ? QLatin1String("password") : QLatin1String("text"))}}));
+				const PasswordsManager::PasswordInformation::Field field(password.fields.at(j));
+
+				fieldsArray.append(QJsonObject({{QLatin1String("name"), field.name}, {QLatin1String("value"), field.value}, {QLatin1String("type"), ((field.type == PasswordsManager::PasswordField) ? QLatin1String("password") : QLatin1String("text"))}}));
 			}
 
-			QJsonObject passwordObject({{QLatin1String("url"), passwords.at(i).url.toString()}});
+			QJsonObject passwordObject({{QLatin1String("url"), password.url.toString()}});
 
-			if (passwords.at(i).timeAdded.isValid())
+			if (password.timeAdded.isValid())
 			{
-				passwordObject.insert(QLatin1String("timeAdded"), passwords.at(i).timeAdded.toString(Qt::ISODate));
+				passwordObject.insert(QLatin1String("timeAdded"), password.timeAdded.toString(Qt::ISODate));
 			}
 
-			if (passwords.at(i).timeUsed.isValid())
+			if (password.timeUsed.isValid())
 			{
-				passwordObject.insert(QLatin1String("timeUsed"), passwords.at(i).timeUsed.toString(Qt::ISODate));
+				passwordObject.insert(QLatin1String("timeUsed"), password.timeUsed.toString(Qt::ISODate));
 			}
 
-			passwordObject.insert(QLatin1String("type"), ((passwords.at(i).type == PasswordsManager::AuthPassword) ? QLatin1String("auth") : QLatin1String("form")));
+			passwordObject.insert(QLatin1String("type"), ((password.type == PasswordsManager::AuthPassword) ? QLatin1String("auth") : QLatin1String("form")));
 			passwordObject.insert(QLatin1String("fields"), fieldsArray);
 
 			passwordsArray.append(passwordObject);
