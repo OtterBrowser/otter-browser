@@ -262,12 +262,14 @@ void FilePasswordsStorageBackend::addPassword(const PasswordsManager::PasswordIn
 
 		for (int i = 0; i < passwords.count(); ++i)
 		{
-			if (comparePasswords(password, passwords.at(i)) == PasswordsManager::FullMatch)
+			const PasswordsManager::PasswordInformation existingPassword(passwords.at(i));
+
+			if (comparePasswords(password, existingPassword) == PasswordsManager::FullMatch)
 			{
 				return;
 			}
 
-			if (comparePasswords(password, passwords.at(i)) == PasswordsManager::PartialMatch)
+			if (comparePasswords(password, existingPassword) == PasswordsManager::PartialMatch)
 			{
 				m_passwords[host].replace(i, password);
 
