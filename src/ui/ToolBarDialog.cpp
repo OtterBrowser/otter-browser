@@ -117,12 +117,14 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 
 				for (int i = 0; i < definition.panels.count(); ++i)
 				{
-					if (!specialPages.contains(definition.panels.at(i)))
+					const QString panel(definition.panels.at(i));
+
+					if (!specialPages.contains(panel))
 					{
-						ItemModel::Item *item(new ItemModel::Item(SidebarWidget::getPanelTitle(definition.panels.at(i))));
+						ItemModel::Item *item(new ItemModel::Item(SidebarWidget::getPanelTitle(panel)));
 						item->setCheckable(true);
 						item->setCheckState(Qt::Checked);
-						item->setData(definition.panels.at(i), ItemModel::UserRole);
+						item->setData(panel, ItemModel::UserRole);
 
 						panelsModel->insertRow(item);
 					}
