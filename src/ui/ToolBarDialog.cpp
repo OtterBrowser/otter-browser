@@ -107,10 +107,11 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 
 				for (int i = 0; i < specialPages.count(); ++i)
 				{
-					ItemModel::Item *item(new ItemModel::Item(SidebarWidget::getPanelTitle(specialPages.at(i))));
+					const QString specialPage(specialPages.at(i));
+					ItemModel::Item *item(new ItemModel::Item(SidebarWidget::getPanelTitle(specialPage)));
 					item->setCheckable(true);
-					item->setCheckState(definition.panels.contains(specialPages.at(i)) ? Qt::Checked : Qt::Unchecked);
-					item->setData(specialPages.at(i), ItemModel::UserRole);
+					item->setCheckState(definition.panels.contains(specialPage) ? Qt::Checked : Qt::Unchecked);
+					item->setData(specialPage, ItemModel::UserRole);
 
 					panelsModel->insertRow(item);
 				}
