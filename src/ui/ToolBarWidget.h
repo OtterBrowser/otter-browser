@@ -66,6 +66,7 @@ public:
 	static bool calculateShouldBeVisible(const ToolBarsManager::ToolBarDefinition &definition, const Session::MainWindow::ToolBarState &state, ToolBarsManager::ToolBarsMode mode);
 	bool canDrop(QDropEvent *event) const;
 	bool isCollapsed() const;
+	bool isHorizontal() const;
 	virtual bool shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const;
 
 public slots:

@@ -177,39 +177,31 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 
 	if (widget)
 	{
-		switch (m_area)
+		if (isHorizontal())
 		{
-			case Qt::LeftToolBarArea:
-			case Qt::RightToolBarArea:
-				position = (widget->geometry().top() - spacing);
-
-				break;
-			default:
-				if (isLeftToRight())
-				{
-					position = (widget->geometry().left() - spacing);
-				}
-				else
-				{
-					position = (widget->geometry().right() + spacing);
-				}
-
-				break;
+			if (isLeftToRight())
+			{
+				position = (widget->geometry().left() - spacing);
+			}
+			else
+			{
+				position = (widget->geometry().right() + spacing);
+			}
+		}
+		else
+		{
+			position = (widget->geometry().top() - spacing);
 		}
 	}
 	else if (m_dropIndex > 0)
 	{
-		switch (m_area)
+		if (isHorizontal())
 		{
-			case Qt::LeftToolBarArea:
-			case Qt::RightToolBarArea:
-				position = (childrenRect().bottom() + spacing);
-
-				break;
-			default:
-				position = (isLeftToRight() ? (childrenRect().right() + spacing) : (childrenRect().left() - spacing));
-
-				break;
+			position = (isLeftToRight() ? (childrenRect().right() + spacing) : (childrenRect().left() - spacing));
+		}
+		else
+		{
+			position = (childrenRect().bottom() + spacing);
 		}
 	}
 
@@ -220,17 +212,13 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 
 	QPainter painter(this);
 
-	switch (m_area)
+	if (isHorizontal())
 	{
-		case Qt::LeftToolBarArea:
-		case Qt::RightToolBarArea:
-			Application::getStyle()->drawDropZone(QLine(0, position, width(), position), &painter);
-
-			break;
-		default:
-			Application::getStyle()->drawDropZone(QLine(position, 0, position, height()), &painter);
-
-			break;
+		Application::getStyle()->drawDropZone(QLine(position, 0, position, height()), &painter);
+	}
+	else
+	{
+		Application::getStyle()->drawDropZone(QLine(0, position, width(), position), &painter);
 	}
 }
 
@@ -405,7 +393,7 @@ void ToolBarWidget::clearEntries()
 void ToolBarWidget::populateEntries()
 {
 	const ToolBarsManager::ToolBarDefinition definition(getDefinition());
-	const bool isHorizontal(m_area != Qt::LeftToolBarArea && m_area != Qt::RightToolBarArea);
+	const bool isHorizontal(this->isHorizontal());
 
 	m_addressFields.clear();
 	m_searchFields.clear();
@@ -491,7 +479,7 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 	if (!position.isNull())
 	{
 		QAction *action(actionAt(position));
-		const bool isHorizontal(m_area != Qt::LeftToolBarArea && m_area != Qt::RightToolBarArea);
+		const bool isHorizontal(this->isHorizontal());
 
 		if (!action)
 		{
@@ -849,7 +837,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 	m_isCollapsed = (definition.hasToggle && !calculateShouldBeVisible(definition, m_state, mode));
 
 	setVisible(shouldBeVisible(mode));
-	setOrientation((m_area != Qt::LeftToolBarArea && m_area != Qt::RightToolBarArea) ? Qt::Horizontal : Qt::Vertical);
+	setOrientation(isHorizontal() ? Qt::Horizontal : Qt::Vertical);
 	clearEntries();
 
 	if (definition.hasToggle)
@@ -1053,6 +1041,11 @@ bool ToolBarWidget::canDrop(QDropEvent *event) const
 bool ToolBarWidget::isCollapsed() const
 {
 	return m_isCollapsed;
+}
+
+bool ToolBarWidget::isHorizontal() const
+{
+	return !(m_area ==  Qt::LeftToolBarArea || m_area == Qt::RightToolBarArea);
 }
 
 bool ToolBarWidget::isDragHandle(const QPoint &position) const
