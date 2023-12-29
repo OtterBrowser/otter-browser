@@ -1253,7 +1253,7 @@ void TabBarToolBarWidget::clearEntries()
 void TabBarToolBarWidget::populateEntries()
 {
 	const ToolBarsManager::ToolBarDefinition definition(getDefinition());
-	const bool isHorizontal(getArea() != Qt::LeftToolBarArea && getArea() != Qt::RightToolBarArea);
+	const bool isHorizontal(this->isHorizontal());
 	QVector<QPointer<QWidget> > addressFields;
 	QVector<QPointer<QWidget> > searchFields;
 
