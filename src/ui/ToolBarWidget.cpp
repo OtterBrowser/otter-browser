@@ -1261,21 +1261,23 @@ void TabBarToolBarWidget::populateEntries()
 
 	for (int i = 0; i < definition.entries.count(); ++i)
 	{
-		if (definition.entries.at(i).action == QLatin1String("separator"))
+		const QString action(definition.entries.at(i).action);
+
+		if (action == QLatin1String("separator"))
 		{
 			addSeparator();
 
 			continue;
 		}
 
-		if (m_tabBar && definition.entries.at(i).action == QLatin1String("TabBarWidget"))
+		if (m_tabBar && action == QLatin1String("TabBarWidget"))
 		{
 			addWidget(m_tabBar);
 
 			continue;
 		}
 
-		const bool isTabBar(definition.entries.at(i).action == QLatin1String("TabBarWidget"));
+		const bool isTabBar(action == QLatin1String("TabBarWidget"));
 
 		if (isTabBar && m_tabBar)
 		{
@@ -1304,11 +1306,11 @@ void TabBarToolBarWidget::populateEntries()
 		}
 		else
 		{
-			if (definition.entries.at(i).action == QLatin1String("AddressWidget"))
+			if (action == QLatin1String("AddressWidget"))
 			{
 				addressFields.append(widget);
 			}
-			else if (definition.entries.at(i).action == QLatin1String("SearchWidget"))
+			else if (action == QLatin1String("SearchWidget"))
 			{
 				searchFields.append(widget);
 			}
