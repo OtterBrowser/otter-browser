@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -164,14 +164,16 @@ bool ActionComboBoxWidget::eventFilter(QObject *object, QEvent *event)
 		case QEvent::Show:
 			if (!m_filterLineEditWidget)
 			{
-				m_filterLineEditWidget = new LineEditWidget(getView()->viewport()->parentWidget());
+				ItemViewWidget *view(getView());
+
+				m_filterLineEditWidget = new LineEditWidget(view->viewport()->parentWidget());
 				m_filterLineEditWidget->setClearButtonEnabled(true);
 				m_filterLineEditWidget->setPlaceholderText(tr("Search…"));
 
-				getView()->setFilterRoles({Qt::DisplayRole, NameRole});
-				getView()->setStyleSheet(QStringLiteral("QAbstractItemView {padding:0 0 %1px 0;}").arg(m_filterLineEditWidget->height()));
+				view->setFilterRoles({Qt::DisplayRole, NameRole});
+				view->setStyleSheet(QStringLiteral("QAbstractItemView {padding:0 0 %1px 0;}").arg(m_filterLineEditWidget->height()));
 
-				connect(m_filterLineEditWidget, &LineEditWidget::textChanged, getView(), &ItemViewWidget::setFilterString);
+				connect(m_filterLineEditWidget, &LineEditWidget::textChanged, view, &ItemViewWidget::setFilterString);
 			}
 
 			if (event->type() == QEvent::Show)
