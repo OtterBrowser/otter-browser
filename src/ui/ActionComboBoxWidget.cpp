@@ -128,18 +128,18 @@ void ActionComboBoxWidget::setActionIdentifier(int action)
 	if (index >= 0)
 	{
 		setCurrentIndex(index);
+
+		return;
 	}
-	else
+
+	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(action));
+
+	if (definition.isValid())
 	{
-		const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(action));
+		addDefinition(definition);
+		setCurrentIndex(count() - 1);
 
-		if (definition.isValid())
-		{
-			addDefinition(definition);
-			setCurrentIndex(count() - 1);
-
-			m_model->sort(0);
-		}
+		m_model->sort(0);
 	}
 }
 
