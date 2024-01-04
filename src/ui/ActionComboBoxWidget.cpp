@@ -182,8 +182,10 @@ bool ActionComboBoxWidget::eventFilter(QObject *object, QEvent *event)
 			}
 			else
 			{
-				m_filterLineEditWidget->resize(getView()->width(), m_filterLineEditWidget->height());
-				m_filterLineEditWidget->move(0, (getView()->height() - m_filterLineEditWidget->height()));
+				ItemViewWidget *view(getView());
+
+				m_filterLineEditWidget->resize(view->width(), m_filterLineEditWidget->height());
+				m_filterLineEditWidget->move(0, (view->height() - m_filterLineEditWidget->height()));
 			}
 
 			break;
