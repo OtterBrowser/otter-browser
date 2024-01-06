@@ -63,7 +63,7 @@ public:
 	static void addProfile(ContentFiltersProfile *profile);
 	static void removeProfile(ContentFiltersProfile *profile, bool removeFile = false);
 	static ContentFiltersManager* getInstance();
-	static ContentFiltersProfile* getProfile(const QString &profile);
+	static ContentFiltersProfile* getProfile(const QString &name);
 	static ContentFiltersProfile* getProfile(const QUrl &url);
 	static ContentFiltersProfile* getProfile(int identifier);
 	static CheckResult checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType);

@@ -364,13 +364,15 @@ ContentFiltersManager* ContentFiltersManager::getInstance()
 	return m_instance;
 }
 
-ContentFiltersProfile* ContentFiltersManager::getProfile(const QString &profile)
+ContentFiltersProfile* ContentFiltersManager::getProfile(const QString &name)
 {
 	for (int i = 0; i < m_contentBlockingProfiles.count(); ++i)
 	{
-		if (m_contentBlockingProfiles.at(i)->getName() == profile)
+		ContentFiltersProfile *profile(m_contentBlockingProfiles.at(i));
+
+		if (profile->getName() == name)
 		{
-			return m_contentBlockingProfiles.at(i);
+			return profile;
 		}
 	}
 
@@ -386,9 +388,11 @@ ContentFiltersProfile* ContentFiltersManager::getProfile(const QUrl &url)
 
 	for (int i = 0; i < m_contentBlockingProfiles.count(); ++i)
 	{
-		if (m_contentBlockingProfiles.at(i)->getUpdateUrl() == url)
+		ContentFiltersProfile *profile(m_contentBlockingProfiles.at(i));
+
+		if (profile->getUpdateUrl() == url)
 		{
-			return m_contentBlockingProfiles.at(i);
+			return profile;
 		}
 	}
 
