@@ -529,6 +529,11 @@ QVector<ContentFiltersProfile*> ContentFiltersManager::getFraudCheckingProfiles(
 
 QVector<int> ContentFiltersManager::getProfileIdentifiers(const QStringList &names)
 {
+	if (names.isEmpty())
+	{
+		return {};
+	}
+
 	initialize();
 
 	QVector<int> identifiers;
