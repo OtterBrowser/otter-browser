@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2014 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -139,12 +139,14 @@ bool PacUtils::weekdayRange(QString fromDay, QString toDay, const QString &gmt) 
 
 	for (int i = 0; i < m_days.count(); ++i)
 	{
-		if (fromDay == m_days.at(i))
+		const QString day(m_days.at(i));
+
+		if (fromDay == day)
 		{
 			fromDayNumber = (i + 1);
 		}
 
-		if (toDay == m_days.at(i))
+		if (toDay == day)
 		{
 			toDayNumber = (i + 1);
 		}
