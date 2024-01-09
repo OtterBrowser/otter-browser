@@ -255,17 +255,19 @@ bool PacUtils::timeRange(const QVariant &arg1, const QVariant &arg2, const QVari
 
 	for (int i = 0; i < rawArguments.count(); ++i)
 	{
-		if (rawArguments.at(i).isNull())
+		const QVariant rawArgument(rawArguments.at(i));
+
+		if (rawArgument.isNull())
 		{
 			break;
 		}
 
-		if (rawArguments.at(i).type() != QVariant::Int)
+		if (rawArgument.type() != QVariant::Int)
 		{
 			return false;
 		}
 
-		arguments.append(rawArguments.at(i).toInt());
+		arguments.append(rawArgument.toInt());
 	}
 
 	if (arguments.count() == 1)
