@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -668,13 +668,15 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 			{
 				for (int i = 0; i < m_windows.count(); ++i)
 				{
-					if (m_windows.at(i)->isPrivate())
+					MainWindow *window(m_windows.at(i));
+
+					if (window->isPrivate())
 					{
-						m_windows.at(i)->close();
+						window->close();
 					}
 					else
 					{
-						m_windows.at(i)->triggerAction(ActionsManager::ClosePrivateTabsAction);
+						window->triggerAction(ActionsManager::ClosePrivateTabsAction);
 					}
 				}
 			}
@@ -722,10 +724,12 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 				for (int i = 0; i < m_windows.count(); ++i)
 				{
-					if (m_windows.at(i)->getIdentifier() == windowIdentifier)
+					MainWindow *window(m_windows.at(i));
+
+					if (window->getIdentifier() == windowIdentifier)
 					{
-						m_windows.at(i)->raise();
-						m_windows.at(i)->activateWindow();
+						window->raise();
+						window->activateWindow();
 
 						break;
 					}
