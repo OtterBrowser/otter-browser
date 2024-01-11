@@ -1118,11 +1118,13 @@ void Application::handlePositionalArguments(QCommandLineParser *parser, bool for
 		{
 			for (int i = 0; i < urls.count(); ++i)
 			{
+				const QUrl url(urls.at(i));
+
 				mainWindow = createWindow(parameters);
 
-				if (!urls.at(i).isEmpty())
+				if (!url.isEmpty())
 				{
-					mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("needsInterpretation"), true}});
+					mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("needsInterpretation"), true}});
 				}
 			}
 		}
