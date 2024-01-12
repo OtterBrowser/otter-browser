@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -1518,7 +1518,9 @@ bool BookmarksModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 
 		for (int i = 0; i < urls.count(); ++i)
 		{
-			addBookmark(UrlBookmark, {{UrlRole, urls.at(i)}, {TitleRole, (data->property("x-url-title").toString().isEmpty() ? urls.at(i).toString() : data->property("x-url-title").toString())}}, getBookmark(parent), row);
+			const QUrl url(urls.at(i));
+
+			addBookmark(UrlBookmark, {{UrlRole, url}, {TitleRole, (data->property("x-url-title").toString().isEmpty() ? url.toString() : data->property("x-url-title").toString())}}, getBookmark(parent), row);
 		}
 
 		return true;
