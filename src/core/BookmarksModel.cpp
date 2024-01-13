@@ -1174,13 +1174,14 @@ BookmarksModel::Bookmark* BookmarksModel::getBookmarkByPath(const QString &path,
 
 	for (int i = 0; i < directories.count(); ++i)
 	{
+		const QString directory(directories.at(i));
 		bool hasMatch(false);
 
 		for (int j = 0; j < bookmark->rowCount(); ++j)
 		{
 			Bookmark *childBookmark(bookmark->getChild(j));
 
-			if (childBookmark && childBookmark->getTitle() == directories.at(i))
+			if (childBookmark && childBookmark->getTitle() == directory)
 			{
 				bookmark = childBookmark;
 
@@ -1197,7 +1198,7 @@ BookmarksModel::Bookmark* BookmarksModel::getBookmarkByPath(const QString &path,
 				return nullptr;
 			}
 
-			bookmark = addBookmark(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, directories.at(i)}}, bookmark);
+			bookmark = addBookmark(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, directory}}, bookmark);
 		}
 	}
 
