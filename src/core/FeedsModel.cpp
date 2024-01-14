@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -931,7 +931,9 @@ bool FeedsModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int 
 
 		for (int i = 0; i < urls.count(); ++i)
 		{
-			addEntry(FeedEntry, {{UrlRole, urls.at(i)}, {TitleRole, (data->property("x-url-title").toString().isEmpty() ? urls.at(i).toString() : data->property("x-url-title").toString())}}, getEntry(parent), row);
+			const QUrl url(urls.at(i));
+
+			addEntry(FeedEntry, {{UrlRole, url}, {TitleRole, (data->property("x-url-title").toString().isEmpty() ? url.toString() : data->property("x-url-title").toString())}}, getEntry(parent), row);
 		}
 
 		return true;
