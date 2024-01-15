@@ -487,34 +487,34 @@ void FeedsModel::readEntry(QXmlStreamReader *reader, Entry *parent)
 
 			parent->appendRow(entry);
 		}
+
+		return;
 	}
-	else
+
+	Entry *entry(new Entry());
+	entry->setData(FolderEntry, TypeRole);
+	entry->setData(title, TitleRole);
+
+	createIdentifier(entry);
+
+	parent->appendRow(entry);
+
+	while (reader->readNext())
 	{
-		Entry *entry(new Entry());
-		entry->setData(FolderEntry, TypeRole);
-		entry->setData(title, TitleRole);
-
-		createIdentifier(entry);
-
-		parent->appendRow(entry);
-
-		while (reader->readNext())
+		if (reader->isStartElement())
 		{
-			if (reader->isStartElement())
+			if (reader->name() == QLatin1String("outline"))
 			{
-				if (reader->name() == QLatin1String("outline"))
-				{
-					readEntry(reader, entry);
-				}
-				else
-				{
-					reader->skipCurrentElement();
-				}
+				readEntry(reader, entry);
 			}
-			else if (reader->hasError())
+			else
 			{
-				return;
+				reader->skipCurrentElement();
 			}
+		}
+		else if (reader->hasError())
+		{
+			return;
 		}
 	}
 }
