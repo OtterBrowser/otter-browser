@@ -806,10 +806,12 @@ QMimeData* FeedsModel::mimeData(const QModelIndexList &indexes) const
 
 	for (int i = 0; i < indexes.count(); ++i)
 	{
-		if (indexes.at(i).isValid() && static_cast<EntryType>(indexes.at(i).data(TypeRole).toInt()) == FeedEntry)
+		const QModelIndex index(indexes.at(i));
+
+		if (index.isValid() && static_cast<EntryType>(index.data(TypeRole).toInt()) == FeedEntry)
 		{
-			texts.append(indexes.at(i).data(UrlRole).toString());
-			urls.append(indexes.at(i).data(UrlRole).toUrl());
+			texts.append(index.data(UrlRole).toString());
+			urls.append(index.data(UrlRole).toUrl());
 		}
 	}
 
