@@ -989,9 +989,15 @@ bool FeedsModel::setData(const QModelIndex &index, const QVariant &value, int ro
 		return QStandardItemModel::setData(index, value, role);
 	}
 
-	if (role == UrlRole && value.toUrl() != index.data(UrlRole).toUrl())
+	if (role == UrlRole)
 	{
-		handleUrlChanged(entry, Utils::normalizeUrl(value.toUrl()), Utils::normalizeUrl(index.data(UrlRole).toUrl()));
+		const QUrl oldUrl(index.data(UrlRole).toUrl());
+		const QUrl newUrl(value.toUrl());
+
+		if (oldUrl != newUrl)
+		{
+			handleUrlChanged(entry, Utils::normalizeUrl(newUrl), Utils::normalizeUrl(oldUrl));
+		}
 	}
 
 	entry->setData(value, role);
