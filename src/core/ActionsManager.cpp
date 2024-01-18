@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -747,9 +747,11 @@ QVector<QKeySequence> ActionsManager::getActionShortcuts(int identifier, const Q
 
 		for (int i = 0; i < definitions.count(); ++i)
 		{
-			if (definitions.at(i).first == parameters)
+			const QPair<QVariantMap, QVector<QKeySequence> > definition(definitions.at(i));
+
+			if (definition.first == parameters)
 			{
-				return definitions.at(i).second;
+				return definition.second;
 			}
 		}
 	}
