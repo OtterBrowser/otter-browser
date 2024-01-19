@@ -35,7 +35,7 @@ namespace Otter
 
 bool KeyboardProfile::Action::operator ==(const KeyboardProfile::Action &other) const
 {
-	return (shortcuts == other.shortcuts && parameters == other.parameters && action == other.action);
+	return (action == other.action && shortcuts == other.shortcuts && parameters == other.parameters);
 }
 
 KeyboardProfile::KeyboardProfile(const QString &identifier, LoadMode mode) :
