@@ -598,9 +598,11 @@ void ActionsManager::loadProfiles()
 
 					for (int k = 0; k < extraDefinitions.count(); ++k)
 					{
-						if (extraDefinitions.at(k).first == definition.parameters)
+						const QPair<QVariantMap, QVector<QKeySequence> > extraDefinition(extraDefinitions.at(k));
+
+						if (extraDefinition.first == definition.parameters)
 						{
-							shortcuts = extraDefinitions.at(k).second;
+							shortcuts = extraDefinition.second;
 
 							break;
 						}
