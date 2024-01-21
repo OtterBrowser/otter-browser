@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -302,19 +302,21 @@ MouseProfile::Gesture::Step MouseProfile::Gesture::Step::fromString(const QStrin
 
 	for (int i = 1; i < parts.count(); ++i)
 	{
-		if (parts.at(i) == QLatin1String("shift"))
+		const QString part(parts.at(i));
+
+		if (part == QLatin1String("shift"))
 		{
 			step.modifiers |= Qt::ShiftModifier;
 		}
-		else if (parts.at(i) == QLatin1String("ctrl"))
+		else if (part == QLatin1String("ctrl"))
 		{
 			step.modifiers |= Qt::ControlModifier;
 		}
-		else if (parts.at(i) == QLatin1String("alt"))
+		else if (part == QLatin1String("alt"))
 		{
 			step.modifiers |= Qt::AltModifier;
 		}
-		else if (parts.at(i) == QLatin1String("meta"))
+		else if (part == QLatin1String("meta"))
 		{
 			step.modifiers |= Qt::MetaModifier;
 		}
