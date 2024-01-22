@@ -52,8 +52,9 @@ KeyboardProfile::KeyboardProfile(const QString &identifier, LoadMode mode) :
 
 	for (int i = 0; i < comments.count(); ++i)
 	{
-		const QString key(comments.at(i).section(QLatin1Char(':'), 0, 0).trimmed());
-		const QString value(comments.at(i).section(QLatin1Char(':'), 1).trimmed());
+		const QString comment(comments.at(i));
+		const QString key(comment.section(QLatin1Char(':'), 0, 0).trimmed());
+		const QString value(comment.section(QLatin1Char(':'), 1).trimmed());
 
 		if (key == QLatin1String("Title"))
 		{
