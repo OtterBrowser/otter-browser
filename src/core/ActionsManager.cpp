@@ -251,12 +251,10 @@ QVector<QKeySequence> KeyboardProfile::loadShortcuts(const QJsonArray &rawShortc
 	{
 		const QKeySequence shortcut(rawShortcuts.at(i).toString());
 
-		if (shortcut.isEmpty() || (!areSingleKeyShortcutsAllowed && !ActionsManager::isShortcutAllowed(shortcut, ActionsManager::DisallowSingleKeyShortcutCheck, false)))
+		if (!shortcut.isEmpty() && (areSingleKeyShortcutsAllowed || ActionsManager::isShortcutAllowed(shortcut, ActionsManager::DisallowSingleKeyShortcutCheck, false)))
 		{
-			continue;
+			shortcuts.append(shortcut);
 		}
-
-		shortcuts.append(shortcut);
 	}
 
 	return shortcuts;
