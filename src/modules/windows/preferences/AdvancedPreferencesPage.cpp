@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -975,7 +975,9 @@ void AdvancedPreferencesPage::updateReaddMouseProfileMenu()
 
 	for (int i = 0; i < availableMouseProfiles.count(); ++i)
 	{
-		readdMenu->addAction((availableMouseProfiles.at(i).getTitle()))->setData(availableMouseProfiles.at(i).getName());
+		const MouseProfile profile(availableMouseProfiles.at(i));
+
+		readdMenu->addAction((profile.getTitle()))->setData(profile.getName());
 	}
 }
 
@@ -1054,11 +1056,12 @@ void AdvancedPreferencesPage::load()
 
 	for (int i = 0; i < events.count(); ++i)
 	{
-		QList<QStandardItem*> items({new QStandardItem(events.at(i).getTitle()), new QStandardItem(events.at(i).getDescription())});
-		items[0]->setData(events.at(i).identifier, IdentifierRole);
-		items[0]->setData(events.at(i).playSound, SoundPathRole);
-		items[0]->setData(events.at(i).showAlert, ShouldShowAlertRole);
-		items[0]->setData(events.at(i).showNotification, ShouldShowNotificationRole);
+		const NotificationsManager::EventDefinition event(events.at(i));
+		QList<QStandardItem*> items({new QStandardItem(event.getTitle()), new QStandardItem(event.getDescription())});
+		items[0]->setData(event.identifier, IdentifierRole);
+		items[0]->setData(event.playSound, SoundPathRole);
+		items[0]->setData(event.showAlert, ShouldShowAlertRole);
+		items[0]->setData(event.showNotification, ShouldShowNotificationRole);
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 
