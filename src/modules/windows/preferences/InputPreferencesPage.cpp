@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -807,10 +807,11 @@ QHash<int, QVector<KeyboardProfile::Action> > InputPreferencesPage::getKeyboardD
 
 		for (int j = 0; j < actionVariants.count(); ++j)
 		{
+			const ShortcutsDefinition actionVariant(actionVariants.at(j));
 			KeyboardProfile::Action definition;
-			definition.parameters = actionVariants.at(j).parameters;
-			definition.shortcuts = actionVariants.at(j).shortcuts;
-			definition.disabledShortcuts = actionVariants.at(j).disabledShortcuts;
+			definition.parameters = actionVariant.parameters;
+			definition.shortcuts = actionVariant.shortcuts;
+			definition.disabledShortcuts = actionVariant.disabledShortcuts;
 			definition.action = iterator.key();
 
 			definitions.append(definition);
