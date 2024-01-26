@@ -509,14 +509,15 @@ void InputPreferencesPage::load()
 
 	for (int i = 0; i < keyboardProfiles.count(); ++i)
 	{
-		const KeyboardProfile profile(keyboardProfiles.at(i), KeyboardProfile::FullMode);
+		const QString identifier(keyboardProfiles.at(i));
+		const KeyboardProfile profile(identifier, KeyboardProfile::FullMode);
 
 		if (!profile.isValid())
 		{
 			continue;
 		}
 
-		m_keyboardProfiles[keyboardProfiles.at(i)] = profile;
+		m_keyboardProfiles[identifier] = profile;
 
 		QStandardItem *item(new QStandardItem(profile.getTitle()));
 		item->setToolTip(profile.getDescription());
