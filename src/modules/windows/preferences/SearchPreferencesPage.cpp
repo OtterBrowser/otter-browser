@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -195,74 +195,76 @@ void SearchPreferencesPage::updateSearchEngine()
 	const QPersistentModelIndex index(m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0));
 	const QString identifier(index.data(IdentifierRole).toString());
 
-	if (!identifier.isEmpty() && m_searchEngines.contains(identifier) && !m_updateJobs.contains(identifier))
+	if (identifier.isEmpty() || !m_searchEngines.contains(identifier) || m_updateJobs.contains(identifier))
 	{
-		if (!m_updateAnimation)
+		return;
+	}
+
+	if (!m_updateAnimation)
+	{
+		const QString path(ThemesManager::getAnimationPath(QLatin1String("spinner")));
+
+		if (path.isEmpty())
 		{
-			const QString path(ThemesManager::getAnimationPath(QLatin1String("spinner")));
-
-			if (path.isEmpty())
-			{
-				m_updateAnimation = new SpinnerAnimation(QCoreApplication::instance());
-			}
-			else
-			{
-				m_updateAnimation = new GenericAnimation(path, QCoreApplication::instance());
-			}
-
-			m_updateAnimation->start();
-
-			connect(m_updateAnimation, &Animation::frameChanged, m_ui->searchViewWidget->viewport(), static_cast<void(QWidget::*)()>(&QWidget::update));
+			m_updateAnimation = new SpinnerAnimation(QCoreApplication::instance());
+		}
+		else
+		{
+			m_updateAnimation = new GenericAnimation(path, QCoreApplication::instance());
 		}
 
-		m_ui->searchViewWidget->setData(index, true, IsUpdatingRole);
-		m_ui->searchViewWidget->update();
+		m_updateAnimation->start();
 
-		SearchEngineFetchJob *job(new SearchEngineFetchJob(m_searchEngines[identifier].definition.selfUrl, identifier, false, this));
-
-		m_updateJobs[identifier] = job;
-
-		connect(job, &SearchEngineFetchJob::jobFinished, this, [=](bool isSuccess)
-		{
-			SearchEnginesManager::SearchEngineDefinition searchEngine(job->getSearchEngine());
-
-			if (index.isValid())
-			{
-				if (isSuccess)
-				{
-					m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::DisplayRole);
-					m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::ToolTipRole);
-					m_ui->searchViewWidget->setData(index, ItemModel::createDecoration(searchEngine.icon), Qt::DecorationRole);
-				}
-
-				m_ui->searchViewWidget->setData(index, false, IsUpdatingRole);
-			}
-
-			m_updateJobs.remove(identifier);
-
-			if (m_updateJobs.isEmpty())
-			{
-				m_updateAnimation->deleteLater();
-				m_updateAnimation = nullptr;
-			}
-
-			if (!isSuccess)
-			{
-				QMessageBox::warning(this, tr("Error"), tr("Failed to update search engine."), QMessageBox::Close);
-
-				return;
-			}
-
-			if (m_searchEngines.contains(identifier))
-			{
-				searchEngine.keyword = m_searchEngines[identifier].definition.keyword;
-
-				m_searchEngines[identifier] = SearchEngine(searchEngine, true);
-			}
-		});
-
-		job->start();
+		connect(m_updateAnimation, &Animation::frameChanged, m_ui->searchViewWidget->viewport(), static_cast<void(QWidget::*)()>(&QWidget::update));
 	}
+
+	m_ui->searchViewWidget->setData(index, true, IsUpdatingRole);
+	m_ui->searchViewWidget->update();
+
+	SearchEngineFetchJob *job(new SearchEngineFetchJob(m_searchEngines[identifier].definition.selfUrl, identifier, false, this));
+
+	m_updateJobs[identifier] = job;
+
+	connect(job, &SearchEngineFetchJob::jobFinished, this, [=](bool isSuccess)
+	{
+		SearchEnginesManager::SearchEngineDefinition searchEngine(job->getSearchEngine());
+
+		if (index.isValid())
+		{
+			if (isSuccess)
+			{
+				m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::DisplayRole);
+				m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::ToolTipRole);
+				m_ui->searchViewWidget->setData(index, ItemModel::createDecoration(searchEngine.icon), Qt::DecorationRole);
+			}
+
+			m_ui->searchViewWidget->setData(index, false, IsUpdatingRole);
+		}
+
+		m_updateJobs.remove(identifier);
+
+		if (m_updateJobs.isEmpty())
+		{
+			m_updateAnimation->deleteLater();
+			m_updateAnimation = nullptr;
+		}
+
+		if (!isSuccess)
+		{
+			QMessageBox::warning(this, tr("Error"), tr("Failed to update search engine."), QMessageBox::Close);
+
+			return;
+		}
+
+		if (m_searchEngines.contains(identifier))
+		{
+			searchEngine.keyword = m_searchEngines[identifier].definition.keyword;
+
+			m_searchEngines[identifier] = SearchEngine(searchEngine, true);
+		}
+	});
+
+	job->start();
 }
 
 void SearchPreferencesPage::removeSearchEngine()
