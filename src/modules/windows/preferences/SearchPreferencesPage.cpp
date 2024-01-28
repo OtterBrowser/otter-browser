@@ -290,27 +290,29 @@ void SearchPreferencesPage::removeSearchEngine()
 		messageBox.setCheckBox(new QCheckBox(tr("Delete search engine permanently")));
 	}
 
-	if (messageBox.exec() == QMessageBox::Yes)
+	if (messageBox.exec() != QMessageBox::Yes)
 	{
-		if (messageBox.checkBox() && messageBox.checkBox()->isChecked())
-		{
-			m_filesToRemove.append(path);
-		}
-
-		if (m_updateJobs.contains(identifier))
-		{
-			m_updateJobs[identifier]->cancel();
-			m_updateJobs.remove(identifier);
-		}
-
-		m_searchEngines.remove(identifier);
-
-		m_ui->searchViewWidget->removeRow();
-
-		updateReaddSearchEngineMenu();
-
-		emit settingsModified();
+		return;
 	}
+
+	if (messageBox.checkBox() && messageBox.checkBox()->isChecked())
+	{
+		m_filesToRemove.append(path);
+	}
+
+	if (m_updateJobs.contains(identifier))
+	{
+		m_updateJobs[identifier]->cancel();
+		m_updateJobs.remove(identifier);
+	}
+
+	m_searchEngines.remove(identifier);
+
+	m_ui->searchViewWidget->removeRow();
+
+	updateReaddSearchEngineMenu();
+
+	emit settingsModified();
 }
 
 void SearchPreferencesPage::addSearchEngine(const QString &path, const QString &identifier, bool isReadding)
