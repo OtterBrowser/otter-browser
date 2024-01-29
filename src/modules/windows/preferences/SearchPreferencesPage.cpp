@@ -419,7 +419,9 @@ void SearchPreferencesPage::updateReaddSearchEngineMenu()
 
 	for (int i = 0; i < availableSearchEngines.count(); ++i)
 	{
-		menu->addAction(availableSearchEngines.at(i).icon, (availableSearchEngines.at(i).title.isEmpty() ? tr("(Untitled)") : availableSearchEngines.at(i).title))->setData(availableSearchEngines.at(i).identifier);
+		const SearchEnginesManager::SearchEngineDefinition searchEngine(availableSearchEngines.at(i));
+
+		menu->addAction(searchEngine.icon, (searchEngine.title.isEmpty() ? tr("(Untitled)") : searchEngine.title))->setData(searchEngine.identifier);
 	}
 }
 
