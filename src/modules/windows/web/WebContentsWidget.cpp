@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -437,40 +437,42 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			{
 				const InputInterpreter::InterpreterResult result(InputInterpreter::interpret(QGuiApplication::clipboard()->text().trimmed(), (InputInterpreter::NoBookmarkKeywordsFlag | InputInterpreter::NoHostLookupFlag | InputInterpreter::NoSearchKeywordsFlag)));
 
-				if (result.isValid())
+				if (!result.isValid())
 				{
-					SessionsManager::OpenHints hints(SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() ? SessionsManager::NewTabOpen : SessionsManager::CurrentTabOpen);
+					return;
+				}
 
-					if (parameters.contains(QLatin1String("hints")))
-					{
-						hints = SessionsManager::calculateOpenHints(parameters);
-					}
+				SessionsManager::OpenHints hints(SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() ? SessionsManager::NewTabOpen : SessionsManager::CurrentTabOpen);
 
-					switch (result.type)
-					{
-						case InputInterpreter::InterpreterResult::UrlType:
-							if (hints.testFlag(SessionsManager::CurrentTabOpen) && hints.testFlag(SessionsManager::PrivateOpen) == isPrivate())
+				if (parameters.contains(QLatin1String("hints")))
+				{
+					hints = SessionsManager::calculateOpenHints(parameters);
+				}
+
+				switch (result.type)
+				{
+					case InputInterpreter::InterpreterResult::UrlType:
+						if (hints.testFlag(SessionsManager::CurrentTabOpen) && hints.testFlag(SessionsManager::PrivateOpen) == isPrivate())
+						{
+							setUrl(result.url);
+						}
+						else
+						{
+							MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+							if (mainWindow)
 							{
-								setUrl(result.url);
+								mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}, {QLatin1String("hints"), QVariant(hints)}}, trigger);
 							}
-							else
-							{
-								MainWindow *mainWindow(MainWindow::findMainWindow(this));
+						}
 
-								if (mainWindow)
-								{
-									mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}, {QLatin1String("hints"), QVariant(hints)}}, trigger);
-								}
-							}
+						break;
+					case InputInterpreter::InterpreterResult::SearchType:
+						emit requestedSearch(result.searchQuery, result.searchEngine, hints);
 
-							break;
-						case InputInterpreter::InterpreterResult::SearchType:
-							emit requestedSearch(result.searchQuery, result.searchEngine, hints);
-
-							break;
-						default:
-							break;
-					}
+						break;
+					default:
+						break;
 				}
 			}
 
