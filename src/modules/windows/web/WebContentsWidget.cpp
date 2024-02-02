@@ -346,35 +346,37 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				const InputInterpreter::InterpreterResult result(InputInterpreter::interpret(text, (InputInterpreter::NoBookmarkKeywordsFlag | InputInterpreter::NoHostLookupFlag | InputInterpreter::NoSearchKeywordsFlag)));
 
-				if (result.isValid())
+				if (!result.isValid())
 				{
-					const SessionsManager::OpenHints hints(parameters.contains(QLatin1String("hints")) ? SessionsManager::calculateOpenHints(parameters) : SessionsManager::calculateOpenHints());
+					return;
+				}
 
-					switch (result.type)
-					{
-						case InputInterpreter::InterpreterResult::UrlType:
-							if (hints.testFlag(SessionsManager::CurrentTabOpen) && hints.testFlag(SessionsManager::PrivateOpen) == isPrivate())
+				const SessionsManager::OpenHints hints(parameters.contains(QLatin1String("hints")) ? SessionsManager::calculateOpenHints(parameters) : SessionsManager::calculateOpenHints());
+
+				switch (result.type)
+				{
+					case InputInterpreter::InterpreterResult::UrlType:
+						if (hints.testFlag(SessionsManager::CurrentTabOpen) && hints.testFlag(SessionsManager::PrivateOpen) == isPrivate())
+						{
+							setUrl(result.url);
+						}
+						else
+						{
+							MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+							if (mainWindow)
 							{
-								setUrl(result.url);
+								mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}, {QLatin1String("hints"), QVariant(hints)}}, trigger);
 							}
-							else
-							{
-								MainWindow *mainWindow(MainWindow::findMainWindow(this));
+						}
 
-								if (mainWindow)
-								{
-									mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}, {QLatin1String("hints"), QVariant(hints)}}, trigger);
-								}
-							}
+						break;
+					case InputInterpreter::InterpreterResult::SearchType:
+						emit requestedSearch(result.searchQuery, result.searchEngine, hints);
 
-							break;
-						case InputInterpreter::InterpreterResult::SearchType:
-							emit requestedSearch(result.searchQuery, result.searchEngine, hints);
-
-							break;
-						default:
-							break;
-					}
+						break;
+					default:
+						break;
 				}
 			}
 
