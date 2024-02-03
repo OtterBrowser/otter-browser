@@ -302,9 +302,11 @@ void WebContentsWidget::mouseMoveEvent(QMouseEvent *event)
 
 	if (m_scrollMode == DragScroll)
 	{
-		scrollContents(m_lastCursorPosition - QCursor::pos());
+		const QPoint position(QCursor::pos());
 
-		m_lastCursorPosition = QCursor::pos();
+		scrollContents(m_lastCursorPosition - position);
+
+		m_lastCursorPosition = position;
 	}
 }
 
