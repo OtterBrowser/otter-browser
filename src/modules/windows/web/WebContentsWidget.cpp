@@ -500,8 +500,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 						m_webWidget->findInPage({}, (flags | WebWidget::HighlightAllFind));
 						m_webWidget->findInPage(m_searchBarWidget->getQuery(), flags);
 					}
-				}
-);
+				});
 				connect(m_webWidget, &WebWidget::findInPageResultsChanged, m_searchBarWidget, &SearchBarWidget::updateResults);
 
 				if (SettingsManager::getOption(SettingsManager::Search_EnableFindInPageAsYouTypeOption).toBool())
