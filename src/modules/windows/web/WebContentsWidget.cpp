@@ -945,36 +945,36 @@ void WebContentsWidget::handlePermissionRequest(WebWidget::FeaturePermission fea
 				break;
 			}
 		}
+
+		return;
 	}
-	else
+
+	for (int i = 0; i < m_permissionBarWidgets.count(); ++i)
 	{
-		for (int i = 0; i < m_permissionBarWidgets.count(); ++i)
+		if (m_permissionBarWidgets.at(i)->hasMatch(feature, url))
 		{
-			if (m_permissionBarWidgets.at(i)->hasMatch(feature, url))
-			{
-				return;
-			}
+			return;
 		}
-
-		PermissionBarWidget *widget(new PermissionBarWidget(feature, url, this));
-
-		addInformationBar(widget);
-
-		m_permissionBarWidgets.append(widget);
-
-		connect(widget, &PermissionBarWidget::permissionChanged, this, [=](WebWidget::PermissionPolicies policies)
-		{
-			m_webWidget->setPermission(feature, url, policies);
-
-			m_permissionBarWidgets.removeAll(widget);
-
-			m_layout->removeWidget(widget);
-
-			widget->deleteLater();
-		});
-
-		emit needsAttention();
 	}
+
+	PermissionBarWidget *widget(new PermissionBarWidget(feature, url, this));
+
+	addInformationBar(widget);
+
+	m_permissionBarWidgets.append(widget);
+
+	connect(widget, &PermissionBarWidget::permissionChanged, this, [=](WebWidget::PermissionPolicies policies)
+	{
+		m_webWidget->setPermission(feature, url, policies);
+
+		m_permissionBarWidgets.removeAll(widget);
+
+		m_layout->removeWidget(widget);
+
+		widget->deleteLater();
+	});
+
+	emit needsAttention();
 }
 
 void WebContentsWidget::handleInspectorVisibilityChangeRequest(bool isVisible)
