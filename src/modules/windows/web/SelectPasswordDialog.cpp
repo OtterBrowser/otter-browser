@@ -129,7 +129,7 @@ int SelectPasswordDialog::getCurrentSet() const
 {
 	const QModelIndex index(m_ui->passwordsViewWidget->currentIndex());
 
-	if (index.isValid() && m_ui->passwordsViewWidget->selectionModel()->hasSelection())
+	if (index.isValid() && m_ui->passwordsViewWidget->hasSelection())
 	{
 		const QModelIndex parentIndex(index.parent());
 
