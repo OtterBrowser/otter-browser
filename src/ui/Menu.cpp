@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -1735,6 +1735,18 @@ void MenuAction::setState(const ActionsManager::ActionDefinition::State &state)
 	}
 
 	setText(Utils::elideText(QString(state.text).replace(QLatin1Char('&'), QLatin1String("&&")), m_menu->fontMetrics(), m_menu, maximumWidth));
+}
+
+QMenu* MenuAction::createContextMenu(QWidget *parent)
+{
+	Q_UNUSED(parent);
+
+	return nullptr;
+}
+
+bool MenuAction::hasContextMenu() const
+{
+	return false;
 }
 
 }

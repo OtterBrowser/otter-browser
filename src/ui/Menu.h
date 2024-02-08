@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -126,6 +126,9 @@ class MenuAction final : public Action
 public:
 	explicit MenuAction(const QString &text, bool isTranslateable, QMenu *parent);
 	explicit MenuAction(int identifier, const QVariantMap &parameters, const ActionExecutor::Object &executor, QMenu *parent);
+
+	virtual QMenu* createContextMenu(QWidget *parent = nullptr);
+	virtual bool hasContextMenu() const;
 
 protected slots:
 	void setState(const ActionsManager::ActionDefinition::State &state) override;
