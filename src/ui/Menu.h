@@ -37,6 +37,7 @@ public:
 	enum MenuRole
 	{
 		UnknownMenu = 0,
+		BookmarkMenu,
 		BookmarksMenu,
 		BookmarkSelectorMenu,
 		FeedsMenu,
