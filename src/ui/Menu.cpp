@@ -75,6 +75,43 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 
 	switch (role)
 	{
+		case BookmarkMenu:
+			connect(this, &Menu::aboutToShow, this, [&]()
+			{
+				const quint64 identifier(m_menuOptions[QLatin1String("bookmark")].toULongLong());
+				Action *openBookmarkAction(new MenuAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}}, m_executor, this));
+				openBookmarkAction->setTextOverride(QT_TRANSLATE_NOOP("actions", "Open"));
+				openBookmarkAction->setIconOverride(QLatin1String("document-open"));
+
+				addAction(openBookmarkAction);
+
+				Action *openBookmarkInNewTabAction(new MenuAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewTabOpen)}}, m_executor, this));
+				openBookmarkInNewTabAction->setTextOverride(QT_TRANSLATE_NOOP("actions", "Open in New Tab"));
+				openBookmarkInNewTabAction->setIconOverride(QIcon());
+
+				addAction(openBookmarkInNewTabAction);
+
+				Action *openBookmarkInNewBackgroundTabAction(new MenuAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen)}}, m_executor, this));
+				openBookmarkInNewBackgroundTabAction->setTextOverride(QT_TRANSLATE_NOOP("actions", "Open in New Background Tab"));
+				openBookmarkInNewBackgroundTabAction->setIconOverride(QIcon());
+
+				addAction(openBookmarkInNewBackgroundTabAction);
+				addSeparator();
+
+				Action *openBookmarkInNewWindowAction(new MenuAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewWindowOpen)}}, m_executor, this));
+				openBookmarkInNewWindowAction->setTextOverride(QT_TRANSLATE_NOOP("actions", "Open in New Window"));
+				openBookmarkInNewWindowAction->setIconOverride(QIcon());
+
+				addAction(openBookmarkInNewWindowAction);
+
+				Action *openBookmarkInNewBackgroundWindowAction(new MenuAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen)}}, m_executor, this));
+				openBookmarkInNewBackgroundWindowAction->setTextOverride(QT_TRANSLATE_NOOP("actions", "Open in New Background Window"));
+				openBookmarkInNewBackgroundWindowAction->setIconOverride(QIcon());
+
+				addAction(openBookmarkInNewBackgroundWindowAction);
+			});
+
+			break;
 		case BookmarksMenu:
 		case BookmarkSelectorMenu:
 			{
@@ -340,40 +377,10 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 		return;
 	}
 
-	const quint64 identifier(action->getParameters().value(QLatin1String("bookmark")).toULongLong());
 	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-	ActionExecutor::Object executor(mainWindow, mainWindow);
-	QMenu menu(this);
-	Action *openBookmarkAction(new MenuAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}}, executor, &menu));
-	openBookmarkAction->setTextOverride(QT_TRANSLATE_NOOP("actions", "Open"));
-	openBookmarkAction->setIconOverride(QLatin1String("document-open"));
-
-	menu.addAction(openBookmarkAction);
-
-	Action *openBookmarkInNewTabAction(new MenuAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewTabOpen)}}, executor, &menu));
-	openBookmarkInNewTabAction->setTextOverride(QT_TRANSLATE_NOOP("actions", "Open in New Tab"));
-	openBookmarkInNewTabAction->setIconOverride(QIcon());
-
-	menu.addAction(openBookmarkInNewTabAction);
-
-	Action *openBookmarkInNewBackgroundTabAction(new MenuAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen)}}, executor, &menu));
-	openBookmarkInNewBackgroundTabAction->setTextOverride(QT_TRANSLATE_NOOP("actions", "Open in New Background Tab"));
-	openBookmarkInNewBackgroundTabAction->setIconOverride(QIcon());
-
-	menu.addAction(openBookmarkInNewBackgroundTabAction);
-	menu.addSeparator();
-
-	Action *openBookmarkInNewWindowAction(new MenuAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewWindowOpen)}}, executor, &menu));
-	openBookmarkInNewWindowAction->setTextOverride(QT_TRANSLATE_NOOP("actions", "Open in New Window"));
-	openBookmarkInNewWindowAction->setIconOverride(QIcon());
-
-	menu.addAction(openBookmarkInNewWindowAction);
-
-	Action *openBookmarkInNewBackgroundWindowAction(new MenuAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen)}}, executor, &menu));
-	openBookmarkInNewBackgroundWindowAction->setTextOverride(QT_TRANSLATE_NOOP("actions", "Open in New Background Window"));
-	openBookmarkInNewBackgroundWindowAction->setIconOverride(QIcon());
-
-	menu.addAction(openBookmarkInNewBackgroundWindowAction);
+	Menu menu(BookmarkMenu, this);
+	menu.setExecutor(ActionExecutor::Object(mainWindow, mainWindow));
+	menu.setMenuOptions({{QLatin1String("bookmark"), action->getParameters().value(QLatin1String("bookmark")).toULongLong()}});
 
 	connect(&menu, &QMenu::triggered, this, &Menu::hideMenu);
 
