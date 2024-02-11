@@ -120,7 +120,7 @@ private:
 	static int m_menuRoleIdentifierEnumerator;
 };
 
-class MenuAction final : public Action
+class MenuAction : public Action
 {
 	Q_OBJECT
 
@@ -128,7 +128,7 @@ public:
 	explicit MenuAction(const QString &text, bool isTranslateable, QMenu *parent);
 	explicit MenuAction(int identifier, const QVariantMap &parameters, const ActionExecutor::Object &executor, QMenu *parent);
 
-	virtual QMenu* createContextMenu(QWidget *parent = nullptr);
+	virtual QMenu* createContextMenu(QWidget *parent = nullptr) const;
 	virtual bool hasContextMenu() const;
 
 protected slots:
@@ -136,6 +136,15 @@ protected slots:
 
 private:
 	QMenu *m_menu;
+};
+
+class OpenBookmarkMenuAction : public MenuAction
+{
+public:
+	explicit OpenBookmarkMenuAction(quint64 bookmark, const ActionExecutor::Object &executor, QMenu *parent);
+
+	QMenu* createContextMenu(QWidget *parent = nullptr) const override;
+	bool hasContextMenu() const override;
 };
 
 }

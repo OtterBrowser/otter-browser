@@ -368,23 +368,21 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 
 void Menu::contextMenuEvent(QContextMenuEvent *event)
 {
-	const Action *action(qobject_cast<Action*>(actionAt(event->pos())));
+	const MenuAction *action(qobject_cast<MenuAction*>(actionAt(event->pos())));
 
-	if (m_role != BookmarksMenu || !action || !action->isEnabled() || action->getIdentifier() != ActionsManager::OpenBookmarkAction)
+	if (!action || !action->isEnabled() || !action->hasContextMenu())
 	{
 		QMenu::contextMenuEvent(event);
 
 		return;
 	}
 
-	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-	Menu menu(BookmarkMenu, this);
-	menu.setExecutor(ActionExecutor::Object(mainWindow, mainWindow));
-	menu.setMenuOptions({{QLatin1String("bookmark"), action->getParameters().value(QLatin1String("bookmark")).toULongLong()}});
+	QMenu *menu(action->createContextMenu(this));
 
-	connect(&menu, &QMenu::triggered, this, &Menu::hideMenu);
+	connect(menu, &QMenu::triggered, this, &Menu::hideMenu);
 
-	menu.exec(event->globalPos());
+	menu->exec(event->globalPos());
+	menu->deleteLater();
 }
 
 void Menu::load(const QString &path, const QStringList &includeSections, const ActionExecutor::Object &executor)
@@ -671,7 +669,7 @@ void Menu::populateBookmarksMenu()
 
 	if (folderBookmark->rowCount() > 1)
 	{
-		Action *action(new MenuAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), folderBookmark->getIdentifier()}}, executor, this));
+		Action *action(new OpenBookmarkMenuAction(folderBookmark->getIdentifier(), executor, this));
 		action->setTextOverride(QT_TRANSLATE_NOOP("actions", "Open All"));
 		action->setIconOverride(QLatin1String("document-open-folder"));
 
@@ -697,7 +695,7 @@ void Menu::populateBookmarksMenu()
 			case BookmarksModel::UrlBookmark:
 			case BookmarksModel::RootBookmark:
 				{
-					Action *action(new MenuAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}}, executor, this));
+					Action *action(new OpenBookmarkMenuAction(bookmark->getIdentifier(), executor, this));
 					action->setTextOverride(bookmark->getTitle(), false);
 
 					if (type != BookmarksModel::UrlBookmark)
@@ -1744,7 +1742,7 @@ void MenuAction::setState(const ActionsManager::ActionDefinition::State &state)
 	setText(Utils::elideText(QString(state.text).replace(QLatin1Char('&'), QLatin1String("&&")), m_menu->fontMetrics(), m_menu, maximumWidth));
 }
 
-QMenu* MenuAction::createContextMenu(QWidget *parent)
+QMenu* MenuAction::createContextMenu(QWidget *parent) const
 {
 	Q_UNUSED(parent);
 
@@ -1754,6 +1752,25 @@ QMenu* MenuAction::createContextMenu(QWidget *parent)
 bool MenuAction::hasContextMenu() const
 {
 	return false;
+}
+
+OpenBookmarkMenuAction::OpenBookmarkMenuAction(quint64 bookmark, const ActionExecutor::Object &executor, QMenu *parent) : MenuAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark}}, executor, parent)
+{
+}
+
+QMenu* OpenBookmarkMenuAction::createContextMenu(QWidget *parent) const
+{
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent));
+	Menu *menu(new Menu(Menu::BookmarkMenu, parent));
+	menu->setExecutor(ActionExecutor::Object(mainWindow, mainWindow));
+	menu->setMenuOptions({{QLatin1String("bookmark"), getParameters().value(QLatin1String("bookmark")).toULongLong()}});
+
+	return menu;
+}
+
+bool OpenBookmarkMenuAction::hasContextMenu() const
+{
+	return true;
 }
 
 }
