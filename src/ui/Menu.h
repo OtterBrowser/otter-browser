@@ -138,7 +138,7 @@ private:
 	QMenu *m_menu;
 };
 
-class OpenBookmarkMenuAction : public MenuAction
+class OpenBookmarkMenuAction final : public MenuAction
 {
 public:
 	explicit OpenBookmarkMenuAction(quint64 bookmark, const ActionExecutor::Object &executor, QMenu *parent);
