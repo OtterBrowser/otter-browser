@@ -815,82 +815,83 @@ void Menu::populateOptionMenu()
 
 	for (int i = 0; i < choices.count(); ++i)
 	{
+		const SettingsManager::OptionDefinition::Choice choice(choices.at(i));
 		QString text;
 
-		if (choices.at(i).value == QLatin1String("ask"))
+		if (choice.value == QLatin1String("ask"))
 		{
 			text = QT_TRANSLATE_NOOP("actions", "Ask What to Do");
 		}
-		else if (choices.at(i).value == QLatin1String("allow"))
+		else if (choice.value == QLatin1String("allow"))
 		{
 			text = QT_TRANSLATE_NOOP("actions", "Always Allow");
 		}
-		else if (choices.at(i).value == QLatin1String("disallow"))
+		else if (choice.value == QLatin1String("disallow"))
 		{
 			text = QT_TRANSLATE_NOOP("actions", "Always Deny");
 		}
-		else if (choices.at(i).value == QLatin1String("keepUntilExpires"))
+		else if (choice.value == QLatin1String("keepUntilExpires"))
 		{
 			text = QT_TRANSLATE_NOOP("actions", "Expires");
 		}
-		else if (choices.at(i).value == QLatin1String("keepUntilExit"))
+		else if (choice.value == QLatin1String("keepUntilExit"))
 		{
 			text = QT_TRANSLATE_NOOP("actions", "Current Session is Closed");
 		}
-		else if (choices.at(i).value == QLatin1String("acceptAll"))
+		else if (choice.value == QLatin1String("acceptAll"))
 		{
 			text = QT_TRANSLATE_NOOP("actions", "Always");
 		}
-		else if (choices.at(i).value == QLatin1String("acceptExisting"))
+		else if (choice.value == QLatin1String("acceptExisting"))
 		{
 			text = QT_TRANSLATE_NOOP("actions", "Only Existing");
 		}
-		else if (choices.at(i).value == QLatin1String("readOnly"))
+		else if (choice.value == QLatin1String("readOnly"))
 		{
 			text = QT_TRANSLATE_NOOP("actions", "Only Read Existing");
 		}
-		else if (choices.at(i).value == QLatin1String("ignore"))
+		else if (choice.value == QLatin1String("ignore"))
 		{
 			text = QT_TRANSLATE_NOOP("actions", "Ignore");
 		}
-		else if (choices.at(i).value == QLatin1String("openAll"))
+		else if (choice.value == QLatin1String("openAll"))
 		{
 			text = QT_TRANSLATE_NOOP("actions", "Open All");
 		}
-		else if (choices.at(i).value == QLatin1String("openAllInBackground"))
+		else if (choice.value == QLatin1String("openAllInBackground"))
 		{
 			text = QT_TRANSLATE_NOOP("actions", "Open in Background");
 		}
-		else if (choices.at(i).value == QLatin1String("blockAll"))
+		else if (choice.value == QLatin1String("blockAll"))
 		{
 			text = QT_TRANSLATE_NOOP("actions", "Block All");
 		}
-		else if (choices.at(i).value == QLatin1String("onlyCached"))
+		else if (choice.value == QLatin1String("onlyCached"))
 		{
 			text = QT_TRANSLATE_NOOP("actions", "Only Cached");
 		}
-		else if (choices.at(i).value == QLatin1String("enabled"))
+		else if (choice.value == QLatin1String("enabled"))
 		{
 			text = QT_TRANSLATE_NOOP("actions", "Enabled");
 		}
-		else if (choices.at(i).value == QLatin1String("onDemand"))
+		else if (choice.value == QLatin1String("onDemand"))
 		{
 			text = QT_TRANSLATE_NOOP("actions", "On Demand");
 		}
-		else if (choices.at(i).value == QLatin1String("disabled"))
+		else if (choice.value == QLatin1String("disabled"))
 		{
 			text = QT_TRANSLATE_NOOP("actions", "Disabled");
 		}
 		else
 		{
-			text = choices.at(i).getTitle();
+			text = choice.getTitle();
 		}
 
 		Action *action(new MenuAction(text, true, this));
-		action->setIconOverride(choices.at(i).icon);
+		action->setIconOverride(choice.icon);
 		action->setCheckable(true);
-		action->setChecked(choices.at(i).value == value);
-		action->setData(choices.at(i).value);
+		action->setChecked(choice.value == value);
+		action->setData(choice.value);
 
 		m_actionGroup->addAction(action);
 
