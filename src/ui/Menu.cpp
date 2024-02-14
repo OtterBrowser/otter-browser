@@ -1013,16 +1013,17 @@ void Menu::populateClosedWindowsMenu()
 					parameters = {{QLatin1String("index"), i}};
 				}
 
+				const Session::ClosedWindow tab(tabs.at(i));
 				Action *reopenTabAction(new MenuAction(ActionsManager::ReopenTabAction, parameters, executor, this));
-				reopenTabAction->setTextOverride(tabs.at(i).window.getTitle(), false);
+				reopenTabAction->setTextOverride(tab.window.getTitle(), false);
 
-				if (tabs.at(i).isPrivate)
+				if (tab.isPrivate)
 				{
 					reopenTabAction->setIconOverride(QLatin1String("tab-private"));
 				}
 				else
 				{
-					reopenTabAction->setIconOverride(tabs.at(i).icon);
+					reopenTabAction->setIconOverride(tabs.icon);
 				}
 
 				addAction(reopenTabAction);
