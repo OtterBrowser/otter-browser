@@ -1023,7 +1023,7 @@ void Menu::populateClosedWindowsMenu()
 				}
 				else
 				{
-					reopenTabAction->setIconOverride(tabs.icon);
+					reopenTabAction->setIconOverride(tab.icon);
 				}
 
 				addAction(reopenTabAction);
