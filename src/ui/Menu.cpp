@@ -1216,12 +1216,14 @@ void Menu::populateOpenInApplicationMenu()
 	{
 		for (int i = 0; i < applications.count(); ++i)
 		{
-			parameters[QLatin1String("application")] = applications.at(i).command;
+			const ApplicationInformation application(applications.at(i));
 
-			const bool hasValidName(!applications.at(i).name.isEmpty());
+			parameters[QLatin1String("application")] = application.command;
+
+			const bool hasValidName(!application.name.isEmpty());
 			Action *openUrlAction(new MenuAction(ActionsManager::OpenUrlAction, parameters, executor, this));
-			openUrlAction->setTextOverride((hasValidName ? applications.at(i).name : QT_TRANSLATE_NOOP("actions", "Unknown")), !hasValidName);
-			openUrlAction->setIconOverride(applications.at(i).icon);
+			openUrlAction->setTextOverride((hasValidName ? application.name : QT_TRANSLATE_NOOP("actions", "Unknown")), !hasValidName);
+			openUrlAction->setIconOverride(application.icon);
 			addAction(new MenuAction(ActionsManager::OpenUrlAction, parameters, executor, this));
 
 			if (i == 0)
