@@ -761,7 +761,7 @@ void Menu::populateBookmarkSelectorMenu()
 					action->setStatusTip(bookmark->getUrl().toString());
 					action->setData(bookmark->getIdentifier());
 
-					if (type != BookmarksModel::UrlBookmark)
+					if (bookmark->isFolder())
 					{
 						Menu *menu(new Menu(BookmarkSelectorMenu, this));
 						menu->setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
@@ -1170,7 +1170,7 @@ void Menu::populateNotesMenu()
 					Action *action(new MenuAction(ActionsManager::PasteAction, {{QLatin1String("note"), bookmark->getIdentifier()}}, getExecutor(), this));
 					action->setTextOverride(bookmark->getTitle(), false);
 
-					if (type == BookmarksModel::FolderBookmark)
+					if (bookmark->isFolder())
 					{
 						if (bookmark->hasChildren())
 						{
