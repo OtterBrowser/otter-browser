@@ -1346,17 +1346,18 @@ void Menu::populateSessionsMenu()
 
 	for (int i = 0; i < sorted.count(); ++i)
 	{
+		const SessionInformation session(sorted.at(i));
 		int windows(0);
 
-		for (int j = 0; j < sorted.at(i).windows.count(); ++j)
+		for (int j = 0; j < session.windows.count(); ++j)
 		{
-			windows += sorted.at(i).windows.at(j).windows.count();
+			windows += session.windows.at(j).windows.count();
 		}
 
-		QAction *action(addAction(tr("%1 (%n tab(s))", "", windows).arg(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : QString(sorted.at(i).title).replace(QLatin1Char('&'), QLatin1String("&&")))));
-		action->setData(sorted.at(i).path);
+		QAction *action(addAction(tr("%1 (%n tab(s))", "", windows).arg(session.title.isEmpty() ? tr("(Untitled)") : QString(session.title).replace(QLatin1Char('&'), QLatin1String("&&")))));
+		action->setData(session.path);
 		action->setCheckable(true);
-		action->setChecked(sorted.at(i).path == currentSession);
+		action->setChecked(session.path == currentSession);
 
 		m_actionGroup->addAction(action);
 	}
