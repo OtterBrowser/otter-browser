@@ -1464,7 +1464,7 @@ void Menu::populateUserAgentMenu()
 
 	const bool isRoot(!menuAction() || menuAction()->data().toString().isEmpty());
 	const MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-	const QString userAgent(mainWindow ? mainWindow->getOption(SettingsManager::Network_UserAgentOption).toString() : QString());
+	const QString currentUserAgent(mainWindow ? mainWindow->getOption(SettingsManager::Network_UserAgentOption).toString() : QString());
 	const QStringList userAgents(isRoot ? NetworkManagerFactory::getUserAgents() : NetworkManagerFactory::getUserAgent(menuAction()->data().toString()).children);
 
 	m_actionGroup = new QActionGroup(this);
@@ -1472,15 +1472,17 @@ void Menu::populateUserAgentMenu()
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
-		if (userAgents.at(i).isEmpty())
+		const QString userAgent(userAgents.at(i));
+
+		if (userAgent.isEmpty())
 		{
 			addSeparator();
 		}
 		else
 		{
-			const UserAgentDefinition definition(NetworkManagerFactory::getUserAgent(userAgents.at(i)));
+			const UserAgentDefinition definition(NetworkManagerFactory::getUserAgent(userAgent));
 			QAction *action(addAction(Utils::elideText(definition.getTitle(), fontMetrics(), this)));
-			action->setData(userAgents.at(i));
+			action->setData(userAgent);
 
 			if (definition.isFolder)
 			{
@@ -1498,7 +1500,7 @@ void Menu::populateUserAgentMenu()
 			else
 			{
 				action->setCheckable(true);
-				action->setChecked(userAgent == userAgents.at(i));
+				action->setChecked(userAgent == currentUserAgent);
 			}
 
 			m_actionGroup->addAction(action);
@@ -1512,7 +1514,7 @@ void Menu::populateUserAgentMenu()
 		Action *customAction(new MenuAction(QT_TRANSLATE_NOOP("actions", "Custom User Agent…"), true, this));
 		customAction->setData(QLatin1String("custom"));
 		customAction->setCheckable(true);
-		customAction->setChecked(userAgent.startsWith(QLatin1String("custom;")));
+		customAction->setChecked(currentUserAgent.startsWith(QLatin1String("custom;")));
 
 		m_actionGroup->addAction(customAction);
 
