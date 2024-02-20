@@ -1477,34 +1477,34 @@ void Menu::populateUserAgentMenu()
 		if (userAgent.isEmpty())
 		{
 			addSeparator();
+
+			continue;
 		}
-		else
+
+		const UserAgentDefinition definition(NetworkManagerFactory::getUserAgent(userAgent));
+		QAction *action(addAction(Utils::elideText(definition.getTitle(), fontMetrics(), this)));
+		action->setData(userAgent);
+
+		if (definition.isFolder)
 		{
-			const UserAgentDefinition definition(NetworkManagerFactory::getUserAgent(userAgent));
-			QAction *action(addAction(Utils::elideText(definition.getTitle(), fontMetrics(), this)));
-			action->setData(userAgent);
+			action->setIcon(ThemesManager::createIcon(QLatin1String("inode-directory")));
 
-			if (definition.isFolder)
+			if (definition.children.count() > 0)
 			{
-				action->setIcon(ThemesManager::createIcon(QLatin1String("inode-directory")));
-
-				if (definition.children.count() > 0)
-				{
-					action->setMenu(new Menu(m_role, this));
-				}
-				else
-				{
-					action->setEnabled(false);
-				}
+				action->setMenu(new Menu(m_role, this));
 			}
 			else
 			{
-				action->setCheckable(true);
-				action->setChecked(userAgent == currentUserAgent);
+				action->setEnabled(false);
 			}
-
-			m_actionGroup->addAction(action);
 		}
+		else
+		{
+			action->setCheckable(true);
+			action->setChecked(userAgent == currentUserAgent);
+		}
+
+		m_actionGroup->addAction(action);
 	}
 
 	if (isRoot)
