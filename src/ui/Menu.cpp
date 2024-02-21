@@ -1102,9 +1102,9 @@ void Menu::populateFeedsMenu()
 			continue;
 		}
 
-		const FeedsModel::EntryType type(entry->getType());
+		const bool isFolder(entry->isFolder());
 
-		if (type == FeedsModel::FeedEntry || type == FeedsModel::FolderEntry || type == FeedsModel::RootEntry)
+		if (isFolder || entry->getType() == FeedsModel::FeedEntry)
 		{
 			QString text(entry->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")));
 			const int unreadEntriesAmount(entry->data(FeedsModel::UnreadEntriesAmountRole).toInt());
@@ -1117,7 +1117,7 @@ void Menu::populateFeedsMenu()
 			Action *action(new MenuAction(ActionsManager::OpenFeedAction, {{QLatin1String("entry"), entry->getIdentifier()}}, executor, this));
 			action->setTextOverride(text, false);
 
-			if (type != FeedsModel::FeedEntry)
+			if (isFolder)
 			{
 				if (entry->rowCount() > 0)
 				{

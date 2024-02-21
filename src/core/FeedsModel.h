@@ -75,6 +75,8 @@ public:
 		QVector<Feed*> getFeeds() const;
 		quint64 getIdentifier() const;
 		EntryType getType() const;
+		static bool isFolder(EntryType type);
+		bool isFolder() const;
 		bool isAncestorOf(Entry *child) const;
 		bool operator<(const QStandardItem &other) const override;
 

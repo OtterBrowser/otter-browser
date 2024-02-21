@@ -250,6 +250,26 @@ FeedsModel::EntryType FeedsModel::Entry::getType() const
 	return static_cast<EntryType>(data(TypeRole).toInt());
 }
 
+bool FeedsModel::Entry::isFolder(FeedsModel::EntryType type)
+{
+	switch (type)
+	{
+		case RootEntry:
+		case TrashEntry:
+		case FolderEntry:
+			return true;
+		default:
+			return false;
+	}
+
+	return false;
+}
+
+bool FeedsModel::Entry::isFolder() const
+{
+	return isFolder(getType());
+}
+
 bool FeedsModel::Entry::isAncestorOf(FeedsModel::Entry *child) const
 {
 	if (child == nullptr || child == this)
@@ -913,9 +933,7 @@ bool FeedsModel::canDropMimeData(const QMimeData *data, Qt::DropAction action, i
 
 bool FeedsModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
-	const EntryType type(static_cast<EntryType>(parent.data(TypeRole).toInt()));
-
-	if (type != FolderEntry && type != RootEntry && type != TrashEntry)
+	if (!Entry::isFolder(static_cast<EntryType>(parent.data(TypeRole).toInt())))
 	{
 		return false;
 	}
