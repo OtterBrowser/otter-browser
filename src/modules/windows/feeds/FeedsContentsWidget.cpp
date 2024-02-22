@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -827,9 +827,7 @@ FeedsModel::Entry* FeedsContentsWidget::findFolder(const QModelIndex &index) con
 		return FeedsManager::getModel()->getRootEntry();
 	}
 
-	const FeedsModel::EntryType type(static_cast<FeedsModel::EntryType>(entry->data(FeedsModel::TypeRole).toInt()));
-
-	return ((type == FeedsModel::RootEntry || type == FeedsModel::FolderEntry) ? entry : static_cast<FeedsModel::Entry*>(entry->parent()));
+	return (entry->isFolder() ? entry : static_cast<FeedsModel::Entry*>(entry->parent()));
 }
 
 QString FeedsContentsWidget::getTitle() const
