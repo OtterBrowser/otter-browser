@@ -506,21 +506,23 @@ void FeedsContentsWidget::updateEntry()
 
 	for (int i = 0; i < entryCategories.count(); ++i)
 	{
-		if (!entryCategories.at(i).isEmpty())
+		if (entryCategories.at(i).isEmpty())
 		{
-			const QString label(feedCategories.value(entryCategories.at(i)));
-			QToolButton *toolButton(new QToolButton(m_ui->entryWidget));
-			toolButton->setText(label.isEmpty() ? QString(entryCategories.at(i)).replace(QLatin1Char('_'), QLatin1Char(' ')) : label);
-
-			m_ui->categoriesLayout->addWidget(toolButton);
-
-			connect(toolButton, &QToolButton::clicked, toolButton, [=]()
-			{
-				m_categories = QStringList({entryCategories.at(i)});
-
-				updateFeedModel();
-			});
+			continue;
 		}
+
+		const QString label(feedCategories.value(entryCategories.at(i)));
+		QToolButton *toolButton(new QToolButton(m_ui->entryWidget));
+		toolButton->setText(label.isEmpty() ? QString(entryCategories.at(i)).replace(QLatin1Char('_'), QLatin1Char(' ')) : label);
+
+		m_ui->categoriesLayout->addWidget(toolButton);
+
+		connect(toolButton, &QToolButton::clicked, toolButton, [=]()
+		{
+			m_categories = QStringList({entryCategories.at(i)});
+
+			updateFeedModel();
+		});
 	}
 
 	m_ui->categoriesLayout->addStretch();
