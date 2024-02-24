@@ -506,20 +506,22 @@ void FeedsContentsWidget::updateEntry()
 
 	for (int i = 0; i < entryCategories.count(); ++i)
 	{
-		if (entryCategories.at(i).isEmpty())
+		const QString entryCategory(entryCategories.at(i));
+
+		if (entryCategory.isEmpty())
 		{
 			continue;
 		}
 
-		const QString label(feedCategories.value(entryCategories.at(i)));
+		const QString label(feedCategories.value(entryCategory));
 		QToolButton *toolButton(new QToolButton(m_ui->entryWidget));
-		toolButton->setText(label.isEmpty() ? QString(entryCategories.at(i)).replace(QLatin1Char('_'), QLatin1Char(' ')) : label);
+		toolButton->setText(label.isEmpty() ? QString(entryCategory).replace(QLatin1Char('_'), QLatin1Char(' ')) : label);
 
 		m_ui->categoriesLayout->addWidget(toolButton);
 
 		connect(toolButton, &QToolButton::clicked, toolButton, [=]()
 		{
-			m_categories = QStringList({entryCategories.at(i)});
+			m_categories = QStringList({entryCategory});
 
 			updateFeedModel();
 		});
