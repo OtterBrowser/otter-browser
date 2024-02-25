@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #include "Application.h"
 #include "PlatformIntegration.h"
 #include "SettingsManager.h"
+#include "../ui/Animation.h"
 #include "../ui/Style.h"
 
 #ifdef Q_OS_WIN32
@@ -214,6 +215,23 @@ Style* ThemesManager::createStyle(const QString &name)
 	}
 
 	return style;
+}
+
+Animation* ThemesManager::createAnimation(const QString &name, QObject *parent)
+{
+	if (!parent)
+	{
+		parent = QCoreApplication::instance();
+	}
+
+	const QString path(getAnimationPath(name));
+
+	if (path.isEmpty())
+	{
+		return new SpinnerAnimation(parent);
+	}
+
+	return new GenericAnimation(path, parent);
 }
 
 QString ThemesManager::getAnimationPath(const QString &name)
