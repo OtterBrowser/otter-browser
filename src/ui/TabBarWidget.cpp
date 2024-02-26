@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -309,17 +309,7 @@ void TabHandleWidget::handleLoadingStateChanged(WebWidget::LoadingState state)
 	{
 		if (!m_spinnerAnimation)
 		{
-			const QString path(ThemesManager::getAnimationPath(QLatin1String("spinner")));
-
-			if (path.isEmpty())
-			{
-				m_spinnerAnimation = new SpinnerAnimation(QCoreApplication::instance());
-			}
-			else
-			{
-				m_spinnerAnimation = new GenericAnimation(path, QCoreApplication::instance());
-			}
-
+			m_spinnerAnimation = ThemesManager::createAnimation();
 			m_spinnerAnimation->start();
 		}
 

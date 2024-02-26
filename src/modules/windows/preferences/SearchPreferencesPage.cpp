@@ -202,17 +202,7 @@ void SearchPreferencesPage::updateSearchEngine()
 
 	if (!m_updateAnimation)
 	{
-		const QString path(ThemesManager::getAnimationPath(QLatin1String("spinner")));
-
-		if (path.isEmpty())
-		{
-			m_updateAnimation = new SpinnerAnimation(QCoreApplication::instance());
-		}
-		else
-		{
-			m_updateAnimation = new GenericAnimation(path, QCoreApplication::instance());
-		}
-
+		m_updateAnimation = ThemesManager::createAnimation();
 		m_updateAnimation->start();
 
 		connect(m_updateAnimation, &Animation::frameChanged, m_ui->searchViewWidget->viewport(), static_cast<void(QWidget::*)()>(&QWidget::update));

@@ -65,6 +65,7 @@ void StartPageModel::reloadModel()
 			}
 
 			const BookmarksModel::BookmarkType type(bookmark->getType());
+			///TODO feed tile with information about unread? menu for folders / folderlike?
 
 			if (type != BookmarksModel::UrlBookmark && type != BookmarksModel::FolderBookmark)
 			{

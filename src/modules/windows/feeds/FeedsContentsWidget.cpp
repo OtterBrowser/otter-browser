@@ -334,17 +334,7 @@ void FeedsContentsWidget::handleFeedModified(const QUrl &url)
 
 	if (!m_updateAnimation && feed && feed->isUpdating() && FeedsManager::getModel()->hasFeed(url))
 	{
-		const QString path(ThemesManager::getAnimationPath(QLatin1String("spinner")));
-
-		if (path.isEmpty())
-		{
-			m_updateAnimation = new SpinnerAnimation(QCoreApplication::instance());
-		}
-		else
-		{
-			m_updateAnimation = new GenericAnimation(path, QCoreApplication::instance());
-		}
-
+		m_updateAnimation = ThemesManager::createAnimation();
 		m_updateAnimation->start();
 	}
 
