@@ -109,7 +109,6 @@ public:
 	static ColorScheme* getColorScheme();
 	static Style* createStyle(const QString &name);
 	static Animation* createAnimation(const QString &name = QLatin1String("spinner"), QObject *parent = nullptr);
-	static QString getAnimationPath(const QString &name);
 	static QIcon createIcon(const QString &name, bool fromTheme = true);
 
 protected:

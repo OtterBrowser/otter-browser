@@ -224,34 +224,30 @@ Animation* ThemesManager::createAnimation(const QString &name, QObject *parent)
 		parent = QCoreApplication::instance();
 	}
 
-	const QString path(getAnimationPath(name));
-
-	if (path.isEmpty())
-	{
-		return new SpinnerAnimation(parent);
-	}
-
-	return new GenericAnimation(path, parent);
-}
-
-QString ThemesManager::getAnimationPath(const QString &name)
-{
+	QString animationPath;
 	const QString iconPath(m_iconThemePath + name);
 	const QString svgPath(iconPath + QLatin1String(".svg"));
 
 	if (QFile::exists(svgPath))
 	{
-		return svgPath;
+		animationPath = svgPath;
 	}
-
-	const QString gifPath(iconPath + QLatin1String(".gif"));
-
-	if (QFile::exists(gifPath))
+	else
 	{
-		return gifPath;
+		const QString gifPath(iconPath + QLatin1String(".gif"));
+
+		if (QFile::exists(gifPath))
+		{
+			animationPath = gifPath;
+		}
 	}
 
-	return {};
+	if (animationPath.isEmpty())
+	{
+		return new SpinnerAnimation(parent);
+	}
+
+	return new GenericAnimation(animationPath, parent);
 }
 
 QIcon ThemesManager::createIcon(const QString &name, bool fromTheme)
