@@ -464,7 +464,7 @@ void FeedsContentsWidget::updateEntry()
 		content.prepend(summary);
 	}
 
-	const QString enableImages(SettingsManager::getOption(SettingsManager::Permissions_EnableImagesOption, Utils::extractHost(m_feed->getUrl())).toString());
+	const QString enableImages(m_feed ? SettingsManager::getOption(SettingsManager::Permissions_EnableImagesOption, Utils::extractHost(m_feed->getUrl())).toString() : QString());
 	TextBrowserWidget::ImagesPolicy imagesPolicy(TextBrowserWidget::AllImages);
 
 	if (enableImages == QLatin1String("onlyCached"))
