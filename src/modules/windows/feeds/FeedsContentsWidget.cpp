@@ -376,8 +376,7 @@ void FeedsContentsWidget::showFeedsContextMenu(const QPoint &position)
 		default:
 			{
 				const bool isInTrash(index.data(FeedsModel::IsTrashedRole).toBool());
-
-				ActionExecutor::Object executor(this, this);
+				const ActionExecutor::Object executor(this, this);
 
 				if (!isInTrash)
 				{
