@@ -593,7 +593,7 @@ void FeedsContentsWidget::updateFeedModel()
 		else if (menu->actions().count() > 0)
 		{
 			QStringList categories;
-			bool hasAllCategories = true;
+			bool hasAllCategories(true);
 
 			m_categories.clear();
 
