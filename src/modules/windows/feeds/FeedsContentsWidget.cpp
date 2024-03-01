@@ -564,10 +564,12 @@ void FeedsContentsWidget::updateFeedModel()
 
 			for (int i = 0; i < applications.count(); ++i)
 			{
-				m_ui->applicationComboBox->addItem(applications.at(i).icon, applications.at(i).name);
-				m_ui->applicationComboBox->setItemData((i + 2), applications.at(i).command, Qt::UserRole);
+				const ApplicationInformation application(applications.at(i));
 
-				if (applications.at(i).icon.isNull())
+				m_ui->applicationComboBox->addItem(application.icon, application.name);
+				m_ui->applicationComboBox->setItemData((i + 2), application.command, Qt::UserRole);
+
+				if (application.icon.isNull())
 				{
 					m_ui->applicationComboBox->setItemData((i + 2), ItemModel::createDecoration(), Qt::DecorationRole);
 				}
