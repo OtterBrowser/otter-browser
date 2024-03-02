@@ -195,7 +195,9 @@ void FeedsContentsWidget::addFeed()
 		return;
 	}
 
-	if (BookmarksManager::getModel()->hasFeed(dialog.getFeed()->getUrl()) || FeedsManager::getModel()->hasFeed(dialog.getFeed()->getUrl()))
+	const QUrl url(dialog.getFeed()->getUrl());
+
+	if (BookmarksManager::getModel()->hasFeed(url) || FeedsManager::getModel()->hasFeed(url))
 	{
 		QMessageBox messageBox;
 		messageBox.setWindowTitle(tr("Question"));
