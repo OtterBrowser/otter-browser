@@ -603,9 +603,11 @@ void FeedsContentsWidget::updateFeedModel()
 
 			for (int i = 2; i < menu->actions().count(); ++i)
 			{
-				if (menu->actions().at(i)->isChecked())
+				const QAction *action(menu->actions().at(i));
+
+				if (action->isChecked())
 				{
-					categories.append(menu->actions().at(i)->data().toString());
+					categories.append(action->data().toString());
 				}
 				else
 				{
