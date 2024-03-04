@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -215,9 +215,11 @@ void ErrorConsoleWidget::filterCategories()
 
 		for (int i = 0; i < menu->actions().count(); ++i)
 		{
-			if (menu->actions().at(i) && menu->actions().at(i)->isChecked())
+			const QAction *action(menu->actions().at(i));
+
+			if (action && action->isChecked())
 			{
-				messageScopes |= static_cast<MessagesScope>(menu->actions().at(i)->data().toInt());
+				messageScopes |= static_cast<MessagesScope>(action->data().toInt());
 			}
 		}
 
