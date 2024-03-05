@@ -215,7 +215,7 @@ QVector<Feed*> FeedsModel::Entry::getFeeds() const
 
 	for (int i = 0; i < rowCount(); ++i)
 	{
-		const Entry *entry(static_cast<Entry*>(child(i, 0)));
+		const Entry *entry(getChild(i));
 
 		if (!entry)
 		{
@@ -555,7 +555,7 @@ void FeedsModel::writeEntry(QXmlStreamWriter *writer, Entry *entry) const
 		case FolderEntry:
 			for (int i = 0; i < entry->rowCount(); ++i)
 			{
-				writeEntry(writer, static_cast<Entry*>(entry->child(i, 0)));
+				writeEntry(writer, entry->getChild(i));
 			}
 
 			break;
@@ -604,7 +604,7 @@ void FeedsModel::removeEntryUrl(Entry *entry)
 		case FolderEntry:
 			for (int i = 0; i < entry->rowCount(); ++i)
 			{
-				removeEntryUrl(static_cast<Entry*>(entry->child(i, 0)));
+				removeEntryUrl(entry->getChild(i));
 			}
 
 			break;
@@ -641,7 +641,7 @@ void FeedsModel::readdEntryUrl(Entry *entry)
 		case FolderEntry:
 			for (int i = 0; i < entry->rowCount(); ++i)
 			{
-				readdEntryUrl(static_cast<Entry*>(entry->child(i, 0)));
+				readdEntryUrl(entry->getChild(i));
 			}
 
 			break;
@@ -989,7 +989,7 @@ bool FeedsModel::save(const QString &path) const
 
 	for (int i = 0; i < m_rootEntry->rowCount(); ++i)
 	{
-		writeEntry(&writer, static_cast<Entry*>(m_rootEntry->child(i, 0)));
+		writeEntry(&writer, m_rootEntry->getChild(i));
 	}
 
 	writer.writeEndElement();
