@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -292,49 +292,49 @@ void Feed::update()
 					if (m_removedEntries.contains(entry.identifier))
 					{
 						existingRemovedEntries.append(entry.identifier);
+
+						continue;
 					}
-					else
+
+					bool hasEntry(false);
+
+					for (int j = 0; j < m_entries.count(); ++j)
 					{
-						bool hasEntry(false);
+						const Feed::Entry existingEntry(m_entries.at(j));
 
-						for (int j = 0; j < m_entries.count(); ++j)
+						if (existingEntry.identifier != entry.identifier)
 						{
-							const Feed::Entry existingEntry(m_entries.at(j));
-
-							if (existingEntry.identifier != entry.identifier)
-							{
-								continue;
-							}
-
-							if ((entry.publicationTime.isValid() && existingEntry.publicationTime != entry.publicationTime) || (entry.updateTime.isValid() && existingEntry.updateTime != entry.updateTime))
-							{
-								++amount;
-							}
-
-							entry.lastReadTime = existingEntry.lastReadTime;
-							entry.publicationTime = normalizeTime(entry.publicationTime);
-
-							if (entry.updateTime.isValid())
-							{
-								entry.updateTime = normalizeTime(entry.updateTime);
-							}
-
-							m_entries[j] = entry;
-
-							hasEntry = true;
-
-							break;
+							continue;
 						}
 
-						if (!hasEntry)
+						if ((entry.publicationTime.isValid() && existingEntry.publicationTime != entry.publicationTime) || (entry.updateTime.isValid() && existingEntry.updateTime != entry.updateTime))
 						{
 							++amount;
-
-							entry.publicationTime = normalizeTime(entry.publicationTime);
-							entry.updateTime = normalizeTime(entry.updateTime);
-
-							m_entries.prepend(entry);
 						}
+
+						entry.lastReadTime = existingEntry.lastReadTime;
+						entry.publicationTime = normalizeTime(entry.publicationTime);
+
+						if (entry.updateTime.isValid())
+						{
+							entry.updateTime = normalizeTime(entry.updateTime);
+						}
+
+						m_entries[j] = entry;
+
+						hasEntry = true;
+
+						break;
+					}
+
+					if (!hasEntry)
+					{
+						++amount;
+
+						entry.publicationTime = normalizeTime(entry.publicationTime);
+						entry.updateTime = normalizeTime(entry.updateTime);
+
+						m_entries.prepend(entry);
 					}
 				}
 
