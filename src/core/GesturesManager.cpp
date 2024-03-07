@@ -546,11 +546,12 @@ bool MouseProfile::save()
 
 	for (contextsIterator = m_definitions.constBegin(); contextsIterator != m_definitions.constEnd(); ++contextsIterator)
 	{
+		const QVector<MouseProfile::Gesture> gestures(contextsIterator.value());
 		QJsonArray gesturesArray;
 
-		for (int i = 0; i < contextsIterator.value().count(); ++i)
+		for (int i = 0; i < gestures.count(); ++i)
 		{
-			const MouseProfile::Gesture &gesture(contextsIterator.value().at(i));
+			const MouseProfile::Gesture &gesture(gestures.at(i));
 			QJsonArray stepsArray;
 
 			for (int j = 0; j < gesture.steps.count(); ++j)
