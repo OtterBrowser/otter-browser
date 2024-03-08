@@ -680,9 +680,11 @@ void GesturesManager::loadProfiles()
 
 				if (!areMouseGesturesEnabled)
 				{
-					for (int k = 0; k < gestures.at(j).steps.count(); ++k)
+					const QVector<MouseProfile::Gesture::Step> steps(gestures.at(j).steps);
+
+					for (int k = 0; k < steps.count(); ++k)
 					{
-						if (gestures.at(j).steps.at(k).type == QEvent::MouseMove)
+						if (steps.at(k).type == QEvent::MouseMove)
 						{
 							isAllowed = false;
 
