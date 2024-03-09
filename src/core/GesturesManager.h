@@ -158,7 +158,7 @@ private:
 	static QVector<GesturesContext> m_contexts;
 	static int m_gesturesContextEnumerator;
 	static bool m_isReleasing;
-	static bool m_afterScroll;
+	static bool m_isAfterScroll;
 };
 
 }

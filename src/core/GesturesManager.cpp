@@ -597,7 +597,7 @@ QVector<MouseProfile::Gesture::Step> GesturesManager::m_steps;
 QVector<GesturesManager::GesturesContext> GesturesManager::m_contexts;
 int GesturesManager::m_gesturesContextEnumerator(0);
 bool GesturesManager::m_isReleasing(false);
-bool GesturesManager::m_afterScroll(false);
+bool GesturesManager::m_isAfterScroll(false);
 
 GesturesManager::GesturesManager(QObject *parent) : QObject(parent),
 	m_reloadTimer(0)
@@ -969,7 +969,7 @@ bool GesturesManager::startGesture(QObject *object, QEvent *event, const QVector
 	{
 		m_contexts = contexts;
 		m_isReleasing = false;
-		m_afterScroll = false;
+		m_isAfterScroll = false;
 	}
 
 	createInstance();
@@ -1095,7 +1095,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 
 			m_events.append(new QMouseEvent(event->type(), mouseEvent->localPos(), mouseEvent->windowPos(), mouseEvent->screenPos(), mouseEvent->button(), mouseEvent->buttons(), mouseEvent->modifiers()));
 
-			if (m_afterScroll && event->type() == QEvent::MouseButtonRelease)
+			if (m_isAfterScroll && event->type() == QEvent::MouseButtonRelease)
 			{
 				break;
 			}
@@ -1136,7 +1136,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 				m_isReleasing = true;
 			}
 
-			m_afterScroll = false;
+			m_isAfterScroll = false;
 
 			break;
 		case QEvent::MouseMove:
@@ -1149,7 +1149,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 
 			m_events.append(new QMouseEvent(event->type(), mouseEvent->localPos(), mouseEvent->windowPos(), mouseEvent->screenPos(), mouseEvent->button(), mouseEvent->buttons(), mouseEvent->modifiers()));
 
-			m_afterScroll = false;
+			m_isAfterScroll = false;
 
 			if (!m_recognizer)
 			{
@@ -1217,7 +1217,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 					m_events.removeAt(m_events.count() - 1);
 				}
 
-				m_afterScroll = true;
+				m_isAfterScroll = true;
 
 				break;
 			}
