@@ -977,7 +977,7 @@ void AdvancedPreferencesPage::updateReaddMouseProfileMenu()
 	{
 		const MouseProfile profile(availableMouseProfiles.at(i));
 
-		readdMenu->addAction((profile.getTitle()))->setData(profile.getName());
+		readdMenu->addAction(profile.getTitle())->setData(profile.getName());
 	}
 }
 
