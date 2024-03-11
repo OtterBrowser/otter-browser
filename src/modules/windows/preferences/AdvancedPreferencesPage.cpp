@@ -101,9 +101,11 @@ void AdvancedPreferencesPage::changeEvent(QEvent *event)
 
 				for (int i = 0; i < navigationTitles.count(); ++i)
 				{
-					if (!navigationTitles.at(i).isEmpty())
+					const QString title(navigationTitles.at(i));
+
+					if (!title.isEmpty())
 					{
-						m_ui->advancedViewWidget->setData(m_ui->advancedViewWidget->getIndex(i), navigationTitles.at(i), Qt::DisplayRole);
+						m_ui->advancedViewWidget->setData(m_ui->advancedViewWidget->getIndex(i), title, Qt::DisplayRole);
 					}
 				}
 
