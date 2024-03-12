@@ -86,8 +86,6 @@ protected slots:
 	void editProxy();
 	void updateProxiesActions();
 	void saveProxies(QJsonArray *proxies, const QStandardItem *parent);
-	void addCipher(QAction *action);
-	void removeCipher();
 	void updateCiphersActions();
 	void updateUpdateChannelsActions();
 	void addMouseProfile();

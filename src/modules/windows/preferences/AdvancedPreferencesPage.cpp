@@ -727,34 +727,6 @@ void AdvancedPreferencesPage::saveProxies(QJsonArray *proxies, const QStandardIt
 	}
 }
 
-void AdvancedPreferencesPage::addCipher(QAction *action)
-{
-	if (!action)
-	{
-		return;
-	}
-
-	QStandardItem *item(new QStandardItem(action->text()));
-	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
-
-	m_ui->ciphersViewWidget->insertRow({item});
-	m_ui->ciphersAddButton->menu()->removeAction(action);
-	m_ui->ciphersAddButton->setEnabled(m_ui->ciphersAddButton->menu()->actions().count() > 0);
-}
-
-void AdvancedPreferencesPage::removeCipher()
-{
-	const int currentRow(m_ui->ciphersViewWidget->getCurrentRow());
-
-	if (currentRow >= 0)
-	{
-		m_ui->ciphersAddButton->menu()->addAction(m_ui->ciphersViewWidget->getIndex(currentRow, 0).data(Qt::DisplayRole).toString());
-		m_ui->ciphersAddButton->setEnabled(true);
-
-		m_ui->ciphersViewWidget->removeRow();
-	}
-}
-
 void AdvancedPreferencesPage::updateCiphersActions()
 {
 	const int currentRow(m_ui->ciphersViewWidget->getCurrentRow());
@@ -1312,8 +1284,27 @@ void AdvancedPreferencesPage::load()
 	connect(m_ui->ciphersViewWidget, &ItemViewWidget::canMoveRowDownChanged, m_ui->ciphersMoveDownButton, &QToolButton::setEnabled);
 	connect(m_ui->ciphersViewWidget, &ItemViewWidget::canMoveRowUpChanged, m_ui->ciphersMoveUpButton, &QToolButton::setEnabled);
 	connect(m_ui->ciphersViewWidget, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateCiphersActions);
-	connect(m_ui->ciphersAddButton->menu(), &QMenu::triggered, this, &AdvancedPreferencesPage::addCipher);
-	connect(m_ui->ciphersRemoveButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::removeCipher);
+	connect(m_ui->ciphersAddButton->menu(), &QMenu::triggered, this, [&](QAction *action)
+	{
+		QStandardItem *item(new QStandardItem(action->text()));
+		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
+
+		m_ui->ciphersViewWidget->insertRow({item});
+		m_ui->ciphersAddButton->menu()->removeAction(action);
+		m_ui->ciphersAddButton->setEnabled(m_ui->ciphersAddButton->menu()->actions().count() > 0);
+	});
+	connect(m_ui->ciphersRemoveButton, &QPushButton::clicked, this, [&]()
+	{
+		const int currentRow(m_ui->ciphersViewWidget->getCurrentRow());
+
+		if (currentRow >= 0)
+		{
+			m_ui->ciphersAddButton->menu()->addAction(m_ui->ciphersViewWidget->getIndex(currentRow, 0).data(Qt::DisplayRole).toString());
+			m_ui->ciphersAddButton->setEnabled(true);
+
+			m_ui->ciphersViewWidget->removeRow();
+		}
+	});
 	connect(m_ui->ciphersMoveDownButton, &QToolButton::clicked, m_ui->ciphersViewWidget, &ItemViewWidget::moveDownRow);
 	connect(m_ui->ciphersMoveUpButton, &QToolButton::clicked, m_ui->ciphersViewWidget, &ItemViewWidget::moveUpRow);
 	connect(m_ui->updateChannelsItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateUpdateChannelsActions);
