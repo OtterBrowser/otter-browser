@@ -195,26 +195,28 @@ void AdvancedPreferencesPage::addDownloadsMimeType()
 {
 	const QString mimeType(QInputDialog::getText(this, tr("MIME Type Name"), tr("Select name of MIME Type:")));
 
-	if (!mimeType.isEmpty())
+	if (mimeType.isEmpty())
 	{
-		const QModelIndexList indexes(m_ui->mimeTypesItemView->getSourceModel()->match(m_ui->mimeTypesItemView->getSourceModel()->index(0, 0), Qt::DisplayRole, mimeType));
+		return;
+	}
 
-		if (!indexes.isEmpty())
-		{
-			m_ui->mimeTypesItemView->setCurrentIndex(indexes.value(0));
-		}
-		else if (QRegularExpression(QLatin1String(R"(^[a-zA-Z\-]+/[a-zA-Z0-9\.\+\-_]+$)")).match(mimeType).hasMatch())
-		{
-			QStandardItem *item(new QStandardItem(mimeType));
-			item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+	const QModelIndexList indexes(m_ui->mimeTypesItemView->getSourceModel()->match(m_ui->mimeTypesItemView->getSourceModel()->index(0, 0), Qt::DisplayRole, mimeType));
 
-			m_ui->mimeTypesItemView->insertRow({item});
-			m_ui->mimeTypesItemView->sortByColumn(0, Qt::AscendingOrder);
-		}
-		else
-		{
-			QMessageBox::critical(this, tr("Error"), tr("Invalid MIME Type name."));
-		}
+	if (!indexes.isEmpty())
+	{
+		m_ui->mimeTypesItemView->setCurrentIndex(indexes.value(0));
+	}
+	else if (QRegularExpression(QLatin1String(R"(^[a-zA-Z\-]+/[a-zA-Z0-9\.\+\-_]+$)")).match(mimeType).hasMatch())
+	{
+		QStandardItem *item(new QStandardItem(mimeType));
+		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+
+		m_ui->mimeTypesItemView->insertRow({item});
+		m_ui->mimeTypesItemView->sortByColumn(0, Qt::AscendingOrder);
+	}
+	else
+	{
+		QMessageBox::critical(this, tr("Error"), tr("Invalid MIME Type name."));
 	}
 }
 
