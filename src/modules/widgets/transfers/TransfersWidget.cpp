@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -262,7 +262,9 @@ void TransferActionWidget::updateState()
 
 	for (int i = 0; i < detailsValues.count(); ++i)
 	{
-		details.append(detailsValues.at(i).first + QLatin1Char(' ') + detailsValues.at(i).second);
+		const QPair<QString, QString> detailsValue(detailsValues.at(i));
+
+		details.append(detailsValue.first + QLatin1Char(' ') + detailsValue.second);
 
 		if (i < (detailsValues.count() - 1))
 		{
