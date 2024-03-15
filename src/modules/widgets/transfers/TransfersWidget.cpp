@@ -64,7 +64,7 @@ TransfersWidget::TransfersWidget(const ToolBarsManager::ToolBarDefinition::Entry
 
 		updateState();
 	});
-	connect(TransfersManager::getInstance(), &TransfersManager::transferFinished, this, [&](Transfer *transfer)
+	connect(TransfersManager::getInstance(), &TransfersManager::transferFinished, this, [&](const Transfer *transfer)
 	{
 		const QList<QAction*> actions(menu()->actions());
 
