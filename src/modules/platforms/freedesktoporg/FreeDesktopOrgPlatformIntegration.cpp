@@ -106,8 +106,10 @@ const QDBusArgument& operator>>(const QDBusArgument &argument, QImage &image)
 namespace Otter
 {
 
-FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(QObject *parent) : PlatformIntegration(parent),
-	m_notificationsInterface(nullptr)
+FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(QObject *parent) : PlatformIntegration(parent)
+#ifdef OTTER_ENABLE_DBUS
+	, m_notificationsInterface(nullptr)
+#endif
 {
 	QGuiApplication::setDesktopFileName(QLatin1String(DESKTOP_ENTRY_NAME) + QLatin1String(".desktop"));
 
