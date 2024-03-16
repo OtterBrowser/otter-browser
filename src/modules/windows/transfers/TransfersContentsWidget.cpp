@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -339,20 +339,22 @@ void TransfersContentsWidget::handleTransferChanged(Transfer *transfer)
 
 	const bool isRunning(transfer && transfer->getState() == Transfer::RunningState);
 
-	if (isRunning != m_isLoading)
+	if (isRunning == m_isLoading)
 	{
-		if (isRunning)
-		{
-			m_isLoading = true;
+		return;
+	}
 
-			emit loadingStateChanged(WebWidget::OngoingLoadingState);
-		}
-		else if (!TransfersManager::hasRunningTransfers())
-		{
-			m_isLoading = false;
+	if (isRunning)
+	{
+		m_isLoading = true;
 
-			emit loadingStateChanged(WebWidget::FinishedLoadingState);
-		}
+		emit loadingStateChanged(WebWidget::OngoingLoadingState);
+	}
+	else if (!TransfersManager::hasRunningTransfers())
+	{
+		m_isLoading = false;
+
+		emit loadingStateChanged(WebWidget::FinishedLoadingState);
 	}
 }
 
