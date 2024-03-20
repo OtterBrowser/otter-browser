@@ -269,16 +269,35 @@ QIcon ThemesManager::createIcon(const QString &name, bool fromTheme)
 
 	const QString iconPath((!fromTheme && name == QLatin1String("otter-browser")) ? QLatin1String(":/icons/otter-browser") : m_iconThemePath + name);
 	const QString svgPath(iconPath + QLatin1String(".svg"));
-	const QString rasterPath(iconPath + QLatin1String(".png"));
 
 	if (QFile::exists(svgPath))
 	{
 		return QIcon(svgPath);
 	}
-
+	
+	QString rasterPath(iconPath + QLatin1String(".png"));
+	
 	if (QFile::exists(rasterPath))
 	{
 		return QIcon(rasterPath);
+	}
+
+	if (rasterPath.contains("/theme/"))
+	{
+		QPalette palette = QApplication::palette();
+		QRgb textColor = palette.color(QPalette::Text).rgb();
+		QRgb baseColor = palette.color(QPalette::Base).rgb();
+		QString colorVariant("/dark/");
+		if (textColor < baseColor)
+		{
+			colorVariant = QString("/light/");
+		}
+		
+		rasterPath.replace("/theme/", colorVariant);
+		if (QFile::exists(rasterPath))
+		{
+			return QIcon(rasterPath);
+		}
 	}
 
 	return {};
