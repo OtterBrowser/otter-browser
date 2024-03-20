@@ -979,10 +979,11 @@ void AdvancedPreferencesPage::load()
 
 	for (int i = 0; i < navigationTitles.count(); ++i)
 	{
-		QStandardItem *item(new QStandardItem(navigationTitles.at(i)));
+		const QString title(navigationTitles.at(i));
+		QStandardItem *item(new QStandardItem(title));
 		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
-		if (navigationTitles.at(i).isEmpty())
+		if (title.isEmpty())
 		{
 			item->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
 			item->setEnabled(false);
