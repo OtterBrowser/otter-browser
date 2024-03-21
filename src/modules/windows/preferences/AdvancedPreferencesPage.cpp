@@ -1498,7 +1498,6 @@ void AdvancedPreferencesPage::save()
 	SettingsManager::setOption(SettingsManager::Updates_AutomaticInstallOption, m_ui->autoInstallCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::Updates_CheckIntervalOption, m_ui->intervalSpinBox->value());
 
-
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("mouse")));
 
 	bool needsMouseProfilesReload(false);
