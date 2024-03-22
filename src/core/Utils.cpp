@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -47,6 +47,14 @@ namespace Otter
 
 namespace Utils
 {
+
+void ensureDirectoryExists(const QString &path)
+{
+	if (!QFile::exists(path))
+	{
+		QDir().mkpath(path);
+	}
+}
 
 void runApplication(const QString &command, const QUrl &url)
 {
