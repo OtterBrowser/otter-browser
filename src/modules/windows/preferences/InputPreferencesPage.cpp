@@ -28,7 +28,6 @@
 #include "../../../ui/ActionParametersDialog.h"
 #include "../../../ui/MetaDataDialog.h"
 
-#include <QtCore/QDir>
 #include <QtCore/QTimer>
 #include <QtWidgets/QMessageBox>
 
@@ -588,7 +587,7 @@ void InputPreferencesPage::load()
 
 void InputPreferencesPage::save()
 {
-	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("keyboard")));
+	Utils::ensureDirectoryExists(SessionsManager::getWritableDataPath(QLatin1String("keyboard")));
 
 	bool needsKeyboardProfilesReload(false);
 	QHash<QString, KeyboardProfile>::iterator keyboardProfilesIterator;
