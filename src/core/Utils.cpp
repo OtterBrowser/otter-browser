@@ -48,14 +48,6 @@ namespace Otter
 namespace Utils
 {
 
-void ensureDirectoryExists(const QString &path)
-{
-	if (!QFile::exists(path))
-	{
-		QDir().mkpath(path);
-	}
-}
-
 void runApplication(const QString &command, const QUrl &url)
 {
 	if (command.isEmpty() && !url.isValid())
@@ -754,6 +746,16 @@ SaveInformation getSavePath(const QString &fileName, const QString &directory, Q
 qreal calculatePercent(qint64 amount, qint64 total, int multiplier)
 {
 	return ((static_cast<qreal>(amount) / static_cast<qreal>(total)) * multiplier);
+}
+
+bool ensureDirectoryExists(const QString &path)
+{
+	if (QFile::exists(path))
+	{
+		return true;
+	}
+
+	return QDir().mkpath(path);
 }
 
 bool isUrl(const QString &text)

@@ -106,7 +106,6 @@ private:
 namespace Utils
 {
 
-void ensureDirectoryExists(const QString &path);
 void runApplication(const QString &command, const QUrl &url = {});
 void startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent = nullptr);
 QString matchUrl(const QUrl &url, const QString &prefix);
@@ -135,6 +134,7 @@ QStringList getOpenPaths(const QStringList &fileNames = {}, QStringList filters 
 QVector<QUrl> extractUrls(const QMimeData *mimeData);
 QVector<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
 qreal calculatePercent(qint64 amount, qint64 total, int multiplier = 100);
+bool ensureDirectoryExists(const QString &path);
 bool isUrl(const QString &text);
 bool isUrlEmpty(const QUrl &url);
 
