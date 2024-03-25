@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2022 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2022 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -196,7 +196,7 @@ void DictionariesPage::save()
 	const QString dictionariesPath(SpellCheckManager::getDictionariesPath());
 	const QDir dictionariesDirectory(dictionariesPath);
 
-	QDir().mkpath(dictionariesPath);
+	Utils::ensureDirectoryExists(dictionariesPath);
 
 	for (int i = 0; i < m_filesToRemove.count(); ++i)
 	{

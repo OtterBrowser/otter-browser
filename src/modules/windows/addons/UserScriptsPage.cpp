@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -126,7 +126,7 @@ void UserScriptsPage::addAddon()
 			}
 		}
 
-		if ((isReplacingScript && !QDir().remove(targetPath)) || (!isReplacingScript && !QDir().mkpath(targetDirectory)) || !QFile::copy(sourcePaths.at(i), targetPath))
+		if ((isReplacingScript && !QDir().remove(targetPath)) || (!isReplacingScript && !Utils::ensureDirectoryExists(targetDirectory)) || !QFile::copy(sourcePaths.at(i), targetPath))
 		{
 			failedPaths.append(sourcePaths.at(i));
 
