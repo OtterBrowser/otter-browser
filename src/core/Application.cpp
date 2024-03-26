@@ -336,7 +336,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	{
 		if (m_isFirstRun)
 		{
-			QDir().mkpath(profilePath);
+			Utils::ensureDirectoryExists(profilePath);
 		}
 
 		const QStorageInfo storageInformation(profilePath);
