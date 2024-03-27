@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -620,7 +620,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 {
 	const QString sessionsPath(m_profilePath + QLatin1String("/sessions/"));
 
-	QDir().mkpath(sessionsPath);
+	Utils::ensureDirectoryExists(sessionsPath);
 
 	if (session.windows.isEmpty())
 	{

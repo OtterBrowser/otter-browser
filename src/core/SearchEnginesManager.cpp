@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@
 #include "SettingsManager.h"
 #include "ThemesManager.h"
 
-#include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QXmlStreamReader>
 #include <QtCore/QXmlStreamWriter>
@@ -531,7 +530,7 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 		identifier = searchEngine.createIdentifier();
 	}
 
-	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("searchEngines")));
+	Utils::ensureDirectoryExists(SessionsManager::getWritableDataPath(QLatin1String("searchEngines")));
 
 	QFile file(SessionsManager::getWritableDataPath(QLatin1String("searchEngines/") + identifier + QLatin1String(".xml")));
 
