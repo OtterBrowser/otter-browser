@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@
 #include "../../../core/SettingsManager.h"
 #include "../../../core/WebBackend.h"
 
-#include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QMimeData>
 #include <QtCore/QTimer>
@@ -208,7 +207,7 @@ void StartPageModel::handleThumbnailCreated(quint64 identifier, const QPixmap &t
 
 	if (!bookmark && SessionsManager::isReadOnly() && !thumbnail.isNull())
 	{
-		QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")));
+		Utils::ensureDirectoryExists(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")));
 
 		thumbnail.save(getThumbnailPath(identifier), "png");
 	}
