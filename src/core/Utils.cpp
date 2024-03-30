@@ -541,23 +541,23 @@ QString getStandardLocation(QStandardPaths::StandardLocation type)
 
 QUrl expandUrl(const QUrl &url)
 {
-	if (url.isValid() && url.scheme().isEmpty())
+	if (!url.isValid() || !url.scheme().isEmpty())
 	{
-		if (!url.path().startsWith(QLatin1Char('/')))
-		{
-			QUrl httpUrl(url);
-			httpUrl.setScheme(QLatin1String("http"));
-
-			return httpUrl;
-		}
-
-		QUrl localUrl(url);
-		localUrl.setScheme(QLatin1String("file"));
-
-		return localUrl;
+		return url;
 	}
 
-	return url;
+	if (!url.path().startsWith(QLatin1Char('/')))
+	{
+		QUrl httpUrl(url);
+		httpUrl.setScheme(QLatin1String("http"));
+
+		return httpUrl;
+	}
+
+	QUrl localUrl(url);
+	localUrl.setScheme(QLatin1String("file"));
+
+	return localUrl;
 }
 
 QUrl normalizeUrl(QUrl url)
