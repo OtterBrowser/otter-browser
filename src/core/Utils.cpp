@@ -425,9 +425,9 @@ QString formatElapsedTime(int value)
 	{
 		QString string(time.toString(QLatin1String("hh:mm:ss")));
 
-		if (value > SECONDS_IN_DAY)
+		if (value > 86400)
 		{
-			string = QCoreApplication::translate("utils", "%n days %1", "", (qFloor(static_cast<qreal>(value) / SECONDS_IN_DAY))).arg(string);
+			string = QCoreApplication::translate("utils", "%n days %1", "", (qFloor(static_cast<qreal>(value) / 86400))).arg(string);
 		}
 
 		return string;

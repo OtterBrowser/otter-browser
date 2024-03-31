@@ -28,8 +28,6 @@
 #include <QtCore/QUrl>
 #include <QtGui/QIcon>
 
-#define SECONDS_IN_DAY 86400
-
 namespace Otter
 {
 
