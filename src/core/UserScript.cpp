@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -67,6 +67,9 @@ void UserScript::reload()
 		return;
 	}
 
+	QRegularExpression uriExpression(QLatin1String("^.+://.*/.*"));
+	uriExpression.optimize();
+
 	QTextStream stream(&file);
 	bool hasHeader(false);
 
@@ -131,7 +134,7 @@ void UserScript::reload()
 		{
 			line = value;
 
-			if (QRegularExpression(QLatin1String("^.+://.*/.*")).match(line).hasMatch() && (!line.startsWith(QLatin1Char('*')) || line.at(1) == QLatin1Char(':')))
+			if (uriExpression.match(line).hasMatch() && (!line.startsWith(QLatin1Char('*')) || line.at(1) == QLatin1Char(':')))
 			{
 				const QString scheme(line.left(line.indexOf(QLatin1String("://"))));
 
