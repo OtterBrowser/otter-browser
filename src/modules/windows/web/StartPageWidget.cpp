@@ -758,21 +758,23 @@ void StartPageWidget::addTile()
 
 	m_isIgnoringEnter = true;
 
-	if (dialog.exec() != QDialog::Accepted || !dialog.getResult().isValid())
+	const InputInterpreter::InterpreterResult result(dialog.getResult());
+
+	if (dialog.exec() != QDialog::Accepted || !result.isValid())
 	{
 		return;
 	}
 
 	QModelIndex index;
 
-	switch (dialog.getResult().type)
+	switch (result.type)
 	{
 		case InputInterpreter::InterpreterResult::BookmarkType:
-			index = m_model->addTile(dialog.getResult().bookmark->getUrl());
+			index = m_model->addTile(result.bookmark->getUrl());
 
 			break;
 		case InputInterpreter::InterpreterResult::UrlType:
-			index = m_model->addTile(dialog.getResult().url);
+			index = m_model->addTile(result.url);
 
 			break;
 		default:
