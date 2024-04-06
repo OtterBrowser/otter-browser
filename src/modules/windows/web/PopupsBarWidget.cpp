@@ -118,10 +118,11 @@ void PopupsBarWidget::populateMenu()
 
 	for (int i = 0; i < policies.count(); ++i)
 	{
-		QAction *action(menu->addAction(policies.at(i).second));
+		const QPair<QString, QString> policy(policies.at(i));
+		QAction *action(menu->addAction(policy.second));
 		action->setCheckable(true);
-		action->setChecked(popupsPolicy == policies.at(i).first);
-		action->setData(policies.at(i).first);
+		action->setChecked(popupsPolicy == policy.first);
+		action->setData(policy.first);
 
 		m_actionGroup->addAction(action);
 	}
