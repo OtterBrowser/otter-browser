@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2019 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2019 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -74,17 +74,17 @@ void ActionsContentsWidget::populateActions()
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		const ActionsManager::ActionDefinition::ActionFlags flags(definitions.at(i).flags);
+		const ActionsManager::ActionDefinition definition(definitions.at(i));
 
-		if (flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag) || flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters))
+		if (definition.flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag) || definition.flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters))
 		{
 			continue;
 		}
 
-		const QString actionName(ActionsManager::getActionName(definitions.at(i).identifier));
-		QList<QStandardItem*> items({new QStandardItem(definitions.at(i).getText(true)), new QStandardItem(QKeySequence::listToString(ActionsManager::getActionShortcuts(definitions.at(i).identifier).toList(), QKeySequence::NativeText)), new QStandardItem()});
-		items[0]->setData(ItemModel::createDecoration(definitions.at(i).defaultState.icon), Qt::DecorationRole);
-		items[0]->setData(definitions.at(i).identifier, IdentifierRole);
+		const QString actionName(ActionsManager::getActionName(definition.identifier));
+		QList<QStandardItem*> items({new QStandardItem(definition.getText(true)), new QStandardItem(QKeySequence::listToString(ActionsManager::getActionShortcuts(definition.identifier).toList(), QKeySequence::NativeText)), new QStandardItem()});
+		items[0]->setData(ItemModel::createDecoration(definition.defaultState.icon), Qt::DecorationRole);
+		items[0]->setData(definition.identifier, IdentifierRole);
 		items[0]->setData(actionName, ActionRole);
 		items[0]->setToolTip(QStringLiteral("%1 (%2)").arg(items[0]->text(), actionName));
 		items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
