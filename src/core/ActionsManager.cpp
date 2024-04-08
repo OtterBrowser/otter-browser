@@ -669,7 +669,9 @@ QString ActionsManager::createReport()
 
 	for (int i = 0; i < m_definitions.count(); ++i)
 	{
-		if (m_shortcuts.contains(i))
+		const bool hasShortcuts(m_shortcuts.contains(i));
+
+		if (hasShortcuts)
 		{
 			const QVector<QKeySequence> shortcuts(m_shortcuts[i]);
 
@@ -691,7 +693,7 @@ QString ActionsManager::createReport()
 		{
 			const QList<QPair<QVariantMap, QVector<QKeySequence> > > definitions(m_extraShortcuts.values(i));
 
-			if (!m_shortcuts.contains(i))
+			if (!hasShortcuts)
 			{
 				stream << QLatin1Char('\t');
 				stream.setFieldWidth(30);
