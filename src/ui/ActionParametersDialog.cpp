@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2021 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #include "ActionParametersDialog.h"
 #include "../core/ActionsManager.h"
 
+#include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
 
 #include "ui_ActionParametersDialog.h"
@@ -56,6 +57,18 @@ ActionParametersDialog::ActionParametersDialog(int action, const QVariantMap &pa
 
 	m_ui->addButton->setMenu(menu);
 
+	connect(menu, &QMenu::triggered, this, [&](QAction *action)
+	{
+		if (action)
+		{
+			const QString key(QInputDialog::getText(this, tr("Select Key Name"), tr("Enter key name:")));
+
+			if (!key.isEmpty())
+			{
+				addItem(key, action->data());
+			}
+		}
+	});
 	connect(m_ui->filterLineEditWidget, &QLineEdit::textChanged, m_ui->parametersViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->parametersViewWidget, &ItemViewWidget::needsActionsUpdate, this, [&]()
 	{
