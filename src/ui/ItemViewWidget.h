@@ -126,7 +126,7 @@ public:
 	QStandardItem* getItem(int row, int column = 0, const QModelIndex &parent = {}) const;
 	QModelIndex getCheckedIndex(const QModelIndex &parent = {}) const;
 	QModelIndex getCurrentIndex(int column = 0) const;
-	QModelIndex getIndex(int row, int column = 0, const QModelIndex &parent = {}) const;\
+	QModelIndex getIndex(int row, int column = 0, const QModelIndex &parent = {}) const;
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	QSize sizeHint() const override;
 	ViewMode getViewMode() const;
