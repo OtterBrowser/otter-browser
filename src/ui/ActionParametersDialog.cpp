@@ -65,7 +65,19 @@ ActionParametersDialog::ActionParametersDialog(int action, const QVariantMap &pa
 
 			if (!key.isEmpty())
 			{
-				addItem(key, action->data());
+				QStandardItem *parent(nullptr);
+				const QModelIndex currentIndex(m_ui->parametersViewWidget->getCurrentIndex());
+
+				if (currentIndex.sibling(currentIndex.row(), 1).data().toString() == QLatin1String("Map"))
+				{
+					parent = m_ui->parametersViewWidget->getSourceModel()->itemFromIndex(currentIndex);
+				}
+				else
+				{
+					parent = m_ui->parametersViewWidget->getSourceModel()->itemFromIndex(currentIndex.parent());
+				}
+
+				addItem(key, action->data(), parent);
 			}
 		}
 	});
