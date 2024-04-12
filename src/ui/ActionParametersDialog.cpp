@@ -59,27 +59,31 @@ ActionParametersDialog::ActionParametersDialog(int action, const QVariantMap &pa
 
 	connect(menu, &QMenu::triggered, this, [&](QAction *action)
 	{
-		if (action)
+		if (!action)
 		{
-			const QString key(QInputDialog::getText(this, tr("Select Key Name"), tr("Enter key name:")));
-
-			if (!key.isEmpty())
-			{
-				QStandardItem *parent(nullptr);
-				const QModelIndex currentIndex(m_ui->parametersViewWidget->getCurrentIndex());
-
-				if (currentIndex.sibling(currentIndex.row(), 1).data().toString() == QLatin1String("Map"))
-				{
-					parent = m_ui->parametersViewWidget->getSourceModel()->itemFromIndex(currentIndex);
-				}
-				else
-				{
-					parent = m_ui->parametersViewWidget->getSourceModel()->itemFromIndex(currentIndex.parent());
-				}
-
-				addItem(key, action->data(), parent);
-			}
+			return;
 		}
+
+		const QString key(QInputDialog::getText(this, tr("Select Key Name"), tr("Enter key name:")));
+
+		if (key.isEmpty())
+		{
+			return;
+		}
+
+		QStandardItem *parent(nullptr);
+		const QModelIndex currentIndex(m_ui->parametersViewWidget->getCurrentIndex());
+
+		if (currentIndex.sibling(currentIndex.row(), 1).data().toString() == QLatin1String("Map"))
+		{
+			parent = m_ui->parametersViewWidget->getSourceModel()->itemFromIndex(currentIndex);
+		}
+		else
+		{
+			parent = m_ui->parametersViewWidget->getSourceModel()->itemFromIndex(currentIndex.parent());
+		}
+
+		addItem(key, action->data(), parent);
 	});
 	connect(m_ui->filterLineEditWidget, &QLineEdit::textChanged, m_ui->parametersViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->parametersViewWidget, &ItemViewWidget::needsActionsUpdate, this, [&]()
