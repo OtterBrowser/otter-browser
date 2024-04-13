@@ -52,6 +52,8 @@ ActionParametersDialog::ActionParametersDialog(int action, const QVariantMap &pa
 
 	QMenu *menu(new QMenu(m_ui->addButton));
 	menu->addAction(tr("String"))->setData(QVariant::String);
+	menu->addAction(tr("Integer"))->setData(QVariant::Int);
+	menu->addAction(tr("Boolean"))->setData(QVariant::Bool);
 	menu->addAction(tr("Map"))->setData(QVariant::Map);
 	menu->addAction(tr("List"))->setData(QVariant::List);
 
@@ -147,10 +149,28 @@ QStandardItem* ActionParametersDialog::addItem(const QString &key, const QVarian
 
 			break;
 		default:
-			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
-			items[1]->setText(tr("String"));
-			items[2]->setText(value.toString());
-			items[2]->setFlags(items[2]->flags() | Qt::ItemNeverHasChildren);
+			{
+				QString text(tr("String"));
+
+				switch (value.type())
+				{
+					case QVariant::Int:
+						text = tr("Integer");
+
+						break;
+					case QVariant::Bool:
+						text = tr("Bolean");
+
+						break;
+					default:
+						break;
+				}
+
+				items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+				items[1]->setText(text);
+				items[2]->setText(value.toString());
+				items[2]->setFlags(items[2]->flags() | Qt::ItemNeverHasChildren);
+			}
 
 			break;
 	}
