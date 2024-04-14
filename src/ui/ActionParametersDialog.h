@@ -46,6 +46,7 @@ public:
 protected:
 	void changeEvent(QEvent *event) override;
 	QStandardItem* addItem(const QString &key, const QVariant &value = {}, QStandardItem *parent = nullptr);
+	QVariantMap getMap(const QModelIndex &parent = {}) const;
 
 private:
 	QStandardItemModel *m_model;

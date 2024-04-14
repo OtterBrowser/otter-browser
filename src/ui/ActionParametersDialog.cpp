@@ -187,13 +187,30 @@ QStandardItem* ActionParametersDialog::addItem(const QString &key, const QVarian
 	return items[0];
 }
 
+QVariantMap ActionParametersDialog::getMap(const QModelIndex &parent) const
+{
+	QVariantMap map;
+
+	for (int i = 0; i < m_ui->parametersViewWidget->getRowCount(parent); ++i)
+	{
+		const QString key(m_ui->parametersViewWidget->getIndex(i, 0, parent).data().toString());
+
+		if (m_ui->parametersViewWidget->getIndex(i, 1, parent).data().toString() == QLatin1String("Map"))
+		{
+			map[key] = getMap(m_ui->parametersViewWidget->getIndex(i, 0, parent));
+		}
+		else
+		{
+			map[key] = m_ui->parametersViewWidget->getIndex(i, 2, parent).data();
+		}
+	}
+
+	return map;
+}
+
 QVariantMap ActionParametersDialog::getParameters() const
 {
-	QVariantMap parameters;
-
-///TODO
-
-	return parameters;
+	return getMap();
 }
 
 bool ActionParametersDialog::isModified() const
