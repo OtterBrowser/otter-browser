@@ -73,19 +73,15 @@ ActionParametersDialog::ActionParametersDialog(int action, const QVariantMap &pa
 			return;
 		}
 
-		QStandardItem *parent(nullptr);
 		const QModelIndex currentIndex(m_ui->parametersViewWidget->getCurrentIndex());
+		QModelIndex parentIndex(currentIndex);
 
-		if (currentIndex.sibling(currentIndex.row(), 1).data().toString() == QLatin1String("Map"))
+		if (currentIndex.sibling(currentIndex.row(), 1).data().toString() != QLatin1String("Map"))
 		{
-			parent = m_ui->parametersViewWidget->getSourceModel()->itemFromIndex(currentIndex);
-		}
-		else
-		{
-			parent = m_ui->parametersViewWidget->getSourceModel()->itemFromIndex(currentIndex.parent());
+			parentIndex = currentIndex.parent();
 		}
 
-		addItem(key, action->data(), parent);
+		addItem(key, action->data(), m_ui->parametersViewWidget->getSourceModel()->itemFromIndex(parentIndex));
 	});
 	connect(m_ui->filterLineEditWidget, &QLineEdit::textChanged, m_ui->parametersViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->parametersViewWidget, &ItemViewWidget::needsActionsUpdate, this, [&]()
