@@ -86,8 +86,6 @@ void AdvancedPreferencesPage::changeEvent(QEvent *event)
 				const QStringList navigationTitles({tr("Browsing"), tr("Notifications"), tr("Appearance"), {}, tr("Downloads"), tr("Programs"), {}, tr("History"), tr("Network"), tr("Scripting"), tr("Security"), tr("Updates"), {}, tr("Mouse")});
 
 				m_ui->retranslateUi(this);
-				m_ui->browsingDisplayModeComboBox->setItemText(0, tr("Compact"));
-				m_ui->browsingDisplayModeComboBox->setItemText(1, tr("Columns"));
 				m_ui->appearranceWidgetStyleComboBox->setItemText(0, tr("System Style"));
 				m_ui->notificationsPlaySoundFilePathWidget->setFilters({tr("WAV files (*.wav)")});
 				m_ui->appearranceStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
@@ -1014,14 +1012,17 @@ void AdvancedPreferencesPage::load()
 	m_ui->browsingSuggestBookmarksCheckBox->setChecked(SettingsManager::getOption(SettingsManager::AddressField_SuggestBookmarksOption).toBool());
 	m_ui->browsingSuggestHistoryCheckBox->setChecked(SettingsManager::getOption(SettingsManager::AddressField_SuggestHistoryOption).toBool());
 	m_ui->browsingSuggestLocalPathsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::AddressField_SuggestLocalPathsOption).toBool());
+
+	if (SettingsManager::getOption(SettingsManager::AddressField_CompletionDisplayModeOption).toString() == QLatin1String("columns"))
+	{
+		m_ui->browsingDisplayModeColumnsRadioButton->setChecked(true);
+	}
+	else
+	{
+		m_ui->browsingDisplayModeCompactRadioButton->setChecked(true);
+	}
+
 	m_ui->browsingCategoriesCheckBox->setChecked(SettingsManager::getOption(SettingsManager::AddressField_ShowCompletionCategoriesOption).toBool());
-
-	m_ui->browsingDisplayModeComboBox->addItem(tr("Compact"), QLatin1String("compact"));
-	m_ui->browsingDisplayModeComboBox->addItem(tr("Columns"), QLatin1String("columns"));
-
-	const int displayModeIndex(m_ui->browsingDisplayModeComboBox->findData(SettingsManager::getOption(SettingsManager::AddressField_CompletionDisplayModeOption).toString()));
-
-	m_ui->browsingDisplayModeComboBox->setCurrentIndex((displayModeIndex < 0) ? 1 : displayModeIndex);
 
 	m_ui->notificationsPlaySoundButton->setIcon(ThemesManager::createIcon(QLatin1String("media-playback-start")));
 	m_ui->notificationsPlaySoundFilePathWidget->setFilters({tr("WAV files (*.wav)")});
@@ -1344,8 +1345,8 @@ void AdvancedPreferencesPage::save()
 	SettingsManager::setOption(SettingsManager::AddressField_SuggestBookmarksOption, m_ui->browsingSuggestBookmarksCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::AddressField_SuggestHistoryOption, m_ui->browsingSuggestHistoryCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::AddressField_SuggestLocalPathsOption, m_ui->browsingSuggestLocalPathsCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::AddressField_CompletionDisplayModeOption, (m_ui->browsingDisplayModeColumnsRadioButton->isChecked() ? QLatin1String("columns") : QLatin1String("compact")));
 	SettingsManager::setOption(SettingsManager::AddressField_ShowCompletionCategoriesOption, m_ui->browsingCategoriesCheckBox->isChecked());
-	SettingsManager::setOption(SettingsManager::AddressField_CompletionDisplayModeOption, m_ui->browsingDisplayModeComboBox->currentData(Qt::UserRole).toString());
 
 	QSettings notificationsSettings(SessionsManager::getWritableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
 	notificationsSettings.setIniCodec("UTF-8");
