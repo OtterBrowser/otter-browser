@@ -111,7 +111,9 @@ void ActionParametersDialog::changeEvent(QEvent *event)
 QStandardItem* ActionParametersDialog::addItem(const QString &key, const QVariant &value, QStandardItem *parent)
 {
 	QList<QStandardItem*> items({new QStandardItem(key), new QStandardItem(), new QStandardItem()});
-	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+	items[2]->setFlags(items[2]->flags() | Qt::ItemNeverHasChildren);
 
 	switch (value.type())
 	{
@@ -120,11 +122,9 @@ QStandardItem* ActionParametersDialog::addItem(const QString &key, const QVarian
 			{
 				const QStringList list(value.toStringList());
 
-				items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 				items[1]->setText(tr("List"));
 				items[2]->setText(list.join(QLatin1String(", ")));
 				items[2]->setData(list, Qt::UserRole);
-				items[2]->setFlags(items[2]->flags() | Qt::ItemNeverHasChildren);
 			}
 
 			break;
@@ -162,10 +162,8 @@ QStandardItem* ActionParametersDialog::addItem(const QString &key, const QVarian
 						break;
 				}
 
-				items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 				items[1]->setText(text);
 				items[2]->setText(value.toString());
-				items[2]->setFlags(items[2]->flags() | Qt::ItemNeverHasChildren);
 			}
 
 			break;
