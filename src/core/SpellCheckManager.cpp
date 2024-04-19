@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ void SpellCheckManager::loadDictionaries()
 
 	for (int i = 0; i < dictionaries.count(); ++i)
 	{
-		Sonnet::Speller::Dictionary dictionary(dictionaries.at(i));
+		const Sonnet::Speller::Dictionary dictionary(dictionaries.at(i));
 
 		if (ignoredDictionaries.contains(dictionary.langCode))
 		{
@@ -86,7 +86,7 @@ void SpellCheckManager::loadDictionaries()
 
 		for (int j = 0; j < information.paths.count(); ++j)
 		{
-			QFileInfo pathInformation(information.paths.at(j));
+			const QFileInfo pathInformation(information.paths.at(j));
 
 			if (pathInformation.isRelative())
 			{
