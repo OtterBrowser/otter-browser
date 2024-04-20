@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2017 Piktas Zuikis <piktas.zuikis@inbox.lt>
@@ -269,6 +269,7 @@ public slots:
 	virtual void clearOptions();
 	virtual void fillPassword(const PasswordsManager::PasswordInformation &password);
 	virtual void findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
+	virtual void replaceMisspelledWord(const QString &replacement);
 	virtual void showContextMenu(const QPoint &position = {});
 	virtual void setActiveStyleSheet(const QString &styleSheet);
 	virtual void setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies);
