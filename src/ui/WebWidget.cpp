@@ -981,6 +981,11 @@ QString WebWidget::getCharacterEncoding() const
 	return {};
 }
 
+QString WebWidget::getMisspelledWord() const
+{
+	return {};
+}
+
 QString WebWidget::getSelectedText() const
 {
 	return {};
@@ -1527,6 +1532,11 @@ WebWidget::LinkUrl WebWidget::getActiveMedia() const
 }
 
 WebWidget::SslInformation WebWidget::getSslInformation() const
+{
+	return {};
+}
+
+QStringList WebWidget::getSpellCheckerSuggestions() const
 {
 	return {};
 }

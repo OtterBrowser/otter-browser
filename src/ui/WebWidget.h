@@ -222,6 +222,7 @@ public:
 	virtual QString getDescription() const;
 	virtual QString getActiveStyleSheet() const;
 	virtual QString getCharacterEncoding() const;
+	virtual QString getMisspelledWord() const;
 	virtual QString getSelectedText() const;
 	QString getStatusMessage() const;
 	QVariant getOption(int identifier, const QUrl &url = {}) const;
@@ -241,6 +242,7 @@ public:
 	virtual SslInformation getSslInformation() const;
 	virtual Session::Window::History getHistory() const = 0;
 	virtual HitTestResult getHitTestResult(const QPoint &position);
+	virtual QStringList getSpellCheckerSuggestions() const;
 	virtual QStringList getStyleSheets() const;
 	virtual QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	virtual QVector<LinkUrl> getFeeds() const;
