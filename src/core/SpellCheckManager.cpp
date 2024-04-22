@@ -34,6 +34,7 @@ namespace Otter
 SpellCheckManager* SpellCheckManager::m_instance(nullptr);
 QString SpellCheckManager::m_defaultDictionary;
 QVector<SpellCheckManager::DictionaryInformation> SpellCheckManager::m_dictionaries;
+QSet<QString> SpellCheckManager::m_ignoredWords;
 
 SpellCheckManager::SpellCheckManager(QObject *parent) : QObject(parent)
 {
@@ -56,6 +57,30 @@ void SpellCheckManager::createInstance()
 		m_instance = new SpellCheckManager(QCoreApplication::instance());
 
 		loadDictionaries();
+	}
+}
+
+void SpellCheckManager::addIgnoredWord(const QString &word)
+{
+	if (!isIgnoringWord(word))
+	{
+		m_ignoredWords.insert(word);
+
+		emit m_instance->ignoredWordAdded(word);
+
+		saveIgnoredWords();
+	}
+}
+
+void SpellCheckManager::removeIgnoredWord(const QString &word)
+{
+	if (isIgnoringWord(word))
+	{
+		m_ignoredWords.remove(word);
+
+		emit m_instance->ignoredWordRemoved(word);
+
+		saveIgnoredWords();
 	}
 }
 
@@ -109,6 +134,11 @@ void SpellCheckManager::loadDictionaries()
 
 	emit m_instance->dictionariesChanged();
 #endif
+}
+
+void SpellCheckManager::saveIgnoredWords()
+{
+	//TODO
 }
 
 void SpellCheckManager::updateDefaultDictionary()
@@ -212,6 +242,18 @@ SpellCheckManager::DictionaryInformation SpellCheckManager::getDictionary(const 
 QVector<SpellCheckManager::DictionaryInformation> SpellCheckManager::getDictionaries()
 {
 	return m_dictionaries;
+}
+
+QStringList SpellCheckManager::getIgnoredWords()
+{
+	//TODO initialize from file
+
+	return m_ignoredWords.values();
+}
+
+bool SpellCheckManager::isIgnoringWord(const QString &word)
+{
+	return m_ignoredWords.contains(word);
 }
 
 bool SpellCheckManager::event(QEvent *event)

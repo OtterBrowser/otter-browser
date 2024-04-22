@@ -44,11 +44,15 @@ public:
 	};
 
 	static void createInstance();
+	static void addIgnoredWord(const QString &word);
+	static void removeIgnoredWord(const QString &word);
 	static SpellCheckManager* getInstance();
 	static QString getDefaultDictionary();
 	static QString getDictionariesPath();
 	static DictionaryInformation getDictionary(const QString &language);
 	static QVector<DictionaryInformation> getDictionaries();
+	static QStringList getIgnoredWords();
+	static bool isIgnoringWord(const QString &word);
 	bool event(QEvent *event) override;
 
 protected:
@@ -56,14 +60,18 @@ protected:
 
 	static void updateDefaultDictionary();
 	static void loadDictionaries();
+	static void saveIgnoredWords();
 
 private:
 	static SpellCheckManager *m_instance;
 	static QString m_defaultDictionary;
 	static QVector<DictionaryInformation> m_dictionaries;
+	static QSet<QString> m_ignoredWords;
 
 signals:
 	void dictionariesChanged();
+	void ignoredWordAdded(const QString &word);
+	void ignoredWordRemoved(const QString &word);
 };
 
 class Dictionary final : public QObject, public Addon
