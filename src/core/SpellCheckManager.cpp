@@ -138,7 +138,31 @@ void SpellCheckManager::loadDictionaries()
 
 void SpellCheckManager::saveIgnoredWords()
 {
-	//TODO
+	const QString path(SessionsManager::getWritableDataPath(QLatin1String("personalDictionary.dic")));
+
+	if (m_ignoredWords.isEmpty() && QFile::exists(path))
+	{
+		QFile::remove(path);
+
+		return;
+	}
+
+	QFile file(path);
+
+	if (!file.open(QIODevice::WriteOnly))
+	{
+		return;
+	}
+
+	QTextStream stream(&file);
+	stream.setCodec("UTF-8");
+
+	QSet<QString>::iterator iterator;
+
+	for (iterator = m_ignoredWords.begin(); iterator != m_ignoredWords.end(); ++iterator)
+	{
+		stream << *iterator << QLatin1Char('\n');
+	}
 }
 
 void SpellCheckManager::updateDefaultDictionary()
@@ -246,14 +270,35 @@ QVector<SpellCheckManager::DictionaryInformation> SpellCheckManager::getDictiona
 
 QStringList SpellCheckManager::getIgnoredWords()
 {
-	//TODO initialize from file
+	const QString path(SessionsManager::getWritableDataPath(QLatin1String("personalDictionary.dic")));
+
+	if (m_ignoredWords.isEmpty() && QFile::exists(path))
+	{
+		QFile file(path);
+
+		if (file.open(QIODevice::ReadOnly))
+		{
+			QTextStream stream(&file);
+			stream.setCodec("UTF-8");
+
+			while (!stream.atEnd())
+			{
+				const QString word(stream.readLine().simplified());
+
+				if (!word.isEmpty())
+				{
+					m_ignoredWords.insert(word);
+				}
+			}
+		}
+	}
 
 	return m_ignoredWords.values();
 }
 
 bool SpellCheckManager::isIgnoringWord(const QString &word)
 {
-	return m_ignoredWords.contains(word);
+	return getIgnoredWords().contains(word);
 }
 
 bool SpellCheckManager::event(QEvent *event)
