@@ -50,6 +50,7 @@ public:
 		ProxyMenu,
 		SearchMenu,
 		SessionsMenu,
+		SpellCheckSuggestionsMenu,
 		StyleSheetsMenu,
 		ToolBarsMenu,
 		UserAgentMenu,
