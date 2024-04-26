@@ -254,6 +254,12 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			});
 
 			break;
+		case SpellCheckSuggestionsMenu:
+			setTitle(QT_TRANSLATE_NOOP("actions", "Spelling Suggestions"));
+
+			connect(this, &Menu::aboutToShow, this, &Menu::populateSpellCheckSuggestionsMenu);
+
+			break;
 		case StyleSheetsMenu:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Style"));
 
@@ -1360,6 +1366,73 @@ void Menu::populateSessionsMenu()
 		action->setChecked(session.path == currentSession);
 
 		m_actionGroup->addAction(action);
+	}
+}
+
+void Menu::populateSpellCheckSuggestionsMenu()
+{
+	clear();
+
+	const MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+
+	if (!mainWindow)
+	{
+		return;
+	}
+
+	Window *window(mainWindow->getActiveWindow());
+
+	if (!window || !window->getWebWidget())
+	{
+		return;
+	}
+
+	WebWidget *webWidget(window->getWebWidget());
+	const QString misspelledWord(webWidget->getMisspelledWord());
+	const QStringList suggestions(webWidget->getSpellCheckerSuggestions());
+
+	for (int i = 0; i < suggestions.count(); ++i)
+	{
+		const QString suggestion(suggestions.at(i));
+
+		addAction(suggestion, webWidget, [=]()
+		{
+			webWidget->replaceMisspelledWord(suggestion);
+		});
+	}
+
+	if (suggestions.isEmpty())
+	{
+		QAction *noSuggestionsAction(new MenuAction(QT_TRANSLATE_NOOP("actions", "(no suggestions)"), true, this));
+		noSuggestionsAction->setEnabled(false);
+
+		addAction(noSuggestionsAction);
+	}
+
+	addSeparator();
+
+	if (!misspelledWord.isEmpty() && SpellCheckManager::isIgnoringWord(misspelledWord))
+	{
+		Action *removeMisspelledWord(new MenuAction(QT_TRANSLATE_NOOP("actions", "Remove Word"), true, this));
+
+		addAction(removeMisspelledWord);
+
+		connect(removeMisspelledWord, &MenuAction::triggered, this, [=]()
+		{
+			SpellCheckManager::removeIgnoredWord(misspelledWord);
+		});
+	}
+	else
+	{
+		Action *addMisspelledWord(new MenuAction(QT_TRANSLATE_NOOP("actions", "Add Word"), true, this));
+		addMisspelledWord->setEnabled(!misspelledWord.isEmpty());
+
+		addAction(addMisspelledWord);
+
+		connect(addMisspelledWord, &MenuAction::triggered, this, [=]()
+		{
+			SpellCheckManager::addIgnoredWord(misspelledWord);
+		});
 	}
 }
 

@@ -98,6 +98,7 @@ protected slots:
 	void populateProxiesMenu();
 	void populateSearchEnginesMenu();
 	void populateSessionsMenu();
+	void populateSpellCheckSuggestionsMenu();
 	void populateStyleSheetsMenu();
 	void populateToolBarsMenu();
 	void populateUserAgentMenu();
