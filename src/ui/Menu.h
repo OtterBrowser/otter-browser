@@ -29,6 +29,10 @@
 namespace Otter
 {
 
+class MainWindow;
+class Window;
+class WebWidget;
+
 class Menu : public QMenu
 {
 	Q_OBJECT
@@ -74,6 +78,13 @@ public:
 	static int getMenuRoleIdentifier(const QString &name);
 
 protected:
+	struct MenuContext final
+	{
+		MainWindow *mainWindow = nullptr;
+		Window *window = nullptr;
+		WebWidget *webWidget = nullptr;
+	};
+
 	void changeEvent(QEvent *event) override;
 	void hideEvent(QHideEvent *event) override;
 	void mousePressEvent(QMouseEvent *event) override;
