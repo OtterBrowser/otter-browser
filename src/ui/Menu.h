@@ -92,6 +92,7 @@ protected:
 	void contextMenuEvent(QContextMenuEvent *event) override;
 	void appendAction(const QJsonValue &definition, const QStringList &sections, const ActionExecutor::Object &executor);
 	ActionExecutor::Object getExecutor() const;
+	MenuContext getMenuContext() const;
 	bool canInclude(const QJsonObject &definition, const QStringList &sections);
 	bool hasIncludeMatch(const QJsonObject &definition, const QString &key, const QStringList &sections);
 

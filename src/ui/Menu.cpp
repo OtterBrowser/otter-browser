@@ -1720,6 +1720,24 @@ ActionExecutor::Object Menu::getExecutor() const
 	return ActionExecutor::Object(Application::getInstance(), Application::getInstance());
 }
 
+Menu::MenuContext Menu::getMenuContext() const
+{
+	MenuContext context;
+	context.mainWindow = MainWindow::findMainWindow(parentWidget());
+
+	if (context.mainWindow)
+	{
+		context.window = context.mainWindow->getActiveWindow();
+
+		if (context.window)
+		{
+			context.webWidget = context.window->getWebWidget();
+		}
+	}
+
+	return context;
+}
+
 int Menu::getRole() const
 {
 	return m_role;
