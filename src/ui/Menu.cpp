@@ -266,16 +266,11 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			connect(this, &Menu::aboutToShow, this, &Menu::populateStyleSheetsMenu);
 			connect(this, &Menu::triggered, this, [&](QAction *action)
 			{
-				const MainWindow *mainWindow(MainWindow::findMainWindow(parentWidget()));
+				const MenuContext context(getMenuContext());
 
-				if (mainWindow && action)
+				if (context.webWidget && action)
 				{
-					Window *window(mainWindow->getActiveWindow());
-
-					if (window && window->getWebWidget())
-					{
-						window->getWebWidget()->setActiveStyleSheet(action->data().isNull() ? action->text() : QString());
-					}
+					context.webWidget->setActiveStyleSheet(action->data().isNull() ? action->text() : QString());
 				}
 			});
 
@@ -1373,31 +1368,23 @@ void Menu::populateSpellCheckSuggestionsMenu()
 {
 	clear();
 
-	const MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+	const MenuContext context(getMenuContext());
 
-	if (!mainWindow)
+	if (!context.webWidget)
 	{
 		return;
 	}
 
-	Window *window(mainWindow->getActiveWindow());
-
-	if (!window || !window->getWebWidget())
-	{
-		return;
-	}
-
-	WebWidget *webWidget(window->getWebWidget());
-	const QString misspelledWord(webWidget->getMisspelledWord());
-	const QStringList suggestions(webWidget->getSpellCheckerSuggestions());
+	const QString misspelledWord(context.webWidget->getMisspelledWord());
+	const QStringList suggestions(context.webWidget->getSpellCheckerSuggestions());
 
 	for (int i = 0; i < suggestions.count(); ++i)
 	{
 		const QString suggestion(suggestions.at(i));
 
-		addAction(suggestion, webWidget, [=]()
+		addAction(suggestion, context.webWidget, [=]()
 		{
-			webWidget->replaceMisspelledWord(suggestion);
+			context.webWidget->replaceMisspelledWord(suggestion);
 		});
 	}
 
@@ -1440,7 +1427,7 @@ void Menu::populateStyleSheetsMenu()
 {
 	clear();
 
-	const MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+	const MenuContext context(getMenuContext());
 	Action *defaultAction(new MenuAction(QT_TRANSLATE_NOOP("actions", "Default Style"), true, this));
 	defaultAction->setData(-1);
 	defaultAction->setCheckable(true);
@@ -1448,22 +1435,15 @@ void Menu::populateStyleSheetsMenu()
 
 	addAction(defaultAction);
 
-	if (!mainWindow)
-	{
-		return;
-	}
-
-	Window *window(mainWindow->getActiveWindow());
-
-	if (!window || !window->getWebWidget())
+	if (!context.webWidget)
 	{
 		return;
 	}
 
 	addSeparator();
 
-	const QString activeStyleSheet(window->getWebWidget()->getActiveStyleSheet());
-	const QStringList styleSheets(window->getWebWidget()->getStyleSheets());
+	const QString activeStyleSheet(context.webWidget->getActiveStyleSheet());
+	const QStringList styleSheets(context.webWidget->getStyleSheets());
 	QActionGroup *actionGroup(new QActionGroup(this));
 	actionGroup->setExclusive(true);
 	actionGroup->addAction(defaultAction);
