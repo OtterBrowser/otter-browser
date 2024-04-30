@@ -418,11 +418,12 @@ void Menu::load(const QJsonObject &definition, const QStringList &includeSection
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
-		const QJsonObject object(actions.at(i).toObject());
+		const QJsonValue action(actions.at(i));
+		const QJsonObject object(action.toObject());
 
-		if (!actions.at(i).isObject() || object.value(QLatin1String("type")) != QLatin1String("include"))
+		if (!action.isObject() || object.value(QLatin1String("type")) != QLatin1String("include"))
 		{
-			appendAction(actions.at(i), includeSections, executor);
+			appendAction(action, includeSections, executor);
 		}
 		else if (canInclude(object, includeSections))
 		{
