@@ -1226,6 +1226,7 @@ void Menu::populateOpenInApplicationMenu()
 			Action *openUrlAction(new MenuAction(ActionsManager::OpenUrlAction, parameters, executor, this));
 			openUrlAction->setTextOverride((hasValidName ? application.name : QT_TRANSLATE_NOOP("actions", "Unknown")), !hasValidName);
 			openUrlAction->setIconOverride(application.icon);
+
 			addAction(new MenuAction(ActionsManager::OpenUrlAction, parameters, executor, this));
 
 			if (i == 0)
