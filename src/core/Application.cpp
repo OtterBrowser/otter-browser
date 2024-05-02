@@ -1423,7 +1423,7 @@ QString Application::createReport(ReportOptions options)
 	stream << QLatin1String("\n\t");
 	stream.setFieldWidth(20);
 	stream << QLatin1String("Build Date");
-	stream << OTTER_BUILD_DATETIME;
+	stream << QDateTime::fromString(OTTER_BUILD_DATETIME, Qt::ISODate).toUTC().toString(Qt::ISODate);
 	stream.setFieldWidth(0);
 	stream << QLatin1String("\n\t");
 	stream.setFieldWidth(20);
@@ -1449,7 +1449,7 @@ QString Application::createReport(ReportOptions options)
 	}
 	else
 	{
-		stream << QStringLiteral("%1 (%2)").arg(OTTER_GIT_REVISION).arg(OTTER_GIT_DATETIME);
+		stream << QStringLiteral("%1 (%2)").arg(OTTER_GIT_REVISION).arg(QDateTime::fromString(OTTER_GIT_DATETIME, Qt::ISODate).toUTC().toString(Qt::ISODate));
 	}
 
 	stream.setFieldWidth(0);
