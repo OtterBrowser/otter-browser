@@ -1384,6 +1384,7 @@ QString Application::createReport(ReportOptions options)
 {
 	ActionsManager::createInstance();
 	AddonsManager::createInstance();
+
 	const WebBackend *webBackend(AddonsManager::getWebBackend());
 	const QString gitBranch(QStringLiteral(OTTER_GIT_BRANCH).trimmed());
 	QString report;
@@ -1418,6 +1419,11 @@ QString Application::createReport(ReportOptions options)
 	stream.setFieldWidth(20);
 	stream << QLatin1String("Web Backend");
 	stream << (webBackend ? QStringLiteral("%1 %2").arg(webBackend->getTitle(), webBackend->getEngineVersion()) : QLatin1String("none"));
+	stream.setFieldWidth(0);
+	stream << QLatin1String("\n\t");
+	stream.setFieldWidth(20);
+	stream << QLatin1String("Build Date");
+	stream << OTTER_BUILD_DATETIME;
 	stream.setFieldWidth(0);
 	stream << QLatin1String("\n\t");
 	stream.setFieldWidth(20);
