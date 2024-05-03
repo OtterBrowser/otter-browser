@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -479,11 +479,12 @@ QString SettingsManager::createReport()
 
 	for (int i = 0; i < options.count(); ++i)
 	{
-		const OptionDefinition definition(getOptionDefinition(getOptionIdentifier(options.at(i))));
+		const QString option(options.at(i));
+		const OptionDefinition definition(getOptionDefinition(getOptionIdentifier(option)));
 
 		stream << QLatin1Char('\t');
 		stream.setFieldWidth(50);
-		stream << options.at(i);
+		stream << option;
 		stream.setFieldWidth(20);
 
 		if (definition.type == StringType || definition.type == PathType)
@@ -496,7 +497,7 @@ QString SettingsManager::createReport()
 		}
 
 		stream << ((definition.defaultValue == getOption(definition.identifier)) ? QLatin1String("default") : QLatin1String("non default"));
-		stream << (overridenValues.contains(options.at(i)) ? QStringLiteral("%1 override(s)").arg(overridenValues[options.at(i)]) : QLatin1String("no overrides"));
+		stream << (overridenValues.contains(option) ? QStringLiteral("%1 override(s)").arg(overridenValues[option]) : QLatin1String("no overrides"));
 		stream.setFieldWidth(0);
 		stream << QLatin1Char('\n');
 	}
