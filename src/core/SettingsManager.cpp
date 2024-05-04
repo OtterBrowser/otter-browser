@@ -417,9 +417,11 @@ QString SettingsManager::createDisplayValue(int identifier, const QVariant &valu
 
 				for (int i = 0; i < definition.choices.count(); ++i)
 				{
-					if (definition.choices.at(i).value == key)
+					const OptionDefinition::Choice choice(definition.choices.at(i));
+
+					if (choice.value == key)
 					{
-						return definition.choices.at(i).getTitle();
+						return choice.getTitle();
 					}
 				}
 			}
@@ -462,13 +464,15 @@ QString SettingsManager::createReport()
 
 		for (int j = 0; j < keys.count(); ++j)
 		{
-			if (overridenValues.contains(keys.at(j)))
+			const QString key(keys.at(j));
+
+			if (overridenValues.contains(key))
 			{
-				++overridenValues[keys.at(j)];
+				++overridenValues[key];
 			}
 			else
 			{
-				overridenValues[keys.at(j)] = 1;
+				overridenValues[key] = 1;
 			}
 		}
 
