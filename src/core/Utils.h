@@ -45,6 +45,18 @@ struct ApplicationInformation final
 	QIcon icon;
 };
 
+struct DiagnosticReport final
+{
+	struct Section final
+	{
+		QString title;
+		QVector<QStringList> entries;
+		QVector<int> fieldWidths;
+	};
+
+	QVector<Section> sections;
+};
+
 struct ErrorPageInformation final
 {
 	enum ActionType
