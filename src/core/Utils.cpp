@@ -684,7 +684,7 @@ SaveInformation getSavePath(const QString &fileName, const QString &directory, Q
 
 	do
 	{
-		if (path.isEmpty() || forceAsk)
+		if (forceAsk || path.isEmpty())
 		{
 			QFileDialog dialog(Application::getActiveWindow(), QCoreApplication::translate("utils", "Save File"), SettingsManager::getOption(SettingsManager::Paths_SaveFileOption).toString() + QDir::separator() + fileName);
 			dialog.setNameFilters(filters);
