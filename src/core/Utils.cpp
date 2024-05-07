@@ -285,12 +285,13 @@ QString createErrorPage(const ErrorPageInformation &information)
 
 		for (int i = 0; i < actions.count(); ++i)
 		{
+			const ErrorPageInformation::PageAction action(actions.at(i));
 			QString actionHtml(actionTemplate);
-			actionHtml.replace(QLatin1String("{action}"), actions.at(i).name);
-			actionHtml.replace(QLatin1String("{text}"), actions.at(i).title);
-			actionHtml.replace(QLatin1String("{attributes}"), ((actions.at(i).type == ErrorPageInformation::MainAction) ? QLatin1String(" autofocus") : QString()));
+			actionHtml.replace(QLatin1String("{action}"), action.name);
+			actionHtml.replace(QLatin1String("{text}"), action.title);
+			actionHtml.replace(QLatin1String("{attributes}"), ((action.type == ErrorPageInformation::MainAction) ? QLatin1String(" autofocus") : QString()));
 
-			if (actions.at(i).type != ErrorPageInformation::AdvancedAction)
+			if (action.type != ErrorPageInformation::AdvancedAction)
 			{
 				basicActionsHtml.append(actionHtml);
 			}
