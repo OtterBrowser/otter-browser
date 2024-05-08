@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -115,24 +115,26 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 
 	for (int i = 0; i < rawEntries.count(); ++i)
 	{
-		if (rawEntries.at(i).fileName() == QLatin1String(".") || rawEntries.at(i).fileName() == QLatin1String(".."))
+		const QFileInfo rawEntry(rawEntries.at(i));
+
+		if (rawEntry.fileName() == QLatin1String(".") || rawEntry.fileName() == QLatin1String(".."))
 		{
 			continue;
 		}
 
 		ListingEntry entry;
-		entry.name = rawEntries.at(i).fileName();
-		entry.url = QUrl::fromUserInput(rawEntries.at(i).filePath());
-		entry.timeModified = rawEntries.at(i).lastModified();
-		entry.mimeType = mimeDatabase.mimeTypeForFile(rawEntries.at(i).filePath());
-		entry.type = (rawEntries.at(i).isRoot() ? ListingEntry::DriveType : (rawEntries.at(i).isDir() ? ListingEntry::DirectoryType : ListingEntry::FileType));
-		entry.size = rawEntries.at(i).size();
-		entry.isSymlink = rawEntries.at(i).isSymLink();
+		entry.name = rawEntry.fileName();
+		entry.url = QUrl::fromUserInput(rawEntry.filePath());
+		entry.timeModified = rawEntry.lastModified();
+		entry.mimeType = mimeDatabase.mimeTypeForFile(rawEntry.filePath());
+		entry.type = (rawEntry.isRoot() ? ListingEntry::DriveType : (rawEntry.isDir() ? ListingEntry::DirectoryType : ListingEntry::FileType));
+		entry.size = rawEntry.size();
+		entry.isSymlink = rawEntry.isSymLink();
 
 #ifdef Q_OS_WIN32
 		if (isListingDevices)
 		{
-			entry.name = rawEntries.at(i).filePath().remove(QLatin1Char('/'));
+			entry.name = rawEntry.filePath().remove(QLatin1Char('/'));
 		}
 #endif
 
