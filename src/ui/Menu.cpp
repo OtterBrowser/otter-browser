@@ -1452,9 +1452,10 @@ void Menu::populateStyleSheetsMenu()
 
 	for (int i = 0; i < styleSheets.count(); ++i)
 	{
-		QAction *action(addAction(styleSheets.at(i)));
+		const QString styleSheet(styleSheets.at(i));
+		QAction *action(addAction(styleSheet));
 		action->setCheckable(true);
-		action->setChecked(styleSheets.at(i) == activeStyleSheet);
+		action->setChecked(styleSheet == activeStyleSheet);
 
 		actionGroup->addAction(action);
 	}
