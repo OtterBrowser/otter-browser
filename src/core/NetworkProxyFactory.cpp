@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -96,17 +96,19 @@ QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &q
 
 				for (int i = 0; i < m_definition.exceptions.count(); ++i)
 				{
-					if (m_definition.exceptions.at(i).contains(QLatin1Char('/')))
+					const QString exception(m_definition.exceptions.at(i));
+
+					if (exception.contains(QLatin1Char('/')))
 					{
 						const QHostAddress address(host);
-						const QPair<QHostAddress, int> subnet(QHostAddress::parseSubnet(m_definition.exceptions.at(i)));
+						const QPair<QHostAddress, int> subnet(QHostAddress::parseSubnet(exception));
 
 						if (!address.isNull() && subnet.second != -1 && address.isInSubnet(subnet))
 						{
 							return m_proxies[-1];
 						}
 					}
-					else if (host.contains(m_definition.exceptions.at(i), Qt::CaseInsensitive))
+					else if (host.contains(exception, Qt::CaseInsensitive))
 					{
 						return m_proxies[-1];
 					}
