@@ -74,9 +74,11 @@ void NetworkCache::clearCache(int period)
 
 			for (int k = 0; k < files.count(); ++k)
 			{
-				if (files.at(k).lastModified().toUTC().secsTo(currentDateTime) < (period * 3600))
+				const QFileInfo file(files.at(k));
+
+				if (file.lastModified().toUTC().secsTo(currentDateTime) < (period * 3600))
 				{
-					const QNetworkCacheMetaData metaData(fileMetaData(files.at(k).absoluteFilePath()));
+					const QNetworkCacheMetaData metaData(fileMetaData(file.absoluteFilePath()));
 
 					if (metaData.isValid())
 					{
