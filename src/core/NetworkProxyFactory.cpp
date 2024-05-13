@@ -56,7 +56,9 @@ void NetworkProxyFactory::setProxy(const QString &identifier)
 
 						for (int i = 0; i < protocols.count(); ++i)
 						{
-							m_proxies[protocols.at(i)] = {QNetworkProxy(getProxyType(protocols.at(i)), iterator.value().hostName, iterator.value().port)};
+							const ProxyDefinition::ProtocolType protocol(protocols.at(i));
+
+							m_proxies[protocol] = {QNetworkProxy(getProxyType(protocol), iterator.value().hostName, iterator.value().port)};
 						}
 					}
 					else
