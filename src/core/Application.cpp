@@ -1387,164 +1387,85 @@ QString Application::createReport(ReportOptions options)
 
 	const WebBackend *webBackend(AddonsManager::getWebBackend());
 	const QString gitBranch(QStringLiteral(OTTER_GIT_BRANCH).trimmed());
-	QString report;
-	QTextStream stream(&report);
+	DiagnosticReport report;
+	DiagnosticReport::Section versionReport;
+	versionReport.title = QLatin1String("Version");
+	versionReport.fieldWidths = {20, 0};
+	versionReport.entries.reserve(7);
+	versionReport.entries.append({QLatin1String("Main Number"), OTTER_VERSION_MAIN});
+	versionReport.entries.append({QLatin1String("Weekly Number"), (QStringLiteral(OTTER_VERSION_WEEKLY).trimmed().isEmpty() ? QString(QLatin1Char('-')) : OTTER_VERSION_WEEKLY)});
+	versionReport.entries.append({QLatin1String("Context"), OTTER_VERSION_CONTEXT});
+	versionReport.entries.append({QLatin1String("Web Backend"), (webBackend ? QStringLiteral("%1 %2").arg(webBackend->getTitle(), webBackend->getEngineVersion()) : QLatin1String("none"))});
+	versionReport.entries.append({QLatin1String("Build Date"), QDateTime::fromString(OTTER_BUILD_DATETIME, Qt::ISODate).toUTC().toString(Qt::ISODate)});
+	versionReport.entries.append({QLatin1String("Git Branch"), ((gitBranch.isEmpty() || gitBranch == QLatin1String("unknown")) ? QString(QLatin1Char('-')) : OTTER_GIT_BRANCH)});
+	versionReport.entries.append({QLatin1String("Git Revision"), ((QStringLiteral(OTTER_GIT_REVISION).trimmed().isEmpty() || QStringLiteral(OTTER_GIT_REVISION) == QLatin1String("unknown")) ? QString(QLatin1Char('-')) : QStringLiteral("%1 (%2)").arg(OTTER_GIT_REVISION).arg(QDateTime::fromString(OTTER_GIT_DATETIME, Qt::ISODate).toUTC().toString(Qt::ISODate)))});
+
+	report.sections.append(versionReport);
+
+	QString reportString;
+	QTextStream stream(&reportString);
 	stream.setFieldAlignment(QTextStream::AlignLeft);
-	stream << QLatin1String("Otter Browser diagnostic report created on ") << QDateTime::currentDateTimeUtc().toString(Qt::ISODate);
-	stream << QLatin1String("\n\nVersion:\n\t");
-	stream.setFieldWidth(20);
-	stream << QLatin1String("Main Number");
-	stream << OTTER_VERSION_MAIN;
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\t");
-	stream.setFieldWidth(20);
-	stream << QLatin1String("Weekly Number");
-
-	if (QStringLiteral(OTTER_VERSION_WEEKLY).trimmed().isEmpty())
-	{
-		stream << QLatin1Char('-');
-	}
-	else
-	{
-		stream << OTTER_VERSION_WEEKLY;
-	}
-
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\t");
-	stream.setFieldWidth(20);
-	stream << QLatin1String("Context");
-	stream << OTTER_VERSION_CONTEXT;
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\t");
-	stream.setFieldWidth(20);
-	stream << QLatin1String("Web Backend");
-	stream << (webBackend ? QStringLiteral("%1 %2").arg(webBackend->getTitle(), webBackend->getEngineVersion()) : QLatin1String("none"));
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\t");
-	stream.setFieldWidth(20);
-	stream << QLatin1String("Build Date");
-	stream << QDateTime::fromString(OTTER_BUILD_DATETIME, Qt::ISODate).toUTC().toString(Qt::ISODate);
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\t");
-	stream.setFieldWidth(20);
-	stream << QLatin1String("Git Branch");
-
-	if (gitBranch.isEmpty() || gitBranch == QLatin1String("unknown"))
-	{
-		stream << QLatin1Char('-');
-	}
-	else
-	{
-		stream << OTTER_GIT_BRANCH;
-	}
-
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\t");
-	stream.setFieldWidth(20);
-	stream << QLatin1String("Git Revision");
-
-	if (QStringLiteral(OTTER_GIT_REVISION).trimmed().isEmpty() || QStringLiteral(OTTER_GIT_REVISION) == QLatin1String("unknown"))
-	{
-		stream << QLatin1Char('-');
-	}
-	else
-	{
-		stream << QStringLiteral("%1 (%2)").arg(OTTER_GIT_REVISION).arg(QDateTime::fromString(OTTER_GIT_DATETIME, Qt::ISODate).toUTC().toString(Qt::ISODate));
-	}
-
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\n");
+	stream << QLatin1String("Otter Browser diagnostic report created on ") << QDateTime::currentDateTimeUtc().toString(Qt::ISODate) << QLatin1String("\n\n");
 
 	if (options.testFlag(EnvironmentReport))
 	{
 		const QString sslVersion(webBackend ? webBackend->getSslVersion() : QString());
+		DiagnosticReport::Section environmentReport;
+		environmentReport.title = QLatin1String("Environment");
+		environmentReport.fieldWidths = {30, 0};
+		environmentReport.entries.reserve(8);
+		environmentReport.entries.append({QLatin1String("System Name"), QSysInfo::prettyProductName()});
+		environmentReport.entries.append({QLatin1String("Build ABI"), QSysInfo::buildAbi()});
+		environmentReport.entries.append({QLatin1String("Build CPU Architecture"), QSysInfo::buildCpuArchitecture()});
+		environmentReport.entries.append({QLatin1String("Runtime CPU Architecture"), QSysInfo::currentCpuArchitecture()});
+		environmentReport.entries.append({QLatin1String("Build Qt Version"), QT_VERSION_STR});
+		environmentReport.entries.append({QLatin1String("Runtime Qt Version"), qVersion()});
+		environmentReport.entries.append({QLatin1String("SSL Library Version"), (sslVersion.isEmpty() ? QLatin1String("unavailable") : sslVersion)});
+		environmentReport.entries.append({QLatin1String("System Locale"), QLocale::system().name()});
 
-		stream << QLatin1String("Environment:\n\t");
-		stream.setFieldWidth(30);
-		stream << QLatin1String("System Name");
-		stream << QSysInfo::prettyProductName();
-		stream.setFieldWidth(0);
-		stream << QLatin1String("\n\t");
-		stream.setFieldWidth(30);
-		stream << QLatin1String("Build ABI");
-		stream << QSysInfo::buildAbi();
-		stream.setFieldWidth(0);
-		stream << QLatin1String("\n\t");
-		stream.setFieldWidth(30);
-		stream << QLatin1String("Build CPU Architecture");
-		stream << QSysInfo::buildCpuArchitecture();
-		stream.setFieldWidth(0);
-		stream << QLatin1String("\n\t");
-		stream.setFieldWidth(30);
-		stream << QLatin1String("Runtime CPU Architecture");
-		stream << QSysInfo::currentCpuArchitecture();
-		stream.setFieldWidth(0);
-		stream << QLatin1String("\n\t");
-		stream.setFieldWidth(30);
-		stream << QLatin1String("Build Qt Version");
-		stream << QT_VERSION_STR;
-		stream.setFieldWidth(0);
-		stream << QLatin1String("\n\t");
-		stream.setFieldWidth(30);
-		stream << QLatin1String("Runtime Qt Version");
-		stream << qVersion();
-		stream.setFieldWidth(0);
-		stream << QLatin1String("\n\t");
-		stream.setFieldWidth(30);
-		stream << QLatin1String("SSL Library Version");
-		stream << (sslVersion.isEmpty() ? QLatin1String("unavailable") : sslVersion);
-		stream.setFieldWidth(0);
-		stream << QLatin1String("\n\t");
-		stream.setFieldWidth(30);
-		stream << QLatin1String("System Locale");
-		stream << QLocale::system().name();
-		stream.setFieldWidth(0);
-		stream << QLatin1String("\n\n");
+		report.sections.append(environmentReport);
 	}
 
 	if (options.testFlag(PathsReport))
 	{
-		stream << QLatin1String("Paths:\n\t");
-		stream.setFieldWidth(20);
-		stream << QLatin1String("Profile");
-		stream << SessionsManager::getProfilePath();
-		stream.setFieldWidth(0);
-		stream << QLatin1String("\n\t");
-		stream.setFieldWidth(20);
-		stream << QLatin1String("Configuration");
-		stream << SettingsManager::getGlobalPath();
-		stream.setFieldWidth(0);
-		stream << QLatin1String("\n\t");
-		stream.setFieldWidth(20);
-		stream << QLatin1String("Overrides");
-		stream << SettingsManager::getOverridePath();
-		stream.setFieldWidth(0);
-		stream << QLatin1String("\n\t");
-		stream.setFieldWidth(20);
-		stream << QLatin1String("Session");
-		stream << SessionsManager::getSessionPath(SessionsManager::getCurrentSession());
-		stream.setFieldWidth(0);
-		stream << QLatin1String("\n\t");
-		stream.setFieldWidth(20);
-		stream << QLatin1String("Bookmarks");
-		stream << SessionsManager::getWritableDataPath(QLatin1String("bookmarks.xbel"));
-		stream.setFieldWidth(0);
-		stream << QLatin1String("\n\t");
-		stream.setFieldWidth(20);
-		stream << QLatin1String("Notes");
-		stream << SessionsManager::getWritableDataPath(QLatin1String("notes.xbel"));
-		stream.setFieldWidth(0);
-		stream << QLatin1String("\n\t");
-		stream.setFieldWidth(20);
-		stream << QLatin1String("History");
-		stream << SessionsManager::getWritableDataPath(QLatin1String("browsingHistory.json"));
-		stream.setFieldWidth(0);
-		stream << QLatin1String("\n\t");
-		stream.setFieldWidth(20);
-		stream << QLatin1String("Cache");
-		stream << SessionsManager::getCachePath();
-		stream.setFieldWidth(0);
-		stream << QLatin1String("\n\n");
+		DiagnosticReport::Section pathsReport;
+		pathsReport.title = QLatin1String("Paths");
+		pathsReport.fieldWidths = {20, 0};
+		pathsReport.entries.reserve(8);
+		pathsReport.entries.append({QLatin1String("Profile"), SessionsManager::getProfilePath()});
+		pathsReport.entries.append({QLatin1String("Configuration"), SettingsManager::getGlobalPath()});
+		pathsReport.entries.append({QLatin1String("Overrides"), SettingsManager::getOverridePath()});
+		pathsReport.entries.append({QLatin1String("Session"), SessionsManager::getSessionPath(SessionsManager::getCurrentSession())});
+		pathsReport.entries.append({QLatin1String("Bookmarks"), SessionsManager::getWritableDataPath(QLatin1String("bookmarks.xbel"))});
+		pathsReport.entries.append({QLatin1String("Notes"), SessionsManager::getWritableDataPath(QLatin1String("notes.xbel"))});
+		pathsReport.entries.append({QLatin1String("History"), SessionsManager::getWritableDataPath(QLatin1String("browsingHistory.json"))});
+		pathsReport.entries.append({QLatin1String("Cache"), SessionsManager::getCachePath()});
+
+		report.sections.append(pathsReport);
+	}
+
+	for (int i = 0; i < report.sections.count(); ++i)
+	{
+		const DiagnosticReport::Section section(report.sections.at(i));
+
+		stream << section.title << QLatin1String(":\n");
+
+		for (int j = 0; j < section.entries.count(); ++j)
+		{
+			const QStringList fields(section.entries.at(j));
+
+			stream << QLatin1Char('\t');
+
+			for (int k = 0; k < fields.count(); ++k)
+			{
+				stream.setFieldWidth(section.fieldWidths.value(k, 0));
+				stream << fields.at(k);
+			}
+
+			stream << QLatin1Char('\n');
+		}
+
+		stream << QLatin1Char('\n');
 	}
 
 	if (options.testFlag(SettingsReport))
@@ -1557,7 +1478,7 @@ QString Application::createReport(ReportOptions options)
 		stream << ActionsManager::createReport();
 	}
 
-	return report.remove(QRegularExpression(QLatin1String(" +$"), QRegularExpression::MultilineOption));
+	return reportString.remove(QRegularExpression(QLatin1String(" +$"), QRegularExpression::MultilineOption));
 }
 
 QString Application::getFullVersion()
