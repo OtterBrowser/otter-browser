@@ -20,13 +20,11 @@
 **************************************************************************/
 
 #include "SettingsManager.h"
-#include "Utils.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 #include <QtCore/QMetaEnum>
 #include <QtCore/QSettings>
-#include <QtCore/QTextStream>
 #include <QtCore/QVector>
 
 namespace Otter
@@ -445,72 +443,6 @@ QString SettingsManager::createDisplayValue(int identifier, const QVariant &valu
 	return value.toString();
 }
 
-QString SettingsManager::createReport()
-{
-	QString report;
-	QTextStream stream(&report);
-	stream.setFieldAlignment(QTextStream::AlignLeft);
-	stream << QLatin1String("Settings:\n");
-
-	QHash<QString, int> overridenValues;
-	QSettings overrides(m_overridePath, QSettings::IniFormat);
-	const QStringList overridesGroups(overrides.childGroups());
-
-	for (int i = 0; i < overridesGroups.count(); ++i)
-	{
-		overrides.beginGroup(overridesGroups.at(i));
-
-		const QStringList keys(overrides.allKeys());
-
-		for (int j = 0; j < keys.count(); ++j)
-		{
-			const QString key(keys.at(j));
-
-			if (overridenValues.contains(key))
-			{
-				++overridenValues[key];
-			}
-			else
-			{
-				overridenValues[key] = 1;
-			}
-		}
-
-		overrides.endGroup();
-	}
-
-	const QStringList options(getOptions());
-
-	for (int i = 0; i < options.count(); ++i)
-	{
-		const QString option(options.at(i));
-		const OptionDefinition definition(getOptionDefinition(getOptionIdentifier(option)));
-
-		stream << QLatin1Char('\t');
-		stream.setFieldWidth(50);
-		stream << option;
-		stream.setFieldWidth(20);
-
-		if (definition.type == StringType || definition.type == PathType)
-		{
-			stream << QLatin1Char('-');
-		}
-		else
-		{
-			stream << definition.defaultValue.toString();
-		}
-
-		stream << ((definition.defaultValue == getOption(definition.identifier)) ? QLatin1String("default") : QLatin1String("non default"));
-		stream << (overridenValues.contains(option) ? QStringLiteral("%1 override(s)").arg(overridenValues[option]) : QLatin1String("no overrides"));
-		stream.setFieldWidth(0);
-		stream << QLatin1Char('\n');
-	}
-
-	stream << QLatin1Char('\n');
-
-	return report;
-}
-
 QString SettingsManager::getGlobalPath()
 {
 	return m_globalPath;
@@ -641,6 +573,67 @@ QStringList SettingsManager::getOverridesHierarchy(const QString &host)
 	}
 
 	return hierarchy;
+}
+
+DiagnosticReport::Section SettingsManager::createReport()
+{
+	QHash<QString, int> overridenValues;
+	QSettings overrides(m_overridePath, QSettings::IniFormat);
+	const QStringList overridesGroups(overrides.childGroups());
+
+	for (int i = 0; i < overridesGroups.count(); ++i)
+	{
+		overrides.beginGroup(overridesGroups.at(i));
+
+		const QStringList keys(overrides.allKeys());
+
+		for (int j = 0; j < keys.count(); ++j)
+		{
+			const QString key(keys.at(j));
+
+			if (overridenValues.contains(key))
+			{
+				++overridenValues[key];
+			}
+			else
+			{
+				overridenValues[key] = 1;
+			}
+		}
+
+		overrides.endGroup();
+	}
+
+	const QStringList options(getOptions());
+	DiagnosticReport::Section report;
+	report.title = QLatin1String("Settings");
+	report.fieldWidths = {50, 20, 20};
+	report.entries.reserve(options.count());
+
+	for (int i = 0; i < options.count(); ++i)
+	{
+		const QString option(options.at(i));
+		const OptionDefinition definition(getOptionDefinition(getOptionIdentifier(option)));
+		QString value;
+
+		switch (definition.type)
+		{
+			case ListType:
+			case PathType:
+			case StringType:
+				value = QLatin1Char('-');
+
+				break;
+			default:
+				value = definition.defaultValue.toString();
+
+				break;
+		}
+
+		report.entries.append({option, value, ((definition.defaultValue == getOption(definition.identifier)) ? QLatin1String("default") : QLatin1String("non default")), (overridenValues.contains(option) ? QStringLiteral("%1 override(s)").arg(overridenValues[option]) : QLatin1String("no overrides"))});
+	}
+
+	return report;
 }
 
 SettingsManager::OptionDefinition SettingsManager::getOptionDefinition(int identifier)

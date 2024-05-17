@@ -22,7 +22,8 @@
 #ifndef OTTER_SETTINGSMANAGER_H
 #define OTTER_SETTINGSMANAGER_H
 
-#include <QtCore/QObject>
+#include "Utils.h"
+
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
 
@@ -309,7 +310,6 @@ public:
 	static void setOption(int identifier, const QVariant &value, const QString &host = {});
 	static SettingsManager* getInstance();
 	static QString createDisplayValue(int identifier, const QVariant &value);
-	static QString createReport();
 	static QString getGlobalPath();
 	static QString getOverridePath();
 	static QString getOptionName(int identifier);
@@ -317,6 +317,7 @@ public:
 	static QStringList getOptions();
 	static QStringList getOverrideHosts(int identifier = -1);
 	static QStringList getOverridesHierarchy(const QString &host);
+	static DiagnosticReport::Section createReport();
 	static OptionDefinition getOptionDefinition(int identifier);
 	static int registerOption(const QString &name, OptionType type, const QVariant &defaultValue = {}, const QStringList &choices = {}, OptionDefinition::OptionFlags flags = static_cast<OptionDefinition::OptionFlags>(OptionDefinition::IsEnabledFlag | OptionDefinition::IsVisibleFlag));
 	static int getOptionIdentifier(const QString &name);

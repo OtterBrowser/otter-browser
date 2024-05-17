@@ -1444,6 +1444,11 @@ QString Application::createReport(ReportOptions options)
 		report.sections.append(pathsReport);
 	}
 
+	if (options.testFlag(SettingsReport))
+	{
+		report.sections.append(SettingsManager::createReport());
+	}
+
 	for (int i = 0; i < report.sections.count(); ++i)
 	{
 		const DiagnosticReport::Section section(report.sections.at(i));
@@ -1466,11 +1471,6 @@ QString Application::createReport(ReportOptions options)
 		}
 
 		stream << QLatin1Char('\n');
-	}
-
-	if (options.testFlag(SettingsReport))
-	{
-		stream << SettingsManager::createReport();
 	}
 
 	if (options.testFlag(KeyboardShortcutsReport))
