@@ -607,7 +607,7 @@ DiagnosticReport::Section SettingsManager::createReport()
 	const QStringList options(getOptions());
 	DiagnosticReport::Section report;
 	report.title = QLatin1String("Settings");
-	report.fieldWidths = {50, 20, 20};
+	report.fieldWidths = {50, 20, 20, 0};
 	report.entries.reserve(options.count());
 
 	for (int i = 0; i < options.count(); ++i)

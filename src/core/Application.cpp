@@ -1458,15 +1458,19 @@ QString Application::createReport(ReportOptions options)
 		for (int j = 0; j < section.entries.count(); ++j)
 		{
 			const QStringList fields(section.entries.at(j));
+			int size(0);
 
 			stream << QLatin1Char('\t');
 
 			for (int k = 0; k < fields.count(); ++k)
 			{
-				stream.setFieldWidth(section.fieldWidths.value(k, 0));
+				size = section.fieldWidths.value(k, size);
+
+				stream.setFieldWidth(size);
 				stream << fields.at(k);
 			}
 
+			stream.setFieldWidth(0);
 			stream << QLatin1Char('\n');
 		}
 
