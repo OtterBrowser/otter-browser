@@ -660,73 +660,6 @@ ActionsManager* ActionsManager::getInstance()
 	return m_instance;
 }
 
-QString ActionsManager::createReport()
-{
-	QString report;
-	QTextStream stream(&report);
-	stream.setFieldAlignment(QTextStream::AlignLeft);
-	stream << QLatin1String("Keyboard Shortcuts:\n");
-
-	for (int i = 0; i < m_definitions.count(); ++i)
-	{
-		const bool hasShortcuts(m_shortcuts.contains(i));
-
-		if (hasShortcuts)
-		{
-			const QVector<QKeySequence> shortcuts(m_shortcuts[i]);
-
-			stream << QLatin1Char('\t');
-			stream.setFieldWidth(30);
-			stream << getActionName(i);
-			stream.setFieldWidth(20);
-
-			for (int j = 0; j < shortcuts.count(); ++j)
-			{
-				stream << shortcuts.at(j).toString(QKeySequence::PortableText);
-			}
-
-			stream.setFieldWidth(0);
-			stream << QLatin1Char('\n');
-		}
-
-		if (m_extraShortcuts.contains(i))
-		{
-			const QList<QPair<QVariantMap, QVector<QKeySequence> > > definitions(m_extraShortcuts.values(i));
-
-			if (!hasShortcuts)
-			{
-				stream << QLatin1Char('\t');
-				stream.setFieldWidth(30);
-				stream << getActionName(i);
-				stream.setFieldWidth(0);
-				stream << QLatin1Char('\n');
-			}
-
-			for (int j = 0; j < definitions.count(); ++j)
-			{
-				const QVector<QKeySequence> shortcuts(definitions.at(j).second);
-
-				stream << QLatin1Char('\t');
-				stream.setFieldWidth(30);
-				stream << QLatin1Char(' ') + QString::fromLatin1(QJsonDocument(QJsonObject::fromVariantMap(definitions.at(j).first)).toJson(QJsonDocument::Compact));
-				stream.setFieldWidth(20);
-
-				for (int k = 0; k < shortcuts.count(); ++k)
-				{
-					stream << shortcuts.at(k).toString(QKeySequence::PortableText);
-				}
-
-				stream.setFieldWidth(0);
-				stream << QLatin1Char('\n');
-			}
-		}
-	}
-
-	stream << QLatin1Char('\n');
-
-	return report;
-}
-
 QString ActionsManager::getActionName(int identifier)
 {
 	return EnumeratorMapper(staticMetaObject.enumerator(m_actionIdentifierEnumerator), QLatin1String("Action")).mapToName(identifier, false);
@@ -796,6 +729,56 @@ QVector<KeyboardProfile::Action> ActionsManager::getShortcutDefinitions()
 	}
 
 	return definitions;
+}
+
+DiagnosticReport::Section ActionsManager::createReport()
+{
+	DiagnosticReport::Section report;
+	report.title = QLatin1String("Keyboard Shortcuts");
+	report.fieldWidths = {30, 20};
+
+	for (int i = 0; i < m_definitions.count(); ++i)
+	{
+		const bool hasShortcuts(m_shortcuts.contains(i));
+
+		if (hasShortcuts)
+		{
+			const QVector<QKeySequence> shortcuts(m_shortcuts[i]);
+			QStringList fields({getActionName(i)});
+
+			for (int j = 0; j < shortcuts.count(); ++j)
+			{
+				fields.append(shortcuts.at(j).toString(QKeySequence::PortableText));
+			}
+
+			report.entries.append(fields);
+		}
+
+		if (m_extraShortcuts.contains(i))
+		{
+			const QList<QPair<QVariantMap, QVector<QKeySequence> > > definitions(m_extraShortcuts.values(i));
+
+			if (!hasShortcuts)
+			{
+				report.entries.append({getActionName(i)});
+			}
+
+			for (int j = 0; j < definitions.count(); ++j)
+			{
+				const QVector<QKeySequence> shortcuts(definitions.at(j).second);
+				QStringList fields({QLatin1Char(' ') + QString::fromLatin1(QJsonDocument(QJsonObject::fromVariantMap(definitions.at(j).first)).toJson(QJsonDocument::Compact))});
+
+				for (int k = 0; k < shortcuts.count(); ++k)
+				{
+					fields.append(shortcuts.at(k).toString(QKeySequence::PortableText));
+				}
+
+				report.entries.append(fields);
+			}
+		}
+	}
+
+	return report;
 }
 
 ActionsManager::ActionDefinition ActionsManager::getActionDefinition(int identifier)

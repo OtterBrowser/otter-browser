@@ -1402,11 +1402,6 @@ QString Application::createReport(ReportOptions options)
 
 	report.sections.append(versionReport);
 
-	QString reportString;
-	QTextStream stream(&reportString);
-	stream.setFieldAlignment(QTextStream::AlignLeft);
-	stream << QLatin1String("Otter Browser diagnostic report created on ") << QDateTime::currentDateTimeUtc().toString(Qt::ISODate) << QLatin1String("\n\n");
-
 	if (options.testFlag(EnvironmentReport))
 	{
 		const QString sslVersion(webBackend ? webBackend->getSslVersion() : QString());
@@ -1449,6 +1444,16 @@ QString Application::createReport(ReportOptions options)
 		report.sections.append(SettingsManager::createReport());
 	}
 
+	if (options.testFlag(KeyboardShortcutsReport))
+	{
+		report.sections.append(ActionsManager::createReport());
+	}
+
+	QString reportString;
+	QTextStream stream(&reportString);
+	stream.setFieldAlignment(QTextStream::AlignLeft);
+	stream << QLatin1String("Otter Browser diagnostic report created on ") << QDateTime::currentDateTimeUtc().toString(Qt::ISODate) << QLatin1String("\n\n");
+
 	for (int i = 0; i < report.sections.count(); ++i)
 	{
 		const DiagnosticReport::Section section(report.sections.at(i));
@@ -1475,11 +1480,6 @@ QString Application::createReport(ReportOptions options)
 		}
 
 		stream << QLatin1Char('\n');
-	}
-
-	if (options.testFlag(KeyboardShortcutsReport))
-	{
-		stream << ActionsManager::createReport();
 	}
 
 	return reportString.remove(QRegularExpression(QLatin1String(" +$"), QRegularExpression::MultilineOption));
