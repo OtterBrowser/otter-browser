@@ -323,6 +323,7 @@ public:
 	static int getOptionIdentifier(const QString &name);
 	static int getOverridesCount(int identifier);
 	static bool hasOverride(const QString &host, int identifier = -1);
+	static bool isDefault(int identifier);
 
 protected:
 	explicit SettingsManager(QObject *parent);

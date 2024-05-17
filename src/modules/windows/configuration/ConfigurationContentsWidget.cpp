@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -192,12 +192,11 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 			m_model->appendRow(groupItem);
 		}
 
-		const QVariant value(SettingsManager::getOption(identifier));
 		QList<QStandardItem*> optionItems({new QStandardItem(nameParts.last()), new QStandardItem(enumeratorMapper.mapToName(definition.type)), new QStandardItem(QString::number(SettingsManager::getOverridesCount(identifier))), new QStandardItem()});
 		optionItems[0]->setFlags(optionItems[0]->flags() | Qt::ItemNeverHasChildren);
 		optionItems[1]->setFlags(optionItems[1]->flags() | Qt::ItemNeverHasChildren);
 		optionItems[2]->setFlags(optionItems[2]->flags() | Qt::ItemNeverHasChildren);
-		optionItems[3]->setData(value, Qt::EditRole);
+		optionItems[3]->setData(SettingsManager::getOption(identifier), Qt::EditRole);
 		optionItems[3]->setData(QSize(-1, 30), Qt::SizeHintRole);
 		optionItems[3]->setData(identifier, IdentifierRole);
 		optionItems[3]->setData(name, NameRole);
@@ -208,7 +207,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 			optionItems[3]->setData(true, RequiresRestartRole);
 		}
 
-		if (value != definition.defaultValue)
+		if (!SettingsManager::isDefault(identifier))
 		{
 			QFont font(optionItems[0]->font());
 			font.setBold(true);
@@ -447,7 +446,7 @@ void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVar
 		if (!optionIndex.data(IsModifiedRole).toBool())
 		{
 			QFont font(optionIndex.data(Qt::FontRole).isNull() ? m_ui->configurationViewWidget->font() : optionIndex.data(Qt::FontRole).value<QFont>());
-			font.setBold(value != SettingsManager::getOptionDefinition(identifier).defaultValue);
+			font.setBold(!SettingsManager::isDefault(identifier));
 
 			m_model->setData(optionIndex, font, Qt::FontRole);
 			m_model->setData(valueIndex, value, Qt::EditRole);
@@ -521,7 +520,7 @@ void ConfigurationContentsWidget::showContextMenu(const QPoint &position)
 		});
 		menu.addSeparator();
 		menu.addAction(tr("Save Value"), this, &ConfigurationContentsWidget::saveOption)->setEnabled(index.sibling(index.row(), 0).data(IsModifiedRole).toBool());
-		menu.addAction(tr("Restore Default Value"), this, &ConfigurationContentsWidget::resetOption)->setEnabled(index.sibling(index.row(), 3).data(Qt::EditRole) != SettingsManager::getOptionDefinition(index.sibling(index.row(), 3).data(IdentifierRole).toInt()).defaultValue);
+		menu.addAction(tr("Restore Default Value"), this, &ConfigurationContentsWidget::resetOption)->setEnabled(!SettingsManager::isDefault(index.sibling(index.row(), 3).data(IdentifierRole).toInt()));
 		menu.addSeparator();
 	}
 

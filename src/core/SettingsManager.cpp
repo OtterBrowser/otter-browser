@@ -630,7 +630,7 @@ DiagnosticReport::Section SettingsManager::createReport()
 				break;
 		}
 
-		report.entries.append({option, value, ((definition.defaultValue == getOption(definition.identifier)) ? QLatin1String("default") : QLatin1String("non default")), (overridenValues.contains(option) ? QStringLiteral("%1 override(s)").arg(overridenValues[option]) : QLatin1String("no overrides"))});
+		report.entries.append({option, value, (isDefault(definition.identifier) ? QLatin1String("default") : QLatin1String("non default")), (overridenValues.contains(option) ? QStringLiteral("%1 override(s)").arg(overridenValues[option]) : QLatin1String("no overrides"))});
 	}
 
 	return report;
@@ -715,6 +715,11 @@ bool SettingsManager::hasOverride(const QString &host, int identifier)
 	}
 
 	return QSettings(m_overridePath, QSettings::IniFormat).contains(host + QLatin1Char('/') + getOptionName(identifier));
+}
+
+bool SettingsManager::isDefault(int identifier)
+{
+	return (getOption(identifier) == getOptionDefinition(identifier).defaultValue);
 }
 
 }
