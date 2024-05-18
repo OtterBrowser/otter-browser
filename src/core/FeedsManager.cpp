@@ -313,11 +313,11 @@ void Feed::update()
 						}
 
 						entry.lastReadTime = existingEntry.lastReadTime;
-						entry.publicationTime = normalizeTime(entry.publicationTime);
+						entry.publicationTime = normalizeDateTime(entry.publicationTime);
 
 						if (entry.updateTime.isValid())
 						{
-							entry.updateTime = normalizeTime(entry.updateTime);
+							entry.updateTime = normalizeDateTime(entry.updateTime);
 						}
 
 						m_entries[j] = entry;
@@ -331,8 +331,8 @@ void Feed::update()
 					{
 						++amount;
 
-						entry.publicationTime = normalizeTime(entry.publicationTime);
-						entry.updateTime = normalizeTime(entry.updateTime);
+						entry.publicationTime = normalizeDateTime(entry.publicationTime);
+						entry.updateTime = normalizeDateTime(entry.updateTime);
 
 						m_entries.prepend(entry);
 					}
@@ -418,7 +418,7 @@ QDateTime Feed::getLastSynchronizationTime() const
 	return m_lastSynchronizationTime;
 }
 
-QDateTime Feed::normalizeTime(const QDateTime &time)
+QDateTime Feed::normalizeDateTime(const QDateTime &time)
 {
 	const QDateTime currentTime(QDateTime::currentDateTimeUtc());
 
