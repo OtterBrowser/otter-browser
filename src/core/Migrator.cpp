@@ -101,15 +101,17 @@ bool Migrator::run()
 
 	for (int i = 0; i < availableMigrations.count(); ++i)
 	{
-		if (!processedMigrations.contains(availableMigrations.at(i)->getName()))
+		Migration *availableMigration(availableMigrations.at(i));
+
+		if (!processedMigrations.contains(availableMigration->getName()))
 		{
-			if (Application::isFirstRun() || !availableMigrations.at(i)->needsMigration())
+			if (Application::isFirstRun() || !availableMigration->needsMigration())
 			{
-				processedMigrations.append(availableMigrations.at(i)->getName());
+				processedMigrations.append(availableMigration->getName());
 			}
 			else
 			{
-				possibleMigrations.append(availableMigrations.at(i));
+				possibleMigrations.append(availableMigration);
 			}
 		}
 	}
@@ -180,16 +182,18 @@ bool Migrator::run()
 
 		for (int i = 0; i < possibleMigrations.count(); ++i)
 		{
-			processedMigrations.append(possibleMigrations.at(i)->getName());
+			Migration *possibleMigration(possibleMigrations.at(i));
+
+			processedMigrations.append(possibleMigration->getName());
 
 			if (createBackupCheckBox->isChecked())
 			{
-				possibleMigrations.at(i)->createBackup();
+				possibleMigration->createBackup();
 			}
 
 			if (canProceed)
 			{
-				possibleMigrations.at(i)->migrate();
+				possibleMigration->migrate();
 			}
 		}
 	}
