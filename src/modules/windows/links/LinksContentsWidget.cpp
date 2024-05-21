@@ -216,7 +216,9 @@ void LinksContentsWidget::updateLinks()
 
 		for (int i = 0; i < links.count(); ++i)
 		{
-			addLink(links.at(i).title, links.at(i).url);
+			const WebWidget::LinkUrl link(links.at(i));
+
+			addLink(link.title, link.url);
 		}
 	}
 
