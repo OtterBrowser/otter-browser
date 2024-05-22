@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2015 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -209,36 +209,38 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	{
 		const ItemViewWidget *view(qobject_cast<ItemViewWidget*>(parent()));
 
-		if (action && view)
+		if (!action || !view)
 		{
-			const int value(action->data().toInt());
-			int column(view->getSortColumn());
+			return;
+		}
 
-			if (column < 0)
+		const int value(action->data().toInt());
+		int column(view->getSortColumn());
+
+		if (column < 0)
+		{
+			for (int i = 0; i < count(); ++i)
 			{
-				for (int i = 0; i < count(); ++i)
-				{
-					column = logicalIndex(i);
+				column = logicalIndex(i);
 
-					if (!isSectionHidden(column))
-					{
-						break;
-					}
+				if (!isSectionHidden(column))
+				{
+					break;
 				}
 			}
+		}
 
-			if (value == AscendingOrder)
-			{
-				setSort(column, Qt::AscendingOrder);
-			}
-			else if (value == DescendingOrder)
-			{
-				setSort(column, Qt::DescendingOrder);
-			}
-			else
-			{
-				handleSectionClicked(value);
-			}
+		if (value == AscendingOrder)
+		{
+			setSort(column, Qt::AscendingOrder);
+		}
+		else if (value == DescendingOrder)
+		{
+			setSort(column, Qt::DescendingOrder);
+		}
+		else
+		{
+			handleSectionClicked(value);
 		}
 	});
 	connect(visibilityMenu, &QMenu::triggered, this, [&](QAction *action)
