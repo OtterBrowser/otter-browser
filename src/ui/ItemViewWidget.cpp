@@ -883,7 +883,9 @@ void ItemViewWidget::updateSize()
 
 		for (int i = 0; i < widestSections.count(); ++i)
 		{
-			m_headerWidget->resizeSection(widestSections.at(i), (m_headerWidget->sectionSize(widestSections.at(i)) + sectionWidth));
+			const int widestSection(widestSections.at(i));
+
+			m_headerWidget->resizeSection(widestSection, (m_headerWidget->sectionSize(widestSection) + sectionWidth));
 		}
 	}
 }
