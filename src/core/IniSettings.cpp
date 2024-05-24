@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -134,14 +134,7 @@ void IniSettings::setValue(const QString &key, const QVariant &value)
 		return;
 	}
 
-	if (value.isNull())
-	{
-		if (m_data.contains(m_group) && m_data[m_group].contains(key))
-		{
-			m_data[m_group].remove(key);
-		}
-	}
-	else
+	if (!value.isNull())
 	{
 		if (!m_data.contains(m_group))
 		{
@@ -149,6 +142,10 @@ void IniSettings::setValue(const QString &key, const QVariant &value)
 		}
 
 		m_data[m_group][key] = value;
+	}
+	else if (m_data.contains(m_group) && m_data[m_group].contains(key))
+	{
+		m_data[m_group].remove(key);
 	}
 }
 
