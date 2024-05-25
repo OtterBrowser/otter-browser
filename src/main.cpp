@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -126,21 +126,22 @@ int main(int argc, char *argv[])
 	Application::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
 	Application application(argc, argv);
+	QCommandLineParser *commandLineParser(Application::getCommandLineParser());
 
-	if (Application::isAboutToQuit() || Application::isRunning() || Application::isUpdating() || Application::getCommandLineParser()->isSet(QLatin1String("report")))
+	if (Application::isAboutToQuit() || Application::isRunning() || Application::isUpdating() || commandLineParser->isSet(QLatin1String("report")))
 	{
 		return 0;
 	}
 
-	const QString session(Application::getCommandLineParser()->value(QLatin1String("session")).isEmpty() ? QLatin1String("default") : Application::getCommandLineParser()->value(QLatin1String("session")));
+	const QString session(commandLineParser->value(QLatin1String("session")).isEmpty() ? QLatin1String("default") : commandLineParser->value(QLatin1String("session")));
 	const QString startupBehavior(SettingsManager::getOption(SettingsManager::Browser_StartupBehaviorOption).toString());
-	const bool isPrivate(Application::getCommandLineParser()->isSet(QLatin1String("private-session")));
+	const bool isPrivate(commandLineParser->isSet(QLatin1String("private-session")));
 
-	if (!Application::getCommandLineParser()->value(QLatin1String("session")).isEmpty() && SessionsManager::getSession(session).isClean)
+	if (!commandLineParser->value(QLatin1String("session")).isEmpty() && SessionsManager::getSession(session).isClean)
 	{
 		SessionsManager::restoreSession(SessionsManager::getSession(session), nullptr, isPrivate);
 	}
-	else if (startupBehavior == QLatin1String("showDialog") || Application::getCommandLineParser()->isSet(QLatin1String("session-chooser")) || !SessionsManager::getSession(session).isClean)
+	else if (startupBehavior == QLatin1String("showDialog") || commandLineParser->isSet(QLatin1String("session-chooser")) || !SessionsManager::getSession(session).isClean)
 	{
 		StartupDialog dialog(session);
 
@@ -202,7 +203,7 @@ int main(int argc, char *argv[])
 		SessionsManager::restoreSession(sessionData, nullptr, isPrivate);
 	}
 
-	Application::handlePositionalArguments(Application::getCommandLineParser());
+	Application::handlePositionalArguments(commandLineParser);
 
 	if (Application::getWindows().isEmpty())
 	{
