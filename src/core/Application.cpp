@@ -544,19 +544,20 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 				for (int i = 0; i < actions.count(); ++i)
 				{
+					const QVariant action(actions.at(i));
 					QVariant actionIdentifier;
 					QVariantMap actionParameters;
 
-					if (actions.at(i).type() == QVariant::Map)
+					if (action.type() == QVariant::Map)
 					{
-						const QVariantMap actionData(actions.at(i).toMap());
+						const QVariantMap actionData(action.toMap());
 
 						actionIdentifier = actionData.value(QLatin1String("identifier"));
 						actionParameters = actionData.value(QLatin1String("parameters")).toMap();
 					}
 					else
 					{
-						actionIdentifier = actions.at(i);
+						actionIdentifier = action;
 					}
 
 					if (actionIdentifier.type() == QVariant::Int)
