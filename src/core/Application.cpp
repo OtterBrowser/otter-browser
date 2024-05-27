@@ -453,11 +453,6 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		QMessageBox::warning(nullptr, tr("Warning"), tr("SSL support is not available or is incomplete.\nSome websites may work incorrectly or do not work at all."), QMessageBox::Close);
 	}
 
-	if (SettingsManager::getOption(SettingsManager::Browser_EnableTrayIconOption).toBool())
-	{
-		m_trayIcon = new TrayIcon(this);
-	}
-
 #ifdef Q_OS_WIN
 	m_platformIntegration = new WindowsPlatformIntegration(this);
 #elif defined(Q_OS_DARWIN)
@@ -502,6 +497,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		}
 	}
 
+	handleOptionChanged(SettingsManager::Browser_EnableTrayIconOption, SettingsManager::getOption(SettingsManager::Browser_EnableTrayIconOption));
 	setStyle(style);
 	setStyleSheet(styleSheet);
 
