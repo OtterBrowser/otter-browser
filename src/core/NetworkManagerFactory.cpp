@@ -71,7 +71,8 @@ void ProxiesModel::populateProxies(const QStringList &proxies, QStandardItem *pa
 {
 	for (int i = 0; i < proxies.count(); ++i)
 	{
-		const ProxyDefinition proxy(proxies.at(i).isEmpty() ? ProxyDefinition() : NetworkManagerFactory::getProxy(proxies.at(i)));
+		const QString identifier(proxies.at(i));
+		const ProxyDefinition proxy(identifier.isEmpty() ? ProxyDefinition() : NetworkManagerFactory::getProxy(identifier));
 		ItemType type(EntryType);
 		QStandardItem *item(new QStandardItem(proxy.isValid() ? proxy.getTitle() : QString()));
 		item->setData(item->data(Qt::DisplayRole), Qt::ToolTipRole);
@@ -96,7 +97,7 @@ void ProxiesModel::populateProxies(const QStringList &proxies, QStandardItem *pa
 		}
 		else
 		{
-			if (proxies.at(i).isEmpty())
+			if (identifier.isEmpty())
 			{
 				type = SeparatorType;
 
@@ -107,7 +108,7 @@ void ProxiesModel::populateProxies(const QStringList &proxies, QStandardItem *pa
 			}
 			else
 			{
-				item->setData(proxies.at(i), IdentifierRole);
+				item->setData(identifier, IdentifierRole);
 
 				if (m_isEditor)
 				{
@@ -142,7 +143,8 @@ void UserAgentsModel::populateUserAgents(const QStringList &userAgents, QStandar
 {
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
-		const UserAgentDefinition userAgent(userAgents.at(i).isEmpty() ? UserAgentDefinition() : NetworkManagerFactory::getUserAgent(userAgents.at(i)));
+		const QString identifier(userAgents.at(i));
+		const UserAgentDefinition userAgent(identifier.isEmpty() ? UserAgentDefinition() : NetworkManagerFactory::getUserAgent(identifier));
 		ItemType type(EntryType);
 		QList<QStandardItem*> items({new QStandardItem(userAgent.isValid() ? userAgent.getTitle() : QString())});
 		items[0]->setData(items[0]->data(Qt::DisplayRole), Qt::ToolTipRole);
@@ -168,7 +170,7 @@ void UserAgentsModel::populateUserAgents(const QStringList &userAgents, QStandar
 		}
 		else
 		{
-			if (userAgents.at(i).isEmpty())
+			if (identifier.isEmpty())
 			{
 				type = SeparatorType;
 
@@ -179,7 +181,7 @@ void UserAgentsModel::populateUserAgents(const QStringList &userAgents, QStandar
 			}
 			else
 			{
-				items[0]->setData(userAgents.at(i), IdentifierRole);
+				items[0]->setData(identifier, IdentifierRole);
 				items[0]->setData(userAgent.value, UserAgentRole);
 
 				if (m_isEditor)
