@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -46,6 +46,11 @@ WebPageThumbnailJob* WebBackend::createPageThumbnailJob(const QUrl &url, const Q
 	Q_UNUSED(url)
 	Q_UNUSED(size)
 
+	return nullptr;
+}
+
+CookieJar* WebBackend::getCookieJar() const
+{
 	return nullptr;
 }
 
