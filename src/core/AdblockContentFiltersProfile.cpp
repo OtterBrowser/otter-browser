@@ -757,12 +757,14 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::evaluateNodeRul
 
 	for (int i = 0; i < node->rules.count(); ++i)
 	{
-		if (!node->rules.at(i))
+		Node::Rule *rule(node->rules.at(i));
+
+		if (!rule)
 		{
 			continue;
 		}
 
-		ContentFiltersManager::CheckResult currentResult(checkRuleMatch(node->rules.at(i), currentRule, request));
+		ContentFiltersManager::CheckResult currentResult(checkRuleMatch(rule, currentRule, request));
 
 		if (currentResult.isBlocked)
 		{
