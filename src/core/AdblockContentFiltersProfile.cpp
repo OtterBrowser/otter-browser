@@ -223,40 +223,43 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 
 	for (int i = 0; i < options.count(); ++i)
 	{
-		const bool isOptionException(options.at(i).startsWith(QLatin1Char('~')));
-		const QString optionName(isOptionException ? options.at(i).mid(1) : options.at(i));
+		const QString option(options.at(i));
+		const bool isOptionException(option.startsWith(QLatin1Char('~')));
+		const QString optionName(isOptionException ? option.mid(1) : option);
 
 		if (m_options.contains(optionName))
 		{
-			const RuleOption option(m_options.value(optionName));
+			const RuleOption ruleOption(m_options.value(optionName));
 
-			if ((!definition->isException || isOptionException) && (option == ElementHideOption || option == GenericHideOption))
+			if ((!definition->isException || isOptionException) && (ruleOption == ElementHideOption || ruleOption == GenericHideOption))
 			{
 				continue;
 			}
 
 			if (!isOptionException)
 			{
-				definition->ruleOptions |= option;
+				definition->ruleOptions |= ruleOption;
 			}
-			else if (option != WebSocketOption && option != PopupOption)
+			else if (ruleOption != WebSocketOption && ruleOption != PopupOption)
 			{
-				definition->ruleExceptions |= option;
+				definition->ruleExceptions |= ruleOption;
 			}
 		}
 		else if (optionName.startsWith(QLatin1String("domain")))
 		{
-			const QStringList parsedDomains(options.at(i).mid(options.at(i).indexOf(QLatin1Char('=')) + 1).split(QLatin1Char('|'), Qt::SkipEmptyParts));
+			const QStringList parsedDomains(option.mid(option.indexOf(QLatin1Char('=')) + 1).split(QLatin1Char('|'), Qt::SkipEmptyParts));
 
 			for (int j = 0; j < parsedDomains.count(); ++j)
 			{
-				if (parsedDomains.at(j).startsWith(QLatin1Char('~')))
+				const QString parsedDomain(parsedDomains.at(j));
+
+				if (parsedDomain.startsWith(QLatin1Char('~')))
 				{
-					definition->allowedDomains.append(parsedDomains.at(j).mid(1));
+					definition->allowedDomains.append(parsedDomain.mid(1));
 				}
 				else
 				{
-					definition->blockedDomains.append(parsedDomains.at(j));
+					definition->blockedDomains.append(parsedDomain);
 				}
 			}
 		}
