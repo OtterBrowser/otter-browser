@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -411,19 +411,20 @@ void SidebarWidget::updatePanels()
 
 	for (int i = 0; i < panels.count(); ++i)
 	{
-		const bool isWebPanel(panels.at(i).startsWith(QLatin1String("web:")));
+		const QString panel(panels.at(i));
+		const bool isWebPanel(panel.startsWith(QLatin1String("web:")));
 
-		if (!isWebPanel && !specialPages.contains(panels.at(i)))
+		if (!isWebPanel && !specialPages.contains(panel))
 		{
 			continue;
 		}
 
-		const QKeySequence shortcut(ActionsManager::getActionShortcut(ActionsManager::ShowPanelAction, {{QLatin1String("panel"), panels.at(i)}}));
-		const QString title(getPanelTitle(panels.at(i)));
+		const QKeySequence shortcut(ActionsManager::getActionShortcut(ActionsManager::ShowPanelAction, {{QLatin1String("panel"), panel}}));
+		const QString title(getPanelTitle(panel));
 		QToolButton *button(new QToolButton(this));
 		QAction *selectPanelButtonAction(new QAction(button));
-		selectPanelButtonAction->setData(panels.at(i));
-		selectPanelButtonAction->setIcon(getPanelIcon(panels.at(i)));
+		selectPanelButtonAction->setData(panel);
+		selectPanelButtonAction->setIcon(getPanelIcon(panel));
 		selectPanelButtonAction->setToolTip(Utils::appendShortcut(title, shortcut));
 
 		button->setDefaultAction(selectPanelButtonAction);
@@ -435,7 +436,7 @@ void SidebarWidget::updatePanels()
 			QAction *selectPanelMenuAction(menu->addAction(Utils::elideText(title, menu->fontMetrics(), nullptr, 300)));
 			selectPanelMenuAction->setCheckable(true);
 			selectPanelMenuAction->setChecked(true);
-			selectPanelMenuAction->setData(panels.at(i));
+			selectPanelMenuAction->setData(panel);
 
 			connect(selectPanelMenuAction, &QAction::toggled, this, &SidebarWidget::choosePanel);
 		}
