@@ -759,6 +759,7 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark)
 		return;
 	}
 
+	const QString elementOwner(QLatin1String("http://otter-browser.org/otter-xbel-bookmark"));
 	const BookmarkType type(bookmark->getType());
 
 	switch (type)
@@ -807,7 +808,7 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark)
 			{
 				writer->writeStartElement(QLatin1String("info"));
 				writer->writeStartElement(QLatin1String("metadata"));
-				writer->writeAttribute(QLatin1String("owner"), QLatin1String("http://otter-browser.org/otter-xbel-bookmark"));
+				writer->writeAttribute(QLatin1String("owner"), elementOwner);
 
 				if (!bookmark->getRawData(KeywordRole).toString().isEmpty())
 				{
@@ -851,7 +852,7 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark)
 			{
 				writer->writeStartElement(QLatin1String("info"));
 				writer->writeStartElement(QLatin1String("metadata"));
-				writer->writeAttribute(QLatin1String("owner"), QLatin1String("http://otter-browser.org/otter-xbel-bookmark"));
+				writer->writeAttribute(QLatin1String("owner"), elementOwner);
 				writer->writeTextElement(QLatin1String("keyword"), bookmark->getRawData(KeywordRole).toString());
 				writer->writeEndElement();
 				writer->writeEndElement();
