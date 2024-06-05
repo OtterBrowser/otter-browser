@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -183,11 +183,12 @@ void AddonsManager::loadUserScripts()
 		file.close();
 	}
 
-	const QList<QFileInfo> scripts(QDir(SessionsManager::getWritableDataPath(QLatin1String("scripts"))).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
+	const QList<QFileInfo> scriptFiles(QDir(SessionsManager::getWritableDataPath(QLatin1String("scripts"))).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
 
-	for (int i = 0; i < scripts.count(); ++i)
+	for (int i = 0; i < scriptFiles.count(); ++i)
 	{
-		const QString path(QDir(scripts.at(i).absoluteFilePath()).filePath(scripts.at(i).fileName() + QLatin1String(".js")));
+		const QFileInfo scriptFile(scriptFiles.at(i));
+		const QString path(QDir(scriptFile.absoluteFilePath()).filePath(scriptFile.fileName() + QLatin1String(".js")));
 
 		if (!QFile::exists(path))
 		{
@@ -196,11 +197,11 @@ void AddonsManager::loadUserScripts()
 			continue;
 		}
 
-		const QJsonObject scriptObject(metaData.value(scripts.at(i).fileName()));
+		const QJsonObject scriptObject(metaData.value(scriptFile.fileName()));
 		UserScript *script(new UserScript(path, QUrl(scriptObject.value(QLatin1String("downloadUrl")).toString()), m_instance));
 		script->setEnabled(scriptObject.value(QLatin1String("isEnabled")).toBool(false));
 
-		m_userScripts[scripts.at(i).fileName()] = script;
+		m_userScripts[scriptFile.fileName()] = script;
 
 		connect(script, &UserScript::metaDataChanged, m_instance, [=]()
 		{
