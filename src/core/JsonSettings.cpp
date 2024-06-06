@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -56,14 +56,12 @@ JsonSettings::JsonSettings(const QString &path) :
 		{
 			const QString line(stream.readLine());
 
-			if (line.startsWith(QLatin1String("//")))
-			{
-				comment.append(line.mid(3));
-			}
-			else
+			if (!line.startsWith(QLatin1String("//")))
 			{
 				break;
 			}
+
+			comment.append(line.mid(3));
 		}
 
 		m_comment = comment.join(QLatin1Char('\n'));
