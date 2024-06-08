@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -79,6 +79,7 @@ protected slots:
 
 private:
 	QStandardItemModel *m_model;
+	CookieJar *m_cookieJar;
 	bool m_isLoading;
 	Ui::CookiesContentsWidget *m_ui;
 };
