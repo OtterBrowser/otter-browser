@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -103,9 +103,11 @@ void PageInformationContentsWidget::changeEvent(QEvent *event)
 	{
 		m_ui->retranslateUi(this);
 
-		if (m_ui->informationViewWidget->getSourceModel())
+		QStandardItemModel *model(m_ui->informationViewWidget->getSourceModel());
+
+		if (model)
 		{
-			m_ui->informationViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Name"), tr("Value")});
+			model->setHorizontalHeaderLabels({tr("Name"), tr("Value")});
 		}
 
 		updateSections();
