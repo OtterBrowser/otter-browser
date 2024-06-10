@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Welcome to Otter</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0,0,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0,0">
    <item>
     <widget class="QLabel" name="headerLabel">
      <property name="font">
@@ -126,16 +126,6 @@
      <attribute name="buttonGroup">
       <string notr="true">buttonGroup</string>
      </attribute>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="enablePluginsCheckBox">
-     <property name="text">
-      <string>Enable plugins</string>
-     </property>
-     <property name="tristate">
-      <bool>true</bool>
-     </property>
     </widget>
    </item>
    <item>

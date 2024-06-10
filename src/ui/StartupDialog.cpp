@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -34,17 +34,6 @@ StartupDialog::StartupDialog(const QString &sessionName, QWidget *parent) : Dial
 	m_ui->windowsTreeView->setModel(m_windowsModel);
 	m_ui->homePageButton->setEnabled(!SettingsManager::getOption(SettingsManager::Browser_HomePageOption).toString().isEmpty());
 
-	const QString pluginsPolicy(SettingsManager::getOption(SettingsManager::Permissions_EnablePluginsOption).toString());
-
-	if (pluginsPolicy == QLatin1String("enabled"))
-	{
-		m_ui->enablePluginsCheckBox->setCheckState(Qt::Checked);
-	}
-	else if (pluginsPolicy == QLatin1String("onDemand"))
-	{
-		m_ui->enablePluginsCheckBox->setCheckState(Qt::PartiallyChecked);
-	}
-
 	const QStringList sessionNames(SessionsManager::getSessions());
 	QMultiHash<QString, SessionInformation> information;
 
@@ -68,24 +57,6 @@ StartupDialog::StartupDialog(const QString &sessionName, QWidget *parent) : Dial
 
 	setSession(index);
 
-	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, [&]()
-	{
-		switch (m_ui->enablePluginsCheckBox->checkState())
-		{
-			case Qt::Checked:
-				SettingsManager::setOption(SettingsManager::Permissions_EnablePluginsOption, QLatin1String("enabled"));
-
-				break;
-			case Qt::PartiallyChecked:
-				SettingsManager::setOption(SettingsManager::Permissions_EnablePluginsOption, QLatin1String("onDemand"));
-
-				break;
-			default:
-				SettingsManager::setOption(SettingsManager::Permissions_EnablePluginsOption, QLatin1String("disabled"));
-
-				break;
-		}
-	});
 	connect(m_ui->buttonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*)>(&QButtonGroup::buttonClicked), [&]()
 	{
 		m_ui->continueSessionWidget->setEnabled(m_ui->continueSessionButton->isChecked());
