@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -159,13 +159,15 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QString &host, const QV
 
 	for (int i = 0; i < checkBoxes.count(); ++i)
 	{
-		if (checkBoxes.at(i)->text().isEmpty())
+		QCheckBox *checkBox(checkBoxes.at(i));
+
+		if (checkBox->text().isEmpty())
 		{
-			connect(checkBoxes.at(i), &QCheckBox::toggled, this, &WebsitePreferencesDialog::updateValues);
+			connect(checkBox, &QCheckBox::toggled, this, &WebsitePreferencesDialog::updateValues);
 		}
 		else
 		{
-			connect(checkBoxes.at(i), &QCheckBox::toggled, this, &WebsitePreferencesDialog::handleValueChanged);
+			connect(checkBox, &QCheckBox::toggled, this, &WebsitePreferencesDialog::handleValueChanged);
 		}
 	}
 
