@@ -71,12 +71,10 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QString &host, const QV
 	{
 		const QTextCodec *codec(QTextCodec::codecForMib(textCodecs.at(i)));
 
-		if (!codec)
+		if (codec)
 		{
-			continue;
+			m_ui->encodingComboBox->addItem(QString::fromLatin1(codec->name()), codec->name());
 		}
-
-		m_ui->encodingComboBox->addItem(QString::fromLatin1(codec->name()), codec->name());
 	}
 
 	m_ui->popupsPolicyComboBox->addItem(tr("Ask"), QLatin1String("ask"));
