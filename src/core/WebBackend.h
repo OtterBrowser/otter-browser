@@ -80,6 +80,14 @@ public:
 
 	Q_DECLARE_FLAGS(CapabilityScopes, CapabilityScope)
 
+	struct CookieJarInformation final
+	{
+		CookieJar *cookieJar = nullptr;
+		QString title;
+		QString path;
+		bool isPrivate = false;
+	};
+
 	explicit WebBackend(QObject *parent = nullptr);
 
 	virtual WebWidget* createWidget(const QVariantMap &parameters, ContentsWidget *parent = nullptr) = 0;
