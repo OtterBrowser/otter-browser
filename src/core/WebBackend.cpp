@@ -49,9 +49,9 @@ WebPageThumbnailJob* WebBackend::createPageThumbnailJob(const QUrl &url, const Q
 	return nullptr;
 }
 
-CookieJar* WebBackend::getCookieJar() const
+WebBackend::CookieJarInformation WebBackend::getCookieJar() const
 {
-	return nullptr;
+	return {};
 }
 
 QVector<SpellCheckManager::DictionaryInformation> WebBackend::getDictionaries() const

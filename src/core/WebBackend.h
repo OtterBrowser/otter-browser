@@ -93,7 +93,7 @@ public:
 	virtual WebWidget* createWidget(const QVariantMap &parameters, ContentsWidget *parent = nullptr) = 0;
 	virtual BookmarksImportJob* createBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed);
 	virtual WebPageThumbnailJob* createPageThumbnailJob(const QUrl &url, const QSize &size);
-	virtual CookieJar* getCookieJar() const;
+	virtual CookieJarInformation getCookieJar() const;
 	virtual QString getEngineVersion() const = 0;
 	virtual QString getSslVersion() const = 0;
 	virtual QString getUserAgent(const QString &pattern = {}) const = 0;

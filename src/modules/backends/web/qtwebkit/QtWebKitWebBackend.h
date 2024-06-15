@@ -48,7 +48,7 @@ public:
 	WebWidget* createWidget(const QVariantMap &parameters, ContentsWidget *parent = nullptr) override;
 	BookmarksImportJob* createBookmarksImportJob(BookmarksModel::Bookmark *folder, const QString &path, bool areDuplicatesAllowed) override;
 	WebPageThumbnailJob* createPageThumbnailJob(const QUrl &url, const QSize &size) override;
-	CookieJar* getCookieJar() const override;
+	CookieJarInformation getCookieJar() const override;
 	QString getName() const override;
 	QString getTitle() const override;
 	QString getDescription() const override;

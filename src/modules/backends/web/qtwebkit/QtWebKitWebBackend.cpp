@@ -197,9 +197,12 @@ WebPageThumbnailJob* QtWebKitWebBackend::createPageThumbnailJob(const QUrl &url,
 	return new QtWebKitWebPageThumbnailJob(url, size, this);
 }
 
-CookieJar* QtWebKitWebBackend::getCookieJar() const
+WebBackend::CookieJarInformation QtWebKitWebBackend::getCookieJar() const
 {
-	return NetworkManagerFactory::getCookieJar();
+	CookieJarInformation information;
+	information.cookieJar = NetworkManagerFactory::getCookieJar();
+
+	return information;
 }
 
 QtWebKitWebBackend* QtWebKitWebBackend::getInstance()
