@@ -288,9 +288,10 @@ QString UserScript::checkUrlSubString(const QString &rule, const QString &urlSub
 
 	for (int i = 0; i < urlSubString.length(); ++i)
 	{
-		const QChar character(urlSubString.at(i));
+		const QChar urlCharacter(urlSubString.at(i));
+		const QChar ruleCharacter(rule.at(position));
 
-		if (rule.at(position) == QLatin1Char('*'))
+		if (ruleCharacter == QLatin1Char('*'))
 		{
 			const QString wildcardString(urlSubString.mid(i));
 
@@ -304,14 +305,14 @@ QString UserScript::checkUrlSubString(const QString &rule, const QString &urlSub
 				}
 			}
 		}
-		else if (rule.at(position) != character)
+		else if (ruleCharacter != urlCharacter)
 		{
 			return {};
 		}
 
 		++position;
 
-		generatedUrl += character;
+		generatedUrl += urlCharacter;
 
 		if (position == rule.length())
 		{
