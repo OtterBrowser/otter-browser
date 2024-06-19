@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,9 @@ QByteArray ListingNetworkReply::createListing(const QString &title, const QVecto
 
 	for (int i = 0; i < navigation.count(); ++i)
 	{
-		navigationHtml.append(QStringLiteral("<a href=\"%1\">%2</a>").arg(navigation[i].url.toString(), navigation[i].name) + ((i < (navigation.count() - 1)) ? QLatin1String("&shy;") : QString()));
+		const NavigationEntry entry(navigation.at(i));
+
+		navigationHtml.append(QStringLiteral("<a href=\"%1\">%2</a>").arg(entry.url.toString(), entry.name) + ((i < (navigation.count() - 1)) ? QLatin1String("&shy;") : QString()));
 	}
 
 	QHash<QString, QIcon> icons;
