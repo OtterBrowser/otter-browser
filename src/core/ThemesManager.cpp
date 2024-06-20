@@ -250,8 +250,10 @@ Animation* ThemesManager::createAnimation(const QString &name, QObject *parent)
 	return new GenericAnimation(animationPath, parent);
 }
 
-QIcon ThemesManager::createIcon(const QString &name, bool fromTheme)
+QIcon ThemesManager::createIcon(const QString &name, bool fromTheme, IconContext context)
 {
+	Q_UNUSED(context)
+
 	if (name.isEmpty())
 	{
 		return {};
