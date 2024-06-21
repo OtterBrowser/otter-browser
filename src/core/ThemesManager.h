@@ -115,6 +115,7 @@ public:
 	static void createInstance();
 	static ThemesManager* getInstance();
 	static ColorScheme* getColorScheme();
+	static Style* getStyle();
 	static Style* createStyle(const QString &name);
 	static Animation* createAnimation(const QString &name = QLatin1String("spinner"), QObject *parent = nullptr);
 	static QIcon createIcon(const QString &name, bool fromTheme = true, IconContext context = GenericContext);

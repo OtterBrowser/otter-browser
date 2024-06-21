@@ -199,6 +199,18 @@ ColorScheme* ThemesManager::getColorScheme()
 	return m_colorScheme;
 }
 
+Style* ThemesManager::getStyle()
+{
+	Style *style(qobject_cast<Style*>(QApplication::style()));
+
+	if (style)
+	{
+		return style;
+	}
+
+	return QApplication::style()->findChild<Style*>();
+}
+
 Style* ThemesManager::createStyle(const QString &name)
 {
 	Style *style(nullptr);
