@@ -515,7 +515,7 @@ void TabHandleWidget::updateTitle()
 
 		m_titleRectangle = m_labelRectangle;
 
-		if (length < m_labelRectangle.width() && Application::getStyle()->getExtraStyleHint(Style::CanAlignTabBarLabelHint) > 0)
+		if (length < m_labelRectangle.width() && ThemesManager::getStyle()->getExtraStyleHint(Style::CanAlignTabBarLabelHint) > 0)
 		{
 			if (isLeftToRight())
 			{
@@ -722,7 +722,7 @@ void TabBarWidget::paintEvent(QPaintEvent *event)
 		lineOffset = tabRect(dropIndex).left();
 	}
 
-	Application::getStyle()->drawDropZone((isHorizontal() ? QLine(lineOffset, 0, lineOffset, height()) : QLine(0, lineOffset, width(), lineOffset)), &painter);
+	ThemesManager::getStyle()->drawDropZone((isHorizontal() ? QLine(lineOffset, 0, lineOffset, height()) : QLine(0, lineOffset, width(), lineOffset)), &painter);
 }
 
 void TabBarWidget::enterEvent(QEvent *event)

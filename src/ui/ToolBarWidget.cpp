@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,6 @@
 #include "TabBarWidget.h"
 #include "WidgetFactory.h"
 #include "Window.h"
-#include "../core/Application.h"
 #include "../core/BookmarksManager.h"
 #include "../core/ThemesManager.h"
 #include "../modules/widgets/bookmark/BookmarkWidget.h"
@@ -37,6 +36,7 @@
 #include <QtGui/QDrag>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
+#include <QtWidgets/QApplication>
 #include <QtWidgets/QLayout>
 #include <QtWidgets/QStyleOption>
 
@@ -211,14 +211,15 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 	}
 
 	QPainter painter(this);
+	Style *style(ThemesManager::getStyle());
 
 	if (isHorizontal())
 	{
-		Application::getStyle()->drawDropZone(QLine(position, 0, position, height()), &painter);
+		style->drawDropZone(QLine(position, 0, position, height()), &painter);
 	}
 	else
 	{
-		Application::getStyle()->drawDropZone(QLine(0, position, width(), position), &painter);
+		style->drawDropZone(QLine(0, position, width(), position), &painter);
 	}
 }
 
