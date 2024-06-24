@@ -151,7 +151,7 @@ void TransfersWidget::updateState()
 		progressBarOption.rect = pixmap.rect();
 		progressBarOption.rect.setTop(progressBarOption.rect.bottom() - (iconSize / 8));
 
-		Application::getStyle()->drawThinProgressBar(&progressBarOption, &painter);
+		ThemesManager::getStyle()->drawThinProgressBar(&progressBarOption, &painter);
 
 		m_icon = QIcon(pixmap);
 	}

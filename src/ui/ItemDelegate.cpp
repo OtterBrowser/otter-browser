@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 
 #include "ItemDelegate.h"
 #include "Style.h"
-#include "../core/Application.h"
+#include "../core/ThemesManager.h"
 
 #include <QtGui/QPainter>
 #include <QtGui/QHelpEvent>
@@ -112,7 +112,7 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 			progressBarOption.palette.setColor(QPalette::Highlight, progressBarOption.palette.highlightedText().color());
 		}
 
-		Application::getStyle()->drawThinProgressBar(&progressBarOption, painter);
+		ThemesManager::getStyle()->drawThinProgressBar(&progressBarOption, painter);
 	}
 }
 
