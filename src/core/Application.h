@@ -75,7 +75,6 @@ public:
 	static Application* getInstance();
 	static MainWindow* getActiveWindow();
 	static QObject* getFocusObject(bool ignoreMenus);
-	static Style* getStyle();
 	static TrayIcon* getTrayIcon();
 	static PlatformIntegration* getPlatformIntegration();
 	static QCommandLineParser* getCommandLineParser();

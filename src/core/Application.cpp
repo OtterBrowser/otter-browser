@@ -1350,11 +1350,6 @@ QObject* Application::getFocusObject(bool ignoreMenus)
 	return (ignoreMenus ? m_nonMenuFocusObject.data() : focusObject());
 }
 
-Style* Application::getStyle()
-{
-	return ThemesManager::getStyle();
-}
-
 PlatformIntegration* Application::getPlatformIntegration()
 {
 	return m_platformIntegration;
