@@ -71,7 +71,15 @@ TabSwitcherWidget::TabSwitcherWidget(MainWindow *parent) : QWidget(parent),
 	m_previewLabel->setAlignment(Qt::AlignCenter);
 	m_previewLabel->setStyleSheet(QLatin1String("border:1px solid gray;"));
 
-	connect(m_tabsView, &ItemViewWidget::clicked, this, &TabSwitcherWidget::handleIndexClicked);
+	connect(m_tabsView, &ItemViewWidget::clicked, this, [&](const QModelIndex &index)
+	{
+		if (index.isValid())
+		{
+			m_mainWindow->setActiveWindowByIdentifier(index.data(IdentifierRole).toULongLong());
+
+			hide();
+		}
+	});
 	connect(m_tabsView->selectionModel(), &QItemSelectionModel::currentChanged, this, &TabSwitcherWidget::handleCurrentTabChanged);
 }
 
@@ -177,16 +185,6 @@ void TabSwitcherWidget::selectTab(bool next)
 	const int currentRow(m_tabsView->currentIndex().row());
 
 	m_tabsView->setCurrentIndex(m_model->index((next ? ((currentRow == (m_model->rowCount() - 1)) ? 0 : (currentRow + 1)) : ((currentRow == 0) ? (m_model->rowCount() - 1) : (currentRow - 1))), 0));
-}
-
-void TabSwitcherWidget::handleIndexClicked(const QModelIndex &index)
-{
-	if (index.isValid())
-	{
-		m_mainWindow->setActiveWindowByIdentifier(index.data(IdentifierRole).toULongLong());
-
-		hide();
-	}
 }
 
 void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
