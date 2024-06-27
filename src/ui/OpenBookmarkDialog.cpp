@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ OpenBookmarkDialog::OpenBookmarkDialog(const ActionExecutor::Object &executor, Q
 {
 	m_ui->setupUi(this);
 
-	m_completer = new QCompleter(new QStringListModel(BookmarksManager::getKeywords()), m_ui->lineEditWidget);
+	m_completer = new QCompleter(new QStringListModel(BookmarksManager::getKeywords(), m_ui->lineEditWidget), m_ui->lineEditWidget);
 	m_completer->setCaseSensitivity(Qt::CaseSensitive);
 	m_completer->setCompletionMode(QCompleter::InlineCompletion);
 	m_completer->setFilterMode(Qt::MatchStartsWith);
