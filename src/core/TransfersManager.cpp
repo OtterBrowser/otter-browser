@@ -1084,17 +1084,19 @@ void TransfersManager::save()
 
 	for (int i = 0; i < m_transfers.count(); ++i)
 	{
-		if (m_privateTransfers.contains(m_transfers.at(i)) || (m_transfers.at(i)->getState() == Transfer::FinishedState && m_transfers.at(i)->getTimeFinished().isValid() && m_transfers.at(i)->getTimeFinished().daysTo(QDateTime::currentDateTimeUtc()) > limit))
+		Transfer *transfer(m_transfers.at(i));
+
+		if (m_privateTransfers.contains(transfer) || (transfer->getState() == Transfer::FinishedState && transfer->getTimeFinished().isValid() && transfer->getTimeFinished().daysTo(QDateTime::currentDateTimeUtc()) > limit))
 		{
 			continue;
 		}
 
-		history.setValue(QStringLiteral("%1/source").arg(entry), m_transfers.at(i)->getSource().toString());
-		history.setValue(QStringLiteral("%1/target").arg(entry), m_transfers.at(i)->getTarget());
-		history.setValue(QStringLiteral("%1/timeStarted").arg(entry), m_transfers.at(i)->getTimeStarted().toString(Qt::ISODate));
-		history.setValue(QStringLiteral("%1/timeFinished").arg(entry), ((m_transfers.at(i)->getTimeFinished().isValid() && m_transfers.at(i)->getState() != Transfer::RunningState) ? m_transfers.at(i)->getTimeFinished() : QDateTime::currentDateTimeUtc()).toString(Qt::ISODate));
-		history.setValue(QStringLiteral("%1/bytesTotal").arg(entry), m_transfers.at(i)->getBytesTotal());
-		history.setValue(QStringLiteral("%1/bytesReceived").arg(entry), m_transfers.at(i)->getBytesReceived());
+		history.setValue(QStringLiteral("%1/source").arg(entry), transfer->getSource().toString());
+		history.setValue(QStringLiteral("%1/target").arg(entry), transfer->getTarget());
+		history.setValue(QStringLiteral("%1/timeStarted").arg(entry), transfer->getTimeStarted().toString(Qt::ISODate));
+		history.setValue(QStringLiteral("%1/timeFinished").arg(entry), ((transfer->getTimeFinished().isValid() && transfer->getState() != Transfer::RunningState) ? transfer->getTimeFinished() : QDateTime::currentDateTimeUtc()).toString(Qt::ISODate));
+		history.setValue(QStringLiteral("%1/bytesTotal").arg(entry), transfer->getBytesTotal());
+		history.setValue(QStringLiteral("%1/bytesReceived").arg(entry), transfer->getBytesReceived());
 
 		++entry;
 	}
@@ -1106,9 +1108,11 @@ void TransfersManager::clearTransfers(int period)
 {
 	for (int i = (m_transfers.count() - 1); i >= 0; --i)
 	{
-		if (m_transfers.at(i)->getState() == Transfer::FinishedState && (period == 0 || (m_transfers.at(i)->getTimeFinished().isValid() && m_transfers.at(i)->getTimeFinished().secsTo(QDateTime::currentDateTimeUtc()) > (period * 3600))))
+		Transfer *transfer(m_transfers.at(i));
+
+		if (transfer->getState() == Transfer::FinishedState && (period == 0 || (transfer->getTimeFinished().isValid() && transfer->getTimeFinished().secsTo(QDateTime::currentDateTimeUtc()) > (period * 3600))))
 		{
-			TransfersManager::removeTransfer(m_transfers.at(i));
+			TransfersManager::removeTransfer(transfer);
 		}
 	}
 }
