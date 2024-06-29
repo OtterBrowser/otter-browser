@@ -1375,22 +1375,24 @@ bool TransfersManager::isDownloading(const QString &source, const QString &targe
 
 	for (int i = 0; i < m_transfers.count(); ++i)
 	{
-		if (m_transfers.at(i)->getState() != Transfer::RunningState)
+		Transfer *transfer(m_transfers.at(i));
+
+		if (transfer->getState() != Transfer::RunningState)
 		{
 			continue;
 		}
 
-		if (source.isEmpty() && m_transfers.at(i)->getTarget() == target)
+		if (source.isEmpty() && transfer->getTarget() == target)
 		{
 			return true;
 		}
 
-		if (target.isEmpty() && m_transfers.at(i)->getSource() == source)
+		if (target.isEmpty() && transfer->getSource() == source)
 		{
 			return true;
 		}
 
-		if (!source.isEmpty() && !target.isEmpty() && m_transfers.at(i)->getSource() == source && m_transfers.at(i)->getTarget() == target)
+		if (!source.isEmpty() && !target.isEmpty() && transfer->getSource() == source && transfer->getTarget() == target)
 		{
 			return true;
 		}
