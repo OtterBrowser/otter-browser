@@ -169,14 +169,16 @@ bool PacUtils::dateRange(const QVariant &arg1, const QVariant &arg2, const QVari
 
 	for (int i = 0; i < rawArguments.count(); ++i)
 	{
-		if (rawArguments.at(i).isNull())
+		const QVariant rawArgument(rawArguments.at(i));
+
+		if (rawArgument.isNull())
 		{
 			break;
 		}
 
-		if (rawArguments.at(i).type() == QVariant::String)
+		if (rawArgument.type() == QVariant::String)
 		{
-			const int month(m_months.indexOf(rawArguments.at(i).toString().toLower()) + 1);
+			const int month(m_months.indexOf(rawArgument.toString().toLower()) + 1);
 
 			if (month < 1)
 			{
@@ -187,7 +189,7 @@ bool PacUtils::dateRange(const QVariant &arg1, const QVariant &arg2, const QVari
 		}
 		else
 		{
-			arguments.append(rawArguments.at(i).toInt());
+			arguments.append(rawArgument.toInt());
 		}
 	}
 
