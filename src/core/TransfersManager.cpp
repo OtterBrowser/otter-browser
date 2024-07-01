@@ -1141,30 +1141,32 @@ void TransfersManager::handleTransferFinished()
 
 	updateRunningTransfersState();
 
-	if (transfer)
+	if (!transfer)
 	{
-		if (transfer->getState() == Transfer::FinishedState)
+		return;
+	}
+
+	if (transfer->getState() == Transfer::FinishedState)
+	{
+		Notification::Message message;
+		message.message = QFileInfo(transfer->getTarget()).fileName();
+		message.icon = transfer->getIcon();
+		message.event = NotificationsManager::TransferCompletedEvent;
+
+		if (message.icon.isNull())
 		{
-			Notification::Message message;
-			message.message = QFileInfo(transfer->getTarget()).fileName();
-			message.icon = transfer->getIcon();
-			message.event = NotificationsManager::TransferCompletedEvent;
-
-			if (message.icon.isNull())
-			{
-				message.icon = ThemesManager::createIcon(QLatin1String("download"));
-			}
-
-			connect(NotificationsManager::createNotification(message, this), &Notification::clicked, transfer, &Transfer::openTarget);
+			message.icon = ThemesManager::createIcon(QLatin1String("download"));
 		}
 
-		emit transferFinished(transfer);
-		emit transfersChanged();
+		connect(NotificationsManager::createNotification(message, this), &Notification::clicked, transfer, &Transfer::openTarget);
+	}
 
-		if (!m_privateTransfers.contains(transfer))
-		{
-			scheduleSave();
-		}
+	emit transferFinished(transfer);
+	emit transfersChanged();
+
+	if (!m_privateTransfers.contains(transfer))
+	{
+		scheduleSave();
 	}
 }
 
