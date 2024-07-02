@@ -1034,6 +1034,8 @@ void TransfersManager::addTransfer(Transfer *transfer)
 		return;
 	}
 
+	const Transfer::TransferOptions options(transfer->getOptions());
+
 	m_transfers.append(transfer);
 
 	transfer->setUpdateInterval(500);
@@ -1043,7 +1045,7 @@ void TransfersManager::addTransfer(Transfer *transfer)
 	connect(transfer, &Transfer::changed, m_instance, &TransfersManager::handleTransferChanged);
 	connect(transfer, &Transfer::stopped, m_instance, &TransfersManager::handleTransferStopped);
 
-	if (transfer->getOptions().testFlag(Transfer::CanNotifyOption) && transfer->getState() != Transfer::CancelledState)
+	if (options.testFlag(Transfer::CanNotifyOption) && transfer->getState() != Transfer::CancelledState)
 	{
 		emit m_instance->transferStarted(transfer);
 		emit m_instance->transfersChanged();
@@ -1054,17 +1056,18 @@ void TransfersManager::addTransfer(Transfer *transfer)
 		}
 	}
 
-	if (transfer->getOptions().testFlag(Transfer::IsPrivateOption))
+	if (options.testFlag(Transfer::IsPrivateOption))
 	{
 		m_privateTransfers.append(transfer);
 	}
 	else
 	{
-		const QString scheme(transfer->getSource().scheme());
+		const QUrl source(transfer->getSource());
+		const QString scheme(source.scheme());
 
 		if (scheme == QLatin1String("http") || scheme == QLatin1String("https"))
 		{
-			HistoryManager::addEntry(transfer->getSource());
+			HistoryManager::addEntry(source);
 		}
 	}
 }
