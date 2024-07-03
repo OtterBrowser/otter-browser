@@ -78,11 +78,12 @@ void AdblockContentFiltersProfile::clear()
 		return;
 	}
 
+/* qt6: no type named 'PromiseType' in 'QtPrivate::ArgResolver<Otter::AdblockContentFiltersProfile *>'
 	if (m_root)
 	{
 		QtConcurrent::run(this, &AdblockContentFiltersProfile::deleteNode, m_root);
 	}
-
+*/
 	m_cosmeticFiltersRules.clear();
 	m_cosmeticFiltersDomainExceptions.clear();
 	m_cosmeticFiltersDomainRules.clear();
