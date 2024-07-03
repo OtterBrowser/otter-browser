@@ -678,9 +678,12 @@ QString Transfer::getTarget() const
 
 QIcon Transfer::getIcon() const
 {
+	/* qt6: no matching member function for call to 'icon'
 	const QString iconName(getMimeType().iconName());
 
 	return QIcon::fromTheme(iconName, QFileIconProvider().icon(iconName));
+	*/
+	return QIcon(); // qt6
 }
 
 QDateTime Transfer::getTimeStarted() const

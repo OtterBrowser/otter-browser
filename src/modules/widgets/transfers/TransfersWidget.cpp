@@ -276,7 +276,9 @@ void TransferActionWidget::updateState()
 
 	m_fileNameLabel->setText(Utils::elideText(QFileInfo(m_transfer->getTarget()).fileName(), m_fileNameLabel->fontMetrics(), nullptr, 300));
 	m_detailsLabel->setText(QLatin1String("<small>") + details + QLatin1String("</small>"));
+	/* qt6: no matching member function for call to 'icon'
 	m_iconLabel->setPixmap(QIcon::fromTheme(iconName, QFileIconProvider().icon(iconName)).pixmap(32, 32));
+	*/
 	m_progressBar->setHasError(hasError);
 	m_progressBar->setRange(0, ((isIndeterminate && !hasError) ? 0 : 100));
 	m_progressBar->setValue(isIndeterminate ? (hasError ? 0 : -1) : ((m_transfer->getBytesTotal() > 0) ? qFloor(Utils::calculatePercent(m_transfer->getBytesReceived(), m_transfer->getBytesTotal())) : -1));
