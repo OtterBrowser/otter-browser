@@ -1209,6 +1209,9 @@ Transfer* TransfersManager::startTransfer(const QUrl &source, const QString &tar
 {
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
+#if QT_VERSION < 0x060000
+	request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+#endif
 	request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
 	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
 	request.setUrl(QUrl(source));
