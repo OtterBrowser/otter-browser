@@ -26,8 +26,8 @@
 #include "../core/GesturesController.h"
 #include "../core/SessionsManager.h"
 
+#include <QtGui/QShortcut>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QShortcut>
 
 namespace Otter
 {
