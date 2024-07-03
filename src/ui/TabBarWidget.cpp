@@ -1299,6 +1299,7 @@ void TabBarWidget::showPreview(int index, int delay)
 
 		m_previewWidget->setPreview(window->getTitle(), ((isActive || m_areThumbnailsEnabled) ? QPixmap() : window->createThumbnail()), isActive);
 
+		/* qt6: reference to non-static member function must be called; did you mean to call it with no arguments?
 		switch (shape())
 		{
 			case QTabBar::RoundedEast:
@@ -1328,6 +1329,7 @@ void TabBarWidget::showPreview(int index, int delay)
 		{
 			position.setY(screen.bottom() - m_previewWidget->height());
 		}
+		*/
 
 		if (m_previewWidget->isVisible())
 		{
