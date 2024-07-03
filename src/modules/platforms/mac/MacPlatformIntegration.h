@@ -23,8 +23,8 @@
 #include "../../../core/PlatformIntegration.h"
 
 #include <QtCore/QTemporaryDir>
+#include <QtGui/QAction>
 #include <QtGui/QDrag>
-#include <QtWidgets/QAction>
 
 namespace Otter
 {
