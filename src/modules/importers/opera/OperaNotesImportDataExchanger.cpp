@@ -47,7 +47,7 @@ QWidget* OperaNotesImportDataExchanger::createOptionsWidget(QWidget *parent)
 		m_optionsWidget = new QWidget(parent);
 
 		QFormLayout *layout(new QFormLayout(m_optionsWidget));
-		layout->setMargin(0);
+		layout->setContentsMargins(0, 0, 0, 0);
 
 		m_optionsWidget->setLayout(layout);
 
