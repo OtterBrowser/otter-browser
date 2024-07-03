@@ -39,7 +39,7 @@
 #include <QtCore/QJsonDocument>
 #include <QtCore/QMetaEnum>
 #include <QtCore/QMimeDatabase>
-#include <QtCore/QTextCodec>
+#include <QtCore5Compat/QTextCodec>
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QDesktopWidget>
 

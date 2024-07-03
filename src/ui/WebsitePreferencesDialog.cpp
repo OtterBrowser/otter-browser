@@ -29,7 +29,7 @@
 
 #include "ui_WebsitePreferencesDialog.h"
 
-#include <QtCore/QTextCodec>
+#include <QtCore5Compat/QTextCodec>
 
 namespace Otter
 {

@@ -28,7 +28,7 @@
 #include "../core/Utils.h"
 
 #include <QtCore/QFile>
-#include <QtCore/QTextCodec>
+#include <QtCore5Compat/QTextCodec>
 #include <QtGui/QClipboard>
 #include <QtGui/QGuiApplication>
 #include <QtWidgets/QMessageBox>
