@@ -927,10 +927,12 @@ void QtWebEngineWebWidget::print(QPrinter *printer)
 {
 	QEventLoop eventLoop;
 
+	/* qt6: no member named 'print' in 'Otter::QtWebEnginePage'
 	m_page->print(printer, [&](bool)
 	{
 		eventLoop.quit();
 	});
+	*/
 
 	eventLoop.exec();
 }
@@ -1019,10 +1021,12 @@ void QtWebEngineWebWidget::handlePrintRequest()
 	{
 		QEventLoop eventLoop;
 
+		/* qt6: no member named 'print' in 'Otter::QtWebEnginePage'
 		m_page->print(printer, [&](bool)
 		{
 			eventLoop.quit();
 		});
+		*/
 
 		eventLoop.exec();
 	});
