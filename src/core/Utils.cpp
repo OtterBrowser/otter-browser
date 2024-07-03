@@ -260,7 +260,9 @@ QString createErrorPage(const ErrorPageInformation &information)
 	file.open(QIODevice::ReadOnly | QIODevice::Text);
 
 	QTextStream stream(&file);
+#ifdef OTTER_ENABLE_QT5
 	stream.setCodec("UTF-8");
+#endif
 
 	QString mainTemplate(stream.readAll());
 	const QRegularExpression advancedActionsExpression(QLatin1String("<!--advancedActions:begin-->(.*)<!--advancedActions:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));

@@ -224,7 +224,9 @@ void ContentBlockingProfileDialog::handleCurrentTabChanged(int index)
 	if (file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
 		QTextStream stream(&file);
+#ifdef OTTER_ENABLE_QT5
 		stream.setCodec("UTF-8");
+#endif
 
 		m_ui->sourceEditWidget->setPlainText(stream.readAll());
 		m_ui->sourceEditWidget->markAsLoaded();
@@ -328,7 +330,9 @@ void ContentBlockingProfileDialog::saveSource()
 	if (file.open(QIODevice::WriteOnly | QIODevice::Text))
 	{
 		QTextStream stream(&file);
+#ifdef OTTER_ENABLE_QT5
 		stream.setCodec("UTF-8");
+#endif
 		stream << m_ui->sourceEditWidget->toPlainText();
 
 		file.close();

@@ -50,7 +50,9 @@ JsonSettings::JsonSettings(const QString &path) :
 
 		QStringList comment;
 		QTextStream stream(&file);
+#ifdef OTTER_ENABLE_QT5
 		stream.setCodec("UTF-8");
+#endif
 
 		while (!stream.atEnd())
 		{
@@ -239,7 +241,9 @@ bool JsonSettings::save(const QString &path, bool isAtomic)
 	if (!m_comment.isEmpty())
 	{
 		QTextStream stream(file);
+#ifdef OTTER_ENABLE_QT5
 		stream.setCodec("UTF-8");
+#endif
 
 		const QStringList comment(m_comment.split(QLatin1Char('\n')));
 

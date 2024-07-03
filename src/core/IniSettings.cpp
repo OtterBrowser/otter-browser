@@ -48,7 +48,9 @@ IniSettings::IniSettings(const QString &path, QObject *parent) : QObject(parent)
 	QStringList comment;
 	bool isHeader(true);
 	QTextStream stream(&file);
+#ifdef OTTER_ENABLE_QT5
 	stream.setCodec("UTF-8");
+#endif
 
 	while (!stream.atEnd())
 	{
@@ -227,7 +229,9 @@ bool IniSettings::save(const QString &path, bool isAtomic)
 
 	bool canAddNewLine(false);
 	QTextStream stream(file);
+#ifdef OTTER_ENABLE_QT5
 	stream.setCodec("UTF-8");
+#endif
 
 	if (!m_comment.isEmpty())
 	{
