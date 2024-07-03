@@ -87,7 +87,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	path.addRoundedRect(tileRectangle, 5, 5);
 
 	painter->setPen(QPen(QColor(26, 35, 126, 51), 1));
-	painter->setRenderHint(QPainter::HighQualityAntialiasing);
+	painter->setRenderHint(QPainter::Antialiasing);
 
 	if (index.data(StartPageModel::IsDraggedRole).toBool())
 	{
@@ -121,7 +121,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	QPainter pixmapPainter(&cachedPixmap);
 	pixmapPainter.translate(-rectangle.topLeft());
 	pixmapPainter.setPen(QPen(QColor(26, 35, 126, 51), 1));
-	pixmapPainter.setRenderHint(QPainter::HighQualityAntialiasing);
+	pixmapPainter.setRenderHint(QPainter::Antialiasing);
 
 	const QRect textRectangle(rectangle.x(), (rectangle.y() + rectangle.height()), rectangle.width(), textHeight);
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
