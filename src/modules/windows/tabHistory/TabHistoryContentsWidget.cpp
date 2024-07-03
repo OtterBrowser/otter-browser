@@ -25,7 +25,6 @@
 
 #include "ui_TabHistoryContentsWidget.h"
 
-#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QToolTip>
 
 namespace Otter

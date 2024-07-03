@@ -42,7 +42,6 @@
 #include <QtGui/QPainter>
 #include <QtGui/QPainterPath>
 #include <QtGui/QPixmapCache>
-#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QScrollBar>
 #include <QtWidgets/QToolTip>

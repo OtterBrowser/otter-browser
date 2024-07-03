@@ -29,7 +29,6 @@
 #include "ui_LinksContentsWidget.h"
 
 #include <QtGui/QClipboard>
-#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QToolTip>
 
 namespace Otter

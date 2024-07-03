@@ -32,7 +32,6 @@
 
 #include <QtGui/QClipboard>
 #include <QtGui/QMouseEvent>
-#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QToolTip>
 

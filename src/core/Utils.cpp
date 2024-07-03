@@ -38,7 +38,6 @@
 #include <QtGui/QDesktopServices>
 #include <QtGui/QDrag>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
 

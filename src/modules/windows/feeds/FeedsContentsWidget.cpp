@@ -30,7 +30,6 @@
 
 #include "ui_FeedsContentsWidget.h"
 
-#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>

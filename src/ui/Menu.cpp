@@ -41,7 +41,6 @@
 #include <QtCore/QMimeDatabase>
 #include <QtCore5Compat/QTextCodec>
 #include <QtGui/QMouseEvent>
-#include <QtWidgets/QDesktopWidget>
 
 namespace Otter
 {
