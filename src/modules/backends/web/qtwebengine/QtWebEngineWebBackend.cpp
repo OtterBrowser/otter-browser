@@ -141,7 +141,7 @@ void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadRequest *i
 void QtWebEngineWebBackend::handleOptionChanged(int identifier)
 {
 	QWebEngineProfile *profile(QWebEngineProfile::defaultProfile());
-	QWebEngineSettings *settings(QWebEngineSettings::globalSettings());
+	QWebEngineSettings *settings(QWebEngineSettings::defaultSettings());
 
 	switch (identifier)
 	{
@@ -229,7 +229,7 @@ WebWidget* QtWebEngineWebBackend::createWidget(const QVariantMap &parameters, Co
 		ContentFiltersManager::initialize();
 
 		QWebEngineProfile *profile(QWebEngineProfile::defaultProfile());
-		QWebEngineSettings *settings(QWebEngineSettings::globalSettings());
+		QWebEngineSettings *settings(QWebEngineSettings::defaultSettings());
 
 		profile->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
 		profile->setHttpUserAgent(getUserAgent());
