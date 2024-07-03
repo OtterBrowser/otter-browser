@@ -46,6 +46,7 @@ void GestureActionDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
 	}
 
 	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(widget->getActionIdentifier()));
+	/* qt6: conversion from 'int' to 'QChar' is ambiguous
 	const QString name(widget->getActionIdentifier());
 
 	model->setData(index, definition.getText(true), Qt::DisplayRole);
@@ -53,6 +54,7 @@ void GestureActionDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
 	model->setData(index, ItemModel::createDecoration(definition.defaultState.icon), Qt::DecorationRole);
 	model->setData(index, widget->getActionIdentifier(), MouseProfileDialog::IdentifierRole);
 	model->setData(index, name, MouseProfileDialog::NameRole);
+	*/
 }
 
 QWidget* GestureActionDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
