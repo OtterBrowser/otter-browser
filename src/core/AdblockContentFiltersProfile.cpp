@@ -295,14 +295,16 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 			Node *newNode(new Node());
 			newNode->value = value;
 
+/* qt6: call to member function 'insert' is ambiguous
 			if (value == QLatin1Char('^'))
 			{
 				node->children.insert(0, newNode);
 			}
 			else
 			{
+*/
 				node->children.append(newNode);
-			}
+//			}
 
 			node = newNode;
 		}
