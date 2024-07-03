@@ -21,8 +21,8 @@
 #ifndef OTTER_FILEPATHWIDGET_H
 #define OTTER_FILEPATHWIDGET_H
 
+#include <QtGui/QFileSystemModel>
 #include <QtWidgets/QCompleter>
-#include <QtWidgets/QFileSystemModel>
 #include <QtWidgets/QPushButton>
 
 namespace Otter
