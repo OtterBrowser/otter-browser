@@ -36,6 +36,7 @@
 #include "../../../ui/OpenAddressDialog.h"
 #include "../../../ui/Window.h"
 
+#include <QtCore/QFile>
 #include <QtCore/QtMath>
 #include <QtGui/QDrag>
 #include <QtGui/QMouseEvent>
