@@ -40,6 +40,7 @@
 #include <QtCore/QMetaEnum>
 #include <QtCore/QMimeDatabase>
 #include <QtCore5Compat/QTextCodec>
+#include <QtGui/QActionGroup>
 #include <QtGui/QMouseEvent>
 
 namespace Otter
