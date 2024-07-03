@@ -243,7 +243,7 @@ void ToolBarWidget::resizeEvent(QResizeEvent *event)
 	}
 }
 
-void ToolBarWidget::enterEvent(QEvent *event)
+void ToolBarWidget::enterEvent(QEnterEvent *event)
 {
 	QToolBar::enterEvent(event);
 
