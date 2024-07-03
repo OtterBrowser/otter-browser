@@ -33,11 +33,11 @@
 
 #include <QtCore/QFile>
 #include <QtCore/QRegularExpression>
-#include <QtWebEngineWidgets/QWebEngineHistory>
-#include <QtWebEngineWidgets/QWebEngineProfile>
-#include <QtWebEngineWidgets/QWebEngineScript>
-#include <QtWebEngineWidgets/QWebEngineScriptCollection>
-#include <QtWebEngineWidgets/QWebEngineSettings>
+#include <QtWebEngineCore/QWebEngineHistory>
+#include <QtWebEngineCore/QWebEngineProfile>
+#include <QtWebEngineCore/QWebEngineScript>
+#include <QtWebEngineCore/QWebEngineScriptCollection>
+#include <QtWebEngineCore/QWebEngineSettings>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
