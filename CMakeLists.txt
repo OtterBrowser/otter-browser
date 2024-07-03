@@ -64,19 +64,37 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(MIN_VERSION_QT5 5.15)
+set(MIN_VERSION_QT6 6.2)
+set(MIN_VERSION_QTWEBKIT 5.212)
 
 include(FeatureSummary)
 include(GNUInstallDirs)
 
 option(ALLOW_WITHOUT_WEB_BACKENDS "Allow to build without any web backends (build testing only)" OFF)
-option(ENABLE_QTWEBENGINE "Enable QtWebEngine backend (requires QtWebEngine 5.15)" ON)
-option(ENABLE_QTWEBKIT "Enable QtWebKit backend (requires QtWebKit 5.212)" ON)
+option(ENABLE_QT6 "Build using Qt 6" ON)
+
+if (ENABLE_QT6)
+	if (NOT ALLOW_WITHOUT_WEB_BACKENDS)
+		option(ENABLE_QTWEBENGINE "Enable QtWebEngine backend (requires QtWebEngine version ${MIN_VERSION_QT6} or higher)" ON)
+	endif ()
+	find_package(Qt6 ${MIN_VERSION_QT6} REQUIRED COMPONENTS Core Core5Compat Gui Multimedia Network PrintSupport Qml Svg WebEngineWidgets Widgets)
+else ()
+	if (NOT ALLOW_WITHOUT_WEB_BACKENDS)
+		option(ENABLE_QTWEBENGINE "Enable QtWebEngine backend (requires QtWebEngine ${MIN_VERSION_QT5})" ON)
+		option(ENABLE_QTWEBKIT "Enable QtWebKit backend (requires QtWebKit ${MIN_VERSION_QTWEBKIT})" ON)
+	endif ()
+	find_package(Qt5 ${MIN_VERSION_QT5} REQUIRED COMPONENTS Core Gui Multimedia Network PrintSupport Qml Svg Widgets)
+	find_package(Qt5WebKitWidgets ${MIN_VERSION_QTWEBKIT} QUIET)
+endif ()
+
 option(ENABLE_CRASH_REPORTS "Enable built-in crash reporting (official builds only)" OFF)
 option(ENABLE_DBUS "Enable D-Bus based integration for notifications (only freedesktop.org compatible platforms)" ON)
 option(ENABLE_SPELLCHECK "Enable Hunspell based spell checking" ON)
 
-find_package(Qt5 5.15.0 REQUIRED COMPONENTS Core Gui Multimedia Network PrintSupport Qml Svg Widgets)
-find_package(Hunspell 1.5.0 QUIET)
+if (ENABLE_SPELLCHECK)
+	find_package(Hunspell 1.5.0 REQUIRED)
+endif ()
 
 set_package_properties(Hunspell PROPERTIES URL "https://hunspell.github.io/" DESCRIPTION "Generic spell checking support" TYPE OPTIONAL)
 
@@ -290,11 +308,7 @@ set(OTTER_SOURCES
 	3rdparty/qrcodegen/qrcodegen.cpp
 )
 
-qt5_add_resources(OTTER_RESOURCES
-	resources/resources.qrc
-)
-
-qt5_wrap_ui(OTTER_UI
+set(OTTER_UI_SOURCES
 	src/ui/AcceptCookieDialog.ui
 	src/ui/ActionParametersDialog.ui
 	src/ui/AuthenticationDialog.ui
@@ -368,14 +382,41 @@ qt5_wrap_ui(OTTER_UI
 	src/modules/windows/windows/WindowsContentsWidget.ui
 )
 
-foreach (_dir ${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
-	if (EXISTS "${_dir}/private/qpixmapfilter_p.h")
-		add_definitions(-DOTTER_ENABLE_STARTPAGEBLUR)
-		include_directories(${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
+if (ENABLE_QT6)
+	qt6_add_resources(OTTER_RESOURCES
+		resources/resources.qrc
+	)
 
-		break ()
-	endif ()
-endforeach ()
+	qt6_wrap_ui(OTTER_UI
+		${OTTER_UI_SOURCES}
+	)
+else ()
+	qt5_add_resources(OTTER_RESOURCES
+		resources/resources.qrc
+	)
+
+	qt5_wrap_ui(OTTER_UI
+		${OTTER_UI_SOURCES}
+	)
+endif ()
+
+if (ENABLE_QT6)
+	foreach (_current_dir ${Qt6Widgets_PRIVATE_INCLUDE_DIRS})
+		if (EXISTS "${_current_dir}/private/qpixmapfilter_p.h")
+			add_definitions(-DOTTER_ENABLE_STARTPAGEBLUR)
+			include_directories(${Qt6Widgets_PRIVATE_INCLUDE_DIRS})
+			break ()
+		endif ()
+	endforeach ()
+else ()
+	foreach (_dir ${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
+		if (EXISTS "${_dir}/private/qpixmapfilter_p.h")
+			add_definitions(-DOTTER_ENABLE_STARTPAGEBLUR)
+			include_directories(${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
+			break ()
+		endif ()
+	endforeach ()
+endif ()
 
 if (ENABLE_QTWEBENGINE)
 	include(src/modules/backends/web/qtwebengine/CMakeLists.txt)
@@ -448,7 +489,9 @@ endif ()
 if (WIN32)
 	add_definitions(-DUNICODE -D_UNICODE)
 
-	find_package(Qt5 5.15.0 QUIET COMPONENTS WinExtras)
+	if (NOT ENABLE_QT6)
+		find_package(Qt5 ${MIN_VERSION_QT5} QUIET COMPONENTS WinExtras)
+	endif ()
 
 	if (MSVC)
 		set(CMAKE_PREFIX_PATH $ENV{QTDIR})
@@ -470,7 +513,9 @@ if (WIN32)
 		src/modules/platforms/windows/WindowsPlatformStyle.cpp
 	)
 elseif (APPLE)
-	find_package(Qt5 5.15.0 QUIET COMPONENTS MacExtras)
+	if (NOT ENABLE_QT6)
+		find_package(Qt5 ${MIN_VERSION_QT5} QUIET COMPONENTS MacExtras)
+	endif ()
 
 	set(CMAKE_OSX_DEPLOYMENT_TARGET 10.13)
 	set(MACOSX_BUNDLE_BUNDLE_NAME "Otter Browser")
@@ -489,10 +534,16 @@ elseif (APPLE)
 
 	set_source_files_properties(resources/icons/otter-browser.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 elseif (UNIX)
-	find_package(Qt5 5.15.0 QUIET COMPONENTS DBus)
-
-	if (TARGET Qt5::DBus AND ENABLE_DBUS)
-		add_definitions(-DOTTER_ENABLE_DBUS)
+	if (ENABLE_QT6)
+		find_package(Qt6 ${MIN_VERSION_QT6} QUIET COMPONENTS DBus)
+		if (TARGET Qt6::DBus AND ENABLE_DBUS)
+			add_definitions(-DOTTER_ENABLE_DBUS)
+		endif ()
+	else ()
+		find_package(Qt5 ${MIN_VERSION_QT5} QUIET COMPONENTS DBus)
+		if (TARGET Qt5::DBus AND ENABLE_DBUS)
+			add_definitions(-DOTTER_ENABLE_DBUS)
+		endif ()
 	endif ()
 
 	set(OTTER_SOURCES
@@ -565,22 +616,48 @@ foreach (_library ${OTTER_LINK_LIBRARIES})
 	target_link_libraries(otter-browser ${_library})
 endforeach ()
 
+if (ENABLE_QT6)
+	if (TARGET Qt6::WebEngineWidgets AND ENABLE_QTWEBENGINE)
+		target_link_libraries(otter-browser Qt6::WebEngineCore Qt6::WebEngineWidgets)
+	endif ()
+else ()
+	if (TARGET Qt5::WebEngineWidgets AND ENABLE_QTWEBENGINE)
+		target_link_libraries(otter-browser Qt5::WebEngineCore Qt5::WebEngineWidgets)
+	endif ()
+endif ()
+
+if (TARGET Qt5::WebKitWidgets AND ENABLE_QTWEBKIT)
+	target_link_libraries(otter-browser Qt5::WebKit Qt5::WebKitWidgets)
+endif ()
+
 if (TARGET Hunspell::Hunspell AND ENABLE_SPELLCHECK)
 	target_link_libraries(otter-browser Hunspell::Hunspell)
 endif ()
 
 if (WIN32)
-	target_link_libraries(otter-browser Qt5::WinExtras ole32 shell32 advapi32 user32)
+	if (NOT ENABLE_QT6)
+		target_link_libraries(Qt5::WinExtras)
+	endif ()
+	target_link_libraries(otter-browser ole32 shell32 advapi32 user32)
 elseif (APPLE)
 	find_library(FRAMEWORK_Cocoa Cocoa)
 	find_library(FRAMEWORK_Foundation Foundation)
 
 	set_target_properties(otter-browser PROPERTIES OUTPUT_NAME "Otter Browser")
 
-	target_link_libraries(otter-browser Qt5::MacExtras ${FRAMEWORK_Cocoa} ${FRAMEWORK_Foundation})
+	if (NOT ENABLE_QT6)
+		target_link_libraries(otter-browser Qt5::MacExtras ${FRAMEWORK_Cocoa} ${FRAMEWORK_Foundation})
+	endif ()
+	target_link_libraries(otter-browser ${FRAMEWORK_Cocoa} ${FRAMEWORK_Foundation})
 elseif (UNIX)
-	if (TARGET Qt5::DBus AND ENABLE_DBUS)
-		target_link_libraries(otter-browser Qt5::DBus)
+	if (ENABLE_QT6)
+		if (TARGET Qt6::DBus AND ENABLE_DBUS)
+			target_link_libraries(otter-browser Qt6::DBus)
+		endif ()
+	else ()
+		if (TARGET Qt5::DBus AND ENABLE_DBUS)
+			target_link_libraries(otter-browser Qt5::DBus)
+		endif ()
 	endif ()
 
 	if (ENABLE_CRASH_REPORTS)
@@ -588,7 +665,11 @@ elseif (UNIX)
 	endif ()
 endif ()
 
-target_link_libraries(otter-browser Qt5::Core Qt5::Gui Qt5::Multimedia Qt5::Network Qt5::PrintSupport Qt5::Qml Qt5::Svg Qt5::Widgets)
+if (ENABLE_QT6)
+	target_link_libraries(otter-browser Qt6::Core Qt6::Core5Compat Qt6::Gui Qt6::Multimedia Qt6::Network Qt6::PrintSupport Qt6::Qml Qt6::Svg Qt6::Widgets)
+else ()
+	target_link_libraries(otter-browser Qt5::Core Qt5::Gui Qt5::Multimedia Qt5::Network Qt5::PrintSupport Qt5::Qml Qt5::Svg Qt5::Widgets)
+endif ()
 
 set(XDG_APPS_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/applications CACHE FILEPATH "Install path for .desktop files")
 
