@@ -761,6 +761,7 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark)
 
 	const QString elementOwner(QLatin1String("http://otter-browser.org/otter-xbel-bookmark"));
 	const BookmarkType type(bookmark->getType());
+	const bool isBookmarks(m_mode == BookmarksMode);
 
 	switch (type)
 	{
@@ -789,7 +790,7 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark)
 				writer->writeAttribute(QLatin1String("modified"), bookmark->getRawData(TimeModifiedRole).toDateTime().toString(Qt::ISODate));
 			}
 
-			if (m_mode == BookmarksMode)
+			if (isBookmarks)
 			{
 				if (bookmark->getRawData(TimeVisitedRole).toDateTime().isValid())
 				{
@@ -804,7 +805,7 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark)
 				writer->writeTextElement(QLatin1String("desc"), bookmark->getRawData(DescriptionRole).toString());
 			}
 
-			if (m_mode == BookmarksMode && (!bookmark->getRawData(KeywordRole).toString().isEmpty() || bookmark->getRawData(VisitsRole).toInt() > 0))
+			if (isBookmarks && (!bookmark->getRawData(KeywordRole).toString().isEmpty() || bookmark->getRawData(VisitsRole).toInt() > 0))
 			{
 				writer->writeStartElement(QLatin1String("info"));
 				writer->writeStartElement(QLatin1String("metadata"));
@@ -848,7 +849,7 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark)
 				writer->writeTextElement(QLatin1String("desc"), bookmark->getRawData(DescriptionRole).toString());
 			}
 
-			if (m_mode == BookmarksMode && !bookmark->getRawData(KeywordRole).toString().isEmpty())
+			if (isBookmarks && !bookmark->getRawData(KeywordRole).toString().isEmpty())
 			{
 				writer->writeStartElement(QLatin1String("info"));
 				writer->writeStartElement(QLatin1String("metadata"));
