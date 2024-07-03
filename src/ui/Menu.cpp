@@ -1811,12 +1811,14 @@ void MenuAction::setState(const ActionsManager::ActionDefinition::State &state)
 	if (!shortcut().isEmpty())
 	{
 		const int shortcutWidth(m_menu->fontMetrics().boundingRect(QLatin1Char('X') + shortcut().toString(QKeySequence::NativeText)).width());
+		/* qt6: ‘desktop’ is not a member of ‘QApplication’; port to ‘QScreen::geometry()?
 		const int availableWidth(QApplication::desktop()->screenGeometry(m_menu).width() / 4);
 
 		if (shortcutWidth < availableWidth)
 		{
 			maximumWidth = (availableWidth - shortcutWidth);
 		}
+		*/
 	}
 
 	setText(Utils::elideText(QString(state.text).replace(QLatin1Char('&'), QLatin1String("&&")), m_menu->fontMetrics(), m_menu, maximumWidth));

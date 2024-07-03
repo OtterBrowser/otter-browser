@@ -1329,10 +1329,13 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			QToolTip::hideText();
 		}
+
+		/* qt6: ‘desktop’ is not a member of ‘QApplication’; port to ‘QScreen::geometry()?
 		else
 		{
 			QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_listView).width() / 2)), m_listView, m_listView->visualRect(index));
 		}
+		*/
 
 		return true;
 	}

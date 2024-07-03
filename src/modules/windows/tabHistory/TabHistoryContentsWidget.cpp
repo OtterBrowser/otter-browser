@@ -182,7 +182,9 @@ bool TabHistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 			}
 		}
 
-		QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->historyViewWidget).width() / 2)), m_ui->historyViewWidget, m_ui->historyViewWidget->visualRect(index));
+		/* qt6: no matching function for call to ‘QScreen::geometry()
+		QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QGuiApplication::primaryScreen()->geometry(m_ui->historyViewWidget).width() / 2)), m_ui->historyViewWidget, m_ui->historyViewWidget->visualRect(index));
+		*/
 
 		return true;
 	}

@@ -418,10 +418,12 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 		const QModelIndex index(m_ui->notesViewWidget->indexAt(helpEvent->pos()));
 		const BookmarksModel::Bookmark *bookmark(NotesManager::getModel()->getBookmark(index));
 
+		/* qt6: no matching function for call to ‘QScreen::geometry()
 		if (bookmark)
 		{
-			QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(bookmark->toolTip(), Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->notesViewWidget).width() / 2)), m_ui->notesViewWidget, m_ui->notesViewWidget->visualRect(index));
+			QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(bookmark->toolTip(), Qt::ElideRight, (QGuiApplication::primaryScreen()->geometry(m_ui->notesViewWidget).width() / 2)), m_ui->notesViewWidget, m_ui->notesViewWidget->visualRect(index));
 		}
+		*/
 
 		return true;
 	}
