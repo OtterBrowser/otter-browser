@@ -668,11 +668,12 @@ bool ActionsManager::isShortcutAllowed(const QKeySequence &shortcut, ShortcutChe
 		return false;
 	}
 
+/* qt6: use of overloaded operator '!=' is ambiguous (with operand types 'QKeyCombination' and 'Qt::Key')
 	if ((check == AllChecks || check == DisallowSingleKeyShortcutCheck) && (!areSingleKeyShortcutsAllowed && (shortcut[0] == Qt::Key_Plus || !shortcut.toString(QKeySequence::PortableText).contains(QLatin1Char('+'))) && shortcut[0] != Qt::Key_Delete && !(shortcut[0] >= Qt::Key_F1 && shortcut[0] <= Qt::Key_F35)))
 	{
 		return false;
 	}
-
+*/
 	if (check == AllChecks || check == DisallowStandardShortcutCheck)
 	{
 		if (m_disallowedShortcuts.isEmpty())
