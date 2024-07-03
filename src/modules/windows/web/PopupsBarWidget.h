@@ -23,7 +23,7 @@
 
 #include "../../../ui/WebWidget.h"
 
-#include <QtWidgets/QActionGroup>
+#include <QtGui/QActionGroup>
 
 namespace Otter
 {
