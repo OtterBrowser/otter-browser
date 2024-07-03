@@ -243,7 +243,7 @@ bool OperaNotesImportDataExchanger::importData(const QString &path)
 			}
 			else if (line.startsWith(QLatin1String("\tCREATED=")))
 			{
-				note->setData(QDateTime::fromTime_t(line.section(QLatin1Char('='), 1, -1).toUInt()), BookmarksModel::TimeAddedRole);
+				note->setData(QDateTime::fromSecsSinceEpoch(line.section(QLatin1Char('='), 1, -1).toUInt()), BookmarksModel::TimeAddedRole);
 			}
 		}
 	}

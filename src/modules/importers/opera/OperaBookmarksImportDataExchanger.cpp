@@ -285,11 +285,11 @@ void OperaBookmarksImportJob::start()
 			}
 			else if (line.startsWith(QLatin1String("\tCREATED=")))
 			{
-				bookmark->setData(QDateTime::fromTime_t(line.section(QLatin1Char('='), 1, -1).toUInt()), BookmarksModel::TimeAddedRole);
+				bookmark->setData(QDateTime::fromSecsSinceEpoch(line.section(QLatin1Char('='), 1, -1).toUInt()), BookmarksModel::TimeAddedRole);
 			}
 			else if (line.startsWith(QLatin1String("\tVISITED=")))
 			{
-				bookmark->setData(QDateTime::fromTime_t(line.section(QLatin1Char('='), 1, -1).toUInt()), BookmarksModel::TimeVisitedRole);
+				bookmark->setData(QDateTime::fromSecsSinceEpoch(line.section(QLatin1Char('='), 1, -1).toUInt()), BookmarksModel::TimeVisitedRole);
 			}
 		}
 	}
