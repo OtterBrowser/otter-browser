@@ -20,6 +20,7 @@
 #include "SyntaxHighlighter.h"
 #include "../core/SessionsManager.h"
 
+#include <QtCore/QFile>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
 

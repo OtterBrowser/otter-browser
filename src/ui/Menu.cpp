@@ -35,6 +35,7 @@
 #include "../core/ToolBarsManager.h"
 #include "../core/Utils.h"
 
+#include <QtCore/QFile>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QMetaEnum>

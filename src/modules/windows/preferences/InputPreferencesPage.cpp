@@ -28,6 +28,7 @@
 #include "../../../ui/ActionParametersDialog.h"
 #include "../../../ui/MetaDataDialog.h"
 
+#include <QtCore/QFile>
 #include <QtCore/QTimer>
 #include <QtWidgets/QMessageBox>
 
