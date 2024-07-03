@@ -284,7 +284,7 @@ QStandardItem* TabSwitcherWidget::createRow(Window *window, const QVariant &inde
 	}
 
 	QStandardItem *item(new QStandardItem(window->getIcon(), window->getTitle()));
-	item->setData(color, Qt::TextColorRole);
+	item->setData(color, Qt::ForegroundRole);
 	item->setData(window->getIdentifier(), IdentifierRole);
 	item->setData(index, OrderRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
@@ -320,7 +320,7 @@ QStandardItem* TabSwitcherWidget::createRow(Window *window, const QVariant &inde
 				color.setAlpha(150);
 			}
 
-			m_model->setData(m_model->index(row, 0), color, Qt::TextColorRole);
+			m_model->setData(m_model->index(row, 0), color, Qt::ForegroundRole);
 		}
 	});
 
