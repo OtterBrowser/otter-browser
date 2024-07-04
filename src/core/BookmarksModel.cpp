@@ -393,10 +393,11 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 	}
 
 	QFile file(path);
+	const bool isNotes(m_mode == NotesMode);
 
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
-		Console::addMessage(((mode == NotesMode) ? tr("Failed to open notes file: %1") : tr("Failed to open bookmarks file: %1")).arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, path);
+		Console::addMessage((isNotes ? tr("Failed to open notes file: %1") : tr("Failed to open bookmarks file: %1")).arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, path);
 
 		return;
 	}
@@ -420,9 +421,9 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 			{
 				m_rootItem->removeRows(0, m_rootItem->rowCount());
 
-				Console::addMessage(((m_mode == NotesMode) ? tr("Failed to load notes file: %1") : tr("Failed to load bookmarks file: %1")).arg(reader.errorString()), Console::OtherCategory, Console::ErrorLevel, path);
+				Console::addMessage((isNotes ? tr("Failed to load notes file: %1") : tr("Failed to load bookmarks file: %1")).arg(reader.errorString()), Console::OtherCategory, Console::ErrorLevel, path);
 
-				QMessageBox::warning(nullptr, tr("Error"), ((m_mode == NotesMode) ? tr("Failed to load notes file.") : tr("Failed to load bookmarks file.")), QMessageBox::Close);
+				QMessageBox::warning(nullptr, tr("Error"), (isNotes ? tr("Failed to load notes file.") : tr("Failed to load bookmarks file.")), QMessageBox::Close);
 
 				return;
 			}
