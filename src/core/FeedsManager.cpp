@@ -72,7 +72,7 @@ void Feed::markAllEntriesAsRead()
 
 	for (int i = 0; i < m_entries.count(); ++i)
 	{
-		if (!m_entries[i].lastReadTime.isValid())
+		if (!m_entries.at(i).lastReadTime.isValid())
 		{
 			m_entries[i].lastReadTime = currentDateTime;
 		}
