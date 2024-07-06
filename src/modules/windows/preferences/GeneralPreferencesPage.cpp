@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -116,19 +116,21 @@ void GeneralPreferencesPage::load()
 
 	connect(bookmarksMenu, &Menu::triggered, this, [&](QAction *action)
 	{
-		if (action)
+		if (!action)
 		{
-			const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(action->data().toULongLong()));
-			const QString url(bookmark ? bookmark->getUrl().toDisplayString() : QString());
+			return;
+		}
 
-			if (url.isEmpty())
-			{
-				m_ui->homePageLineEditWidget->setText(QLatin1String("bookmarks:") + QString::number(action->data().toULongLong()));
-			}
-			else
-			{
-				m_ui->homePageLineEditWidget->setText(url);
-			}
+		const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(action->data().toULongLong()));
+		const QString url(bookmark ? bookmark->getUrl().toDisplayString() : QString());
+
+		if (url.isEmpty())
+		{
+			m_ui->homePageLineEditWidget->setText(QLatin1String("bookmarks:") + QString::number(action->data().toULongLong()));
+		}
+		else
+		{
+			m_ui->homePageLineEditWidget->setText(url);
 		}
 	});
 	connect(m_ui->useCurrentAsHomePageButton, &QPushButton::clicked, this, [&]()
