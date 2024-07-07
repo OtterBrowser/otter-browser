@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -234,14 +234,16 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 
 	for (int i = 0; i < profiles.count(); ++i)
 	{
-		if (profiles.at(i))
+		ContentFiltersProfile* profile(profiles.at(i));
+
+		if (profile)
 		{
-			const int amount(amounts.value(profiles.at(i)->getName()));
-			const QString title(Utils::elideText(profiles.at(i)->getTitle(), m_profilesMenu->fontMetrics(), m_profilesMenu));
+			const int amount(amounts.value(profile->getName()));
+			const QString title(Utils::elideText(profile->getTitle(), m_profilesMenu->fontMetrics(), m_profilesMenu));
 			QAction *profileAction(m_profilesMenu->addAction((amount > 0) ? QStringLiteral("%1 (%2)").arg(title).arg(amount) : title));
-			profileAction->setData(profiles.at(i)->getName());
+			profileAction->setData(profile->getName());
 			profileAction->setCheckable(true);
-			profileAction->setChecked(enabledProfiles.contains(profiles.at(i)->getName()));
+			profileAction->setChecked(enabledProfiles.contains(profile->getName()));
 		}
 	}
 }
