@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -1635,14 +1635,16 @@ void MainWindow::beginToolBarDragging(bool isSidebar)
 
 void MainWindow::endToolBarDragging()
 {
-	const QList<ToolBarDropZoneWidget*> toolBars(findChildren<ToolBarDropZoneWidget*>());
+	const QList<ToolBarDropZoneWidget*> dropZones(findChildren<ToolBarDropZoneWidget*>());
 
-	for (int i = 0; i < toolBars.count(); ++i)
+	for (int i = 0; i < dropZones.count(); ++i)
 	{
-		removeToolBarBreak(toolBars.at(i));
-		removeToolBar(toolBars.at(i));
+		ToolBarDropZoneWidget *dropZone(dropZones.at(i));
 
-		toolBars.at(i)->deleteLater();
+		removeToolBarBreak(dropZone);
+		removeToolBar(dropZone);
+
+		dropZone->deleteLater();
 	}
 
 	m_isDraggingToolBar = false;
