@@ -1085,10 +1085,11 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 				const int toolBarIdentifier(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt());
 				const QString panel(parameters.value(QLatin1String("panel")).toString());
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(toolBarIdentifier));
-				definition.currentPanel = ((definition.currentPanel == panel) ? QString() : panel);
 
 				if (definition.isValid())
 				{
+					definition.currentPanel = ((definition.currentPanel == panel) ? QString() : panel);
+
 					ToolBarsManager::setToolBar(definition);
 
 					triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), toolBarIdentifier}, {QLatin1String("isChecked"), true}}, trigger);
