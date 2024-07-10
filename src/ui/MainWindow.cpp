@@ -1298,7 +1298,8 @@ void MainWindow::restoreSession(const Session::MainWindow &session)
 	{
 		for (int i = 0; i < session.windows.count(); ++i)
 		{
-			QVariantMap parameters({{QLatin1String("size"), ((session.windows.at(i).state.state == Qt::WindowMaximized || !session.windows.at(i).state.geometry.isValid()) ? m_workspace->size() : session.windows.at(i).state.geometry.size())}});
+			const Session::Window sessionWindow(session.windows.at(i));
+			QVariantMap parameters({{QLatin1String("size"), ((sessionWindow.state.state == Qt::WindowMaximized || !sessionWindow.state.geometry.isValid()) ? m_workspace->size() : sessionWindow.state.geometry.size())}});
 
 			if (m_isPrivate)
 			{
@@ -1306,14 +1307,14 @@ void MainWindow::restoreSession(const Session::MainWindow &session)
 			}
 
 			Window *window(new Window(parameters, nullptr, this));
-			window->setSession(session.windows.at(i), SettingsManager::getOption(SettingsManager::Sessions_DeferTabsLoadingOption).toBool());
+			window->setSession(sessionWindow, SettingsManager::getOption(SettingsManager::Sessions_DeferTabsLoadingOption).toBool());
 
-			if (index < 0 && session.windows.at(i).state.state != Qt::WindowMinimized)
+			if (index < 0 && sessionWindow.state.state != Qt::WindowMinimized)
 			{
 				index = i;
 			}
 
-			addWindow(window, SessionsManager::DefaultOpen, -1, session.windows.at(i).state, session.windows.at(i).isAlwaysOnTop);
+			addWindow(window, SessionsManager::DefaultOpen, -1, sessionWindow.state, sessionWindow.isAlwaysOnTop);
 		}
 
 		emit arbitraryActionsStateChanged({ActionsManager::MaximizeAllAction, ActionsManager::MinimizeAllAction, ActionsManager::RestoreAllAction, ActionsManager::CascadeAllAction, ActionsManager::TileAllAction});
