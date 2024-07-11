@@ -1389,11 +1389,14 @@ void MainWindow::restoreClosedWindow(int index)
 
 void MainWindow::clearClosedWindows()
 {
-	m_closedWindows.clear();
-
-	if (SessionsManager::getClosedWindows().isEmpty())
+	if (!m_closedWindows.isEmpty())
 	{
-		emit closedWindowsAvailableChanged(false);
+		m_closedWindows.clear();
+
+		if (SessionsManager::getClosedWindows().isEmpty())
+		{
+			emit closedWindowsAvailableChanged(false);
+		}
 	}
 }
 
