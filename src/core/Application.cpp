@@ -1371,6 +1371,7 @@ QString Application::createReport(ReportOptions options)
 	AddonsManager::createInstance();
 
 	const WebBackend *webBackend(AddonsManager::getWebBackend());
+	const QString versionWeekly(QStringLiteral(OTTER_VERSION_WEEKLY).trimmed());
 	const QString gitBranch(QStringLiteral(OTTER_GIT_BRANCH).trimmed());
 	const QString gitRevision(QStringLiteral(OTTER_GIT_REVISION).trimmed());
 	DiagnosticReport report;
@@ -1379,7 +1380,7 @@ QString Application::createReport(ReportOptions options)
 	versionReport.fieldWidths = {20, 0};
 	versionReport.entries.reserve(7);
 	versionReport.entries.append({QLatin1String("Main Number"), OTTER_VERSION_MAIN});
-	versionReport.entries.append({QLatin1String("Weekly Number"), (QStringLiteral(OTTER_VERSION_WEEKLY).trimmed().isEmpty() ? QString(QLatin1Char('-')) : OTTER_VERSION_WEEKLY)});
+	versionReport.entries.append({QLatin1String("Weekly Number"), (versionWeekly.isEmpty() ? QString(QLatin1Char('-')) : versionWeekly)});
 	versionReport.entries.append({QLatin1String("Context"), OTTER_VERSION_CONTEXT});
 	versionReport.entries.append({QLatin1String("Web Backend"), (webBackend ? QStringLiteral("%1 %2").arg(webBackend->getTitle(), webBackend->getEngineVersion()) : QLatin1String("none"))});
 	versionReport.entries.append({QLatin1String("Build Date"), QDateTime::fromString(OTTER_BUILD_DATETIME, Qt::ISODate).toUTC().toString(Qt::ISODate)});
