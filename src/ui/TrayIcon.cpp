@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -38,16 +38,18 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
-		if (actions.at(i) < 0)
+		const int identifier(actions.at(i));
+
+		if (identifier < 0)
 		{
 			menu->addSeparator();
 
 			continue;
 		}
 
-		Action *action(new Action(actions.at(i), {}, executor, menu));
+		Action *action(new Action(identifier, {}, executor, menu));
 
-		switch (actions.at(i))
+		switch (identifier)
 		{
 			case ActionsManager::BookmarksAction:
 				action->setTextOverride(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
