@@ -50,7 +50,6 @@ protected:
 protected slots:
 	void toggleWindowsVisibility();
 	void handleMessageClicked();
-	void handleMessageIgnored();
 	void updateMenu();
 
 private:

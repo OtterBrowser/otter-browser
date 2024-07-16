@@ -99,7 +99,9 @@ void TrayIcon::timerEvent(QTimerEvent *event)
 
 		m_autoHideTimer = 0;
 
-		handleMessageIgnored();
+		disconnect(m_trayIcon, &QSystemTrayIcon::messageClicked, this, &TrayIcon::handleMessageClicked);
+
+		m_notification->markAsIgnored();
 	}
 }
 
@@ -127,13 +129,6 @@ void TrayIcon::handleMessageClicked()
 	}
 
 	m_notification->markAsClicked();
-}
-
-void TrayIcon::handleMessageIgnored()
-{
-	disconnect(m_trayIcon, &QSystemTrayIcon::messageClicked, this, &TrayIcon::handleMessageClicked);
-
-	m_notification->markAsIgnored();
 }
 
 void TrayIcon::updateMenu()
