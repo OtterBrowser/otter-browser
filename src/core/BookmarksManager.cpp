@@ -158,12 +158,12 @@ BookmarksModel::Bookmark* BookmarksManager::getBookmark(const QString &text)
 
 	if (text.startsWith(QLatin1Char('#')))
 	{
-		return m_model->getBookmark(text.midRef(1).toULongLong());
+		return m_model->getBookmark(text.mid(1).toULongLong());
 	}
 
 	if (text.startsWith(QLatin1String("bookmarks:")))
 	{
-		return (text.startsWith(QLatin1String("bookmarks:/")) ? m_model->getBookmarkByPath(text.mid(11)) : getBookmark(text.midRef(10).toULongLong()));
+		return (text.startsWith(QLatin1String("bookmarks:/")) ? m_model->getBookmarkByPath(text.mid(11)) : getBookmark(text.mid(10).toULongLong()));
 	}
 
 	return m_model->getBookmarkByKeyword(text);

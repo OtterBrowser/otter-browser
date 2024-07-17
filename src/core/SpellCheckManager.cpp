@@ -155,7 +155,6 @@ void SpellCheckManager::saveIgnoredWords()
 	}
 
 	QTextStream stream(&file);
-	stream.setCodec("UTF-8");
 
 	QSet<QString>::iterator iterator;
 
@@ -279,7 +278,6 @@ QStringList SpellCheckManager::getIgnoredWords()
 		if (file.open(QIODevice::ReadOnly))
 		{
 			QTextStream stream(&file);
-			stream.setCodec("UTF-8");
 
 			while (!stream.atEnd())
 			{

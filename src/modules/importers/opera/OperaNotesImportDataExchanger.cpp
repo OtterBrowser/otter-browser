@@ -47,7 +47,7 @@ QWidget* OperaNotesImportDataExchanger::createOptionsWidget(QWidget *parent)
 		m_optionsWidget = new QWidget(parent);
 
 		QFormLayout *layout(new QFormLayout(m_optionsWidget));
-		layout->setMargin(0);
+		layout->setContentsMargins(0, 0, 0, 0);
 
 		m_optionsWidget->setLayout(layout);
 
@@ -140,7 +140,6 @@ bool OperaNotesImportDataExchanger::importData(const QString &path)
 	}
 
 	QTextStream stream(&file);
-	stream.setCodec("UTF-8");
 
 	QString line(stream.readLine());
 
@@ -243,7 +242,7 @@ bool OperaNotesImportDataExchanger::importData(const QString &path)
 			}
 			else if (line.startsWith(QLatin1String("\tCREATED=")))
 			{
-				note->setData(QDateTime::fromTime_t(line.section(QLatin1Char('='), 1, -1).toUInt()), BookmarksModel::TimeAddedRole);
+				note->setData(QDateTime::fromSecsSinceEpoch(line.section(QLatin1Char('='), 1, -1).toUInt()), BookmarksModel::TimeAddedRole);
 			}
 		}
 	}

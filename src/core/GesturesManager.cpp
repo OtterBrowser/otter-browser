@@ -532,7 +532,6 @@ bool MouseProfile::save()
 	JsonSettings settings(SessionsManager::getWritableDataPath(QLatin1String("mouse/") + m_identifier + QLatin1String(".json")));
 	QString comment;
 	QTextStream stream(&comment);
-	stream.setCodec("UTF-8");
 	stream << QLatin1String("Title: ") << (m_title.isEmpty() ? QT_TR_NOOP("(Untitled)") : m_title) << QLatin1Char('\n');
 	stream << QLatin1String("Description: ") << m_description << QLatin1Char('\n');
 	stream << QLatin1String("Type: mouse-profile\n");

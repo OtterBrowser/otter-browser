@@ -1275,7 +1275,9 @@ void Application::setLocale(const QString &locale)
 	m_qtTranslator->load(QLatin1String("qt_") + (useSystemLocale ? QLocale::system().name() : identifier), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 	m_applicationTranslator->load((locale.endsWith(QLatin1String(".qm")) ? locale : QLatin1String("otter-browser_") + (useSystemLocale ? QLocale::system().name() : locale)), m_localePath);
 
+	/* qt6: linktime undefined reference to `Otter::Utils::createLocale(QString const&)'
 	QLocale::setDefault(Utils::createLocale(identifier));
+	*/
 }
 
 MainWindow* Application::createWindow(const QVariantMap &parameters, const Session::MainWindow &session)

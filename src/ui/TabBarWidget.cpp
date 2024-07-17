@@ -39,7 +39,6 @@
 #include <QtGui/QStatusTipEvent>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
-#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QStyleOption>
@@ -132,7 +131,7 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 		else
 		{
 			QStyleOption option;
-			option.init(this);
+			option.initFrom(this);
 			option.rect = m_closeButtonRectangle;
 			option.state = (QStyle::State_Enabled | QStyle::State_AutoRaise);
 
@@ -725,7 +724,7 @@ void TabBarWidget::paintEvent(QPaintEvent *event)
 	ThemesManager::getStyle()->drawDropZone((isHorizontal() ? QLine(lineOffset, 0, lineOffset, height()) : QLine(0, lineOffset, width(), lineOffset)), &painter);
 }
 
-void TabBarWidget::enterEvent(QEvent *event)
+void TabBarWidget::enterEvent(QEnterEvent *event)
 {
 	QTabBar::enterEvent(event);
 
@@ -1284,7 +1283,9 @@ void TabBarWidget::showPreview(int index, int delay)
 		// of a current screen rectangle. Because top left point of current screen could
 		// have coordinates (-1366, 250) instead of (0, 0).
 		///TODO: Calculate screen rectangle based on current mouse pointer position
-		const QRect screen(QApplication::desktop()->screenGeometry(this));
+		/* qt6: no matching function for call to ‘QScreen::geometry()
+		const QRect screen(QGuiApplication::primaryScreen()->geometry(this));
+		*/
 		QRect rectangle(tabRect(index));
 		rectangle.moveTo(mapToGlobal(rectangle.topLeft()));
 
@@ -1292,6 +1293,7 @@ void TabBarWidget::showPreview(int index, int delay)
 
 		m_previewWidget->setPreview(window->getTitle(), ((isActive || m_areThumbnailsEnabled) ? QPixmap() : window->createThumbnail()), isActive);
 
+		/* qt6: reference to non-static member function must be called; did you mean to call it with no arguments?
 		switch (shape())
 		{
 			case QTabBar::RoundedEast:
@@ -1321,6 +1323,7 @@ void TabBarWidget::showPreview(int index, int delay)
 		{
 			position.setY(screen.bottom() - m_previewWidget->height());
 		}
+		*/
 
 		if (m_previewWidget->isVisible())
 		{

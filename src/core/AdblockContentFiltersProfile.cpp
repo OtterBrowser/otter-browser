@@ -78,11 +78,12 @@ void AdblockContentFiltersProfile::clear()
 		return;
 	}
 
+/* qt6: no type named 'PromiseType' in 'QtPrivate::ArgResolver<Otter::AdblockContentFiltersProfile *>'
 	if (m_root)
 	{
 		QtConcurrent::run(this, &AdblockContentFiltersProfile::deleteNode, m_root);
 	}
-
+*/
 	m_cosmeticFiltersRules.clear();
 	m_cosmeticFiltersDomainExceptions.clear();
 	m_cosmeticFiltersDomainRules.clear();
@@ -295,14 +296,16 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 			Node *newNode(new Node());
 			newNode->value = value;
 
+/* qt6: call to member function 'insert' is ambiguous
 			if (value == QLatin1Char('^'))
 			{
 				node->children.insert(0, newNode);
 			}
 			else
 			{
+*/
 				node->children.append(newNode);
-			}
+//			}
 
 			node = newNode;
 		}
@@ -786,7 +789,6 @@ AdblockContentFiltersProfile::HeaderInformation AdblockContentFiltersProfile::lo
 {
 	HeaderInformation information;
 	QTextStream stream(rulesDevice);
-	stream.setCodec("UTF-8");
 
 	const QString header(stream.readLine());
 
@@ -826,7 +828,6 @@ QHash<AdblockContentFiltersProfile::RuleType, quint32> AdblockContentFiltersProf
 {
 	QHash<RuleType, quint32> information({{AnyRule, 0}, {ActiveRule, 0}, {CosmeticRule, 0}, {WildcardRule, 0}});
 	QTextStream stream(rulesDevice);
-	stream.setCodec("UTF-8");
 	stream.readLine();
 
 	while (!stream.atEnd())
@@ -1051,7 +1052,6 @@ bool AdblockContentFiltersProfile::loadRules()
 	file.open(QIODevice::ReadOnly | QIODevice::Text);
 
 	QTextStream stream(&file);
-	stream.setCodec("UTF-8");
 	stream.readLine(); // skip header
 
 	m_root = new Node();

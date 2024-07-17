@@ -36,13 +36,13 @@
 #include "../../../ui/OpenAddressDialog.h"
 #include "../../../ui/Window.h"
 
+#include <QtCore/QFile>
 #include <QtCore/QtMath>
 #include <QtGui/QDrag>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
 #include <QtGui/QPainterPath>
 #include <QtGui/QPixmapCache>
-#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QScrollBar>
 #include <QtWidgets/QToolTip>
@@ -88,7 +88,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	path.addRoundedRect(tileRectangle, 5, 5);
 
 	painter->setPen(QPen(QColor(26, 35, 126, 51), 1));
-	painter->setRenderHint(QPainter::HighQualityAntialiasing);
+	painter->setRenderHint(QPainter::Antialiasing);
 
 	if (index.data(StartPageModel::IsDraggedRole).toBool())
 	{
@@ -122,7 +122,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	QPainter pixmapPainter(&cachedPixmap);
 	pixmapPainter.translate(-rectangle.topLeft());
 	pixmapPainter.setPen(QPen(QColor(26, 35, 126, 51), 1));
-	pixmapPainter.setRenderHint(QPainter::HighQualityAntialiasing);
+	pixmapPainter.setRenderHint(QPainter::Antialiasing);
 
 	const QRect textRectangle(rectangle.x(), (rectangle.y() + rectangle.height()), rectangle.width(), textHeight);
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
@@ -1330,10 +1330,13 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			QToolTip::hideText();
 		}
+
+		/* qt6: ‘desktop’ is not a member of ‘QApplication’; port to ‘QScreen::geometry()?
 		else
 		{
 			QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_listView).width() / 2)), m_listView, m_listView->visualRect(index));
 		}
+		*/
 
 		return true;
 	}

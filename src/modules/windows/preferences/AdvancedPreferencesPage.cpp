@@ -1349,7 +1349,6 @@ void AdvancedPreferencesPage::save()
 	SettingsManager::setOption(SettingsManager::AddressField_ShowCompletionCategoriesOption, m_ui->browsingCategoriesCheckBox->isChecked());
 
 	QSettings notificationsSettings(SessionsManager::getWritableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
-	notificationsSettings.setIniCodec("UTF-8");
 	notificationsSettings.clear();
 
 	for (int i = 0; i < m_ui->notificationsItemView->getRowCount(); ++i)

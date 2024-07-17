@@ -38,7 +38,6 @@
 #include <QtGui/QDesktopServices>
 #include <QtGui/QDrag>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
 
@@ -252,7 +251,6 @@ QString createErrorPage(const ErrorPageInformation &information)
 	file.open(QIODevice::ReadOnly | QIODevice::Text);
 
 	QTextStream stream(&file);
-	stream.setCodec("UTF-8");
 
 	QString mainTemplate(stream.readAll());
 	const QRegularExpression advancedActionsExpression(QLatin1String("<!--advancedActions:begin-->(.*)<!--advancedActions:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
@@ -376,10 +374,12 @@ QString appendShortcut(const QString &text, const QKeySequence &shortcut)
 
 QString elideText(const QString &text, const QFontMetrics &fontMetrics, QWidget *widget, int maximumWidth, int minimumWidth)
 {
+	/* qt6: no matching function for call to ‘QScreen::geometry()
 	if (widget && maximumWidth < 0)
 	{
-		maximumWidth = (QApplication::desktop()->screenGeometry(widget).width() / 4);
+		maximumWidth = (QGuiApplication::primaryScreen()->geometry(widget).width() / 4);
 	}
+	*/
 
 	return fontMetrics.elidedText(text, Qt::ElideRight, qMax(minimumWidth, maximumWidth));
 }
@@ -580,6 +580,7 @@ QColor createColor(const QUrl &url)
 	return QColor(hash.at(0), hash.at(1), hash.at(2));
 }
 
+/* qt6: chosen constructor is explicit in copy-initialization
 QLocale createLocale(const QString &name)
 {
 	if (name == QLatin1String("pt"))
@@ -589,6 +590,7 @@ QLocale createLocale(const QString &name)
 
 	return {name};
 }
+*/
 
 QPixmap loadPixmapFromDataUri(const QString &data)
 {

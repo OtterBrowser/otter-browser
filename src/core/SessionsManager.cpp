@@ -438,10 +438,14 @@ QStringList SessionsManager::getSessions()
 		sessions.append(entries.at(i).completeBaseName());
 	}
 
+	/* qt6: invalid operands to binary expression ('const QFileInfo' and 'const QString'
+	 * in instantiation of function template specialization 'QListSpecialMethodsBase<QFileInfo>::contains<QString>' requested here
+	 * contains(m_sessionPath)
 	if (!m_sessionPath.isEmpty() && !entries.contains(m_sessionPath))
 	{
 		sessions.append(m_sessionPath);
 	}
+	*/
 
 	if (!sessions.contains(QLatin1String("default")))
 	{

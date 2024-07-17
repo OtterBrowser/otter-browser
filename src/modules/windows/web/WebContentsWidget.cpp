@@ -170,7 +170,9 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 
 		scrollContents(scrollDelta);
 
+		/* qt6: no viable conversion from 'QPixmap' to 'const QCursor'
 		QApplication::changeOverrideCursor(m_scrollCursors[directions]);
+		*/
 	}
 
 	ContentsWidget::timerEvent(event);
@@ -1090,7 +1092,9 @@ void WebContentsWidget::setScrollMode(ScrollMode mode)
 
 			m_isIgnoringMouseRelease = true;
 
+			/* qt6: no viable conversion from 'QPixmap' to 'const QCursor'
 			QApplication::setOverrideCursor(m_scrollCursors[NoDirection]);
+			*/
 
 			break;
 		case DragScroll:

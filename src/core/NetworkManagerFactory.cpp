@@ -35,7 +35,6 @@
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
-#include <QtNetwork/QNetworkConfigurationManager>
 #include <QtNetwork/QSslConfiguration>
 
 namespace Otter
@@ -664,7 +663,9 @@ CookieJar* NetworkManagerFactory::getCookieJar()
 QNetworkReply* NetworkManagerFactory::createRequest(const QUrl &url, QNetworkAccessManager::Operation operation, bool isPrivate, QIODevice *outgoingData)
 {
 	QNetworkRequest request(url);
+	/* qt6: 'FollowRedirectsAttribute' has been removed
 	request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+	*/
 	request.setHeader(QNetworkRequest::UserAgentHeader, getUserAgent());
 
 	return getNetworkManager(isPrivate)->createRequest(operation, request, outgoingData);

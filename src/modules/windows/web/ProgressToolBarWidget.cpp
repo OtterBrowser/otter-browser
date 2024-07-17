@@ -94,7 +94,9 @@ void ProgressToolBarWidget::handleActionsStateChanged(const QVector<int> &identi
 			}
 
 			geometry.setTop(geometry.bottom() - 30);
+			/* qt6: call to member function 'mapTo' is ambiguous
 			geometry.translate(m_webWidget->mapTo(m_window->getContentsWidget(), {0, 0}));
+			*/
 
 			setGeometry(geometry);
 			show();

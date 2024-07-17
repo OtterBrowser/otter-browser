@@ -370,6 +370,7 @@ bool CookieJar::hasCookie(const QNetworkCookie &cookie) const
 
 bool CookieJar::isDomainTheSame(const QUrl &first, const QUrl &second)
 {
+	/* qt6: 'topLevelDomain()' is no more; port to 'qIsEffectiveTLD()'?
 	const QString firstTld(first.topLevelDomain());
 	const QString secondTld(second.topLevelDomain());
 
@@ -385,6 +386,8 @@ bool CookieJar::isDomainTheSame(const QUrl &first, const QUrl &second)
 	secondDomain.remove((secondDomain.length() - secondTld.length()), secondTld.length());
 
 	return firstDomain.section(QLatin1Char('.'), -1) == secondDomain.section(QLatin1Char('.'), -1);
+	*/
+	return false; // qt6
 }
 
 }

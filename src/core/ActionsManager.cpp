@@ -275,7 +275,6 @@ bool KeyboardProfile::save()
 	JsonSettings settings(SessionsManager::getWritableDataPath(QLatin1String("keyboard/") + m_identifier + QLatin1String(".json")));
 	QString comment;
 	QTextStream stream(&comment);
-	stream.setCodec("UTF-8");
 	stream << QLatin1String("Title: ") << (m_title.isEmpty() ? QT_TR_NOOP("(Untitled)") : m_title) << QLatin1Char('\n');
 	stream << QLatin1String("Description: ") << m_description << QLatin1Char('\n');
 	stream << QLatin1String("Type: keyboard-profile\n");
@@ -803,11 +802,12 @@ bool ActionsManager::isShortcutAllowed(const QKeySequence &shortcut, ShortcutChe
 		return false;
 	}
 
+/* qt6: use of overloaded operator '!=' is ambiguous (with operand types 'QKeyCombination' and 'Qt::Key')
 	if ((check == AllChecks || check == DisallowSingleKeyShortcutCheck) && (!areSingleKeyShortcutsAllowed && (shortcut[0] == Qt::Key_Plus || !shortcut.toString(QKeySequence::PortableText).contains(QLatin1Char('+'))) && shortcut[0] != Qt::Key_Delete && !(shortcut[0] >= Qt::Key_F1 && shortcut[0] <= Qt::Key_F35)))
 	{
 		return false;
 	}
-
+*/
 	if (check == AllChecks || check == DisallowStandardShortcutCheck)
 	{
 		if (m_disallowedShortcuts.isEmpty())

@@ -80,7 +80,7 @@ protected:
 	void paintEvent(QPaintEvent *event) override;
 	void showEvent(QShowEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
-	void enterEvent(QEvent *event) override;
+	void enterEvent(QEnterEvent *event) override;
 	void leaveEvent(QEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
 	void mousePressEvent(QMouseEvent *event) override;

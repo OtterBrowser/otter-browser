@@ -28,7 +28,6 @@
 #include "../core/Utils.h"
 
 #include <QtCore/QFile>
-#include <QtCore/QTextCodec>
 #include <QtGui/QClipboard>
 #include <QtGui/QGuiApplication>
 #include <QtWidgets/QMessageBox>
@@ -370,18 +369,23 @@ void SourceViewerWebWidget::setContents(const QByteArray &contents, const QStrin
 {
 	triggerAction(ActionsManager::StopAction);
 
+	/* qt6: QTextCodec is no more
 	const QTextCodec *codec(nullptr);
+	*/
 
 	if (hasOption(SettingsManager::Content_DefaultCharacterEncodingOption))
 	{
 		const QString encoding(getOption(SettingsManager::Content_DefaultCharacterEncodingOption).toString());
 
+		/* qt6: QTextCodec is no more
 		if (encoding != QLatin1String("auto"))
 		{
 			codec = QTextCodec::codecForName(encoding.toLatin1());
 		}
+		*/
 	}
 
+	/* qt6: QTextCodec is no more
 	if (!codec && !contentType.isEmpty() && contentType.contains(QLatin1String("charset=")))
 	{
 		codec = QTextCodec::codecForName(contentType.mid(contentType.indexOf(QLatin1String("charset=")) + 8).toLatin1());
@@ -400,6 +404,7 @@ void SourceViewerWebWidget::setContents(const QByteArray &contents, const QStrin
 	{
 		m_sourceEditWidget->setPlainText(QString::fromLatin1(contents));
 	}
+	*/
 
 	m_sourceEditWidget->markAsLoaded();
 }

@@ -47,17 +47,18 @@
 #include <QtCore/QMimeData>
 #include <QtCore/QTimer>
 #include <QtCore/QtMath>
+#include <QtGui/QAction>
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QImageWriter>
 #include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtWebEngineCore/QWebEngineCookieStore>
 #include <QtWebEngineCore/QWebEngineFindTextResult>
-#include <QtWebEngineWidgets/QWebEngineHistory>
-#include <QtWebEngineWidgets/QWebEngineProfile>
-#include <QtWebEngineWidgets/QWebEngineScript>
-#include <QtWebEngineWidgets/QWebEngineSettings>
-#include <QtWidgets/QAction>
+#include <QtWebEngineCore/QWebEngineHistory>
+#include <QtWebEngineCore/QWebEngineHttpRequest>
+#include <QtWebEngineCore/QWebEngineProfile>
+#include <QtWebEngineCore/QWebEngineScript>
+#include <QtWebEngineCore/QWebEngineSettings>
 #include <QtWidgets/QVBoxLayout>
 
 namespace Otter
@@ -235,7 +236,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 				if (information.canSave)
 				{
-					m_page->save(information.path, QWebEngineDownloadItem::SingleHtmlSaveFormat);
+					m_page->save(information.path, QWebEngineDownloadRequest::SingleHtmlSaveFormat);
 				}
 			}
 			else
@@ -248,11 +249,11 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 					switch (format)
 					{
 						case CompletePageSaveFormat:
-							m_page->save(path, QWebEngineDownloadItem::CompleteHtmlSaveFormat);
+							m_page->save(path, QWebEngineDownloadRequest::CompleteHtmlSaveFormat);
 
 							break;
 						case MhtmlSaveFormat:
-							m_page->save(path, QWebEngineDownloadItem::MimeHtmlSaveFormat);
+							m_page->save(path, QWebEngineDownloadRequest::MimeHtmlSaveFormat);
 
 							break;
 						case PdfSaveFormat:
@@ -260,7 +261,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 							break;
 						default:
-							m_page->save(path, QWebEngineDownloadItem::SingleHtmlSaveFormat);
+							m_page->save(path, QWebEngineDownloadRequest::SingleHtmlSaveFormat);
 
 							break;
 					}
@@ -926,10 +927,12 @@ void QtWebEngineWebWidget::print(QPrinter *printer)
 {
 	QEventLoop eventLoop;
 
+	/* qt6: no member named 'print' in 'Otter::QtWebEnginePage'
 	m_page->print(printer, [&](bool)
 	{
 		eventLoop.quit();
 	});
+	*/
 
 	eventLoop.exec();
 }
@@ -1018,10 +1021,12 @@ void QtWebEngineWebWidget::handlePrintRequest()
 	{
 		QEventLoop eventLoop;
 
+		/* qt6: no member named 'print' in 'Otter::QtWebEnginePage'
 		m_page->print(printer, [&](bool)
 		{
 			eventLoop.quit();
 		});
+		*/
 
 		eventLoop.exec();
 	});

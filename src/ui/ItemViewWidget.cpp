@@ -27,6 +27,7 @@
 #include "../core/ThemesManager.h"
 
 #include <QtCore/QTimer>
+#include <QtGui/QActionGroup>
 #include <QtGui/QDropEvent>
 #include <QtGui/QPainter>
 #include <QtWidgets/QToolTip>

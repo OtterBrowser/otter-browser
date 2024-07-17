@@ -61,6 +61,7 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QImageWriter>
 #include <QtGui/QMouseEvent>
+#include <QtGui/QShortcut>
 #include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtWebKit/QWebFullScreenRequest>
 #include <QtWebKit/QWebElement>
@@ -68,7 +69,6 @@
 #include <QtWebKitWidgets/QWebFrame>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
-#include <QtWidgets/QShortcut>
 #include <QtWidgets/QUndoStack>
 #include <QtWidgets/QVBoxLayout>
 

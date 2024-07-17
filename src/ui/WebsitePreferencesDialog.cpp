@@ -29,8 +29,6 @@
 
 #include "ui_WebsitePreferencesDialog.h"
 
-#include <QtCore/QTextCodec>
-
 namespace Otter
 {
 
@@ -67,6 +65,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QString &host, const QV
 
 	const QVector<int> textCodecs({106, 1015, 1017, 4, 5, 6, 7, 8, 82, 10, 85, 12, 13, 109, 110, 112, 2250, 2251, 2252, 2253, 2254, 2255, 2256, 2257, 2258, 18, 39, 17, 38, 2026});
 
+	/* qt6: QTextCodec is no more
 	for (int i = 0; i < textCodecs.count(); ++i)
 	{
 		const QTextCodec *codec(QTextCodec::codecForMib(textCodecs.at(i)));
@@ -76,6 +75,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QString &host, const QV
 			m_ui->encodingComboBox->addItem(QString::fromLatin1(codec->name()), codec->name());
 		}
 	}
+	*/
 
 	m_ui->popupsPolicyComboBox->addItem(tr("Ask"), QLatin1String("ask"));
 	m_ui->popupsPolicyComboBox->addItem(tr("Block all"), QLatin1String("blockAll"));

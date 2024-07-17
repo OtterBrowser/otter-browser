@@ -239,7 +239,7 @@ void SpinnerAnimation::paint(QPainter *painter, const QRect &rectangle) const
 	gradient.setColorAt(1, Qt::transparent);
 
 	painter->save();
-	painter->setRenderHint(QPainter::HighQualityAntialiasing);
+	painter->setRenderHint(QPainter::Antialiasing);
 	painter->setPen(QPen(gradient, (offset * 1.5)));
 	painter->drawArc(targetRectangle, 0, 5760);
 	painter->restore();
