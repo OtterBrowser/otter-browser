@@ -1258,8 +1258,10 @@ QMimeData* BookmarksModel::mimeData(const QModelIndexList &indexes) const
 
 	if (indexes.count() == 1)
 	{
-		mimeData->setProperty("x-item-index", indexes.at(0));
-		mimeData->setProperty("x-url-title", indexes.at(0).data(TitleRole).toString());
+		const QModelIndex index(indexes.at(0));
+
+		mimeData->setProperty("x-item-index", index);
+		mimeData->setProperty("x-url-title", index.data(TitleRole).toString());
 	}
 
 	for (int i = 0; i < indexes.count(); ++i)
