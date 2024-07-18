@@ -590,9 +590,11 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 
 		for (int i = 0; i < parameters.count(); ++i)
 		{
+			const QPair<QString, QString> parameter(parameters.at(i));
+
 			writer.writeStartElement(QLatin1String("Param"));
-			writer.writeAttribute(QLatin1String("name"), parameters.at(i).first);
-			writer.writeAttribute(QLatin1String("value"), parameters.at(i).second);
+			writer.writeAttribute(QLatin1String("name"), parameter.first);
+			writer.writeAttribute(QLatin1String("value"), parameter.second);
 			writer.writeEndElement();
 		}
 
