@@ -479,11 +479,12 @@ bool SearchEnginesManager::hasSearchEngine(const QUrl &url)
 
 	ensureInitialized();
 
+	const QUrl normalizedUrl(Utils::normalizeUrl(url));
 	QHash<QString, SearchEngineDefinition>::iterator iterator;
 
 	for (iterator = m_searchEngines.begin(); iterator != m_searchEngines.end(); ++iterator)
 	{
-		if (iterator.value().selfUrl == url)
+		if (Utils::normalizeUrl(iterator.value().selfUrl) == normalizedUrl)
 		{
 			return true;
 		}
