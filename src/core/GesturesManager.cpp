@@ -676,11 +676,12 @@ void GesturesManager::loadProfiles()
 
 			for (int j = 0; j < gestures.count(); ++j)
 			{
+				const MouseProfile::Gesture gesture(gestures.at(j));
 				bool isAllowed(true);
 
 				if (!areMouseGesturesEnabled)
 				{
-					const QVector<MouseProfile::Gesture::Step> steps(gestures.at(j).steps);
+					const QVector<MouseProfile::Gesture::Step> steps(gesture.steps);
 
 					for (int k = 0; k < steps.count(); ++k)
 					{
@@ -695,7 +696,7 @@ void GesturesManager::loadProfiles()
 
 				if (isAllowed)
 				{
-					m_gestures[static_cast<GesturesContext>(iterator.key())].append(gestures.at(j));
+					m_gestures[static_cast<GesturesContext>(iterator.key())].append(gesture);
 				}
 			}
 		}
