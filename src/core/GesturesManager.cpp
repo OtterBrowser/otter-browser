@@ -1175,7 +1175,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 				}
 				else
 				{
-					m_steps.pop_back();
+					m_steps.removeLast();
 				}
 			}
 
