@@ -177,7 +177,8 @@ void CookiesContentsWidget::removeDomainCookies()
 
 	for (int i = 0; i < indexes.count(); ++i)
 	{
-		const QStandardItem *domainItem((indexes.at(i).isValid() && indexes.at(i).parent() == m_model->invisibleRootItem()->index()) ? findDomainItem(indexes.at(i).sibling(indexes.at(i).row(), 0).data(Qt::ToolTipRole).toString()) : m_model->itemFromIndex(indexes.at(i).parent()));
+		const QModelIndex index(indexes.at(i));
+		const QStandardItem *domainItem((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? findDomainItem(index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString()) : m_model->itemFromIndex(index.parent()));
 
 		if (!domainItem)
 		{
