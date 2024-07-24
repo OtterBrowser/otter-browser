@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -172,10 +172,11 @@ void PasswordsContentsWidget::populatePasswords()
 
 	for (int i = 0; i < hosts.count(); ++i)
 	{
-		const QUrl url(QStringLiteral("http://%1/").arg(hosts.at(i)));
+		const QString host(hosts.at(i));
+		const QUrl url(QStringLiteral("http://%1/").arg(host));
 		const QVector<PasswordsManager::PasswordInformation> passwords(PasswordsManager::getPasswords(url));
-		QStandardItem *hostItem(new QStandardItem(HistoryManager::getIcon(url), hosts.at(i)));
-		hostItem->setData(hosts.at(i), HostRole);
+		QStandardItem *hostItem(new QStandardItem(HistoryManager::getIcon(url), host));
+		hostItem->setData(host, HostRole);
 		hostItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 		for (int j = 0; j < passwords.count(); ++j)
@@ -198,7 +199,7 @@ void PasswordsContentsWidget::populatePasswords()
 			hostItem->appendRow({setItem, new QStandardItem()});
 		}
 
-		hostItem->setText(QStringLiteral("%1 (%2)").arg(hosts.at(i)).arg(hostItem->rowCount()));
+		hostItem->setText(QStringLiteral("%1 (%2)").arg(host).arg(hostItem->rowCount()));
 
 		m_model->appendRow(hostItem);
 
