@@ -181,15 +181,17 @@ void PasswordsContentsWidget::populatePasswords()
 
 		for (int j = 0; j < passwords.count(); ++j)
 		{
+			const PasswordsManager::PasswordInformation password(passwords.at(j));
 			QStandardItem *setItem(new QStandardItem(tr("Set #%1").arg(j + 1)));
-			setItem->setData(passwords.at(j).url, UrlRole);
-			setItem->setData(((passwords.at(j).type == PasswordsManager::AuthPassword) ? QLatin1String("auth") : QLatin1String("form")), AuthTypeRole);
+			setItem->setData(password.url, UrlRole);
+			setItem->setData(((password.type == PasswordsManager::AuthPassword) ? QLatin1String("auth") : QLatin1String("form")), AuthTypeRole);
 			setItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-			for (int k = 0; k < passwords.at(j).fields.count(); ++k)
+			for (int k = 0; k < password.fields.count(); ++k)
 			{
-				QList<QStandardItem*> fieldItems({new QStandardItem(passwords.at(j).fields.at(k).name), new QStandardItem(passwords.at(j).fields.at(k).value)});
-				fieldItems[0]->setData(passwords.at(j).fields.at(k).type, FieldTypeRole);
+				const PasswordsManager::PasswordInformation::Field field(password.fields.at(k));
+				QList<QStandardItem*> fieldItems({new QStandardItem(field.name), new QStandardItem(field.value)});
+				fieldItems[0]->setData(field.type, FieldTypeRole);
 				fieldItems[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 				fieldItems[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
 
