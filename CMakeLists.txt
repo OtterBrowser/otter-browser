@@ -75,14 +75,8 @@ option(ENABLE_DBUS "Enable D-Bus based integration for notifications (only freed
 option(ENABLE_SPELLCHECK "Enable Hunspell based spell checking" ON)
 
 find_package(Qt5 5.15.0 REQUIRED COMPONENTS Core Gui Multimedia Network PrintSupport Qml Svg Widgets)
-find_package(Qt5 5.15.0 QUIET COMPONENTS WebEngineWidgets)
-find_package(Qt5WebKitWidgets 5.212.0 QUIET)
 find_package(Hunspell 1.5.0 QUIET)
 
-set_package_properties(Qt5WebEngineCore PROPERTIES URL "https://www.qt.io/" DESCRIPTION "QtWebEngine based backend (core)" TYPE OPTIONAL)
-set_package_properties(Qt5WebEngineWidgets PROPERTIES URL "https://www.qt.io/" DESCRIPTION "QtWebEngine based backend (widgets)" TYPE OPTIONAL)
-set_package_properties(Qt5WebKit PROPERTIES URL "https://qtwebkit.github.io/" DESCRIPTION "QtWebKit based backend (core)" TYPE OPTIONAL)
-set_package_properties(Qt5WebKitWidgets PROPERTIES URL "https://qtwebkit.github.io/" DESCRIPTION "QtWebKit based backend (widgets)" TYPE OPTIONAL)
 set_package_properties(Hunspell PROPERTIES URL "https://hunspell.github.io/" DESCRIPTION "Generic spell checking support" TYPE OPTIONAL)
 
 set(otter_src
@@ -382,57 +376,12 @@ foreach (_current_dir ${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
 	endif ()
 endforeach ()
 
-if (TARGET Qt5::WebEngineWidgets AND ENABLE_QTWEBENGINE)
-	add_definitions(-DOTTER_ENABLE_QTWEBENGINE)
-
-	list(APPEND OTTER_BACKENDS_WEB "QtWebEngine (experimental)")
-
-	set(otter_src
-		${otter_src}
-		src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp
-		src/modules/backends/web/qtwebengine/QtWebEngineUrlRequestInterceptor.cpp
-		src/modules/backends/web/qtwebengine/QtWebEngineTransfer.cpp
-		src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp
-		src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp
-	)
-
-	qt5_add_resources(otter_res
-		src/modules/backends/web/qtwebengine/QtWebEngineResources.qrc
-	)
+if (ENABLE_QTWEBENGINE)
+	include(src/modules/backends/web/qtwebengine/CMakeLists.txt)
 endif ()
 
-if (TARGET Qt5::WebKitWidgets AND ENABLE_QTWEBKIT)
-	add_definitions(-DOTTER_ENABLE_QTWEBKIT -DOTTER_QTWEBKIT_PLUGINS_AVAILABLE -DQT_STATICPLUGIN)
-
-	list(APPEND OTTER_BACKENDS_WEB "QtWebKit")
-
-	set(otter_src
-		${otter_src}
-		src/modules/backends/web/qtwebkit/qwebkitplatformplugin.h
-		src/modules/backends/web/qtwebkit/QtWebKitCookieJar.cpp
-		src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp
-		src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.cpp
-		src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp
-		src/modules/backends/web/qtwebkit/QtWebKitNotificationPresenter.cpp
-		src/modules/backends/web/qtwebkit/QtWebKitPage.cpp
-		src/modules/backends/web/qtwebkit/QtWebKitPlugin.cpp
-		src/modules/backends/web/qtwebkit/QtWebKitPluginFactory.cpp
-		src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp
-		src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp
-		src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp
-		src/modules/backends/web/qtwebkit/3rdparty/qtftp/qurlinfo.cpp
-	)
-
-	if (TARGET Hunspell::Hunspell AND ENABLE_SPELLCHECK)
-		set(otter_src
-			${otter_src}
-			src/modules/backends/web/qtwebkit/QtWebKitSpellChecker.cpp
-		)
-	endif ()
-
-	qt5_add_resources(otter_res
-		src/modules/backends/web/qtwebkit/QtWebKitResources.qrc
-	)
+if (ENABLE_QTWEBKIT)
+	include(src/modules/backends/web/qtwebkit/CMakeLists.txt)
 endif ()
 
 if (ENABLE_CRASHREPORTS)
