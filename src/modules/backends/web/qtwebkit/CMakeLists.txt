@@ -10,6 +10,7 @@ endif ()
 add_definitions(-DOTTER_ENABLE_QTWEBKIT -DOTTER_QTWEBKIT_PLUGINS_AVAILABLE -DQT_STATICPLUGIN)
 
 list(APPEND OTTER_BACKENDS_WEB "QtWebKit")
+list(APPEND OTTER_LINK_LIBRARIES Qt5::WebKit Qt5::WebKitWidgets)
 
 set(otter_src
 	${otter_src}

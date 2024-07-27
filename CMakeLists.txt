@@ -554,13 +554,9 @@ add_executable(otter-browser WIN32 MACOSX_BUNDLE
 	${otter_src}
 )
 
-if (TARGET Qt5::WebEngineWidgets AND ENABLE_QTWEBENGINE)
-	target_link_libraries(otter-browser Qt5::WebEngineCore Qt5::WebEngineWidgets)
-endif ()
-
-if (TARGET Qt5::WebKitWidgets AND ENABLE_QTWEBKIT)
-	target_link_libraries(otter-browser Qt5::WebKit Qt5::WebKitWidgets)
-endif ()
+foreach (_library ${OTTER_LINK_LIBRARIES})
+	target_link_libraries(otter-browser ${_library})
+endforeach ()
 
 if (TARGET Hunspell::Hunspell AND ENABLE_SPELLCHECK)
 	target_link_libraries(otter-browser Hunspell::Hunspell)

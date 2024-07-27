@@ -10,6 +10,7 @@ endif ()
 add_definitions(-DOTTER_ENABLE_QTWEBENGINE)
 
 list(APPEND OTTER_BACKENDS_WEB "QtWebEngine")
+list(APPEND OTTER_LINK_LIBRARIES Qt5::WebEngineCore Qt5::WebEngineWidgets)
 
 set(otter_src
 	${otter_src}
