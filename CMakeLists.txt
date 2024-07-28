@@ -79,7 +79,7 @@ find_package(Hunspell 1.5.0 QUIET)
 
 set_package_properties(Hunspell PROPERTIES URL "https://hunspell.github.io/" DESCRIPTION "Generic spell checking support" TYPE OPTIONAL)
 
-set(otter_src
+set(OTTER_SOURCES
 	src/main.cpp
 	src/core/ActionExecutor.cpp
 	src/core/ActionsManager.cpp
@@ -289,11 +289,11 @@ set(otter_src
 	3rdparty/qrcodegen/qrcodegen.cpp
 )
 
-qt5_add_resources(otter_res
+qt5_add_resources(OTTER_RESOURCES
 	resources/resources.qrc
 )
 
-qt5_wrap_ui(otter_ui
+qt5_wrap_ui(OTTER_UI
 	src/ui/AcceptCookieDialog.ui
 	src/ui/ActionParametersDialog.ui
 	src/ui/AuthenticationDialog.ui
@@ -367,8 +367,8 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/windows/WindowsContentsWidget.ui
 )
 
-foreach (_current_dir ${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
-	if (EXISTS "${_current_dir}/private/qpixmapfilter_p.h")
+foreach (_dir ${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
+	if (EXISTS "${_dir}/private/qpixmapfilter_p.h")
 		add_definitions(-DOTTER_ENABLE_STARTPAGEBLUR)
 		include_directories(${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
 
@@ -389,15 +389,15 @@ if (ENABLE_CRASHREPORTS)
 	include_directories(${CMAKE_SOURCE_DIR}/3rdparty/breakpad/src/)
 
 	if (WIN32)
-		set(otter_src
-			${otter_src}
+		set(OTTER_SOURCES
+			${OTTER_SOURCES}
 			3rdparty/breakpad/src/common/windows/guid_string.cc
 			3rdparty/breakpad/src/client/windows/crash_generation/crash_generation_client.cc
 			3rdparty/breakpad/src/client/windows/handler/exception_handler.cc
 		)
 	elseif (CMAKE_SYSTEM_NAME MATCHES "Linux")
-		set(otter_src
-			${otter_src}
+		set(OTTER_SOURCES
+			${OTTER_SOURCES}
 			3rdparty/breakpad/src/client/minidump_file_writer.cc
 			3rdparty/breakpad/src/client/linux/crash_generation/crash_generation_client.cc
 			3rdparty/breakpad/src/client/linux/dump_writer_common/thread_info.cc
@@ -428,8 +428,8 @@ if (TARGET Hunspell::Hunspell AND ENABLE_SPELLCHECK)
 	add_definitions(-DOTTER_ENABLE_SPELLCHECK)
 	include_directories(Hunspell::Hunspell)
 
-	set(otter_src
-		${otter_src}
+	set(OTTER_SOURCES
+		${OTTER_SOURCES}
 		3rdparty/sonnet/src/core/client.cpp
 		3rdparty/sonnet/src/core/loader.cpp
 		3rdparty/sonnet/src/core/speller.cpp
@@ -462,8 +462,8 @@ if (WIN32)
 		endif ()
 	endif ()
 
-	set(otter_src
-		${otter_src}
+	set(OTTER_SOURCES
+		${OTTER_SOURCES}
 		otter-browser.rc
 		src/modules/platforms/windows/WindowsPlatformIntegration.cpp
 		src/modules/platforms/windows/WindowsPlatformStyle.cpp
@@ -479,8 +479,8 @@ elseif (APPLE)
 	set(MACOSX_BUNDLE_ICON_FILE otter-browser.icns)
 	set(MACOSX_BUNDLE_GUI_IDENTIFIER "org.otter-browser.otter-browser")
 	set(MACOSX_BUNDLE_COPYRIGHT "Copyright (C) 2013-2024 Otter Browser Team. All rights reserved.")
-	set(otter_src
-		${otter_src}
+	set(OTTER_SOURCES
+		${OTTER_SOURCES}
 		src/modules/platforms/mac/MacPlatformIntegration.mm
 		src/modules/platforms/mac/MacPlatformStyle.cpp
 		resources/icons/otter-browser.icns
@@ -494,8 +494,8 @@ elseif (UNIX)
 		add_definitions(-DOTTER_ENABLE_DBUS)
 	endif ()
 
-	set(otter_src
-		${otter_src}
+	set(OTTER_SOURCES
+		${OTTER_SOURCES}
 		src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp
 		src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformStyle.cpp
 		3rdparty/libmimeapps/ConfigReader.cpp
@@ -549,9 +549,9 @@ endif ()
 add_definitions(-DOTTER_BUILD_DATETIME="${BUILD_DATETIME}" -DOTTER_GIT_BRANCH="${GIT_BRANCH}" -DOTTER_GIT_DATETIME="${GIT_DATETIME}" -DOTTER_GIT_REVISION="${GIT_REVISION}")
 
 add_executable(otter-browser WIN32 MACOSX_BUNDLE
-	${otter_ui}
-	${otter_res}
-	${otter_src}
+	${OTTER_UI}
+	${OTTER_RESOURCES}
+	${OTTER_SOURCES}
 )
 
 foreach (_library ${OTTER_LINK_LIBRARIES})

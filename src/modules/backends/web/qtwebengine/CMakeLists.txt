@@ -12,8 +12,8 @@ add_definitions(-DOTTER_ENABLE_QTWEBENGINE)
 list(APPEND OTTER_BACKENDS_WEB "QtWebEngine")
 list(APPEND OTTER_LINK_LIBRARIES Qt5::WebEngineCore Qt5::WebEngineWidgets)
 
-set(otter_src
-	${otter_src}
+set(OTTER_SOURCES
+	${OTTER_SOURCES}
 	src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp
 	src/modules/backends/web/qtwebengine/QtWebEngineUrlRequestInterceptor.cpp
 	src/modules/backends/web/qtwebengine/QtWebEngineTransfer.cpp
@@ -21,6 +21,6 @@ set(otter_src
 	src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp
 )
 
-qt5_add_resources(otter_res
+qt5_add_resources(OTTER_RESOURCES
 	src/modules/backends/web/qtwebengine/QtWebEngineResources.qrc
 )

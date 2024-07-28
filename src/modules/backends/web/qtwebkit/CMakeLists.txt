@@ -12,8 +12,8 @@ add_definitions(-DOTTER_ENABLE_QTWEBKIT -DOTTER_QTWEBKIT_PLUGINS_AVAILABLE -DQT_
 list(APPEND OTTER_BACKENDS_WEB "QtWebKit")
 list(APPEND OTTER_LINK_LIBRARIES Qt5::WebKit Qt5::WebKitWidgets)
 
-set(otter_src
-	${otter_src}
+set(OTTER_SOURCES
+	${OTTER_SOURCES}
 	src/modules/backends/web/qtwebkit/qwebkitplatformplugin.h
 	src/modules/backends/web/qtwebkit/QtWebKitCookieJar.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp
@@ -30,12 +30,12 @@ set(otter_src
 )
 
 if (TARGET Hunspell::Hunspell AND ENABLE_SPELLCHECK)
-	set(otter_src
-		${otter_src}
+	set(OTTER_SOURCES
+		${OTTER_SOURCES}
 		src/modules/backends/web/qtwebkit/QtWebKitSpellChecker.cpp
 	)
 endif ()
 
-qt5_add_resources(otter_res
+qt5_add_resources(OTTER_RESOURCES
 	src/modules/backends/web/qtwebkit/QtWebKitResources.qrc
 )
