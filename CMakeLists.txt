@@ -585,13 +585,13 @@ target_link_libraries(otter-browser Qt5::Core Qt5::Gui Qt5::Multimedia Qt5::Netw
 
 set(XDG_APPS_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/applications CACHE FILEPATH "Install path for .desktop files")
 
-file(GLOB _qm_files resources/translations/*.qm)
+file(GLOB OTTER_TRANSLATIONS resources/translations/*.qm)
 
-foreach (_current_QM_FILE ${_qm_files})
-	install(FILES ${_current_QM_FILE} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/otter-browser/locale/)
+foreach (_translation ${OTTER_TRANSLATIONS})
+	install(FILES ${_translation} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/otter-browser/locale/)
 
 	if (APPLE)
-		file(COPY ${_current_QM_FILE} DESTINATION "Otter Browser.app/Contents/Resources/locale/")
+		file(COPY ${_translation} DESTINATION "Otter Browser.app/Contents/Resources/locale/")
 	endif ()
 endforeach ()
 
