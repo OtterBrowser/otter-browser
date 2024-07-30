@@ -83,9 +83,11 @@ void ConfigurationOptionDelegate::initStyleOption(QStyleOptionViewItem *option, 
 
 				for (int i = 0; i < definition.choices.count(); ++i)
 				{
-					if (definition.choices.at(i).value == value)
+					const SettingsManager::OptionDefinition::Choice choice(definition.choices.at(i));
+
+					if (choice.value == value)
 					{
-						option->icon = definition.choices.at(i).icon;
+						option->icon = choice.icon;
 
 						break;
 					}
