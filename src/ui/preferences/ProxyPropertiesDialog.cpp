@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -145,22 +145,22 @@ void ProxyPropertiesDialog::updateProxyType()
 {
 	if (m_ui->manualConfigurationCheckBox->isChecked())
 	{
-		const bool usesSeparateServers(!m_ui->allCheckBox->isChecked());
+		const bool hasSeparateServers(!m_ui->allCheckBox->isChecked());
 
 		m_ui->manualConfigurationWidget->setEnabled(true);
 		m_ui->automaticConfigurationWidget->setEnabled(false);
-		m_ui->httpCheckBox->setEnabled(usesSeparateServers);
-		m_ui->httpServersLineEditWidget->setEnabled(usesSeparateServers);
-		m_ui->httpPortSpinBox->setEnabled(usesSeparateServers);
-		m_ui->httpsCheckBox->setEnabled(usesSeparateServers);
-		m_ui->httpsServersLineEditWidget->setEnabled(usesSeparateServers);
-		m_ui->httpsPortSpinBox->setEnabled(usesSeparateServers);
-		m_ui->ftpCheckBox->setEnabled(usesSeparateServers);
-		m_ui->ftpServersLineEditWidget->setEnabled(usesSeparateServers);
-		m_ui->ftpPortSpinBox->setEnabled(usesSeparateServers);
-		m_ui->socksCheckBox->setEnabled(usesSeparateServers);
-		m_ui->socksServersLineEditWidget->setEnabled(usesSeparateServers);
-		m_ui->socksPortSpinBox->setEnabled(usesSeparateServers);
+		m_ui->httpCheckBox->setEnabled(hasSeparateServers);
+		m_ui->httpServersLineEditWidget->setEnabled(hasSeparateServers);
+		m_ui->httpPortSpinBox->setEnabled(hasSeparateServers);
+		m_ui->httpsCheckBox->setEnabled(hasSeparateServers);
+		m_ui->httpsServersLineEditWidget->setEnabled(hasSeparateServers);
+		m_ui->httpsPortSpinBox->setEnabled(hasSeparateServers);
+		m_ui->ftpCheckBox->setEnabled(hasSeparateServers);
+		m_ui->ftpServersLineEditWidget->setEnabled(hasSeparateServers);
+		m_ui->ftpPortSpinBox->setEnabled(hasSeparateServers);
+		m_ui->socksCheckBox->setEnabled(hasSeparateServers);
+		m_ui->socksServersLineEditWidget->setEnabled(hasSeparateServers);
+		m_ui->socksPortSpinBox->setEnabled(hasSeparateServers);
 	}
 	else
 	{
