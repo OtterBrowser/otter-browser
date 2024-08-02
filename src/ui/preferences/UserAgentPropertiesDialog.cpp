@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -99,9 +99,11 @@ bool UserAgentPropertiesDialog::eventFilter(QObject *object, QEvent *event)
 
 			connect(placeholdersMenu, &QMenu::triggered, this, [&](QAction *action)
 			{
-				if (!action->data().toString().isEmpty())
+				const QString placeholder(action->data().toString());
+
+				if (!placeholder.isEmpty())
 				{
-					m_ui->valueLineEditWidget->insert(QLatin1Char('{') + action->data().toString() + QLatin1Char('}'));
+					m_ui->valueLineEditWidget->insert(QLatin1Char('{') + placeholder + QLatin1Char('}'));
 				}
 			});
 
