@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2010 David Sansome <me@davidsansome.com>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -299,7 +299,9 @@ QVector<ApplicationInformation> FreeDesktopOrgPlatformIntegration::getApplicatio
 
 	for (std::vector<LibMimeApps::DesktopEntry>::size_type i = 0; i < entries.size(); ++i)
 	{
-		applications.append({QString::fromStdString(entries.at(i).executable()), QString::fromStdString(entries.at(i).name()), QIcon::fromTheme(QString::fromStdString(entries.at(i).icon()))});
+		const LibMimeApps::DesktopEntry entry(entries.at(i));
+
+		applications.append({QString::fromStdString(entry.executable()), QString::fromStdString(entry.name()), QIcon::fromTheme(QString::fromStdString(entry.icon()))});
 	}
 
 	m_applicationsCache[mimeType.name()] = applications;
