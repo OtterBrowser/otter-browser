@@ -698,7 +698,7 @@ InputPreferencesPage::ValidationResult InputPreferencesPage::validateShortcut(co
 		const QModelIndex matchedIndex(indexes.value(0));
 		const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(matchedIndex.sibling(matchedIndex.row(), 1).data(IdentifierRole).toInt()));
 
-		messages.append(tr("This shortcut already used by %1").arg(definition.isValid() ? definition.getText(true) : tr("unknown action")));
+		messages.append(tr("This shortcut is already used by %1").arg(definition.isValid() ? definition.getText(true) : tr("unknown action")));
 
 		result.isError = true;
 	}
