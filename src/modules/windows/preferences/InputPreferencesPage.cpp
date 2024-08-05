@@ -265,11 +265,12 @@ void InputPreferencesPage::loadKeyboardDefinitions(const QString &identifier)
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(definitions.at(i).action));
-		const QString name(ActionsManager::getActionName(definitions.at(i).action));
+		const int identifier(definitions.at(i).action);
+		const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(identifier));
+		const QString name(ActionsManager::getActionName(identifier));
 
-		addKeyboardShortcuts(m_keyboardShortcutsModel, definitions.at(i).action, name, action.getText(true), action.defaultState.icon, definitions.at(i).parameters, definitions.at(i).shortcuts, false);
-		addKeyboardShortcuts(m_keyboardShortcutsModel, definitions.at(i).action, name, action.getText(true), action.defaultState.icon, definitions.at(i).parameters, definitions.at(i).disabledShortcuts, true);
+		addKeyboardShortcuts(m_keyboardShortcutsModel, identifier, name, action.getText(true), action.defaultState.icon, definitions.at(i).parameters, definitions.at(i).shortcuts, false);
+		addKeyboardShortcuts(m_keyboardShortcutsModel, identifier, name, action.getText(true), action.defaultState.icon, definitions.at(i).parameters, definitions.at(i).disabledShortcuts, true);
 	}
 
 	m_keyboardShortcutsModel->sort(1);
