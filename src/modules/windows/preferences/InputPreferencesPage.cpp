@@ -265,12 +265,12 @@ void InputPreferencesPage::loadKeyboardDefinitions(const QString &identifier)
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		const int identifier(definitions.at(i).action);
-		const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(identifier));
-		const QString name(ActionsManager::getActionName(identifier));
+		const KeyboardProfile::Action shortcutsDefinition(definitions.at(i));
+		const ActionsManager::ActionDefinition actionDefinition(ActionsManager::getActionDefinition(shortcutsDefinition.action));
+		const QString name(ActionsManager::getActionName(shortcutsDefinition.action));
 
-		addKeyboardShortcuts(m_keyboardShortcutsModel, identifier, name, action.getText(true), action.defaultState.icon, definitions.at(i).parameters, definitions.at(i).shortcuts, false);
-		addKeyboardShortcuts(m_keyboardShortcutsModel, identifier, name, action.getText(true), action.defaultState.icon, definitions.at(i).parameters, definitions.at(i).disabledShortcuts, true);
+		addKeyboardShortcuts(m_keyboardShortcutsModel, shortcutsDefinition.action, name, actionDefinition.getText(true), actionDefinition.defaultState.icon, shortcutsDefinition.parameters, shortcutsDefinition.shortcuts, false);
+		addKeyboardShortcuts(m_keyboardShortcutsModel, shortcutsDefinition.action, name, actionDefinition.getText(true), actionDefinition.defaultState.icon, shortcutsDefinition.parameters, shortcutsDefinition.disabledShortcuts, true);
 	}
 
 	m_keyboardShortcutsModel->sort(1);
