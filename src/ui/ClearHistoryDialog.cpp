@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ ClearHistoryDialog::ClearHistoryDialog(const QStringList &clearSettings, bool is
 
 	if (settings.isEmpty())
 	{
-		settings = getDefaultClearSettings();
+		settings = SettingsManager::getOptionDefinition(SettingsManager::History_ManualClearOptionsOption).defaultValue.toStringList();
 	}
 
 	if (m_isConfiguring)
@@ -164,11 +164,6 @@ QStringList ClearHistoryDialog::getClearSettings() const
 	}
 
 	return clearSettings;
-}
-
-QStringList ClearHistoryDialog::getDefaultClearSettings()
-{
-	return {QLatin1String("browsing"), QLatin1String("cookies"), QLatin1String("forms"), QLatin1String("downloads"), QLatin1String("caches")};
 }
 
 }

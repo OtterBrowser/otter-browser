@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -139,7 +139,7 @@ void PrivacyPreferencesPage::load()
 	{
 		if (isChecked && m_clearHistorySettings.isEmpty())
 		{
-			m_clearHistorySettings = ClearHistoryDialog::getDefaultClearSettings();
+			m_clearHistorySettings = SettingsManager::getOptionDefinition(SettingsManager::History_ManualClearOptionsOption).defaultValue.toStringList();
 
 			emit settingsModified();
 		}
