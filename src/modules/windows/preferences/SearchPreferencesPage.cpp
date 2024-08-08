@@ -150,7 +150,9 @@ void SearchPreferencesPage::readdSearchEngine(QAction *action)
 {
 	if (action && !action->data().isNull())
 	{
-		addSearchEngine(SessionsManager::getReadableDataPath(QLatin1String("searchEngines/") + action->data().toString() + QLatin1String(".xml")), action->data().toString(), true);
+		const QString identifier(action->data().toString());
+
+		addSearchEngine(SessionsManager::getReadableDataPath(QLatin1String("searchEngines/") + identifier + QLatin1String(".xml")), identifier, true);
 	}
 }
 
