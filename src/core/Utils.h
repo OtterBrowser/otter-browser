@@ -116,6 +116,7 @@ private:
 namespace Utils
 {
 
+void removeFiles(const QStringList &paths);
 void runApplication(const QString &command, const QUrl &url = {});
 void startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent = nullptr);
 QString matchUrl(const QUrl &url, const QString &prefix);

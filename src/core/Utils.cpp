@@ -48,6 +48,14 @@ namespace Otter
 namespace Utils
 {
 
+void removeFiles(const QStringList &paths)
+{
+	for (int i = 0; i < paths.count(); ++i)
+	{
+		QFile::remove(paths.at(i));
+	}
+}
+
 void runApplication(const QString &command, const QUrl &url)
 {
 	if (command.isEmpty() && !url.isValid())
