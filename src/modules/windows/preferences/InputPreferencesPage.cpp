@@ -588,6 +588,10 @@ void InputPreferencesPage::load()
 
 void InputPreferencesPage::save()
 {
+	Utils::removeFiles(m_filesToRemove);
+
+	m_filesToRemove.clear();
+
 	Utils::ensureDirectoryExists(SessionsManager::getWritableDataPath(QLatin1String("keyboard")));
 
 	bool needsKeyboardProfilesReload(false);
