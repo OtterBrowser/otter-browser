@@ -1333,10 +1333,7 @@ void AdvancedPreferencesPage::save()
 		return;
 	}
 
-	for (int i = 0; i < m_filesToRemove.count(); ++i)
-	{
-		QFile::remove(m_filesToRemove.at(i));
-	}
+	Utils::removeFiles(m_filesToRemove);
 
 	m_filesToRemove.clear();
 
