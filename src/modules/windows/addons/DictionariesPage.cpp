@@ -196,14 +196,11 @@ void DictionariesPage::save()
 	const QString dictionariesPath(SpellCheckManager::getDictionariesPath());
 	const QDir dictionariesDirectory(dictionariesPath);
 
-	Utils::ensureDirectoryExists(dictionariesPath);
-
-	for (int i = 0; i < m_filesToRemove.count(); ++i)
-	{
-		QFile::remove(m_filesToRemove.at(i));
-	}
+	Utils::removeFiles(m_filesToRemove);
 
 	m_filesToRemove.clear();
+
+	Utils::ensureDirectoryExists(dictionariesPath);
 
 	for (int i = 0; i < m_dictionariesToAdd.count(); ++i)
 	{
