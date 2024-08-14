@@ -858,46 +858,46 @@ void ContentFiltersViewWidget::save()
 			if (profile)
 			{
 				profile->setProfileSummary(profileSummary);
-			}
-			else
-			{
-				const QString importPath(entryIndex.data(ImportPathRole).toString());
 
-				if (importPath.isEmpty() && !AdblockContentFiltersProfile::create(profileSummary))
+				continue;
+			}
+
+			const QString importPath(entryIndex.data(ImportPathRole).toString());
+
+			if (importPath.isEmpty() && !AdblockContentFiltersProfile::create(profileSummary))
+			{
+				QMessageBox::critical(this, tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
+
+				continue;
+			}
+
+			if (!importPath.isEmpty())
+			{
+				if (!QFile::exists(importPath))
+				{
+					QMessageBox::critical(this, tr("Error"), tr("Rules file does not exist."), QMessageBox::Close);
+
+					continue;
+				}
+
+				QFile file(importPath);
+
+				if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 				{
 					QMessageBox::critical(this, tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
 
 					continue;
 				}
 
-				if (!importPath.isEmpty())
+				const bool isSuccess(AdblockContentFiltersProfile::create(profileSummary, &file));
+
+				file.close();
+
+				if (!isSuccess)
 				{
-					if (!QFile::exists(importPath))
-					{
-						QMessageBox::critical(this, tr("Error"), tr("Rules file does not exist."), QMessageBox::Close);
+					QMessageBox::critical(this, tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
 
-						continue;
-					}
-
-					QFile file(importPath);
-
-					if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-					{
-						QMessageBox::critical(this, tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
-
-						continue;
-					}
-
-					const bool isSuccess(AdblockContentFiltersProfile::create(profileSummary, &file));
-
-					file.close();
-
-					if (!isSuccess)
-					{
-						QMessageBox::critical(this, tr("Error"), tr("Failed to create profile file."), QMessageBox::Close);
-
-						continue;
-					}
+					continue;
 				}
 			}
 
