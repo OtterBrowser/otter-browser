@@ -242,8 +242,9 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 
 	for (int i = 0; i < categories.count(); ++i)
 	{
+		const ContentFiltersProfile::ProfileCategory category(categories.at(i).first);
 		QList<QStandardItem*> categoryItems({new QStandardItem(categories.at(i).second), new QStandardItem(), new QStandardItem()});
-		categoryItems[0]->setData(categories.at(i).first, CategoryRole);
+		categoryItems[0]->setData(category, CategoryRole);
 		categoryItems[0]->setData(false, IsShowingProgressIndicatorRole);
 		categoryItems[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		categoryItems[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
@@ -251,9 +252,9 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 
 		m_model->appendRow(categoryItems);
 
-		if (categoryEntries.contains(categories.at(i).first))
+		if (categoryEntries.contains(category))
 		{
-			const QList<QList<QStandardItem*> > profileItems(categoryEntries[categories.at(i).first]);
+			const QList<QList<QStandardItem*> > profileItems(categoryEntries[category]);
 
 			for (int j = 0; j < profileItems.count(); ++j)
 			{
