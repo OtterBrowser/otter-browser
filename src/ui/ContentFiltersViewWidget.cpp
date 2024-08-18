@@ -547,24 +547,26 @@ void ContentFiltersViewWidget::removeProfile()
 		messageBox.setCheckBox(new QCheckBox(tr("Delete profile permanently")));
 	}
 
-	if (messageBox.exec() == QMessageBox::Yes)
+	if (messageBox.exec() != QMessageBox::Yes)
 	{
-		m_profilesToRemove[profile->getName()] = (messageBox.checkBox() && messageBox.checkBox()->isChecked());
-
-		QStandardItem *categoryItem(m_model->itemFromIndex(index.parent()));
-
-		if (categoryItem)
-		{
-			categoryItem->removeRow(index.row());
-
-			if (getRowCount(categoryItem->index()) == 0)
-			{
-				setRowHidden(categoryItem->row(), m_model->invisibleRootItem()->index(), true);
-			}
-		}
-
-		markProfilesAsModified();
+		return;
 	}
+
+	m_profilesToRemove[profile->getName()] = (messageBox.checkBox() && messageBox.checkBox()->isChecked());
+
+	QStandardItem *categoryItem(m_model->itemFromIndex(index.parent()));
+
+	if (categoryItem)
+	{
+		categoryItem->removeRow(index.row());
+
+		if (getRowCount(categoryItem->index()) == 0)
+		{
+			setRowHidden(categoryItem->row(), m_model->invisibleRootItem()->index(), true);
+		}
+	}
+
+	markProfilesAsModified();
 }
 
 void ContentFiltersViewWidget::updateProfile()
