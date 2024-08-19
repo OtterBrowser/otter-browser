@@ -580,7 +580,6 @@ void ContentFiltersViewWidget::updateProfile()
 
 	if (!m_updateAnimation)
 	{
-
 		m_updateAnimation = ThemesManager::createAnimation();
 		m_updateAnimation->start();
 
