@@ -219,7 +219,7 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 	{
 		const ContentFiltersProfile *profile(contentBlockingProfiles.at(i));
 		QList<QStandardItem*> profileItems(createEntry(profile->getProfileSummary(), profiles, false));
-		const ContentFiltersProfile::ProfileCategory category(contentBlockingProfiles.at(i)->getCategory());
+		const ContentFiltersProfile::ProfileCategory category(profile->getCategory());
 
 		if (!profileItems.isEmpty())
 		{
