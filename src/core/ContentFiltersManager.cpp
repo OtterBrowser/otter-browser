@@ -98,10 +98,11 @@ void ContentFiltersManager::initialize()
 
 	for (int i = 0; i < profiles.count(); ++i)
 	{
-		QJsonObject profileObject(localMainObject.value(profiles.at(i)).toObject());
-		const QJsonObject bundledProfileObject(bundledMainObject.value(profiles.at(i)).toObject());
+		const QString name(profiles.at(i));
+		QJsonObject profileObject(localMainObject.value(name).toObject());
+		const QJsonObject bundledProfileObject(bundledMainObject.value(name).toObject());
 		ContentFiltersProfile::ProfileSummary profileSummary;
-		profileSummary.name = profiles.at(i);
+		profileSummary.name = name;
 
 		ContentFiltersProfile::ProfileFlags flags(ContentFiltersProfile::NoFlags);
 
