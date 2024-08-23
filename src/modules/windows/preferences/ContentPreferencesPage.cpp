@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -302,12 +302,16 @@ void ContentPreferencesPage::save()
 
 	for (int i = 0; i < m_ui->fontsViewWidget->getRowCount(); ++i)
 	{
-		SettingsManager::setOption(SettingsManager::getOptionIdentifier(m_ui->fontsViewWidget->getIndex(i, 1).data(Qt::UserRole).toString()), m_ui->fontsViewWidget->getIndex(i, 1).data(Qt::DisplayRole));
+		const QModelIndex index(m_ui->fontsViewWidget->getIndex(i, 1));
+
+		SettingsManager::setOption(SettingsManager::getOptionIdentifier(index.data(Qt::UserRole).toString()), index.data(Qt::DisplayRole));
 	}
 
 	for (int i = 0; i < m_ui->colorsViewWidget->getRowCount(); ++i)
 	{
-		SettingsManager::setOption(SettingsManager::getOptionIdentifier(m_ui->colorsViewWidget->getIndex(i, 1).data(Qt::UserRole).toString()), m_ui->colorsViewWidget->getIndex(i, 1).data(Qt::EditRole));
+		const QModelIndex index(m_ui->fontsViewWidget->getIndex(i, 1));
+
+		SettingsManager::setOption(SettingsManager::getOptionIdentifier(index.data(Qt::UserRole).toString()), index.data(Qt::EditRole));
 	}
 }
 
