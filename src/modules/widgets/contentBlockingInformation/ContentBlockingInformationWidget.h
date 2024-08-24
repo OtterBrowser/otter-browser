@@ -51,7 +51,7 @@ protected slots:
 	void toggleOption(QAction *action);
 	void populateElementsMenu();
 	void populateProfilesMenu();
-	void handleRequest();
+	void handleBlockedRequest();
 	void setWindow(Window *window);
 
 private:

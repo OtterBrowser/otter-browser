@@ -248,7 +248,7 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 	}
 }
 
-void ContentBlockingInformationWidget::handleRequest()
+void ContentBlockingInformationWidget::handleBlockedRequest()
 {
 	++m_amount;
 
@@ -329,7 +329,7 @@ void ContentBlockingInformationWidget::setWindow(Window *window)
 	if (m_window && !m_window->isAboutToClose())
 	{
 		disconnect(m_window, &Window::aboutToNavigate, this, &ContentBlockingInformationWidget::clear);
-		disconnect(m_window, &Window::requestBlocked, this, &ContentBlockingInformationWidget::handleRequest);
+		disconnect(m_window, &Window::requestBlocked, this, &ContentBlockingInformationWidget::handleBlockedRequest);
 	}
 
 	m_window = window;
@@ -341,7 +341,7 @@ void ContentBlockingInformationWidget::setWindow(Window *window)
 		m_isContentBlockingEnabled = (m_window->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption).toBool());
 
 		connect(m_window, &Window::aboutToNavigate, this, &ContentBlockingInformationWidget::clear);
-		connect(m_window, &Window::requestBlocked, this, &ContentBlockingInformationWidget::handleRequest);
+		connect(m_window, &Window::requestBlocked, this, &ContentBlockingInformationWidget::handleBlockedRequest);
 	}
 	else
 	{
