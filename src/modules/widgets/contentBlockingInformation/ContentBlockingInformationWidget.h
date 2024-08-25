@@ -59,7 +59,7 @@ private:
 	QMenu *m_elementsMenu;
 	QMenu *m_profilesMenu;
 	QIcon m_icon;
-	int m_amount;
+	int m_requestsAmount;
 	bool m_isContentBlockingEnabled;
 };
 

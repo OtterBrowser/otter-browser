@@ -37,7 +37,7 @@ ContentBlockingInformationWidget::ContentBlockingInformationWidget(Window *windo
 	m_window(window),
 	m_elementsMenu(nullptr),
 	m_profilesMenu(nullptr),
-	m_amount(0),
+	m_requestsAmount(0),
 	m_isContentBlockingEnabled(false)
 {
 	QMenu *menu(new QMenu(this));
@@ -84,7 +84,7 @@ void ContentBlockingInformationWidget::resizeEvent(QResizeEvent *event)
 
 void ContentBlockingInformationWidget::clear()
 {
-	m_amount = 0;
+	m_requestsAmount = 0;
 
 	updateState();
 }
@@ -138,7 +138,7 @@ void ContentBlockingInformationWidget::populateElementsMenu()
 		return;
 	}
 
-	const QVector<NetworkManager::ResourceInformation> requests(m_window->getWebWidget()->getBlockedRequests().mid(m_amount - 50));
+	const QVector<NetworkManager::ResourceInformation> requests(m_window->getWebWidget()->getBlockedRequests().mid(m_requestsAmount - 50));
 
 	for (int i = 0; i < requests.count(); ++i)
 	{
@@ -250,7 +250,7 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 
 void ContentBlockingInformationWidget::handleBlockedRequest()
 {
-	++m_amount;
+	++m_requestsAmount;
 
 	updateState();
 }
@@ -290,17 +290,17 @@ void ContentBlockingInformationWidget::updateState()
 
 	QString label;
 
-	if (m_amount > 999999)
+	if (m_requestsAmount > 999999)
 	{
-		label = QString::number(m_amount / 1000000) + QLatin1Char('M');
+		label = QString::number(m_requestsAmount / 1000000) + QLatin1Char('M');
 	}
-	else if (m_amount > 999)
+	else if (m_requestsAmount > 999)
 	{
-		label = QString::number(m_amount / 1000) + QLatin1Char('K');
+		label = QString::number(m_requestsAmount / 1000) + QLatin1Char('K');
 	}
 	else
 	{
-		label = QString::number(m_amount);
+		label = QString::number(m_requestsAmount);
 	}
 
 	const qreal labelWidth(QFontMetricsF(font).width(label));
@@ -321,7 +321,7 @@ void ContentBlockingInformationWidget::updateState()
 	setToolTip(text());
 	setIcon(m_icon);
 
-	m_elementsMenu->setEnabled(m_amount > 0);
+	m_elementsMenu->setEnabled(m_requestsAmount > 0);
 }
 
 void ContentBlockingInformationWidget::setWindow(Window *window)
@@ -333,11 +333,11 @@ void ContentBlockingInformationWidget::setWindow(Window *window)
 	}
 
 	m_window = window;
-	m_amount = 0;
+	m_requestsAmount = 0;
 
 	if (window && window->getWebWidget())
 	{
-		m_amount = window->getWebWidget()->getBlockedRequests().count();
+		m_requestsAmount = window->getWebWidget()->getBlockedRequests().count();
 		m_isContentBlockingEnabled = (m_window->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption).toBool());
 
 		connect(m_window, &Window::aboutToNavigate, this, &ContentBlockingInformationWidget::clear);
@@ -366,7 +366,7 @@ QString ContentBlockingInformationWidget::getText() const
 		}
 	}
 
-	return text.replace(QLatin1String("{amount}"), QString::number(m_amount));
+	return text.replace(QLatin1String("{amount}"), QString::number(m_requestsAmount));
 }
 
 QIcon ContentBlockingInformationWidget::getIcon() const
