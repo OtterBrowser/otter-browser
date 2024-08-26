@@ -1171,16 +1171,18 @@ void AdvancedPreferencesPage::load()
 
 		for (int i = 0; i < supportedCiphers.count(); ++i)
 		{
+			const QString cipherName(supportedCiphers.at(i).name());
+
 			if (useDefaultCiphers && defaultCiphers.contains(supportedCiphers.at(i)))
 			{
-				QStandardItem *item(new QStandardItem(supportedCiphers.at(i).name()));
+				QStandardItem *item(new QStandardItem(cipherName));
 				item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
 				ciphersModel->appendRow(item);
 			}
-			else if (!selectedCiphers.contains(supportedCiphers.at(i).name()))
+			else if (!selectedCiphers.contains(cipherName))
 			{
-				m_ui->ciphersAddButton->menu()->addAction(supportedCiphers.at(i).name());
+				m_ui->ciphersAddButton->menu()->addAction(cipherName);
 			}
 		}
 
