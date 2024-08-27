@@ -156,6 +156,7 @@ void AdvancedPreferencesPage::updateNotificationsActions()
 	m_ui->notificationsPlaySoundFilePathWidget->blockSignals(true);
 	m_ui->notificationsShowAlertCheckBox->blockSignals(true);
 	m_ui->notificationsShowNotificationCheckBox->blockSignals(true);
+	m_ui->preferNativeNotificationsCheckBox->blockSignals(true);
 
 	const QModelIndex index(m_ui->notificationsItemView->getIndex(m_ui->notificationsItemView->getCurrentRow()));
 	const QString path(index.data(SoundPathRole).toString());
@@ -168,6 +169,7 @@ void AdvancedPreferencesPage::updateNotificationsActions()
 	m_ui->notificationsPlaySoundFilePathWidget->blockSignals(false);
 	m_ui->notificationsShowAlertCheckBox->blockSignals(false);
 	m_ui->notificationsShowNotificationCheckBox->blockSignals(false);
+	m_ui->preferNativeNotificationsCheckBox->blockSignals(false);
 }
 
 void AdvancedPreferencesPage::updateNotificationsOptions()
@@ -1270,6 +1272,10 @@ void AdvancedPreferencesPage::load()
 	});
 	connect(m_ui->notificationsItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateNotificationsActions);
 	connect(m_ui->notificationsPlaySoundButton, &QToolButton::clicked, this, &AdvancedPreferencesPage::playNotificationSound);
+	connect(m_ui->notificationsPlaySoundFilePathWidget, &FilePathWidget::pathChanged, this, &AdvancedPreferencesPage::updateNotificationsOptions);
+	connect(m_ui->notificationsShowNotificationCheckBox, &QCheckBox::toggled, this, &AdvancedPreferencesPage::updateNotificationsOptions);
+	connect(m_ui->notificationsShowAlertCheckBox, &QCheckBox::toggled, this, &AdvancedPreferencesPage::updateNotificationsOptions);
+	connect(m_ui->preferNativeNotificationsCheckBox, &QCheckBox::toggled, this, &AdvancedPreferencesPage::updateNotificationsOptions);
 	connect(m_ui->mimeTypesItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateDownloadsActions);
 	connect(m_ui->mimeTypesAddMimeTypeButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::addDownloadsMimeType);
 	connect(m_ui->mimeTypesRemoveMimeTypeButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::removeDownloadsMimeType);
@@ -1346,6 +1352,8 @@ void AdvancedPreferencesPage::save()
 	SettingsManager::setOption(SettingsManager::AddressField_SuggestLocalPathsOption, m_ui->browsingSuggestLocalPathsCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::AddressField_CompletionDisplayModeOption, (m_ui->browsingDisplayModeColumnsRadioButton->isChecked() ? QLatin1String("columns") : QLatin1String("compact")));
 	SettingsManager::setOption(SettingsManager::AddressField_ShowCompletionCategoriesOption, m_ui->browsingCategoriesCheckBox->isChecked());
+
+	updateNotificationsOptions();
 
 	QSettings notificationsSettings(SessionsManager::getWritableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
 	notificationsSettings.setIniCodec("UTF-8");
