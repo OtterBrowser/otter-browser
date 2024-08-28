@@ -282,32 +282,34 @@ void AdvancedPreferencesPage::updateDownloadsActions()
 
 void AdvancedPreferencesPage::updateDownloadsOptions()
 {
+	const QModelIndex index(m_ui->mimeTypesItemView->getIndex(m_ui->mimeTypesItemView->getCurrentRow()));
+
+	if (!index.isValid())
+	{
+		return;
+	}
+
 	disconnect(m_ui->mimeTypesItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateDownloadsActions);
 	disconnect(m_ui->mimeTypesButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this, &AdvancedPreferencesPage::updateDownloadsOptions);
 
-	const QModelIndex index(m_ui->mimeTypesItemView->getIndex(m_ui->mimeTypesItemView->getCurrentRow()));
+	HandlersManager::MimeTypeHandlerDefinition::TransferMode mode(HandlersManager::MimeTypeHandlerDefinition::IgnoreTransfer);
 
-	if (index.isValid())
+	if (m_ui->mimeTypesSaveButton->isChecked())
 	{
-		HandlersManager::MimeTypeHandlerDefinition::TransferMode mode(HandlersManager::MimeTypeHandlerDefinition::IgnoreTransfer);
-
-		if (m_ui->mimeTypesSaveButton->isChecked())
-		{
-			mode = (m_ui->mimeTypesSaveDirectlyCheckBox->isChecked() ? HandlersManager::MimeTypeHandlerDefinition::SaveTransfer : HandlersManager::MimeTypeHandlerDefinition::SaveAsTransfer);
-		}
-		else if (m_ui->mimeTypesOpenButton->isChecked())
-		{
-			mode = HandlersManager::MimeTypeHandlerDefinition::OpenTransfer;
-		}
-		else
-		{
-			mode = HandlersManager::MimeTypeHandlerDefinition::AskTransfer;
-		}
-
-		m_ui->mimeTypesItemView->setData(index, mode, TransferModeRole);
-		m_ui->mimeTypesItemView->setData(index, ((mode == HandlersManager::MimeTypeHandlerDefinition::SaveTransfer || mode == HandlersManager::MimeTypeHandlerDefinition::SaveAsTransfer) ? m_ui->mimeTypesFilePathWidget->getPath() : QString()), DownloadsPathRole);
-		m_ui->mimeTypesItemView->setData(index, ((mode == HandlersManager::MimeTypeHandlerDefinition::OpenTransfer) ? m_ui->mimeTypesApplicationComboBoxWidget->getCommand() : QString()), OpenCommandRole);
+		mode = (m_ui->mimeTypesSaveDirectlyCheckBox->isChecked() ? HandlersManager::MimeTypeHandlerDefinition::SaveTransfer : HandlersManager::MimeTypeHandlerDefinition::SaveAsTransfer);
 	}
+	else if (m_ui->mimeTypesOpenButton->isChecked())
+	{
+		mode = HandlersManager::MimeTypeHandlerDefinition::OpenTransfer;
+	}
+	else
+	{
+		mode = HandlersManager::MimeTypeHandlerDefinition::AskTransfer;
+	}
+
+	m_ui->mimeTypesItemView->setData(index, mode, TransferModeRole);
+	m_ui->mimeTypesItemView->setData(index, ((mode == HandlersManager::MimeTypeHandlerDefinition::SaveTransfer || mode == HandlersManager::MimeTypeHandlerDefinition::SaveAsTransfer) ? m_ui->mimeTypesFilePathWidget->getPath() : QString()), DownloadsPathRole);
+	m_ui->mimeTypesItemView->setData(index, ((mode == HandlersManager::MimeTypeHandlerDefinition::OpenTransfer) ? m_ui->mimeTypesApplicationComboBoxWidget->getCommand() : QString()), OpenCommandRole);
 
 	connect(m_ui->mimeTypesItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateDownloadsActions);
 	connect(m_ui->mimeTypesButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this, &AdvancedPreferencesPage::updateDownloadsOptions);
