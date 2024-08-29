@@ -158,6 +158,11 @@ void ContentPreferencesPage::changeEvent(QEvent *event)
 			m_ui->fontsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Style"), tr("Font"), tr("Preview")});
 			m_ui->colorsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Type"), tr("Preview")});
 
+			for (int i = 0; i < m_ui->fontsViewWidget->getRowCount(); ++i)
+			{
+				m_ui->fontsViewWidget->setData(m_ui->fontsViewWidget->getIndex(i, 2), tr("The quick brown fox jumps over the lazy dog"), Qt::DisplayRole);
+			}
+
 			break;
 		default:
 			break;
