@@ -39,7 +39,7 @@ public:
 
 		bool isValid()
 		{
-			return !language.isEmpty();
+			return (!language.isEmpty() && !paths.isEmpty());
 		}
 	};
 
