@@ -254,9 +254,11 @@ SpellCheckManager::DictionaryInformation SpellCheckManager::getDictionary(const 
 {
 	for (int i = 0; i < m_dictionaries.count(); ++i)
 	{
-		if (m_dictionaries.at(i).language == language)
+		const DictionaryInformation dictionary(m_dictionaries.at(i));
+
+		if (dictionary.language == language)
 		{
-			return m_dictionaries.at(i);
+			return dictionary;
 		}
 	}
 
