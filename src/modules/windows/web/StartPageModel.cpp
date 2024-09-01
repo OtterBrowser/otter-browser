@@ -245,8 +245,10 @@ QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const
 
 		if (index.isValid() && static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
 		{
-			texts.append(index.data(BookmarksModel::UrlRole).toString());
-			urls.append(index.data(BookmarksModel::UrlRole).toUrl());
+			const QVariant data(index.data(BookmarksModel::UrlRole));
+
+			texts.append(data.toString());
+			urls.append(data.toUrl());
 		}
 	}
 
