@@ -219,7 +219,9 @@ void StartPageModel::handleThumbnailCreated(quint64 identifier, const QPixmap &t
 			bookmark->setData(title, BookmarksModel::TitleRole);
 		}
 
-		emit isReloadingTileChanged(index(bookmark->index().row(), bookmark->index().column()));
+		const QModelIndex bookmarkIndex(bookmark->index());
+
+		emit isReloadingTileChanged(index(bookmarkIndex.row(), bookmarkIndex.column()));
 	}
 }
 
