@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -53,11 +53,13 @@ LinksContentsWidget::LinksContentsWidget(const QVariantMap &parameters, QWidget 
 		{
 			disconnect(previousWindow, &Window::loadingStateChanged, this, &LinksContentsWidget::updateLinks);
 
-			if (previousWindow->getWebWidget())
-			{
-				previousWindow->getWebWidget()->stopWatchingChanges(this, WebWidget::LinksWatcher);
+			WebWidget *webWidget(previousWindow->getWebWidget());
 
-				disconnect(previousWindow->getWebWidget(), &WebWidget::watchedDataChanged, this, &LinksContentsWidget::handleWatchedDataChanged);
+			if (webWidget)
+			{
+				webWidget->stopWatchingChanges(this, WebWidget::LinksWatcher);
+
+				disconnect(webWidget, &WebWidget::watchedDataChanged, this, &LinksContentsWidget::handleWatchedDataChanged);
 			}
 		}
 
@@ -65,11 +67,13 @@ LinksContentsWidget::LinksContentsWidget(const QVariantMap &parameters, QWidget 
 		{
 			connect(window, &Window::loadingStateChanged, this, &LinksContentsWidget::updateLinks);
 
-			if (window->getWebWidget())
-			{
-				window->getWebWidget()->startWatchingChanges(this, WebWidget::LinksWatcher);
+			WebWidget *webWidget(window->getWebWidget());
 
-				connect(window->getWebWidget(), &WebWidget::watchedDataChanged, this, &LinksContentsWidget::handleWatchedDataChanged);
+			if (webWidget)
+			{
+				webWidget->startWatchingChanges(this, WebWidget::LinksWatcher);
+
+				connect(webWidget, &WebWidget::watchedDataChanged, this, &LinksContentsWidget::handleWatchedDataChanged);
 			}
 		}
 
