@@ -139,7 +139,9 @@ void LinksContentsWidget::triggerAction(int identifier, const QVariantMap &param
 
 				for (int i = 0; i < indexes.count(); ++i)
 				{
-					BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, indexes.at(i).data(Qt::StatusTipRole)}, {BookmarksModel::TitleRole, indexes.at(i).data(Qt::DisplayRole)}}, nullptr);
+					const QModelIndex index(indexes.at(i));
+
+					BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, index.data(Qt::StatusTipRole)}, {BookmarksModel::TitleRole, index.data(Qt::DisplayRole)}}, nullptr);
 				}
 			}
 
