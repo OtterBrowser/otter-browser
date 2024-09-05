@@ -180,10 +180,11 @@ void LinksContentsWidget::openLink()
 	if (action)
 	{
 		const QList<QModelIndex> indexes(m_ui->linksViewWidget->selectionModel()->selectedIndexes());
+		const QVariant hints(static_cast<SessionsManager::OpenHints>(action->data().toInt()));
 
 		for (int i = 0; i < indexes.count(); ++i)
 		{
-			Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), indexes.at(i).data(Qt::StatusTipRole)}, {QLatin1String("hints"), QVariant((action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen))}}, parentWidget());
+			Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), indexes.at(i).data(Qt::StatusTipRole)}, {QLatin1String("hints"), hints}}, parentWidget());
 		}
 	}
 }
