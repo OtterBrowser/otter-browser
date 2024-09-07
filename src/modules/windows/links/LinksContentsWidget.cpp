@@ -320,9 +320,11 @@ bool LinksContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (index.isValid())
 		{
-			if (index.data(Qt::DisplayRole).toString() != index.data(Qt::StatusTipRole).toUrl().toDisplayString(QUrl::RemovePassword))
+			const QString title(index.data(Qt::DisplayRole).toString());
+
+			if (title != index.data(Qt::StatusTipRole).toUrl().toDisplayString(QUrl::RemovePassword))
 			{
-				toolTip.append(tr("Title: %1").arg(index.data(Qt::DisplayRole).toString()) + QLatin1Char('\n'));
+				toolTip.append(tr("Title: %1").arg(title) + QLatin1Char('\n'));
 			}
 
 			toolTip.append(tr("Address: %1").arg(index.data(Qt::StatusTipRole).toUrl().toDisplayString()));
