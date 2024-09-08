@@ -321,13 +321,14 @@ bool LinksContentsWidget::eventFilter(QObject *object, QEvent *event)
 		if (index.isValid())
 		{
 			const QString title(index.data(Qt::DisplayRole).toString());
+			const QString address(index.data(Qt::StatusTipRole).toUrl().toDisplayString(QUrl::RemovePassword));
 
-			if (title != index.data(Qt::StatusTipRole).toUrl().toDisplayString(QUrl::RemovePassword))
+			if (title != address)
 			{
 				toolTip.append(tr("Title: %1").arg(title) + QLatin1Char('\n'));
 			}
 
-			toolTip.append(tr("Address: %1").arg(index.data(Qt::StatusTipRole).toUrl().toDisplayString()));
+			toolTip.append(tr("Address: %1").arg(address));
 		}
 
 		QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->linksViewWidget).width() / 2)), m_ui->linksViewWidget, m_ui->linksViewWidget->visualRect(index));
