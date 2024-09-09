@@ -286,28 +286,28 @@ void PasswordsContentsWidget::removePasswords()
 
 	for (int i = 0; i < indexes.count(); ++i)
 	{
-		if (!indexes.at(i).isValid() || indexes.at(i).column() > 0)
+		const QModelIndex index(indexes.at(i));
+
+		if (!index.isValid() || index.column() > 0)
 		{
 			continue;
 		}
 
-		if (indexes.at(i).parent() == m_model->invisibleRootItem()->index())
+		if (index.parent() == m_model->invisibleRootItem()->index())
 		{
-			const QModelIndex hostIndex(indexes.at(i));
-
-			if (!hostIndex.isValid())
+			if (!index.isValid())
 			{
 				continue;
 			}
 
-			for (int j = 0; j < m_model->rowCount(hostIndex); ++j)
+			for (int j = 0; j < m_model->rowCount(index); ++j)
 			{
-				passwords.append(getPassword(m_model->index(j, 0, hostIndex)));
+				passwords.append(getPassword(m_model->index(j, 0, index)));
 			}
 		}
 		else
 		{
-			const QModelIndex setIndex((indexes.at(i).parent().parent() == m_model->invisibleRootItem()->index()) ? indexes.at(i) : indexes.at(i).parent());
+			const QModelIndex setIndex((index.parent().parent() == m_model->invisibleRootItem()->index()) ? index : index.parent());
 
 			if (setIndex.isValid())
 			{
