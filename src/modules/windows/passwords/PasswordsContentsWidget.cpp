@@ -447,17 +447,19 @@ void PasswordsContentsWidget::showContextMenu(const QPoint &position)
 		{
 			if (index.parent().parent().isValid() && index.parent().parent().parent() == m_model->invisibleRootItem()->index())
 			{
-				const QModelIndex valueIndex(index.sibling(index.row(), 0));
-
 				menu.addAction(tr("Copy Field Name"), this, [&]()
 				{
-					if (valueIndex.isValid())
+					const QModelIndex nameIndex(index.sibling(index.row(), 0));
+
+					if (nameIndex.isValid())
 					{
-						QGuiApplication::clipboard()->setText(valueIndex.data(Qt::DisplayRole).toString());
+						QGuiApplication::clipboard()->setText(nameIndex.data(Qt::DisplayRole).toString());
 					}
 				});
 				menu.addAction(tr("Copy Field Value"), this, [&]()
 				{
+					const QModelIndex valueIndex(index.sibling(index.row(), 1));
+
 					if (valueIndex.isValid())
 					{
 						QGuiApplication::clipboard()->setText(valueIndex.data(Qt::DisplayRole).toString());
