@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -401,7 +401,7 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
-		if ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton)
+		if (mouseEvent->button() == Qt::MiddleButton || (mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier))
 		{
 			const BookmarksModel::Bookmark *bookmark(NotesManager::getModel()->getBookmark(m_ui->notesViewWidget->indexAt(mouseEvent->pos())));
 
