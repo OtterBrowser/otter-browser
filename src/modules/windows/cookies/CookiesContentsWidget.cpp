@@ -258,7 +258,7 @@ void CookiesContentsWidget::handleCookieAdded(const QNetworkCookie &cookie)
 
 			if (childItem && cookie.hasSameIdentifier(getCookie(childItem->index().data(CookieRole))))
 			{
-				childItem->setData(cookie.toRawForm());
+				childItem->setData(cookie.toRawForm(), CookieRole);
 
 				updateActions();
 
