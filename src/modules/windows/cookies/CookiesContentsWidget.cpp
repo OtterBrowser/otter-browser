@@ -247,7 +247,7 @@ void CookiesContentsWidget::cookieProperties()
 
 void CookiesContentsWidget::handleCookieAdded(const QNetworkCookie &cookie)
 {
-	const QString domain(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
+	const QString domain(getCookieDomain(cookie));
 	QStandardItem *domainItem(findDomainItem(domain));
 
 	if (domainItem)
@@ -290,7 +290,7 @@ void CookiesContentsWidget::handleCookieAdded(const QNetworkCookie &cookie)
 
 void CookiesContentsWidget::handleCookieRemoved(const QNetworkCookie &cookie)
 {
-	const QString domain(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
+	const QString domain(getCookieDomain(cookie));
 	QStandardItem *domainItem(findDomainItem(domain));
 
 	if (!domainItem)
@@ -442,6 +442,11 @@ QStandardItem* CookiesContentsWidget::findDomainItem(const QString &domain)
 	}
 
 	return nullptr;
+}
+
+QString CookiesContentsWidget::getCookieDomain(const QNetworkCookie &cookie) const
+{
+	return QString(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
 }
 
 QString CookiesContentsWidget::getTitle() const

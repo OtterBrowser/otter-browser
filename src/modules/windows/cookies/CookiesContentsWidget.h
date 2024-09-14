@@ -63,6 +63,7 @@ public slots:
 protected:
 	void changeEvent(QEvent *event) override;
 	QStandardItem* findDomainItem(const QString &domain);
+	QString getCookieDomain(const QNetworkCookie &cookie) const;
 	QNetworkCookie getCookie(const QVariant &data) const;
 
 protected slots:
