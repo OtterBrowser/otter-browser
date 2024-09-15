@@ -201,6 +201,8 @@ void CookiesContentsWidget::removeDomainCookies()
 		return;
 	}
 
+	cookies.squeeze();
+
 	QMessageBox messageBox;
 	messageBox.setWindowTitle(tr("Question"));
 	messageBox.setText(tr("You are about to delete %n cookie(s).", "", cookies.count()));
