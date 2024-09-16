@@ -247,9 +247,11 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &url)
 
 	for (int i = 0; i < headers.count(); ++i)
 	{
-		if (headers.at(i).first == QByteArrayLiteral("Content-Type"))
+		const QPair<QByteArray, QByteArray> header(headers.at(i));
+
+		if (header.first == QByteArrayLiteral("Content-Type"))
 		{
-			type = QString::fromLatin1(headers.at(i).second);
+			type = QString::fromLatin1(header.second);
 
 			break;
 		}
