@@ -60,11 +60,13 @@ PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &
 		{
 			disconnect(previousWindow, &Window::loadingStateChanged, this, &PageInformationContentsWidget::updateSections);
 
-			if (previousWindow->getWebWidget())
-			{
-				previousWindow->getWebWidget()->stopWatchingChanges(this, WebWidget::MetaDataWatcher);
+			WebWidget *webWidget(previousWindow->getWebWidget());
 
-				disconnect(previousWindow->getWebWidget(), &WebWidget::watchedDataChanged, this, &PageInformationContentsWidget::handleWatchedDataChanged);
+			if (webWidget)
+			{
+				webWidget->stopWatchingChanges(this, WebWidget::MetaDataWatcher);
+
+				disconnect(webWidget, &WebWidget::watchedDataChanged, this, &PageInformationContentsWidget::handleWatchedDataChanged);
 			}
 		}
 
@@ -72,11 +74,13 @@ PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &
 		{
 			connect(window, &Window::loadingStateChanged, this, &PageInformationContentsWidget::updateSections);
 
-			if (window->getWebWidget())
-			{
-				window->getWebWidget()->stopWatchingChanges(this, WebWidget::MetaDataWatcher);
+			WebWidget *webWidget(window->getWebWidget());
 
-				connect(window->getWebWidget(), &WebWidget::watchedDataChanged, this, &PageInformationContentsWidget::handleWatchedDataChanged);
+			if (webWidget)
+			{
+				webWidget->stopWatchingChanges(this, WebWidget::MetaDataWatcher);
+
+				connect(webWidget, &WebWidget::watchedDataChanged, this, &PageInformationContentsWidget::handleWatchedDataChanged);
 			}
 		}
 
