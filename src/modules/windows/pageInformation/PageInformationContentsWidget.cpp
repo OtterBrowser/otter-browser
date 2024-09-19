@@ -169,7 +169,7 @@ void PageInformationContentsWidget::updateSections()
 
 					addEntry(sectionItem, tr("Title"), (window ? window->getTitle() : QString()));
 
-					if (!window || window->getUrl().scheme() != QLatin1String("about"))
+					if (window && window->getUrl().scheme() != QLatin1String("about"))
 					{
 						WebWidget *webWidget(window->getWebWidget());
 
