@@ -172,14 +172,15 @@ void PageInformationContentsWidget::updateSections()
 					if (window && window->getUrl().scheme() != QLatin1String("about"))
 					{
 						WebWidget *webWidget(window->getWebWidget());
+						const int amountOfBlockedRequests(webWidget->getPageInformation(WebWidget::RequestsBlockedInformation).toInt());
 
 						addEntry(sectionItem, tr("MIME type"), (canGetPageInformation ? webWidget->getPageInformation(WebWidget::DocumentMimeTypeInformation).toString() : QString()));
 						addEntry(sectionItem, tr("Document size"), (canGetPageInformation ? Utils::formatUnit(webWidget->getPageInformation(WebWidget::DocumentBytesTotalInformation).toLongLong(), false, 1, true) : QString()));
 						addEntry(sectionItem, tr("Total size"), (canGetPageInformation ? Utils::formatUnit(webWidget->getPageInformation(WebWidget::TotalBytesTotalInformation).toLongLong(), false, 1, true) : QString()));
 
-						if (canGetPageInformation && webWidget->getPageInformation(WebWidget::RequestsBlockedInformation).toInt() > 0)
+						if (canGetPageInformation && amountOfBlockedRequests > 0)
 						{
-							addEntry(sectionItem, tr("Number of requests"), tr("%1 (%n blocked)", "", webWidget->getPageInformation(WebWidget::RequestsBlockedInformation).toInt()).arg(window->getWebWidget()->getPageInformation(WebWidget::RequestsFinishedInformation).toInt()));
+							addEntry(sectionItem, tr("Number of requests"), tr("%1 (%n blocked)", "", amountOfBlockedRequests).arg(window->getWebWidget()->getPageInformation(WebWidget::RequestsFinishedInformation).toInt()));
 						}
 						else
 						{
