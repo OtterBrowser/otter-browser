@@ -534,7 +534,7 @@ ActionsManager::ActionDefinition::State PasswordsContentsWidget::getActionState(
 			return state;
 		default:
 			break;
-		}
+	}
 
 	return ContentsWidget::getActionState(identifier, parameters);
 }
