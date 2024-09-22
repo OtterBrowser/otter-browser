@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -101,10 +101,11 @@ void TabHistoryContentsWidget::updateHistory()
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
-		QStandardItem *item(new QStandardItem(history.entries.at(i).getTitle()));
-		item->setData((history.entries.at(i).icon.isNull() ? ThemesManager::createIcon(QLatin1String("text-html")) : history.entries.at(i).icon), Qt::DecorationRole);
-		item->setData(history.entries.at(i).url, UrlRole);
-		item->setData(history.entries.at(i).time, TimeVisitedRole);
+		const Session::Window::History::Entry entry(history.entries.at(i));
+		QStandardItem *item(new QStandardItem(entry.getTitle()));
+		item->setData((entry.icon.isNull() ? ThemesManager::createIcon(QLatin1String("text-html")) : entry.icon), Qt::DecorationRole);
+		item->setData(entry.url, UrlRole);
+		item->setData(entry.time, TimeVisitedRole);
 		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 		if (i == history.index)
