@@ -406,10 +406,7 @@ void TransfersContentsWidget::showContextMenu(const QPoint &position)
 		}
 	}
 
-	menu.addAction(ThemesManager::createIcon(QLatin1String("edit-clear-history")), tr("Clear Finished Transfers"), this, [&]()
-	{
-		TransfersManager::clearTransfers();
-	})->setEnabled(finishedTransfers > 0);
+	menu.addAction(ThemesManager::createIcon(QLatin1String("edit-clear-history")), tr("Clear Finished Transfers"), &TransfersManager::clearTransfers)->setEnabled(finishedTransfers > 0);
 	menu.exec(m_ui->transfersViewWidget->mapToGlobal(position));
 }
 
