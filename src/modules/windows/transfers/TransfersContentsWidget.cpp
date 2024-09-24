@@ -332,7 +332,7 @@ void TransfersContentsWidget::handleTransferChanged(Transfer *transfer)
 		}
 	}
 
-	if (m_ui->transfersViewWidget->selectionModel()->hasSelection())
+	if (m_ui->transfersViewWidget->hasSelection())
 	{
 		updateActions();
 	}
