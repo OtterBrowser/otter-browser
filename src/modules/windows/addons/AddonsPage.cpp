@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2022 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2022 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -244,7 +244,7 @@ void AddonsPage::showContextMenu(const QPoint &position)
 	QMenu menu(this);
 	menu.addAction(tr("Add Addon…"), this, &AddonsPage::addAddon);
 
-	if (m_ui->addonsViewWidget->selectionModel()->hasSelection())
+	if (m_ui->addonsViewWidget->hasSelection())
 	{
 		menu.addSeparator();
 		menu.addAction(tr("Open Addon File"), this, &AddonsPage::openAddons)->setEnabled(canOpenAddons());

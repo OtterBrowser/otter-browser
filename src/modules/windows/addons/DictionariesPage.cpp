@@ -26,6 +26,9 @@
 
 namespace Otter
 {
+///TODO
+/// allow to disable dictionaries
+/// connect to dictionaries changed signal
 
 DictionariesPage::DictionariesPage(bool needsDetails, QWidget *parent) : AddonsPage(needsDetails, parent)
 {
