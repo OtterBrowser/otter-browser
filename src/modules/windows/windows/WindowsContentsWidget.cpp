@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -246,12 +246,14 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 
 					if (windowItem)
 					{
-						executor = ActionExecutor::Object(windowItem->getActiveWindow()->getMainWindow(), windowItem->getActiveWindow()->getMainWindow());
+						Window *window(windowItem->getActiveWindow());
+
+						executor = ActionExecutor::Object(window->getMainWindow(), window->getMainWindow());
 
 						menu.addAction(new Action(ActionsManager::NewTabAction, {}, executor, &menu));
 						menu.addAction(new Action(ActionsManager::NewTabPrivateAction, {}, executor, &menu));
 						menu.addSeparator();
-						menu.addAction(new Action(ActionsManager::CloseTabAction, {}, ActionExecutor::Object(windowItem->getActiveWindow(), windowItem->getActiveWindow()), &menu));
+						menu.addAction(new Action(ActionsManager::CloseTabAction, {}, ActionExecutor::Object(window, window), &menu));
 					}
 				}
 
