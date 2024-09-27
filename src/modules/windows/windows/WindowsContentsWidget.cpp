@@ -101,7 +101,7 @@ int EntryItemDelegate::calculateDecorationWidth(QStyleOptionViewItem *option, co
 {
 	if (m_decorationSize < 0)
 	{
-		QStyleOptionViewItem mutableOption(*(option));
+		QStyleOptionViewItem mutableOption(*option);
 
 		ItemDelegate::initStyleOption(&mutableOption, index);
 
