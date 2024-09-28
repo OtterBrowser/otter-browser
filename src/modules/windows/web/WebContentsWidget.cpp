@@ -889,7 +889,9 @@ void WebContentsWidget::handleSavePasswordRequest(const PasswordsManager::Passwo
 
 	for (int i = 0; i < password.fields.count(); ++i)
 	{
-		if (password.fields.at(i).type == PasswordsManager::PasswordField && !password.fields.at(i).value.isEmpty())
+		const PasswordsManager::PasswordInformation::Field field(password.fields.at(i));
+
+		if (field.type == PasswordsManager::PasswordField && !field.value.isEmpty())
 		{
 			isValid = true;
 
