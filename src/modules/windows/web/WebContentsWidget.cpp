@@ -1263,14 +1263,19 @@ void WebContentsWidget::setOption(int identifier, const QVariant &value)
 
 void WebContentsWidget::setHistory(const Session::Window::History &history)
 {
-	if (history.entries.count() == 1 && QUrl(history.entries.at(0).url).scheme() == QLatin1String("view-source"))
+	if (history.entries.count() == 1)
 	{
-		setUrl(QUrl(history.entries.at(0).url), true);
+		const QUrl url(history.entries.at(0).url);
+
+		if (url.scheme() == QLatin1String("view-source"))
+		{
+			setUrl(url, true);
+
+			return;
+		}
 	}
-	else
-	{
-		m_webWidget->setHistory(history);
-	}
+
+	m_webWidget->setHistory(history);
 }
 
 void WebContentsWidget::setZoom(int zoom)
