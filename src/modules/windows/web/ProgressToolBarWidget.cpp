@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -70,42 +70,39 @@ void ProgressToolBarWidget::timerEvent(QTimerEvent *event)
 
 void ProgressToolBarWidget::handleActionsStateChanged(const QVector<int> &identifiers)
 {
-	if (!m_window || !m_webWidget)
+	if (!m_window || !m_webWidget || !identifiers.contains(ActionsManager::ShowToolBarAction))
 	{
 		return;
 	}
 
-	if (identifiers.contains(ActionsManager::ShowToolBarAction))
+	const MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+	if (m_window->getLoadingState() == WebWidget::OngoingLoadingState && mainWindow && mainWindow->getActionState(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::ProgressBar}}).isChecked)
 	{
-		const MainWindow *mainWindow(MainWindow::findMainWindow(this));
+		QRect geometry(m_webWidget->getGeometry(true));
 
-		if (m_window->getLoadingState() == WebWidget::OngoingLoadingState && mainWindow && mainWindow->getActionState(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::ProgressBar}}).isChecked)
+		if (!isVisible())
 		{
-			QRect geometry(m_webWidget->getGeometry(true));
-
-			if (!isVisible())
-			{
-				connect(m_webWidget, &WebWidget::geometryChanged, this, &ProgressToolBarWidget::scheduleGeometryUpdate);
-			}
-
-			if (!geometry.isValid())
-			{
-				geometry = m_webWidget->geometry();
-			}
-
-			geometry.setTop(geometry.bottom() - 30);
-			geometry.translate(m_webWidget->mapTo(m_window->getContentsWidget(), {0, 0}));
-
-			setGeometry(geometry);
-			show();
-			raise();
+			connect(m_webWidget, &WebWidget::geometryChanged, this, &ProgressToolBarWidget::scheduleGeometryUpdate);
 		}
-		else
+
+		if (!geometry.isValid())
 		{
-			disconnect(m_webWidget, &WebWidget::geometryChanged, this, &ProgressToolBarWidget::scheduleGeometryUpdate);
-
-			hide();
+			geometry = m_webWidget->geometry();
 		}
+
+		geometry.setTop(geometry.bottom() - 30);
+		geometry.translate(m_webWidget->mapTo(m_window->getContentsWidget(), {0, 0}));
+
+		setGeometry(geometry);
+		show();
+		raise();
+	}
+	else
+	{
+		disconnect(m_webWidget, &WebWidget::geometryChanged, this, &ProgressToolBarWidget::scheduleGeometryUpdate);
+
+		hide();
 	}
 }
 
