@@ -434,11 +434,13 @@ void ToolBarWidget::populateEntries()
 
 			for (int i = 0; i < definition.entries.count(); ++i)
 			{
-				if (definition.entries.at(i).action == QLatin1String("separator"))
+				const QString action(definition.entries.at(i).action);
+
+				if (action == QLatin1String("separator"))
 				{
 					addSeparator();
 				}
-				else if (definition.entries.at(i).action != QLatin1String("TabBarWidget"))
+				else if (action != QLatin1String("TabBarWidget"))
 				{
 					QWidget *widget(WidgetFactory::createToolBarItem(definition.entries.at(i), m_window, this));
 
@@ -449,11 +451,11 @@ void ToolBarWidget::populateEntries()
 
 					addWidget(widget);
 
-					if (definition.entries.at(i).action == QLatin1String("AddressWidget"))
+					if (action == QLatin1String("AddressWidget"))
 					{
 						m_addressFields.append(widget);
 					}
-					else if (definition.entries.at(i).action == QLatin1String("SearchWidget"))
+					else if (action == QLatin1String("SearchWidget"))
 					{
 						m_searchFields.append(widget);
 					}
