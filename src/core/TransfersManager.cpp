@@ -462,7 +462,7 @@ void Transfer::handleDownloadFinished()
 
 		if (!url.isValid() || (m_source.scheme() == QLatin1String("https") && url.scheme() == QLatin1String("http")))
 		{
-			handleDownloadError(QNetworkReply::UnknownContentError);
+			handleDownloadError(QNetworkReply::InsecureRedirectError);
 		}
 		else
 		{
