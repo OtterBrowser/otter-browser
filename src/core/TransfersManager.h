@@ -62,7 +62,7 @@ public:
 
 	~Transfer();
 
-	void setHash(QCryptographicHash::Algorithm algorithm, const QByteArray &hash);
+	void setHash(QCryptographicHash::Algorithm algorithm, const QByteArray &hash = {});
 	virtual void setUpdateInterval(int interval);
 	virtual QUrl getSource() const;
 	virtual QString getSuggestedFileName();
