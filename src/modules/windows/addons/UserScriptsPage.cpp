@@ -74,14 +74,16 @@ void UserScriptsPage::addAddon()
 
 	for (int i = 0; i < sourcePaths.count(); ++i)
 	{
-		if (sourcePaths.at(i).isEmpty())
+		const QString sourcePath(sourcePaths.at(i));
+
+		if (sourcePath.isEmpty())
 		{
 			continue;
 		}
 
-		const QString scriptName(QFileInfo(sourcePaths.at(i)).completeBaseName());
+		const QString scriptName(QFileInfo(sourcePath).completeBaseName());
 		const QString targetDirectory(QDir(SessionsManager::getWritableDataPath(QLatin1String("scripts"))).filePath(scriptName));
-		const QString targetPath(QDir(targetDirectory).filePath(QFileInfo(sourcePaths.at(i)).fileName()));
+		const QString targetPath(QDir(targetDirectory).filePath(QFileInfo(sourcePath).fileName()));
 		bool isReplacingScript(false);
 
 		if (QFile::exists(targetPath))
@@ -126,9 +128,9 @@ void UserScriptsPage::addAddon()
 			}
 		}
 
-		if ((isReplacingScript && !QDir().remove(targetPath)) || (!isReplacingScript && !Utils::ensureDirectoryExists(targetDirectory)) || !QFile::copy(sourcePaths.at(i), targetPath))
+		if ((isReplacingScript && !QDir().remove(targetPath)) || (!isReplacingScript && !Utils::ensureDirectoryExists(targetDirectory)) || !QFile::copy(sourcePath, targetPath))
 		{
-			failedPaths.append(sourcePaths.at(i));
+			failedPaths.append(sourcePath);
 
 			continue;
 		}
