@@ -179,9 +179,11 @@ void UserScriptsPage::reloadAddons()
 
 	for (int i = 0; i < addons.count(); ++i)
 	{
-		addons.at(i)->reload();
+		UserScript *addon(addons.at(i));
 
-		updateAddonEntry(addons.at(i));
+		addon->reload();
+
+		updateAddonEntry(addon);
 	}
 }
 
@@ -198,9 +200,11 @@ void UserScriptsPage::removeAddons()
 
 	for (int i = 0; i < addons.count(); ++i)
 	{
-		if (addons.at(i)->canRemove())
+		UserScript *addon(addons.at(i));
+
+		if (addon->canRemove())
 		{
-			m_addonsToRemove.append(addons.at(i)->getName());
+			m_addonsToRemove.append(addon->getName());
 
 			hasAddonsToRemove = true;
 		}
