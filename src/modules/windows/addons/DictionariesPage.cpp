@@ -91,7 +91,6 @@ void DictionariesPage::addAddon()
 
 	QString language;
 	bool hasAff(false);
-	bool hasDic(false);
 
 	for (int i = 0; i < sourcePaths.count(); ++i)
 	{
@@ -105,11 +104,10 @@ void DictionariesPage::addAddon()
 		else if (suffix == QLatin1String("dic"))
 		{
 			language = fileInformation.baseName();
-			hasDic = true;
 		}
 	}
 
-	if (hasAff && hasDic)
+	if (hasAff && !language.isEmpty())
 	{
 		SpellCheckManager::DictionaryInformation dictionary;
 		dictionary.language = language;
