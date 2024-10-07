@@ -226,26 +226,22 @@ void ErrorConsoleWidget::filterCategories()
 		m_messageScopes = messageScopes;
 	}
 
-	const QVector<Console::MessageCategory> categories(getCategories());
-	const quint64 activeWindow(getActiveWindow());
-
-	for (int i = 0; i < m_model->rowCount(); ++i)
-	{
-		applyFilters(m_model->index(i, 0), m_ui->filterLineEditWidget->text(), categories, activeWindow);
-	}
+	applyFilters(m_ui->filterLineEditWidget->text(), getCategories(), getActiveWindow());
 }
 
 void ErrorConsoleWidget::filterMessages(const QString &filter)
 {
 	if (m_model)
 	{
-		const QVector<Console::MessageCategory> categories(getCategories());
-		const quint64 activeWindow(getActiveWindow());
+		applyFilters(filter, getCategories(), getActiveWindow());
+	}
+}
 
-		for (int i = 0; i < m_model->rowCount(); ++i)
-		{
-			applyFilters(m_model->index(i, 0), filter, categories, activeWindow);
-		}
+void ErrorConsoleWidget::applyFilters(const QString &filter, const QVector<Console::MessageCategory> &categories, quint64 activeWindow)
+{
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		applyFilters(m_model->index(i, 0), filter, categories, activeWindow);
 	}
 }
 
