@@ -301,11 +301,14 @@ void ContentFiltersManager::addProfile(ContentFiltersProfile *profile)
 
 	for (int i = 0; i < m_contentBlockingProfiles.count(); ++i)
 	{
-		if (m_contentBlockingProfiles.at(i)->getName() == profile->getName())
+		ContentFiltersProfile *currentProfile(m_contentBlockingProfiles.at(i));
+
+		if (currentProfile->getName() == profile->getName())
 		{
 			isReplacing = true;
 
-			m_contentBlockingProfiles.at(i)->deleteLater();
+			currentProfile->deleteLater();
+
 			m_contentBlockingProfiles.replace(i, profile);
 
 			break;
