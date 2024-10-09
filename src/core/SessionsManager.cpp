@@ -664,16 +664,17 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 		for (int j = 0; j < sessionEntry.windows.count(); ++j)
 		{
-			QJsonObject windowObject({{QLatin1String("currentIndex"), (sessionEntry.windows.at(j).history.index + 1)}});
+			const Session::Window window(sessionEntry.windows.at(j));
+			QJsonObject windowObject({{QLatin1String("currentIndex"), (window.history.index + 1)}});
 
-			if (!sessionEntry.windows.at(j).identity.isEmpty())
+			if (!window.identity.isEmpty())
 			{
-				windowObject.insert(QLatin1String("identity"), sessionEntry.windows.at(j).identity);
+				windowObject.insert(QLatin1String("identity"), window.identity);
 			}
 
-			if (!sessionEntry.windows.at(j).options.isEmpty())
+			if (!window.options.isEmpty())
 			{
-				const QHash<int, QVariant> windowOptions(sessionEntry.windows.at(j).options);
+				const QHash<int, QVariant> windowOptions(window.options);
 				QHash<int, QVariant>::const_iterator optionsIterator;
 				QJsonObject optionsObject;
 
@@ -690,7 +691,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 				windowObject.insert(QLatin1String("options"), optionsObject);
 			}
 
-			switch (sessionEntry.windows.at(j).state.state)
+			switch (window.state.state)
 			{
 				case Qt::WindowMaximized:
 					windowObject.insert(QLatin1String("state"), QLatin1String("maximized"));
@@ -702,7 +703,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 					break;
 				default:
 					{
-						const QRect geometry(sessionEntry.windows.at(j).state.geometry);
+						const QRect geometry(window.state.geometry);
 
 						windowObject.insert(QLatin1String("state"), QLatin1String("normal"));
 
@@ -715,17 +716,17 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 					break;
 			}
 
-			if (sessionEntry.windows.at(j).isAlwaysOnTop)
+			if (window.isAlwaysOnTop)
 			{
 				windowObject.insert(QLatin1String("isAlwaysOnTop"), true);
 			}
 
-			if (sessionEntry.windows.at(j).isPinned)
+			if (window.isPinned)
 			{
 				windowObject.insert(QLatin1String("isPinned"), true);
 			}
 
-			const Session::Window::History windowHistory(sessionEntry.windows.at(j).history);
+			const Session::Window::History windowHistory(window.history);
 			QJsonArray windowHistoryArray;
 
 			for (int k = 0; k < windowHistory.entries.count(); ++k)
