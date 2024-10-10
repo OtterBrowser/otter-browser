@@ -755,7 +755,8 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 			for (int j = 0; j < sessionEntry.toolBars.count(); ++j)
 			{
-				const QString identifier(ToolBarsManager::getToolBarName(sessionEntry.toolBars.at(j).identifier));
+				const Session::MainWindow::ToolBarState toolBar(sessionEntry.toolBars.at(j));
+				const QString identifier(ToolBarsManager::getToolBarName(toolBar.identifier));
 
 				if (identifier.isEmpty())
 				{
@@ -765,7 +766,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 				QJsonObject toolBarObject({{QLatin1String("identifier"), identifier}});
 				QString location;
 
-				switch (sessionEntry.toolBars.at(j).location)
+				switch (toolBar.location)
 				{
 					case Qt::LeftToolBarArea:
 						location = QLatin1String("left");
@@ -792,19 +793,19 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 					toolBarObject.insert(QLatin1String("location"), location);
 				}
 
-				if (sessionEntry.toolBars.at(j).normalVisibility != Session::MainWindow::ToolBarState::UnspecifiedVisibilityToolBar)
+				if (toolBar.normalVisibility != Session::MainWindow::ToolBarState::UnspecifiedVisibilityToolBar)
 				{
-					toolBarObject.insert(QLatin1String("normalVisibility"), ((sessionEntry.toolBars.at(j).normalVisibility == Session::MainWindow::ToolBarState::AlwaysHiddenToolBar) ? QLatin1String("hidden") : QLatin1String("visible")));
+					toolBarObject.insert(QLatin1String("normalVisibility"), ((toolBar.normalVisibility == Session::MainWindow::ToolBarState::AlwaysHiddenToolBar) ? QLatin1String("hidden") : QLatin1String("visible")));
 				}
 
-				if (sessionEntry.toolBars.at(j).fullScreenVisibility != Session::MainWindow::ToolBarState::UnspecifiedVisibilityToolBar)
+				if (toolBar.fullScreenVisibility != Session::MainWindow::ToolBarState::UnspecifiedVisibilityToolBar)
 				{
-					toolBarObject.insert(QLatin1String("fullScreenVisibility"), ((sessionEntry.toolBars.at(j).fullScreenVisibility == Session::MainWindow::ToolBarState::AlwaysHiddenToolBar) ? QLatin1String("hidden") : QLatin1String("visible")));
+					toolBarObject.insert(QLatin1String("fullScreenVisibility"), ((toolBar.fullScreenVisibility == Session::MainWindow::ToolBarState::AlwaysHiddenToolBar) ? QLatin1String("hidden") : QLatin1String("visible")));
 				}
 
-				if (sessionEntry.toolBars.at(j).row >= 0)
+				if (toolBar.row >= 0)
 				{
-					toolBarObject.insert(QLatin1String("row"), sessionEntry.toolBars.at(j).row);
+					toolBarObject.insert(QLatin1String("row"), toolBar.row);
 				}
 
 				toolBarsArray.append(toolBarObject);
