@@ -731,8 +731,9 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 			for (int k = 0; k < windowHistory.entries.count(); ++k)
 			{
-				const QPoint position(windowHistory.entries.at(k).position);
-				QJsonObject historyEntryObject({{QLatin1String("url"), windowHistory.entries.at(k).url}, {QLatin1String("title"), windowHistory.entries.at(k).title}, {QLatin1String("zoom"), windowHistory.entries.at(k).zoom}});
+				const Session::Window::History::Entry historyEntry(windowHistory.entries.at(k));
+				const QPoint position(historyEntry.position);
+				QJsonObject historyEntryObject({{QLatin1String("url"), historyEntry.url}, {QLatin1String("title"), historyEntry.title}, {QLatin1String("zoom"), historyEntry.zoom}});
 
 				if (!position.isNull())
 				{
