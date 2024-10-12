@@ -105,7 +105,9 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 
 			for (int j = 0; j < definitions.count(); ++j)
 			{
-				states.append(Session::MainWindow::ToolBarState(definitions.at(j).identifier, ToolBarsManager::getToolBarDefinition(definitions.at(j).identifier)));
+				const int identifier(definitions.at(j).identifier);
+
+				states.append(Session::MainWindow::ToolBarState(identifier, ToolBarsManager::getToolBarDefinition(identifier)));
 			}
 
 			toolBarStates[areas.at(i)] = states;
