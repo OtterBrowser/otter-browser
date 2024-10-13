@@ -82,26 +82,27 @@ void SearchEnginesManager::loadSearchEngines()
 
 	for (int i = 0; i < searchEnginesOrder.count(); ++i)
 	{
-		QFile file(SessionsManager::getReadableDataPath(QLatin1String("searchEngines/") + searchEnginesOrder.at(i) + QLatin1String(".xml")));
+		const QString identifier(searchEnginesOrder.at(i));
+		QFile file(SessionsManager::getReadableDataPath(QLatin1String("searchEngines/") + identifier + QLatin1String(".xml")));
 
 		if (!file.open(QIODevice::ReadOnly))
 		{
-			m_searchEnginesOrder.removeAll(searchEnginesOrder.at(i));
+			m_searchEnginesOrder.removeAll(identifier);
 
 			continue;
 		}
 
-		const SearchEngineDefinition searchEngine(loadSearchEngine(&file, searchEnginesOrder.at(i), true));
+		const SearchEngineDefinition searchEngine(loadSearchEngine(&file, identifier, true));
 
 		file.close();
 
 		if (searchEngine.isValid())
 		{
-			m_searchEngines[searchEnginesOrder.at(i)] = searchEngine;
+			m_searchEngines[identifier] = searchEngine;
 		}
 		else
 		{
-			m_searchEnginesOrder.removeAll(searchEnginesOrder.at(i));
+			m_searchEnginesOrder.removeAll(identifier);
 		}
 	}
 
