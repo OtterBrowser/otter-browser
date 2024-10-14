@@ -205,15 +205,16 @@ SearchEnginesManager::SearchQuery SearchEnginesManager::setupQuery(const QString
 
 	for (int i = 0; i < parameters.count(); ++i)
 	{
+		const QString key(parameters.at(i).first);
 		const QString value(Utils::substitutePlaceholders(parameters.at(i).second, values));
 
 		if (searchQuery.method == QNetworkAccessManager::GetOperation)
 		{
-			getQuery.addQueryItem(parameters.at(i).first, QString::fromLatin1(QUrl::toPercentEncoding(value)));
+			getQuery.addQueryItem(key, QString::fromLatin1(QUrl::toPercentEncoding(value)));
 		}
 		else if (isUrlEncoded)
 		{
-			postQuery.addQueryItem(parameters.at(i).first, QString::fromLatin1(QUrl::toPercentEncoding(value)));
+			postQuery.addQueryItem(key, QString::fromLatin1(QUrl::toPercentEncoding(value)));
 		}
 		else if (isFormData)
 		{
@@ -238,7 +239,7 @@ SearchEnginesManager::SearchQuery SearchEnginesManager::setupQuery(const QString
 			}
 
 			searchQuery.body += QByteArrayLiteral("--AaB03x\r\ncontent-disposition: form-data; name=\"");
-			searchQuery.body += parameters.at(i).first.toUtf8();
+			searchQuery.body += key.toUtf8();
 			searchQuery.body += QByteArrayLiteral("\"\r\ncontent-type: text/plain;charset=UTF-8\r\ncontent-transfer-encoding: quoted-printable\r\n");
 			searchQuery.body += encodedValue.toUtf8();
 			searchQuery.body += QByteArrayLiteral("\r\n--AaB03x\r\n");
