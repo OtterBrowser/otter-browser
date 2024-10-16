@@ -162,9 +162,10 @@ void SearchEnginesManager::updateSearchEnginesOptions()
 
 	for (int i = 0; i < searchEngines.count(); ++i)
 	{
-		const SearchEngineDefinition searchEngine(getSearchEngine(searchEngines.at(i)));
+		const QString identifier(searchEngines.at(i));
+		const SearchEngineDefinition searchEngine(getSearchEngine(identifier));
 
-		searchEngineChoices.append({(searchEngine.title.isEmpty() ? tr("Unknown") : searchEngine.title), searchEngines.at(i), searchEngine.icon});
+		searchEngineChoices.append({(searchEngine.title.isEmpty() ? tr("Unknown") : searchEngine.title), identifier, searchEngine.icon});
 	}
 
 	SettingsManager::OptionDefinition defaultQuickSearchEngineOption(SettingsManager::getOptionDefinition(SettingsManager::Search_DefaultQuickSearchEngineOption));
