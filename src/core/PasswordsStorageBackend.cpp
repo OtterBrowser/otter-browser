@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -75,14 +75,17 @@ PasswordsManager::PasswordMatch PasswordsStorageBackend::comparePasswords(const 
 
 	for (int i = 0; i < first.fields.count(); ++i)
 	{
-		if (first.fields.at(i).name != second.fields.at(i).name || first.fields.at(i).type != second.fields.at(i).type)
+		const PasswordsManager::PasswordInformation::Field firstField(first.fields.at(i));
+		const PasswordsManager::PasswordInformation::Field secondField(second.fields.at(i));
+
+		if (firstField.name != secondField.name || firstField.type != secondField.type)
 		{
 			return PasswordsManager::NoMatch;
 		}
 
-		if (first.fields.at(i).value != second.fields.at(i).value)
+		if (firstField.value != secondField.value)
 		{
-			if (first.fields.at(i).type != PasswordsManager::PasswordField)
+			if (firstField.type != PasswordsManager::PasswordField)
 			{
 				return PasswordsManager::NoMatch;
 			}
