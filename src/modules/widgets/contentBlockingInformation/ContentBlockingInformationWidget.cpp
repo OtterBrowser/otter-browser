@@ -303,7 +303,7 @@ void ContentBlockingInformationWidget::updateState()
 		label = QString::number(m_requestsAmount);
 	}
 
-	const qreal labelWidth(QFontMetricsF(font).width(label));
+	const qreal labelWidth(QFontMetricsF(font).horizontalAdvance(label));
 
 	font.setPixelSize(qRound(fontSize * 0.8));
 
