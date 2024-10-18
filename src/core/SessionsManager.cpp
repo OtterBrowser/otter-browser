@@ -605,9 +605,11 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 
 	for (int i = 0; i < windows.count(); ++i)
 	{
-		if (!windows.at(i)->isPrivate())
+		MainWindow *window(windows.at(i));
+
+		if (!window->isPrivate())
 		{
-			session.windows.append(windows.at(i)->getSession());
+			session.windows.append(window->getSession());
 		}
 	}
 
@@ -885,9 +887,11 @@ bool SessionsManager::hasUrl(const QUrl &url, bool activate)
 
 	for (int i = 0; i < windows.count(); ++i)
 	{
-		if (windows.at(i) != activeWindow && windows.at(i)->getActiveWindow())
+		MainWindow *window(windows.at(i));
+
+		if (window != activeWindow && window->getActiveWindow())
 		{
-			map.insert(windows.at(i)->getActiveWindow()->getLastActivity().toMSecsSinceEpoch(), windows.at(i));
+			map.insert(window->getActiveWindow()->getLastActivity().toMSecsSinceEpoch(), window);
 		}
 	}
 
@@ -895,9 +899,11 @@ bool SessionsManager::hasUrl(const QUrl &url, bool activate)
 
 	for (int i = (sortedWindows.count() - 1); i >= 0; --i)
 	{
-		if (sortedWindows.at(i)->hasUrl(url, activate))
+		MainWindow *window(sortedWindows.at(i));
+
+		if (window->hasUrl(url, activate))
 		{
-			Application::triggerAction(ActionsManager::ActivateWindowAction, {{QLatin1String("window"), sortedWindows.at(i)->getIdentifier()}}, m_instance);
+			Application::triggerAction(ActionsManager::ActivateWindowAction, {{QLatin1String("window"), window->getIdentifier()}}, m_instance);
 
 			return true;
 		}
