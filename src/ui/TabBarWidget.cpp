@@ -132,7 +132,7 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 		else
 		{
 			QStyleOption option;
-			option.init(this);
+			option.initFrom(this);
 			option.rect = m_closeButtonRectangle;
 			option.state = (QStyle::State_Enabled | QStyle::State_AutoRaise);
 
