@@ -230,12 +230,13 @@ SessionInformation SessionsManager::getSession(const QString &path)
 	}
 
 	const int defaultZoom(SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());
-	const QJsonArray mainWindowsArray(settings.object().value(QLatin1String("windows")).toArray());
+	const QJsonObject settingsObject(settings.object());
+	const QJsonArray mainWindowsArray(settingsObject.value(QLatin1String("windows")).toArray());
 
 	session.path = path;
-	session.title = settings.object().value(QLatin1String("title")).toString((path == QLatin1String("default")) ? tr("Default") : tr("(Untitled)"));
-	session.index = (settings.object().value(QLatin1String("currentIndex")).toInt(1) - 1);
-	session.isClean = settings.object().value(QLatin1String("isClean")).toBool(true);
+	session.title = settingsObject.value(QLatin1String("title")).toString((path == QLatin1String("default")) ? tr("Default") : tr("(Untitled)"));
+	session.index = (settingsObject.value(QLatin1String("currentIndex")).toInt(1) - 1);
+	session.isClean = settingsObject.value(QLatin1String("isClean")).toBool(true);
 
 	for (int i = 0; i < mainWindowsArray.count(); ++i)
 	{
