@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -113,8 +113,9 @@ void AddressCompletionModel::updateModel()
 
 		for (int i = 0; i < bookmarks.count(); ++i)
 		{
-			CompletionEntry completionEntry(bookmarks.at(i).bookmark->getUrl(), bookmarks.at(i).bookmark->getTitle(), bookmarks.at(i).match, bookmarks.at(i).bookmark->getIcon(), {}, CompletionEntry::BookmarkType);
-			completionEntry.keyword = bookmarks.at(i).bookmark->getKeyword();
+			const BookmarksModel::BookmarkMatch bookmark(bookmarks.at(i));
+			CompletionEntry completionEntry(bookmark.bookmark->getUrl(), bookmark.bookmark->getTitle(), bookmark.match, bookmark.bookmark->getIcon(), {}, CompletionEntry::BookmarkType);
+			completionEntry.keyword = bookmark.bookmark->getKeyword();
 
 			if (completionEntry.keyword.startsWith(m_filter))
 			{
