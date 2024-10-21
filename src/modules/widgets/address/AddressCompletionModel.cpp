@@ -137,9 +137,11 @@ void AddressCompletionModel::updateModel()
 
 		for (int i = 0; i < entries.count(); ++i)
 		{
-			if (entries.at(i).fileName().startsWith(prefix, Qt::CaseInsensitive))
+			const QFileInfo entry(entries.at(i));
+
+			if (entry.fileName().startsWith(prefix, Qt::CaseInsensitive))
 			{
-				const QString path(directory + entries.at(i).fileName());
+				const QString path(directory + entry.fileName());
 
 				if (!headerWasAdded)
 				{
@@ -148,7 +150,7 @@ void AddressCompletionModel::updateModel()
 					headerWasAdded = true;
 				}
 
-				completions.append(CompletionEntry(QUrl::fromLocalFile(QDir::toNativeSeparators(path)), path, path, QIcon::fromTheme(mimeDatabase.mimeTypeForFile(entries.at(i), QMimeDatabase::MatchExtension).iconName(), iconProvider.icon(entries.at(i))), {}, CompletionEntry::LocalPathType));
+				completions.append(CompletionEntry(QUrl::fromLocalFile(QDir::toNativeSeparators(path)), path, path, QIcon::fromTheme(mimeDatabase.mimeTypeForFile(entry, QMimeDatabase::MatchExtension).iconName(), iconProvider.icon(entry)), {}, CompletionEntry::LocalPathType));
 			}
 		}
 	}
