@@ -274,28 +274,30 @@ QVariant AddressCompletionModel::data(const QModelIndex &index, int role) const
 		return {};
 	}
 
+	const CompletionEntry entry(m_completions.at(index.row()));
+
 	switch (role)
 	{
 		case Qt::DecorationRole:
-			return m_completions.at(index.row()).icon;
+			return entry.icon;
 		case HistoryIdentifierRole:
-			return (m_completions.at(index.row()).historyIdentifier);
+			return entry.historyIdentifier;
 		case IsRemovableRole:
-			return (m_completions.at(index.row()).type == CompletionEntry::TypedHistoryType);
+			return (entry.type == CompletionEntry::TypedHistoryType);
 		case TextRole:
-			return (m_completions.at(index.row()).text.isEmpty() ? m_completions.at(index.row()).url.toString() : m_completions.at(index.row()).text);
+			return (entry.text.isEmpty() ? entry.url.toString() : entry.text);
 		case UrlRole:
-			return m_completions.at(index.row()).url;
+			return entry.url;
 		case TitleRole:
-			return m_completions.at(index.row()).title;
+			return entry.title;
 		case KeywordRole:
-			return m_completions.at(index.row()).keyword;
+			return entry.keyword;
 		case MatchRole:
-			return (m_completions.at(index.row()).match.isEmpty() ? m_completions.at(index.row()).url.toString() : m_completions.at(index.row()).match);
+			return (entry.match.isEmpty() ? entry.url.toString() : entry.match);
 		case TimeVisitedRole:
-			return m_completions.at(index.row()).timeVisited;
+			return entry.timeVisited;
 		case TypeRole:
-			return static_cast<int>(m_completions.at(index.row()).type);
+			return static_cast<int>(entry.type);
 		default:
 			return {};
 	}
