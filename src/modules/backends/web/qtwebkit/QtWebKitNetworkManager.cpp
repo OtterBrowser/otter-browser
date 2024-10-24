@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -157,7 +157,9 @@ void QtWebKitNetworkManager::resetStatistics()
 
 	for (int i = 0; i < keys.count(); ++i)
 	{
-		emit pageInformationChanged(keys.at(i), m_pageInformation.value(keys.at(i)));
+		const WebWidget::PageInformation key(keys.at(i));
+
+		emit pageInformationChanged(key, m_pageInformation.value(key));
 	}
 
 	emit contentStateChanged(m_contentState);
