@@ -248,8 +248,10 @@ void QtWebKitNetworkManager::handleRequestFinished(QNetworkReply *reply)
 		}
 		else
 		{
-			m_sslInformation.certificates = reply->sslConfiguration().peerCertificateChain().toVector();
-			m_sslInformation.cipher = reply->sslConfiguration().sessionCipher();
+			const QSslConfiguration sslConfiguration(reply->sslConfiguration());
+
+			m_sslInformation.certificates = sslConfiguration.peerCertificateChain().toVector();
+			m_sslInformation.cipher = sslConfiguration.sessionCipher();
 		}
 
 		const QList<QNetworkReply::RawHeaderPair> rawHeaders(m_baseReply->rawHeaderPairs());
