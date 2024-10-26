@@ -258,7 +258,9 @@ void QtWebKitNetworkManager::handleRequestFinished(QNetworkReply *reply)
 
 		for (int i = 0; i < rawHeaders.count(); ++i)
 		{
-			m_headers[rawHeaders.at(i).first] = rawHeaders.at(i).second;
+			const QNetworkReply::RawHeaderPair rawHeader(rawHeaders.at(i));
+
+			m_headers[rawHeader.first] = rawHeader.second;
 		}
 
 		const QVariant mimeTypeHeader(reply->header(QNetworkRequest::ContentTypeHeader));
