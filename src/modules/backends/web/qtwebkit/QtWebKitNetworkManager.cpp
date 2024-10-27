@@ -683,7 +683,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 			{
 				const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(result.profile));
 
-				Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg((profile ? profile->getTitle() : QCoreApplication::translate("main", "(Unknown)")), result.rule), Console::NetworkCategory, Console::LogLevel, request.url().toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
+				Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg((profile ? profile->getTitle() : QCoreApplication::translate("main", "(Unknown)")), result.rule), Console::NetworkCategory, Console::LogLevel, request.url().toString(), -1, m_widget->getWindowIdentifier());
 
 				if (resourceType != NetworkManager::ScriptType && resourceType != NetworkManager::StyleSheetType)
 				{
