@@ -90,17 +90,19 @@ void StartupDialog::setSession(int index)
 
 	for (int i = 0; i < session.windows.count(); ++i)
 	{
+		const Session::MainWindow mainWindow(session.windows.at(i));
 		QStandardItem *windowItem(new QStandardItem(tr("Window %1").arg(i + 1)));
-		windowItem->setData(session.windows.at(i).geometry, Qt::UserRole);
+		windowItem->setData(mainWindow.geometry, Qt::UserRole);
 
 		m_windowsModel->invisibleRootItem()->appendRow(windowItem);
 
-		for (int j = 0; j < session.windows.at(i).windows.count(); ++j)
+		for (int j = 0; j < mainWindow.windows.count(); ++j)
 		{
-			QStandardItem *tabItem(new QStandardItem(session.windows.at(i).windows.at(j).getTitle()));
+			const Session::Window window(mainWindow.windows.at(j));
+			QStandardItem *tabItem(new QStandardItem(window.getTitle()));
 			tabItem->setFlags(windowItem->flags() | Qt::ItemIsUserCheckable | Qt::ItemNeverHasChildren);
 			tabItem->setData(Qt::Checked, Qt::CheckStateRole);
-			tabItem->setData(tr("Title: %1\nAddress: %2").arg(tabItem->text(), session.windows.at(i).windows.at(j).getUrl()), Qt::ToolTipRole);
+			tabItem->setData(tr("Title: %1\nAddress: %2").arg(tabItem->text(), window.getUrl()), Qt::ToolTipRole);
 
 			windowItem->appendRow(tabItem);
 
