@@ -106,7 +106,7 @@ void StartupDialog::setSession(int index)
 
 			windowItem->appendRow(tabItem);
 
-			if (j == session.windows.at(i).index)
+			if (j == mainWindow.index)
 			{
 				tabItem->setData(font, Qt::FontRole);
 
