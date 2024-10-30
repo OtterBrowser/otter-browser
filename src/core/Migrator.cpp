@@ -139,10 +139,11 @@ bool Migrator::run()
 
 	for (int i = 0; i < possibleMigrations.count(); ++i)
 	{
-		QStandardItem *item(new QStandardItem(QCoreApplication::translate("migrations", possibleMigrations.at(i)->getTitle().toUtf8().constData())));
+		Migration *possibleMigration(possibleMigrations.at(i));
+		QStandardItem *item(new QStandardItem(QCoreApplication::translate("migrations", possibleMigration->getTitle().toUtf8().constData())));
 		item->setFlags(Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsSelectable);
 
-		if (possibleMigrations.at(i)->needsBackup())
+		if (possibleMigration->needsBackup())
 		{
 			needsBackup = true;
 		}
