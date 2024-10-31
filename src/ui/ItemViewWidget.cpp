@@ -653,7 +653,7 @@ void ItemViewWidget::currentChanged(const QModelIndex &current, const QModelInde
 {
 	QTreeView::currentChanged(current, previous);
 
-	if (selectionModel() && selectionModel()->hasSelection())
+	if (hasSelection())
 	{
 		if (m_sourceModel)
 		{
@@ -1158,7 +1158,7 @@ QModelIndex ItemViewWidget::getCheckedIndex(const QModelIndex &parent) const
 
 QModelIndex ItemViewWidget::getCurrentIndex(int column) const
 {
-	if (!selectionModel() || !selectionModel()->hasSelection())
+	if (!hasSelection())
 	{
 		return {};
 	}
@@ -1233,7 +1233,7 @@ int ItemViewWidget::getSortColumn() const
 
 int ItemViewWidget::getCurrentRow() const
 {
-	return ((selectionModel() && selectionModel()->hasSelection()) ? currentIndex().row() : -1);
+	return (hasSelection() ? currentIndex().row() : -1);
 }
 
 int ItemViewWidget::getRowCount(const QModelIndex &parent) const
