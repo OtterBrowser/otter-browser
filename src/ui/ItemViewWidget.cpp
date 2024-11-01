@@ -1121,12 +1121,12 @@ QSortFilterProxyModel* ItemViewWidget::getProxyModel() const
 
 QStandardItem* ItemViewWidget::getItem(const QModelIndex &index) const
 {
-	return(m_sourceModel ? m_sourceModel->itemFromIndex(index) : nullptr);
+	return (m_sourceModel ? m_sourceModel->itemFromIndex(index) : nullptr);
 }
 
 QStandardItem* ItemViewWidget::getItem(int row, int column, const QModelIndex &parent) const
 {
-	return(m_sourceModel ? m_sourceModel->itemFromIndex(getIndex(row, column, parent)) : nullptr);
+	return (m_sourceModel ? m_sourceModel->itemFromIndex(getIndex(row, column, parent)) : nullptr);
 }
 
 QModelIndex ItemViewWidget::getCheckedIndex(const QModelIndex &parent) const
