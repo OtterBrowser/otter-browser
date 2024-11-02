@@ -177,7 +177,13 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	for (int i = 0; i < model()->columnCount(); ++i)
 	{
-		const QString title(model()->headerData(i, orientation()).toString().isEmpty() ? tr("(Untitled)") : model()->headerData(i, orientation()).toString());
+		QString title(model()->headerData(i, orientation()).toString());
+
+		if (title.isEmpty())
+		{
+			title = tr("(Untitled)");
+		}
+
 		QAction *sortAction(sortMenu->addAction(title));
 		sortAction->setData(i);
 		sortAction->setCheckable(true);
