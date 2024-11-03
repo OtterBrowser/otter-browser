@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -896,17 +896,19 @@ bool QtWebKitPage::extension(Extension extension, const ExtensionOption *option,
 
 			for (int i = 0; i < blockeckedRequests.count(); ++i)
 			{
-				if (blockeckedRequests.at(i).resourceType == NetworkManager::MainFrameType && Utils::normalizeUrl(blockeckedRequests.at(i).url) == normalizedUrl)
+				const NetworkManager::ResourceInformation blockedRequest(blockeckedRequests.at(i));
+
+				if (blockedRequest.resourceType == NetworkManager::MainFrameType && Utils::normalizeUrl(blockedRequest.url) == normalizedUrl)
 				{
 					isBlockedContent = true;
 
 					information.description.clear();
 
-					if (blockeckedRequests.at(i).metaData.contains(NetworkManager::ContentBlockingRuleMetaData))
+					if (blockedRequest.metaData.contains(NetworkManager::ContentBlockingRuleMetaData))
 					{
-						const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(blockeckedRequests.at(i).metaData.value(NetworkManager::ContentBlockingProfileMetaData).toInt()));
+						const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(blockedRequest.metaData.value(NetworkManager::ContentBlockingProfileMetaData).toInt()));
 
-						information.description.append(tr("Request blocked by rule from profile %1:<br>\n%2").arg(profile ? profile->getTitle() : tr("(Unknown)"), QStringLiteral("<span style=\"font-family:monospace;\">%1</span>").arg(blockeckedRequests.at(i).metaData.value(NetworkManager::ContentBlockingRuleMetaData).toString())));
+						information.description.append(tr("Request blocked by rule from profile %1:<br>\n%2").arg(profile ? profile->getTitle() : tr("(Unknown)"), QStringLiteral("<span style=\"font-family:monospace;\">%1</span>").arg(blockedRequest.metaData.value(NetworkManager::ContentBlockingRuleMetaData).toString())));
 					}
 
 					break;
