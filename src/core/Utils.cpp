@@ -772,6 +772,11 @@ bool isUrl(const QString &text)
 	return QRegularExpression(QLatin1String(R"(^[^\s]+\.[^\s]{2,}$)")).match(text).hasMatch();
 }
 
+bool isUrlAmbiguous(const QUrl &url)
+{
+	return (!url.isLocalFile() && url.host(QUrl::FullyEncoded) != url.host(QUrl::FullyDecoded));
+}
+
 bool isUrlEmpty(const QUrl &url)
 {
 	return (url.isEmpty() || (url.scheme() == QLatin1String("about") && (url.path().isEmpty() || url.path() == QLatin1String("blank") || url.path() == QLatin1String("start"))));

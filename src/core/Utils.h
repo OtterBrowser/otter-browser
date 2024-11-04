@@ -147,6 +147,7 @@ QVector<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mime
 qreal calculatePercent(qint64 amount, qint64 total, int multiplier = 100);
 bool ensureDirectoryExists(const QString &path);
 bool isUrl(const QString &text);
+bool isUrlAmbiguous(const QUrl &url);
 bool isUrlEmpty(const QUrl &url);
 
 }
