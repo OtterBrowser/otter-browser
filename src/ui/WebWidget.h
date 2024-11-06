@@ -67,8 +67,9 @@ public:
 		RemoteContentState = 4,
 		SecureContentState = 8,
 		TrustedContentState = 16,
-		MixedContentState = 32,
-		FraudContentState = 64
+		AmbiguousContentState = 32,
+		MixedContentState = 64,
+		FraudContentState = 128
 	};
 
 	Q_DECLARE_FLAGS(ContentStates, ContentState)
