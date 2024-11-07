@@ -1035,7 +1035,7 @@ QPixmap WebWidget::createThumbnail(const QSize &size)
 {
 	QPixmap pixmap(size);
 	pixmap.fill(Qt::white);
-
+///TODO fallback method to create one letter "thumbnails"
 	return pixmap;
 }
 
@@ -1617,6 +1617,11 @@ WebWidget::ContentStates WebWidget::getContentState() const
 	if (getOption(SettingsManager::Security_EnableFraudCheckingOption, url).toBool() && ContentFiltersManager::isFraud(url))
 	{
 		state |= FraudContentState;
+	}
+
+	if (Utils::isUrlAmbiguous(url))
+	{
+		state |= AmbiguousContentState;
 	}
 
 	return state;
