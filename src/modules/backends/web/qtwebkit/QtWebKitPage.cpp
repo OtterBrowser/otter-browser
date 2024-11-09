@@ -891,12 +891,12 @@ bool QtWebKitPage::extension(Extension extension, const ExtensionOption *option,
 		else if (errorOption->domain == QtNetwork && errorOption->error == QNetworkReply::QNetworkReply::ProtocolUnknownError)
 		{
 			const QUrl normalizedUrl(Utils::normalizeUrl(url));
-			const QVector<NetworkManager::ResourceInformation> blockeckedRequests(m_networkManager->getBlockedRequests());
+			const QVector<NetworkManager::ResourceInformation> blockedRequests(m_networkManager->getBlockedRequests());
 			bool isBlockedContent(false);
 
-			for (int i = 0; i < blockeckedRequests.count(); ++i)
+			for (int i = 0; i < blockedRequests.count(); ++i)
 			{
-				const NetworkManager::ResourceInformation blockedRequest(blockeckedRequests.at(i));
+				const NetworkManager::ResourceInformation blockedRequest(blockedRequests.at(i));
 
 				if (blockedRequest.resourceType == NetworkManager::MainFrameType && Utils::normalizeUrl(blockedRequest.url) == normalizedUrl)
 				{
