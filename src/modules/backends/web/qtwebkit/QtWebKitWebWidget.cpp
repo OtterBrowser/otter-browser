@@ -2558,6 +2558,11 @@ WebWidget::ContentStates QtWebKitWebWidget::getContentState() const
 		state |= FraudContentState;
 	}
 
+	if (Utils::isUrlAmbiguous(url))
+	{
+		state |= AmbiguousContentState;
+	}
+
 	return state;
 }
 
