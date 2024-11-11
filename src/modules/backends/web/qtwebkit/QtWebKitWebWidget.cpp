@@ -608,11 +608,11 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			break;
 		case ActionsManager::FastForwardAction:
 			{
-				const QUrl url(m_page->mainFrame()->evaluateJavaScript(getFastForwardScript(true)).toUrl());
+				const QUrl fastForwardUrl(m_page->mainFrame()->evaluateJavaScript(getFastForwardScript(true)).toUrl());
 
-				if (url.isValid())
+				if (fastForwardUrl.isValid())
 				{
-					setUrl(url);
+					setUrl(fastForwardUrl);
 				}
 				else if (canGoForward())
 				{
@@ -848,13 +848,13 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				QWebElement searchTermsElement;
 				const QString tagName(element.tagName().toLower());
-				const QUrl url(parentElement.attribute(QLatin1String("action")));
+				const QUrl targetUrl(parentElement.attribute(QLatin1String("action")));
 				const QIcon icon(m_page->mainFrame()->icon());
 				SearchEnginesManager::SearchEngineDefinition searchEngine;
 				searchEngine.title = getTitle();
 				searchEngine.formUrl = getUrl();
 				searchEngine.icon = (icon.isNull() ? ThemesManager::createIcon(QLatin1String("edit-find")) : icon);
-				searchEngine.resultsUrl.url = (url.isEmpty() ? getUrl() : resolveUrl(parentElement.webFrame(), url)).toString();
+				searchEngine.resultsUrl.url = (targetUrl.isEmpty() ? getUrl() : resolveUrl(parentElement.webFrame(), targetUrl)).toString();
 				searchEngine.resultsUrl.enctype = parentElement.attribute(QLatin1String("enctype"));
 				searchEngine.resultsUrl.method = ((parentElement.attribute(QLatin1String("method"), QLatin1String("get")).toLower() == QLatin1String("post")) ? QLatin1String("post") : QLatin1String("get"));
 
