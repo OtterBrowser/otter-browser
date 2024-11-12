@@ -418,15 +418,15 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::ReloadFrameAction:
 			if (hitResult.frameUrl.isValid())
 			{
-				const QUrl url(hitResult.frameUrl);
+				const QUrl frameUrl(hitResult.frameUrl);
 				QWebFrame *frame(m_page->mainFrame()->hitTestContent(hitResult.hitPosition).frame());
 
 				if (frame)
 				{
-					m_networkManager->addContentBlockingException(url, NetworkManager::SubFrameType);
+					m_networkManager->addContentBlockingException(frameUrl, NetworkManager::SubFrameType);
 
 					frame->setUrl({});
-					frame->setUrl(url);
+					frame->setUrl(frameUrl);
 				}
 			}
 
@@ -507,7 +507,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				else
 				{
 					QWebElement element(m_page->mainFrame()->hitTestContent(hitResult.hitPosition).element());
-					const QUrl url(hitResult.imageUrl);
+					const QUrl imageUrl(hitResult.imageUrl);
 					const QString src(element.attribute(QLatin1String("src")));
 					NetworkCache *cache(NetworkManagerFactory::getCache());
 
@@ -515,7 +515,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 					if (cache)
 					{
-						cache->remove(url);
+						cache->remove(imageUrl);
 					}
 
 					element.setAttribute(QLatin1String("src"), src);
