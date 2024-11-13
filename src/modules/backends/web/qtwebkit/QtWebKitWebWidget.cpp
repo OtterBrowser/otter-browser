@@ -1097,13 +1097,13 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			break;
 		case ActionsManager::WebsitePreferencesAction:
 			{
-				const QUrl url(getUrl());
+				const QUrl pageUrl(getUrl());
 				CookieJar *cookieJar(m_networkManager->getCookieJar());
-				WebsitePreferencesDialog dialog(Utils::extractHost(url), (url.host().isEmpty() ? QVector<QNetworkCookie>() : cookieJar->getCookies(url.host())), this);
+				WebsitePreferencesDialog dialog(Utils::extractHost(pageUrl), (pageUrl.host().isEmpty() ? QVector<QNetworkCookie>() : cookieJar->getCookies(pageUrl.host())), this);
 
 				if (dialog.exec() == QDialog::Accepted)
 				{
-					updateOptions(url);
+					updateOptions(pageUrl);
 
 					const QVector<QNetworkCookie> cookiesToDelete(dialog.getCookiesToDelete());
 					const QVector<QNetworkCookie> cookiesToInsert(dialog.getCookiesToInsert());
