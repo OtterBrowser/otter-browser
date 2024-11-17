@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ public:
 	void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
 	void drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
 	int pixelMetric(PixelMetric metric, const QStyleOption *option = nullptr, const QWidget *widget = nullptr) const override;
-	int getExtraStyleHint(Style::ExtraStyleHint hint) const;
+	int getExtraStyleHint(Style::ExtraStyleHint hint) const override;
 
 protected slots:
 	void checkForModernStyle();
