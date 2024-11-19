@@ -407,22 +407,23 @@ QVector<QNetworkProxy> NetworkAutomaticProxy::getProxy(const QString &url, const
 	{
 		const QStringList proxy(proxies.at(i).split(QLatin1Char(':')));
 		QString proxyHost(proxy.at(0));
+		const int proxyCount(proxy.count());
 
-		if (proxy.count() == 2 && proxyHost.indexOf(QLatin1String("PROXY"), Qt::CaseInsensitive) == 0)
+		if (proxyCount == 2 && proxyHost.indexOf(QLatin1String("PROXY"), Qt::CaseInsensitive) == 0)
 		{
 			proxiesForQuery.append(QNetworkProxy(QNetworkProxy::HttpProxy, proxyHost.replace(0, 5, QString()), proxy.at(1).toUShort()));
 
 			continue;
 		}
 
-		if (proxy.count() == 2 && proxyHost.indexOf(QLatin1String("SOCKS"), Qt::CaseInsensitive) == 0)
+		if (proxyCount == 2 && proxyHost.indexOf(QLatin1String("SOCKS"), Qt::CaseInsensitive) == 0)
 		{
 			proxiesForQuery.append(QNetworkProxy(QNetworkProxy::Socks5Proxy, proxyHost.replace(0, 5, QString()), proxy.at(1).toUShort()));
 
 			continue;
 		}
 
-		if (proxy.count() == 1 && proxyHost.indexOf(QLatin1String("DIRECT"), Qt::CaseInsensitive) == 0)
+		if (proxyCount == 1 && proxyHost.indexOf(QLatin1String("DIRECT"), Qt::CaseInsensitive) == 0)
 		{
 			proxiesForQuery.append(QNetworkProxy(QNetworkProxy::NoProxy));
 
