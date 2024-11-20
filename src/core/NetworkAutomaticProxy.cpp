@@ -345,35 +345,35 @@ void NetworkAutomaticProxy::setPath(const QString &path)
 		{
 			Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(file.errorString()), Console::NetworkCategory, Console::ErrorLevel, path);
 		}
+
+		return;
+	}
+
+	const QUrl url(path);
+
+	if (url.isValid())
+	{
+		DataFetchJob *job(new DataFetchJob(url, this));
+
+		connect(job, &Job::jobFinished, this, [=](bool isSuccess)
+		{
+			QIODevice *device(job->getData());
+
+			if (isSuccess && device && setup(QString::fromLatin1(device->readAll())))
+			{
+				m_isValid = true;
+			}
+			else
+			{
+				Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(device ? device->errorString() : tr("Download failure")), Console::NetworkCategory, Console::ErrorLevel, url.url());
+			}
+		});
+
+		job->start();
 	}
 	else
 	{
-		const QUrl url(path);
-
-		if (url.isValid())
-		{
-			DataFetchJob *job(new DataFetchJob(url, this));
-
-			connect(job, &Job::jobFinished, this, [=](bool isSuccess)
-			{
-				QIODevice *device(job->getData());
-
-				if (isSuccess && device && setup(QString::fromLatin1(device->readAll())))
-				{
-					m_isValid = true;
-				}
-				else
-				{
-					Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(device ? device->errorString() : tr("Download failure")), Console::NetworkCategory, Console::ErrorLevel, url.url());
-				}
-			});
-
-			job->start();
-		}
-		else
-		{
-			Console::addMessage(tr("Failed to load proxy auto-config (PAC). Invalid URL: %1").arg(url.url()), Console::NetworkCategory, Console::ErrorLevel);
-		}
+		Console::addMessage(tr("Failed to load proxy auto-config (PAC). Invalid URL: %1").arg(url.url()), Console::NetworkCategory, Console::ErrorLevel);
 	}
 }
 
