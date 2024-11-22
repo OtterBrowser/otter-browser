@@ -272,6 +272,8 @@ bool PacUtils::timeRange(const QVariant &arg1, const QVariant &arg2, const QVari
 		arguments.append(rawArgument.toInt());
 	}
 
+	arguments.squeeze();
+
 	if (arguments.count() == 1)
 	{
 		return isNumberInRange(arguments.at(0), arguments.at(0), currentTime.hour());
