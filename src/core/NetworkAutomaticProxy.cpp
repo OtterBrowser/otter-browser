@@ -386,7 +386,7 @@ QString NetworkAutomaticProxy::getPath() const
 
 QVector<QNetworkProxy> NetworkAutomaticProxy::getProxy(const QString &url, const QString &host)
 {
-	const QJSValue result(m_findProxy.call(QJSValueList({m_engine.toScriptValue(url), m_engine.toScriptValue(host)})));
+	const QJSValue result(m_findProxyFunction.call(QJSValueList({m_engine.toScriptValue(url), m_engine.toScriptValue(host)})));
 
 	if (result.isError())
 	{
@@ -457,9 +457,9 @@ bool NetworkAutomaticProxy::setup(const QString &script)
 		return false;
 	}
 
-	m_findProxy = m_engine.globalObject().property(QLatin1String("FindProxyForURL"));
+	m_findProxyFunction = m_engine.globalObject().property(QLatin1String("FindProxyForURL"));
 
-	return m_findProxy.isCallable();
+	return m_findProxyFunction.isCallable();
 }
 
 }

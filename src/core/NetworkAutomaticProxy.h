@@ -74,7 +74,7 @@ protected:
 
 private:
 	QJSEngine m_engine;
-	QJSValue m_findProxy;
+	QJSValue m_findProxyFunction;
 	QString m_path;
 	QHash<QString, QVector<QNetworkProxy> > m_proxies;
 	bool m_isValid;
