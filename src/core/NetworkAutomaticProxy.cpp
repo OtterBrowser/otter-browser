@@ -413,16 +413,18 @@ QVector<QNetworkProxy> NetworkAutomaticProxy::getProxy(const QString &url, const
 
 		if (proxyCount == 2)
 		{
+			const ushort proxyPort(proxy.at(1).toUShort());
+
 			if (proxyHost.indexOf(QLatin1String("PROXY"), Qt::CaseInsensitive) == 0)
 			{
-				proxiesForQuery.append(QNetworkProxy(QNetworkProxy::HttpProxy, proxyHost.replace(0, 5, QString()), proxy.at(1).toUShort()));
+				proxiesForQuery.append(QNetworkProxy(QNetworkProxy::HttpProxy, proxyHost.replace(0, 5, QString()), proxyPort));
 
 				continue;
 			}
 
 			if (proxyHost.indexOf(QLatin1String("SOCKS"), Qt::CaseInsensitive) == 0)
 			{
-				proxiesForQuery.append(QNetworkProxy(QNetworkProxy::Socks5Proxy, proxyHost.replace(0, 5, QString()), proxy.at(1).toUShort()));
+				proxiesForQuery.append(QNetworkProxy(QNetworkProxy::Socks5Proxy, proxyHost.replace(0, 5, QString()), proxyPort));
 
 				continue;
 			}
