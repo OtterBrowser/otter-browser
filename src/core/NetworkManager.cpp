@@ -193,7 +193,7 @@ NetworkManager::ResourceType NetworkManager::getResourceType(const QNetworkReque
 		return SubFrameType;
 	}
 
-	if (acceptHeader.contains(QByteArrayLiteral("image/")) || path.endsWith(QLatin1String(".png")) || path.endsWith(QLatin1String(".jpg")) || path.endsWith(QLatin1String(".gif")) || path.endsWith(QLatin1String(".webp")))
+	if (acceptHeader.contains(QByteArrayLiteral("image/")) || path.endsWith(QLatin1String(".png")) || path.endsWith(QLatin1String(".jpg")) || path.endsWith(QLatin1String(".jpeg")) || path.endsWith(QLatin1String(".gif")) || path.endsWith(QLatin1String(".webp")))
 	{
 		return ImageType;
 	}
