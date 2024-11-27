@@ -2088,9 +2088,11 @@ QWidget* MainWindow::findVisibleWidget(const QVector<QPointer<QWidget> > &widget
 {
 	for (int i = 0; i < widgets.count(); ++i)
 	{
-		if (widgets.at(i) && widgets.at(i)->isVisible())
+		QWidget *widget(widgets.at(i));
+
+		if (widget && widget->isVisible())
 		{
-			return widgets.at(i);
+			return widget;
 		}
 	}
 
