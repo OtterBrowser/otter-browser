@@ -1632,10 +1632,12 @@ void MainWindow::beginToolBarDragging(bool isSidebar)
 
 	for (int i = 0; i < 4; ++i)
 	{
-		if (!isSidebar || areas.at(i) == Qt::LeftToolBarArea || areas.at(i) == Qt::RightToolBarArea)
+		const Qt::ToolBarArea area(areas.at(i));
+
+		if (!isSidebar || area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea)
 		{
-			addToolBarBreak(areas.at(i));
-			addToolBar(areas.at(i), new ToolBarDropZoneWidget(this));
+			addToolBarBreak(area);
+			addToolBar(area, new ToolBarDropZoneWidget(this));
 		}
 	}
 }
