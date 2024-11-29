@@ -1818,7 +1818,7 @@ void MainWindow::handleToolBarAdded(int identifier)
 {
 	const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(identifier));
 	QVector<ToolBarWidget*> toolBars(getToolBars(definition.location));
-	ToolBarWidget *toolBar(WidgetFactory::createToolBar(identifier, nullptr, this));
+	ToolBarWidget *newToolBar(WidgetFactory::createToolBar(identifier, nullptr, this));
 
 	if (toolBars.isEmpty() || definition.row < 0)
 	{
@@ -1827,7 +1827,7 @@ void MainWindow::handleToolBarAdded(int identifier)
 			addToolBarBreak(definition.location);
 		}
 
-		addToolBar(definition.location, toolBar);
+		addToolBar(definition.location, newToolBar);
 	}
 	else
 	{
@@ -1836,7 +1836,7 @@ void MainWindow::handleToolBarAdded(int identifier)
 			removeToolBar(toolBars.at(i));
 		}
 
-		toolBars.append(toolBar);
+		toolBars.append(newToolBar);
 
 		std::sort(toolBars.begin(), toolBars.end(), [&](ToolBarWidget *first, ToolBarWidget *second)
 		{
@@ -1847,18 +1847,20 @@ void MainWindow::handleToolBarAdded(int identifier)
 
 		for (int i = 0; i < toolBars.count(); ++i)
 		{
+			ToolBarWidget *toolBar(toolBars.at(i));
+
 			if (i > 0)
 			{
 				addToolBarBreak(definition.location);
 			}
 
-			addToolBar(definition.location, toolBars.at(i));
+			addToolBar(definition.location, toolBar);
 
-			toolBars.at(i)->setVisible(toolBars.at(i)->shouldBeVisible(mode));
+			toolBar->setVisible(toolBar->shouldBeVisible(mode));
 		}
 	}
 
-	m_toolBars[identifier] = toolBar;
+	m_toolBars[identifier] = newToolBar;
 
 	SessionsManager::markSessionAsModified();
 
