@@ -2524,9 +2524,10 @@ Session::MainWindow MainWindow::getSession() const
 
 		for (int j = 0; j < toolBars.count(); ++j)
 		{
-			Session::MainWindow::ToolBarState state(toolBars.at(j)->getState());
+			ToolBarWidget *toolBar(toolBars.at(j));
+			Session::MainWindow::ToolBarState state(toolBar->getState());
 			state.location = areas.at(i);
-			state.identifier = toolBars.at(j)->getIdentifier();
+			state.identifier = toolBar->getIdentifier();
 			state.row = j;
 
 			session.toolBars.append(state);
