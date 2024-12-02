@@ -1186,15 +1186,17 @@ void Application::handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInf
 		return;
 	}
 
+	const UpdateChecker::UpdateInformation availableUpdate(availableUpdates.at(latestVersionIndex));
+
 	if (SettingsManager::getOption(SettingsManager::Updates_AutomaticInstallOption).toBool())
 	{
-		new Updater(availableUpdates.at(latestVersionIndex), this);
+		new Updater(availableUpdate, this);
 
 		return;
 	}
 
 	Notification::Message message;
-	message.message = tr("New update %1 from %2 channel is available.").arg(availableUpdates.at(latestVersionIndex).version, availableUpdates.at(latestVersionIndex).channel);
+	message.message = tr("New update %1 from %2 channel is available.").arg(availableUpdate.version, availableUpdate.channel);
 	message.icon = windowIcon();
 	message.event = NotificationsManager::UpdateAvailableEvent;
 
