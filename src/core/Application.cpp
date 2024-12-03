@@ -1201,11 +1201,10 @@ void Application::handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInf
 	message.event = NotificationsManager::UpdateAvailableEvent;
 
 	Notification *notification(NotificationsManager::createNotification(message));
-	notification->setData(QVariant::fromValue<QVector<UpdateChecker::UpdateInformation> >(availableUpdates));
 
-	connect(notification, &Notification::clicked, notification, [&]()
+	connect(notification, &Notification::clicked, notification, [=]()
 	{
-		UpdateCheckerDialog *dialog(new UpdateCheckerDialog(nullptr, notification->getData().value<QVector<UpdateChecker::UpdateInformation> >()));
+		UpdateCheckerDialog *dialog(new UpdateCheckerDialog(nullptr, availableUpdates));
 		dialog->show();
 	});
 }
