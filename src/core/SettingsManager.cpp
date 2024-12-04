@@ -531,9 +531,11 @@ QStringList SettingsManager::getOverrideHosts(int identifier)
 
 	for (int i = 0; i < overridesGroups.count(); ++i)
 	{
-		if (overrides.contains(overridesGroups.at(i) + QLatin1Char('/') + optionName))
+		const QString group(overridesGroups.at(i));
+
+		if (overrides.contains(group + QLatin1Char('/') + optionName))
 		{
-			hosts.append(overridesGroups.at(i));
+			hosts.append(group);
 		}
 	}
 
