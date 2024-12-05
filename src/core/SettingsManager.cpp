@@ -286,13 +286,15 @@ void SettingsManager::removeOverride(const QString &host, int identifier)
 
 	for (int i = 0; i < groups.count(); ++i)
 	{
-		settings.beginGroup(groups.at(i));
+		const QString group(groups.at(i));
+
+		settings.beginGroup(group);
 
 		const QStringList rawOptions(settings.childKeys());
 
 		for (int j = 0; j < rawOptions.count(); ++j)
 		{
-			const int option(getOptionIdentifier(groups.at(i) + QLatin1Char('/') + rawOptions.at(j)));
+			const int option(getOptionIdentifier(group + QLatin1Char('/') + rawOptions.at(j)));
 
 			if (option >= 0)
 			{
