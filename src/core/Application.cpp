@@ -830,9 +830,11 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 			for (int i = 0; i < m_windows.count(); ++i)
 			{
-				if (m_windows.at(i)->getIdentifier() == windowIdentifier)
+				MainWindow *currentMainWindow(m_windows.at(i));
+
+				if (currentMainWindow->getIdentifier() == windowIdentifier)
 				{
-					mainWindow = m_windows.at(i);
+					mainWindow = currentMainWindow;
 
 					break;
 				}
