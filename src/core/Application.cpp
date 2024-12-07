@@ -820,71 +820,73 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 	const ActionsManager::ActionDefinition::ActionScope scope(ActionsManager::getActionDefinition(identifier).scope);
 
-	if (scope == ActionsManager::ActionDefinition::MainWindowScope || scope == ActionsManager::ActionDefinition::WindowScope || scope == ActionsManager::ActionDefinition::EditorScope)
+	if (scope != ActionsManager::ActionDefinition::MainWindowScope && scope != ActionsManager::ActionDefinition::WindowScope && scope != ActionsManager::ActionDefinition::EditorScope)
 	{
-		MainWindow *mainWindow(nullptr);
+		return;
+	}
 
-		if (parameters.contains(QLatin1String("window")))
+	MainWindow *mainWindow(nullptr);
+
+	if (parameters.contains(QLatin1String("window")))
+	{
+		const quint64 windowIdentifier(parameters.value(QLatin1String("window")).toULongLong());
+
+		for (int i = 0; i < m_windows.count(); ++i)
 		{
-			const quint64 windowIdentifier(parameters.value(QLatin1String("window")).toULongLong());
+			MainWindow *currentMainWindow(m_windows.at(i));
 
-			for (int i = 0; i < m_windows.count(); ++i)
+			if (currentMainWindow->getIdentifier() == windowIdentifier)
 			{
-				MainWindow *currentMainWindow(m_windows.at(i));
+				mainWindow = currentMainWindow;
 
-				if (currentMainWindow->getIdentifier() == windowIdentifier)
-				{
-					mainWindow = currentMainWindow;
-
-					break;
-				}
+				break;
 			}
 		}
-		else
-		{
-			mainWindow = (target ? MainWindow::findMainWindow(target) : m_activeWindow.data());
-		}
+	}
+	else
+	{
+		mainWindow = (target ? MainWindow::findMainWindow(target) : m_activeWindow.data());
+	}
 
-		if (scope == ActionsManager::ActionDefinition::WindowScope)
-		{
-			Window *window(nullptr);
+	if (scope == ActionsManager::ActionDefinition::WindowScope)
+	{
+		Window *window(nullptr);
 
-			if (target)
+		if (target)
+		{
+			if (mainWindow && parameters.contains(QLatin1String("tab")))
 			{
-				if (mainWindow && parameters.contains(QLatin1String("tab")))
+				window = mainWindow->getWindowByIdentifier(parameters[QLatin1String("tab")].toULongLong());
+			}
+			else
+			{
+				while (target)
 				{
-					window = mainWindow->getWindowByIdentifier(parameters[QLatin1String("tab")].toULongLong());
-				}
-				else
-				{
-					while (target)
+					if (target->metaObject()->className() == QLatin1String("Otter::Window"))
 					{
-						if (target->metaObject()->className() == QLatin1String("Otter::Window"))
-						{
-							window = qobject_cast<Window*>(target);
+						window = qobject_cast<Window*>(target);
 
-							break;
-						}
-
-						target = target->parent();
+						break;
 					}
+
+					target = target->parent();
 				}
 			}
-
-			if (!target && mainWindow)
-			{
-				window = mainWindow->getActiveWindow();
-			}
-
-			if (window)
-			{
-				window->triggerAction(identifier, parameters, trigger);
-			}
 		}
-		else if (mainWindow)
+
+		if (!target && mainWindow)
 		{
-			mainWindow->triggerAction(identifier, parameters, trigger);
+			window = mainWindow->getActiveWindow();
 		}
+
+		if (window)
+		{
+			window->triggerAction(identifier, parameters, trigger);
+		}
+	}
+	else if (mainWindow)
+	{
+		mainWindow->triggerAction(identifier, parameters, trigger);
 	}
 }
 
