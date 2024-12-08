@@ -1275,10 +1275,11 @@ void Application::setLocale(const QString &locale)
 		identifier = QLocale::system().name();
 	}
 
+	const QString systemLocale(QLocale::system().name());
 	const bool useSystemLocale(locale.isEmpty() || locale == QLatin1String("system"));
 
-	m_qtTranslator->load(QLatin1String("qt_") + (useSystemLocale ? QLocale::system().name() : identifier), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-	m_applicationTranslator->load((locale.endsWith(QLatin1String(".qm")) ? locale : QLatin1String("otter-browser_") + (useSystemLocale ? QLocale::system().name() : locale)), m_localePath);
+	m_qtTranslator->load(QLatin1String("qt_") + (useSystemLocale ? systemLocale : identifier), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+	m_applicationTranslator->load((locale.endsWith(QLatin1String(".qm")) ? locale : QLatin1String("otter-browser_") + (useSystemLocale ? systemLocale : locale)), m_localePath);
 
 	QLocale::setDefault(Utils::createLocale(identifier));
 }
