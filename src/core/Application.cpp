@@ -1264,6 +1264,7 @@ void Application::setLocale(const QString &locale)
 		installTranslator(m_applicationTranslator);
 	}
 
+	const QString systemLocale(QLocale::system().name());
 	QString identifier(locale);
 
 	if (locale.endsWith(QLatin1String(".qm")))
@@ -1272,10 +1273,9 @@ void Application::setLocale(const QString &locale)
 	}
 	else if (locale == QLatin1String("system"))
 	{
-		identifier = QLocale::system().name();
+		identifier = systemLocale;
 	}
 
-	const QString systemLocale(QLocale::system().name());
 	const bool useSystemLocale(locale.isEmpty() || locale == QLatin1String("system"));
 
 	m_qtTranslator->load(QLatin1String("qt_") + (useSystemLocale ? systemLocale : identifier), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
