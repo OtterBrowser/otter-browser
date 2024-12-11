@@ -819,11 +819,12 @@ Animation* FeedsContentsWidget::getUpdateAnimation()
 
 FeedsModel::Entry* FeedsContentsWidget::findFolder(const QModelIndex &index) const
 {
+	FeedsModel *model(FeedsManager::getModel());
 	FeedsModel::Entry *entry(FeedsManager::getModel()->getEntry(index));
 
-	if (!entry || entry == FeedsManager::getModel()->getRootEntry() || entry == FeedsManager::getModel()->getTrashEntry())
+	if (!entry || entry == model->getRootEntry() || entry == model->getTrashEntry())
 	{
-		return FeedsManager::getModel()->getRootEntry();
+		return model->getRootEntry();
 	}
 
 	return (entry->isFolder() ? entry : static_cast<FeedsModel::Entry*>(entry->parent()));
