@@ -111,22 +111,24 @@ void ContentBlockingInformationWidget::toggleContentBlocking()
 
 void ContentBlockingInformationWidget::toggleOption(QAction *action)
 {
-	if (action && m_window && !action->data().isNull())
+	if (!m_window || !action || action->data().isNull())
 	{
-		const QString profile(action->data().toString());
-		QStringList profiles(m_window->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
-
-		if (!action->isChecked())
-		{
-			profiles.removeAll(profile);
-		}
-		else if (!profiles.contains(profile))
-		{
-			profiles.append(profile);
-		}
-
-		m_window->setOption(SettingsManager::ContentBlocking_ProfilesOption, profiles);
+		return;
 	}
+
+	const QString profile(action->data().toString());
+	QStringList profiles(m_window->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
+
+	if (!action->isChecked())
+	{
+		profiles.removeAll(profile);
+	}
+	else if (!profiles.contains(profile))
+	{
+		profiles.append(profile);
+	}
+
+	m_window->setOption(SettingsManager::ContentBlocking_ProfilesOption, profiles);
 }
 
 void ContentBlockingInformationWidget::populateElementsMenu()
