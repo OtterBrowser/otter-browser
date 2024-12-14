@@ -180,7 +180,7 @@ void PageInformationContentsWidget::updateSections()
 
 						if (canGetPageInformation && amountOfBlockedRequests > 0)
 						{
-							addEntry(sectionItem, tr("Number of requests"), tr("%1 (%n blocked)", "", amountOfBlockedRequests).arg(window->getWebWidget()->getPageInformation(WebWidget::RequestsFinishedInformation).toInt()));
+							addEntry(sectionItem, tr("Number of requests"), tr("%1 (%n blocked)", "", amountOfBlockedRequests).arg(webWidget->getPageInformation(WebWidget::RequestsFinishedInformation).toInt()));
 						}
 						else
 						{
