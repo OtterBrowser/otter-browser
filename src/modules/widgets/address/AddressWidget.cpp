@@ -1420,11 +1420,13 @@ void AddressWidget::setWindow(Window *window)
 			}
 		});
 
-		if (window->getWebWidget())
-		{
-			window->getWebWidget()->startWatchingChanges(this, WebWidget::FeedsWatcher);
+		WebWidget *webWidget(window->getWebWidget());
 
-			connect(window->getWebWidget(), &WebWidget::watchedDataChanged, this, &AddressWidget::handleWatchedDataChanged);
+		if (webWidget)
+		{
+			webWidget->startWatchingChanges(this, WebWidget::FeedsWatcher);
+
+			connect(webWidget, &WebWidget::watchedDataChanged, this, &AddressWidget::handleWatchedDataChanged);
 		}
 
 		const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
