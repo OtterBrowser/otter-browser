@@ -148,9 +148,10 @@ void ContentBlockingInformationWidget::populateElementsMenu()
 
 	for (int i = 0; i < requests.count(); ++i)
 	{
+		const NetworkManager::ResourceInformation request(requests.at(i));
 		QString type;
 
-		switch (requests.at(i).resourceType)
+		switch (request.resourceType)
 		{
 			case NetworkManager::MainFrameType:
 				type = tr("main frame");
@@ -198,8 +199,8 @@ void ContentBlockingInformationWidget::populateElementsMenu()
 				break;
 		}
 
-		QAction *action(m_elementsMenu->addAction(QStringLiteral("%1\t [%2]").arg(Utils::elideText(requests.at(i).url.toString(), m_elementsMenu->fontMetrics(), m_elementsMenu), type)));
-		action->setStatusTip(requests.at(i).url.toString());
+		QAction *action(m_elementsMenu->addAction(QStringLiteral("%1\t [%2]").arg(Utils::elideText(request.url.toString(), m_elementsMenu->fontMetrics(), m_elementsMenu), type)));
+		action->setStatusTip(request.url.toString());
 	}
 }
 
