@@ -467,6 +467,7 @@ ContentFiltersManager::CosmeticFiltersResult ContentFiltersManager::getCosmeticF
 
 	CosmeticFiltersResult result;
 	const QStringList domains(createSubdomainList(requestUrl.host()));
+	const bool isDomainOnly(mode == DomainOnlyFilters);
 
 	for (int i = 0; i < profiles.count(); ++i)
 	{
@@ -474,7 +475,7 @@ ContentFiltersManager::CosmeticFiltersResult ContentFiltersManager::getCosmeticF
 
 		if (index >= 0 && index < m_contentBlockingProfiles.count())
 		{
-			const CosmeticFiltersResult profileResult(m_contentBlockingProfiles.at(index)->getCosmeticFilters(domains, (mode == DomainOnlyFilters)));
+			const CosmeticFiltersResult profileResult(m_contentBlockingProfiles.at(index)->getCosmeticFilters(domains, isDomainOnly));
 
 			result.rules.append(profileResult.rules);
 			result.exceptions.append(profileResult.exceptions);
