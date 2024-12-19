@@ -133,7 +133,7 @@ protected:
 
 	void changeEvent(QEvent *event) override;
 	void loadKeyboardDefinitions(const QString &identifier);
-	void addKeyboardShortcuts(QStandardItemModel *model, int identifier, const QString &name, const QString &text, const QIcon &icon, const QVariantMap &rawParameters, const QVector<QKeySequence> &shortcuts, bool areShortcutsDisabled);
+	void addKeyboardShortcuts(int identifier, const QString &name, const QString &text, const QIcon &icon, const QVariantMap &rawParameters, const QVector<QKeySequence> &shortcuts, bool areShortcutsDisabled);
 	void addKeyboardShortcut(bool isDisabled);
 	QString createProfileIdentifier(QStandardItemModel *model, const QString &base = {}) const;
 	QHash<int, QVector<KeyboardProfile::Action> > getKeyboardDefinitions() const;
