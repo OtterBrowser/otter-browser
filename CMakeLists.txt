@@ -70,7 +70,7 @@ include(GNUInstallDirs)
 
 option(ENABLE_QTWEBENGINE "Enable QtWebEngine backend (requires QtWebEngine 5.15)" ON)
 option(ENABLE_QTWEBKIT "Enable QtWebKit backend (requires QtWebKit 5.212)" ON)
-option(ENABLE_CRASHREPORTS "Enable built-in crash reporting (only for official builds)" OFF)
+option(ENABLE_CRASH_REPORTS "Enable built-in crash reporting (official builds only)" OFF)
 option(ENABLE_DBUS "Enable D-Bus based integration for notifications (only freedesktop.org compatible platforms)" ON)
 option(ENABLE_SPELLCHECK "Enable Hunspell based spell checking" ON)
 
@@ -384,8 +384,8 @@ if (ENABLE_QTWEBKIT)
 	include(src/modules/backends/web/qtwebkit/CMakeLists.txt)
 endif ()
 
-if (ENABLE_CRASHREPORTS)
-	add_definitions(-DOTTER_ENABLE_CRASHREPORTS)
+if (ENABLE_CRASH_REPORTS)
+	add_definitions(-DOTTER_ENABLE_CRASH_REPORTS)
 	include_directories(${CMAKE_SOURCE_DIR}/3rdparty/breakpad/src/)
 
 	if (WIN32)
@@ -576,7 +576,7 @@ elseif (UNIX)
 		target_link_libraries(otter-browser Qt5::DBus)
 	endif ()
 
-	if (ENABLE_CRASHREPORTS)
+	if (ENABLE_CRASH_REPORTS)
 		target_link_libraries(otter-browser -lpthread)
 	endif ()
 endif ()
