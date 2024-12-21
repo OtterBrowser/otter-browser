@@ -68,6 +68,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include(FeatureSummary)
 include(GNUInstallDirs)
 
+option(ALLOW_WITHOUT_WEB_BACKENDS "Allow to build without any web backends (build testing only)" OFF)
 option(ENABLE_QTWEBENGINE "Enable QtWebEngine backend (requires QtWebEngine 5.15)" ON)
 option(ENABLE_QTWEBKIT "Enable QtWebKit backend (requires QtWebKit 5.212)" ON)
 option(ENABLE_CRASH_REPORTS "Enable built-in crash reporting (official builds only)" OFF)
@@ -510,7 +511,11 @@ feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAG
 list(LENGTH OTTER_BACKENDS_WEB OTTER_BACKENDS_WEB_LENGTH)
 
 if (${OTTER_BACKENDS_WEB_LENGTH} EQUAL 0)
-	message(SEND_ERROR "No web backends available!")
+	if (ALLOW_WITHOUT_WEB_BACKENDS)
+		message(WARNING "No web backends available!")
+	else ()
+		message(SEND_ERROR "No web backends available!")
+	endif ()
 else ()
 	set(OTTER_BACKENDS_WEB_SUMMARY "The following web backends will be built:\n\n")
 
