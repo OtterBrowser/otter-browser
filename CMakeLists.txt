@@ -377,6 +377,10 @@ foreach (_dir ${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
 	endif ()
 endforeach ()
 
+if (ALLOW_WITHOUT_WEB_BACKENDS)
+	add_definitions(-DOTTER_ALLOW_WITHOUT_WEB_BACKENDS)
+endif ()
+
 if (ENABLE_QTWEBENGINE)
 	include(src/modules/backends/web/qtwebengine/CMakeLists.txt)
 endif ()
