@@ -126,6 +126,13 @@ int main(int argc, char *argv[])
 	Application::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
 	Application application(argc, argv);
+
+#ifdef OTTER_ALLOW_WITHOUT_WEB_BACKENDS
+	QMessageBox::critical(nullptr, QLatin1String("Error"), QLatin1String("No web backends available."), QMessageBox::Close);
+
+	return 0;
+#endif
+
 	QCommandLineParser *commandLineParser(Application::getCommandLineParser());
 
 	if (Application::isAboutToQuit() || Application::isRunning() || Application::isUpdating() || commandLineParser->isSet(QLatin1String("report")))
