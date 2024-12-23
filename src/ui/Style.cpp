@@ -48,8 +48,7 @@ Style::Style(const QString &name) : QProxyStyle(name.isEmpty() ? nullptr : QStyl
 		{
 			m_areToolTipsEnabled = value.toBool();
 		}
-	}
-);
+	});
 }
 
 void Style::drawOverlayedIcon(const QRect &rectangle, const QIcon &icon, const QIcon &overlayIcon, QPainter *painter) const
