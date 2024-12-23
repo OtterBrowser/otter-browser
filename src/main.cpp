@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
 
 	Application application(argc, argv);
 
-#ifdef OTTER_ALLOW_WITHOUT_WEB_BACKENDS
+#ifdef OTTER_NO_WEB_BACKENDS
 	QMessageBox::critical(nullptr, QLatin1String("Error"), QLatin1String("No web backends available."), QMessageBox::Close);
 
 	return 0;

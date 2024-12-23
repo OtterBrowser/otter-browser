@@ -377,10 +377,6 @@ foreach (_dir ${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
 	endif ()
 endforeach ()
 
-if (ALLOW_WITHOUT_WEB_BACKENDS)
-	add_definitions(-DOTTER_ALLOW_WITHOUT_WEB_BACKENDS)
-endif ()
-
 if (ENABLE_QTWEBENGINE)
 	include(src/modules/backends/web/qtwebengine/CMakeLists.txt)
 endif ()
@@ -516,6 +512,8 @@ list(LENGTH OTTER_BACKENDS_WEB OTTER_BACKENDS_WEB_LENGTH)
 
 if (${OTTER_BACKENDS_WEB_LENGTH} EQUAL 0)
 	if (ALLOW_WITHOUT_WEB_BACKENDS)
+		add_definitions(-DOTTER_NO_WEB_BACKENDS)
+
 		message(WARNING "No web backends available!")
 	else ()
 		message(SEND_ERROR "No web backends available!")
