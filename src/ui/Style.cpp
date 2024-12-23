@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -50,6 +50,18 @@ Style::Style(const QString &name) : QProxyStyle(name.isEmpty() ? nullptr : QStyl
 		}
 	}
 );
+}
+
+void Style::drawOverlayedIcon(const QRect &rectangle, const QIcon &icon, const QIcon &overlayIcon, QPainter *painter) const
+{
+	const QPoint offset((rectangle.width() / 4), (rectangle.height() / 4));
+	QRect overlayRectangle(rectangle);
+	overlayRectangle.setBottom(rectangle.bottom() - (2 * offset.y()));
+	overlayRectangle.setLeft(rectangle.left() + (2 * offset.x()));
+	overlayRectangle.moveTo((rectangle.left() + (offset.x() * 3)), (rectangle.top() - offset.y()));
+
+	icon.paint(painter, rectangle, Qt::AlignCenter);
+	overlayIcon.paint(painter, overlayRectangle, Qt::AlignCenter);
 }
 
 void Style::drawDropZone(const QLine &line, QPainter *painter) const
