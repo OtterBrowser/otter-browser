@@ -51,16 +51,15 @@ Style::Style(const QString &name) : QProxyStyle(name.isEmpty() ? nullptr : QStyl
 	});
 }
 
-void Style::drawOverlayedIcon(const QRect &rectangle, const QIcon &icon, const QIcon &overlayIcon, QPainter *painter) const
+void Style::drawIconOverlay(const QRect &iconRectangle, const QIcon &overlayIcon, QPainter *painter) const
 {
-	const QPoint offset((rectangle.width() / 4), (rectangle.height() / 4));
-	QRect overlayRectangle(rectangle);
-	overlayRectangle.setBottom(rectangle.bottom() - (2 * offset.y()));
-	overlayRectangle.setLeft(rectangle.left() + (2 * offset.x()));
-	overlayRectangle.moveTo((rectangle.left() + (offset.x() * 3)), (rectangle.top() - offset.y()));
+	const QPoint offset((iconRectangle.width() / 4), (iconRectangle.height() / 4));
+	QRect overlayRectangle(iconRectangle);
+	overlayRectangle.setBottom(iconRectangle.bottom() - (2 * offset.y()));
+	overlayRectangle.setLeft(iconRectangle.left() + (2 * offset.x()));
+	overlayRectangle.moveTo((iconRectangle.left() + (offset.x() * 3)), (iconRectangle.top() - offset.y()));
 
-	icon.paint(painter, rectangle, Qt::AlignCenter);
-	overlayIcon.paint(painter, overlayRectangle, Qt::AlignCenter);
+	overlayIcon.paint(painter, overlayRectangle);
 }
 
 void Style::drawDropZone(const QLine &line, QPainter *painter) const

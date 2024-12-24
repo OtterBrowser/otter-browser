@@ -47,7 +47,7 @@ public:
 
 	explicit Style(const QString &name);
 
-	void drawOverlayedIcon(const QRect &rectangle, const QIcon &icon, const QIcon &overlayIcon, QPainter *painter) const;
+	void drawIconOverlay(const QRect &iconRectangle, const QIcon &overlayIcon, QPainter *painter) const;
 	void drawDropZone(const QLine &line, QPainter *painter) const;
 	void drawToolBarEdge(const QStyleOption *option, QPainter *painter) const;
 	void drawThinProgressBar(const QStyleOptionProgressBar *option, QPainter *painter) const;
