@@ -57,7 +57,7 @@ void Style::drawIconOverlay(const QRect &iconRectangle, const QIcon &overlayIcon
 	QRect overlayRectangle(iconRectangle);
 	overlayRectangle.setBottom(iconRectangle.bottom() - (2 * offset.y()));
 	overlayRectangle.setLeft(iconRectangle.left() + (2 * offset.x()));
-	overlayRectangle.moveTo((iconRectangle.left() + (offset.x() * 3)), (iconRectangle.top() - offset.y()));
+	overlayRectangle.moveTo((iconRectangle.left() + (offset.x() * 2)), iconRectangle.top());
 
 	overlayIcon.paint(painter, overlayRectangle);
 }
