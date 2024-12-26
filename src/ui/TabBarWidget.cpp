@@ -152,13 +152,20 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 
 	if (m_urlIconRectangle.isValid())
 	{
-		if (m_window->getLoadingState() == WebWidget::OngoingLoadingState && m_spinnerAnimation)
+		const WebWidget::LoadingState loadingState(m_window->getLoadingState());
+
+		if (loadingState == WebWidget::OngoingLoadingState && m_spinnerAnimation)
 		{
 			m_spinnerAnimation->paint(&painter, m_urlIconRectangle);
 		}
 		else
 		{
 			m_window->getIcon().paint(&painter, m_urlIconRectangle);
+
+			if (loadingState == WebWidget::CrashedLoadingState)
+			{
+				ThemesManager::getStyle()->drawIconOverlay(m_urlIconRectangle, ThemesManager::createIcon(QLatin1String("dialog-error")), &painter);
+			}
 		}
 	}
 
