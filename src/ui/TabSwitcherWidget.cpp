@@ -20,12 +20,14 @@
 #include "TabSwitcherWidget.h"
 #include "Animation.h"
 #include "MainWindow.h"
+#include "Style.h"
 #include "Window.h"
 #include "../core/Application.h"
 #include "../core/SessionModel.h"
 #include "../core/ThemesManager.h"
 
 #include <QtGui/QKeyEvent>
+#include <QtGui/QPainter>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
@@ -199,7 +201,9 @@ void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 		return;
 	}
 
-	if (window->getLoadingState() == WebWidget::DeferredLoadingState || window->getLoadingState() == WebWidget::OngoingLoadingState)
+	const WebWidget::LoadingState loadingState(window->getLoadingState());
+
+	if (loadingState == WebWidget::DeferredLoadingState || loadingState == WebWidget::OngoingLoadingState)
 	{
 		if (!m_spinnerAnimation)
 		{
@@ -222,7 +226,31 @@ void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 			m_spinnerAnimation->stop();
 		}
 
-		m_previewLabel->setPixmap((window->getLoadingState() == WebWidget::CrashedLoadingState) ? ThemesManager::createIcon(QLatin1String("tab-crashed")).pixmap(32, 32) : window->createThumbnail());
+		QPixmap pixmap;
+
+		if (loadingState != WebWidget::CrashedLoadingState)
+		{
+			pixmap = window->createThumbnail();
+		}
+
+		if (pixmap.isNull())
+		{
+			pixmap = QPixmap(32, 32);
+			pixmap.setDevicePixelRatio(devicePixelRatio());
+			pixmap.fill(Qt::transparent);
+
+			QRect rectangle(0, 0, 32, 32);
+			QPainter painter(&pixmap);
+
+			window->getIcon().paint(&painter, rectangle);
+
+			if (loadingState == WebWidget::CrashedLoadingState)
+			{
+				ThemesManager::getStyle()->drawIconOverlay(rectangle, ThemesManager::createIcon(QLatin1String("dialog-error")), &painter);
+			}
+		}
+
+		m_previewLabel->setPixmap(pixmap);
 	}
 }
 
