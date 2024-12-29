@@ -164,7 +164,7 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 
 			if (loadingState == WebWidget::CrashedLoadingState)
 			{
-				ThemesManager::getStyle()->drawIconOverlay(m_urlIconRectangle, ThemesManager::createIcon(QLatin1String("dialog-error")), &painter);
+				ThemesManager::getStyle()->drawIconOverlay(m_urlIconRectangle, ThemesManager::createIcon(QLatin1String("emblem-crashed")), &painter);
 			}
 		}
 	}

@@ -246,7 +246,7 @@ void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 
 			if (loadingState == WebWidget::CrashedLoadingState)
 			{
-				ThemesManager::getStyle()->drawIconOverlay(rectangle, ThemesManager::createIcon(QLatin1String("dialog-error")), &painter);
+				ThemesManager::getStyle()->drawIconOverlay(rectangle, ThemesManager::createIcon(QLatin1String("emblem-crashed")), &painter);
 			}
 		}
 
