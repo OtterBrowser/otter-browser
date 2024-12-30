@@ -117,6 +117,7 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 	}
 
 	QPainter painter(this);
+	const WebWidget::LoadingState loadingState(m_window->getLoadingState());
 
 	if (m_closeButtonRectangle.isValid())
 	{
@@ -152,8 +153,6 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 
 	if (m_urlIconRectangle.isValid())
 	{
-		const WebWidget::LoadingState loadingState(m_window->getLoadingState());
-
 		if (loadingState == WebWidget::OngoingLoadingState && m_spinnerAnimation)
 		{
 			m_spinnerAnimation->paint(&painter, m_urlIconRectangle);
@@ -179,7 +178,7 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 
 			if (m_thumbnailRectangle.height() >= 16 && m_thumbnailRectangle.width() >= 16)
 			{
-				if (m_window->getLoadingState() == WebWidget::OngoingLoadingState && m_spinnerAnimation)
+				if (loadingState == WebWidget::OngoingLoadingState && m_spinnerAnimation)
 				{
 					m_spinnerAnimation->paint(&painter, {(m_thumbnailRectangle.left() + ((m_thumbnailRectangle.width() - 16) / 2)), (m_thumbnailRectangle.top() + ((m_thumbnailRectangle.height() - 16) / 2)), 16, 16});
 				}
@@ -213,7 +212,7 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 
 		painter.save();
 
-		if (m_window->getLoadingState() == WebWidget::DeferredLoadingState)
+		if (loadingState == WebWidget::DeferredLoadingState)
 		{
 			painter.setOpacity(0.75);
 		}
