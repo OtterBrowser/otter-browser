@@ -218,10 +218,11 @@ void ContentPreferencesPage::load()
 
 	for (int i = 0; i < fonts.count(); ++i)
 	{
-		const QString family(SettingsManager::getOption(SettingsManager::getOptionIdentifier((QLatin1String("Content/") + fonts.at(i)))).toString());
+		const QString optionName(QLatin1String("Content/") + fonts.at(i));
+		const QString family(SettingsManager::getOption(SettingsManager::getOptionIdentifier(optionName)).toString());
 		QList<QStandardItem*> items({new QStandardItem(fontCategories.at(i)), new QStandardItem(family), new QStandardItem(tr("The quick brown fox jumps over the lazy dog"))});
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
-		items[1]->setData(QLatin1String("Content/") + fonts.at(i), Qt::UserRole);
+		items[1]->setData(optionName, Qt::UserRole);
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 		items[2]->setData(QFont(family), Qt::FontRole);
 		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
