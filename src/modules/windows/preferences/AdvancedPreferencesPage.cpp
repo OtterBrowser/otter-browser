@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -1391,25 +1391,22 @@ void AdvancedPreferencesPage::save()
 	SettingsManager::setOption(SettingsManager::Interface_StyleSheetOption, m_ui->appearranceStyleSheetFilePathWidget->getPath());
 	SettingsManager::setOption(SettingsManager::Browser_EnableTrayIconOption, m_ui->enableTrayIconCheckBox->isChecked());
 
-	if (m_ui->appearranceStyleSheetFilePathWidget->getPath().isEmpty())
+	QString styleSheetPath(m_ui->appearranceStyleSheetFilePathWidget->getPath());
+	QString styleSheet;
+
+	if (!styleSheetPath.isEmpty())
 	{
-		Application::getInstance()->setStyleSheet({});
-	}
-	else
-	{
-		QFile file(m_ui->appearranceStyleSheetFilePathWidget->getPath());
+		QFile file(styleSheetPath);
 
 		if (file.open(QIODevice::ReadOnly))
 		{
-			Application::getInstance()->setStyleSheet(QString::fromLatin1(file.readAll()));
+			styleSheet = QString::fromLatin1(file.readAll());
 
 			file.close();
 		}
-		else
-		{
-			Application::getInstance()->setStyleSheet({});
-		}
 	}
+
+	Application::getInstance()->setStyleSheet(styleSheet);
 
 	const QMimeDatabase mimeDatabase;
 
