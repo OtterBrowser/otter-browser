@@ -79,7 +79,7 @@ public:
         CsConnectionRefused
     };
 
-    QFtpDTP(QFtpPI *p, QObject *parent = nullptr);
+    explicit QFtpDTP(QFtpPI *p, QObject *parent = nullptr);
 
     void setData(QByteArray *);
     void setDevice(QIODevice *);
