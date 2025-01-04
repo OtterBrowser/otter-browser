@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -133,6 +133,7 @@ QString formatUnit(qint64 value, bool isSpeed = false, int precision = 1, bool a
 QString formatFileTypes(const QStringList &filters = {});
 QString normalizeObjectName(QString name, const QString &suffix = {});
 QString normalizePath(const QString &path);
+QString getTopLevelDomain(const QUrl &url);
 QString getStandardLocation(QStandardPaths::StandardLocation type);
 QUrl expandUrl(const QUrl &url);
 QUrl normalizeUrl(QUrl url);
