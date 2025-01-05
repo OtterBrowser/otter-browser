@@ -67,7 +67,7 @@ public:
 	bool forceUpdateCookie(const QNetworkCookie &cookie);
 	bool forceDeleteCookie(const QNetworkCookie &cookie);
 	bool hasCookie(const QNetworkCookie &cookie) const;
-	static bool isDomainTheSame(const QUrl &first, const QUrl &second);
+	static bool isDomainTheSame(const QUrl &firstUrl, const QUrl &secondUrl);
 
 protected:
 	void timerEvent(QTimerEvent *event) override;
