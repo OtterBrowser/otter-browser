@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -141,7 +141,7 @@ bool QtWebKitCookieJar::canModifyCookie(const QNetworkCookie &cookie) const
 		url.setScheme(QLatin1String("http"));
 		url.setHost(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
 
-		if (!CookieJar::isDomainTheSame(m_widget->getUrl(), url))
+		if (!Utils::isDomainTheSame(m_widget->getUrl(), url))
 		{
 			if (m_thirdPartyRejectedHosts.contains(cookie.domain()))
 			{

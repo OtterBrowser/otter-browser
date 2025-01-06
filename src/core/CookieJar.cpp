@@ -368,23 +368,4 @@ bool CookieJar::hasCookie(const QNetworkCookie &cookie) const
 	return false;
 }
 
-bool CookieJar::isDomainTheSame(const QUrl &firstUrl, const QUrl &secondUrl)
-{
-	const QString firstTld(Utils::getTopLevelDomain(firstUrl));
-	const QString secondTld(Utils::getTopLevelDomain(secondUrl));
-
-	if (firstTld != secondTld)
-	{
-		return false;
-	}
-
-	QString firstDomain(QLatin1Char('.') + firstUrl.host().toLower());
-	firstDomain.remove((firstDomain.length() - firstTld.length()), firstTld.length());
-
-	QString secondDomain(QLatin1Char('.') + secondUrl.host().toLower());
-	secondDomain.remove((secondDomain.length() - secondTld.length()), secondTld.length());
-
-	return firstDomain.section(QLatin1Char('.'), -1) == secondDomain.section(QLatin1Char('.'), -1);
-}
-
 }
