@@ -774,8 +774,8 @@ bool ensureDirectoryExists(const QString &path)
 
 bool isDomainTheSame(const QUrl &firstUrl, const QUrl &secondUrl)
 {
-	const QString firstTld(Utils::getTopLevelDomain(firstUrl));
-	const QString secondTld(Utils::getTopLevelDomain(secondUrl));
+	const QString firstTld(getTopLevelDomain(firstUrl));
+	const QString secondTld(getTopLevelDomain(secondUrl));
 
 	if (firstTld != secondTld)
 	{
