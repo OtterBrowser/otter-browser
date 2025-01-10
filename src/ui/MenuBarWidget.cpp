@@ -168,13 +168,15 @@ void MenuBarWidget::reload()
 	{
 		if (i != position)
 		{
+			const ToolBarsManager::ToolBarDefinition::Entry entry(definition.entries.at(i));
+
 			if (i < position)
 			{
-				leftDefinition.entries.append(definition.entries.at(i));
+				leftDefinition.entries.append(entry);
 			}
 			else
 			{
-				rightDefinition.entries.append(definition.entries.at(i));
+				rightDefinition.entries.append(entry);
 			}
 		}
 	}
