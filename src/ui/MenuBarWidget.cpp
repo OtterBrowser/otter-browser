@@ -105,30 +105,10 @@ void MenuBarWidget::reload()
 		actions.append(definition.entries.at(i).action);
 	}
 
-	if (actions.count() == 1 && actions.at(0) == QLatin1String("MenuBarWidget"))
-	{
-		if (m_leftToolBar)
-		{
-			m_leftToolBar->deleteLater();
-			m_leftToolBar = nullptr;
-
-			setCornerWidget(nullptr, Qt::TopLeftCorner);
-		}
-
-		if (m_rightToolBar)
-		{
-			m_rightToolBar->deleteLater();
-			m_rightToolBar = nullptr;
-
-			setCornerWidget(nullptr, Qt::TopRightCorner);
-		}
-
-		return;
-	}
-
 	const int position(actions.indexOf(QLatin1String("MenuBarWidget")));
-	const bool needsLeftToolbar(position != 0);
-	const bool needsRightToolbar(position != (definition.entries.count() - 1));
+	const bool isMenuBarOnly(actions.count() == 1 && actions.at(0) == QLatin1String("MenuBarWidget"));
+	const bool needsLeftToolbar(!isMenuBarOnly && position != 0);
+	const bool needsRightToolbar(!isMenuBarOnly && position != (definition.entries.count() - 1));
 
 	if (needsLeftToolbar && !m_leftToolBar)
 	{
@@ -156,6 +136,11 @@ void MenuBarWidget::reload()
 		m_rightToolBar = nullptr;
 
 		setCornerWidget(nullptr, Qt::TopRightCorner);
+	}
+
+	if (isMenuBarOnly)
+	{
+		return;
 	}
 
 	ToolBarsManager::ToolBarDefinition leftDefinition(definition);
