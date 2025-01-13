@@ -140,6 +140,9 @@ void MenuBarWidget::reload()
 
 	if (isMenuBarOnly)
 	{
+		setMaximumHeight(QWIDGETSIZE_MAX);
+		setMinimumHeight(0);
+
 		return;
 	}
 
