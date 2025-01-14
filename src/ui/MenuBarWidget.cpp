@@ -97,16 +97,19 @@ void MenuBarWidget::contextMenuEvent(QContextMenuEvent *event)
 void MenuBarWidget::reload()
 {
 	const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar));
-	QStringList actions;
-	actions.reserve(definition.entries.count());
+	int menuBarPosition(-1);
 
 	for (int i = 0; i < definition.entries.count(); ++i)
 	{
-		actions.append(definition.entries.at(i).action);
+		if (definition.entries.at(i).action == QLatin1String("MenuBarWidget"))
+		{
+			menuBarPosition = i;
+
+			break;
+		}
 	}
 
-	const int menuBarPosition(actions.indexOf(QLatin1String("MenuBarWidget")));
-	const bool isMenuBarOnly(actions.count() == 1 && actions.at(0) == QLatin1String("MenuBarWidget"));
+	const bool isMenuBarOnly(menuBarPosition == 0 && definition.entries.count() == 1);
 	const bool needsLeftToolbar(!isMenuBarOnly && menuBarPosition != 0);
 	const bool needsRightToolbar(!isMenuBarOnly && menuBarPosition != (definition.entries.count() - 1));
 
