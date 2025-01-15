@@ -201,13 +201,14 @@ void MenuBarWidget::updateGeometries()
 		return;
 	}
 
+	const int actionsCount(actions().count());
 	int size(0);
 
-	if (actions().count() > 0)
+	if (actionsCount > 0)
 	{
-		size = ((style()->pixelMetric(QStyle::PM_MenuBarHMargin, nullptr, this) * 2) + (style()->pixelMetric(QStyle::PM_MenuBarItemSpacing, nullptr, this) * actions().count()));
+		size = ((style()->pixelMetric(QStyle::PM_MenuBarHMargin, nullptr, this) * 2) + (style()->pixelMetric(QStyle::PM_MenuBarItemSpacing, nullptr, this) * actionsCount));
 
-		for (int i = 0; i < actions().count(); ++i)
+		for (int i = 0; i < actionsCount; ++i)
 		{
 			QStyleOptionMenuItem option;
 
