@@ -196,7 +196,7 @@ void MenuBarWidget::reload()
 
 void MenuBarWidget::updateGeometries()
 {
-	if (!m_leftToolBar && !m_rightToolBar)
+	if (!m_rightToolBar)
 	{
 		return;
 	}
@@ -218,7 +218,7 @@ void MenuBarWidget::updateGeometries()
 		}
 	}
 
-	if (m_rightToolBar && width() > (size + (m_leftToolBar ? m_leftToolBar->sizeHint().width() : 0) + m_rightToolBar->sizeHint().width()))
+	if (width() > (size + (m_leftToolBar ? m_leftToolBar->sizeHint().width() : 0) + m_rightToolBar->sizeHint().width()))
 	{
 		const int offset(size - (m_leftToolBar ? m_leftToolBar->sizeHint().width() : 0));
 
