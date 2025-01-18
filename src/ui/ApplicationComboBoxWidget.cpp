@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -131,9 +131,11 @@ void ApplicationComboBoxWidget::setMimeType(const QMimeType &mimeType)
 	{
 		for (int i = 0; i < applications.count(); ++i)
 		{
-			addItem(applications.at(i).icon, ((applications.at(i).name.isEmpty()) ? tr("Unknown") : applications.at(i).name), applications.at(i).command);
+			const ApplicationInformation application(applications.at(i));
 
-			if (applications.at(i).icon.isNull())
+			addItem(application.icon, ((application.name.isEmpty()) ? tr("Unknown") : application.name), application.command);
+
+			if (application.icon.isNull())
 			{
 				model()->setData(model()->index((count() - 1), 0), ItemModel::createDecoration(), Qt::DecorationRole);
 			}
