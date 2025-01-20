@@ -20,7 +20,7 @@
       <attribute name="title">
        <string>Keyboard</string>
       </attribute>
-      <layout class="QVBoxLayout" name="keyboardLayout" stretch="0,0,1,0,3">
+      <layout class="QVBoxLayout" name="keyboardLayout" stretch="0,0,0,0,1">
        <item>
         <widget class="Otter::HeaderWidget" name="keyboardOptionsHeaderWidget">
          <property name="text">
