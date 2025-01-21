@@ -1209,10 +1209,11 @@ void AdvancedPreferencesPage::load()
 
 	for (int i = 0; i < updateChannels.count(); ++i)
 	{
-		QStandardItem *item(new QStandardItem(updateChannels.at(i).second));
+		const QPair<QString, QString> updateChannel(updateChannels.at(i));
+		QStandardItem *item(new QStandardItem(updateChannel.second));
 		item->setCheckable(true);
-		item->setCheckState(activeUpdateChannels.contains(updateChannels.at(i).first) ? Qt::Checked : Qt::Unchecked);
-		item->setData(updateChannels.at(i).first, Qt::UserRole);
+		item->setCheckState(activeUpdateChannels.contains(updateChannel.first) ? Qt::Checked : Qt::Unchecked);
+		item->setData(updateChannel.first, Qt::UserRole);
 		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 		updateChannelsModel->appendRow(item);
