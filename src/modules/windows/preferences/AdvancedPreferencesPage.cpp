@@ -1074,10 +1074,11 @@ void AdvancedPreferencesPage::load()
 
 	for (int i = 0; i < handlers.count(); ++i)
 	{
-		QStandardItem *item(new QStandardItem(handlers.at(i).mimeType.isValid() ? handlers.at(i).mimeType.name() : QLatin1String("*")));
-		item->setData(handlers.at(i).transferMode, TransferModeRole);
-		item->setData(handlers.at(i).downloadsPath, DownloadsPathRole);
-		item->setData(handlers.at(i).openCommand, OpenCommandRole);
+		const HandlersManager::MimeTypeHandlerDefinition handler(handlers.at(i));
+		QStandardItem *item(new QStandardItem(handler.mimeType.isValid() ? handler.mimeType.name() : QLatin1String("*")));
+		item->setData(handler.transferMode, TransferModeRole);
+		item->setData(handler.downloadsPath, DownloadsPathRole);
+		item->setData(handler.openCommand, OpenCommandRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 
 		mimeTypesModel->appendRow(item);
