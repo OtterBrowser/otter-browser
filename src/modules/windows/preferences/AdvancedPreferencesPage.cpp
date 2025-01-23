@@ -1425,18 +1425,18 @@ void AdvancedPreferencesPage::save()
 			continue;
 		}
 
-		HandlersManager::MimeTypeHandlerDefinition definition;
+		HandlersManager::MimeTypeHandlerDefinition hamdler;
 
 		if (index.data(Qt::DisplayRole).toString() != QLatin1String("*"))
 		{
-			definition.mimeType = mimeDatabase.mimeTypeForName(index.data(Qt::DisplayRole).toString());
+			hamdler.mimeType = mimeDatabase.mimeTypeForName(index.data(Qt::DisplayRole).toString());
 		}
 
-		definition.openCommand = index.data(OpenCommandRole).toString();
-		definition.downloadsPath = index.data(DownloadsPathRole).toString();
-		definition.transferMode = static_cast<HandlersManager::MimeTypeHandlerDefinition::TransferMode>(index.data(TransferModeRole).toInt());
+		hamdler.openCommand = index.data(OpenCommandRole).toString();
+		hamdler.downloadsPath = index.data(DownloadsPathRole).toString();
+		hamdler.transferMode = static_cast<HandlersManager::MimeTypeHandlerDefinition::TransferMode>(index.data(TransferModeRole).toInt());
 
-		HandlersManager::setMimeTypeHandler(definition.mimeType, definition);
+		HandlersManager::setMimeTypeHandler(hamdler.mimeType, hamdler);
 	}
 
 	SettingsManager::setOption(SettingsManager::Permissions_EnableJavaScriptOption, m_ui->enableJavaScriptCheckBox->isChecked());
