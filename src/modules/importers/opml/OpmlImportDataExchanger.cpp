@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -43,14 +43,7 @@ void OpmlImportDataExchanger::importFolder(FeedsModel::Entry *source, FeedsModel
 			continue;
 		}
 
-		const FeedsModel::EntryType type(static_cast<FeedsModel::EntryType>(sourceEntry->data(FeedsModel::TypeRole).toInt()));
-
-		if (type != FeedsModel::FeedEntry && type != FeedsModel::FolderEntry)
-		{
-			continue;
-		}
-
-		switch (type)
+		switch (static_cast<FeedsModel::EntryType>(sourceEntry->data(FeedsModel::TypeRole).toInt()))
 		{
 			case FeedsModel::FeedEntry:
 				if (sourceEntry->getFeed() && (areDuplicatesAllowed || !FeedsManager::getModel()->hasFeed(sourceEntry->getFeed()->getUrl())))
