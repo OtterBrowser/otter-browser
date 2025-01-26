@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 
 #include "AddonsManager.h"
 #include "Console.h"
+#include "JsonSettings.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "ThemesManager.h"
@@ -74,6 +75,43 @@ QUrl Addon::getUpdateUrl() const
 QIcon Addon::getIcon() const
 {
 	return {};
+}
+
+Addon::MetaData Addon::loadMetaData(const QString &path)
+{
+	MetaData metaData;
+	const JsonSettings settings(path);
+	const QStringList comments(settings.getComment().split(QLatin1Char('\n')));
+
+	for (int i = 0; i < comments.count(); ++i)
+	{
+		const QString comment(comments.at(i));
+		const QString key(comment.section(QLatin1Char(':'), 0, 0).trimmed());
+		const QString value(comment.section(QLatin1Char(':'), 1).trimmed());
+
+		if (key == QLatin1String("Title"))
+		{
+			metaData.title = value;
+		}
+		else if (key == QLatin1String("Description"))
+		{
+			metaData.description = value;
+		}
+		else if (key == QLatin1String("Author"))
+		{
+			metaData.author = value;
+		}
+		else if (key == QLatin1String("Version"))
+		{
+			metaData.version = value;
+		}
+		else if (key == QLatin1String("HomePage"))
+		{
+			metaData.homePage = QUrl(value);
+		}
+	}
+
+	return metaData;
 }
 
 Addon::AddonType Addon::getType() const
