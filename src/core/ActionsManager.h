@@ -78,11 +78,7 @@ protected:
 
 private:
 	QString m_identifier;
-	QString m_title;
-	QString m_description;
-	QString m_author;
-	QString m_version;
-	QUrl m_homePage;
+	MetaData m_metaData;
 	QHash<int, QVector<Action> > m_definitions;
 	bool m_isModified;
 };

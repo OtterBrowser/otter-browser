@@ -48,13 +48,8 @@ KeyboardProfile::KeyboardProfile(const QString &identifier, LoadMode mode) :
 	}
 
 	const QString path(SessionsManager::getReadableDataPath(QLatin1String("keyboard/") + identifier + QLatin1String(".json")));
-	const MetaData metaData(loadMetaData(path));
 
-	m_title = metaData.title;
-	m_description = metaData.description;
-	m_author = metaData.author;
-	m_version = metaData.version;
-	m_homePage = metaData.homePage;
+	m_metaData = loadMetaData(path);
 
 	if (mode == MetaDataOnlyMode)
 	{
@@ -103,36 +98,36 @@ KeyboardProfile::KeyboardProfile(const QString &identifier, LoadMode mode) :
 
 void KeyboardProfile::setTitle(const QString &title)
 {
-	if (title != m_title)
+	if (title != m_metaData.title)
 	{
-		m_title = title;
+		m_metaData.title = title;
 		m_isModified = true;
 	}
 }
 
 void KeyboardProfile::setDescription(const QString &description)
 {
-	if (description != m_description)
+	if (description != m_metaData.description)
 	{
-		m_description = description;
+		m_metaData.description = description;
 		m_isModified = true;
 	}
 }
 
 void KeyboardProfile::setAuthor(const QString &author)
 {
-	if (author != m_author)
+	if (author != m_metaData.author)
 	{
-		m_author = author;
+		m_metaData.author = author;
 		m_isModified = true;
 	}
 }
 
 void KeyboardProfile::setVersion(const QString &version)
 {
-	if (version != m_version)
+	if (version != m_metaData.version)
 	{
-		m_version = version;
+		m_metaData.version = version;
 		m_isModified = true;
 	}
 }
@@ -148,12 +143,8 @@ void KeyboardProfile::setDefinitions(const QHash<int, QVector<KeyboardProfile::A
 
 void KeyboardProfile::setMetaData(const MetaData &metaData)
 {
-	setTitle(metaData.title);
-	setDescription(metaData.description);
-	setVersion(metaData.version);
-	setAuthor(metaData.author);
-
-	m_homePage = metaData.homePage;
+	m_metaData = metaData;
+	m_isModified = true;
 }
 
 void KeyboardProfile::setModified(bool isModified)
@@ -168,39 +159,32 @@ QString KeyboardProfile::getName() const
 
 QString KeyboardProfile::getTitle() const
 {
-	return (m_title.isEmpty() ? QCoreApplication::translate("Otter::KeyboardProfile", "(Untitled)") : m_title);
+	return (m_metaData.title.isEmpty() ? QCoreApplication::translate("Otter::KeyboardProfile", "(Untitled)") : m_metaData.title);
 }
 
 QString KeyboardProfile::getDescription() const
 {
-	return m_description;
+	return m_metaData.description;
 }
 
 QString KeyboardProfile::getAuthor() const
 {
-	return m_author;
+	return m_metaData.author;
 }
 
 QString KeyboardProfile::getVersion() const
 {
-	return m_version;
+	return m_metaData.version;
 }
 
 QUrl KeyboardProfile::getHomePage() const
 {
-	return m_homePage;
+	return m_metaData.homePage;
 }
 
 Addon::MetaData KeyboardProfile::getMetaData() const
 {
-	Addon::MetaData metaData;
-	metaData.title = getTitle();
-	metaData.description = getDescription();
-	metaData.version = getVersion();
-	metaData.author = getAuthor();
-	metaData.homePage = getHomePage();
-
-	return metaData;
+	return m_metaData;
 }
 
 QHash<int, QVector<KeyboardProfile::Action> > KeyboardProfile::getDefinitions() const
@@ -254,15 +238,15 @@ bool KeyboardProfile::save()
 	QString comment;
 	QTextStream stream(&comment);
 	stream.setCodec("UTF-8");
-	stream << QLatin1String("Title: ") << (m_title.isEmpty() ? QT_TR_NOOP("(Untitled)") : m_title) << QLatin1Char('\n');
-	stream << QLatin1String("Description: ") << m_description << QLatin1Char('\n');
+	stream << QLatin1String("Title: ") << (m_metaData.title.isEmpty() ? QT_TR_NOOP("(Untitled)") : m_metaData.title) << QLatin1Char('\n');
+	stream << QLatin1String("Description: ") << m_metaData.description << QLatin1Char('\n');
 	stream << QLatin1String("Type: keyboard-profile\n");
-	stream << QLatin1String("Author: ") << m_author << QLatin1Char('\n');
-	stream << QLatin1String("Version: ") << m_version;
+	stream << QLatin1String("Author: ") << m_metaData.author << QLatin1Char('\n');
+	stream << QLatin1String("Version: ") << m_metaData.version;
 
-	if (m_homePage.isValid())
+	if (m_metaData.homePage.isValid())
 	{
-		stream << QLatin1Char('\n') << QLatin1String("HomePage: ") << m_homePage.toString();
+		stream << QLatin1Char('\n') << QLatin1String("HomePage: ") << m_metaData.homePage.toString();
 	}
 
 	settings.setComment(comment);
