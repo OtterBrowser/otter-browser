@@ -143,8 +143,11 @@ void KeyboardProfile::setDefinitions(const QHash<int, QVector<KeyboardProfile::A
 
 void KeyboardProfile::setMetaData(const MetaData &metaData)
 {
-	m_metaData = metaData;
-	m_isModified = true;
+	if (metaData.title != m_metaData.title || metaData.description != m_metaData.description || metaData.author != m_metaData.author || metaData.version != m_metaData.version || metaData.homePage != m_metaData.homePage)
+	{
+		m_metaData = metaData;
+		m_isModified = true;
+	}
 }
 
 void KeyboardProfile::setModified(bool isModified)
