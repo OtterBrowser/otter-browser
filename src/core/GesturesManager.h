@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -87,10 +87,7 @@ public:
 
 private:
 	QString m_identifier;
-	QString m_title;
-	QString m_description;
-	QString m_author;
-	QString m_version;
+	MetaData m_metaData;
 	QHash<int, QVector<Gesture> > m_definitions;
 	bool m_isModified;
 };

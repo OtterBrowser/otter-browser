@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -349,38 +349,16 @@ MouseProfile::MouseProfile(const QString &identifier, LoadMode mode) :
 		return;
 	}
 
-	const JsonSettings settings(SessionsManager::getReadableDataPath(QLatin1String("mouse/") + identifier + QLatin1String(".json")));
-	const QStringList comments(settings.getComment().split(QLatin1Char('\n')));
+	const QString path(SessionsManager::getReadableDataPath(QLatin1String("mouse/") + identifier + QLatin1String(".json")));
 
-	for (int i = 0; i < comments.count(); ++i)
-	{
-		const QString comment(comments.at(i));
-		const QString key(comment.section(QLatin1Char(':'), 0, 0).trimmed());
-		const QString value(comment.section(QLatin1Char(':'), 1).trimmed());
-
-		if (key == QLatin1String("Title"))
-		{
-			m_title = value;
-		}
-		else if (key == QLatin1String("Description"))
-		{
-			m_description = value;
-		}
-		else if (key == QLatin1String("Author"))
-		{
-			m_author = value;
-		}
-		else if (key == QLatin1String("Version"))
-		{
-			m_version = value;
-		}
-	}
+	m_metaData = loadMetaData(path);
 
 	if (mode == MetaDataOnlyMode)
 	{
 		return;
 	}
 
+	const JsonSettings settings(path);
 	const QJsonArray contextsArray(settings.array());
 
 	for (int i = 0; i < contextsArray.count(); ++i)
@@ -434,36 +412,36 @@ MouseProfile::MouseProfile(const QString &identifier, LoadMode mode) :
 
 void MouseProfile::setTitle(const QString &title)
 {
-	if (title != m_title)
+	if (title != m_metaData.title)
 	{
-		m_title = title;
+		m_metaData.title = title;
 		m_isModified = true;
 	}
 }
 
 void MouseProfile::setDescription(const QString &description)
 {
-	if (description != m_description)
+	if (description != m_metaData.description)
 	{
-		m_description = description;
+		m_metaData.description = description;
 		m_isModified = true;
 	}
 }
 
 void MouseProfile::setAuthor(const QString &author)
 {
-	if (author != m_author)
+	if (author != m_metaData.author)
 	{
-		m_author = author;
+		m_metaData.author = author;
 		m_isModified = true;
 	}
 }
 
 void MouseProfile::setVersion(const QString &version)
 {
-	if (version != m_version)
+	if (version != m_metaData.version)
 	{
-		m_version = version;
+		m_metaData.version = version;
 		m_isModified = true;
 	}
 }
@@ -489,22 +467,22 @@ QString MouseProfile::getName() const
 
 QString MouseProfile::getTitle() const
 {
-	return (m_title.isEmpty() ? QCoreApplication::translate("Otter::MouseProfile", "(Untitled)") : m_title);
+	return (m_metaData.title.isEmpty() ? QCoreApplication::translate("Otter::MouseProfile", "(Untitled)") : m_metaData.title);
 }
 
 QString MouseProfile::getDescription() const
 {
-	return m_description;
+	return m_metaData.description;
 }
 
 QString MouseProfile::getAuthor() const
 {
-	return m_author;
+	return m_metaData.author;
 }
 
 QString MouseProfile::getVersion() const
 {
-	return m_version;
+	return m_metaData.version;
 }
 
 QHash<int, QVector<MouseProfile::Gesture> > MouseProfile::getDefinitions() const
@@ -533,11 +511,11 @@ bool MouseProfile::save()
 	QString comment;
 	QTextStream stream(&comment);
 	stream.setCodec("UTF-8");
-	stream << QLatin1String("Title: ") << (m_title.isEmpty() ? QT_TR_NOOP("(Untitled)") : m_title) << QLatin1Char('\n');
-	stream << QLatin1String("Description: ") << m_description << QLatin1Char('\n');
+	stream << QLatin1String("Title: ") << (m_metaData.title.isEmpty() ? QT_TR_NOOP("(Untitled)") : m_metaData.title) << QLatin1Char('\n');
+	stream << QLatin1String("Description: ") << m_metaData.description << QLatin1Char('\n');
 	stream << QLatin1String("Type: mouse-profile\n");
-	stream << QLatin1String("Author: ") << m_author << QLatin1Char('\n');
-	stream << QLatin1String("Version: ") << m_version;
+	stream << QLatin1String("Author: ") << m_metaData.author << QLatin1Char('\n');
+	stream << QLatin1String("Version: ") << m_metaData.version;
 
 	settings.setComment(comment);
 
