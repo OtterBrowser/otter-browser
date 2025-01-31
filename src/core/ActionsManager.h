@@ -31,7 +31,7 @@
 namespace Otter
 {
 
-class KeyboardProfile final : public Addon
+class KeyboardProfile final : public JsonAddon
 {
 public:
 	enum LoadMode

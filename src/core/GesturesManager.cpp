@@ -340,7 +340,7 @@ bool MouseProfile::Gesture::operator ==(const Gesture &other) const
 	return (steps == other.steps && parameters == other.parameters && action == other.action);
 }
 
-MouseProfile::MouseProfile(const QString &identifier, LoadMode mode) :
+MouseProfile::MouseProfile(const QString &identifier, LoadMode mode) : JsonAddon(),
 	m_identifier(identifier),
 	m_isModified(false)
 {

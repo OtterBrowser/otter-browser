@@ -76,13 +76,21 @@ public:
 	virtual bool remove();
 
 protected:
-	static MetaData loadMetaData(const QString &path);
 	void setEnabled(bool isEnabled);
 
 private:
 	bool m_isEnabled;
 
 friend class AddonsManager;
+};
+
+class JsonAddon : public Addon
+{
+public:
+	explicit JsonAddon();
+
+protected:
+	static MetaData loadMetaData(const QString &path);
 };
 
 class AddonsManager final : public QObject

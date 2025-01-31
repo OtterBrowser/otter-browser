@@ -77,7 +77,31 @@ QIcon Addon::getIcon() const
 	return {};
 }
 
-Addon::MetaData Addon::loadMetaData(const QString &path)
+Addon::AddonType Addon::getType() const
+{
+	return UnknownType;
+}
+
+bool Addon::isEnabled() const
+{
+	return m_isEnabled;
+}
+
+bool Addon::canRemove() const
+{
+	return false;
+}
+
+bool Addon::remove()
+{
+	return false;
+}
+
+JsonAddon::JsonAddon() : Addon()
+{
+}
+
+Addon::MetaData JsonAddon::loadMetaData(const QString &path)
 {
 	MetaData metaData;
 	const JsonSettings settings(path);
@@ -112,26 +136,6 @@ Addon::MetaData Addon::loadMetaData(const QString &path)
 	}
 
 	return metaData;
-}
-
-Addon::AddonType Addon::getType() const
-{
-	return UnknownType;
-}
-
-bool Addon::isEnabled() const
-{
-	return m_isEnabled;
-}
-
-bool Addon::canRemove() const
-{
-	return false;
-}
-
-bool Addon::remove()
-{
-	return false;
 }
 
 AddonsManager* AddonsManager::m_instance(nullptr);

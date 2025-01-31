@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-class MouseProfile final : public Addon
+class MouseProfile final : public JsonAddon
 {
 public:
 	enum LoadMode
