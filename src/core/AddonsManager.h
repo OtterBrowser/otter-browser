@@ -90,6 +90,7 @@ public:
 	explicit JsonAddon();
 
 protected:
+	static QString formatComment(const MetaData &metaData, const QString &type);
 	static MetaData loadMetaData(const QString &path);
 };
 

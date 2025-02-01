@@ -508,16 +508,7 @@ bool MouseProfile::isValid() const
 bool MouseProfile::save()
 {
 	JsonSettings settings(SessionsManager::getWritableDataPath(QLatin1String("mouse/") + m_identifier + QLatin1String(".json")));
-	QString comment;
-	QTextStream stream(&comment);
-	stream.setCodec("UTF-8");
-	stream << QLatin1String("Title: ") << (m_metaData.title.isEmpty() ? QT_TR_NOOP("(Untitled)") : m_metaData.title) << QLatin1Char('\n');
-	stream << QLatin1String("Description: ") << m_metaData.description << QLatin1Char('\n');
-	stream << QLatin1String("Type: mouse-profile\n");
-	stream << QLatin1String("Author: ") << m_metaData.author << QLatin1Char('\n');
-	stream << QLatin1String("Version: ") << m_metaData.version;
-
-	settings.setComment(comment);
+	settings.setComment(formatComment(m_metaData, QLatin1String("mouse-profile")));
 
 	QJsonArray contextsArray;
 	QHash<int, QVector<MouseProfile::Gesture> >::const_iterator contextsIterator;

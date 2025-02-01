@@ -36,6 +36,7 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
+#include <QtCore/QTextStream>
 
 namespace Otter
 {
@@ -99,6 +100,25 @@ bool Addon::remove()
 
 JsonAddon::JsonAddon() : Addon()
 {
+}
+
+QString JsonAddon::formatComment(const Addon::MetaData &metaData, const QString &type)
+{
+	QString comment;
+	QTextStream stream(&comment);
+	stream.setCodec("UTF-8");
+	stream << QLatin1String("Title: ") << (metaData.title.isEmpty() ? QT_TR_NOOP("(Untitled)") : metaData.title) << QLatin1Char('\n');
+	stream << QLatin1String("Description: ") << metaData.description << QLatin1Char('\n');
+	stream << QLatin1String("Type: ") << type << QLatin1String("\n");
+	stream << QLatin1String("Author: ") << metaData.author << QLatin1Char('\n');
+	stream << QLatin1String("Version: ") << metaData.version;
+
+	if (metaData.homePage.isValid())
+	{
+		stream << QLatin1Char('\n') << QLatin1String("HomePage: ") << metaData.homePage.toString();
+	}
+
+	return comment;
 }
 
 Addon::MetaData JsonAddon::loadMetaData(const QString &path)

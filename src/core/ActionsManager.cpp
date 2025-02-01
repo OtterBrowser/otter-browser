@@ -26,7 +26,6 @@
 
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonObject>
-#include <QtCore/QTextStream>
 #include <QtGui/QGuiApplication>
 #include <QtGui/QKeySequence>
 
@@ -238,21 +237,7 @@ bool KeyboardProfile::isValid() const
 bool KeyboardProfile::save()
 {
 	JsonSettings settings(SessionsManager::getWritableDataPath(QLatin1String("keyboard/") + m_identifier + QLatin1String(".json")));
-	QString comment;
-	QTextStream stream(&comment);
-	stream.setCodec("UTF-8");
-	stream << QLatin1String("Title: ") << (m_metaData.title.isEmpty() ? QT_TR_NOOP("(Untitled)") : m_metaData.title) << QLatin1Char('\n');
-	stream << QLatin1String("Description: ") << m_metaData.description << QLatin1Char('\n');
-	stream << QLatin1String("Type: keyboard-profile\n");
-	stream << QLatin1String("Author: ") << m_metaData.author << QLatin1Char('\n');
-	stream << QLatin1String("Version: ") << m_metaData.version;
-
-	if (m_metaData.homePage.isValid())
-	{
-		stream << QLatin1Char('\n') << QLatin1String("HomePage: ") << m_metaData.homePage.toString();
-	}
-
-	settings.setComment(comment);
+	settings.setComment(formatComment(m_metaData, QLatin1String("keyboard-profile")));
 
 	QJsonArray contextsArray;
 	QHash<int, QVector<KeyboardProfile::Action> >::const_iterator contextsIterator;
