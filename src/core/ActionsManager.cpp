@@ -38,8 +38,7 @@ bool KeyboardProfile::Action::operator ==(const KeyboardProfile::Action &other) 
 }
 
 KeyboardProfile::KeyboardProfile(const QString &identifier, LoadMode mode) : JsonAddon(),
-	m_identifier(identifier),
-	m_isModified(false)
+	m_identifier(identifier)
 {
 	if (identifier.isEmpty())
 	{
@@ -48,7 +47,7 @@ KeyboardProfile::KeyboardProfile(const QString &identifier, LoadMode mode) : Jso
 
 	const QString path(SessionsManager::getReadableDataPath(QLatin1String("keyboard/") + identifier + QLatin1String(".json")));
 
-	m_metaData = loadMetaData(path);
+	loadMetaData(path);
 
 	if (mode == MetaDataOnlyMode)
 	{
@@ -95,98 +94,19 @@ KeyboardProfile::KeyboardProfile(const QString &identifier, LoadMode mode) : Jso
 	}
 }
 
-void KeyboardProfile::setTitle(const QString &title)
-{
-	if (title != m_metaData.title)
-	{
-		m_metaData.title = title;
-		m_isModified = true;
-	}
-}
-
-void KeyboardProfile::setDescription(const QString &description)
-{
-	if (description != m_metaData.description)
-	{
-		m_metaData.description = description;
-		m_isModified = true;
-	}
-}
-
-void KeyboardProfile::setAuthor(const QString &author)
-{
-	if (author != m_metaData.author)
-	{
-		m_metaData.author = author;
-		m_isModified = true;
-	}
-}
-
-void KeyboardProfile::setVersion(const QString &version)
-{
-	if (version != m_metaData.version)
-	{
-		m_metaData.version = version;
-		m_isModified = true;
-	}
-}
-
 void KeyboardProfile::setDefinitions(const QHash<int, QVector<KeyboardProfile::Action> > &definitions)
 {
 	if (definitions != m_definitions)
 	{
 		m_definitions = definitions;
-		m_isModified = true;
-	}
-}
 
-void KeyboardProfile::setMetaData(const MetaData &metaData)
-{
-	if (metaData.title != m_metaData.title || metaData.description != m_metaData.description || metaData.author != m_metaData.author || metaData.version != m_metaData.version || metaData.homePage != m_metaData.homePage)
-	{
-		m_metaData = metaData;
-		m_isModified = true;
+		setModified(true);
 	}
-}
-
-void KeyboardProfile::setModified(bool isModified)
-{
-	m_isModified = isModified;
 }
 
 QString KeyboardProfile::getName() const
 {
 	return m_identifier;
-}
-
-QString KeyboardProfile::getTitle() const
-{
-	return (m_metaData.title.isEmpty() ? QCoreApplication::translate("Otter::KeyboardProfile", "(Untitled)") : m_metaData.title);
-}
-
-QString KeyboardProfile::getDescription() const
-{
-	return m_metaData.description;
-}
-
-QString KeyboardProfile::getAuthor() const
-{
-	return m_metaData.author;
-}
-
-QString KeyboardProfile::getVersion() const
-{
-	return m_metaData.version;
-}
-
-QUrl KeyboardProfile::getHomePage() const
-{
-	return m_metaData.homePage;
-}
-
-Addon::MetaData KeyboardProfile::getMetaData() const
-{
-	return m_metaData;
 }
 
 QHash<int, QVector<KeyboardProfile::Action> > KeyboardProfile::getDefinitions() const
@@ -224,11 +144,6 @@ QVector<QKeySequence> KeyboardProfile::loadShortcuts(const QJsonArray &rawShortc
 	return shortcuts;
 }
 
-bool KeyboardProfile::isModified() const
-{
-	return m_isModified;
-}
-
 bool KeyboardProfile::isValid() const
 {
 	return !m_identifier.isEmpty();
@@ -237,7 +152,7 @@ bool KeyboardProfile::isValid() const
 bool KeyboardProfile::save()
 {
 	JsonSettings settings(SessionsManager::getWritableDataPath(QLatin1String("keyboard/") + m_identifier + QLatin1String(".json")));
-	settings.setComment(formatComment(m_metaData, QLatin1String("keyboard-profile")));
+	settings.setComment(formatComment(QLatin1String("keyboard-profile")));
 
 	QJsonArray contextsArray;
 	QHash<int, QVector<KeyboardProfile::Action> >::const_iterator contextsIterator;
@@ -273,7 +188,7 @@ bool KeyboardProfile::save()
 
 	if (result)
 	{
-		m_isModified = false;
+		setModified(false);
 	}
 
 	return result;

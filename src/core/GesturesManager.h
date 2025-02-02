@@ -68,28 +68,16 @@ public:
 
 	explicit MouseProfile(const QString &identifier = {}, LoadMode mode = StandardMode);
 
-	void setTitle(const QString &title);
-	void setDescription(const QString &description);
-	void setAuthor(const QString &author);
-	void setVersion(const QString &version);
 	void setDefinitions(const QHash<int, QVector<Gesture> > &definitions);
-	void setModified(bool isModified);
 	QString getName() const override;
-	QString getTitle() const override;
-	QString getDescription() const override;
-	QString getAuthor() const;
-	QString getVersion() const override;
 	QHash<int, QVector<Gesture> > getDefinitions() const;
 	AddonType getType() const override;
-	bool isModified() const;
 	bool isValid() const;
 	bool save();
 
 private:
 	QString m_identifier;
-	MetaData m_metaData;
 	QHash<int, QVector<Gesture> > m_definitions;
-	bool m_isModified;
 };
 
 class GesturesManager final : public QObject

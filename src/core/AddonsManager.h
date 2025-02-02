@@ -89,9 +89,27 @@ class JsonAddon : public Addon
 public:
 	explicit JsonAddon();
 
+	void setTitle(const QString &title);
+	void setDescription(const QString &description);
+	void setAuthor(const QString &author);
+	void setVersion(const QString &version);
+	void setMetaData(const MetaData &metaData);
+	void setModified(bool isModified);
+	QString getTitle() const override;
+	QString getDescription() const override;
+	QString getAuthor() const;
+	QString getVersion() const override;
+	QUrl getHomePage() const override;
+	MetaData getMetaData() const;
+	bool isModified() const;
+
 protected:
-	static QString formatComment(const MetaData &metaData, const QString &type);
-	static MetaData loadMetaData(const QString &path);
+	void loadMetaData(const QString &path);
+	QString formatComment(const QString &type);
+
+private:
+	MetaData m_metaData;
+	bool m_isModified;
 };
 
 class AddonsManager final : public QObject

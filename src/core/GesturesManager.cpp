@@ -341,8 +341,7 @@ bool MouseProfile::Gesture::operator ==(const Gesture &other) const
 }
 
 MouseProfile::MouseProfile(const QString &identifier, LoadMode mode) : JsonAddon(),
-	m_identifier(identifier),
-	m_isModified(false)
+	m_identifier(identifier)
 {
 	if (identifier.isEmpty())
 	{
@@ -351,7 +350,7 @@ MouseProfile::MouseProfile(const QString &identifier, LoadMode mode) : JsonAddon
 
 	const QString path(SessionsManager::getReadableDataPath(QLatin1String("mouse/") + identifier + QLatin1String(".json")));
 
-	m_metaData = loadMetaData(path);
+	loadMetaData(path);
 
 	if (mode == MetaDataOnlyMode)
 	{
@@ -410,79 +409,19 @@ MouseProfile::MouseProfile(const QString &identifier, LoadMode mode) : JsonAddon
 	}
 }
 
-void MouseProfile::setTitle(const QString &title)
-{
-	if (title != m_metaData.title)
-	{
-		m_metaData.title = title;
-		m_isModified = true;
-	}
-}
-
-void MouseProfile::setDescription(const QString &description)
-{
-	if (description != m_metaData.description)
-	{
-		m_metaData.description = description;
-		m_isModified = true;
-	}
-}
-
-void MouseProfile::setAuthor(const QString &author)
-{
-	if (author != m_metaData.author)
-	{
-		m_metaData.author = author;
-		m_isModified = true;
-	}
-}
-
-void MouseProfile::setVersion(const QString &version)
-{
-	if (version != m_metaData.version)
-	{
-		m_metaData.version = version;
-		m_isModified = true;
-	}
-}
-
 void MouseProfile::setDefinitions(const QHash<int, QVector<MouseProfile::Gesture> > &definitions)
 {
 	if (definitions != m_definitions)
 	{
 		m_definitions = definitions;
-		m_isModified = true;
-	}
-}
 
-void MouseProfile::setModified(bool isModified)
-{
-	m_isModified = isModified;
+		setModified(true);
+	}
 }
 
 QString MouseProfile::getName() const
 {
 	return m_identifier;
-}
-
-QString MouseProfile::getTitle() const
-{
-	return (m_metaData.title.isEmpty() ? QCoreApplication::translate("Otter::MouseProfile", "(Untitled)") : m_metaData.title);
-}
-
-QString MouseProfile::getDescription() const
-{
-	return m_metaData.description;
-}
-
-QString MouseProfile::getAuthor() const
-{
-	return m_metaData.author;
-}
-
-QString MouseProfile::getVersion() const
-{
-	return m_metaData.version;
 }
 
 QHash<int, QVector<MouseProfile::Gesture> > MouseProfile::getDefinitions() const
@@ -495,11 +434,6 @@ Addon::AddonType MouseProfile::getType() const
 	return Addon::UnknownType;
 }
 
-bool MouseProfile::isModified() const
-{
-	return m_isModified;
-}
-
 bool MouseProfile::isValid() const
 {
 	return !m_identifier.isEmpty();
@@ -508,7 +442,7 @@ bool MouseProfile::isValid() const
 bool MouseProfile::save()
 {
 	JsonSettings settings(SessionsManager::getWritableDataPath(QLatin1String("mouse/") + m_identifier + QLatin1String(".json")));
-	settings.setComment(formatComment(m_metaData, QLatin1String("mouse-profile")));
+	settings.setComment(formatComment(QLatin1String("mouse-profile")));
 
 	QJsonArray contextsArray;
 	QHash<int, QVector<MouseProfile::Gesture> >::const_iterator contextsIterator;
@@ -547,7 +481,7 @@ bool MouseProfile::save()
 
 	if (result)
 	{
-		m_isModified = false;
+		setModified(false);
 	}
 
 	return result;
