@@ -26,7 +26,7 @@
 #include "ui_ErrorConsoleWidget.h"
 
 #include <QtGui/QClipboard>
-#include <QtWidgets/QActionGroup>
+#include <QtGui/QActionGroup>
 #include <QtWidgets/QMenu>
 
 namespace Otter

@@ -1360,7 +1360,9 @@ void AdvancedPreferencesPage::save()
 	updateNotificationsOptions();
 
 	QSettings notificationsSettings(SessionsManager::getWritableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
+#ifdef OTTER_ENABLE_QT5
 	notificationsSettings.setIniCodec("UTF-8");
+#endif
 	notificationsSettings.clear();
 
 	for (int i = 0; i < m_ui->notificationsItemView->getRowCount(); ++i)

@@ -22,7 +22,7 @@
 
 #include "../core/ActionExecutor.h"
 
-#include <QtWidgets/QAction>
+#include <QtGui/QAction>
 
 namespace Otter
 {

@@ -32,7 +32,6 @@
 
 #include <QtGui/QClipboard>
 #include <QtGui/QMouseEvent>
-#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QToolTip>
 
@@ -425,10 +424,12 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 		const QModelIndex index(m_ui->bookmarksViewWidget->indexAt(helpEvent->pos()));
 		const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(index));
 
+		/* qt6: no matching function for call to ‘QScreen::geometry()
 		if (bookmark)
 		{
-			QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(bookmark->toolTip(), Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->bookmarksViewWidget).width() / 2)), m_ui->bookmarksViewWidget, m_ui->bookmarksViewWidget->visualRect(index));
+			QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(bookmark->toolTip(), Qt::ElideRight, (QGuiApplication::primaryScreen()->geometry(m_ui->bookmarksViewWidget).width() / 2)), m_ui->bookmarksViewWidget, m_ui->bookmarksViewWidget->visualRect(index));
 		}
+		*/
 
 		return true;
 	}

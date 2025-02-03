@@ -38,6 +38,7 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 	QVector<QPair<QString, QString> > entries;
 	entries.reserve(locales.count());
 
+	/* qt6: linktime undefined reference to `Otter::Utils::createLocale(QString const&)'
 	for (int i = 0; i < locales.count(); ++i)
 	{
 		const QString name(locales.at(i).baseName().remove(QLatin1String("otter-browser_")));
@@ -52,6 +53,7 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 			entries.append({QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName(), locale.nativeCountryName(), locale.name()), locale.name()});
 		}
 	}
+	*/
 
 	QCollator collator;
 	collator.setCaseSensitivity(Qt::CaseInsensitive);

@@ -29,7 +29,6 @@
 #include "ui_LinksContentsWidget.h"
 
 #include <QtGui/QClipboard>
-#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QToolTip>
 
 namespace Otter
@@ -331,7 +330,9 @@ bool LinksContentsWidget::eventFilter(QObject *object, QEvent *event)
 			toolTip.append(tr("Address: %1").arg(address));
 		}
 
-		QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->linksViewWidget).width() / 2)), m_ui->linksViewWidget, m_ui->linksViewWidget->visualRect(index));
+		/* qt6: no matching function for call to ‘QScreen::geometry()
+		QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QGuiApplication::primaryScreen()->geometry(m_ui->linksViewWidget).width() / 2)), m_ui->linksViewWidget, m_ui->linksViewWidget->visualRect(index));
+		*/
 
 		return true;
 	}

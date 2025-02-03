@@ -92,7 +92,9 @@ void ProgressToolBarWidget::handleActionsStateChanged(const QVector<int> &identi
 		}
 
 		geometry.setTop(geometry.bottom() - 30);
+#ifdef OTTER_ENABLE_QT5 // qt: 6 call of overloaded ‘mapTo(Otter::ContentsWidget*, <brace-enclosed initializer list>)’ is ambiguous
 		geometry.translate(m_webWidget->mapTo(m_window->getContentsWidget(), {0, 0}));
+#endif
 
 		setGeometry(geometry);
 		show();

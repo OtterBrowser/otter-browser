@@ -191,7 +191,9 @@ QString JsonAddon::formatComment(const QString &type)
 {
 	QString comment;
 	QTextStream stream(&comment);
+#ifdef OTTER_ENABLE_QT5
 	stream.setCodec("UTF-8");
+#endif
 	stream << QLatin1String("Title: ") << (m_metaData.title.isEmpty() ? QT_TR_NOOP("(Untitled)") : m_metaData.title) << QLatin1Char('\n');
 	stream << QLatin1String("Description: ") << m_metaData.description << QLatin1Char('\n');
 	stream << QLatin1String("Type: ") << type << QLatin1String("\n");

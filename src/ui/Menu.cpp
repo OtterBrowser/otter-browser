@@ -35,13 +35,14 @@
 #include "../core/ToolBarsManager.h"
 #include "../core/Utils.h"
 
+#include <QtCore/QFile>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QMetaEnum>
 #include <QtCore/QMimeDatabase>
-#include <QtCore/QTextCodec>
+#include <QtCore5Compat/QTextCodec>
+#include <QtGui/QActionGroup>
 #include <QtGui/QMouseEvent>
-#include <QtWidgets/QDesktopWidget>
 
 namespace Otter
 {
@@ -1812,12 +1813,14 @@ void MenuAction::setState(const ActionsManager::ActionDefinition::State &state)
 	if (!shortcut().isEmpty())
 	{
 		const int shortcutWidth(m_menu->fontMetrics().boundingRect(QLatin1Char('X') + shortcut().toString(QKeySequence::NativeText)).width());
+		/* qt6: ‘desktop’ is not a member of ‘QApplication’; port to ‘QScreen::geometry()?
 		const int availableWidth(QApplication::desktop()->screenGeometry(m_menu).width() / 4);
 
 		if (shortcutWidth < availableWidth)
 		{
 			maximumWidth = (availableWidth - shortcutWidth);
 		}
+		*/
 	}
 
 	setText(Utils::elideText(QString(state.text).replace(QLatin1Char('&'), QLatin1String("&&")), m_menu->fontMetrics(), m_menu, maximumWidth));

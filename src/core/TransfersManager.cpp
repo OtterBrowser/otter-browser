@@ -678,9 +678,12 @@ QString Transfer::getTarget() const
 
 QIcon Transfer::getIcon() const
 {
+	/* qt6: no matching member function for call to 'icon'
 	const QString iconName(getMimeType().iconName());
 
 	return QIcon::fromTheme(iconName, QFileIconProvider().icon(iconName));
+	*/
+	return QIcon(); // qt6
 }
 
 QDateTime Transfer::getTimeStarted() const
@@ -1211,6 +1214,11 @@ Transfer* TransfersManager::startTransfer(const QUrl &source, const QString &tar
 {
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
+
+#ifdef OTTER_ENABLE_QT5
+	// qt6: 'FollowRedirectsAttribute' has been removed
+	request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+#endif
 	request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
 	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
 	request.setUrl(QUrl(source));

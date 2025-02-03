@@ -30,7 +30,6 @@
 
 #include "ui_FeedsContentsWidget.h"
 
-#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
@@ -977,7 +976,9 @@ bool FeedsContentsWidget::eventFilter(QObject *object, QEvent *event)
 			}
 		}
 
-		QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QApplication::desktop()->screenGeometry(viewWidget).width() / 2)), viewWidget, viewWidget->visualRect(index));
+		/* qt6: no matching function for call to ‘QScreen::geometry()
+		QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QGuiApplication::primaryScreen()->geometry(viewWidget).width() / 2)), viewWidget, viewWidget->visualRect(index));
+		*/
 
 		return true;
 	}

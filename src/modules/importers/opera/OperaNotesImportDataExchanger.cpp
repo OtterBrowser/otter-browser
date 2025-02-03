@@ -47,7 +47,7 @@ QWidget* OperaNotesImportDataExchanger::createOptionsWidget(QWidget *parent)
 		m_optionsWidget = new QWidget(parent);
 
 		QFormLayout *layout(new QFormLayout(m_optionsWidget));
-		layout->setMargin(0);
+		layout->setContentsMargins(0, 0, 0, 0);
 
 		m_optionsWidget->setLayout(layout);
 
@@ -140,7 +140,9 @@ bool OperaNotesImportDataExchanger::importData(const QString &path)
 	}
 
 	QTextStream stream(&file);
+#ifdef OTTER_ENABLE_QT5
 	stream.setCodec("UTF-8");
+#endif
 
 	QString line(stream.readLine());
 

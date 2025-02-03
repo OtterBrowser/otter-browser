@@ -43,7 +43,9 @@ QByteArray ListingNetworkReply::createListing(const QString &title, const QVecto
 	file.open(QIODevice::ReadOnly | QIODevice::Text);
 
 	QTextStream stream(&file);
+#ifdef OTTER_ENABLE_QT5
 	stream.setCodec("UTF-8");
+#endif
 
 	QString navigationHtml;
 	QString entriesHtml;
