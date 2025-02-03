@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -247,7 +247,6 @@ void TransferActionWidget::mouseReleaseEvent(QMouseEvent *event)
 
 void TransferActionWidget::updateState()
 {
-	const QString iconName(m_transfer->getMimeType().iconName());
 	QString details;
 	QVector<QPair<QString, QString> > detailsValues({{tr("From:"), Utils::extractHost(m_transfer->getSource())}});
 	const bool isIndeterminate(m_transfer->getBytesTotal() <= 0);
@@ -276,7 +275,7 @@ void TransferActionWidget::updateState()
 
 	m_fileNameLabel->setText(Utils::elideText(QFileInfo(m_transfer->getTarget()).fileName(), m_fileNameLabel->fontMetrics(), nullptr, 300));
 	m_detailsLabel->setText(QLatin1String("<small>") + details + QLatin1String("</small>"));
-	m_iconLabel->setPixmap(QIcon::fromTheme(iconName, QFileIconProvider().icon(iconName)).pixmap(32, 32));
+	m_iconLabel->setPixmap(m_transfer->getIcon().pixmap(32, 32));
 	m_progressBar->setHasError(hasError);
 	m_progressBar->setRange(0, ((isIndeterminate && !hasError) ? 0 : 100));
 	m_progressBar->setValue(isIndeterminate ? (hasError ? 0 : -1) : ((m_transfer->getBytesTotal() > 0) ? qFloor(Utils::calculatePercent(m_transfer->getBytesReceived(), m_transfer->getBytesTotal())) : -1));
