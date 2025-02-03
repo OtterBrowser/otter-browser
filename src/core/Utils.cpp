@@ -544,10 +544,12 @@ QString normalizePath(const QString &path)
 	return path;
 }
 
+#ifdef OTTER_ENABLE_QT5 // qt6: ‘const class QUrl’ has no member named ‘topLevelDomain’
 QString getTopLevelDomain(const QUrl &url)
 {
 	return url.topLevelDomain();
 }
+#endif
 
 QString getStandardLocation(QStandardPaths::StandardLocation type)
 {
@@ -779,6 +781,7 @@ bool ensureDirectoryExists(const QString &path)
 
 bool isDomainTheSame(const QUrl &firstUrl, const QUrl &secondUrl)
 {
+#ifdef OTTER_ENABLE_QT5 // qt6: 'topLevelDomain()' is no more; port to 'qIsEffectiveTLD()'?
 	const QString firstTld(getTopLevelDomain(firstUrl));
 	const QString secondTld(getTopLevelDomain(secondUrl));
 
@@ -794,6 +797,8 @@ bool isDomainTheSame(const QUrl &firstUrl, const QUrl &secondUrl)
 	secondDomain.remove((secondDomain.length() - secondTld.length()), secondTld.length());
 
 	return firstDomain.section(QLatin1Char('.'), -1) == secondDomain.section(QLatin1Char('.'), -1);
+#endif
+	return false;
 }
 
 bool isUrl(const QString &text)

@@ -424,10 +424,12 @@ bool UserScript::checkUrl(const QUrl &url, const QStringList &rules) const
 			return QRegularExpression(rule.mid(1, rule.length() - 2)).match(url.url()).hasMatch();
 		}
 
+#ifdef OTTER_ENABLE_QT5
 		if (rule.contains(QLatin1String(".tld"), Qt::CaseInsensitive))
 		{
 			rule.replace(QLatin1String(".tld"), Utils::getTopLevelDomain(url), Qt::CaseInsensitive);
 		}
+#endif
 
 		bool useExactMatch(true);
 
