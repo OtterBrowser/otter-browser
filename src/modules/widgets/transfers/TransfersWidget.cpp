@@ -32,7 +32,6 @@
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
 #include <QtWidgets/QBoxLayout>
-#include <QtWidgets/QFileIconProvider>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QToolTip>
