@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -683,9 +683,11 @@ QVector<ToolBarsManager::ToolBarDefinition> ToolBarsManager::getToolBarDefinitio
 
 	for (int i = 0; i < m_definitions.count(); ++i)
 	{
-		if (!m_definitions.at(i).wasRemoved && (areas == Qt::AllToolBarAreas || areas.testFlag(m_definitions.at(i).location)))
+		const ToolBarDefinition definition(m_definitions.at(i));
+
+		if (!definition.wasRemoved && (areas == Qt::AllToolBarAreas || areas.testFlag(definition.location)))
 		{
-			definitions.append(m_definitions.at(i));
+			definitions.append(definition);
 		}
 	}
 
