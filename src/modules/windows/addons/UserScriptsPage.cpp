@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -283,7 +283,9 @@ void UserScriptsPage::save()
 
 	for (int i = (indexesToRemove.count() - 1); i >= 0; --i)
 	{
-		model->removeRow(indexesToRemove.at(i).row(), indexesToRemove.at(i).parent());
+		const QModelIndex index(indexesToRemove.at(i));
+
+		model->removeRow(index.row(), index.parent());
 	}
 
 	m_addonsToAdd.clear();
