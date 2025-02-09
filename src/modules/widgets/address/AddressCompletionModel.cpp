@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -28,9 +28,6 @@
 #include "../../../core/Utils.h"
 
 #include <QtCore/QDir>
-#include <QtCore/QFileInfo>
-#include <QtCore/QMimeDatabase>
-#include <QtWidgets/QFileIconProvider>
 
 namespace Otter
 {
@@ -130,18 +127,16 @@ void AddressCompletionModel::updateModel()
 	{
 		const QString directory((m_filter == QString(QLatin1Char('~'))) ? QDir::homePath() : m_filter.section(QDir::separator(), 0, -2) + QDir::separator());
 		const QString prefix(m_filter.contains(QDir::separator()) ? m_filter.section(QDir::separator(), -1, -1) : QString());
-		const QList<QFileInfo> entries(QDir(Utils::normalizePath(directory)).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot));
-		const QFileIconProvider iconProvider;
-		const QMimeDatabase mimeDatabase;
+		const QStringList entries(QDir(Utils::normalizePath(directory)).entryList(QDir::AllEntries | QDir::NoDotAndDotDot));
 		bool headerWasAdded(!m_showCompletionCategories);
 
 		for (int i = 0; i < entries.count(); ++i)
 		{
-			const QFileInfo entry(entries.at(i));
+			const QString entry(entries.at(i));
 
-			if (entry.fileName().startsWith(prefix, Qt::CaseInsensitive))
+			if (entry.startsWith(prefix, Qt::CaseInsensitive))
 			{
-				const QString path(directory + entry.fileName());
+				const QString path(directory + entry);
 
 				if (!headerWasAdded)
 				{
@@ -150,7 +145,7 @@ void AddressCompletionModel::updateModel()
 					headerWasAdded = true;
 				}
 
-				completions.append(CompletionEntry(QUrl::fromLocalFile(QDir::toNativeSeparators(path)), path, path, QIcon::fromTheme(mimeDatabase.mimeTypeForFile(entry, QMimeDatabase::MatchExtension).iconName(), iconProvider.icon(entry)), {}, CompletionEntry::LocalPathType));
+				completions.append(CompletionEntry(QUrl::fromLocalFile(QDir::toNativeSeparators(path)), path, path, ThemesManager::getFileTypeIcon(path), {}, CompletionEntry::LocalPathType));
 			}
 		}
 	}

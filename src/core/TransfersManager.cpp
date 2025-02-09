@@ -34,7 +34,6 @@
 #include <QtCore/QTemporaryFile>
 #include <QtCore/QTimer>
 #include <QtNetwork/QAbstractNetworkCache>
-#include <QtWidgets/QFileIconProvider>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -678,9 +677,7 @@ QString Transfer::getTarget() const
 
 QIcon Transfer::getIcon() const
 {
-	const QString iconName(getMimeType().iconName());
-
-	return QIcon::fromTheme(iconName, QFileIconProvider().icon(iconName));
+	return ThemesManager::getFileTypeIcon(getMimeType());
 }
 
 QDateTime Transfer::getTimeStarted() const
