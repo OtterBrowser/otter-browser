@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,8 @@
 #include <QtCore/QAbstractNativeEventFilter>
 #endif
 #include <QtCore/QMap>
+#include <QtCore/QMimeDatabase>
+#include <QtWidgets/QFileIconProvider>
 #include <QtWidgets/QStyle>
 
 namespace Otter
@@ -119,6 +121,8 @@ public:
 	static Style* createStyle(const QString &name);
 	static Animation* createAnimation(const QString &name = QLatin1String("spinner"), QObject *parent = nullptr);
 	static QIcon createIcon(const QString &name, bool fromTheme = true, IconContext context = GenericContext);
+	static QIcon getFileTypeIcon(const QString &path);
+	static QIcon getFileTypeIcon(const QMimeType &mimeType);
 
 protected:
 	explicit ThemesManager(QObject *parent);
@@ -136,6 +140,8 @@ private:
 	static ColorScheme *m_colorScheme;
 	static QWidget *m_probeWidget;
 	static QString m_iconThemePath;
+	static QFileIconProvider m_fileIconProvider;
+	static QMimeDatabase m_mimeDatabase;
 	static bool m_useSystemIconTheme;
 
 signals:
