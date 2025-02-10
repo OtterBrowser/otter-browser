@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -239,7 +239,7 @@ void SpinnerAnimation::paint(QPainter *painter, const QRect &rectangle) const
 	gradient.setColorAt(1, Qt::transparent);
 
 	painter->save();
-	painter->setRenderHint(QPainter::HighQualityAntialiasing);
+	painter->setRenderHint(QPainter::Antialiasing);
 	painter->setPen(QPen(gradient, (offset * 1.5)));
 	painter->drawArc(targetRectangle, 0, 5760);
 	painter->restore();
