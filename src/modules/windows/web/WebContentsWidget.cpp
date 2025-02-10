@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -57,7 +57,7 @@ namespace Otter
 {
 
 QString WebContentsWidget::m_sharedQuickFindQuery = nullptr;
-QMap<WebContentsWidget::ScrollDirections, QPixmap> WebContentsWidget::m_scrollCursors;
+QMap<WebContentsWidget::ScrollDirections, QCursor> WebContentsWidget::m_scrollCursors;
 
 WebContentsWidget::WebContentsWidget(const QVariantMap &parameters, const QHash<int, QVariant> &options, WebWidget *widget, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
 	m_websiteInformationDialog(nullptr),
@@ -165,7 +165,7 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 				}
 			}
 
-			m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-") + mappedDirections.join(QLatin1Char('-')) + QLatin1String(".png"));
+			m_scrollCursors[directions] = QCursor(QPixmap(QLatin1String(":/cursors/scroll-") + mappedDirections.join(QLatin1Char('-')) + QLatin1String(".png")));
 		}
 
 		scrollContents(scrollDelta);
