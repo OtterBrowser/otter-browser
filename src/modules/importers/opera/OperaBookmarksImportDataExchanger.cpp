@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2014 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -171,8 +171,6 @@ void OperaBookmarksImportJob::start()
 	m_isRunning = true;
 
 	QTextStream stream(&file);
-	stream.setCodec("UTF-8");
-
 	QString line(stream.readLine());
 
 	if (line != QLatin1String("Opera Hotlist version 2.0"))

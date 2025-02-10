@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2016 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -224,7 +224,6 @@ void ContentBlockingProfileDialog::handleCurrentTabChanged(int index)
 	if (file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
 		QTextStream stream(&file);
-		stream.setCodec("UTF-8");
 
 		m_ui->sourceEditWidget->setPlainText(stream.readAll());
 		m_ui->sourceEditWidget->markAsLoaded();
@@ -328,7 +327,6 @@ void ContentBlockingProfileDialog::saveSource()
 	if (file.open(QIODevice::WriteOnly | QIODevice::Text))
 	{
 		QTextStream stream(&file);
-		stream.setCodec("UTF-8");
 		stream << m_ui->sourceEditWidget->toPlainText();
 
 		file.close();

@@ -260,8 +260,6 @@ QString createErrorPage(const ErrorPageInformation &information)
 	file.open(QIODevice::ReadOnly | QIODevice::Text);
 
 	QTextStream stream(&file);
-	stream.setCodec("UTF-8");
-
 	QString mainTemplate(stream.readAll());
 	const QRegularExpression advancedActionsExpression(QLatin1String("<!--advancedActions:begin-->(.*)<!--advancedActions:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
 	const QRegularExpression basicActionsExpression(QLatin1String("<!--basicActions:begin-->(.*)<!--basicActions:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));

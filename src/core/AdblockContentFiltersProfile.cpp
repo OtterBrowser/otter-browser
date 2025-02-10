@@ -2,7 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2010 - 2014 David Rosca <nowrep@gmail.com>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -786,8 +786,6 @@ AdblockContentFiltersProfile::HeaderInformation AdblockContentFiltersProfile::lo
 {
 	HeaderInformation information;
 	QTextStream stream(rulesDevice);
-	stream.setCodec("UTF-8");
-
 	const QString header(stream.readLine());
 
 	if (!header.contains(QLatin1String("[Adblock"), Qt::CaseInsensitive))
@@ -826,7 +824,6 @@ QHash<AdblockContentFiltersProfile::RuleType, quint32> AdblockContentFiltersProf
 {
 	QHash<RuleType, quint32> information({{AnyRule, 0}, {ActiveRule, 0}, {CosmeticRule, 0}, {WildcardRule, 0}});
 	QTextStream stream(rulesDevice);
-	stream.setCodec("UTF-8");
 	stream.readLine();
 
 	while (!stream.atEnd())
@@ -1051,7 +1048,6 @@ bool AdblockContentFiltersProfile::loadRules()
 	file.open(QIODevice::ReadOnly | QIODevice::Text);
 
 	QTextStream stream(&file);
-	stream.setCodec("UTF-8");
 	stream.readLine(); // skip header
 
 	m_root = new Node();

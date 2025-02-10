@@ -163,7 +163,6 @@ bool HtmlBookmarksExportDataExchanger::exportData(const QString &path, bool canO
 	}
 
 	QTextStream stream(&file);
-	stream.setCodec("UTF-8");
 	stream << "<!DOCTYPE NETSCAPE-Bookmark-file-1>\n";
 	stream << "<!-- This is an automatically generated file.\n";
 	stream << "     It will be read and overwritten.\n";
