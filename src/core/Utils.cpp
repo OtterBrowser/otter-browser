@@ -37,8 +37,8 @@
 #include <QtCore/QtMath>
 #include <QtGui/QDesktopServices>
 #include <QtGui/QDrag>
+#include <QtGui/QScreen>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
 
@@ -384,7 +384,7 @@ QString elideText(const QString &text, const QFontMetrics &fontMetrics, QWidget 
 {
 	if (widget && maximumWidth < 0)
 	{
-		maximumWidth = (QApplication::desktop()->screenGeometry(widget).width() / 4);
+		maximumWidth = (widget->screen()->geometry().width() / 4);
 	}
 
 	return fontMetrics.elidedText(text, Qt::ElideRight, qMax(minimumWidth, maximumWidth));

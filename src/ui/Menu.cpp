@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QTextCodec>
 #include <QtGui/QMouseEvent>
-#include <QtWidgets/QDesktopWidget>
+#include <QtGui/QScreen>
 
 namespace Otter
 {
@@ -1812,7 +1812,7 @@ void MenuAction::setState(const ActionsManager::ActionDefinition::State &state)
 	if (!shortcut().isEmpty())
 	{
 		const int shortcutWidth(m_menu->fontMetrics().boundingRect(QLatin1Char('X') + shortcut().toString(QKeySequence::NativeText)).width());
-		const int availableWidth(QApplication::desktop()->screenGeometry(m_menu).width() / 4);
+		const int availableWidth(m_menu->screen()->geometry().width() / 4);
 
 		if (shortcutWidth < availableWidth)
 		{
