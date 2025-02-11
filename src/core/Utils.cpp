@@ -41,6 +41,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
+#include <QtWidgets/QToolTip>
 
 namespace Otter
 {
@@ -101,6 +102,11 @@ void startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap,
 	drag->setMimeData(mimeData);
 	drag->setPixmap(pixmap);
 	drag->exec(Qt::CopyAction);
+}
+
+void showToolTip(const QPoint &position, const QString &text, QWidget *widget, const QRect &rectangle)
+{
+	QToolTip::showText(position, QFontMetrics(QToolTip::font()).elidedText(text, Qt::ElideRight, (widget->screen()->geometry().width() / 2)), widget, rectangle);
 }
 
 QString matchUrl(const QUrl &url, const QString &prefix)
