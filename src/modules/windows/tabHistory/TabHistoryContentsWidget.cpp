@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,9 +24,6 @@
 #include "../../../ui/Window.h"
 
 #include "ui_TabHistoryContentsWidget.h"
-
-#include <QtWidgets/QDesktopWidget>
-#include <QtWidgets/QToolTip>
 
 namespace Otter
 {
@@ -183,7 +180,7 @@ bool TabHistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 			}
 		}
 
-		QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->historyViewWidget).width() / 2)), m_ui->historyViewWidget, m_ui->historyViewWidget->visualRect(index));
+		Utils::showToolTip(helpEvent->globalPos(), toolTip, m_ui->historyViewWidget, m_ui->historyViewWidget->visualRect(index));
 
 		return true;
 	}

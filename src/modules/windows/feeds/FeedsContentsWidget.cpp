@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,12 +30,10 @@
 
 #include "ui_FeedsContentsWidget.h"
 
-#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QToolButton>
-#include <QtWidgets/QToolTip>
 
 namespace Otter
 {
@@ -977,7 +975,7 @@ bool FeedsContentsWidget::eventFilter(QObject *object, QEvent *event)
 			}
 		}
 
-		QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QApplication::desktop()->screenGeometry(viewWidget).width() / 2)), viewWidget, viewWidget->visualRect(index));
+		Utils::showToolTip(helpEvent->globalPos(), toolTip, viewWidget, viewWidget->visualRect(index));
 
 		return true;
 	}

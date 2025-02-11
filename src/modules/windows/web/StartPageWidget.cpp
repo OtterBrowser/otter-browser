@@ -42,7 +42,6 @@
 #include <QtGui/QPainter>
 #include <QtGui/QPainterPath>
 #include <QtGui/QPixmapCache>
-#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QScrollBar>
 #include <QtWidgets/QToolTip>
@@ -1332,7 +1331,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 		}
 		else
 		{
-			QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_listView).width() / 2)), m_listView, m_listView->visualRect(index));
+			Utils::showToolTip(helpEvent->globalPos(), toolTip, m_listView, m_listView->visualRect(index));
 		}
 
 		return true;
