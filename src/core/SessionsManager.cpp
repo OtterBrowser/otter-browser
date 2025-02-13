@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -434,12 +434,21 @@ QStringList SessionsManager::getSessions()
 	QStringList sessions;
 	sessions.reserve(entries.count());
 
+	bool containsCurrentSession(false);
+
 	for (int i = 0; i < entries.count(); ++i)
 	{
-		sessions.append(entries.at(i).completeBaseName());
+		const QString entry(entries.at(i).completeBaseName());
+
+		sessions.append(entry);
+
+		if (entry == m_sessionPath)
+		{
+			containsCurrentSession = true;
+		}
 	}
 
-	if (!m_sessionPath.isEmpty() && !entries.contains(m_sessionPath))
+	if (!containsCurrentSession && !m_sessionPath.isEmpty())
 	{
 		sessions.append(m_sessionPath);
 	}
