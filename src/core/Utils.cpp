@@ -601,10 +601,10 @@ QLocale createLocale(const QString &name)
 {
 	if (name == QLatin1String("pt"))
 	{
-		return {QLocale::Portuguese, QLocale::Portugal};
+		return QLocale(QLocale::Portuguese, QLocale::Portugal);
 	}
 
-	return {name};
+	return QLocale(name);
 }
 
 QPixmap loadPixmapFromDataUri(const QString &data)
