@@ -83,7 +83,6 @@ public:
 	bool update(const QUrl &url = {}) override;
 	bool remove() override;
 	bool areWildcardsEnabled() const override;
-	bool isFraud(const QUrl &url) override;
 	bool isUpdating() const override;
 
 protected:
