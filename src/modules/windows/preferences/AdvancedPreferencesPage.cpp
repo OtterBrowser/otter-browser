@@ -24,6 +24,7 @@
 #include "../../../core/Application.h"
 #include "../../../core/GesturesManager.h"
 #include "../../../core/HandlersManager.h"
+#include "../../../core/IniSettings.h"
 #include "../../../core/JsonSettings.h"
 #include "../../../core/NotificationsManager.h"
 #include "../../../core/SessionsManager.h"
@@ -40,7 +41,6 @@
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonObject>
 #include <QtCore/QMimeDatabase>
-#include <QtCore/QSettings>
 #include <QtMultimedia/QSoundEffect>
 #include <QtNetwork/QSslSocket>
 #include <QtNetwork/QSslCipher>
@@ -1359,8 +1359,7 @@ void AdvancedPreferencesPage::save()
 
 	updateNotificationsOptions();
 
-	QSettings notificationsSettings(SessionsManager::getWritableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
-	notificationsSettings.setIniCodec("UTF-8");
+	IniSettings notificationsSettings(SessionsManager::getWritableDataPath(QLatin1String("notifications.ini")), this);
 	notificationsSettings.clear();
 
 	for (int i = 0; i < m_ui->notificationsItemView->getRowCount(); ++i)
