@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,10 @@
 
 #include "NotificationsManager.h"
 #include "Application.h"
+#include "IniSettings.h"
 #include "SessionsManager.h"
 #include "../ui/MainWindow.h"
 
-#include <QtCore/QFile>
-#include <QtCore/QSettings>
 #include <QtMultimedia/QSoundEffect>
 
 namespace Otter
@@ -177,20 +176,20 @@ NotificationsManager::EventDefinition NotificationsManager::getEventDefinition(i
 		return {};
 	}
 
-	const QSettings bundledSettings(SessionsManager::getReadableDataPath(QLatin1String("notifications.ini"), true), QSettings::IniFormat);
-	const QSettings localSettings(SessionsManager::getReadableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
-	const QSettings *settings(&localSettings);
+	const IniSettings bundledSettings(SessionsManager::getReadableDataPath(QLatin1String("notifications.ini"), true), m_instance);
+	const IniSettings localSettings(SessionsManager::getReadableDataPath(QLatin1String("notifications.ini")), m_instance);
+	const IniSettings *settings(&localSettings);
 	const QString eventName(getEventName(identifier));
 
-	if (!localSettings.childGroups().contains(eventName))
+	if (!localSettings.getGroups().contains(eventName))
 	{
 		settings = &bundledSettings;
 	}
 
 	EventDefinition definition(m_definitions.at(identifier));
-	definition.playSound = settings->value(eventName + QLatin1String("/playSound"), {}).toString();
-	definition.showAlert = settings->value(eventName + QLatin1String("/showAlert"), false).toBool();
-	definition.showNotification = settings->value(eventName + QLatin1String("/showNotification"), false).toBool();
+	definition.playSound = settings->getValue(eventName + QLatin1String("/playSound"), {}).toString();
+	definition.showAlert = settings->getValue(eventName + QLatin1String("/showAlert"), false).toBool();
+	definition.showNotification = settings->getValue(eventName + QLatin1String("/showNotification"), false).toBool();
 
 	return definition;
 }
