@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class CookieJar final : public QNetworkCookieJar
+class CookieJar : public QNetworkCookieJar
 {
 	Q_OBJECT
 
@@ -53,20 +53,38 @@ public:
 		RemoveCookie
 	};
 
-	explicit CookieJar(const QString &path, QObject *parent = nullptr);
+	explicit CookieJar(QObject *parent = nullptr);
 
-	void clearCookies(int period = 0);
-	QString getPath() const;
-	QList<QNetworkCookie> cookiesForUrl(const QUrl &url) const override;
+	virtual void clearCookies(int period = 0) = 0;
 	QList<QNetworkCookie> getCookiesForUrl(const QUrl &url) const;
 	QVector<QNetworkCookie> getCookies(const QString &domain = {}) const;
+	virtual bool forceInsertCookie(const QNetworkCookie &cookie) = 0;
+	virtual bool forceUpdateCookie(const QNetworkCookie &cookie) = 0;
+	virtual bool forceDeleteCookie(const QNetworkCookie &cookie) = 0;
+	bool hasCookie(const QNetworkCookie &cookie) const;
+
+signals:
+	void cookieAdded(const QNetworkCookie &cookie);
+	void cookieModified(const QNetworkCookie &cookie);
+	void cookieRemoved(const QNetworkCookie &cookie);
+};
+
+class DiskCookieJar final : public CookieJar
+{
+	Q_OBJECT
+
+public:
+	explicit DiskCookieJar(const QString &path, QObject *parent = nullptr);
+
+	void clearCookies(int period = 0) override;
+	QString getPath() const;
+	QList<QNetworkCookie> cookiesForUrl(const QUrl &url) const override;
 	bool insertCookie(const QNetworkCookie &cookie) override;
 	bool updateCookie(const QNetworkCookie &cookie) override;
 	bool deleteCookie(const QNetworkCookie &cookie) override;
-	bool forceInsertCookie(const QNetworkCookie &cookie);
-	bool forceUpdateCookie(const QNetworkCookie &cookie);
-	bool forceDeleteCookie(const QNetworkCookie &cookie);
-	bool hasCookie(const QNetworkCookie &cookie) const;
+	bool forceInsertCookie(const QNetworkCookie &cookie) override;
+	bool forceUpdateCookie(const QNetworkCookie &cookie) override;
+	bool forceDeleteCookie(const QNetworkCookie &cookie) override;
 
 protected:
 	void timerEvent(QTimerEvent *event) override;
@@ -83,11 +101,6 @@ private:
 	CookiesPolicy m_thirdPartyCookiesPolicy;
 	KeepMode m_keepMode;
 	int m_saveTimer;
-
-signals:
-	void cookieAdded(const QNetworkCookie &cookie);
-	void cookieModified(const QNetworkCookie &cookie);
-	void cookieRemoved(const QNetworkCookie &cookie);
 };
 
 }

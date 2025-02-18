@@ -44,7 +44,7 @@ NetworkManager::NetworkManager(bool isPrivate, QObject *parent) : QNetworkAccess
 
 	if (isPrivate)
 	{
-		m_cookieJar = new CookieJar({}, this);
+		m_cookieJar = new DiskCookieJar({}, this);
 
 		setCookieJar(m_cookieJar);
 	}

@@ -30,7 +30,59 @@
 namespace Otter
 {
 
-CookieJar::CookieJar(const QString &path, QObject *parent) : QNetworkCookieJar(parent),
+CookieJar::CookieJar(QObject *parent) : QNetworkCookieJar(parent)
+{
+}
+
+QList<QNetworkCookie> CookieJar::getCookiesForUrl(const QUrl &url) const
+{
+	return QNetworkCookieJar::cookiesForUrl(url);
+}
+
+QVector<QNetworkCookie> CookieJar::getCookies(const QString &domain) const
+{
+	if (domain.isEmpty())
+	{
+		return allCookies().toVector();
+	}
+
+	const QList<QNetworkCookie> cookies(allCookies());
+	QVector<QNetworkCookie> domainCookies;
+
+	for (int i = 0; i < cookies.count(); ++i)
+	{
+		const QNetworkCookie cookie(cookies.at(i));
+
+		if (cookie.domain() == domain || (cookie.domain().startsWith(QLatin1Char('.')) && domain.endsWith(cookie.domain())))
+		{
+			domainCookies.append(cookie);
+		}
+	}
+
+	return domainCookies;
+}
+
+bool CookieJar::hasCookie(const QNetworkCookie &cookie) const
+{
+	QUrl url;
+	url.setScheme(cookie.isSecure() ? QLatin1String("https") : QLatin1String("http"));
+	url.setHost(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
+	url.setPath(cookie.path());
+
+	const QList<QNetworkCookie> cookies(getCookiesForUrl(url));
+
+	for (int i = 0; i < cookies.count(); ++i)
+	{
+		if (cookie.hasSameIdentifier(cookies.at(i)))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+DiskCookieJar::DiskCookieJar(const QString &path, QObject *parent) : CookieJar(parent),
 	m_path(path),
 	m_generalCookiesPolicy(AcceptAllCookies),
 	m_thirdPartyCookiesPolicy(AcceptAllCookies),
@@ -44,10 +96,10 @@ CookieJar::CookieJar(const QString &path, QObject *parent) : QNetworkCookieJar(p
 
 	handleOptionChanged(SettingsManager::Network_CookiesPolicyOption, SettingsManager::getOption(SettingsManager::Network_CookiesPolicyOption));
 
-	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &CookieJar::handleOptionChanged);
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &DiskCookieJar::handleOptionChanged);
 }
 
-void CookieJar::timerEvent(QTimerEvent *event)
+void DiskCookieJar::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() != m_saveTimer)
 	{
@@ -61,7 +113,7 @@ void CookieJar::timerEvent(QTimerEvent *event)
 	save();
 }
 
-void CookieJar::loadCookies(const QString &path)
+void DiskCookieJar::loadCookies(const QString &path)
 {
 	QFile file(path);
 
@@ -100,7 +152,7 @@ void CookieJar::loadCookies(const QString &path)
 	setAllCookies(allCookies);
 }
 
-void CookieJar::clearCookies(int period)
+void DiskCookieJar::clearCookies(int period)
 {
 	Q_UNUSED(period)
 
@@ -116,7 +168,7 @@ void CookieJar::clearCookies(int period)
 	scheduleSave();
 }
 
-void CookieJar::scheduleSave()
+void DiskCookieJar::scheduleSave()
 {
 	if (m_path.isEmpty())
 	{
@@ -140,7 +192,7 @@ void CookieJar::scheduleSave()
 	}
 }
 
-void CookieJar::handleOptionChanged(int identifier, const QVariant &value)
+void DiskCookieJar::handleOptionChanged(int identifier, const QVariant &value)
 {
 	switch (identifier)
 	{
@@ -175,7 +227,7 @@ void CookieJar::handleOptionChanged(int identifier, const QVariant &value)
 	}
 }
 
-void CookieJar::save()
+void DiskCookieJar::save()
 {
 	if (m_path.isEmpty() || SessionsManager::isReadOnly())
 	{
@@ -206,12 +258,12 @@ void CookieJar::save()
 	file.commit();
 }
 
-QString CookieJar::getPath() const
+QString DiskCookieJar::getPath() const
 {
 	return m_path;
 }
 
-QList<QNetworkCookie> CookieJar::cookiesForUrl(const QUrl &url) const
+QList<QNetworkCookie> DiskCookieJar::cookiesForUrl(const QUrl &url) const
 {
 	if (m_generalCookiesPolicy == IgnoreCookies)
 	{
@@ -221,35 +273,7 @@ QList<QNetworkCookie> CookieJar::cookiesForUrl(const QUrl &url) const
 	return QNetworkCookieJar::cookiesForUrl(url);
 }
 
-QList<QNetworkCookie> CookieJar::getCookiesForUrl(const QUrl &url) const
-{
-	return QNetworkCookieJar::cookiesForUrl(url);
-}
-
-QVector<QNetworkCookie> CookieJar::getCookies(const QString &domain) const
-{
-	if (domain.isEmpty())
-	{
-		return allCookies().toVector();
-	}
-
-	const QList<QNetworkCookie> cookies(allCookies());
-	QVector<QNetworkCookie> domainCookies;
-
-	for (int i = 0; i < cookies.count(); ++i)
-	{
-		const QNetworkCookie cookie(cookies.at(i));
-
-		if (cookie.domain() == domain || (cookie.domain().startsWith(QLatin1Char('.')) && domain.endsWith(cookie.domain())))
-		{
-			domainCookies.append(cookie);
-		}
-	}
-
-	return domainCookies;
-}
-
-bool CookieJar::insertCookie(const QNetworkCookie &cookie)
+bool DiskCookieJar::insertCookie(const QNetworkCookie &cookie)
 {
 	if (m_generalCookiesPolicy != AcceptAllCookies)
 	{
@@ -268,7 +292,7 @@ bool CookieJar::insertCookie(const QNetworkCookie &cookie)
 	return result;
 }
 
-bool CookieJar::updateCookie(const QNetworkCookie &cookie)
+bool DiskCookieJar::updateCookie(const QNetworkCookie &cookie)
 {
 	if (m_generalCookiesPolicy == IgnoreCookies || m_generalCookiesPolicy == ReadOnlyCookies)
 	{
@@ -287,7 +311,7 @@ bool CookieJar::updateCookie(const QNetworkCookie &cookie)
 	return result;
 }
 
-bool CookieJar::deleteCookie(const QNetworkCookie &cookie)
+bool DiskCookieJar::deleteCookie(const QNetworkCookie &cookie)
 {
 	if (m_generalCookiesPolicy == IgnoreCookies || m_generalCookiesPolicy == ReadOnlyCookies)
 	{
@@ -306,7 +330,7 @@ bool CookieJar::deleteCookie(const QNetworkCookie &cookie)
 	return result;
 }
 
-bool CookieJar::forceInsertCookie(const QNetworkCookie &cookie)
+bool DiskCookieJar::forceInsertCookie(const QNetworkCookie &cookie)
 {
 	const bool result(QNetworkCookieJar::insertCookie(cookie));
 
@@ -320,7 +344,7 @@ bool CookieJar::forceInsertCookie(const QNetworkCookie &cookie)
 	return result;
 }
 
-bool CookieJar::forceUpdateCookie(const QNetworkCookie &cookie)
+bool DiskCookieJar::forceUpdateCookie(const QNetworkCookie &cookie)
 {
 	const bool result(QNetworkCookieJar::updateCookie(cookie));
 
@@ -334,7 +358,7 @@ bool CookieJar::forceUpdateCookie(const QNetworkCookie &cookie)
 	return result;
 }
 
-bool CookieJar::forceDeleteCookie(const QNetworkCookie &cookie)
+bool DiskCookieJar::forceDeleteCookie(const QNetworkCookie &cookie)
 {
 	const bool result(QNetworkCookieJar::deleteCookie(cookie));
 
@@ -346,26 +370,6 @@ bool CookieJar::forceDeleteCookie(const QNetworkCookie &cookie)
 	}
 
 	return result;
-}
-
-bool CookieJar::hasCookie(const QNetworkCookie &cookie) const
-{
-	QUrl url;
-	url.setScheme(cookie.isSecure() ? QLatin1String("https") : QLatin1String("http"));
-	url.setHost(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
-	url.setPath(cookie.path());
-
-	const QList<QNetworkCookie> cookies(getCookiesForUrl(url));
-
-	for (int i = 0; i < cookies.count(); ++i)
-	{
-		if (cookie.hasSameIdentifier(cookies.at(i)))
-		{
-			return true;
-		}
-	}
-
-	return false;
 }
 
 }
