@@ -113,7 +113,7 @@ void NotificationsManager::createInstance()
 
 Notification* NotificationsManager::createNotification(const Notification::Message &message, QObject *parent)
 {
-	Notification *notification(new Notification(message, Application::getInstance()));
+	Notification *notification(new Notification(message, QCoreApplication::instance()));
 	const EventDefinition definition(getEventDefinition(message.event));
 
 	if (!definition.playSound.isEmpty())
