@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -151,14 +151,16 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 
 		for (int j = 0; j < states.count(); ++j)
 		{
-			if (states.at(j).identifier < 0)
+			const Session::MainWindow::ToolBarState state(states.at(j));
+
+			if (state.identifier < 0)
 			{
 				continue;
 			}
 
-			ToolBarWidget *toolBar(WidgetFactory::createToolBar(states.at(j).identifier, nullptr, this));
+			ToolBarWidget *toolBar(WidgetFactory::createToolBar(state.identifier, nullptr, this));
 			toolBar->setArea(area);
-			toolBar->setState(states.at(j));
+			toolBar->setState(state);
 
 			if (row > 0)
 			{
