@@ -32,6 +32,7 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QRegularExpression>
+#include <QtCore/QTextCodec>
 #include <QtCore/QTextStream>
 #include <QtCore/QTime>
 #include <QtCore/QtMath>
@@ -624,6 +625,25 @@ QFont multiplyFontSize(QFont font, qreal multiplier)
 	}
 
 	return font;
+}
+
+QStringList getCharacterEncodings()
+{
+	const QVector<int> textCodecs({106, 1015, 1017, 4, 5, 6, 7, 8, 82, 10, 85, 12, 13, 109, 110, 112, 2250, 2251, 2252, 2253, 2254, 2255, 2256, 2257, 2258, 18, 39, 17, 38, 2026});
+	QStringList encodings;
+	encodings.reserve(textCodecs.count());
+
+	for (int i = 0; i < textCodecs.count(); ++i)
+	{
+		const QTextCodec *codec(QTextCodec::codecForMib(textCodecs.at(i)));
+
+		if (codec)
+		{
+			encodings.append(QString::fromLatin1(codec->name()));
+		}
+	}
+
+	return encodings;
 }
 
 QStringList getOpenPaths(const QStringList &fileNames, QStringList filters, bool selectMultiple)

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -28,8 +28,6 @@
 #include "../core/Utils.h"
 
 #include "ui_WebsitePreferencesDialog.h"
-
-#include <QtCore/QTextCodec>
 
 namespace Otter
 {
@@ -65,16 +63,11 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QString &host, const QV
 
 	m_ui->encodingComboBox->addItem(tr("Auto Detect"), QLatin1String("auto"));
 
-	const QVector<int> textCodecs({106, 1015, 1017, 4, 5, 6, 7, 8, 82, 10, 85, 12, 13, 109, 110, 112, 2250, 2251, 2252, 2253, 2254, 2255, 2256, 2257, 2258, 18, 39, 17, 38, 2026});
+	const QStringList encodings(Utils::getCharacterEncodings());
 
-	for (int i = 0; i < textCodecs.count(); ++i)
+	for (int i = 0; i < encodings.count(); ++i)
 	{
-		const QTextCodec *codec(QTextCodec::codecForMib(textCodecs.at(i)));
-
-		if (codec)
-		{
-			m_ui->encodingComboBox->addItem(QString::fromLatin1(codec->name()), codec->name());
-		}
+		m_ui->encodingComboBox->addItem(encodings.at(i));
 	}
 
 	m_ui->popupsPolicyComboBox->addItem(tr("Ask"), QLatin1String("ask"));
@@ -270,7 +263,7 @@ void WebsitePreferencesDialog::handleButtonClicked(QAbstractButton *button)
 				return;
 			}
 
-			SettingsManager::setOption(SettingsManager::Content_DefaultCharacterEncodingOption, (m_ui->encodingOverrideCheckBox->isChecked() ? m_ui->encodingComboBox->currentData(Qt::UserRole).toString() : QVariant()), host);
+			SettingsManager::setOption(SettingsManager::Content_DefaultCharacterEncodingOption, (m_ui->encodingOverrideCheckBox->isChecked() ? m_ui->encodingComboBox->currentText() : QString()), host);
 			SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, (m_ui->popupsPolicyOverrideCheckBox->isChecked() ? m_ui->popupsPolicyComboBox->currentData(Qt::UserRole).toString() : QVariant()), host);
 			SettingsManager::setOption(SettingsManager::Permissions_EnableImagesOption, (m_ui->enableImagesOverrideCheckBox->isChecked() ? m_ui->enableImagesComboBox->currentData(Qt::UserRole).toString() : QVariant()), host);
 			SettingsManager::setOption(SettingsManager::Permissions_EnablePluginsOption, (m_ui->enablePluginsOverrideCheckBox->isChecked() ? m_ui->enablePluginsComboBox->currentData(Qt::UserRole).toString() : QVariant()), host);
@@ -395,7 +388,7 @@ void WebsitePreferencesDialog::updateValues(bool isChecked)
 
 	m_updateOverride = false;
 
-	m_ui->encodingComboBox->setCurrentIndex(m_ui->encodingComboBox->findData(SettingsManager::getOption(SettingsManager::Content_DefaultCharacterEncodingOption, (m_ui->encodingOverrideCheckBox->isChecked() ? host : QString())).toString()));
+	m_ui->encodingComboBox->setCurrentIndex(m_ui->encodingComboBox->findText(SettingsManager::getOption(SettingsManager::Content_DefaultCharacterEncodingOption, (m_ui->encodingOverrideCheckBox->isChecked() ? host : QString())).toString()));
 
 	const int popupsPolicyIndex(m_ui->popupsPolicyComboBox->findData(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, (m_ui->popupsPolicyOverrideCheckBox->isChecked() ? host : QString())).toString()));
 

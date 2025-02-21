@@ -40,7 +40,6 @@
 #include <QtCore/QJsonDocument>
 #include <QtCore/QMetaEnum>
 #include <QtCore/QMimeDatabase>
-#include <QtCore/QTextCodec>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QScreen>
 
@@ -906,8 +905,6 @@ void Menu::populateCharacterEncodingMenu()
 {
 	if (!m_actionGroup)
 	{
-		const QVector<int> textCodecs({106, 1015, 1017, 4, 5, 6, 7, 8, 82, 10, 85, 12, 13, 109, 110, 112, 2250, 2251, 2252, 2253, 2254, 2255, 2256, 2257, 2258, 18, 39, 17, 38, 2026});
-
 		m_actionGroup = new QActionGroup(this);
 		m_actionGroup->setExclusive(true);
 
@@ -920,17 +917,13 @@ void Menu::populateCharacterEncodingMenu()
 		addAction(defaultAction);
 		addSeparator();
 
-		for (int i = 0; i < textCodecs.count(); ++i)
+		const QStringList encodings(Utils::getCharacterEncodings());
+
+		for (int i = 0; i < encodings.count(); ++i)
 		{
-			const QTextCodec *codec(QTextCodec::codecForMib(textCodecs.at(i)));
-
-			if (!codec)
-			{
-				continue;
-			}
-
-			QAction *textCodecAction(addAction(Utils::elideText(QString::fromLatin1(codec->name()), fontMetrics(), this)));
-			textCodecAction->setData(codec->name().toLower());
+			const QString encoding(encodings.at(i));
+			QAction *textCodecAction(addAction(Utils::elideText(encoding, fontMetrics(), this)));
+			textCodecAction->setData(encoding.toLower());
 			textCodecAction->setCheckable(true);
 
 			m_actionGroup->addAction(textCodecAction);
