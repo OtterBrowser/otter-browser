@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2017 Piktas Zuikis <piktas.zuikis@inbox.lt>
@@ -260,7 +260,9 @@ void WebWidget::clearOptions()
 
 	for (int i = 0; i < identifiers.count(); ++i)
 	{
-		emit optionChanged(identifiers.at(i), SettingsManager::getOption(identifiers.at(i), host));
+		const int identifier(identifiers.at(i));
+
+		emit optionChanged(identifier, SettingsManager::getOption(identifier, host));
 	}
 
 	emit arbitraryActionsStateChanged({ActionsManager::ResetQuickPreferencesAction});
