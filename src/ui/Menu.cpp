@@ -1046,14 +1046,6 @@ void Menu::populateDictionariesMenu()
 {
 	clear();
 
-	if (m_actionGroup)
-	{
-		m_actionGroup->deleteLater();
-	}
-
-	m_actionGroup = new QActionGroup(this);
-	m_actionGroup->setExclusive(true);
-
 	WebWidget *webWidget(nullptr);
 
 	if (m_executor.isValid())
@@ -1070,11 +1062,7 @@ void Menu::populateDictionariesMenu()
 
 	for (int i = 0; i < dictionaries.count(); ++i)
 	{
-		Action *action(new MenuAction(ActionsManager::CheckSpellingAction, {{QLatin1String("dictionary"), dictionaries.at(i).language}}, m_executor, this));
-
-		addAction(action);
-
-		m_actionGroup->addAction(action);
+		addAction(new MenuAction(ActionsManager::CheckSpellingAction, {{QLatin1String("dictionary"), dictionaries.at(i).language}}, m_executor, this));
 	}
 }
 
