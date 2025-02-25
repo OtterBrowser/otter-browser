@@ -37,7 +37,7 @@ public:
 		QStringList paths;
 		bool isLocalDictionary = true;
 
-		bool isValid()
+		bool isValid() const
 		{
 			return (!language.isEmpty() && !paths.isEmpty());
 		}
