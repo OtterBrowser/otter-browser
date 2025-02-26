@@ -1418,30 +1418,34 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 			break;
 		case ActionsManager::CheckSpellingAction:
 			{
-				const QVector<SpellCheckManager::DictionaryInformation> dictionaries(getDictionaries());
-
-				state.isEnabled = (getOption(SettingsManager::Browser_EnableSpellCheckOption, getUrl()).toBool() && !dictionaries.isEmpty());
+				state.isEnabled = (getOption(SettingsManager::Browser_EnableSpellCheckOption, getUrl()).toBool() && !getDictionaries().isEmpty());
 
 				if (parameters.contains(QLatin1String("dictionary")))
 				{
-					const QString dictionary(parameters[QLatin1String("dictionary")].toString());
+					const QString language(parameters[QLatin1String("dictionary")].toString());
+					const SpellCheckManager::DictionaryInformation dictionary(SpellCheckManager::getDictionary(language));
+					QStringList activeDictionaries;
 
-					state.text = dictionary;
-					state.isChecked = (dictionary == (getOption(SettingsManager::Browser_SpellCheckDictionaryOption).isNull() ? SpellCheckManager::getDefaultDictionary() : getOption(SettingsManager::Browser_SpellCheckDictionaryOption).toString()));
-
-					for (int i = 0; i < dictionaries.count(); ++i)
+					if (getOption(SettingsManager::Browser_SpellCheckDictionaryOption).isNull())
 					{
-						if (dictionaries.at(i).language == dictionary)
-						{
-							state.text = dictionaries.at(i).title;
+						activeDictionaries = QStringList(SpellCheckManager::getDefaultDictionary());
+					}
+					else
+					{
+						activeDictionaries = getOption(SettingsManager::Browser_SpellCheckDictionaryOption).toStringList();
+					}
 
-							break;
-						}
+					state.text = language;
+					state.isChecked = activeDictionaries.contains(language);
+
+					if (dictionary.isValid())
+					{
+						state.text = dictionary.title;
 					}
 				}
 				else
 				{
-					state.isChecked = (m_hitResult.flags.testFlag(HitTestResult::IsSpellCheckEnabled));
+					state.isChecked = m_hitResult.flags.testFlag(HitTestResult::IsSpellCheckEnabled);
 				}
 			}
 
