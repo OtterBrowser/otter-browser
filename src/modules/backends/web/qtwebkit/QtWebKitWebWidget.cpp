@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -61,6 +61,9 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QImageWriter>
 #include <QtGui/QMouseEvent>
+#if QT_VERSION >= 0x060000
+#include <QtGui/QShortcut>
+#endif
 #include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtWebKit/QWebFullScreenRequest>
 #include <QtWebKit/QWebElement>
@@ -68,7 +71,9 @@
 #include <QtWebKitWidgets/QWebFrame>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
+#if QT_VERSION < 0x060000
 #include <QtWidgets/QShortcut>
+#endif
 #include <QtWidgets/QUndoStack>
 #include <QtWidgets/QVBoxLayout>
 

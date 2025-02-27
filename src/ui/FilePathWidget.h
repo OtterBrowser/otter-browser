@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,13 @@
 #ifndef OTTER_FILEPATHWIDGET_H
 #define OTTER_FILEPATHWIDGET_H
 
+#if QT_VERSION >= 0x060000
+#include <QtGui/QFileSystemModel>
+#endif
 #include <QtWidgets/QCompleter>
+#if QT_VERSION < 0x060000
 #include <QtWidgets/QFileSystemModel>
+#endif
 #include <QtWidgets/QPushButton>
 
 namespace Otter

@@ -26,8 +26,13 @@
 #include "../core/GesturesController.h"
 #include "../core/SessionsManager.h"
 
+#if QT_VERSION >= 0x060000
+#include <QtGui/QShortcut>
+#endif
 #include <QtWidgets/QMainWindow>
+#if QT_VERSION < 0x060000
 #include <QtWidgets/QShortcut>
+#endif
 
 namespace Otter
 {
