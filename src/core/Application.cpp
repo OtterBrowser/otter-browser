@@ -71,7 +71,9 @@
 #include <QtCore/QRegularExpression>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QStorageInfo>
+#if QT_VERSION < 0x060000
 #include <QtCore/QTextCodec>
+#endif
 #include <QtCore/QTranslator>
 #include <QtGui/QDesktopServices>
 #include <QtNetwork/QLocalSocket>
@@ -111,7 +113,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	m_instance = this;
 
+#if QT_VERSION < 0x060000
 	QTextCodec::setCodecForLocale(QTextCodec::codecForMib(106));
+#endif
 
 	QString profilePath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/otter"));
 	QString cachePath(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
