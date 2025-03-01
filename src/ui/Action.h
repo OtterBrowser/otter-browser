@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,11 @@
 
 #include "../core/ActionExecutor.h"
 
+#if QT_VERSION >= 0x060000
+#include <QtGui/QAction>
+#else
 #include <QtWidgets/QAction>
+#endif
 
 namespace Otter
 {
