@@ -24,6 +24,9 @@
 #include "../ui/Action.h"
 
 #include <QtCore/QJsonObject>
+#if QT_VERSION >= 0x060000
+#include <QtGui/QActionGroup>
+#endif
 #include <QtWidgets/QMenu>
 
 namespace Otter
