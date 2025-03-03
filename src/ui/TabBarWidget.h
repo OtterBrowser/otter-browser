@@ -107,7 +107,11 @@ protected:
 	void childEvent(QChildEvent *event) override;
 	void timerEvent(QTimerEvent *event) override;
 	void paintEvent(QPaintEvent *event) override;
+#if QT_VERSION >= 0x060000
+	void enterEvent(QEnterEvent *event) override;
+#else
 	void enterEvent(QEvent *event) override;
+#endif
 	void leaveEvent(QEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
 	void mousePressEvent(QMouseEvent *event) override;

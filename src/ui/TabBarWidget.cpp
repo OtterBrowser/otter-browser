@@ -731,7 +731,11 @@ void TabBarWidget::paintEvent(QPaintEvent *event)
 	ThemesManager::getStyle()->drawDropZone((isHorizontal() ? QLine(lineOffset, 0, lineOffset, height()) : QLine(0, lineOffset, width(), lineOffset)), &painter);
 }
 
+#if QT_VERSION >= 0x060000
+void TabBarWidget::enterEvent(QEnterEvent *event)
+#else
 void TabBarWidget::enterEvent(QEvent *event)
+#endif
 {
 	QTabBar::enterEvent(event);
 

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -80,7 +80,11 @@ protected:
 	void paintEvent(QPaintEvent *event) override;
 	void showEvent(QShowEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
+#if QT_VERSION >= 0x060000
+	void enterEvent(QEnterEvent *event) override;
+#else
 	void enterEvent(QEvent *event) override;
+#endif
 	void leaveEvent(QEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
 	void mousePressEvent(QMouseEvent *event) override;
