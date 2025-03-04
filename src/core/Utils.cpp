@@ -32,7 +32,11 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QRegularExpression>
+#if QT_VERSION >= 0x060000
+#include <QtCore5Compat/QTextCodec>
+#else
 #include <QtCore/QTextCodec>
+#endif
 #include <QtCore/QTextStream>
 #include <QtCore/QTime>
 #include <QtCore/QtMath>
