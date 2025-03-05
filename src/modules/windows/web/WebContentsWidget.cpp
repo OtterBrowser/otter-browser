@@ -1079,7 +1079,7 @@ void WebContentsWidget::setScrollMode(ScrollMode mode)
 
 			if (!m_scrollCursors.contains(NoDirection))
 			{
-				m_scrollCursors[NoDirection] = QPixmap(QLatin1String(":/cursors/scroll-vertical.png"));
+				m_scrollCursors[NoDirection] = QCursor(QPixmap(QLatin1String(":/cursors/scroll-vertical.png")));
 			}
 
 			if (m_scrollTimer == 0)
