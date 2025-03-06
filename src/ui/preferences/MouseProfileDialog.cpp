@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -46,7 +46,7 @@ void GestureActionDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
 	}
 
 	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(widget->getActionIdentifier()));
-	const QString name(widget->getActionIdentifier());
+	const QString name(ActionsManager::getActionName(widget->getActionIdentifier()));
 
 	model->setData(index, definition.getText(true), Qt::DisplayRole);
 	model->setData(index, QStringLiteral("%1 (%2)").arg(definition.getText(true), name), Qt::ToolTipRole);
