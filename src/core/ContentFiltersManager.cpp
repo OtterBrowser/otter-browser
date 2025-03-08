@@ -30,6 +30,7 @@
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonObject>
 #include <QtCore/QTimer>
+#include <QtCore/QTimeZone>
 
 namespace Otter
 {
@@ -153,7 +154,7 @@ void ContentFiltersManager::initialize()
 		}
 
 		profileSummary.lastUpdate = QDateTime::fromString(profileObject.value(QLatin1String("lastUpdate")).toString(), Qt::ISODate);
-		profileSummary.lastUpdate.setTimeSpec(Qt::UTC);
+		profileSummary.lastUpdate.setTimeZone(QTimeZone::utc());
 		profileSummary.category = categoryTitles.value(profileObject.value(QLatin1String("category")).toString());
 		profileSummary.updateInterval = profileObject.value(QLatin1String("updateInterval")).toInt();
 		profileSummary.areWildcardsEnabled = profileObject.value(QLatin1String("areWildcardsEnabled")).toBool();

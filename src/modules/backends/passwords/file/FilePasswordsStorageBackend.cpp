@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -26,6 +26,7 @@
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
+#include <QtCore/QTimeZone>
 
 namespace Otter
 {
@@ -77,9 +78,9 @@ void FilePasswordsStorageBackend::ensureInitialized()
 			PasswordsManager::PasswordInformation password;
 			password.url = QUrl(passwordObject.value(QLatin1String("url")).toString());
 			password.timeAdded = QDateTime::fromString(passwordObject.value(QLatin1String("timeAdded")).toString(), Qt::ISODate);
-			password.timeAdded.setTimeSpec(Qt::UTC);
+			password.timeAdded.setTimeZone(QTimeZone::utc());
 			password.timeUsed = QDateTime::fromString(passwordObject.value(QLatin1String("timeUsed")).toString(), Qt::ISODate);
-			password.timeUsed.setTimeSpec(Qt::UTC);
+			password.timeUsed.setTimeZone(QTimeZone::utc());
 			password.type = ((passwordObject.value(QLatin1String("type")).toString() == QLatin1String("auth")) ? PasswordsManager::AuthPassword : PasswordsManager::FormPassword);
 			password.fields.reserve(fieldsArray.count());
 

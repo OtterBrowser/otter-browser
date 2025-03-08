@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -28,6 +28,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonObject>
+#include <QtCore/QTimeZone>
 
 namespace Otter
 {
@@ -103,7 +104,7 @@ HistoryModel::HistoryModel(const QString &path, HistoryType type, QObject *paren
 	{
 		const QJsonObject entryObject(historyArray.at(i).toObject());
 		QDateTime dateTime(QDateTime::fromString(entryObject.value(QLatin1String("time")).toString(), Qt::ISODate));
-		dateTime.setTimeSpec(Qt::UTC);
+		dateTime.setTimeZone(QTimeZone::utc());
 
 		addEntry(QUrl(entryObject.value(QLatin1String("url")).toString()), entryObject.value(QLatin1String("title")).toString(), {}, dateTime);
 	}

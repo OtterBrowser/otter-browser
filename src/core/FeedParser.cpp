@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 #include <QtCore/QCryptographicHash>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QRegularExpression>
+#include <QtCore/QTimeZone>
 
 namespace Otter
 {
@@ -246,7 +247,7 @@ FeedParser::FeedInformation AtomFeedParser::getInformation() const
 QDateTime AtomFeedParser::readDateTime(QXmlStreamReader *reader)
 {
 	QDateTime dateTime(QDateTime::fromString(reader->readElementText(QXmlStreamReader::IncludeChildElements), Qt::ISODate));
-	dateTime.setTimeSpec(Qt::UTC);
+	dateTime.setTimeZone(QTimeZone::utc());
 
 	return dateTime;
 }
@@ -409,7 +410,7 @@ FeedParser::FeedInformation RssFeedParser::getInformation() const
 QDateTime RssFeedParser::readDateTime(QXmlStreamReader *reader)
 {
 	QDateTime dateTime(QDateTime::fromString(reader->readElementText(QXmlStreamReader::IncludeChildElements), Qt::RFC2822Date));
-	dateTime.setTimeSpec(Qt::UTC);
+	dateTime.setTimeZone(QTimeZone::utc());
 
 	return dateTime;
 }
