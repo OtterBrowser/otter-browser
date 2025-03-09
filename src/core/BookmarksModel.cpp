@@ -185,7 +185,7 @@ QVariant BookmarksModel::Bookmark::data(int role) const
 							const QString text(data(DescriptionRole).toString());
 							const int newLinePosition(text.indexOf(QLatin1Char('\n')));
 
-							if (newLinePosition > 0 && newLinePosition < (text.count() - 1))
+							if (newLinePosition > 0 && newLinePosition < (text.length() - 1))
 							{
 								return text.left(newLinePosition) + QStringLiteral("…");
 							}

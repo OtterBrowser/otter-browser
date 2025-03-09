@@ -254,7 +254,7 @@ bool JsonSettings::save(const QString &path, bool isAtomic)
 	int lineStartPosition(0);
 	bool isReplacingSpaces(true);
 
-	for (int i = 0; i < data.count(); ++i)
+	for (int i = 0; i < data.length(); ++i)
 	{
 		const char character(data.at(i));
 

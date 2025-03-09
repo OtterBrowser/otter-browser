@@ -851,7 +851,7 @@ QString EnumeratorMapper::mapToName(int value, bool lowercaseFirst) const
 		return {};
 	}
 
-	name.chop(m_suffix.count());
+	name.chop(m_suffix.length());
 
 	if (lowercaseFirst)
 	{
