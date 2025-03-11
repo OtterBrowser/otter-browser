@@ -134,7 +134,8 @@ private:
 	static MouseGestures::Recognizer *m_recognizer;
 	static QPointer<QObject> m_trackedObject;
 	static QPoint m_lastClick;
-	static QPoint m_lastPosition;
+	static QPoint m_lastLocalPosition;
+	static QPoint m_lastGlobalPosition;
 	static QVariantMap m_parameters;
 	static QHash<GesturesContext, QVector<MouseProfile::Gesture> > m_gestures;
 	static QHash<GesturesContext, QVector<QVector<MouseProfile::Gesture::Step> > > m_nativeGestures;

@@ -491,7 +491,8 @@ GesturesManager* GesturesManager::m_instance(nullptr);
 MouseGestures::Recognizer* GesturesManager::m_recognizer(nullptr);
 QPointer<QObject> GesturesManager::m_trackedObject(nullptr);
 QPoint GesturesManager::m_lastClick;
-QPoint GesturesManager::m_lastPosition;
+QPoint GesturesManager::m_lastLocalPosition;
+QPoint GesturesManager::m_lastGlobalPosition;
 QVariantMap GesturesManager::m_parameters;
 QHash<GesturesManager::GesturesContext, QVector<MouseProfile::Gesture> > GesturesManager::m_gestures;
 QHash<GesturesManager::GesturesContext, QVector<QVector<MouseProfile::Gesture::Step> > > GesturesManager::m_nativeGestures;
@@ -954,7 +955,7 @@ bool GesturesManager::triggerAction(const MouseProfile::Gesture &gesture)
 	{
 		if (gesture.action == ActionsManager::ContextMenuAction)
 		{
-			QContextMenuEvent event(QContextMenuEvent::Other, m_lastPosition);
+			QContextMenuEvent event(QContextMenuEvent::Other, m_lastLocalPosition, m_lastGlobalPosition);
 
 			QCoreApplication::sendEvent(m_trackedObject, &event);
 		}
@@ -1004,7 +1005,8 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 				break;
 			}
 
-			m_lastPosition = mouseEvent->pos();
+			m_lastLocalPosition = mouseEvent->pos();
+			m_lastGlobalPosition = mouseEvent->globalPos();
 			m_lastClick = mouseEvent->pos();
 
 			recognizeMoveStep(mouseEvent);
@@ -1061,7 +1063,8 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 				m_recognizer->startGesture(m_lastClick.x(), m_lastClick.y());
 			}
 
-			m_lastPosition = mouseEvent->pos();
+			m_lastLocalPosition = mouseEvent->pos();
+			m_lastGlobalPosition = mouseEvent->globalPos();
 
 			m_recognizer->addPosition(mouseEvent->pos().x(), mouseEvent->pos().y());
 
