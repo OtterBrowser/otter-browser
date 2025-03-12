@@ -192,7 +192,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 			break;
 		case ActionsManager::ContextMenuAction:
 			{
-				QContextMenuEvent event(QContextMenuEvent::Other, QCursor::pos());
+				QContextMenuEvent event(QContextMenuEvent::Other, mapFromGlobal(QCursor::pos()), QCursor::pos());
 
 				QCoreApplication::sendEvent(m_sourceEditWidget, &event);
 			}
