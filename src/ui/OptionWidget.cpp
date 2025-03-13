@@ -145,7 +145,7 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 	setAutoFillBackground(false);
 
 	QHBoxLayout *layout(new QHBoxLayout(this));
-	layout->setMargin(0);
+	layout->setContentsMargins(0, 0, 0, 0);
 	layout->addWidget(m_widget);
 
 	if (type == SettingsManager::IconType)
