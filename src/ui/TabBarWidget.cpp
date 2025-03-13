@@ -890,7 +890,7 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 	{
 		m_isDraggingTab = false;
 
-		QMouseEvent mouseEvent(QEvent::MouseButtonRelease, event->pos(), Qt::LeftButton, Qt::LeftButton, event->modifiers());
+		QMouseEvent mouseEvent(QEvent::MouseButtonRelease, event->pos(), event->globalPos(), Qt::LeftButton, Qt::LeftButton, event->modifiers());
 
 		QApplication::sendEvent(this, &mouseEvent);
 
