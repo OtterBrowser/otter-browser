@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -96,7 +96,7 @@ void MarginWidget::mousePressEvent(QMouseEvent *event)
 {
 	if (event->button() == Qt::LeftButton)
 	{
-		QTextCursor textCursor(m_sourceEditWidget->cursorForPosition({1, event->y()}));
+		QTextCursor textCursor(m_sourceEditWidget->cursorForPosition({1, event->pos().y()}));
 		textCursor.select(QTextCursor::LineUnderCursor);
 		textCursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
 
@@ -112,7 +112,7 @@ void MarginWidget::mousePressEvent(QMouseEvent *event)
 
 void MarginWidget::mouseMoveEvent(QMouseEvent *event)
 {
-	QTextCursor textCursor(m_sourceEditWidget->cursorForPosition({1, event->y()}));
+	QTextCursor textCursor(m_sourceEditWidget->cursorForPosition({1, event->pos().y()}));
 	const int currentLine(textCursor.blockNumber());
 
 	if (currentLine != m_lastClickedLine)
