@@ -45,13 +45,14 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 	painter.fillRect(event->rect(), Qt::transparent);
 
 	QTextBlock block(m_sourceEditWidget->firstVisibleBlock());
+	const QTextCursor textCursor(m_sourceEditWidget->textCursor());
 	const Qt::AlignmentFlag alignment(isLeftToRight() ? Qt::AlignRight : Qt::AlignLeft);
 	int top(m_sourceEditWidget->blockBoundingGeometry(block).translated(m_sourceEditWidget->contentOffset()).toRect().top());
 	int bottom(top + m_sourceEditWidget->blockBoundingRect(block).toRect().height());
 	const int numberHeight(fontMetrics().height());
 	const int numberWidth(width() - 8);
-	const int selectionStart(m_sourceEditWidget->document()->findBlock(m_sourceEditWidget->textCursor().selectionStart()).blockNumber());
-	const int selectionEnd(m_sourceEditWidget->document()->findBlock(m_sourceEditWidget->textCursor().selectionEnd()).blockNumber());
+	const int selectionStart(m_sourceEditWidget->document()->findBlock(textCursor.selectionStart()).blockNumber());
+	const int selectionEnd(m_sourceEditWidget->document()->findBlock(textCursor.selectionEnd()).blockNumber());
 	const int initialRevison(m_sourceEditWidget->getInitialRevision());
 	const int savedRevison(m_sourceEditWidget->getSavedRevision());
 
@@ -59,11 +60,12 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 	{
 		if (block.isVisible() && bottom >= event->rect().top())
 		{
+			const int blockNumber(block.blockNumber());
 			QColor textColor(palette().color(QPalette::Text));
-			textColor.setAlpha((block.blockNumber() >= selectionStart && block.blockNumber() <= selectionEnd) ? 250 : 150);
+			textColor.setAlpha((blockNumber >= selectionStart && blockNumber <= selectionEnd) ? 250 : 150);
 
 			painter.setPen(textColor);
-			painter.drawText(4, top, numberWidth, numberHeight, alignment, QString::number(block.blockNumber() + 1));
+			painter.drawText(4, top, numberWidth, numberHeight, alignment, QString::number(blockNumber + 1));
 
 			if (block.revision() > initialRevison)
 			{
