@@ -44,6 +44,7 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 	QPainter painter(this);
 	painter.fillRect(event->rect(), Qt::transparent);
 
+	QColor textColor(palette().color(QPalette::Text));
 	QTextBlock block(m_sourceEditWidget->firstVisibleBlock());
 	const QTextCursor textCursor(m_sourceEditWidget->textCursor());
 	const Qt::AlignmentFlag alignment(isLeftToRight() ? Qt::AlignRight : Qt::AlignLeft);
@@ -61,7 +62,6 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 		if (block.isVisible() && bottom >= event->rect().top())
 		{
 			const int blockNumber(block.blockNumber());
-			QColor textColor(palette().color(QPalette::Text));
 			textColor.setAlpha((blockNumber >= selectionStart && blockNumber <= selectionEnd) ? 250 : 150);
 
 			painter.setPen(textColor);
