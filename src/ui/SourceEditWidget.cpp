@@ -62,6 +62,7 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 		if (block.isVisible() && bottom >= event->rect().top())
 		{
 			const int blockNumber(block.blockNumber());
+
 			textColor.setAlpha((blockNumber >= selectionStart && blockNumber <= selectionEnd) ? 250 : 150);
 
 			painter.setPen(textColor);
