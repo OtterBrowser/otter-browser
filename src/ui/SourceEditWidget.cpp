@@ -49,7 +49,6 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 	const QTextCursor textCursor(m_sourceEditWidget->textCursor());
 	const Qt::AlignmentFlag alignment(isLeftToRight() ? Qt::AlignRight : Qt::AlignLeft);
 	int top(m_sourceEditWidget->blockBoundingGeometry(block).translated(m_sourceEditWidget->contentOffset()).toRect().top());
-	int bottom(top + m_sourceEditWidget->blockBoundingRect(block).toRect().height());
 	const int numberHeight(fontMetrics().height());
 	const int numberWidth(width() - 8);
 	const int selectionStart(m_sourceEditWidget->document()->findBlock(textCursor.selectionStart()).blockNumber());
@@ -59,6 +58,8 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 
 	while (block.isValid() && top <= event->rect().bottom())
 	{
+		const int bottom(top + m_sourceEditWidget->blockBoundingRect(block).toRect().height());
+
 		if (block.isVisible() && bottom >= event->rect().top())
 		{
 			const int blockNumber(block.blockNumber());
@@ -78,7 +79,6 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 
 		block = block.next();
 		top = bottom;
-		bottom = (top + m_sourceEditWidget->blockBoundingRect(block).toRect().height());
 	}
 }
 
