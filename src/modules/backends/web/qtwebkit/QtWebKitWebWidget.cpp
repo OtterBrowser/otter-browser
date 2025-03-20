@@ -818,7 +818,19 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (parameters.contains(QLatin1String("dictionary")))
 				{
-					setOption(SettingsManager::Browser_SpellCheckDictionaryOption, parameters.value(QLatin1String("dictionary")));
+					const QString dictionary(parameters.value(QLatin1String("dictionary")).toString());
+					QStringList dictionaries(getOption(SettingsManager::Browser_SpellCheckDictionaryOption).toStringList());
+
+					if (dictionaries.contains(dictionary))
+					{
+						dictionaries.removeAll(dictionary);
+					}
+					else
+					{
+						dictionaries.append(dictionary);
+					}
+
+					setOption(SettingsManager::Browser_SpellCheckDictionaryOption, dictionaries);
 				}
 				else
 				{
