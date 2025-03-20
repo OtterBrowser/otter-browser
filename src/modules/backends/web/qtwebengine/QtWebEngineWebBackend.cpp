@@ -35,8 +35,8 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 #include <QtCore/QRegularExpression>
-#include <QtWebEngineWidgets/QWebEngineProfile>
-#include <QtWebEngineWidgets/QWebEngineSettings>
+#include <QtWebEngineCore/QWebEngineProfile>
+#include <QtWebEngineCore/QWebEngineSettings>
 
 namespace Otter
 {
@@ -57,9 +57,9 @@ QtWebEngineWebBackend::QtWebEngineWebBackend(QObject *parent) : WebBackend(paren
 	qputenv("QTWEBENGINE_DICTIONARIES_PATH", SpellCheckManager::getDictionariesPath().toLatin1());
 }
 
-void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadItem *item)
+void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadRequest *item)
 {
-	if (item->savePageFormat() != QWebEngineDownloadItem::UnknownSaveFormat)
+	if (item->savePageFormat() != QWebEngineDownloadRequest::UnknownSaveFormat)
 	{
 		return;
 	}
@@ -141,7 +141,7 @@ void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadItem *item
 void QtWebEngineWebBackend::handleOptionChanged(int identifier)
 {
 	QWebEngineProfile *profile(QWebEngineProfile::defaultProfile());
-	QWebEngineSettings *settings(QWebEngineSettings::globalSettings());
+	QWebEngineSettings *settings(QWebEngineProfile::defaultProfile()->settings());
 
 	switch (identifier)
 	{
@@ -229,7 +229,7 @@ WebWidget* QtWebEngineWebBackend::createWidget(const QVariantMap &parameters, Co
 		ContentFiltersManager::initialize();
 
 		QWebEngineProfile *profile(QWebEngineProfile::defaultProfile());
-		QWebEngineSettings *settings(QWebEngineSettings::globalSettings());
+		QWebEngineSettings *settings(QWebEngineProfile::defaultProfile()->settings());
 
 		profile->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
 		profile->setHttpUserAgent(getUserAgent());
