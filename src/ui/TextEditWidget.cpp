@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -344,21 +344,11 @@ ActionsManager::ActionDefinition::State TextEditWidget::getActionState(int ident
 
 				if (parameters.contains(QLatin1String("dictionary")))
 				{
-					const QString dictionary(parameters[QLatin1String("dictionary")].toString());
-					const QVector<SpellCheckManager::DictionaryInformation> dictionaries(SpellCheckManager::getDictionaries());
+					const QString language(parameters[QLatin1String("dictionary")].toString());
+					const SpellCheckManager::DictionaryInformation dictionary(SpellCheckManager::getDictionary(language));
 
-					state.text = dictionary;
-					state.isChecked = (dictionary == (SettingsManager::getOption(SettingsManager::Browser_SpellCheckDictionaryOption).isNull() ? SpellCheckManager::getDefaultDictionary() : SettingsManager::getOption(SettingsManager::Browser_SpellCheckDictionaryOption).toString()));
-
-					for (int i = 0; i < dictionaries.count(); ++i)
-					{
-						if (dictionaries.at(i).language == dictionary)
-						{
-							state.text = dictionaries.at(i).title;
-
-							break;
-						}
-					}
+					state.text = (dictionary.isValid() ? dictionary.title : language);
+					state.isChecked = (language == (SettingsManager::getOption(SettingsManager::Browser_SpellCheckDictionaryOption).isNull() ? SpellCheckManager::getDefaultDictionary() : SettingsManager::getOption(SettingsManager::Browser_SpellCheckDictionaryOption).toString()));
 				}
 				else
 				{
