@@ -196,7 +196,8 @@ void SpellCheckManager::updateDefaultDictionary()
 
 	for (int i = 0; i < locales.count(); ++i)
 	{
-		const QString localeName(locales.at(i).name());
+		const QLocale locale(locales.at(i));
+		const QString localeName(locale.name());
 
 		if (dictionaries.contains(localeName))
 		{
@@ -205,7 +206,7 @@ void SpellCheckManager::updateDefaultDictionary()
 			break;
 		}
 
-		const QString localeBcp47Name(locales.at(i).bcp47Name());
+		const QString localeBcp47Name(locale.bcp47Name());
 
 		if (dictionaries.contains(localeBcp47Name))
 		{
