@@ -191,8 +191,8 @@ void SpellCheckManager::updateDefaultDictionary()
 		return;
 	}
 
-	const QLocale locale(defaultLanguage);
-	const QList<QLocale> locales(QLocale::matchingLocales(locale.language(), locale.script(), QLocale::AnyCountry));
+	const QLocale defaultLocale(defaultLanguage);
+	const QList<QLocale> locales(QLocale::matchingLocales(defaultLocale.language(), defaultLocale.script(), QLocale::AnyCountry));
 
 	for (int i = 0; i < locales.count(); ++i)
 	{
