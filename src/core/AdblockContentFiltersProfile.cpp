@@ -719,8 +719,10 @@ ContentFiltersManager::CosmeticFiltersResult AdblockContentFiltersProfile::getCo
 
 	for (int i = 0; i < domains.count(); ++i)
 	{
-		result.rules.append(m_cosmeticFiltersDomainRules.values(domains.at(i)));
-		result.exceptions.append(m_cosmeticFiltersDomainExceptions.values(domains.at(i)));
+		const QString domain(domains.at(i));
+
+		result.rules.append(m_cosmeticFiltersDomainRules.values(domain));
+		result.exceptions.append(m_cosmeticFiltersDomainExceptions.values(domain));
 	}
 
 	return result;
