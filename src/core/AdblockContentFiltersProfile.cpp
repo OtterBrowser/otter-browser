@@ -78,11 +78,12 @@ void AdblockContentFiltersProfile::clear()
 		return;
 	}
 
+/* qt6: no type named 'PromiseType' in 'QtPrivate::ArgResolver<Otter::AdblockContentFiltersProfile *>'
 	if (m_root)
 	{
 		QtConcurrent::run(this, &AdblockContentFiltersProfile::deleteNode, m_root);
 	}
-
+*/
 	m_cosmeticFiltersRules.clear();
 	m_cosmeticFiltersDomainExceptions.clear();
 	m_cosmeticFiltersDomainRules.clear();
@@ -297,14 +298,16 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 			Node *newNode(new Node());
 			newNode->value = value;
 
+/* qt6: call to member function 'insert' is ambiguous
 			if (value == QLatin1Char('^'))
 			{
 				node->children.insert(0, newNode);
 			}
 			else
 			{
+*/
 				node->children.append(newNode);
-			}
+//			}
 
 			node = newNode;
 		}

@@ -61,7 +61,7 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 	m_closeLabel->setPixmap(pixmap);
 	m_closeLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
 	m_closeLabel->setAlignment(Qt::AlignTop);
-	m_closeLabel->setMargin(5);
+	m_closeLabel->setContentsMargins(5, 5, 5, 5);
 
 	QBoxLayout *layout(new QBoxLayout(QBoxLayout::LeftToRight));
 	layout->setContentsMargins(0, 0, 0, 0);
