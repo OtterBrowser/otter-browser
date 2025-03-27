@@ -169,13 +169,14 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 		return;
 	}
 
-	const int optionsSeparator(rule.indexOf(QLatin1Char('$')));
-	const QStringList options((optionsSeparator >= 0) ? rule.mid(optionsSeparator + 1).split(QLatin1Char(','), Qt::SkipEmptyParts) : QStringList());
+	const int separatorIndex(rule.indexOf(QLatin1Char('$')));
+	const bool hasSeparator(separatorIndex >= 0);
+	const QStringList options(hasSeparator ? rule.mid(separatorIndex + 1).split(QLatin1Char(','), Qt::SkipEmptyParts) : QStringList());
 	QString line(rule);
 
-	if (optionsSeparator >= 0)
+	if (hasSeparator)
 	{
-		line = line.left(optionsSeparator);
+		line = line.left(separatorIndex);
 	}
 
 	if (line.endsWith(QLatin1Char('*')))
