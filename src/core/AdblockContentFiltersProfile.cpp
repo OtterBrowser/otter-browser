@@ -40,10 +40,10 @@ namespace Otter
 QHash<QString, AdblockContentFiltersProfile::RuleOption> AdblockContentFiltersProfile::m_options({{QLatin1String("third-party"), ThirdPartyOption}, {QLatin1String("stylesheet"), StyleSheetOption}, {QLatin1String("image"), ImageOption}, {QLatin1String("script"), ScriptOption}, {QLatin1String("object"), ObjectOption}, {QLatin1String("object-subrequest"), ObjectSubRequestOption}, {QLatin1String("object_subrequest"), ObjectSubRequestOption}, {QLatin1String("subdocument"), SubDocumentOption}, {QLatin1String("xmlhttprequest"), XmlHttpRequestOption}, {QLatin1String("websocket"), WebSocketOption}, {QLatin1String("popup"), PopupOption}, {QLatin1String("elemhide"), ElementHideOption}, {QLatin1String("generichide"), GenericHideOption}});
 QHash<NetworkManager::ResourceType, AdblockContentFiltersProfile::RuleOption> AdblockContentFiltersProfile::m_resourceTypes({{NetworkManager::ImageType, ImageOption}, {NetworkManager::ScriptType, ScriptOption}, {NetworkManager::StyleSheetType, StyleSheetOption}, {NetworkManager::ObjectType, ObjectOption}, {NetworkManager::XmlHttpRequestType, XmlHttpRequestOption}, {NetworkManager::SubFrameType, SubDocumentOption},{NetworkManager::PopupType, PopupOption}, {NetworkManager::ObjectSubrequestType, ObjectSubRequestOption}, {NetworkManager::WebSocketType, WebSocketOption}});
 
-AdblockContentFiltersProfile::AdblockContentFiltersProfile(const ContentFiltersProfile::ProfileSummary &profileSummary, const QStringList &languages, ContentFiltersProfile::ProfileFlags flags, QObject *parent) : ContentFiltersProfile(parent),
+AdblockContentFiltersProfile::AdblockContentFiltersProfile(const ContentFiltersProfile::ProfileSummary &summary, const QStringList &languages, ContentFiltersProfile::ProfileFlags flags, QObject *parent) : ContentFiltersProfile(parent),
 	m_root(nullptr),
 	m_dataFetchJob(nullptr),
-	m_profileSummary(profileSummary),
+	m_summary(summary),
 	m_error(NoError),
 	m_flags(flags),
 	m_wasLoaded(false)
@@ -121,10 +121,10 @@ void AdblockContentFiltersProfile::loadHeader()
 
 	if (!m_flags.testFlag(HasCustomTitleFlag) && !information.title.isEmpty())
 	{
-		m_profileSummary.title = information.title;
+		m_summary.title = information.title;
 	}
 
-	if (!m_dataFetchJob && m_profileSummary.updateInterval > 0 && (!m_profileSummary.lastUpdate.isValid() || m_profileSummary.lastUpdate.daysTo(QDateTime::currentDateTimeUtc()) > m_profileSummary.updateInterval))
+	if (!m_dataFetchJob && m_summary.updateInterval > 0 && (!m_summary.lastUpdate.isValid() || m_summary.lastUpdate.daysTo(QDateTime::currentDateTimeUtc()) > m_summary.updateInterval))
 	{
 		update();
 	}
@@ -137,11 +137,11 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 		return;
 	}
 
-	const bool areCosmeticFiltersEnabled(m_profileSummary.cosmeticFiltersMode != ContentFiltersManager::NoFilters);
+	const bool areCosmeticFiltersEnabled(m_summary.cosmeticFiltersMode != ContentFiltersManager::NoFilters);
 
 	if (rule.startsWith(QLatin1String("##")))
 	{
-		if (m_profileSummary.cosmeticFiltersMode == ContentFiltersManager::AllFilters)
+		if (m_summary.cosmeticFiltersMode == ContentFiltersManager::AllFilters)
 		{
 			m_cosmeticFiltersRules.append(rule.mid(2));
 		}
@@ -189,7 +189,7 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 		line = line.mid(1);
 	}
 
-	if (!m_profileSummary.areWildcardsEnabled && line.contains(QLatin1Char('*')))
+	if (!m_summary.areWildcardsEnabled && line.contains(QLatin1Char('*')))
 	{
 		return;
 	}
@@ -635,7 +635,7 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 
 	file.write(buffer.data());
 
-	m_profileSummary.lastUpdate = QDateTime::currentDateTimeUtc();
+	m_summary.lastUpdate = QDateTime::currentDateTimeUtc();
 
 	if (!file.commit())
 	{
@@ -653,20 +653,20 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 	emit profileModified();
 }
 
-void AdblockContentFiltersProfile::setProfileSummary(const ContentFiltersProfile::ProfileSummary &profileSummary)
+void AdblockContentFiltersProfile::setProfileSummary(const ContentFiltersProfile::ProfileSummary &summary)
 {
-	const bool needsReload(profileSummary.cosmeticFiltersMode != m_profileSummary.cosmeticFiltersMode || profileSummary.areWildcardsEnabled != m_profileSummary.areWildcardsEnabled);
+	const bool needsReload(summary.cosmeticFiltersMode != m_summary.cosmeticFiltersMode || summary.areWildcardsEnabled != m_summary.areWildcardsEnabled);
 
-	if (profileSummary.title != m_profileSummary.title)
+	if (summary.title != m_summary.title)
 	{
 		m_flags |= HasCustomTitleFlag;
 	}
-	else if (!needsReload && profileSummary.updateUrl == m_profileSummary.updateUrl && profileSummary.updateInterval == m_profileSummary.updateInterval && profileSummary.category == m_profileSummary.category)
+	else if (!needsReload && summary.updateUrl == m_summary.updateUrl && summary.updateInterval == m_summary.updateInterval && summary.category == m_summary.category)
 	{
 		return;
 	}
 
-	m_profileSummary = profileSummary;
+	m_summary = summary;
 
 	if (needsReload)
 	{
@@ -678,32 +678,32 @@ void AdblockContentFiltersProfile::setProfileSummary(const ContentFiltersProfile
 
 QString AdblockContentFiltersProfile::getName() const
 {
-	return m_profileSummary.name;
+	return m_summary.name;
 }
 
 QString AdblockContentFiltersProfile::getTitle() const
 {
-	return (m_profileSummary.title.isEmpty() ? tr("(Unknown)") : m_profileSummary.title);
+	return (m_summary.title.isEmpty() ? tr("(Unknown)") : m_summary.title);
 }
 
 QString AdblockContentFiltersProfile::getPath() const
 {
-	return SessionsManager::getWritableDataPath(QLatin1String("contentBlocking/%1.txt")).arg(m_profileSummary.name);
+	return SessionsManager::getWritableDataPath(QLatin1String("contentBlocking/%1.txt")).arg(m_summary.name);
 }
 
 QDateTime AdblockContentFiltersProfile::getLastUpdate() const
 {
-	return m_profileSummary.lastUpdate;
+	return m_summary.lastUpdate;
 }
 
 QUrl AdblockContentFiltersProfile::getUpdateUrl() const
 {
-	return m_profileSummary.updateUrl;
+	return m_summary.updateUrl;
 }
 
 ContentFiltersProfile::ProfileSummary AdblockContentFiltersProfile::getProfileSummary() const
 {
-	return m_profileSummary;
+	return m_summary;
 }
 
 ContentFiltersManager::CosmeticFiltersResult AdblockContentFiltersProfile::getCosmeticFilters(const QStringList &domains, bool isDomainOnly)
@@ -825,7 +825,7 @@ AdblockContentFiltersProfile::HeaderInformation AdblockContentFiltersProfile::lo
 	return information;
 }
 
-QHash<AdblockContentFiltersProfile::RuleType, quint32> AdblockContentFiltersProfile::loadRulesInformation(const ContentFiltersProfile::ProfileSummary &profileSummary, QIODevice *rulesDevice)
+QHash<AdblockContentFiltersProfile::RuleType, quint32> AdblockContentFiltersProfile::loadRulesInformation(const ContentFiltersProfile::ProfileSummary &summary, QIODevice *rulesDevice)
 {
 	QHash<RuleType, quint32> information({{AnyRule, 0}, {ActiveRule, 0}, {CosmeticRule, 0}, {WildcardRule, 0}});
 	QTextStream stream(rulesDevice);
@@ -846,7 +846,7 @@ QHash<AdblockContentFiltersProfile::RuleType, quint32> AdblockContentFiltersProf
 		{
 			++information[CosmeticRule];
 
-			if (profileSummary.cosmeticFiltersMode == ContentFiltersManager::AllFilters)
+			if (summary.cosmeticFiltersMode == ContentFiltersManager::AllFilters)
 			{
 				++information[ActiveRule];
 			}
@@ -858,7 +858,7 @@ QHash<AdblockContentFiltersProfile::RuleType, quint32> AdblockContentFiltersProf
 		{
 			++information[CosmeticRule];
 
-			if (profileSummary.cosmeticFiltersMode != ContentFiltersManager::NoFilters)
+			if (summary.cosmeticFiltersMode != ContentFiltersManager::NoFilters)
 			{
 				++information[ActiveRule];
 			}
@@ -870,7 +870,7 @@ QHash<AdblockContentFiltersProfile::RuleType, quint32> AdblockContentFiltersProf
 		{
 			++information[CosmeticRule];
 
-			if (profileSummary.cosmeticFiltersMode != ContentFiltersManager::NoFilters)
+			if (summary.cosmeticFiltersMode != ContentFiltersManager::NoFilters)
 			{
 				++information[ActiveRule];
 			}
@@ -882,7 +882,7 @@ QHash<AdblockContentFiltersProfile::RuleType, quint32> AdblockContentFiltersProf
 		{
 			++information[WildcardRule];
 
-			if (profileSummary.areWildcardsEnabled)
+			if (summary.areWildcardsEnabled)
 			{
 				++information[ActiveRule];
 			}
@@ -903,12 +903,12 @@ QVector<QLocale::Language> AdblockContentFiltersProfile::getLanguages() const
 
 ContentFiltersProfile::ProfileCategory AdblockContentFiltersProfile::getCategory() const
 {
-	return m_profileSummary.category;
+	return m_summary.category;
 }
 
 ContentFiltersManager::CosmeticFiltersMode AdblockContentFiltersProfile::getCosmeticFiltersMode() const
 {
-	return m_profileSummary.cosmeticFiltersMode;
+	return m_summary.cosmeticFiltersMode;
 }
 
 ContentFiltersProfile::ProfileError AdblockContentFiltersProfile::getError() const
@@ -923,7 +923,7 @@ ContentFiltersProfile::ProfileFlags AdblockContentFiltersProfile::getFlags() con
 
 int AdblockContentFiltersProfile::getUpdateInterval() const
 {
-	return m_profileSummary.updateInterval;
+	return m_summary.updateInterval;
 }
 
 int AdblockContentFiltersProfile::getUpdateProgress() const
@@ -931,9 +931,9 @@ int AdblockContentFiltersProfile::getUpdateProgress() const
 	return (m_dataFetchJob ? m_dataFetchJob->getProgress() : -1);
 }
 
-bool AdblockContentFiltersProfile::create(const ContentFiltersProfile::ProfileSummary &profileSummary, QIODevice *rulesDevice, bool canOverwriteExisting)
+bool AdblockContentFiltersProfile::create(const ContentFiltersProfile::ProfileSummary &summary, QIODevice *rulesDevice, bool canOverwriteExisting)
 {
-	const QString path(SessionsManager::getWritableDataPath(QStringLiteral("contentBlocking/%1.txt")).arg(profileSummary.name));
+	const QString path(SessionsManager::getWritableDataPath(QStringLiteral("contentBlocking/%1.txt")).arg(summary.name));
 
 	if (SessionsManager::isReadOnly() || (!canOverwriteExisting && QFile::exists(path)))
 	{
@@ -961,16 +961,16 @@ bool AdblockContentFiltersProfile::create(const ContentFiltersProfile::ProfileSu
 
 	ProfileFlags flags(NoFlags);
 
-	if (!profileSummary.title.isEmpty())
+	if (!summary.title.isEmpty())
 	{
 		flags |= HasCustomTitleFlag;
 	}
 
-	AdblockContentFiltersProfile *profile(new AdblockContentFiltersProfile(profileSummary, {}, flags, ContentFiltersManager::getInstance()));
+	AdblockContentFiltersProfile *profile(new AdblockContentFiltersProfile(summary, {}, flags, ContentFiltersManager::getInstance()));
 
 	ContentFiltersManager::addProfile(profile);
 
-	if (!rulesDevice && profileSummary.updateUrl.isValid())
+	if (!rulesDevice && summary.updateUrl.isValid())
 	{
 		profile->update();
 	}
@@ -1034,7 +1034,7 @@ bool AdblockContentFiltersProfile::loadRules()
 
 	m_error = NoError;
 
-	if (!QFile::exists(path) && !m_profileSummary.updateUrl.isEmpty())
+	if (!QFile::exists(path) && !m_summary.updateUrl.isEmpty())
 	{
 		update();
 
@@ -1074,7 +1074,7 @@ bool AdblockContentFiltersProfile::update(const QUrl &url)
 		return false;
 	}
 
-	const QUrl updateUrl(url.isValid() ? url : m_profileSummary.updateUrl);
+	const QUrl updateUrl(url.isValid() ? url : m_summary.updateUrl);
 
 	if (!updateUrl.isValid())
 	{
@@ -1136,7 +1136,7 @@ bool AdblockContentFiltersProfile::resolveDomainExceptions(const QString &url, c
 
 bool AdblockContentFiltersProfile::areWildcardsEnabled() const
 {
-	return m_profileSummary.areWildcardsEnabled;
+	return m_summary.areWildcardsEnabled;
 }
 
 bool AdblockContentFiltersProfile::isUpdating() const
