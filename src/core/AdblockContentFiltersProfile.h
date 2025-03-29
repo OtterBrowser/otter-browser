@@ -57,10 +57,10 @@ public:
 		}
 	};
 
-	explicit AdblockContentFiltersProfile(const ProfileSummary &profileSummary, const QStringList &languages, ProfileFlags flags, QObject *parent = nullptr);
+	explicit AdblockContentFiltersProfile(const ProfileSummary &summary, const QStringList &languages, ProfileFlags flags, QObject *parent = nullptr);
 
 	void clear() override;
-	void setProfileSummary(const ProfileSummary &profileSummary) override;
+	void setProfileSummary(const ProfileSummary &summary) override;
 	QString getName() const override;
 	QString getTitle() const override;
 	QString getPath() const override;
@@ -70,7 +70,7 @@ public:
 	ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly) override;
 	ContentFiltersManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType) override;
 	static HeaderInformation loadHeader(QIODevice *rulesDevice);
-	static QHash<RuleType, quint32> loadRulesInformation(const ProfileSummary &profileSummary, QIODevice *rulesDevice);
+	static QHash<RuleType, quint32> loadRulesInformation(const ProfileSummary &summary, QIODevice *rulesDevice);
 	QVector<QLocale::Language> getLanguages() const override;
 	ProfileCategory getCategory() const override;
 	ContentFiltersManager::CosmeticFiltersMode getCosmeticFiltersMode() const override;
@@ -78,7 +78,7 @@ public:
 	ProfileFlags getFlags() const override;
 	int getUpdateInterval() const override;
 	int getUpdateProgress() const override;
-	static bool create(const ProfileSummary &profileSummary, QIODevice *rulesDevice = nullptr, bool canOverwriteExisting = false);
+	static bool create(const ProfileSummary &summary, QIODevice *rulesDevice = nullptr, bool canOverwriteExisting = false);
 	static bool create(const QUrl &url, bool canOverwriteExisting = false);
 	bool update(const QUrl &url = {}) override;
 	bool remove() override;
@@ -165,7 +165,7 @@ protected slots:
 private:
 	Node *m_root;
 	DataFetchJob *m_dataFetchJob;
-	ProfileSummary m_profileSummary;
+	ProfileSummary m_summary;
 	QRegularExpression m_domainExpression;
 	QStringList m_cosmeticFiltersRules;
 	QVector<QLocale::Language> m_languages;
