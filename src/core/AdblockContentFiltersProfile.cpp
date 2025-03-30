@@ -25,12 +25,12 @@
 #include "SessionsManager.h"
 #include "../ui/ContentBlockingProfileDialog.h"
 
-#include <QtConcurrent/QtConcurrentRun>
 #include <QtCore/QBuffer>
 #include <QtCore/QCoreApplication>
 #include <QtCore/QFileInfo>
 #include <QtCore/QSaveFile>
 #include <QtCore/QTextStream>
+#include <QtCore/QThreadPool>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMessageBox>
 
@@ -80,7 +80,10 @@ void AdblockContentFiltersProfile::clear()
 
 	if (m_root)
 	{
-		QtConcurrent::run(this, &AdblockContentFiltersProfile::deleteNode, m_root);
+		QThreadPool::globalInstance()->start([&]()
+		{
+			deleteNode(m_root);
+		});
 	}
 
 	m_cosmeticFiltersRules.clear();
