@@ -350,7 +350,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 	for (int i = 0; i < subString.length(); ++i)
 	{
 		const QChar treeChar(subString.at(i));
-		bool childrenExists(false);
+		bool hasChildren(false);
 
 		currentResult = evaluateNodeRules(node, currentRule, request);
 
@@ -404,13 +404,13 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 			{
 				node = nextNode;
 
-				childrenExists = true;
+				hasChildren = true;
 
 				break;
 			}
 		}
 
-		if (!childrenExists)
+		if (!hasChildren)
 		{
 			return result;
 		}
