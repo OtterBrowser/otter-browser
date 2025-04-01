@@ -156,7 +156,7 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 	{
 		if (areCosmeticFiltersEnabled)
 		{
-			parseStyleSheetRule(rule.split(QLatin1String("##")), m_cosmeticFiltersDomainRules);
+			m_cosmeticFiltersDomainRules += parseStyleSheetRule(rule.split(QLatin1String("##")));
 		}
 
 		return;
@@ -166,7 +166,7 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 	{
 		if (areCosmeticFiltersEnabled)
 		{
-			parseStyleSheetRule(rule.split(QLatin1String("#@#")), m_cosmeticFiltersDomainExceptions);
+			m_cosmeticFiltersDomainExceptions += parseStyleSheetRule(rule.split(QLatin1String("#@#")));
 		}
 
 		return;
@@ -317,16 +317,6 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 	node->rules.append(definition);
 }
 
-void AdblockContentFiltersProfile::parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list)
-{
-	const QStringList domains(line.at(0).split(QLatin1Char(',')));
-
-	for (int i = 0; i < domains.count(); ++i)
-	{
-		list.insert(domains.at(i), line.at(1));
-	}
-}
-
 void AdblockContentFiltersProfile::deleteNode(Node *node) const
 {
 	for (int i = 0; i < node->children.count(); ++i)
@@ -340,6 +330,19 @@ void AdblockContentFiltersProfile::deleteNode(Node *node) const
 	}
 
 	delete node;
+}
+
+QMultiHash<QString, QString> AdblockContentFiltersProfile::parseStyleSheetRule(const QStringList &line)
+{
+	QMultiHash<QString, QString> list;
+	const QStringList domains(line.at(0).split(QLatin1Char(',')));
+
+	for (int i = 0; i < domains.count(); ++i)
+	{
+		list.insert(domains.at(i), line.at(1));
+	}
+
+	return list;
 }
 
 ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstring(const Node *node, const QString &subString, QString currentRule, const Request &request) const
