@@ -345,14 +345,14 @@ QMultiHash<QString, QString> AdblockContentFiltersProfile::parseStyleSheetRule(c
 	return list;
 }
 
-ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstring(const Node *node, const QString &subString, QString currentRule, const Request &request) const
+ContentFiltersManager::CheckResult AdblockContentFiltersProfile::scheckUrlSubstring(const Node *node, const QString &substring, QString currentRule, const Request &request) const
 {
 	ContentFiltersManager::CheckResult result;
 	ContentFiltersManager::CheckResult currentResult;
 
-	for (int i = 0; i < subString.length(); ++i)
+	for (int i = 0; i < substring.length(); ++i)
 	{
-		const QChar treeChar(subString.at(i));
+		const QChar treeChar(substring.at(i));
 		bool hasChildren(false);
 
 		currentResult = evaluateNodeRules(node, currentRule, request);
@@ -372,7 +372,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 
 			if (nextNode->value == QLatin1Char('*'))
 			{
-				const QString wildcardSubString(subString.mid(i));
+				const QString wildcardSubString(substring.mid(i));
 
 				for (int k = 0; k < wildcardSubString.length(); ++k)
 				{
@@ -391,7 +391,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 
 			if (nextNode->value == QLatin1Char('^') && !treeChar.isDigit() && !treeChar.isLetter() && treeChar != QLatin1Char('_') && treeChar != QLatin1Char('-') && treeChar != QLatin1Char('.') && treeChar != QLatin1Char('%'))
 			{
-				currentResult = checkUrlSubstring(nextNode, subString.mid(i), currentRule, request);
+				currentResult = checkUrlSubstring(nextNode, substring.mid(i), currentRule, request);
 
 				if (currentResult.isBlocked)
 				{

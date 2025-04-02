@@ -152,7 +152,7 @@ protected:
 	void parseRuleLine(const QString &rule);
 	void deleteNode(Node *node) const;
 	QMultiHash<QString, QString> parseStyleSheetRule(const QStringList &line);
-	ContentFiltersManager::CheckResult checkUrlSubstring(const Node *node, const QString &subString, QString currentRule, const Request &request) const;
+	ContentFiltersManager::CheckResult checkUrlSubstring(const Node *node, const QString &substring, QString currentRule, const Request &request) const;
 	ContentFiltersManager::CheckResult checkRuleMatch(const Node::Rule *rule, const QString &currentRule, const Request &request) const;
 	ContentFiltersManager::CheckResult evaluateNodeRules(const Node *node, const QString &currentRule, const Request &request) const;
 	bool loadRules();
