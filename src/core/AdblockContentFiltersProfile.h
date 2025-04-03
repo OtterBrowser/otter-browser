@@ -156,7 +156,7 @@ protected:
 	ContentFiltersManager::CheckResult checkRuleMatch(const Node::Rule *rule, const QString &currentRule, const Request &request) const;
 	ContentFiltersManager::CheckResult evaluateNodeRules(const Node *node, const QString &currentRule, const Request &request) const;
 	bool loadRules();
-	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList) const;
+	bool resolveDomainExceptions(const QString &host, const QStringList &domains) const;
 
 protected slots:
 	void raiseError(const QString &message, ProfileError error);

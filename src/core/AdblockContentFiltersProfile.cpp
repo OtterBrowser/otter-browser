@@ -345,7 +345,7 @@ QMultiHash<QString, QString> AdblockContentFiltersProfile::parseStyleSheetRule(c
 	return list;
 }
 
-ContentFiltersManager::CheckResult AdblockContentFiltersProfile::scheckUrlSubstring(const Node *node, const QString &substring, QString currentRule, const Request &request) const
+ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstring(const Node *node, const QString &substring, QString currentRule, const Request &request) const
 {
 	ContentFiltersManager::CheckResult result;
 	ContentFiltersManager::CheckResult currentResult;
@@ -1127,11 +1127,11 @@ bool AdblockContentFiltersProfile::remove()
 	return true;
 }
 
-bool AdblockContentFiltersProfile::resolveDomainExceptions(const QString &url, const QStringList &ruleList) const
+bool AdblockContentFiltersProfile::resolveDomainExceptions(const QString &host, const QStringList &domains) const
 {
-	for (int i = 0; i < ruleList.count(); ++i)
+	for (int i = 0; i < domains.count(); ++i)
 	{
-		if (url.contains(ruleList.at(i)))
+		if (host.contains(domains.at(i)))
 		{
 			return true;
 		}
