@@ -501,7 +501,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 
 	if (hasBlockedDomains)
 	{
-		isBlocked = resolveDomainExceptions(request.baseHost, rule->blockedDomains);
+		isBlocked = domainContains(request.baseHost, rule->blockedDomains);
 
 		if (!isBlocked)
 		{
@@ -509,7 +509,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 		}
 	}
 
-	isBlocked = (hasAllowedDomains ? !resolveDomainExceptions(request.baseHost, rule->allowedDomains) : isBlocked);
+	isBlocked = (hasAllowedDomains ? !domainContains(request.baseHost, rule->allowedDomains) : isBlocked);
 
 	if (rule->ruleOptions.testFlag(ThirdPartyOption) || rule->ruleExceptions.testFlag(ThirdPartyOption))
 	{
@@ -1127,7 +1127,7 @@ bool AdblockContentFiltersProfile::remove()
 	return true;
 }
 
-bool AdblockContentFiltersProfile::resolveDomainExceptions(const QString &host, const QStringList &domains) const
+bool AdblockContentFiltersProfile::domainContains(const QString &host, const QStringList &domains) const
 {
 	for (int i = 0; i < domains.count(); ++i)
 	{
