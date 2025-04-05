@@ -127,7 +127,7 @@ protected:
 			bool needsDomainCheck = false;
 		};
 
-		QChar value = 0;
+		QChar value;
 		QVarLengthArray<Node*, 1> children;
 		QVarLengthArray<Rule*, 1> rules;
 	};

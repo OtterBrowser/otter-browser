@@ -23,7 +23,7 @@
 #include "../../../../ui/WebWidget.h"
 
 #include <QtNetwork/QNetworkReply>
-#include <QtWebEngineWidgets/QWebEngineFullScreenRequest>
+#include <QtWebEngineCore/QWebEngineFullScreenRequest>
 #include <QtWebEngineWidgets/QWebEngineView>
 
 namespace Otter
