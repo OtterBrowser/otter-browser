@@ -352,7 +352,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 
 	for (int i = 0; i < substring.length(); ++i)
 	{
-		const QChar treeChar(substring.at(i));
+		const QChar character(substring.at(i));
 		bool hasChildren(false);
 
 		currentResult = evaluateNodeRules(node, currentRule, request);
@@ -389,7 +389,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 				}
 			}
 
-			if (nextNode->value == QLatin1Char('^') && !treeChar.isDigit() && !treeChar.isLetter() && treeChar != QLatin1Char('_') && treeChar != QLatin1Char('-') && treeChar != QLatin1Char('.') && treeChar != QLatin1Char('%'))
+			if (nextNode->value == QLatin1Char('^') && !character.isDigit() && !character.isLetter() && character != QLatin1Char('_') && character != QLatin1Char('-') && character != QLatin1Char('.') && character != QLatin1Char('%'))
 			{
 				currentResult = checkUrlSubstring(nextNode, substring.mid(i), currentRule, request);
 
@@ -403,7 +403,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 				}
 			}
 
-			if (nextNode->value == treeChar)
+			if (nextNode->value == character)
 			{
 				node = nextNode;
 
@@ -418,7 +418,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 			return result;
 		}
 
-		currentRule += treeChar;
+		currentRule += character;
 	}
 
 	currentResult = evaluateNodeRules(node, currentRule, request);
