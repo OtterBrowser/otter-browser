@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2022 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2022 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -120,17 +120,15 @@ void DictionariesPage::addAddon()
 void DictionariesPage::openAddons()
 {
 	const QStringList selectedDictionaries(getSelectedDictionaries());
-	QStringList paths;
-	paths.reserve(selectedDictionaries.count() * 2);
 
 	for (int i = 0; i < selectedDictionaries.count(); ++i)
 	{
-		paths.append(SpellCheckManager::getDictionary(selectedDictionaries.at(i)).paths);
-	}
+		const QStringList paths(SpellCheckManager::getDictionary(selectedDictionaries.at(i)).paths);
 
-	for (int i = 0; i < paths.count(); ++i)
-	{
-		Utils::runApplication({}, paths.at(i));
+		for (int j = 0; j < paths.count(); ++j)
+		{
+			Utils::runApplication({}, paths.at(j));
+		}
 	}
 }
 
