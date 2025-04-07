@@ -203,14 +203,13 @@ void DictionariesPage::save()
 
 	for (int i = 0; i < m_dictionariesToAdd.count(); ++i)
 	{
-		const QString language(m_dictionariesToAdd.at(i).language);
-		const QStringList paths(m_dictionariesToAdd.at(i).paths);
+		const SpellCheckManager::DictionaryInformation dictionary(m_dictionariesToAdd.at(i));
 
-		for (int j = 0; j < paths.count(); ++j)
+		for (int j = 0; j < dictionary.paths.count(); ++j)
 		{
-			const QString path(paths.at(j));
+			const QString path(dictionary.paths.at(j));
 
-			QFile::copy(path, dictionariesDirectory.filePath(language + QFileInfo(path).suffix()));
+			QFile::copy(path, dictionariesDirectory.filePath(dictionary.language + QFileInfo(path).suffix()));
 		}
 	}
 
