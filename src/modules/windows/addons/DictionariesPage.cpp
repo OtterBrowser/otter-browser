@@ -147,11 +147,11 @@ void DictionariesPage::removeAddons()
 
 	for (int i = 0; i < dictionaries.count(); ++i)
 	{
-		const SpellCheckManager::DictionaryInformation information(SpellCheckManager::getDictionary(dictionaries.at(i)));
+		const SpellCheckManager::DictionaryInformation dictionary(SpellCheckManager::getDictionary(dictionaries.at(i)));
 
-		if (information.isLocalDictionary)
+		if (dictionary.isLocalDictionary)
 		{
-			m_filesToRemove.append(information.paths);
+			m_filesToRemove.append(dictionary.paths);
 
 			hasAddonsToRemove = true;
 		}
