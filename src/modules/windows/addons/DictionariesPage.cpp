@@ -141,7 +141,7 @@ void DictionariesPage::removeAddons()
 		return;
 	}
 
-	bool hasAddonsToRemove(false);
+	bool hasDictionariesToRemove(false);
 
 	m_filesToRemove.reserve(m_filesToRemove.count() + (dictionaries.count() * 2));
 
@@ -153,11 +153,11 @@ void DictionariesPage::removeAddons()
 		{
 			m_filesToRemove.append(dictionary.paths);
 
-			hasAddonsToRemove = true;
+			hasDictionariesToRemove = true;
 		}
 	}
 
-	if (hasAddonsToRemove)
+	if (hasDictionariesToRemove)
 	{
 		emit settingsModified();
 	}
