@@ -177,13 +177,13 @@ void DictionariesPage::updateDetails()
 
 	if (selectedDictionaries.count() == 1)
 	{
-		SpellCheckManager::DictionaryInformation information(SpellCheckManager::getDictionary(selectedDictionaries.first()));
+		SpellCheckManager::DictionaryInformation dictionary(SpellCheckManager::getDictionary(selectedDictionaries.first()));
 
-		if (information.isValid())
+		if (dictionary.isValid())
 		{
-			titleEntry.value = Dictionary(information, this).getTitle();
-			codeEntry.value = information.language;
-			locationEntry.value = QFileInfo(information.paths.at(0)).absolutePath();
+			titleEntry.value = Dictionary(dictionary, this).getTitle();
+			codeEntry.value = dictionary.language;
+			locationEntry.value = QFileInfo(dictionary.paths.at(0)).absolutePath();
 		}
 	}
 
