@@ -231,9 +231,11 @@ void UserScriptsPage::updateDetails()
 
 		if (script)
 		{
+			const QUrl homePage(script->getHomePage());
+
 			titleEntry.value = script->getTitle();
-			homePageEntry.value = script->getHomePage().toDisplayString();
-			homePageEntry.isUrl = !script->getHomePage().isEmpty();
+			homePageEntry.value = homePage.toDisplayString();
+			homePageEntry.isUrl = !homePage.isEmpty();
 		}
 	}
 
