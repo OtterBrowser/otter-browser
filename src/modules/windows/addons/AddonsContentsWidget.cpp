@@ -36,11 +36,13 @@ AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window
 {
 	m_ui->setupUi(this);
 
-	addPage(new UserScriptsPage(!isSidebarPanel(), this));
+	const bool needsDetails(!isSidebarPanel());
+
+	addPage(new UserScriptsPage(needsDetails, this));
 
 	m_ui->categoriesTabWidget->addPage(tr("User Styles"));
 
-	addPage(new DictionariesPage(!isSidebarPanel(), this));
+	addPage(new DictionariesPage(needsDetails, this));
 
 	m_ui->categoriesTabWidget->addPage(tr("Translations"));
 
