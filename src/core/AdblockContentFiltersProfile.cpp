@@ -303,7 +303,7 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 
 			if (value == QLatin1Char('^'))
 			{
-				node->children.insert(0, newNode);
+				node->children.insert(node->children.begin(), newNode);
 			}
 			else
 			{
