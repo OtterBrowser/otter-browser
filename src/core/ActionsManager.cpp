@@ -668,9 +668,14 @@ bool ActionsManager::isShortcutAllowed(const QKeySequence &shortcut, ShortcutChe
 		return false;
 	}
 
-	if ((check == AllChecks || check == DisallowSingleKeyShortcutCheck) && (!areSingleKeyShortcutsAllowed && (shortcut[0] == Qt::Key_Plus || !shortcut.toString(QKeySequence::PortableText).contains(QLatin1Char('+'))) && shortcut[0] != Qt::Key_Delete && !(shortcut[0] >= Qt::Key_F1 && shortcut[0] <= Qt::Key_F35)))
+	if ((check == AllChecks || check == DisallowSingleKeyShortcutCheck) && !areSingleKeyShortcutsAllowed)
 	{
-		return false;
+		const int key(shortcut[0]);
+
+		if ((key == Qt::Key_Plus || !shortcut.toString(QKeySequence::PortableText).contains(QLatin1Char('+'))) && key != Qt::Key_Delete && !(key >= Qt::Key_F1 && key <= Qt::Key_F35))
+		{
+			return false;
+		}
 	}
 
 	if (check == AllChecks || check == DisallowStandardShortcutCheck)
