@@ -438,7 +438,7 @@ void ActionsManager::loadProfiles()
 
 	const QStringList profiles(SettingsManager::getOption(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList());
 	QVector<QKeySequence> allShortcuts;
-	allShortcuts.reserve(50);
+	allShortcuts.reserve(100);
 
 	for (int i = 0; i < profiles.count(); ++i)
 	{
