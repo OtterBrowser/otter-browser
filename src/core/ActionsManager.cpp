@@ -184,14 +184,14 @@ bool KeyboardProfile::save()
 
 	settings.setArray(contextsArray);
 
-	const bool result(settings.save());
-
-	if (result)
+	if (settings.save())
 	{
 		setModified(false);
+
+		return true;
 	}
 
-	return result;
+	return false;
 }
 
 ActionsManager* ActionsManager::m_instance(nullptr);
