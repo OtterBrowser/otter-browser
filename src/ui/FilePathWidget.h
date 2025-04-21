@@ -21,6 +21,7 @@
 #ifndef OTTER_FILEPATHWIDGET_H
 #define OTTER_FILEPATHWIDGET_H
 
+#include <QtCore/QObject>
 #if QT_VERSION >= 0x060000
 #include <QtGui/QFileSystemModel>
 #endif
