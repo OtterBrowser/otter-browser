@@ -114,9 +114,11 @@ void FilePathWidget::focusOutEvent(QFocusEvent *event)
 {
 	QWidget::focusOutEvent(event);
 
-	if (m_initialPath != getPath())
+	const QString path(getPath());
+
+	if (m_initialPath != path)
 	{
-		emit pathChanged(getPath());
+		emit pathChanged(path);
 	}
 }
 
