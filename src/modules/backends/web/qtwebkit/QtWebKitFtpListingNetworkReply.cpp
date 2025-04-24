@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -144,25 +144,26 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 				for (int i = 0; i < rawEntries.count(); ++i)
 				{
+					const QUrlInfo rawEntry(rawEntries.at(i));
 					ListingEntry entry;
-					entry.name = rawEntries.at(i).name();
-					entry.url = Utils::normalizeUrl(request().url()).url() + QLatin1Char('/') + rawEntries.at(i).name();
-					entry.timeModified = rawEntries.at(i).lastModified();
-					entry.type = (rawEntries.at(i).isSymLink() ? ListingEntry::UnknownType : (rawEntries.at(i).isDir() ? ListingEntry::DirectoryType : ListingEntry::FileType));
-					entry.size = rawEntries.at(i).size();
-					entry.isSymlink = rawEntries.at(i).isSymLink();
+					entry.name = rawEntry.name();
+					entry.url = Utils::normalizeUrl(request().url()).url() + QLatin1Char('/') + rawEntry.name();
+					entry.timeModified = rawEntry.lastModified();
+					entry.type = (rawEntry.isSymLink() ? ListingEntry::UnknownType : (rawEntry.isDir() ? ListingEntry::DirectoryType : ListingEntry::FileType));
+					entry.size = rawEntry.size();
+					entry.isSymlink = rawEntry.isSymLink();
 
-					if (rawEntries.at(i).isSymLink())
+					if (rawEntry.isSymLink())
 					{
 						entry.mimeType = mimeDatabase.mimeTypeForName(QLatin1String("text/uri-list"));
 					}
-					else if (rawEntries.at(i).isDir())
+					else if (rawEntry.isDir())
 					{
 						entry.mimeType = mimeDatabase.mimeTypeForName(QLatin1String("inode/directory"));
 					}
 					else
 					{
-						entry.mimeType = mimeDatabase.mimeTypeForUrl(request().url().url() + rawEntries.at(i).name());
+						entry.mimeType = mimeDatabase.mimeTypeForUrl(request().url().url() + rawEntry.name());
 					}
 
 					entries.append(entry);
