@@ -110,6 +110,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 			{
 				open(ReadOnly | Unbuffered);
 
+				const QUrl normalizedUrl(Utils::normalizeUrl(request().url()));
 				QUrl url(request().url());
 				QMimeDatabase mimeDatabase;
 				QVector<NavigationEntry> navigation;
@@ -147,7 +148,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 					const QUrlInfo rawEntry(rawEntries.at(i));
 					ListingEntry entry;
 					entry.name = rawEntry.name();
-					entry.url = Utils::normalizeUrl(request().url()).url() + QLatin1Char('/') + rawEntry.name();
+					entry.url = normalizedUrl.url() + QLatin1Char('/') + rawEntry.name();
 					entry.timeModified = rawEntry.lastModified();
 					entry.type = (rawEntry.isSymLink() ? ListingEntry::UnknownType : (rawEntry.isDir() ? ListingEntry::DirectoryType : ListingEntry::FileType));
 					entry.size = rawEntry.size();
@@ -163,13 +164,13 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 					}
 					else
 					{
-						entry.mimeType = mimeDatabase.mimeTypeForUrl(request().url().url() + rawEntry.name());
+						entry.mimeType = mimeDatabase.mimeTypeForUrl(normalizedUrl.url() + rawEntry.name());
 					}
 
 					entries.append(entry);
 				}
 
-				m_content = createListing(request().url().toString() + (request().url().path().endsWith(QLatin1Char('/')) ? QChar() : QLatin1Char('/')), navigation, entries);
+				m_content = createListing(normalizedUrl.toString() + (normalizedUrl.path().endsWith(QLatin1Char('/')) ? QChar() : QLatin1Char('/')), navigation, entries);
 
 				setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("text/html; charset=UTF-8")));
 				setHeader(QNetworkRequest::ContentLengthHeader, QVariant(m_content.size()));
