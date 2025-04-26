@@ -31,8 +31,27 @@ QtWebKitFtpListingNetworkReply::QtWebKitFtpListingNetworkReply(const QNetworkReq
 	m_ftp(new QFtp(this)),
 	m_offset(0)
 {
-	connect(m_ftp, &QFtp::listInfo, this, &QtWebKitFtpListingNetworkReply::addEntry);
-	connect(m_ftp, &QFtp::readyRead, this, &QtWebKitFtpListingNetworkReply::processData);
+	connect(m_ftp, &QFtp::listInfo, this, [&](const QUrlInfo &entry)
+	{
+		if (entry.isSymLink())
+		{
+			m_symlinks.append(entry);
+		}
+		else if (entry.isDir())
+		{
+			m_directories.append(entry);
+		}
+		else
+		{
+			m_files.append(entry);
+		}
+	});
+	connect(m_ftp, &QFtp::readyRead, this, [&]()
+	{
+		m_content += m_ftp->readAll();
+
+		emit readyRead();
+	});
 	connect(m_ftp, &QFtp::commandFinished, this, &QtWebKitFtpListingNetworkReply::processCommand);
 	connect(m_ftp, &QFtp::dataTransferProgress, this, &QtWebKitFtpListingNetworkReply::downloadProgress);
 
@@ -195,29 +214,6 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 		default:
 			break;
 	}
-}
-
-void QtWebKitFtpListingNetworkReply::addEntry(const QUrlInfo &entry)
-{
-	if (entry.isSymLink())
-	{
-		m_symlinks.append(entry);
-	}
-	else if (entry.isDir())
-	{
-		m_directories.append(entry);
-	}
-	else
-	{
-		m_files.append(entry);
-	}
-}
-
-void QtWebKitFtpListingNetworkReply::processData()
-{
-	m_content += m_ftp->readAll();
-
-	emit readyRead();
 }
 
 void QtWebKitFtpListingNetworkReply::abort()

@@ -44,8 +44,6 @@ public slots:
 
 protected slots:
 	void processCommand(int command, bool isError);
-	void addEntry(const QUrlInfo &entry);
-	void processData();
 
 private:
 	QFtp *m_ftp;
