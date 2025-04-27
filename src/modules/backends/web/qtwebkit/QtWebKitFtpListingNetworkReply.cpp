@@ -60,8 +60,6 @@ QtWebKitFtpListingNetworkReply::QtWebKitFtpListingNetworkReply(const QNetworkReq
 
 void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 {
-	Q_UNUSED(command)
-
 	if (isError)
 	{
 		open(ReadOnly | Unbuffered);
@@ -110,7 +108,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 		return;
 	}
 
-	switch (m_ftp->currentCommand())
+	switch (command)
 	{
 		case QFtp::ConnectToHost:
 			m_ftp->login();
