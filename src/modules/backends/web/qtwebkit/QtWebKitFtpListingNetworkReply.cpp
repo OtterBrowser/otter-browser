@@ -64,6 +64,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 	{
 		open(ReadOnly | Unbuffered);
 
+		const QFtp::Error error(m_ftp->error());
 		ErrorPageInformation::PageAction reloadAction;
 		reloadAction.name = QLatin1String("reloadPage");
 		reloadAction.title = QCoreApplication::translate("utils", "Try Again");
@@ -74,17 +75,23 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 		information.description = QStringList(m_ftp->errorString());
 		information.actions.append(reloadAction);
 
-		if (m_ftp->error() == QFtp::HostNotFound)
+		switch (error)
 		{
-			information.type = ErrorPageInformation::ServerNotFoundError;
-		}
-		else if (m_ftp->error() == QFtp::ConnectionRefused)
-		{
-			information.type = ErrorPageInformation::ConnectionRefusedError;
-		}
-		else if (m_ftp->replyCode() > 0)
-		{
-			information.title = tr("Network error %1").arg(m_ftp->replyCode());
+			case QFtp::HostNotFound:
+				information.type = ErrorPageInformation::ServerNotFoundError;
+
+				break;
+			case QFtp::ConnectionRefused:
+				information.type = ErrorPageInformation::ConnectionRefusedError;
+
+				break;
+			default:
+				if (m_ftp->replyCode() > 0)
+				{
+					information.title = tr("Network error %1").arg(m_ftp->replyCode());
+				}
+
+				break;
 		}
 
 		m_content = Utils::createErrorPage(information).toUtf8();
@@ -96,7 +103,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 		emit readyRead();
 		emit finished();
 
-		if (m_ftp->error() != QFtp::NotConnected)
+		if (error != QFtp::NotConnected)
 		{
 			m_ftp->close();
 		}
