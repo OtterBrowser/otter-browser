@@ -195,7 +195,14 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 					entries.append(entry);
 				}
 
-				m_content = createListing(normalizedUrl.toString() + (normalizedUrl.path().endsWith(QLatin1Char('/')) ? QChar() : QLatin1Char('/')), navigation, entries);
+				QString title(normalizedUrl.toString());
+
+				if (!normalizedUrl.path().endsWith(QLatin1Char('/')))
+				{
+					title.append(QLatin1Char('/'));
+				}
+
+				m_content = createListing(title, navigation, entries);
 
 				setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("text/html; charset=UTF-8")));
 				setHeader(QNetworkRequest::ContentLengthHeader, QVariant(m_content.size()));
