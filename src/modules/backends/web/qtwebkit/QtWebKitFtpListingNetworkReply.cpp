@@ -175,20 +175,22 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 					entry.name = rawEntry.name();
 					entry.url = normalizedUrl.url() + QLatin1Char('/') + rawEntry.name();
 					entry.timeModified = rawEntry.lastModified();
-					entry.type = (rawEntry.isSymLink() ? ListingEntry::UnknownType : (rawEntry.isDir() ? ListingEntry::DirectoryType : ListingEntry::FileType));
 					entry.size = rawEntry.size();
 					entry.isSymlink = rawEntry.isSymLink();
 
 					if (rawEntry.isSymLink())
 					{
+						entry.type = ListingEntry::UnknownType;
 						entry.mimeType = mimeDatabase.mimeTypeForName(QLatin1String("text/uri-list"));
 					}
 					else if (rawEntry.isDir())
 					{
+						entry.type = ListingEntry::DirectoryType;
 						entry.mimeType = mimeDatabase.mimeTypeForName(QLatin1String("inode/directory"));
 					}
 					else
 					{
+						entry.type = ListingEntry::FileType;
 						entry.mimeType = mimeDatabase.mimeTypeForUrl(normalizedUrl.url() + rawEntry.name());
 					}
 
