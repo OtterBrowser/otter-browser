@@ -96,12 +96,9 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 		m_content = Utils::createErrorPage(information).toUtf8();
 
-		setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("text/html; charset=UTF-8")));
-		setHeader(QNetworkRequest::ContentLengthHeader, QVariant(m_content.size()));
+		sendHeaders();
 
 		emit listingError();
-		emit readyRead();
-		emit finished();
 
 		if (error != QFtp::NotConnected)
 		{
@@ -206,11 +203,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 				m_content = createListing(title, navigation, entries);
 
-				setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("text/html; charset=UTF-8")));
-				setHeader(QNetworkRequest::ContentLengthHeader, QVariant(m_content.size()));
-
-				emit readyRead();
-				emit finished();
+				sendHeaders();
 
 				m_ftp->close();
 			}
@@ -235,6 +228,15 @@ void QtWebKitFtpListingNetworkReply::abort()
 {
 	m_ftp->close();
 
+	emit finished();
+}
+
+void QtWebKitFtpListingNetworkReply::sendHeaders()
+{
+	setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("text/html; charset=UTF-8")));
+	setHeader(QNetworkRequest::ContentLengthHeader, QVariant(m_content.size()));
+
+	emit readyRead();
 	emit finished();
 }
 

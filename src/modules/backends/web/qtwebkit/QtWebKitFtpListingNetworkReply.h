@@ -42,6 +42,9 @@ public:
 public slots:
 	void abort() override;
 
+protected:
+	void sendHeaders();
+
 protected slots:
 	void processCommand(int command, bool isError);
 
