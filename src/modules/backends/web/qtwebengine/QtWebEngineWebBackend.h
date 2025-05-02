@@ -24,7 +24,7 @@
 #include "../../../../core/WebBackend.h"
 
 #include <QtWebEngineCore/QWebEngineNotification>
-#include <QtWebEngineWidgets/QWebEngineDownloadItem>
+#include <QtWebEngineCore/QWebEngineDownloadRequest>
 
 #include <memory>
 
@@ -57,7 +57,7 @@ protected:
 	static void showNotification(std::unique_ptr<QWebEngineNotification> nativeNotification);
 
 protected slots:
-	void handleDownloadRequested(QWebEngineDownloadItem *item);
+	void handleDownloadRequested(QWebEngineDownloadRequest *item);
 	void handleOptionChanged(int identifier);
 
 private:

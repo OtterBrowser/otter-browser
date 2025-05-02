@@ -1,0 +1,16 @@
+if (NOT ENABLE_QT6)
+	set(QT_MAJOR_VERSION Qt5)
+	set(QT_MINIMUM_VERSION 5.15)
+	set(QT_MINIMUM_VERSION_WEBKIT 5.212)
+else ()
+	set(QT_MAJOR_VERSION Qt6)
+	set(QT_MINIMUM_VERSION 6.2)
+endif ()
+
+find_package(${QT_MAJOR_VERSION} REQUIRED COMPONENTS Core Gui Multimedia Network PrintSupport Qml Svg Widgets)
+find_package(${QT_MAJOR_VERSION} REQUIRED COMPONENTS Core5Compat)
+
+if (ENABLE_SPELLCHECK)
+	find_package(Hunspell 1.5.0 REQUIRED)
+	set_package_properties(Hunspell PROPERTIES URL "https://hunspell.github.io/" DESCRIPTION "Generic spell checking support" TYPE OPTIONAL)
+endif ()
