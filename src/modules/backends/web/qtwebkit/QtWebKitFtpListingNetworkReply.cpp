@@ -211,10 +211,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 			break;
 		case QFtp::Get:
 			open(QIODevice::ReadOnly | QIODevice::Unbuffered);
-			setHeader(QNetworkRequest::ContentLengthHeader, QVariant(m_content.size()));
-
-			emit readyRead();
-			emit finished();
+			sendHeaders(false);
 
 			m_ftp->close();
 
@@ -231,9 +228,13 @@ void QtWebKitFtpListingNetworkReply::abort()
 	emit finished();
 }
 
-void QtWebKitFtpListingNetworkReply::sendHeaders()
+void QtWebKitFtpListingNetworkReply::sendHeaders(bool isHtml)
 {
-	setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("text/html; charset=UTF-8")));
+	if (isHtml)
+	{
+		setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("text/html; charset=UTF-8")));
+	}
+
 	setHeader(QNetworkRequest::ContentLengthHeader, QVariant(m_content.size()));
 
 	emit readyRead();

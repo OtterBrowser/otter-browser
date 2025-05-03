@@ -43,7 +43,7 @@ public slots:
 	void abort() override;
 
 protected:
-	void sendHeaders();
+	void sendHeaders(bool isHtml = true);
 
 protected slots:
 	void processCommand(int command, bool isError);
