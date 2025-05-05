@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -166,13 +166,13 @@ qint64 LocalListingNetworkReply::readData(char *data, qint64 maxSize)
 {
 	if (m_offset < m_content.size())
 	{
-		const qint64 number(qMin(maxSize, (m_content.size() - m_offset)));
+		const qint64 size(qMin(maxSize, (m_content.size() - m_offset)));
 
-		memcpy(data, (m_content.constData() + m_offset), static_cast<size_t>(number));
+		memcpy(data, (m_content.constData() + m_offset), static_cast<size_t>(size));
 
-		m_offset += number;
+		m_offset += size;
 
-		return number;
+		return size;
 	}
 
 	return -1;
