@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTemporaryFile>
 #include <QtCore/QTimer>
+#include <QtCore/QTimeZone>
 #include <QtNetwork/QAbstractNetworkCache>
 #include <QtWidgets/QMessageBox>
 
@@ -84,8 +85,8 @@ Transfer::Transfer(const QSettings &settings, QObject *parent) : QObject(parent 
 	m_isSelectingPath(false),
 	m_isArchived(true)
 {
-	m_timeStarted.setTimeSpec(Qt::UTC);
-	m_timeFinished.setTimeSpec(Qt::UTC);
+	m_timeStarted.setTimeZone(QTimeZone::utc());
+	m_timeFinished.setTimeZone(QTimeZone::utc());
 }
 
 Transfer::~Transfer()
