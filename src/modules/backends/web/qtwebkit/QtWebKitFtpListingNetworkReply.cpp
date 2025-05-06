@@ -136,6 +136,8 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 				QUrl url(request().url());
 				QMimeDatabase mimeDatabase;
 				QVector<NavigationEntry> navigation;
+				navigation.reserve(url.path().count(QLatin1Char('/')) + 1);
+
 				const QVector<QUrlInfo> rawEntries(m_symlinks + m_directories + m_files);
 				QVector<ListingEntry> entries;
 				entries.reserve(rawEntries.count());
