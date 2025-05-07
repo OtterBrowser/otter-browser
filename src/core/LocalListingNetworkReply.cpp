@@ -127,9 +127,21 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 		entry.url = QUrl::fromUserInput(rawEntry.filePath());
 		entry.timeModified = rawEntry.lastModified();
 		entry.mimeType = mimeDatabase.mimeTypeForFile(rawEntry.filePath());
-		entry.type = (rawEntry.isRoot() ? ListingEntry::DriveType : (rawEntry.isDir() ? ListingEntry::DirectoryType : ListingEntry::FileType));
 		entry.size = rawEntry.size();
 		entry.isSymlink = rawEntry.isSymLink();
+
+		if (rawEntry.isRoot())
+		{
+			entry.type = ListingEntry::DriveType;
+		}
+		else if (rawEntry.isDir())
+		{
+			entry.type = ListingEntry::DirectoryType;
+		}
+		else
+		{
+			entry.type = ListingEntry::FileType;
+		}
 
 #ifdef Q_OS_WIN32
 		if (isListingDevices)
