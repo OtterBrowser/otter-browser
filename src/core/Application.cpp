@@ -1398,7 +1398,7 @@ QString Application::createReport(ReportOptions options)
 	versionReport.entries.append({QLatin1String("Web Backend"), (webBackend ? QStringLiteral("%1 %2").arg(webBackend->getTitle(), webBackend->getEngineVersion()) : QLatin1String("none"))});
 	versionReport.entries.append({QLatin1String("Build Date"), QDateTime::fromString(OTTER_BUILD_DATETIME, Qt::ISODate).toUTC().toString(Qt::ISODate)});
 	versionReport.entries.append({QLatin1String("Git Branch"), ((gitBranch.isEmpty() || gitBranch == QLatin1String("unknown")) ? QString(QLatin1Char('-')) : gitBranch)});
-	versionReport.entries.append({QLatin1String("Git Revision"), ((gitRevision.isEmpty() || gitRevision == QLatin1String("unknown")) ? QString(QLatin1Char('-')) : QStringLiteral("%1 (%2)").arg(gitRevision).arg(QDateTime::fromString(QStringLiteral(OTTER_GIT_DATETIME).trimmed(), Qt::ISODate).toUTC().toString(Qt::ISODate)))});
+	versionReport.entries.append({QLatin1String("Git Revision"), ((gitRevision.isEmpty() || gitRevision == QLatin1String("unknown")) ? QString(QLatin1Char('-')) : QStringLiteral("%1 (%2)").arg(gitRevision, QDateTime::fromString(QStringLiteral(OTTER_GIT_DATETIME).trimmed(), Qt::ISODate).toUTC().toString(Qt::ISODate)))});
 
 	report.sections.append(versionReport);
 
