@@ -721,7 +721,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 						if (geometry.isValid())
 						{
-							windowObject.insert(QLatin1String("geometry"), QStringLiteral("%1, %2, %3, %4").arg(geometry.x()).arg(geometry.y()).arg(geometry.width()).arg(geometry.height()));
+							windowObject.insert(QLatin1String("geometry"), QStringLiteral("%1, %2, %3, %4").arg(QString::number(geometry.x()), QString::number(geometry.y()), QString::number(geometry.width()), QString::number(geometry.height())));
 						}
 					}
 
@@ -749,7 +749,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 				if (!position.isNull())
 				{
-					historyEntryObject.insert(QLatin1String("position"), QStringLiteral("%1, %2").arg(position.x()).arg(position.y()));
+					historyEntryObject.insert(QLatin1String("position"), QStringLiteral("%1, %2").arg(QString::number(position.x()), QString::number(position.y())));
 				}
 
 				windowHistoryArray.append(historyEntryObject);
