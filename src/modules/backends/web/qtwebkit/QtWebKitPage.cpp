@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -834,7 +834,7 @@ bool QtWebKitPage::extension(Extension extension, const ExtensionOption *option,
 			domain = QLatin1String("HTTP");
 		}
 
-		const QString logMessage(tr("%1 error #%2: %3").arg(domain).arg(errorOption->error).arg(errorOption->errorString));
+        const QString logMessage(tr("%1 error #%2: %3").arg(domain, QString::number(errorOption->error), errorOption->errorString));
 		const quint64 windowIdentifier(m_widget ? m_widget->getWindowIdentifier() : 0);
 
 		if (errorOption->domain == WebKit && (errorOption->error == 102 || errorOption->error == 203))
