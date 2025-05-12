@@ -908,7 +908,7 @@ bool QtWebKitPage::extension(Extension extension, const ExtensionOption *option,
 					{
 						const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(blockedRequest.metaData.value(NetworkManager::ContentBlockingProfileMetaData).toInt()));
 
-						information.description.append(tr("Request blocked by rule from profile %1:<br>\n%2").arg(profile ? profile->getTitle() : tr("(Unknown)"), QStringLiteral("<span style=\"font-family:monospace;\">%1</span>").arg(blockedRequest.metaData.value(NetworkManager::ContentBlockingRuleMetaData).toString())));
+						information.description.append(tr("Request blocked by rule from profile %1:<br>\n%2").arg((profile ? profile->getTitle() : tr("(Unknown)"), QStringLiteral("<span style=\"font-family:monospace;\">%1</span>"), blockedRequest.metaData.value(NetworkManager::ContentBlockingRuleMetaData).toString())));
 					}
 
 					break;
