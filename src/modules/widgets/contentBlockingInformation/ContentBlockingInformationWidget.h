@@ -21,7 +21,6 @@
 #ifndef OTTER_CONTENTBLOCKINGINFORMATIONWIDGET_H
 #define OTTER_CONTENTBLOCKINGINFORMATIONWIDGET_H
 
-#include "../../../core/NetworkManager.h"
 #include "../../../ui/ToolButtonWidget.h"
 
 namespace Otter
