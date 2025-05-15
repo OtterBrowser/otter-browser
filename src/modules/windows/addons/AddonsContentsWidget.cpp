@@ -128,7 +128,7 @@ QString AddonsContentsWidget::getTitle() const
 
 	if (page)
 	{
-		return QStringLiteral("%1 / %2").arg(tr("Addons")).arg(page->getTitle());
+		return QStringLiteral("%1 / %2").arg(tr("Addons"), page->getTitle());
 	}
 
 	return tr("Addons");
