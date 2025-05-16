@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -281,7 +281,7 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &url)
 	}
 
 	domainItem->appendRow(entryItems);
-	domainItem->setText(QStringLiteral("%1 (%2)").arg(domain).arg(domainItem->rowCount()));
+	domainItem->setText(QStringLiteral("%1 (%2)").arg(domain, QString::number(domainItem->rowCount())));
 
 	if (sender())
 	{
@@ -325,7 +325,7 @@ void CacheContentsWidget::handleEntryRemoved(const QUrl &url)
 				domainSizeItem->setText(Utils::formatUnit(domainSizeItem->data(SizeRole).toLongLong()));
 			}
 
-			domainItem->setText(QStringLiteral("%1 (%2)").arg(url.host()).arg(domainItem->rowCount()));
+			domainItem->setText(QStringLiteral("%1 (%2)").arg(url.host(), QString::number(domainItem->rowCount())));
 		}
 
 		break;
