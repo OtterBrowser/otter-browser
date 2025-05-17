@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -216,7 +216,7 @@ QString AcceptLanguageDialog::getLanguages()
 			}
 			else
 			{
-				result.append(QStringLiteral(",%1;q=%2").arg(index.data(Qt::UserRole).toString()).arg(qMax(1 - (i * step), 0.001)));
+				result.append(QStringLiteral(",%1;q=%2").arg(index.data(Qt::UserRole).toString(), QString::number(qMax(1 - (i * step), 0.001))));
 			}
 		}
 	}
