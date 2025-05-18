@@ -610,6 +610,7 @@ DiagnosticReport::Section ActionsManager::createReport()
 		{
 			const QVector<QKeySequence> shortcuts(m_shortcuts[i]);
 			QStringList fields({getActionName(i)});
+			fields.reserve(shortcuts.count());
 
 			for (int j = 0; j < shortcuts.count(); ++j)
 			{
