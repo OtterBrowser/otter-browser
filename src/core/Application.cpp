@@ -919,7 +919,7 @@ void Application::removeWindow(MainWindow *mainWindow)
 	}
 }
 
-void Application::scheduleUpdateCheck(int interval)
+void Application::scheduleUpdateCheck(quint64 interval)
 {
 	if (m_updateCheckTimer)
 	{
@@ -927,7 +927,7 @@ void Application::scheduleUpdateCheck(int interval)
 	}
 
 	m_updateCheckTimer = new LongTermTimer(this);
-	m_updateCheckTimer->start(static_cast<quint64>(interval * 1000 * 86400));
+	m_updateCheckTimer->start(interval * 1000 * 86400);
 
 	connect(m_updateCheckTimer, &LongTermTimer::timeout, this, [&]()
 	{
