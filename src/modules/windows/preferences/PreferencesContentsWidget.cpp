@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -112,7 +112,7 @@ QString PreferencesContentsWidget::getTitle() const
 
 	if (page)
 	{
-		return QStringLiteral("%1 / %2").arg(tr("Preferences")).arg(page->getTitle());
+		return QStringLiteral("%1 / %2").arg(tr("Preferences"), page->getTitle());
 	}
 
 	return tr("Preferences");
