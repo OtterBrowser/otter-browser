@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -287,7 +287,7 @@ void CookiesContentsWidget::handleCookieAdded(const QNetworkCookie &cookie)
 	cookieItem->setFlags(cookieItem->flags() | Qt::ItemNeverHasChildren);
 
 	domainItem->appendRow(cookieItem);
-	domainItem->setText(QStringLiteral("%1 (%2)").arg(domain).arg(domainItem->rowCount()));
+	domainItem->setText(QStringLiteral("%1 (%2)").arg(domain, QString::number(domainItem->rowCount())));
 }
 
 void CookiesContentsWidget::handleCookieRemoved(const QNetworkCookie &cookie)
@@ -325,7 +325,7 @@ void CookiesContentsWidget::handleCookieRemoved(const QNetworkCookie &cookie)
 	}
 	else
 	{
-		domainItem->setText(QStringLiteral("%1 (%2)").arg(domain).arg(domainItem->rowCount()));
+		domainItem->setText(QStringLiteral("%1 (%2)").arg(domain, QString::number(domainItem->rowCount())));
 	}
 
 	if (!point.isNull())
