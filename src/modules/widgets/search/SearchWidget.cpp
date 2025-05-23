@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -330,10 +330,12 @@ void SearchWidget::mouseReleaseEvent(QMouseEvent *event)
 
 			for (int i = 0; i < searchEngines.count(); ++i)
 			{
-				if (!SearchEnginesManager::hasSearchEngine(searchEngines.at(i).url))
+				const WebWidget::LinkUrl searchEngine(searchEngines.at(i));
+
+				if (!SearchEnginesManager::hasSearchEngine(searchEngine.url))
 				{
-					Action *action(new Action(ActionsManager::AddSearchAction, {{QLatin1String("url"), searchEngines.at(i).url}}, executor, this));
-					action->setTextOverride(tr("Add %1").arg(searchEngines.at(i).title.isEmpty() ? tr("(untitled)") : searchEngines.at(i).title));
+					Action *action(new Action(ActionsManager::AddSearchAction, {{QLatin1String("url"), searchEngine.url}}, executor, this));
+					action->setTextOverride(tr("Add %1").arg(searchEngine.title.isEmpty() ? tr("(untitled)") : searchEngine.title));
 					action->setIconOverride(m_window->getIcon());
 
 					menu.addAction(action);
