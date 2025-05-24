@@ -633,6 +633,7 @@ DiagnosticReport::Section ActionsManager::createReport()
 			{
 				const QVector<QKeySequence> shortcuts(definitions.at(j).second);
 				QStringList fields({QLatin1Char(' ') + QString::fromLatin1(QJsonDocument(QJsonObject::fromVariantMap(definitions.at(j).first)).toJson(QJsonDocument::Compact))});
+				fields.reserve(shortcuts.count() + 1);
 
 				for (int k = 0; k < shortcuts.count(); ++k)
 				{
