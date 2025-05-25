@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -162,7 +162,7 @@ bool Migrator::run()
 
 	QDialogButtonBox::StandardButton clickedButton(QDialogButtonBox::Yes);
 
-	QObject::connect(buttonBox, &QDialogButtonBox::clicked, [&](QAbstractButton *button)
+	QObject::connect(buttonBox, &QDialogButtonBox::clicked, &dialog, [&](QAbstractButton *button)
 	{
 		clickedButton = buttonBox->standardButton(button);
 
