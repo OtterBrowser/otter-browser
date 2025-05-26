@@ -307,7 +307,7 @@ void AddonsManager::registerSpecialPage(const AddonsManager::SpecialPageInformat
 
 void AddonsManager::loadUserScripts()
 {
-	qDeleteAll(m_userScripts.values());
+	qDeleteAll(m_userScripts);
 
 	m_userScripts.clear();
 
