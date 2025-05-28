@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -101,7 +101,7 @@ UpdateChecker::UpdateChecker(QObject *parent, bool isInBackground) : QObject(par
 						information.isAvailable = channelObject.value(QLatin1String("availablePlatforms")).toVariant().toStringList().contains(platform);
 						information.detailsUrl = QUrl(channelObject.value(QLatin1String("detailsUrl")).toString());
 						information.scriptUrl = QUrl(channelObject.value(QLatin1String("scriptUrl")).toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform));
-						information.fileUrl = QUrl(channelObject.value(QLatin1String("fileUrl")).toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform).replace(QLatin1String("%TIMESTAMP%"), QString::number(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch() / 1000)));
+						information.fileUrl = QUrl(channelObject.value(QLatin1String("fileUrl")).toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform).replace(QLatin1String("%TIMESTAMP%"), QString::number(QDateTime::currentMSecsSinceEpoch() / 1000)));
 
 						if (!channelObject.value(QLatin1String("subVersion")).toString().isEmpty())
 						{
