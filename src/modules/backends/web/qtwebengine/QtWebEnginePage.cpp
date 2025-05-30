@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -264,7 +264,7 @@ void QtWebEnginePage::setHistory(const Session::Window::History &history)
 	{
 		const Session::Window::History::Entry entry(history.entries.at(i));
 
-		stream << QUrl(entry.url) << entry.title << QByteArray() << static_cast<qint32>(0) << false << QUrl() << static_cast<qint32>(0) << QUrl(entry.url) << false << QDateTime::currentDateTimeUtc().toSecsSinceEpoch() << static_cast<int>(200);
+		stream << QUrl(entry.url) << entry.title << QByteArray() << static_cast<qint32>(0) << false << QUrl() << static_cast<qint32>(0) << QUrl(entry.url) << false << QDateTime::currentSecsSinceEpoch() << static_cast<int>(200);
 
 		HistoryEntryInformation entryInformation;
 		entryInformation.timeVisited = entry.time;
