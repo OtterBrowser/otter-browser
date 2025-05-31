@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -103,7 +103,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 
 	m_page->setUrlRequestInterceptor(m_requestInterceptor);
 
-	connect(m_page, &QtWebEnginePage::loadProgress, [&](int progress)
+	connect(m_page, &QtWebEnginePage::loadProgress, m_page, [&](int progress)
 	{
 		m_documentLoadingProgress = progress;
 
@@ -121,15 +121,15 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	connect(m_page, &QtWebEnginePage::printRequested, this, &QtWebEngineWebWidget::handlePrintRequest);
 	connect(m_page, &QtWebEnginePage::windowCloseRequested, this, &QtWebEngineWebWidget::handleWindowCloseRequest);
 	connect(m_page, &QtWebEnginePage::fullScreenRequested, this, &QtWebEngineWebWidget::handleFullScreenRequest);
-	connect(m_page, &QtWebEnginePage::featurePermissionRequested, [&](const QUrl &url, QWebEnginePage::Feature feature)
+	connect(m_page, &QtWebEnginePage::featurePermissionRequested, m_page, [&](const QUrl &url, QWebEnginePage::Feature feature)
 	{
 		notifyPermissionRequested(url, feature, false);
 	});
-	connect(m_page, &QtWebEnginePage::featurePermissionRequestCanceled, [&](const QUrl &url, QWebEnginePage::Feature feature)
+	connect(m_page, &QtWebEnginePage::featurePermissionRequestCanceled, m_page, [&](const QUrl &url, QWebEnginePage::Feature feature)
 	{
 		notifyPermissionRequested(url, feature, true);
 	});
-	connect(m_page, &QtWebEnginePage::findTextFinished, [&](const QWebEngineFindTextResult &result)
+	connect(m_page, &QtWebEnginePage::findTextFinished, m_page, [&](const QWebEngineFindTextResult &result)
 	{
 		emit findInPageResultsChanged(m_findInPageText, result.numberOfMatches(), result.activeMatch());
 	});
