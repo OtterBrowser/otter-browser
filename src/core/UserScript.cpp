@@ -67,7 +67,7 @@ void UserScript::reload()
 		return;
 	}
 
-	QRegularExpression uriExpression(QLatin1String("^.+://.*/.*"));
+	const QRegularExpression uriExpression(QLatin1String("^.+://.*/.*"));
 	uriExpression.optimize();
 
 	QTextStream stream(&file);
