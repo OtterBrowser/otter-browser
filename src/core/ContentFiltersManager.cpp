@@ -64,7 +64,7 @@ void ContentFiltersManager::initialize()
 	}
 
 	const QList<QFileInfo> existingProfiles(QDir(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking"))).entryInfoList({QLatin1String("*.txt")}, QDir::Files));
-	QJsonObject bundledMainObject(JsonSettings(SessionsManager::getReadableDataPath(QLatin1String("contentBlocking.json"), true)).object());
+	const QJsonObject bundledMainObject(JsonSettings(SessionsManager::getReadableDataPath(QLatin1String("contentBlocking.json"), true)).object());
 	QStringList profiles;
 	profiles.reserve(existingProfiles.count());
 
@@ -94,7 +94,7 @@ void ContentFiltersManager::initialize()
 
 	m_contentBlockingProfiles.reserve(profiles.count());
 
-	QJsonObject localMainObject(JsonSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.json"))).object());
+	const QJsonObject localMainObject(JsonSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.json"))).object());
 	const QHash<QString, ContentFiltersProfile::ProfileCategory> categoryTitles({{QLatin1String("advertisements"), ContentFiltersProfile::AdvertisementsCategory}, {QLatin1String("annoyance"), ContentFiltersProfile::AnnoyanceCategory}, {QLatin1String("privacy"), ContentFiltersProfile::PrivacyCategory}, {QLatin1String("social"), ContentFiltersProfile::SocialCategory}, {QLatin1String("regional"), ContentFiltersProfile::RegionalCategory}, {QLatin1String("other"), ContentFiltersProfile::OtherCategory}});
 
 	for (int i = 0; i < profiles.count(); ++i)
