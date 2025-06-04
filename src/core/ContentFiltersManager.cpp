@@ -23,7 +23,6 @@
 #include "Application.h"
 #include "Console.h"
 #include "JsonSettings.h"
-#include "SettingsManager.h"
 #include "SessionsManager.h"
 
 #include <QtCore/QDir>
