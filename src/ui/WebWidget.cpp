@@ -26,7 +26,6 @@
 #include "Menu.h"
 #include "TransferDialog.h"
 #include "Window.h"
-#include "../core/Application.h"
 #include "../core/BookmarksManager.h"
 #include "../core/ContentFiltersManager.h"
 #include "../core/HandlersManager.h"
@@ -43,6 +42,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
+#include <QtGui/QGuiApplication>
 #include <QtGui/QClipboard>
 #include <QtWidgets/QToolTip>
 
