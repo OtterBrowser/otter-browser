@@ -20,7 +20,6 @@
 #include "BookmarksContentsWidget.h"
 #include "../../../core/Application.h"
 #include "../../../core/SessionsManager.h"
-#include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
