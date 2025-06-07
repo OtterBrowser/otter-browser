@@ -20,7 +20,6 @@
 **************************************************************************/
 
 #include "AdvancedPreferencesPage.h"
-#include "../../../core/ActionsManager.h"
 #include "../../../core/Application.h"
 #include "../../../core/GesturesManager.h"
 #include "../../../core/HandlersManager.h"
