@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "DictionariesPage.h"
-#include "../../../ui/ItemViewWidget.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
