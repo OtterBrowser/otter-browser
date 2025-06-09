@@ -20,7 +20,6 @@
 #ifndef OTTER_ADDONSCONTENTSWIDGET_H
 #define OTTER_ADDONSCONTENTSWIDGET_H
 
-#include "../../../core/AddonsManager.h"
 #include "../../../ui/ContentsWidget.h"
 
 #include <QtGui/QStandardItemModel>
