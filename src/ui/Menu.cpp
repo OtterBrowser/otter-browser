@@ -25,7 +25,6 @@
 #include "../core/BookmarksManager.h"
 #include "../core/Console.h"
 #include "../core/FeedsManager.h"
-#include "../core/HistoryManager.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/NotesManager.h"
 #include "../core/SearchEnginesManager.h"
