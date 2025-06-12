@@ -22,7 +22,6 @@
 #include "WebsitePreferencesDialog.h"
 #include "ContentFiltersViewWidget.h"
 #include "CookiePropertiesDialog.h"
-#include "../core/ContentFiltersManager.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
