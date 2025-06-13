@@ -20,7 +20,7 @@
 #ifndef OTTER_BOOKMARKSCONTENTSWIDGET_H
 #define OTTER_BOOKMARKSCONTENTSWIDGET_H
 
-#include "../../../core/BookmarksManager.h"
+#include "../../../core/BookmarksModel.h"
 #include "../../../ui/ContentsWidget.h"
 
 #include <QtGui/QStandardItemModel>
