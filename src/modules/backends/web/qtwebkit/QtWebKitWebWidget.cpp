@@ -2415,7 +2415,7 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 
 	if (nativeResult.element().evaluateJavaScript(QLatin1String("this.spellcheck")).toBool())
 	{
-		result.flags |= HitTestResult::IsSpellCheckEnabled;
+		result.flags |= HitTestResult::IsSpellCheckEnabledTest;
 	}
 
 	if (result.mediaUrl.isValid())

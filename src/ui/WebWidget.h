@@ -163,7 +163,7 @@ public:
 			IsFormTest = 4,
 			IsLinkFromSelectionTest = 8,
 			IsSelectedTest = 16,
-			IsSpellCheckEnabled = 32,
+			IsSpellCheckEnabledTest = 32,
 			MediaHasControlsTest = 64,
 			MediaIsLoopedTest = 128,
 			MediaIsMutedTest = 256,

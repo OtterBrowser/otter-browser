@@ -1445,7 +1445,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 				}
 				else
 				{
-					state.isChecked = m_hitResult.flags.testFlag(HitTestResult::IsSpellCheckEnabled);
+					state.isChecked = m_hitResult.flags.testFlag(HitTestResult::IsSpellCheckEnabledTest);
 				}
 			}
 
