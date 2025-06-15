@@ -36,6 +36,7 @@ ProxyModel::ProxyModel(QStandardItemModel *model, const QVector<ProxyModel::Colu
 QMimeData* ProxyModel::mimeData(const QModelIndexList &indexes) const
 {
 	QModelIndexList sourceIndexes;
+	sourceIndexes.reserve(indexes.count());
 
 	for (int i = 0; i < indexes.count(); ++i)
 	{
