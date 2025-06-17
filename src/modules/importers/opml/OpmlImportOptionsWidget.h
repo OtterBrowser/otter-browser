@@ -20,7 +20,7 @@
 #ifndef OTTER_OPMLIMPORTDATAEXCHANGERWIDGET_H
 #define OTTER_OPMLIMPORTDATAEXCHANGERWIDGET_H
 
-#include "../../../core/FeedsManager.h"
+#include "../../../core/FeedsModel.h"
 
 #include <QtWidgets/QWidget>
 
