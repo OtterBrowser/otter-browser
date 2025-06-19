@@ -521,7 +521,7 @@ void WebWidget::showContextMenu(const QPoint &position)
 		}
 	}
 
-	if (!m_hitResult.imageUrl.isEmpty())
+	if (m_hitResult.imageUrl.isValid())
 	{
 		includeSections.append(QLatin1String("image"));
 	}
