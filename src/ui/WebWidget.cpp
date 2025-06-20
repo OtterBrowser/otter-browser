@@ -366,9 +366,11 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 	{
 		for (int i = 0; i < layout.count(); ++i)
 		{
-			if (entries.contains(layout.at(i)))
+			const ToolTipEntry entry(layout.at(i));
+
+			if (entries.contains(entry))
 			{
-				switch (layout.at(i))
+				switch (entry)
 				{
 					case LastVisitedEntry:
 						m_toolTip.append(tr("Last Visited: %1").arg(entries[LastVisitedEntry]));
