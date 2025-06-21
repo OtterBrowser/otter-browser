@@ -954,19 +954,23 @@ QString WebWidget::getFastForwardScript(bool isSelectingTheBestLink)
 
 		for (int i = 0; i < categories.count(); ++i)
 		{
-			settings.beginGroup(categories.at(i));
+			const QString category(categories.at(i));
+
+			settings.beginGroup(category);
 
 			const QStringList keys(settings.getKeys());
 			QJsonArray tokensArray;
 
 			for (int j = 0; j < keys.count(); ++j)
 			{
-				tokensArray.append(QJsonObject({{QLatin1String("value"), keys.at(j).toUpper()}, {QLatin1String("score"), settings.getValue(keys.at(j)).toInt()}}));
+				const QString key(keys.at(j));
+
+				tokensArray.append(QJsonObject({{QLatin1String("value"), key.toUpper()}, {QLatin1String("score"), settings.getValue(key).toInt()}}));
 			}
 
 			settings.endGroup();
 
-			script.replace(QLatin1Char('{') + categories.at(i).toLower() + QLatin1String("Tokens}"), QString::fromUtf8(QJsonDocument(tokensArray).toJson(QJsonDocument::Compact)));
+			script.replace(QLatin1Char('{') + category.toLower() + QLatin1String("Tokens}"), QString::fromUtf8(QJsonDocument(tokensArray).toJson(QJsonDocument::Compact)));
 		}
 
 		m_fastForwardScript = script;
