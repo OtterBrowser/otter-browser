@@ -44,6 +44,7 @@
 #include <QtCore/QJsonDocument>
 #include <QtGui/QGuiApplication>
 #include <QtGui/QClipboard>
+#include <QtGui/QPainter>
 #include <QtWidgets/QToolTip>
 
 namespace Otter
@@ -1041,9 +1042,27 @@ QUrl WebWidget::getRequestedUrl() const
 
 QPixmap WebWidget::createThumbnail(const QSize &size)
 {
-	QPixmap pixmap(size);
+	const QString host(Utils::extractHost(getUrl()));
+	const QString text(host.mid(0, 1).toUpper());
+	QCryptographicHash hash(QCryptographicHash::Md5);
+	hash.addData(host.toUtf8());
+
+	QPixmap pixmap(size.isValid() ? size : QSize(260, 170));
+	pixmap.setDevicePixelRatio(devicePixelRatio());
 	pixmap.fill(Qt::white);
-///TODO fallback method to create one letter "thumbnails"
+
+	QPainter painter(&pixmap);
+	QFont font(painter.font());
+	font.setPixelSize((pixmap.rect().height() / 3) * 2);
+
+	painter.setFont(font);
+	painter.setRenderHints(QPainter::Antialiasing);
+	painter.setPen(QPen(QColor(Qt::gray)));
+	painter.drawText(pixmap.rect().adjusted(0, 1, 1, 0), Qt::AlignCenter, text);
+	painter.setPen(QPen(QColor(QLatin1Char('#') + QString::fromLatin1(hash.result().toHex()).mid(0, 6))));
+	painter.drawText(pixmap.rect(), Qt::AlignCenter, text);
+	painter.end();
+
 	return pixmap;
 }
 
