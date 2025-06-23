@@ -1047,7 +1047,7 @@ QPixmap WebWidget::createThumbnail(const QSize &size)
 	QCryptographicHash hash(QCryptographicHash::Md5);
 	hash.addData(host.toUtf8());
 
-	QPixmap pixmap(size.isValid() ? size : QSize(260, 170));
+	QPixmap pixmap(size.isValid() ? size : getDefaultThumbnailSize());
 	pixmap.setDevicePixelRatio(devicePixelRatio());
 	pixmap.fill(Qt::white);
 
@@ -1069,6 +1069,11 @@ QPixmap WebWidget::createThumbnail(const QSize &size)
 QPoint WebWidget::getClickPosition() const
 {
 	return m_clickPosition;
+}
+
+QSize WebWidget::getDefaultThumbnailSize()
+{
+	return QSize(260, 170);
 }
 
 QRect WebWidget::getGeometry(bool excludeScrollBars) const

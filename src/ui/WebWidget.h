@@ -301,6 +301,7 @@ protected:
 	static QString getFastForwardScript(bool isSelectingTheBestLink);
 	QUrl extractUrl(const QVariantMap &parameters) const;
 	HitTestResult getCurrentHitTestResult() const;
+	static QSize getDefaultThumbnailSize();
 	PermissionPolicy getPermission(FeaturePermission feature, const QUrl &url) const;
 	static SessionsManager::OpenHints mapOpenActionToOpenHints(int identifier);
 	virtual int getAmountOfDeferredPlugins() const;
