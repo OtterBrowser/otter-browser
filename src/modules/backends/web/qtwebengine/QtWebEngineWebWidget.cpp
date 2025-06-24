@@ -1599,7 +1599,7 @@ QPixmap QtWebEngineWebWidget::createThumbnail(const QSize &size)
 		return m_thumbnail;
 	}
 
-	const QSize thumbnailSize(size.isValid() ? size : QSize(260, 170));
+	const QSize thumbnailSize(size.isValid() ? size : getDefaultThumbnailSize());
 	const qreal thumbnailAspectRatio(static_cast<qreal>(thumbnailSize.width()) / thumbnailSize.height());
 	const QSize contentsSize(m_webView->size());
 	const qreal contentsAspectRatio(static_cast<qreal>(contentsSize.width()) / contentsSize.height());
