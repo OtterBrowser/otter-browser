@@ -2133,7 +2133,7 @@ QPixmap QtWebKitWebWidget::createThumbnail(const QSize &size)
 		return m_thumbnail;
 	}
 
-    const QSize thumbnailSize(size.isValid() ? size : getDefaultThumbnailSize());
+	const QSize thumbnailSize(size.isValid() ? size : getDefaultThumbnailSize());
 	const QSize oldViewportSize(m_page->viewportSize());
 	const QPoint position(m_page->mainFrame()->scrollPosition());
 	const qreal zoom(m_page->mainFrame()->zoomFactor());
