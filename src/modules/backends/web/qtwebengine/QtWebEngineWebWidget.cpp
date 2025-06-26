@@ -1600,10 +1600,16 @@ QPixmap QtWebEngineWebWidget::createThumbnail(const QSize &size)
 	}
 
 	const QSize thumbnailSize(size.isValid() ? size : getDefaultThumbnailSize());
-	const qreal thumbnailAspectRatio(static_cast<qreal>(thumbnailSize.width()) / thumbnailSize.height());
 	const QSize contentsSize(m_webView->size());
-	const qreal contentsAspectRatio(static_cast<qreal>(contentsSize.width()) / contentsSize.height());
 	QPixmap pixmap(m_webView->grab(QRect({0, 0}, contentsSize)));
+
+	if (pixmap.isNull())
+	{
+		return WebWidget::createThumbnail(size);
+	}
+
+	const qreal thumbnailAspectRatio(static_cast<qreal>(thumbnailSize.width()) / thumbnailSize.height());
+	const qreal contentsAspectRatio(static_cast<qreal>(contentsSize.width()) / contentsSize.height());
 
 	if (!qFuzzyCompare(thumbnailAspectRatio, contentsAspectRatio))
 	{
