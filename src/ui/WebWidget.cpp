@@ -283,8 +283,8 @@ void WebWidget::openUrl(const QUrl &url, SessionsManager::OpenHints hints)
 {
 	switch (hints)
 	{
-		case SessionsManager::CurrentTabOpen:
 		case SessionsManager::DefaultOpen:
+		case SessionsManager::CurrentTabOpen:
 			setUrl(url, false);
 
 			break;
