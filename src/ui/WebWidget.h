@@ -256,7 +256,6 @@ public:
 	virtual ContentStates getContentState() const;
 	virtual LoadingState getLoadingState() const = 0;
 	quint64 getWindowIdentifier() const;
-	virtual quint64 getGlobalHistoryEntryIdentifier(int index) const;
 	virtual int getZoom() const = 0;
 	bool hasOption(int identifier) const;
 	virtual bool hasSelection() const;
@@ -304,6 +303,7 @@ protected:
 	static QSize getDefaultThumbnailSize();
 	PermissionPolicy getPermission(FeaturePermission feature, const QUrl &url) const;
 	static SessionsManager::OpenHints mapOpenActionToOpenHints(int identifier);
+    virtual quint64 getGlobalHistoryEntryIdentifier(int index) const;
 	virtual int getAmountOfDeferredPlugins() const;
 	virtual bool canGoBack() const;
 	virtual bool canGoForward() const;
