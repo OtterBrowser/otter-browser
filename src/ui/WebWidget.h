@@ -257,7 +257,6 @@ public:
 	virtual LoadingState getLoadingState() const = 0;
 	quint64 getWindowIdentifier() const;
 	virtual int getZoom() const = 0;
-	bool hasOption(int identifier) const;
 	virtual bool hasSelection() const;
 	virtual bool hasWatchedChanges(ChangeWatcher watcher) const;
 	virtual bool isAudible() const;
@@ -303,7 +302,7 @@ protected:
 	static QSize getDefaultThumbnailSize();
 	PermissionPolicy getPermission(FeaturePermission feature, const QUrl &url) const;
 	static SessionsManager::OpenHints mapOpenActionToOpenHints(int identifier);
-    virtual quint64 getGlobalHistoryEntryIdentifier(int index) const;
+	virtual quint64 getGlobalHistoryEntryIdentifier(int index) const;
 	virtual int getAmountOfDeferredPlugins() const;
 	virtual bool canGoBack() const;
 	virtual bool canGoForward() const;
@@ -317,6 +316,7 @@ protected:
 	virtual bool isInspecting() const;
 	virtual bool isPopup() const;
 	virtual bool isScrollBar(const QPoint &position) const;
+	bool hasOption(int identifier) const;
 
 protected slots:
 	void handleWindowCloseRequest();
