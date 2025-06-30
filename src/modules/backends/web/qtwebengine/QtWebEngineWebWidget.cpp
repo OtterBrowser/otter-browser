@@ -973,9 +973,11 @@ void QtWebEngineWebWidget::handleLoadFinished()
 
 		for (int i = 0; i < watchers.count(); ++i)
 		{
-			if (isWatchingChanges(watchers.at(i)))
+			const ChangeWatcher watcher(watchers.at(i));
+
+			if (isWatchingChanges(watcher))
 			{
-				updateWatchedData(watchers.at(i));
+				updateWatchedData(watcher);
 			}
 		}
 	});
