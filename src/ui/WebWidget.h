@@ -263,7 +263,6 @@ public:
 	virtual bool isAudioMuted() const;
 	virtual bool isFullScreen() const;
 	virtual bool isPrivate() const = 0;
-	bool isWatchingChanges(ChangeWatcher watcher) const;
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
@@ -316,6 +315,7 @@ protected:
 	virtual bool isInspecting() const;
 	virtual bool isPopup() const;
 	virtual bool isScrollBar(const QPoint &position) const;
+	bool isWatchingChanges(ChangeWatcher watcher) const;
 	bool hasOption(int identifier) const;
 
 protected slots:
