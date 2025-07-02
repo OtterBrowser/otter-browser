@@ -312,11 +312,11 @@ protected:
 	virtual bool canUndo() const;
 	virtual bool canShowContextMenu(const QPoint &position) const;
 	virtual bool canViewSource() const;
+	bool hasOption(int identifier) const;
 	virtual bool isInspecting() const;
 	virtual bool isPopup() const;
 	virtual bool isScrollBar(const QPoint &position) const;
 	bool isWatchingChanges(ChangeWatcher watcher) const;
-	bool hasOption(int identifier) const;
 
 protected slots:
 	void handleWindowCloseRequest();

@@ -1834,23 +1834,6 @@ bool WebWidget::canViewSource() const
 	return true;
 }
 
-bool WebWidget::isInspecting() const
-{
-	return false;
-}
-
-bool WebWidget::isPopup() const
-{
-	return false;
-}
-
-bool WebWidget::isScrollBar(const QPoint &position) const
-{
-	Q_UNUSED(position)
-
-	return false;
-}
-
 bool WebWidget::hasOption(int identifier) const
 {
 	return m_options.contains(identifier);
@@ -1880,6 +1863,23 @@ bool WebWidget::isAudioMuted() const
 
 bool WebWidget::isFullScreen() const
 {
+	return false;
+}
+
+bool WebWidget::isInspecting() const
+{
+	return false;
+}
+
+bool WebWidget::isPopup() const
+{
+	return false;
+}
+
+bool WebWidget::isScrollBar(const QPoint &position) const
+{
+	Q_UNUSED(position)
+
 	return false;
 }
 
