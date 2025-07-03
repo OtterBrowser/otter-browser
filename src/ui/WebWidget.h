@@ -255,7 +255,6 @@ public:
 	virtual QMultiMap<QString, QString> getMetaData() const;
 	virtual ContentStates getContentState() const;
 	virtual LoadingState getLoadingState() const = 0;
-	quint64 getWindowIdentifier() const;
 	virtual int getZoom() const = 0;
 	virtual bool hasSelection() const;
 	virtual bool hasWatchedChanges(ChangeWatcher watcher) const;
@@ -301,6 +300,7 @@ protected:
 	static QSize getDefaultThumbnailSize();
 	PermissionPolicy getPermission(FeaturePermission feature, const QUrl &url) const;
 	static SessionsManager::OpenHints mapOpenActionToOpenHints(int identifier);
+	quint64 getWindowIdentifier() const;
 	virtual quint64 getGlobalHistoryEntryIdentifier(int index) const;
 	virtual int getAmountOfDeferredPlugins() const;
 	virtual bool canGoBack() const;
