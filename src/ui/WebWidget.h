@@ -242,7 +242,6 @@ public:
 	virtual LinkUrl getActiveMedia() const;
 	virtual SslInformation getSslInformation() const;
 	virtual Session::Window::History getHistory() const = 0;
-	virtual HitTestResult getHitTestResult(const QPoint &position);
 	virtual QStringList getSpellCheckerSuggestions() const;
 	virtual QStringList getStyleSheets() const;
 	virtual QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const;
@@ -297,6 +296,7 @@ protected:
 	static QString getFastForwardScript(bool isSelectingTheBestLink);
 	QUrl extractUrl(const QVariantMap &parameters) const;
 	HitTestResult getCurrentHitTestResult() const;
+	virtual HitTestResult getHitTestResult(const QPoint &position);
 	static QSize getDefaultThumbnailSize();
 	PermissionPolicy getPermission(FeaturePermission feature, const QUrl &url) const;
 	static SessionsManager::OpenHints mapOpenActionToOpenHints(int identifier);
