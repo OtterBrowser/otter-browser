@@ -279,7 +279,7 @@ public slots:
 	void setRequestedUrl(const QUrl &url, bool isTypedIn = true, bool updateOnly = false);
 
 protected:
-	explicit WebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent = nullptr);
+	explicit WebWidget(WebBackend *backend, ContentsWidget *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event) override;
 	void openUrl(const QUrl &url, SessionsManager::OpenHints hints);

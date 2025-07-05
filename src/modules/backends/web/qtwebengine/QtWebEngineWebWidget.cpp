@@ -82,7 +82,7 @@ void QtWebEngineInspectorWidget::showEvent(QShowEvent *event)
 	QWebEngineView::showEvent(event);
 }
 
-QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent) : WebWidget(parameters, backend, parent),
+QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent) : WebWidget(backend, parent),
 	m_webView(nullptr),
 	m_inspectorWidget(nullptr),
 	m_page(new QtWebEnginePage(SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen), this)),

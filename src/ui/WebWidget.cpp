@@ -52,7 +52,7 @@ namespace Otter
 
 QString WebWidget::m_fastForwardScript;
 
-WebWidget::WebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent) : QWidget(parent),
+WebWidget::WebWidget(WebBackend *backend, ContentsWidget *parent) : QWidget(parent),
 	m_parent(parent),
 	m_toolTipParentWidget(nullptr),
 	m_backend(backend),
@@ -63,8 +63,6 @@ WebWidget::WebWidget(const QVariantMap &parameters, WebBackend *backend, Content
 	m_toolTipTimer(0),
 	m_toolTipEntryEnumerator(metaObject()->indexOfEnumerator(QLatin1String("ToolTipEntry").data()))
 {
-	Q_UNUSED(parameters)
-
 	connect(this, &WebWidget::loadingStateChanged, this, [&](LoadingState state)
 	{
 		if (m_loadingTimer != 0)

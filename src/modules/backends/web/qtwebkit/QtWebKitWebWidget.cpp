@@ -103,7 +103,7 @@ void QtWebKitInspectorWidget::childEvent(QChildEvent *event)
 	}
 }
 
-QtWebKitWebWidget::QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *backend, QtWebKitNetworkManager *networkManager, ContentsWidget *parent) : WebWidget(parameters, backend, parent),
+QtWebKitWebWidget::QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *backend, QtWebKitNetworkManager *networkManager, ContentsWidget *parent) : WebWidget(backend, parent),
 	m_webView(new QWebView(this)),
 	m_page(nullptr),
 	m_inspectorWidget(nullptr),
