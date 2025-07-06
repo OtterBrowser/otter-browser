@@ -312,7 +312,7 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 		return;
 	}
 
-	EnumeratorMapper enumeratorMapper(metaObject()->enumerator(m_toolTipEntryEnumerator), QLatin1String("Entry"));
+	const EnumeratorMapper enumeratorMapper(metaObject()->enumerator(m_toolTipEntryEnumerator), QLatin1String("Entry"));
 	const QStringList rawLayout(SettingsManager::getOption(SettingsManager::Interface_ToolTipLayoutOption).toStringList());
 	QHash<ToolTipEntry, QString> entries;
 	QVector<ToolTipEntry> layout;
