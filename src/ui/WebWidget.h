@@ -225,7 +225,6 @@ public:
 	virtual QString getCharacterEncoding() const;
 	virtual QString getMisspelledWord() const;
 	virtual QString getSelectedText() const;
-	QString getStatusMessage() const;
 	QVariant getOption(int identifier, const QUrl &url = {}) const;
 	virtual QVariant getPageInformation(PageInformation key) const;
 	virtual QUrl getUrl() const = 0;
@@ -294,6 +293,7 @@ protected:
 	QString getSavePath(const QVector<SaveFormat> &allowedFormats, SaveFormat *selectedFormat) const;
 	QString getOpenActionText(SessionsManager::OpenHints hints) const;
 	static QString getFastForwardScript(bool isSelectingTheBestLink);
+	QString getStatusMessage() const;
 	QUrl extractUrl(const QVariantMap &parameters) const;
 	HitTestResult getCurrentHitTestResult() const;
 	virtual HitTestResult getHitTestResult(const QPoint &position);
