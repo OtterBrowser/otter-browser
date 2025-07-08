@@ -231,7 +231,6 @@ public:
 	QUrl getRequestedUrl() const;
 	virtual QIcon getIcon() const = 0;
 	virtual QPixmap createThumbnail(const QSize &size = {});
-	QPoint getClickPosition() const;
 	virtual QPoint getScrollPosition() const = 0;
 	virtual QRect getGeometry(bool excludeScrollBars = false) const;
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
@@ -297,6 +296,7 @@ protected:
 	QUrl extractUrl(const QVariantMap &parameters) const;
 	HitTestResult getCurrentHitTestResult() const;
 	virtual HitTestResult getHitTestResult(const QPoint &position);
+	QPoint getClickPosition() const;
 	static QSize getDefaultThumbnailSize();
 	PermissionPolicy getPermission(FeaturePermission feature, const QUrl &url) const;
 	static SessionsManager::OpenHints mapOpenActionToOpenHints(int identifier);
