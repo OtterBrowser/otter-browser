@@ -505,7 +505,7 @@ void WebWidget::showContextMenu(const QPoint &position)
 		includeSections.append(QLatin1String("form"));
 	}
 
-	if (!m_hitResult.imageUrl.isValid() && m_hitResult.flags.testFlag(HitTestResult::IsSelectedTest) && hasSelection)
+	if (hasSelection && !m_hitResult.imageUrl.isValid() && m_hitResult.flags.testFlag(HitTestResult::IsSelectedTest))
 	{
 		includeSections.append(QLatin1String("selection"));
 	}
