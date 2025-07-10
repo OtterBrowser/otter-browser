@@ -547,11 +547,6 @@ void WebWidget::showContextMenu(const QPoint &position)
 		}
 	}
 
-	if (includeSections.isEmpty())
-	{
-		return;
-	}
-
 	ActionExecutor::Object executor(this, this);
 
 	if (m_parent)
