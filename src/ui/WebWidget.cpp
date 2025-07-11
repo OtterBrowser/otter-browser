@@ -499,6 +499,7 @@ void WebWidget::showContextMenu(const QPoint &position)
 	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::EditingCategory});
 
 	QStringList includeSections;
+	includeSections.reserve(1);
 
 	if (m_hitResult.flags.testFlag(HitTestResult::IsFormTest))
 	{
