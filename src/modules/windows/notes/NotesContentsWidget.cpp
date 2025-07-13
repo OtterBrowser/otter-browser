@@ -20,7 +20,6 @@
 #include "NotesContentsWidget.h"
 #include "../../../core/Application.h"
 #include "../../../core/NotesManager.h"
-#include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/Action.h"
