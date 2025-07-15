@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -97,15 +97,16 @@ void TextLabelWidget::updateStyle()
 	QFont font(this->font());
 	font.setUnderline(m_url.isValid() && style()->styleHint(QStyle::SH_UnderlineShortcut) > 0);
 
+	const QPalette applicationPalette(QGuiApplication::palette());
 	QPalette palette(this->palette());
 
 	if (m_isEmpty)
 	{
-		palette.setColor(QPalette::Text, QGuiApplication::palette().color(QPalette::Disabled, QPalette::WindowText));
+		palette.setColor(QPalette::Text, applicationPalette.color(QPalette::Disabled, QPalette::WindowText));
 	}
 	else
 	{
-		palette.setColor(QPalette::Text, QGuiApplication::palette().color(m_url.isValid() ? QPalette::Link : QPalette::WindowText));
+		palette.setColor(QPalette::Text, applicationPalette.color(m_url.isValid() ? QPalette::Link : QPalette::WindowText));
 	}
 
 	setCursor(m_url.isValid() ? Qt::PointingHandCursor : Qt::ArrowCursor);
