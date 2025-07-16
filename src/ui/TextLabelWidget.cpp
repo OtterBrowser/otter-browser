@@ -39,7 +39,7 @@ TextLabelWidget::TextLabelWidget(QWidget *parent) : QLineEdit(parent),
 	setReadOnly(true);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
-	QLineEdit::setText(tr("<empty>"));
+	setFallbackText(tr("<empty>"));
 }
 
 void TextLabelWidget::mousePressEvent(QMouseEvent *event)
@@ -84,12 +84,25 @@ void TextLabelWidget::contextMenuEvent(QContextMenuEvent *event)
 
 void TextLabelWidget::clear()
 {
-	QLineEdit::setText(tr("<empty>"));
+	QLineEdit::setText(m_fallbackText);
 
 	m_url.clear();
 	m_isEmpty = true;
 
 	updateStyle();
+}
+
+void TextLabelWidget::setFallbackText(const QString &text)
+{
+	if (text != m_fallbackText)
+	{
+		m_fallbackText = text;
+
+		if (m_isEmpty)
+		{
+			QLineEdit::setText(text);
+		}
+	}
 }
 
 void TextLabelWidget::updateStyle()
@@ -125,7 +138,7 @@ void TextLabelWidget::setText(const QString &text)
 			updateStyle();
 		}
 
-		QLineEdit::setText(m_isEmpty ? tr("<empty>") : text);
+		QLineEdit::setText(m_isEmpty ? m_fallbackText : text);
 		setCursorPosition(0);
 		updateGeometry();
 	}
@@ -139,6 +152,11 @@ void TextLabelWidget::setUrl(const QUrl &url)
 	m_isEmpty = url.isEmpty();
 
 	updateStyle();
+}
+
+QString TextLabelWidget::getFallbackText() const
+{
+	return m_fallbackText;
 }
 
 QSize TextLabelWidget::sizeHint() const
@@ -164,13 +182,6 @@ bool TextLabelWidget::event(QEvent *event)
 		case QEvent::ApplicationPaletteChange:
 		case QEvent::StyleChange:
 			updateStyle();
-
-			break;
-		case QEvent::LanguageChange:
-			if (m_isEmpty)
-			{
-				QLineEdit::setText(tr("<empty>"));
-			}
 
 			break;
 		default:

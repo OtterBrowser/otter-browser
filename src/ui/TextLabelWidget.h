@@ -33,11 +33,13 @@ class TextLabelWidget : public QLineEdit
 public:
 	explicit TextLabelWidget(QWidget *parent = nullptr);
 
+	QString getFallbackText() const;
 	QSize sizeHint() const override;
 	bool event(QEvent *event) override;
 
 public slots:
 	void clear();
+	void setFallbackText(const QString &text);
 	void setText(const QString &text);
 	void setUrl(const QUrl &url);
 
@@ -48,6 +50,7 @@ protected:
 	void updateStyle();
 
 private:
+	QString m_fallbackText;
 	QUrl m_url;
 	QPoint m_dragStartPosition;
 	bool m_isEmpty;
