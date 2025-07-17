@@ -73,8 +73,9 @@ void DateTimeTextLabelWidget::setDateTime(const QDateTime &dateTime)
 	}
 	else
 	{
-		setText(tr("Unknown"));
+		setFallbackText(tr("<unknown>"));
 		setToolTip({});
+		clear();
 	}
 }
 
