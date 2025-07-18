@@ -179,7 +179,7 @@ void Action::updateState()
 		}
 	}
 
-	if (definition.isValid() && definition.flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters) && m_parameters.isEmpty())
+	if (definition.flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters) && m_parameters.isEmpty())
 	{
 		state.isEnabled = false;
 	}
