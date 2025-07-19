@@ -40,7 +40,8 @@ public:
 	{
 		NoFlags = 0,
 		HasCustomTextFlag = 1,
-		HasCustomIconFlag = 2
+		HasCustomIconFlag = 2,
+		IsTextOverrideTranslateableFlag = 4
 	};
 
 	Q_DECLARE_FLAGS(ActionFlags, ActionFlag)
@@ -79,7 +80,6 @@ private:
 	QVariantMap m_parameters;
 	ActionFlags m_flags;
 	int m_identifier;
-	bool m_isTextOverrideTranslateable;
 };
 
 }

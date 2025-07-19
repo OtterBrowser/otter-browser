@@ -31,17 +31,20 @@ namespace Otter
 Action::Action(const QString &text, bool isTranslateable, QObject *parent) : QAction(parent),
 	m_textOverride(text),
 	m_flags(HasCustomTextFlag),
-	m_identifier(-1),
-	m_isTextOverrideTranslateable(isTranslateable)
+	m_identifier(-1)
 {
+	if (isTranslateable)
+	{
+		m_flags |= IsTextOverrideTranslateableFlag;
+	}
+
 	initialize();
 }
 
 Action::Action(int identifier, const QVariantMap &parameters, QObject *parent) : QAction(parent),
 	m_parameters(parameters),
 	m_flags(NoFlags),
-	m_identifier(identifier),
-	m_isTextOverrideTranslateable(true)
+	m_identifier(identifier)
 {
 	initialize();
 }
@@ -49,8 +52,7 @@ Action::Action(int identifier, const QVariantMap &parameters, QObject *parent) :
 Action::Action(int identifier, const QVariantMap &parameters, const ActionExecutor::Object &executor, QObject *parent) : QAction(parent),
 	m_parameters(parameters),
 	m_flags(NoFlags),
-	m_identifier(identifier),
-	m_isTextOverrideTranslateable(true)
+	m_identifier(identifier)
 {
 	initialize();
 	setExecutor(executor);
@@ -169,7 +171,7 @@ void Action::updateState()
 
 	if (m_flags.testFlag(HasCustomTextFlag))
 	{
-		if (m_isTextOverrideTranslateable)
+		if (m_flags.testFlag(IsTextOverrideTranslateableFlag))
 		{
 			state.text = QCoreApplication::translate("actions", m_textOverride.toUtf8().constData());
 		}
@@ -246,9 +248,12 @@ void Action::setExecutor(ActionExecutor::Object executor)
 void Action::setTextOverride(const QString &text, bool isTranslateable)
 {
 	m_textOverride = text;
-	m_isTextOverrideTranslateable = isTranslateable;
-
 	m_flags |= HasCustomTextFlag;
+
+	if (isTranslateable)
+	{
+		m_flags |= IsTextOverrideTranslateableFlag;
+	}
 
 	updateState();
 }
@@ -307,7 +312,7 @@ bool Action::hasTextOverride() const
 
 bool Action::isTextOverrideTranslateable() const
 {
-	return m_isTextOverrideTranslateable;
+	return m_flags.testFlag(IsTextOverrideTranslateableFlag);
 }
 
 bool Action::event(QEvent *event)
