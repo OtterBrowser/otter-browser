@@ -39,8 +39,8 @@ public:
 	enum ActionFlag
 	{
 		NoFlags = 0,
-		HasCustomTextFlag = 1,
-		HasCustomIconFlag = 2,
+		HasIconOverrideFlag = 1,
+		HasTextOverrideFlag = 2,
 		IsTextOverrideTranslateableFlag = 4
 	};
 

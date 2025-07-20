@@ -30,7 +30,7 @@ namespace Otter
 
 Action::Action(const QString &text, bool isTranslateable, QObject *parent) : QAction(parent),
 	m_textOverride(text),
-	m_flags(HasCustomTextFlag),
+	m_flags(HasTextOverrideFlag),
 	m_identifier(-1)
 {
 	if (isTranslateable)
@@ -121,7 +121,7 @@ void Action::handleCategorizedActionsStateChanged(const QVector<int> &categories
 
 void Action::updateIcon()
 {
-	if (m_flags.testFlag(HasCustomIconFlag))
+	if (m_flags.testFlag(HasIconOverrideFlag))
 	{
 		return;
 	}
@@ -169,7 +169,7 @@ void Action::updateState()
 		state.isEnabled = false;
 	}
 
-	if (m_flags.testFlag(HasCustomTextFlag))
+	if (m_flags.testFlag(HasTextOverrideFlag))
 	{
 		if (m_flags.testFlag(IsTextOverrideTranslateableFlag))
 		{
@@ -248,7 +248,7 @@ void Action::setExecutor(ActionExecutor::Object executor)
 void Action::setTextOverride(const QString &text, bool isTranslateable)
 {
 	m_textOverride = text;
-	m_flags |= HasCustomTextFlag;
+	m_flags |= HasTextOverrideFlag;
 
 	if (isTranslateable)
 	{
@@ -265,7 +265,7 @@ void Action::setIconOverride(const QString &icon)
 
 void Action::setIconOverride(const QIcon &icon)
 {
-	m_flags |= HasCustomIconFlag;
+	m_flags |= HasIconOverrideFlag;
 
 	setIcon(icon);
 }
@@ -278,7 +278,7 @@ void Action::setState(const ActionsManager::ActionDefinition::State &state)
 	setEnabled(state.isEnabled);
 	setChecked(state.isChecked);
 
-	if (!m_flags.testFlag(HasCustomIconFlag))
+	if (!m_flags.testFlag(HasIconOverrideFlag))
 	{
 		setIcon(state.icon);
 		updateIcon();
@@ -307,7 +307,7 @@ int Action::getIdentifier() const
 
 bool Action::hasTextOverride() const
 {
-	return m_flags.testFlag(HasCustomTextFlag);
+	return m_flags.testFlag(HasTextOverrideFlag);
 }
 
 bool Action::isTextOverrideTranslateable() const
