@@ -245,6 +245,18 @@ void Action::setExecutor(ActionExecutor::Object executor)
 	}
 }
 
+void Action::setIconOverride(const QString &icon)
+{
+	setIconOverride(ThemesManager::createIcon(icon));
+}
+
+void Action::setIconOverride(const QIcon &icon)
+{
+	m_flags |= HasIconOverrideFlag;
+
+	setIcon(icon);
+}
+
 void Action::setTextOverride(const QString &text, bool isTranslateable)
 {
 	m_textOverride = text;
@@ -256,18 +268,6 @@ void Action::setTextOverride(const QString &text, bool isTranslateable)
 	}
 
 	updateState();
-}
-
-void Action::setIconOverride(const QString &icon)
-{
-	setIconOverride(ThemesManager::createIcon(icon));
-}
-
-void Action::setIconOverride(const QIcon &icon)
-{
-	m_flags |= HasIconOverrideFlag;
-
-	setIcon(icon);
 }
 
 void Action::setState(const ActionsManager::ActionDefinition::State &state)
