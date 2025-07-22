@@ -58,6 +58,7 @@ public:
 	ActionsManager::ActionDefinition getDefinition() const;
 	QVariantMap getParameters() const;
 	int getIdentifier() const;
+	bool hasIconOverride() const;
 	bool hasTextOverride() const;
 	bool isTextOverrideTranslateable() const;
 	bool event(QEvent *event) override;

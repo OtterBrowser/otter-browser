@@ -305,6 +305,11 @@ int Action::getIdentifier() const
 	return m_identifier;
 }
 
+bool Action::hasIconOverride() const
+{
+	return m_flags.testFlag(HasIconOverrideFlag);
+}
+
 bool Action::hasTextOverride() const
 {
 	return m_flags.testFlag(HasTextOverrideFlag);
