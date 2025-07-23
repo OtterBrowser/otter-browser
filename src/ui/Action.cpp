@@ -121,7 +121,7 @@ void Action::handleCategorizedActionsStateChanged(const QVector<int> &categories
 
 void Action::updateIcon()
 {
-	if (m_flags.testFlag(HasIconOverrideFlag))
+	if (hasIconOverride())
 	{
 		return;
 	}
@@ -169,9 +169,9 @@ void Action::updateState()
 		state.isEnabled = false;
 	}
 
-	if (m_flags.testFlag(HasTextOverrideFlag))
+	if (hasTextOverride())
 	{
-		if (m_flags.testFlag(IsTextOverrideTranslateableFlag))
+		if (isTextOverrideTranslateable())
 		{
 			state.text = QCoreApplication::translate("actions", m_textOverride.toUtf8().constData());
 		}
@@ -278,7 +278,7 @@ void Action::setState(const ActionsManager::ActionDefinition::State &state)
 	setEnabled(state.isEnabled);
 	setChecked(state.isChecked);
 
-	if (!m_flags.testFlag(HasIconOverrideFlag))
+	if (!hasIconOverride())
 	{
 		setIcon(state.icon);
 		updateIcon();
