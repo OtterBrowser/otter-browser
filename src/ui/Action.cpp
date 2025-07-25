@@ -207,12 +207,14 @@ void Action::setExecutor(ActionExecutor::Object executor)
 
 	if (isExecutorValid)
 	{
+		QObject *object(executor.getObject());
+
 		switch (definition.scope)
 		{
 			case ActionsManager::ActionDefinition::MainWindowScope:
-				if (!executor.getObject()->inherits("Otter::Application") && !executor.getObject()->inherits("Otter::MainWindow"))
+				if (!object->inherits("Otter::Application") && !object->inherits("Otter::MainWindow"))
 				{
-					MainWindow *mainWindow(MainWindow::findMainWindow(executor.getObject()));
+					MainWindow *mainWindow(MainWindow::findMainWindow(object));
 
 					if (mainWindow)
 					{
@@ -226,7 +228,7 @@ void Action::setExecutor(ActionExecutor::Object executor)
 
 				break;
 			case ActionsManager::ActionDefinition::ApplicationScope:
-				if (!executor.getObject()->inherits("Otter::Application"))
+				if (!object->inherits("Otter::Application"))
 				{
 					executor = ActionExecutor::Object(Application::getInstance(), Application::getInstance());
 				}
