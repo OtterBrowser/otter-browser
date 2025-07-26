@@ -67,6 +67,7 @@ protected:
 	void initialize();
 	void updateIcon();
 	virtual void setState(const ActionsManager::ActionDefinition::State &state);
+	QMetaMethod getMethod(const char *method) const;
 
 protected slots:
 	void triggerAction(bool isChecked = false);

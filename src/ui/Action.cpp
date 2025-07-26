@@ -195,9 +195,9 @@ void Action::updateState()
 void Action::setExecutor(ActionExecutor::Object executor)
 {
 	const ActionsManager::ActionDefinition definition(getDefinition());
-	const QMetaMethod updateStateMethod(metaObject()->method(metaObject()->indexOfMethod("updateState()")));
-	const QMetaMethod handleArbitraryActionsStateChangedMethod(metaObject()->method(metaObject()->indexOfMethod("handleArbitraryActionsStateChanged(QVector<int>)")));
-	const QMetaMethod handleCategorizedActionsStateChangeddMethod(metaObject()->method(metaObject()->indexOfMethod("handleCategorizedActionsStateChanged(QVector<int>)")));
+	const QMetaMethod updateStateMethod(getMethod("updateState()"));
+	const QMetaMethod handleArbitraryActionsStateChangedMethod(getMethod("handleArbitraryActionsStateChanged(QVector<int>)"));
+	const QMetaMethod handleCategorizedActionsStateChangeddMethod(getMethod("handleCategorizedActionsStateChanged(QVector<int>)"));
 	const bool isExecutorValid(executor.isValid());
 
 	if (m_executor.isValid())
@@ -292,6 +292,11 @@ void Action::setState(const ActionsManager::ActionDefinition::State &state)
 QString Action::getTextOverride() const
 {
 	return m_textOverride;
+}
+
+QMetaMethod Action::getMethod(const char *method) const
+{
+	return metaObject()->method(metaObject()->indexOfMethod(method));
 }
 
 ActionsManager::ActionDefinition Action::getDefinition() const
