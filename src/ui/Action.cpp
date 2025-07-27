@@ -265,11 +265,7 @@ void Action::setTextOverride(const QString &text, bool isTranslateable)
 {
 	m_textOverride = text;
 	m_flags |= HasTextOverrideFlag;
-
-	if (isTranslateable)
-	{
-		m_flags |= IsTextOverrideTranslateableFlag;
-	}
+	m_flags.setFlag(IsTextOverrideTranslateableFlag, isTranslateable);
 
 	updateState();
 }
