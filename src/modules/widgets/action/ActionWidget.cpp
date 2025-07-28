@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -152,9 +152,10 @@ void ActionWidget::dropEvent(QDropEvent *event)
 
 	QVariantMap parameters(getParameters());
 	const QVector<QUrl> urls(Utils::extractUrls(event->mimeData()));
-	SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(((m_action->getIdentifier() == ActionsManager::NewWindowAction || m_action->getIdentifier() == ActionsManager::NewWindowPrivateAction) ? SessionsManager::NewWindowOpen : SessionsManager::NewTabOpen), Qt::LeftButton, event->keyboardModifiers()));
+	const bool isNewTab(m_action->getIdentifier() == ActionsManager::NewTabPrivateAction || m_action->getIdentifier() == ActionsManager::NewWindowPrivateAction);
+	SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints((isNewTab ? SessionsManager::NewWindowOpen : SessionsManager::NewTabOpen), Qt::LeftButton, event->keyboardModifiers()));
 
-	if (m_action->getIdentifier() == ActionsManager::NewTabPrivateAction || m_action->getIdentifier() == ActionsManager::NewWindowPrivateAction)
+	if (isNewTab)
 	{
 		hints |= SessionsManager::PrivateOpen;
 	}
