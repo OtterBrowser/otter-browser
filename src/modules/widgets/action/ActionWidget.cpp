@@ -20,7 +20,6 @@
 
 #include "ActionWidget.h"
 #include "../../../core/Application.h"
-#include "../../../core/HistoryManager.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/ContentsWidget.h"
 #include "../../../ui/MainWindow.h"
