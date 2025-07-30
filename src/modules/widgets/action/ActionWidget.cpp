@@ -342,7 +342,7 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (action && action->getIdentifier() == ActionsManager::GoToHistoryIndexAction)
 		{
-			ActionExecutor::Object executor(m_window, m_window);
+			const ActionExecutor::Object executor(m_window, m_window);
 			const int index(action->getParameters().value(QLatin1String("index")).toInt());
 			QMenu contextMenu(menu());
 			Action *removeEntryAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index}}, executor, &contextMenu));
