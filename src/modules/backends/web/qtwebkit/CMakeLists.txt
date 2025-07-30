@@ -1,16 +1,20 @@
-find_package(Qt5WebKitWidgets 5.212.0 QUIET)
+if (NOT ENABLE_QTWEBKIT)
+	return ()
+endif ()
 
-set_package_properties(Qt5WebKit PROPERTIES URL "https://qtwebkit.github.io/" DESCRIPTION "QtWebKit based backend (core)" TYPE OPTIONAL)
-set_package_properties(Qt5WebKitWidgets PROPERTIES URL "https://qtwebkit.github.io/" DESCRIPTION "QtWebKit based backend (widgets)" TYPE OPTIONAL)
+find_package(${QT_MAJOR_VERSION}WebKitWidgets ${QT_MINIMUM_VERSION_WEBKIT} REQUIRED)
 
-if (NOT TARGET Qt5::WebKitWidgets)
+set_package_properties(${QT_MAJOR_VERSION}WebKit PROPERTIES URL "https://qtwebkit.github.io/" DESCRIPTION "QtWebKit based backend (core)" OPTIONAL)
+set_package_properties(${QT_MAJOR_VERSION}WebKitWidgets PROPERTIES URL "https://qtwebkit.github.io/" DESCRIPTION "QtWebKit based backend (widgets)" TYPE OPTIONAL)
+
+if (NOT TARGET ${QT_MAJOR_VERSION}::WebKitWidgets)
 	return ()
 endif ()
 
 add_definitions(-DOTTER_ENABLE_QTWEBKIT -DOTTER_QTWEBKIT_PLUGINS_AVAILABLE -DQT_STATICPLUGIN)
 
 list(APPEND OTTER_BACKENDS_WEB "QtWebKit")
-list(APPEND OTTER_LINK_LIBRARIES Qt5::WebKit Qt5::WebKitWidgets)
+list(APPEND OTTER_LINK_LIBRARIES ${QT_MAJOR_VERSION}::WebKit ${QT_MAJOR_VERSION}::WebKitWidgets)
 
 set(OTTER_SOURCES
 	${OTTER_SOURCES}
@@ -36,6 +40,6 @@ if (TARGET Hunspell::Hunspell AND ENABLE_SPELLCHECK)
 	)
 endif ()
 
-qt5_add_resources(OTTER_RESOURCES
+qt_add_resources(OTTER_RESOURCES
 	src/modules/backends/web/qtwebkit/QtWebKitResources.qrc
 )
