@@ -39,9 +39,11 @@ ActionWidget::ActionWidget(int identifier, Window *window, const ToolBarsManager
 	setDefaultAction(m_action);
 	setWindow(window);
 
-	if (definition.options.contains(QLatin1String("icon")))
+	const QVariantMap options(definition.options);
+
+	if (options.contains(QLatin1String("icon")))
 	{
-		const QVariant data(definition.options[QLatin1String("icon")]);
+		const QVariant data(options[QLatin1String("icon")]);
 
 		if (data.type() == QVariant::Icon)
 		{
@@ -53,9 +55,9 @@ ActionWidget::ActionWidget(int identifier, Window *window, const ToolBarsManager
 		}
 	}
 
-	if (definition.options.contains(QLatin1String("text")))
+	if (options.contains(QLatin1String("text")))
 	{
-		m_action->setTextOverride(definition.options[QLatin1String("text")].toString());
+		m_action->setTextOverride(options[QLatin1String("text")].toString());
 	}
 
 	switch (identifier)
