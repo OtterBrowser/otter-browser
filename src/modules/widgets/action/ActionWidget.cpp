@@ -153,7 +153,8 @@ void ActionWidget::dropEvent(QDropEvent *event)
 
 	QVariantMap parameters(getParameters());
 	const QVector<QUrl> urls(Utils::extractUrls(event->mimeData()));
-	const bool isNewTab(m_action->getIdentifier() == ActionsManager::NewTabPrivateAction || m_action->getIdentifier() == ActionsManager::NewWindowPrivateAction);
+	const int identifier(getIdentifier());
+	const bool isNewTab(identifier == ActionsManager::NewTabPrivateAction || identifier == ActionsManager::NewWindowPrivateAction);
 	SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints((isNewTab ? SessionsManager::NewWindowOpen : SessionsManager::NewTabOpen), Qt::LeftButton, event->keyboardModifiers()));
 
 	if (isNewTab)
@@ -298,7 +299,8 @@ bool NavigationActionWidget::event(QEvent *event)
 			}
 		case QEvent::ToolTip:
 			{
-				const QKeySequence shortcut(ActionsManager::getActionShortcut(getIdentifier()));
+				const int identifier(getIdentifier());
+				const QKeySequence shortcut(ActionsManager::getActionShortcut(identifier));
 				QString toolTip(Utils::appendShortcut(text(), shortcut));
 
 				if (m_window)
@@ -309,11 +311,11 @@ bool NavigationActionWidget::event(QEvent *event)
 					{
 						int index(-1);
 
-						if (getIdentifier() == ActionsManager::GoBackAction && history.index > 0)
+						if (identifier == ActionsManager::GoBackAction && history.index > 0)
 						{
 							index = (history.index - 1);
 						}
-						else if (getIdentifier() == ActionsManager::GoForwardAction && history.index < (history.entries.count() - 1))
+						else if (identifier == ActionsManager::GoForwardAction && history.index < (history.entries.count() - 1))
 						{
 							index = (history.index + 1);
 						}
