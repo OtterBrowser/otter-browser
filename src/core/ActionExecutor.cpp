@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -43,9 +43,9 @@ void ActionExecutor::Object::connectSignals(const QObject *receiver, const QMeta
 	}
 
 	const QMetaObject *metaObject(m_object.data()->metaObject());
-	const QMetaMethod actionsStateChangedSignal(metaObject->method(metaObject->indexOfSignal("actionsStateChanged()")));
-	const QMetaMethod arbitraryActionsStateChangedSignal(metaObject->method(metaObject->indexOfSignal("arbitraryActionsStateChanged(QVector<int>)")));
-	const QMetaMethod categorizedActionsStateChangedSignal(metaObject->method(metaObject->indexOfSignal("categorizedActionsStateChanged(QVector<int>)")));
+	const QMetaMethod actionsStateChangedSignal(getMethod(metaObject, "actionsStateChanged()"));
+	const QMetaMethod arbitraryActionsStateChangedSignal(getMethod(metaObject, "arbitraryActionsStateChanged(QVector<int>)"));
+	const QMetaMethod categorizedActionsStateChangedSignal(getMethod(metaObject, "categorizedActionsStateChanged(QVector<int>)"));
 
 	if (actionsStateChangedSignal.isValid() && actionsStateChangedMethod)
 	{
@@ -71,9 +71,9 @@ void ActionExecutor::Object::disconnectSignals(const QObject *receiver, const QM
 	}
 
 	const QMetaObject *metaObject(m_object.data()->metaObject());
-	const QMetaMethod actionsStateChangedSignal(metaObject->method(metaObject->indexOfSignal("actionsStateChanged()")));
-	const QMetaMethod arbitraryActionsStateChangedSignal(metaObject->method(metaObject->indexOfSignal("arbitraryActionsStateChanged(QVector<int>)")));
-	const QMetaMethod categorizedActionsStateChangedSignal(metaObject->method(metaObject->indexOfSignal("categorizedActionsStateChanged(QVector<int>)")));
+	const QMetaMethod actionsStateChangedSignal(getMethod(metaObject, "actionsStateChanged()"));
+	const QMetaMethod arbitraryActionsStateChangedSignal(getMethod(metaObject, "arbitraryActionsStateChanged(QVector<int>)"));
+	const QMetaMethod categorizedActionsStateChangedSignal(getMethod(metaObject, "categorizedActionsStateChanged(QVector<int>)"));
 
 	if (actionsStateChangedSignal.isValid() && actionsStateChangedMethod)
 	{
@@ -126,6 +126,11 @@ ActionsManager::ActionDefinition::State ActionExecutor::Object::getActionState(i
 	state.isEnabled = false;
 
 	return state;
+}
+
+QMetaMethod ActionExecutor::Object::getMethod(const QMetaObject *metaObject, const char *method) const
+{
+	return metaObject->method(metaObject->indexOfSignal(method));
 }
 
 bool ActionExecutor::Object::isValid() const
