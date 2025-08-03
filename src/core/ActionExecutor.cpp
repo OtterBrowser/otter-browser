@@ -42,24 +42,25 @@ void ActionExecutor::Object::connectSignals(const QObject *receiver, const QMeta
 		return;
 	}
 
-	const QMetaObject *metaObject(m_object.data()->metaObject());
+	QObject *sender(m_object.data());
+	const QMetaObject *metaObject(sender->metaObject());
 	const QMetaMethod actionsStateChangedSignal(getMethod(metaObject, "actionsStateChanged()"));
 	const QMetaMethod arbitraryActionsStateChangedSignal(getMethod(metaObject, "arbitraryActionsStateChanged(QVector<int>)"));
 	const QMetaMethod categorizedActionsStateChangedSignal(getMethod(metaObject, "categorizedActionsStateChanged(QVector<int>)"));
 
 	if (actionsStateChangedSignal.isValid() && actionsStateChangedMethod)
 	{
-		QObject::connect(m_object.data(), actionsStateChangedSignal, receiver, *(actionsStateChangedMethod));
+		QObject::connect(sender, actionsStateChangedSignal, receiver, *(actionsStateChangedMethod));
 	}
 
 	if (arbitraryActionsStateChangedMethod && arbitraryActionsStateChangedSignal.isValid())
 	{
-		QObject::connect(m_object.data(), arbitraryActionsStateChangedSignal, receiver, *(arbitraryActionsStateChangedMethod));
+		QObject::connect(sender, arbitraryActionsStateChangedSignal, receiver, *(arbitraryActionsStateChangedMethod));
 	}
 
 	if (categorizedActionsStateChangedMethod && categorizedActionsStateChangedSignal.isValid())
 	{
-		QObject::connect(m_object.data(), categorizedActionsStateChangedSignal, receiver, *(categorizedActionsStateChangedMethod));
+		QObject::connect(sender, categorizedActionsStateChangedSignal, receiver, *(categorizedActionsStateChangedMethod));
 	}
 }
 
@@ -70,24 +71,25 @@ void ActionExecutor::Object::disconnectSignals(const QObject *receiver, const QM
 		return;
 	}
 
-	const QMetaObject *metaObject(m_object.data()->metaObject());
+	QObject *sender(m_object.data());
+	const QMetaObject *metaObject(sender->metaObject());
 	const QMetaMethod actionsStateChangedSignal(getMethod(metaObject, "actionsStateChanged()"));
 	const QMetaMethod arbitraryActionsStateChangedSignal(getMethod(metaObject, "arbitraryActionsStateChanged(QVector<int>)"));
 	const QMetaMethod categorizedActionsStateChangedSignal(getMethod(metaObject, "categorizedActionsStateChanged(QVector<int>)"));
 
 	if (actionsStateChangedSignal.isValid() && actionsStateChangedMethod)
 	{
-		QObject::disconnect(m_object.data(), actionsStateChangedSignal, receiver, *(actionsStateChangedMethod));
+		QObject::disconnect(sender, actionsStateChangedSignal, receiver, *(actionsStateChangedMethod));
 	}
 
 	if (arbitraryActionsStateChangedMethod && arbitraryActionsStateChangedSignal.isValid())
 	{
-		QObject::disconnect(m_object.data(), arbitraryActionsStateChangedSignal, receiver, *(arbitraryActionsStateChangedMethod));
+		QObject::disconnect(sender, arbitraryActionsStateChangedSignal, receiver, *(arbitraryActionsStateChangedMethod));
 	}
 
 	if (categorizedActionsStateChangedMethod && categorizedActionsStateChangedSignal.isValid())
 	{
-		QObject::disconnect(m_object.data(), categorizedActionsStateChangedSignal, receiver, *(categorizedActionsStateChangedMethod));
+		QObject::disconnect(sender, categorizedActionsStateChangedSignal, receiver, *(categorizedActionsStateChangedMethod));
 	}
 }
 
