@@ -161,9 +161,10 @@ void AddressCompletionModel::updateModel()
 
 		for (int i = 0; i < entries.count(); ++i)
 		{
-			HistoryModel::Entry *entry(entries.at(i).entry);
+			const HistoryModel::HistoryEntryMatch match(entries.at(i));
+			HistoryModel::Entry *entry(match.entry);
 
-			completions.append(CompletionEntry(entry->getUrl(), entry->getTitle(), entries.at(i).match, entry->getIcon(), entry->getTimeVisited(), (entries.at(i).isTypedIn ? CompletionEntry::TypedHistoryType : CompletionEntry::HistoryType)));
+			completions.append(CompletionEntry(entry->getUrl(), entry->getTitle(), match.match, entry->getIcon(), entry->getTimeVisited(), (match.isTypedIn ? CompletionEntry::TypedHistoryType : CompletionEntry::HistoryType)));
 		}
 	}
 
@@ -178,9 +179,10 @@ void AddressCompletionModel::updateModel()
 
 		for (int i = 0; i < entries.count(); ++i)
 		{
-			HistoryModel::Entry *entry(entries.at(i).entry);
+			const HistoryModel::HistoryEntryMatch match(entries.at(i));
+			HistoryModel::Entry *entry(match.entry);
 
-			completions.append(CompletionEntry(entry->getUrl(), entry->getTitle(), entries.at(i).match, entry->getIcon(), entry->getTimeVisited(), CompletionEntry::TypedHistoryType, entry->getIdentifier()));
+			completions.append(CompletionEntry(entry->getUrl(), entry->getTitle(), match.match, entry->getIcon(), entry->getTimeVisited(), CompletionEntry::TypedHistoryType, entry->getIdentifier()));
 		}
 	}
 
