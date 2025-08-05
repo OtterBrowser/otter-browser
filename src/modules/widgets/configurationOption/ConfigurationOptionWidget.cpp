@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,6 @@
 **************************************************************************/
 
 #include "ConfigurationOptionWidget.h"
-#include "../../../core/ActionsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../ui/OptionWidget.h"
 #include "../../../ui/ToolBarWidget.h"
