@@ -89,7 +89,13 @@ ConfigurationOptionWidget::ConfigurationOptionWidget(Window *window, const ToolB
 			connect(toolBar, &ToolBarWidget::windowChanged, this, &ConfigurationOptionWidget::setWindow);
 		}
 
-		connect(SettingsManager::getInstance(), &SettingsManager::hostOptionChanged, this, &ConfigurationOptionWidget::updateValue);
+		connect(SettingsManager::getInstance(), &SettingsManager::hostOptionChanged, this, [&](int option)
+		{
+			if (option == m_identifier && m_window)
+			{
+				m_optionWidget->setValue(m_window->getOption(m_identifier));
+			}
+		});
 	}
 
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &ConfigurationOptionWidget::handleOptionChanged);
@@ -101,14 +107,6 @@ void ConfigurationOptionWidget::handleOptionChanged(int option, const QVariant &
 	if (option == m_identifier)
 	{
 		m_optionWidget->setValue(value);
-	}
-}
-
-void ConfigurationOptionWidget::updateValue(int option)
-{
-	if (option == m_identifier && m_window)
-	{
-		m_optionWidget->setValue(m_window->getOption(m_identifier));
 	}
 }
 

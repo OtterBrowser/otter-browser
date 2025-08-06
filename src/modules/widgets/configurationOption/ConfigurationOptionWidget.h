@@ -46,7 +46,6 @@ protected:
 
 protected slots:
 	void handleOptionChanged(int option, const QVariant &value);
-	void updateValue(int option);
 	void setWindow(Window *window);
 	void save();
 
