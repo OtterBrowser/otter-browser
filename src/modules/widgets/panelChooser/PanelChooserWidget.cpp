@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,9 @@ namespace Otter
 
 PanelChooserWidget::PanelChooserWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent)
 {
-	setMenu(new QMenu(this));
+	QMenu *menu(new QMenu(this));
+
+	setMenu(menu);
 	setPopupMode(QToolButton::InstantPopup);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	updateText();
@@ -40,8 +42,36 @@ PanelChooserWidget::PanelChooserWidget(const ToolBarsManager::ToolBarDefinition:
 			updateText();
 		}
 	});
-	connect(menu(), &QMenu::aboutToShow, this, &PanelChooserWidget::populateMenu);
-	connect(menu(), &QMenu::triggered, this, &PanelChooserWidget::selectPanel);
+	connect(menu, &QMenu::aboutToShow, this, [&]()
+	{
+		menu->clear();
+
+		const int identifier(getSideBarIdentifier());
+
+		if (identifier >= 0)
+		{
+			const QStringList panels(ToolBarsManager::getToolBarDefinition(identifier).panels);
+
+			for (int i = 0; i < panels.count(); ++i)
+			{
+				const QString panel(panels.at(i));
+
+				menu->addAction(SidebarWidget::getPanelTitle(panel))->setData(panel);
+			}
+		}
+	});
+	connect(menu, &QMenu::triggered, this, [&](QAction *action)
+	{
+		const int identifier(getSideBarIdentifier());
+
+		if (identifier >= 0)
+		{
+			ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(identifier));
+			definition.currentPanel = action->data().toString();
+
+			ToolBarsManager::setToolBar(definition);
+		}
+	});
 }
 
 void PanelChooserWidget::changeEvent(QEvent *event)
@@ -51,38 +81,6 @@ void PanelChooserWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		updateText();
-	}
-}
-
-void PanelChooserWidget::populateMenu()
-{
-	menu()->clear();
-
-	const int identifier(getSideBarIdentifier());
-
-	if (identifier >= 0)
-	{
-		const QStringList panels(ToolBarsManager::getToolBarDefinition(identifier).panels);
-
-		for (int i = 0; i < panels.count(); ++i)
-		{
-			const QString panel(panels.at(i));
-
-			menu()->addAction(SidebarWidget::getPanelTitle(panel))->setData(panel);
-		}
-	}
-}
-
-void PanelChooserWidget::selectPanel(QAction *action)
-{
-	const int identifier(getSideBarIdentifier());
-
-	if (identifier >= 0)
-	{
-		ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(identifier));
-		definition.currentPanel = action->data().toString();
-
-		ToolBarsManager::setToolBar(definition);
 	}
 }
 
