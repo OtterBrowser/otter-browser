@@ -42,7 +42,7 @@ PanelChooserWidget::PanelChooserWidget(const ToolBarsManager::ToolBarDefinition:
 			updateText();
 		}
 	});
-	connect(menu, &QMenu::aboutToShow, this, [&]()
+	connect(menu, &QMenu::aboutToShow, this, [=]()
 	{
 		menu->clear();
 
