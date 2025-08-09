@@ -29,15 +29,16 @@ namespace Otter
 PanelChooserWidget::PanelChooserWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent)
 {
 	QMenu *menu(new QMenu(this));
+	const int sideBarIdentifier(getSideBarIdentifier());
 
 	setMenu(menu);
 	setPopupMode(QToolButton::InstantPopup);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	updateText();
 
-	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarModified, this, [&](int identifier)
+	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarModified, this, [=](int identifier)
 	{
-		if (identifier == getSideBarIdentifier())
+		if (identifier == sideBarIdentifier)
 		{
 			updateText();
 		}
@@ -46,11 +47,9 @@ PanelChooserWidget::PanelChooserWidget(const ToolBarsManager::ToolBarDefinition:
 	{
 		menu->clear();
 
-		const int identifier(getSideBarIdentifier());
-
-		if (identifier >= 0)
+		if (sideBarIdentifier >= 0)
 		{
-			const QStringList panels(ToolBarsManager::getToolBarDefinition(identifier).panels);
+			const QStringList panels(ToolBarsManager::getToolBarDefinition(sideBarIdentifier).panels);
 
 			for (int i = 0; i < panels.count(); ++i)
 			{
@@ -60,13 +59,11 @@ PanelChooserWidget::PanelChooserWidget(const ToolBarsManager::ToolBarDefinition:
 			}
 		}
 	});
-	connect(menu, &QMenu::triggered, this, [&](QAction *action)
+	connect(menu, &QMenu::triggered, this, [=](QAction *action)
 	{
-		const int identifier(getSideBarIdentifier());
-
-		if (identifier >= 0)
+		if (sideBarIdentifier >= 0)
 		{
-			ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(identifier));
+			ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(sideBarIdentifier));
 			definition.currentPanel = action->data().toString();
 
 			ToolBarsManager::setToolBar(definition);
