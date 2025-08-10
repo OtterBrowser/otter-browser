@@ -38,7 +38,9 @@ public:
 
 protected:
 	void updateText();
-	int getSideBarIdentifier() const;
+
+private:
+	int m_toolBarIdentifier;
 };
 
 }

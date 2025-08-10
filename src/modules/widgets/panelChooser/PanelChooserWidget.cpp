@@ -26,10 +26,17 @@
 namespace Otter
 {
 
-PanelChooserWidget::PanelChooserWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent)
+PanelChooserWidget::PanelChooserWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
+	m_toolBarIdentifier(-1)
 {
+	const QVariant toolBar(getParameters().value(QLatin1String("sidebar")));
+
+	if (!toolBar.isNull())
+	{
+		m_toolBarIdentifier = ((toolBar.type() == QVariant::Int) ? toolBar.toInt() : ToolBarsManager::getToolBarIdentifier(toolBar.toString()));
+	}
+
 	QMenu *menu(new QMenu(this));
-	const int sideBarIdentifier(getSideBarIdentifier());
 
 	setMenu(menu);
 	setPopupMode(QToolButton::InstantPopup);
@@ -38,7 +45,7 @@ PanelChooserWidget::PanelChooserWidget(const ToolBarsManager::ToolBarDefinition:
 
 	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarModified, this, [=](int identifier)
 	{
-		if (identifier == sideBarIdentifier)
+		if (identifier == m_toolBarIdentifier)
 		{
 			updateText();
 		}
@@ -47,9 +54,9 @@ PanelChooserWidget::PanelChooserWidget(const ToolBarsManager::ToolBarDefinition:
 	{
 		menu->clear();
 
-		if (sideBarIdentifier >= 0)
+		if (m_toolBarIdentifier >= 0)
 		{
-			const QStringList panels(ToolBarsManager::getToolBarDefinition(sideBarIdentifier).panels);
+			const QStringList panels(ToolBarsManager::getToolBarDefinition(m_toolBarIdentifier).panels);
 
 			for (int i = 0; i < panels.count(); ++i)
 			{
@@ -61,9 +68,9 @@ PanelChooserWidget::PanelChooserWidget(const ToolBarsManager::ToolBarDefinition:
 	});
 	connect(menu, &QMenu::triggered, this, [=](QAction *action)
 	{
-		if (sideBarIdentifier >= 0)
+		if (m_toolBarIdentifier >= 0)
 		{
-			ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(sideBarIdentifier));
+			ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(m_toolBarIdentifier));
 			definition.currentPanel = action->data().toString();
 
 			ToolBarsManager::setToolBar(definition);
@@ -83,34 +90,15 @@ void PanelChooserWidget::changeEvent(QEvent *event)
 
 void PanelChooserWidget::updateText()
 {
-	const int identifier(getSideBarIdentifier());
-
-	if (identifier >= 0)
+	if (m_toolBarIdentifier >= 0)
 	{
-		setText(SidebarWidget::getPanelTitle(ToolBarsManager::getToolBarDefinition(identifier).currentPanel));
+		setText(SidebarWidget::getPanelTitle(ToolBarsManager::getToolBarDefinition(m_toolBarIdentifier).currentPanel));
 	}
 }
 
 QSize PanelChooserWidget::minimumSizeHint() const
 {
 	return {0, 0};
-}
-
-int PanelChooserWidget::getSideBarIdentifier() const
-{
-	const QVariant toolBar(getParameters().value(QLatin1String("sidebar")));
-
-	if (toolBar.isNull())
-	{
-		return -1;
-	}
-
-	if (toolBar.type() == QVariant::Int)
-	{
-		return toolBar.toInt();
-	}
-
-	return ToolBarsManager::getToolBarIdentifier(toolBar.toString());
 }
 
 }
