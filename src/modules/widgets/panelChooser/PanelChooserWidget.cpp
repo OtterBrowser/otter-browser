@@ -29,7 +29,7 @@ namespace Otter
 PanelChooserWidget::PanelChooserWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
 	m_toolBarIdentifier(-1)
 {
-	const QVariant toolBar(getParameters().value(QLatin1String("sidebar")));
+	const QVariant toolBar(definition.parameters.value(QLatin1String("sidebar")));
 
 	if (!toolBar.isNull())
 	{
