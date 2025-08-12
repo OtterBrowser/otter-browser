@@ -397,11 +397,12 @@ void SidebarWidget::updatePanels()
 
 	for (int i = 0; i < specialPages.count(); ++i)
 	{
-		QAction *action(menu->addAction(getPanelTitle(specialPages.at(i))));
+		const QString specialPage(specialPages.at(i));
+		QAction *action(menu->addAction(getPanelTitle(specialPage)));
 		action->setCheckable(true);
-		action->setChecked(panels.contains(specialPages.at(i)));
-		action->setData(specialPages.at(i));
-		action->setShortcut(ActionsManager::getActionShortcut(ActionsManager::ShowPanelAction, {{QLatin1String("panel"), specialPages.at(i)}}));
+		action->setChecked(panels.contains(specialPage));
+		action->setData(specialPage);
+		action->setShortcut(ActionsManager::getActionShortcut(ActionsManager::ShowPanelAction, {{QLatin1String("panel"), specialPage}}));
 		action->setShortcutContext(Qt::WidgetShortcut);
 
 		connect(action, &QAction::toggled, this, &SidebarWidget::choosePanel);
