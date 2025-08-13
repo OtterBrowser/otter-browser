@@ -183,16 +183,17 @@ void SidebarWidget::addWebPanel()
 		return;
 	}
 
+	const InputInterpreter::InterpreterResult result(dialog.getResult());
 	QUrl url;
 
-	switch (dialog.getResult().type)
+	switch (result.type)
 	{
 		case InputInterpreter::InterpreterResult::BookmarkType:
-			url = dialog.getResult().bookmark->getUrl();
+			url = result.bookmark->getUrl();
 
 			break;
 		case InputInterpreter::InterpreterResult::UrlType:
-			url = dialog.getResult().url;
+			url = result.url;
 
 			break;
 		default:
