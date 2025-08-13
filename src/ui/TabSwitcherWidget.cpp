@@ -274,8 +274,11 @@ void TabSwitcherWidget::handleWindowRemoved(quint64 identifier)
 	}
 }
 
-QStandardItem* TabSwitcherWidget::createRow(Window *window, const QVariant &index) const
+QStandardItem* TabSwitcherWidget::createRow(QPointer<Window> window, const QVariant &index) const
 {
+	if (!window) return nullptr;
+
+	const auto windowIdentifier = window->getIdentifier();
 	QColor color(palette().color(QPalette::Text));
 
 	if (window->getLoadingState() == WebWidget::DeferredLoadingState)
@@ -285,13 +288,13 @@ QStandardItem* TabSwitcherWidget::createRow(Window *window, const QVariant &inde
 
 	QStandardItem *item(new QStandardItem(window->getIcon(), window->getTitle()));
 	item->setData(color, Qt::ForegroundRole);
-	item->setData(window->getIdentifier(), IdentifierRole);
+	item->setData(windowIdentifier, IdentifierRole);
 	item->setData(index, OrderRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 	connect(window, &Window::titleChanged, this, [&](const QString &title)
 	{
-		const int row(findRow(window->getIdentifier()));
+		const int row(findRow(windowIdentifier));
 
 		if (row >= 0)
 		{
@@ -300,7 +303,7 @@ QStandardItem* TabSwitcherWidget::createRow(Window *window, const QVariant &inde
 	});
 	connect(window, &Window::iconChanged, this, [&](const QIcon &icon)
 	{
-		const int row(findRow(window->getIdentifier()));
+		const int row(findRow(windowIdentifier));
 
 		if (row >= 0)
 		{
@@ -309,7 +312,7 @@ QStandardItem* TabSwitcherWidget::createRow(Window *window, const QVariant &inde
 	});
 	connect(window, &Window::loadingStateChanged, this, [&](WebWidget::LoadingState state)
 	{
-		const int row(findRow(window->getIdentifier()));
+		const int row(findRow(windowIdentifier));
 
 		if (row >= 0)
 		{
