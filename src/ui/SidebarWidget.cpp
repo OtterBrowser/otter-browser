@@ -209,35 +209,6 @@ void SidebarWidget::addWebPanel()
 	}
 }
 
-void SidebarWidget::choosePanel(bool isChecked)
-{
-	const QAction *action(qobject_cast<QAction*>(sender()));
-
-	if (!action)
-	{
-		return;
-	}
-
-	ToolBarsManager::ToolBarDefinition definition(m_parentToolBarWidget->getDefinition());
-	const QString panel(action->data().toString());
-
-	if (isChecked)
-	{
-		definition.panels.append(panel);
-	}
-	else
-	{
-		definition.panels.removeAll(panel);
-
-		if (panel == definition.currentPanel)
-		{
-			definition.currentPanel.clear();
-		}
-	}
-
-	ToolBarsManager::setToolBar(definition);
-}
-
 void SidebarWidget::selectPanel(const QString &identifier)
 {
 	if (!identifier.isEmpty() && identifier == m_currentPanel)
@@ -405,8 +376,6 @@ void SidebarWidget::updatePanels()
 		action->setData(specialPage);
 		action->setShortcut(ActionsManager::getActionShortcut(ActionsManager::ShowPanelAction, {{QLatin1String("panel"), specialPage}}));
 		action->setShortcutContext(Qt::WidgetShortcut);
-
-		connect(action, &QAction::toggled, this, &SidebarWidget::choosePanel);
 	}
 
 	menu->addSeparator();
@@ -439,8 +408,6 @@ void SidebarWidget::updatePanels()
 			selectPanelMenuAction->setCheckable(true);
 			selectPanelMenuAction->setChecked(true);
 			selectPanelMenuAction->setData(panel);
-
-			connect(selectPanelMenuAction, &QAction::toggled, this, &SidebarWidget::choosePanel);
 		}
 
 		m_ui->buttonsLayout->insertWidget(qMax(0, (m_ui->buttonsLayout->count() - 2)), button);
@@ -455,6 +422,40 @@ void SidebarWidget::updatePanels()
 			{
 				selectPanel((action->data().toString() == m_currentPanel) ? QString() : action->data().toString());
 			}
+		});
+	}
+
+	const QList<QAction*> actions(menu->actions());
+
+	for (int i = 0; i < actions.count(); ++i)
+	{
+		QAction *action(actions.at(i));
+
+		if (!action->isCheckable())
+		{
+			continue;
+		}
+
+		connect(action, &QAction::toggled, action, [=](bool isChecked)
+		{
+			ToolBarsManager::ToolBarDefinition definition(m_parentToolBarWidget->getDefinition());
+			const QString panel(action->data().toString());
+
+			if (isChecked)
+			{
+				definition.panels.append(panel);
+			}
+			else
+			{
+				definition.panels.removeAll(panel);
+
+				if (panel == definition.currentPanel)
+				{
+					definition.currentPanel.clear();
+				}
+			}
+
+			ToolBarsManager::setToolBar(definition);
 		});
 	}
 
