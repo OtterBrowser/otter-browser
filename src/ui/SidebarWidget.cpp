@@ -412,16 +412,11 @@ void SidebarWidget::updatePanels()
 
 		m_ui->buttonsLayout->insertWidget(qMax(0, (m_ui->buttonsLayout->count() - 2)), button);
 
-		m_buttons[panels.at(i)] = button;
+		m_buttons[panel] = button;
 
-		connect(selectPanelButtonAction, &QAction::triggered, this, [&]()
+		connect(selectPanelButtonAction, &QAction::triggered, this, [=]()
 		{
-			const QAction *action(qobject_cast<QAction*>(sender()));
-
-			if (action)
-			{
-				selectPanel((action->data().toString() == m_currentPanel) ? QString() : action->data().toString());
-			}
+			selectPanel((panel == m_currentPanel) ? QString() : panel);
 		});
 	}
 
