@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -273,17 +273,12 @@ void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 		m_layer->raise();
 	}
 
-	connect(dialog, &ContentsDialog::finished, this, [&]()
+	connect(dialog, &ContentsDialog::finished, this, [=]()
 	{
-		ContentsDialog *dialog(qobject_cast<ContentsDialog*>(sender()));
+		m_dialogs.removeAll(dialog);
 
-		if (dialog)
-		{
-			m_dialogs.removeAll(dialog);
-
-			dialog->hide();
-			dialog->deleteLater();
-		}
+		dialog->hide();
+		dialog->deleteLater();
 
 		if (m_dialogs.isEmpty() && m_layer && m_layerTimer == 0)
 		{
