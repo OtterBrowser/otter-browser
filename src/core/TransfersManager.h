@@ -175,10 +175,6 @@ protected:
 
 protected slots:
 	void save();
-	void handleTransferStarted();
-	void handleTransferFinished();
-	void handleTransferChanged();
-	void handleTransferStopped();
 
 private:
 	int m_saveTimer;
