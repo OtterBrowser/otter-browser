@@ -275,7 +275,7 @@ void CookiesContentsWidget::handleCookieAdded(const QNetworkCookie &cookie)
 
 		m_model->appendRow(domainItem);
 
-		if (sender())
+		if (!m_isLoading)
 		{
 			m_model->sort(0);
 		}
