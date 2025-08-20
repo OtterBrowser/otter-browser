@@ -233,7 +233,7 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &url)
 		m_model->appendRow(domainItem);
 		m_model->setItem(domainItem->row(), 2, new QStandardItem());
 
-		if (sender())
+		if (!m_isLoading)
 		{
 			m_model->sort(0);
 		}
