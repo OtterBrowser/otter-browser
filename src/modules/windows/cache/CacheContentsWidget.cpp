@@ -283,7 +283,7 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &url)
 	domainItem->appendRow(entryItems);
 	domainItem->setText(QStringLiteral("%1 (%2)").arg(domain, QString::number(domainItem->rowCount())));
 
-	if (sender())
+	if (!m_isLoading)
 	{
 		domainItem->sortChildren(0, Qt::DescendingOrder);
 	}
