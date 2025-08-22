@@ -75,7 +75,6 @@ protected:
 protected slots:
 	void handleDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
 	void handleRequestFinished(QNetworkReply *reply);
-	void handleTransferFinished();
 	void handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator);
 	void handleProxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator);
 	void handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors);

@@ -173,7 +173,24 @@ void QtWebKitNetworkManager::registerTransfer(QNetworkReply *reply)
 
 		setParent(nullptr);
 
-		connect(reply, &QNetworkReply::finished, this, &QtWebKitNetworkManager::handleTransferFinished);
+		connect(reply, &QNetworkReply::finished, reply, [=]()
+		{
+			m_transfers.removeAll(reply);
+
+			reply->deleteLater();
+
+			if (m_transfers.isEmpty())
+			{
+				if (m_widget)
+				{
+					setParent(m_widget);
+				}
+				else
+				{
+					deleteLater();
+				}
+			}
+		});
 	}
 }
 
@@ -282,32 +299,6 @@ void QtWebKitNetworkManager::handleRequestFinished(QNetworkReply *reply)
 	}
 
 	disconnect(reply, &QNetworkReply::downloadProgress, this, &QtWebKitNetworkManager::handleDownloadProgress);
-}
-
-void QtWebKitNetworkManager::handleTransferFinished()
-{
-	QNetworkReply *reply(qobject_cast<QNetworkReply*>(sender()));
-
-	if (!reply)
-	{
-		return;
-	}
-
-	m_transfers.removeAll(reply);
-
-	reply->deleteLater();
-
-	if (m_transfers.isEmpty())
-	{
-		if (m_widget)
-		{
-			setParent(m_widget);
-		}
-		else
-		{
-			deleteLater();
-		}
-	}
 }
 
 void QtWebKitNetworkManager::handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator)
