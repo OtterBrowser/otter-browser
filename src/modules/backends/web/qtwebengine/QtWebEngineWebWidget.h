@@ -109,6 +109,7 @@ protected:
 	void hideEvent(QHideEvent *event) override;
 	void focusInEvent(QFocusEvent *event) override;
 	void ensureInitialized();
+	void viewSource(const QUrl &url);
 	void notifyWatchedDataChanged(ChangeWatcher watcher);
 	void updateOptions(const QUrl &url);
 	void updateWatchedData(ChangeWatcher watcher) override;

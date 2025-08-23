@@ -356,25 +356,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::ViewFrameSourceAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
-				const QString defaultEncoding(m_page->settings()->defaultTextEncoding());
-				QNetworkRequest request(m_hitResult.frameUrl);
-				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
-				request.setHeader(QNetworkRequest::UserAgentHeader, m_page->profile()->httpUserAgent());
-
-				QNetworkReply *reply(NetworkManagerFactory::getNetworkManager(isPrivate())->get(request));
-				SourceViewerWebWidget *sourceViewer(new SourceViewerWebWidget(isPrivate()));
-				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + m_hitResult.frameUrl.toString()), false);
-
-				if (!defaultEncoding.isEmpty())
-				{
-					sourceViewer->setOption(SettingsManager::Content_DefaultCharacterEncodingOption, defaultEncoding);
-				}
-
-				m_viewSourceReplies[reply] = sourceViewer;
-
-				connect(reply, &QNetworkReply::finished, this, &QtWebEngineWebWidget::handleViewSourceReplyFinished);
-
-				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen, {});
+				viewSource(m_hitResult.frameUrl);
 			}
 
 			break;
@@ -780,25 +762,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::ViewSourceAction:
 			if (canViewSource())
 			{
-				const QString defaultEncoding(m_page->settings()->defaultTextEncoding());
-				QNetworkRequest request(getUrl());
-				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
-				request.setHeader(QNetworkRequest::UserAgentHeader, m_page->profile()->httpUserAgent());
-
-				QNetworkReply *reply(NetworkManagerFactory::getNetworkManager(isPrivate())->get(request));
-				SourceViewerWebWidget *sourceViewer(new SourceViewerWebWidget(isPrivate()));
-				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + getUrl().toString()), false);
-
-				if (!defaultEncoding.isEmpty())
-				{
-					sourceViewer->setOption(SettingsManager::Content_DefaultCharacterEncodingOption, defaultEncoding);
-				}
-
-				m_viewSourceReplies[reply] = sourceViewer;
-
-				connect(reply, &QNetworkReply::finished, this, &QtWebEngineWebWidget::handleViewSourceReplyFinished);
-
-				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen, {});
+				viewSource(getUrl());
 			}
 
 			break;
@@ -930,6 +894,29 @@ void QtWebEngineWebWidget::print(QPrinter *printer)
 	});
 
 	eventLoop.exec();
+}
+
+void QtWebEngineWebWidget::viewSource(const QUrl &url)
+{
+	const QString defaultEncoding(m_page->settings()->defaultTextEncoding());
+	QNetworkRequest request(url);
+	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
+	request.setHeader(QNetworkRequest::UserAgentHeader, m_page->profile()->httpUserAgent());
+
+	QNetworkReply *reply(NetworkManagerFactory::getNetworkManager(isPrivate())->get(request));
+	SourceViewerWebWidget *sourceViewer(new SourceViewerWebWidget(isPrivate()));
+	sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + url.toString()), false);
+
+	if (!defaultEncoding.isEmpty())
+	{
+		sourceViewer->setOption(SettingsManager::Content_DefaultCharacterEncodingOption, defaultEncoding);
+	}
+
+	m_viewSourceReplies[reply] = sourceViewer;
+
+	connect(reply, &QNetworkReply::finished, this, &QtWebEngineWebWidget::handleViewSourceReplyFinished);
+
+	emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen, {});
 }
 
 void QtWebEngineWebWidget::handleLoadStarted()
