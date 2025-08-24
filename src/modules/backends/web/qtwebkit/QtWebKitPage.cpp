@@ -253,11 +253,12 @@ void QtWebKitPage::validatePopup(const QUrl &url)
 		page->deleteLater();
 	}
 
+	const QUrl baseUrl(mainFrame()->url());
 	const QVector<int> profiles(ContentFiltersManager::getProfileIdentifiers(getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList()));
 
 	if (!profiles.isEmpty())
 	{
-		const ContentFiltersManager::CheckResult result(ContentFiltersManager::checkUrl(profiles, mainFrame()->url(), url, NetworkManager::PopupType));
+		const ContentFiltersManager::CheckResult result(ContentFiltersManager::checkUrl(profiles, baseUrl, url, NetworkManager::PopupType));
 
 		if (result.isBlocked)
 		{
@@ -271,7 +272,7 @@ void QtWebKitPage::validatePopup(const QUrl &url)
 
 	if (popupsPolicy == QLatin1String("ask"))
 	{
-		emit requestedPopupWindow(mainFrame()->url(), url);
+		emit requestedPopupWindow(baseUrl, url);
 	}
 	else
 	{
@@ -282,7 +283,7 @@ void QtWebKitPage::validatePopup(const QUrl &url)
 			hints |= SessionsManager::BackgroundOpen;
 		}
 
-		QtWebKitWebWidget *widget(createWidget(hints));
+		WebWidget *widget(createWidget(hints));
 		widget->setUrl(url);
 	}
 }
