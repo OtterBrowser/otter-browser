@@ -242,52 +242,6 @@ QtWebKitPage::~QtWebKitPage()
 	m_popups.clear();
 }
 
-void QtWebKitPage::validatePopup(const QUrl &url)
-{
-	QtWebKitPage *page(qobject_cast<QtWebKitPage*>(sender()));
-
-	if (page)
-	{
-		m_popups.removeAll(page);
-
-		page->deleteLater();
-	}
-
-	const QUrl baseUrl(mainFrame()->url());
-	const QVector<int> profiles(ContentFiltersManager::getProfileIdentifiers(getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList()));
-
-	if (!profiles.isEmpty())
-	{
-		const ContentFiltersManager::CheckResult result(ContentFiltersManager::checkUrl(profiles, baseUrl, url, NetworkManager::PopupType));
-
-		if (result.isBlocked)
-		{
-			Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(ContentFiltersManager::getProfile(result.profile)->getTitle(), result.rule), Console::NetworkCategory, Console::LogLevel, url.url(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
-
-			return;
-		}
-	}
-
-	const QString popupsPolicy(getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString());
-
-	if (popupsPolicy == QLatin1String("ask"))
-	{
-		emit requestedPopupWindow(baseUrl, url);
-	}
-	else
-	{
-		SessionsManager::OpenHints hints(SessionsManager::NewTabOpen);
-
-		if (popupsPolicy == QLatin1String("openAllInBackground"))
-		{
-			hints |= SessionsManager::BackgroundOpen;
-		}
-
-		WebWidget *widget(createWidget(hints));
-		widget->setUrl(url);
-	}
-}
-
 void QtWebKitPage::saveState(QWebFrame *frame, QWebHistoryItem *item)
 {
 	if (!m_widget || frame != mainFrame())
@@ -519,7 +473,46 @@ QWebPage* QtWebKitPage::createWindow(WebWindowType type)
 			QtWebKitPage *page(new QtWebKitPage());
 			page->markAsPopup();
 
-			connect(page, &QtWebKitPage::aboutToNavigate, this, &QtWebKitPage::validatePopup);
+			connect(page, &QtWebKitPage::aboutToNavigate, page, [=](const QUrl &url)
+			{
+				m_popups.removeAll(page);
+
+				page->deleteLater();
+
+				const QUrl baseUrl(mainFrame()->url());
+				const QVector<int> profiles(ContentFiltersManager::getProfileIdentifiers(getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList()));
+
+				if (!profiles.isEmpty())
+				{
+					const ContentFiltersManager::CheckResult result(ContentFiltersManager::checkUrl(profiles, baseUrl, url, NetworkManager::PopupType));
+
+					if (result.isBlocked)
+					{
+						Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(ContentFiltersManager::getProfile(result.profile)->getTitle(), result.rule), Console::NetworkCategory, Console::LogLevel, url.url(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
+
+						return;
+					}
+				}
+
+				const QString popupsPolicy(getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString());
+
+				if (popupsPolicy == QLatin1String("ask"))
+				{
+					emit requestedPopupWindow(baseUrl, url);
+				}
+				else
+				{
+					SessionsManager::OpenHints hints(SessionsManager::NewTabOpen);
+
+					if (popupsPolicy == QLatin1String("openAllInBackground"))
+					{
+						hints |= SessionsManager::BackgroundOpen;
+					}
+
+					WebWidget *widget(createWidget(hints));
+					widget->setUrl(url);
+				}
+			});
 
 			return page;
 		}

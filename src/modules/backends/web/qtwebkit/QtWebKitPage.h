@@ -109,7 +109,6 @@ protected:
 	bool javaScriptPrompt(QWebFrame *frame, const QString &message, const QString &defaultValue, QString *result) override;
 
 protected slots:
-	void validatePopup(const QUrl &url);
 	void handleFrameCreation(QWebFrame *frame);
 	void handleConsoleMessage(MessageSource category, MessageLevel level, const QString &message, int line, const QString &source);
 
