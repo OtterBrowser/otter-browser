@@ -1042,18 +1042,20 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 
 						break;
 					case ToolBarsManager::StatusBar:
-						if (isChecked && !m_statusBar)
+						if (isChecked && (!m_statusBar || !m_statusBar->isVisible()))
 						{
-							m_statusBar = new StatusBarWidget(this);
+							if (!m_statusBar)
+							{
+								m_statusBar = new StatusBarWidget(this);
 
-							setStatusBar(m_statusBar);
+								setStatusBar(m_statusBar);
+							}
+
+							m_statusBar->show();
 						}
-						else if (!isChecked && m_statusBar)
+						else if (!isChecked && (m_statusBar && m_statusBar->isVisible()))
 						{
-							m_statusBar->deleteLater();
-							m_statusBar = nullptr;
-
-							setStatusBar(nullptr);
+							m_statusBar->hide();
 						}
 
 						break;
@@ -2751,12 +2753,12 @@ bool MainWindow::event(QEvent *event)
 
 					if (m_menuBar)
 					{
-						m_menuBar->setVisible(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).getVisibility(mode) == ToolBarsManager::AlwaysVisibleToolBar);
+						m_menuBar->setVisible(getToolBarState(ToolBarsManager::MenuBar).getVisibility(mode) == Session::MainWindow::ToolBarState::AlwaysVisibleToolBar);
 					}
 
 					if (m_statusBar)
 					{
-						m_statusBar->setVisible(ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).getVisibility(mode) == ToolBarsManager::AlwaysVisibleToolBar);
+						m_statusBar->setVisible(getToolBarState(ToolBarsManager::StatusBar).getVisibility(mode) == Session::MainWindow::ToolBarState::AlwaysVisibleToolBar);
 					}
 
 					if (!windowState().testFlag(Qt::WindowFullScreen))
