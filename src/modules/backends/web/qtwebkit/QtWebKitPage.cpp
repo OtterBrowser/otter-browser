@@ -828,7 +828,7 @@ bool QtWebKitPage::extension(Extension extension, const ExtensionOption *option,
 			domain = QLatin1String("HTTP");
 		}
 
-        const QString logMessage(tr("%1 error #%2: %3").arg(domain, QString::number(errorOption->error), errorOption->errorString));
+		const QString logMessage(tr("%1 error #%2: %3").arg(domain, QString::number(errorOption->error), errorOption->errorString));
 		const quint64 windowIdentifier(m_widget ? m_widget->getWindowIdentifier() : 0);
 
 		if (errorOption->domain == WebKit && (errorOption->error == 102 || errorOption->error == 203))
