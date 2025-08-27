@@ -74,7 +74,6 @@ protected:
 	bool javaScriptPrompt(const QUrl &url, const QString &message, const QString &defaultValue, QString *result) override;
 
 protected slots:
-	void validatePopup(const QUrl &url);
 	void handleLoadFinished();
 
 private:
