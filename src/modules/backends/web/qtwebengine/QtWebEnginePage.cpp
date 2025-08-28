@@ -43,7 +43,7 @@
 namespace Otter
 {
 
-QtWebEnginePage::QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent) : QWebEnginePage((isPrivate ? new QWebEngineProfile(parent) : QWebEngineProfile::defaultProfile()), parent),
+QtWebEnginePage::QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent) : QWebEnginePage((isPrivate ? new QWebEngineProfile(parent) : qobject_cast<QtWebEngineWebBackend*>(parent->getBackend())->getDefaultProfile()), parent),
 	m_widget(parent),
 	m_previousNavigationType(QtWebEnginePage::NavigationTypeOther),
 	m_isIgnoringJavaScriptPopups(false),

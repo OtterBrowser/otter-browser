@@ -20,6 +20,7 @@
 #include "QtWebEngineWebWidget.h"
 #include "QtWebEnginePage.h"
 #include "QtWebEngineUrlRequestInterceptor.h"
+#include "QtWebEngineWebBackend.h"
 #include "../../../../core/Application.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/GesturesManager.h"
@@ -61,10 +62,11 @@
 namespace Otter
 {
 
-QtWebEngineInspectorWidget::QtWebEngineInspectorWidget(QWebEnginePage *inspectedPage, QWidget *parent) : QWebEngineView(parent),
+QtWebEngineInspectorWidget::QtWebEngineInspectorWidget(QWebEnginePage *inspectedPage, QtWebEngineWebWidget *parent) : QWebEngineView(parent),
 	m_inspectedPage(inspectedPage)
 {
 	setMinimumHeight(200);
+	setPage(new QWebEnginePage(qobject_cast<QtWebEngineWebBackend*>(parent->getBackend())->getDefaultProfile(), this));
 
 	connect(page(), &QWebEnginePage::windowCloseRequested, this, [&]()
 	{

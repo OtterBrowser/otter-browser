@@ -31,12 +31,13 @@ namespace Otter
 
 class QtWebEnginePage;
 class QtWebEngineUrlRequestInterceptor;
+class QtWebEngineWebWidget;
 class SourceViewerWebWidget;
 
 class QtWebEngineInspectorWidget final : public QWebEngineView
 {
 public:
-	explicit QtWebEngineInspectorWidget(QWebEnginePage *inspectedPage, QWidget *parent);
+	explicit QtWebEngineInspectorWidget(QWebEnginePage *inspectedPage, QtWebEngineWebWidget *parent);
 
 protected:
 	void showEvent(QShowEvent *event) override;

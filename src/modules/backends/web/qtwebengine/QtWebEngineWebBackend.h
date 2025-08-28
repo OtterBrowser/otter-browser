@@ -25,6 +25,7 @@
 
 #include <QtWebEngineCore/QWebEngineNotification>
 #include <QtWebEngineWidgets/QWebEngineDownloadItem>
+#include <QtWebEngineWidgets/QWebEngineProfile>
 
 #include <memory>
 
@@ -42,6 +43,7 @@ public:
 	explicit QtWebEngineWebBackend(QObject *parent = nullptr);
 
 	WebWidget* createWidget(const QVariantMap &parameters, ContentsWidget *parent = nullptr) override;
+	QWebEngineProfile* getDefaultProfile();
 	QString getName() const override;
 	QString getTitle() const override;
 	QString getDescription() const override;
