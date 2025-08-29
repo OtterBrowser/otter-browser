@@ -62,7 +62,7 @@ protected:
 	void hideEvent(QHideEvent *event) override;
 	void keyPressEvent(QKeyEvent *event) override;
 	void keyReleaseEvent(QKeyEvent *event) override;
-	QStandardItem* createRow(Window *window, const QVariant &index) const;
+	QStandardItem* createRow(QPointer<Window> window, const QVariant &index) const;
 	int findRow(quint64 identifier) const;
 
 protected slots:
