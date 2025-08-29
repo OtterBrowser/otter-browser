@@ -63,12 +63,13 @@ namespace Otter
 {
 
 QtWebEngineInspectorWidget::QtWebEngineInspectorWidget(QWebEnginePage *inspectedPage, QtWebEngineWebWidget *parent) : QWebEngineView(parent),
+	m_page(new QWebEnginePage(qobject_cast<QtWebEngineWebBackend*>(parent->getBackend())->getDefaultProfile(), this)),
 	m_inspectedPage(inspectedPage)
 {
 	setMinimumHeight(200);
-	setPage(new QWebEnginePage(qobject_cast<QtWebEngineWebBackend*>(parent->getBackend())->getDefaultProfile(), this));
+	setPage(m_page);
 
-	connect(page(), &QWebEnginePage::windowCloseRequested, this, [&]()
+	connect(m_page, &QWebEnginePage::windowCloseRequested, this, [&]()
 	{
 		hide();
 	});
@@ -76,9 +77,9 @@ QtWebEngineInspectorWidget::QtWebEngineInspectorWidget(QWebEnginePage *inspected
 
 void QtWebEngineInspectorWidget::showEvent(QShowEvent *event)
 {
-	if (!page()->inspectedPage())
+	if (!m_page->inspectedPage())
 	{
-		page()->setInspectedPage(m_inspectedPage);
+		m_page->setInspectedPage(m_inspectedPage);
 	}
 
 	QWebEngineView::showEvent(event);
