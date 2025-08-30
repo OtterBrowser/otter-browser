@@ -298,7 +298,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 				if (hints == SessionsManager::DefaultOpen && !getCurrentHitTestResult().flags.testFlag(HitTestResult::IsLinkFromSelectionTest))
 				{
-					m_page->runJavaScript(parsePosition(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element) { element.click(); }"), getClickPosition()));
+					m_page->runJavaScript(parsePosition(QStringLiteral("let element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element) { element.click(); }"), getClickPosition()));
 
 					setClickPosition({});
 				}
@@ -352,7 +352,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			if (m_hitResult.frameUrl.isValid())
 			{
 //TODO Add support for subframes
-				m_page->runJavaScript(QStringLiteral("var frames = document.querySelectorAll('iframe[src=\"%1\"], frame[src=\"%1\"]'); for (var i = 0; i < frames.length; ++i) { frames[i].contentWindow.location.replace('%1'); }").arg(m_hitResult.frameUrl.toString()));
+				m_page->runJavaScript(QStringLiteral("let frames = document.querySelectorAll('iframe[src=\"%1\"], frame[src=\"%1\"]'); for (let i = 0; i < frames.length; ++i) { frames[i].contentWindow.location.replace('%1'); }").arg(m_hitResult.frameUrl.toString()));
 			}
 
 			break;
@@ -424,7 +424,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				else
 				{
 //TODO Improve
-					m_page->runJavaScript(QStringLiteral("var images = document.querySelectorAll('img[src=\"%1\"]'); for (var i = 0; i < images.length; ++i) { images[i].src = ''; images[i].src = \'%1\'; }").arg(m_hitResult.imageUrl.toString()));
+					m_page->runJavaScript(QStringLiteral("let images = document.querySelectorAll('img[src=\"%1\"]'); for (let i = 0; i < images.length; ++i) { images[i].src = ''; images[i].src = \'%1\'; }").arg(m_hitResult.imageUrl.toString()));
 				}
 			}
 
@@ -444,7 +444,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			}
 			else
 			{
-				m_page->runJavaScript(parsePosition(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element && element.tagName && element.tagName.toLowerCase() == 'img') { [element.naturalWidth, element.naturalHeight]; }"), getClickPosition()), [&](const QVariant &result)
+				m_page->runJavaScript(parsePosition(QStringLiteral("let element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element && element.tagName && element.tagName.toLowerCase() == 'img') { [element.naturalWidth, element.naturalHeight]; }"), getClickPosition()), [&](const QVariant &result)
 				{
 					QMap<ImagePropertiesDialog::ImageProperty, QVariant> properties({{ImagePropertiesDialog::AlternativeTextProperty, m_hitResult.alternateText}, {ImagePropertiesDialog::LongDescriptionProperty, m_hitResult.longDescription}});
 
@@ -501,7 +501,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			break;
 		case ActionsManager::MediaPlaybackRateAction:
-			m_page->runJavaScript(parsePosition(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element) { element.playbackRate = %3; }"), getClickPosition()).arg(parameters.value(QLatin1String("rate"), 1).toReal()));
+			m_page->runJavaScript(parsePosition(QStringLiteral("let element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element) { element.playbackRate = %3; }"), getClickPosition()).arg(parameters.value(QLatin1String("rate"), 1).toReal()));
 
 			break;
 		case ActionsManager::GoBackAction:
@@ -759,7 +759,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			m_webView->setFocus();
 
-			m_page->runJavaScript(QLatin1String("var element = document.activeElement; if (element && element.tagName && (element.tagName.toLowerCase() == 'input' || element.tagName.toLowerCase() == 'textarea'))) { document.activeElement.blur(); }"));
+			m_page->runJavaScript(QLatin1String("let element = document.activeElement; if (element && element.tagName && (element.tagName.toLowerCase() == 'input' || element.tagName.toLowerCase() == 'textarea'))) { document.activeElement.blur(); }"));
 
 			break;
 		case ActionsManager::ViewSourceAction:
@@ -1251,7 +1251,7 @@ void QtWebEngineWebWidget::updateWatchedData(ChangeWatcher watcher)
 
 			break;
 		case MetaDataWatcher:
-			m_page->runJavaScript(QLatin1String("var elements = document.querySelectorAll('meta'); var metaData = []; for (var i = 0; i < elements.length; ++i) { if (elements[i].name !== '') { metaData.push({key: elements[i].name, value: elements[i].content}); } } metaData;"), [&](const QVariant &result)
+			m_page->runJavaScript(QLatin1String("let elements = document.querySelectorAll('meta'); let metaData = []; for (let i = 0; i < elements.length; ++i) { if (elements[i].name !== '') { metaData.push({key: elements[i].name, value: elements[i].content}); } } metaData;"), [&](const QVariant &result)
 			{
 				QMultiMap<QString, QString> metaData;
 				const QVariantList rawMetaData(result.toList());
@@ -1352,7 +1352,7 @@ void QtWebEngineWebWidget::setUrl(const QUrl &url, bool isTypedIn)
 	}
 	else if (!url.fragment().isEmpty() && url.matches(getUrl(), (QUrl::RemoveFragment | QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)))
 	{
-		m_page->runJavaScript(QStringLiteral("var element = document.querySelector('a[name=%1], [id=%1]'); if (element) { var geometry = element.getBoundingClientRect(); [(geometry.left + window.scrollX), (geometry.top + window.scrollY)]; }").arg(url.fragment()), [&](const QVariant &result)
+		m_page->runJavaScript(QStringLiteral("let element = document.querySelector('a[name=%1], [id=%1]'); if (element) { let geometry = element.getBoundingClientRect(); [(geometry.left + window.scrollX), (geometry.top + window.scrollY)]; }").arg(url.fragment()), [&](const QVariant &result)
 		{
 			if (result.isValid())
 			{
@@ -1377,7 +1377,7 @@ void QtWebEngineWebWidget::setUrl(const QUrl &url, bool isTypedIn)
 
 void QtWebEngineWebWidget::setActiveStyleSheet(const QString &styleSheet)
 {
-	m_page->runJavaScript(QStringLiteral("var elements = document.querySelectorAll('link[rel=\\'alternate stylesheet\\']'); for (var i = 0; i < elements.length; ++i) { elements[i].disabled = (elements[i].title !== '%1'); }").arg(QString(styleSheet).replace(QLatin1Char('\''), QLatin1String("\\'"))));
+	m_page->runJavaScript(QStringLiteral("let elements = document.querySelectorAll('link[rel=\\'alternate stylesheet\\']'); for (let i = 0; i < elements.length; ++i) { elements[i].disabled = (elements[i].title !== '%1'); }").arg(QString(styleSheet).replace(QLatin1Char('\''), QLatin1String("\\'"))));
 }
 
 void QtWebEngineWebWidget::setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies)
@@ -1528,7 +1528,7 @@ QString QtWebEngineWebWidget::getTitle() const
 
 QString QtWebEngineWebWidget::getDescription() const
 {
-	return m_page->runScriptSource(QLatin1String(R"(var element = document.querySelector('[name=\'description\']'); var description = (element ? element.content : ''); if (description == '') { element = document.querySelector('[name=\'og:description\']'); description = (element ? element.property : ''); } description;)")).toString();
+	return m_page->runScriptSource(QLatin1String(R"(let element = document.querySelector('[name=\'description\']'); let description = (element ? element.content : ''); if (description == '') { element = document.querySelector('[name=\'og:description\']'); description = (element ? element.property : ''); } description;)")).toString();
 }
 
 QString QtWebEngineWebWidget::getActiveStyleSheet() const
@@ -1984,7 +1984,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			break;
 		case QEvent::ShortcutOverride:
-			m_isEditing = m_page->runScriptSource(QLatin1String("var element = document.body.querySelector(':focus'); var tagName = (element ? element.tagName.toLowerCase() : ''); var result = false; if (tagName == 'textarea' || tagName == 'input') { var type = (element.type ? element.type.toLowerCase() : ''); if ((type == '' || tagName == 'textarea' || type == 'text' || type == 'search') && !element.hasAttribute('readonly') && !element.hasAttribute('disabled')) { result = true; } } result;")).toBool();
+			m_isEditing = m_page->runScriptSource(QLatin1String("let element = document.body.querySelector(':focus'); let tagName = (element ? element.tagName.toLowerCase() : ''); let result = false; if (tagName == 'textarea' || tagName == 'input') { let type = (element.type ? element.type.toLowerCase() : ''); if ((type == '' || tagName == 'textarea' || type == 'text' || type == 'search') && !element.hasAttribute('readonly') && !element.hasAttribute('disabled')) { result = true; } } result;")).toBool();
 
 			if (m_isEditing)
 			{
