@@ -931,15 +931,8 @@ bool QtWebKitPage::extension(Extension extension, const ExtensionOption *option,
 		{
 			case ErrorPageInformation::BlockedContentError:
 				{
-					ErrorPageInformation::PageAction goBackAction;
-					goBackAction.name = QLatin1String("goBack");
-					goBackAction.title = QCoreApplication::translate("utils", "Go Back");
-					goBackAction.type = ErrorPageInformation::MainAction;
-
-					ErrorPageInformation::PageAction addExceptionAction;
-					addExceptionAction.name = QLatin1String("addContentBlockingException");
-					addExceptionAction.title = QCoreApplication::translate("utils", "Load Blocked Page");
-					addExceptionAction.type = ErrorPageInformation::AdvancedAction;
+					const ErrorPageInformation::PageAction goBackAction({QLatin1String("goBack"), QCoreApplication::translate("utils", "Go Back"), ErrorPageInformation::MainAction});
+					const ErrorPageInformation::PageAction addExceptionAction({QLatin1String("addContentBlockingException"), QCoreApplication::translate("utils", "Load Blocked Page"), ErrorPageInformation::AdvancedAction});
 
 					information.actions = {goBackAction, addExceptionAction};
 				}
@@ -947,15 +940,8 @@ bool QtWebKitPage::extension(Extension extension, const ExtensionOption *option,
 				break;
 			case ErrorPageInformation::ConnectionInsecureError:
 				{
-					ErrorPageInformation::PageAction goBackAction;
-					goBackAction.name = QLatin1String("goBack");
-					goBackAction.title = QCoreApplication::translate("utils", "Go Back");
-					goBackAction.type = ErrorPageInformation::MainAction;
-
-					ErrorPageInformation::PageAction addExceptionAction;
-					addExceptionAction.name = QLatin1String("addSslErrorException");
-					addExceptionAction.title = QCoreApplication::translate("utils", "Load Insecure Page");
-					addExceptionAction.type = ErrorPageInformation::AdvancedAction;
+					const ErrorPageInformation::PageAction goBackAction({QLatin1String("goBack"), QCoreApplication::translate("utils", "Go Back"), ErrorPageInformation::MainAction});
+					const ErrorPageInformation::PageAction addExceptionAction({QLatin1String("addSslErrorException"), QCoreApplication::translate("utils", "Load Insecure Page"), ErrorPageInformation::AdvancedAction});
 
 					information.actions = {goBackAction, addExceptionAction};
 				}
@@ -963,12 +949,7 @@ bool QtWebKitPage::extension(Extension extension, const ExtensionOption *option,
 				break;
 			default:
 				{
-					ErrorPageInformation::PageAction reloadAction;
-					reloadAction.name = QLatin1String("reloadPage");
-					reloadAction.title = QCoreApplication::translate("utils", "Try Again");
-					reloadAction.type = ErrorPageInformation::MainAction;
-
-					information.actions = {reloadAction};
+					information.actions = {{QLatin1String("reloadPage"), QCoreApplication::translate("utils", "Try Again"), ErrorPageInformation::MainAction}};
 				}
 
 				break;
