@@ -39,14 +39,9 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 
 	if (!directory.exists() || !directory.isReadable())
 	{
-		ErrorPageInformation::PageAction reloadAction;
-		reloadAction.name = QLatin1String("reloadPage");
-		reloadAction.title = QCoreApplication::translate("utils", "Try Again");
-		reloadAction.type = ErrorPageInformation::MainAction;
-
 		ErrorPageInformation information;
 		information.url = request.url();
-		information.actions.append(reloadAction);
+		information.actions.append({QLatin1String("reloadPage"), QCoreApplication::translate("utils", "Try Again"), ErrorPageInformation::MainAction});
 
 		if (directory.isReadable())
 		{
