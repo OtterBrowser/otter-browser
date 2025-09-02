@@ -65,11 +65,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 		open(ReadOnly | Unbuffered);
 
 		const QFtp::Error error(m_ftp->error());
-		ErrorPageInformation::PageAction reloadAction;
-		reloadAction.name = QLatin1String("reloadPage");
-		reloadAction.title = QCoreApplication::translate("utils", "Try Again");
-		reloadAction.type = ErrorPageInformation::MainAction;
-
+		const ErrorPageInformation::PageAction reloadAction({QLatin1String("reloadPage"), QCoreApplication::translate("utils", "Try Again"), ErrorPageInformation::MainAction});
 		ErrorPageInformation information;
 		information.url = request().url();
 		information.description = QStringList(m_ftp->errorString());
