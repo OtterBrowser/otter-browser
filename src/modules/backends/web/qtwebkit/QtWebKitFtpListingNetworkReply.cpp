@@ -121,89 +121,93 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 			break;
 		case QFtp::List:
-			if (m_directories.isEmpty() && ((m_files.count() == 1 && m_symlinks.isEmpty() && request().url().path().endsWith(m_files.value(0).name())) || (m_symlinks.count() == 1 && m_files.isEmpty() && request().url().path().endsWith(m_symlinks.value(0).name()))))
 			{
-				m_ftp->get(normalizedUrl.path());
-			}
-			else
-			{
-				open(ReadOnly | Unbuffered);
-
 				QUrl url(request().url());
-				QMimeDatabase mimeDatabase;
-				QVector<NavigationEntry> navigation;
-				navigation.reserve(url.path().count(QLatin1Char('/')) + 1);
+				const QString path(url.path());
 
-				const QVector<QUrlInfo> rawEntries(m_symlinks + m_directories + m_files);
-				QVector<ListingEntry> entries;
-				entries.reserve(rawEntries.count());
-
-				if (url.path().isEmpty())
+				if (m_directories.isEmpty() && ((m_files.count() == 1 && m_symlinks.isEmpty() && path.endsWith(m_files.value(0).name())) || (m_symlinks.count() == 1 && m_files.isEmpty() && path.endsWith(m_symlinks.value(0).name()))))
 				{
-					url.setPath(QLatin1String("/"));
+					m_ftp->get(normalizedUrl.path());
 				}
-
-				while (true)
+				else
 				{
-					const bool isRoot(url.path() == QLatin1String("/"));
+					open(ReadOnly | Unbuffered);
 
-					url = url.adjusted(QUrl::StripTrailingSlash);
+					QMimeDatabase mimeDatabase;
+					QVector<NavigationEntry> navigation;
+					navigation.reserve(path.count(QLatin1Char('/')) + 1);
 
-					NavigationEntry entry;
-					entry.name = (isRoot ? url.toString() : url.fileName() + QLatin1Char('/'));
-					entry.url = url.url();
+					const QVector<QUrlInfo> rawEntries(m_symlinks + m_directories + m_files);
+					QVector<ListingEntry> entries;
+					entries.reserve(rawEntries.count());
 
-					navigation.prepend(entry);
-
-					if (isRoot)
+					if (path.isEmpty())
 					{
-						break;
+						url.setPath(QLatin1String("/"));
 					}
 
-					url = url.adjusted(QUrl::RemoveFilename);
-				}
+					while (true)
+					{
+						const bool isRoot(url.path() == QLatin1String("/"));
 
-				for (int i = 0; i < rawEntries.count(); ++i)
-				{
-					const QUrlInfo rawEntry(rawEntries.at(i));
-					ListingEntry entry;
-					entry.name = rawEntry.name();
-					entry.url = normalizedUrl.url() + QLatin1Char('/') + rawEntry.name();
-					entry.timeModified = rawEntry.lastModified();
-					entry.size = rawEntry.size();
-					entry.isSymlink = rawEntry.isSymLink();
+						url = url.adjusted(QUrl::StripTrailingSlash);
 
-					if (rawEntry.isSymLink())
-					{
-						entry.type = ListingEntry::UnknownType;
-						entry.mimeType = mimeDatabase.mimeTypeForName(QLatin1String("text/uri-list"));
-					}
-					else if (rawEntry.isDir())
-					{
-						entry.type = ListingEntry::DirectoryType;
-						entry.mimeType = mimeDatabase.mimeTypeForName(QLatin1String("inode/directory"));
-					}
-					else
-					{
-						entry.type = ListingEntry::FileType;
-						entry.mimeType = mimeDatabase.mimeTypeForUrl(normalizedUrl.url() + rawEntry.name());
+						NavigationEntry entry;
+						entry.name = (isRoot ? url.toString() : url.fileName() + QLatin1Char('/'));
+						entry.url = url.url();
+
+						navigation.prepend(entry);
+
+						if (isRoot)
+						{
+							break;
+						}
+
+						url = url.adjusted(QUrl::RemoveFilename);
 					}
 
-					entries.append(entry);
+					for (int i = 0; i < rawEntries.count(); ++i)
+					{
+						const QUrlInfo rawEntry(rawEntries.at(i));
+						ListingEntry entry;
+						entry.name = rawEntry.name();
+						entry.url = normalizedUrl.url() + QLatin1Char('/') + rawEntry.name();
+						entry.timeModified = rawEntry.lastModified();
+						entry.size = rawEntry.size();
+						entry.isSymlink = rawEntry.isSymLink();
+
+						if (rawEntry.isSymLink())
+						{
+							entry.type = ListingEntry::UnknownType;
+							entry.mimeType = mimeDatabase.mimeTypeForName(QLatin1String("text/uri-list"));
+						}
+						else if (rawEntry.isDir())
+						{
+							entry.type = ListingEntry::DirectoryType;
+							entry.mimeType = mimeDatabase.mimeTypeForName(QLatin1String("inode/directory"));
+						}
+						else
+						{
+							entry.type = ListingEntry::FileType;
+							entry.mimeType = mimeDatabase.mimeTypeForUrl(normalizedUrl.url() + rawEntry.name());
+						}
+
+						entries.append(entry);
+					}
+
+					QString title(normalizedUrl.toString());
+
+					if (!normalizedUrl.path().endsWith(QLatin1Char('/')))
+					{
+						title.append(QLatin1Char('/'));
+					}
+
+					m_content = createListing(title, navigation, entries);
+
+					sendHeaders();
+
+					m_ftp->close();
 				}
-
-				QString title(normalizedUrl.toString());
-
-				if (!normalizedUrl.path().endsWith(QLatin1Char('/')))
-				{
-					title.append(QLatin1Char('/'));
-				}
-
-				m_content = createListing(title, navigation, entries);
-
-				sendHeaders();
-
-				m_ftp->close();
 			}
 
 			break;
