@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,7 @@ public:
 	void setVisible(bool visible) override;
 	QString getQuery() const;
 	WebWidget::FindFlags getFlags() const;
+	bool hasQuery() const;
 
 public slots:
 	void updateResults(const QString &query, int matchesAmount, int activeResult);
