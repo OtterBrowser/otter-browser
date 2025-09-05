@@ -712,7 +712,7 @@ void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
 		m_quickFindTimer = startTimer(2000);
 	}
 
-	m_quickFindQuery = (m_searchBarWidget ? m_searchBarWidget->getQuery() : m_sharedQuickFindQuery);
+	m_quickFindQuery = ((m_searchBarWidget && m_searchBarWidget->hasQuery()) ? m_searchBarWidget->getQuery() : m_sharedQuickFindQuery);
 
 	m_webWidget->findInPage(m_quickFindQuery, flags);
 
