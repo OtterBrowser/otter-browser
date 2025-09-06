@@ -314,7 +314,7 @@ void WebContentsWidget::search(const QString &search, const QString &query)
 {
 	if (m_webWidget->getUrl().scheme() == QLatin1String("view-source"))
 	{
-		setWidget(nullptr, {{QLatin1String("hints"), (isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen)}}, (m_webWidget ? m_webWidget->getOptions() : QHash<int, QVariant>()));
+		setWidget(nullptr, {{QLatin1String("hints"), (isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen)}}, m_webWidget->getOptions());
 	}
 
 	m_webWidget->search(search, query);
