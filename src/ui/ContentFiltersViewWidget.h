@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -96,7 +96,7 @@ protected:
 	void changeEvent(QEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
 	void markProfilesAsModified();
-	void appendProfile(QList<QStandardItem*> items, ContentFiltersProfile::ProfileCategory category);
+    void appendProfile(const QList<QStandardItem *> &items, ContentFiltersProfile::ProfileCategory category);
 	void moveProfile(QStandardItem *entryItem, ContentFiltersProfile::ProfileCategory newCategory);
 	QString getProfilePath(const QModelIndex &index) const;
 	ContentFiltersProfile::ProfileSummary getProfileSummary(const QModelIndex &index) const;
