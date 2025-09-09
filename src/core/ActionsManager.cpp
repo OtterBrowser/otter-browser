@@ -678,7 +678,7 @@ bool ActionsManager::isShortcutAllowed(const QKeySequence &shortcut, ShortcutChe
 		const int key(shortcut[0]);
 #endif
 
-		if ((key == Qt::Key_Plus || !shortcut.toString(QKeySequence::PortableText).contains(QLatin1Char('+'))) && key != Qt::Key_Delete && !(key >= Qt::Key_F1 && key <= Qt::Key_F35))
+		if ((key == Qt::Key_Plus || !shortcut.toString(QKeySequence::PortableText).contains(QLatin1Char('+'))) && key != Qt::Key_Delete && (key < Qt::Key_F1 || key > Qt::Key_F35))
 		{
 			return false;
 		}
