@@ -481,7 +481,7 @@ QString formatDateTime(const QDateTime &dateTime, QString format, bool allowFanc
 		format = SettingsManager::getOption(SettingsManager::Interface_DateTimeFormatOption).toString();
 	}
 
-	QLocale locale;
+	const QLocale locale;
 
 	return (format.isEmpty() ? locale.toString(localDateTime, QLocale::ShortFormat) : locale.toString(localDateTime, format));
 }
@@ -597,7 +597,7 @@ QUrl normalizeUrl(QUrl url)
 
 QColor createColor(const QUrl &url)
 {
-	QByteArray hash(QCryptographicHash::hash(url.host().toUtf8(), QCryptographicHash::Md5));
+	const QByteArray hash(QCryptographicHash::hash(url.host().toUtf8(), QCryptographicHash::Md5));
 
 	return QColor(hash.at(0), hash.at(1), hash.at(2));
 }
