@@ -133,7 +133,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 				{
 					open(ReadOnly | Unbuffered);
 
-					QMimeDatabase mimeDatabase;
+					const QMimeDatabase mimeDatabase;
 					QVector<NavigationEntry> navigation;
 					navigation.reserve(path.count(QLatin1Char('/')) + 1);
 
