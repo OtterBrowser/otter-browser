@@ -520,22 +520,22 @@ void BookmarksModel::restoreBookmark(Bookmark *bookmark)
 		return;
 	}
 
-	Bookmark *formerParent(m_trash.contains(bookmark) ? getBookmark(m_trash[bookmark].parent) : m_rootItem);
+	Bookmark *previousParent(m_trash.contains(bookmark) ? getBookmark(m_trash[bookmark].parent) : m_rootItem);
 
-	if (!formerParent || formerParent->getType() != FolderBookmark)
+	if (!previousParent || previousParent->getType() != FolderBookmark)
 	{
-		formerParent = m_rootItem;
+		previousParent = m_rootItem;
 	}
 
 	if (m_trash.contains(bookmark))
 	{
-		formerParent->insertRow(m_trash[bookmark].row, bookmark->parent()->takeRow(bookmark->row()));
+		previousParent->insertRow(m_trash[bookmark].row, bookmark->parent()->takeRow(bookmark->row()));
 
 		m_trash.remove(bookmark);
 	}
 	else
 	{
-		formerParent->appendRow(bookmark->parent()->takeRow(bookmark->row()));
+		previousParent->appendRow(bookmark->parent()->takeRow(bookmark->row()));
 	}
 
 	readdBookmarkUrl(bookmark);
