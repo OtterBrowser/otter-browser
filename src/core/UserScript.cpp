@@ -388,7 +388,7 @@ bool UserScript::isEnabledForUrl(const QUrl &url)
 		return false;
 	}
 
-	bool isEnabled(!(m_includeRules.length() > 0 || m_matchRules.length() > 0));
+	bool isEnabled(m_includeRules.isEmpty() && m_matchRules.isEmpty());
 
 	if (checkUrl(url, m_matchRules))
 	{
