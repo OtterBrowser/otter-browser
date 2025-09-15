@@ -212,7 +212,7 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 
 				if (!parentMenu || parentMenu->getRole() != m_role)
 				{
-					connect(NotesManager::getModel(), &BookmarksModel::modelModified, this, &Menu::clearBookmarksMenu);
+					connect(NotesManager::getModel(), &BookmarksModel::modelModified, this, &Menu::clearNotesMenu);
 				}
 
 				connect(this, &Menu::aboutToShow, this, &Menu::populateNotesMenu);
