@@ -70,7 +70,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 		return;
 	}
 
-	QMimeDatabase mimeDatabase;
+	const QMimeDatabase mimeDatabase;
 	QVector<NavigationEntry> navigation;
 	navigation.reserve(request.url().path().count(QLatin1Char('/')) + 1);
 
