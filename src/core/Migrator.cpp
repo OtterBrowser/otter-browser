@@ -50,7 +50,7 @@ void Migration::migrate() const
 QString Migration::createBackupPath(const QString &sourcePath)
 {
 	QString backupPath(SessionsManager::getWritableDataPath(QLatin1String("backups") + QDir::separator() + (sourcePath.isEmpty() ? QLatin1String("other") : sourcePath)) + QDir::separator());
-	QString backupName(QDate::currentDate().toString(QLatin1String("yyyyMMdd")));
+	const QString backupName(QDate::currentDate().toString(QLatin1String("yyyyMMdd")));
 	int i(1);
 
 	do
