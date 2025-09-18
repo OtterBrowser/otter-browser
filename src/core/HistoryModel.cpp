@@ -140,7 +140,7 @@ void HistoryModel::clearRecentEntries(uint period)
 
 	for (int i = (rowCount() - 1); i >= 0; --i)
 	{
-		if (index(i, 0).data(TimeVisitedRole).toDateTime().secsTo(QDateTime::currentDateTimeUtc()) < (period * 3600))
+		if (index(i, 0).data(TimeVisitedRole).toDateTime().secsTo(QDateTime::currentDateTimeUtc()) < (static_cast<qint64>(period) * 3600))
 		{
 			removeEntry(index(i, 0).data(IdentifierRole).toULongLong());
 		}
