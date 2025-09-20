@@ -503,7 +503,7 @@ QJsonValue ToolBarsManager::encodeEntry(const ToolBarDefinition::Entry &definiti
 {
 	if (definition.entries.isEmpty() && definition.options.isEmpty() && definition.parameters.isEmpty())
 	{
-		return QJsonValue(definition.action);
+		return {definition.action};
 	}
 
 	QJsonObject actionObject({{QLatin1String("identifier"), QJsonValue(definition.action)}});
@@ -530,7 +530,7 @@ QJsonValue ToolBarsManager::encodeEntry(const ToolBarDefinition::Entry &definiti
 		actionObject.insert(QLatin1String("parameters"), QJsonValue::fromVariant(definition.parameters));
 	}
 
-	return QJsonValue(actionObject);
+	return {actionObject};
 }
 
 ToolBarsManager::ToolBarDefinition::Entry ToolBarsManager::decodeEntry(const QJsonValue &value)
