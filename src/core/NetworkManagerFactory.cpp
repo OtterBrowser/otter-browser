@@ -688,7 +688,7 @@ QStringList NetworkManagerFactory::getProxies()
 {
 	if (!m_isInitialized)
 	{
-		m_instance->initialize();
+		initialize();
 	}
 
 	return m_proxies[QLatin1String("root")].children;
@@ -698,7 +698,7 @@ QStringList NetworkManagerFactory::getUserAgents()
 {
 	if (!m_isInitialized)
 	{
-		m_instance->initialize();
+		initialize();
 	}
 
 	return m_userAgents[QLatin1String("root")].children;
@@ -713,7 +713,7 @@ ProxyDefinition NetworkManagerFactory::getProxy(const QString &identifier)
 {
 	if (!m_isInitialized)
 	{
-		m_instance->initialize();
+		initialize();
 	}
 
 	if (identifier.isEmpty() || !m_proxies.contains(identifier))
@@ -743,7 +743,7 @@ UserAgentDefinition NetworkManagerFactory::getUserAgent(const QString &identifie
 
 	if (!m_isInitialized)
 	{
-		m_instance->initialize();
+		initialize();
 	}
 
 	if (identifier.isEmpty() || !m_userAgents.contains(identifier))
