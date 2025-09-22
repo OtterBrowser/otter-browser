@@ -490,7 +490,7 @@ QString formatUnit(qint64 value, bool isSpeed, int precision, bool appendRaw)
 {
 	if (value < 0)
 	{
-		return QString(QLatin1Char('?'));
+		return {QLatin1Char('?')};
 	}
 
 	if (value > 1024)
@@ -599,17 +599,17 @@ QColor createColor(const QUrl &url)
 {
 	const QByteArray hash(QCryptographicHash::hash(url.host().toUtf8(), QCryptographicHash::Md5));
 
-	return QColor(hash.at(0), hash.at(1), hash.at(2));
+	return {hash.at(0), hash.at(1), hash.at(2)};
 }
 
 QLocale createLocale(const QString &name)
 {
 	if (name == QLatin1String("pt"))
 	{
-		return QLocale(QLocale::Portuguese, QLocale::Portugal);
+		return {QLocale::Portuguese, QLocale::Portugal};
 	}
 
-	return QLocale(name);
+	return {name};
 }
 
 QPixmap loadPixmapFromDataUri(const QString &data)
