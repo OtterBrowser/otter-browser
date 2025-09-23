@@ -220,7 +220,7 @@ SearchEnginesManager::SearchQuery SearchEnginesManager::setupQuery(const QString
 		else if (isFormData)
 		{
 			QString encodedValue;
-			QByteArray plainValue(value.toUtf8());
+			const QByteArray plainValue(value.toUtf8());
 			const QVector<QChar> hex({QLatin1Char('0'), QLatin1Char('1'), QLatin1Char('2'), QLatin1Char('3'), QLatin1Char('4'), QLatin1Char('5'), QLatin1Char('6'), QLatin1Char('7'), QLatin1Char('8'), QLatin1Char('9'), QLatin1Char('A'), QLatin1Char('B'), QLatin1Char('C'), QLatin1Char('D'), QLatin1Char('E'), QLatin1Char('F')});
 
 			for (int j = 0; j < plainValue.length(); ++j)
