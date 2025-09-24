@@ -275,7 +275,7 @@ QIcon ThemesManager::createIcon(const QString &name, bool fromTheme, IconContext
 
 	if (name.startsWith(QLatin1String("data:image/")))
 	{
-		return QIcon(Utils::loadPixmapFromDataUri(name));
+		return {Utils::loadPixmapFromDataUri(name)};
 	}
 
 	if (m_useSystemIconTheme && fromTheme && QIcon::hasThemeIcon(name))
