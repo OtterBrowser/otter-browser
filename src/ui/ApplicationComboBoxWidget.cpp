@@ -120,14 +120,15 @@ void ApplicationComboBoxWidget::setMimeType(const QMimeType &mimeType)
 	clear();
 
 	const QVector<ApplicationInformation> applications(Utils::getApplicationsForMimeType(mimeType));
+	const bool onlyDefaultApplication(applications.isEmpty());
 
-	if (m_alwaysShowDefaultApplication || applications.isEmpty())
+	if (m_alwaysShowDefaultApplication || onlyDefaultApplication)
 	{
 		addItem(tr("Default Application"));
 		insertSeparator(1);
 	}
 
-	if (!applications.isEmpty())
+	if (!onlyDefaultApplication)
 	{
 		for (int i = 0; i < applications.count(); ++i)
 		{
