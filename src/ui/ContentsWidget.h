@@ -80,6 +80,7 @@ protected:
 	void closeEvent(QCloseEvent *event) override;
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
+	void setupPrinter(QPrinter *printer);
 	virtual bool canClose();
 
 protected slots:

@@ -160,8 +160,8 @@ void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters
 		case ActionsManager::PrintAction:
 			{
 				QPrinter printer;
-				printer.setCreator(QStringLiteral("Otter Browser %1").arg(Application::getFullVersion()));
-				printer.setDocName(getTitle());
+
+				setupPrinter(&printer);
 
 				QPrintDialog printDialog(&printer, this);
 				printDialog.setWindowTitle(tr("Print Page"));
@@ -176,8 +176,9 @@ void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters
 		case ActionsManager::PrintPreviewAction:
 			{
 				QPrintPreviewDialog printPreviewDialog(this);
-				printPreviewDialog.printer()->setCreator(QStringLiteral("Otter Browser %1").arg(Application::getFullVersion()));
-				printPreviewDialog.printer()->setDocName(getTitle());
+
+				setupPrinter(printPreviewDialog.printer());
+
 				printPreviewDialog.setWindowFlags(printPreviewDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
 				printPreviewDialog.setWindowTitle(tr("Print Preview"));
 
@@ -226,6 +227,12 @@ void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters
 void ContentsWidget::print(QPrinter *printer)
 {
 	Q_UNUSED(printer)
+}
+
+void ContentsWidget::setupPrinter(QPrinter *printer)
+{
+	printer->setCreator(QStringLiteral("Otter Browser %1").arg(Application::getFullVersion()));
+	printer->setDocName(getTitle());
 }
 
 void ContentsWidget::handleAboutToClose()
