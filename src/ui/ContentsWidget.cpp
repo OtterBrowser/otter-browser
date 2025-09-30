@@ -239,9 +239,11 @@ void ContentsWidget::handleAboutToClose()
 {
 	for (int i = 0; i < m_dialogs.count(); ++i)
 	{
-		if (m_dialogs.at(i))
+		ContentsDialog *dialog(m_dialogs.at(i));
+
+		if (dialog)
 		{
-			m_dialogs.at(i)->close();
+			dialog->close();
 		}
 	}
 }
