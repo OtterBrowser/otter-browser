@@ -428,7 +428,7 @@ QLatin1String HistoryContentsWidget::getType() const
 
 QUrl HistoryContentsWidget::getUrl() const
 {
-	return QUrl(QLatin1String("about:history"));
+	return {QLatin1String("about:history")};
 }
 
 QIcon HistoryContentsWidget::getIcon() const
