@@ -463,7 +463,7 @@ QLatin1String CookiesContentsWidget::getType() const
 
 QUrl CookiesContentsWidget::getUrl() const
 {
-	return QUrl(QLatin1String("about:cookies"));
+	return {QLatin1String("about:cookies")};
 }
 
 QIcon CookiesContentsWidget::getIcon() const
