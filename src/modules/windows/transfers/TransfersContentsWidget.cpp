@@ -525,7 +525,7 @@ QLatin1String TransfersContentsWidget::getType() const
 
 QUrl TransfersContentsWidget::getUrl() const
 {
-	return QUrl(QLatin1String("about:transfers"));
+	return {QLatin1String("about:transfers")};
 }
 
 QIcon TransfersContentsWidget::getIcon() const
