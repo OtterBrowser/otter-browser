@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2019 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2019 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -129,7 +129,7 @@ QLatin1String ActionsContentsWidget::getType() const
 
 QUrl ActionsContentsWidget::getUrl() const
 {
-	return QUrl(QLatin1String("about:actions"));
+	return {QLatin1String("about:actions")};
 }
 
 QIcon ActionsContentsWidget::getIcon() const
