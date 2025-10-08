@@ -510,7 +510,7 @@ QLatin1String PasswordsContentsWidget::getType() const
 
 QUrl PasswordsContentsWidget::getUrl() const
 {
-	return QUrl(QLatin1String("about:passwords"));
+	return {QLatin1String("about:passwords")};
 }
 
 QIcon PasswordsContentsWidget::getIcon() const
