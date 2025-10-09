@@ -331,7 +331,7 @@ QLatin1String NotesContentsWidget::getType() const
 
 QUrl NotesContentsWidget::getUrl() const
 {
-	return QUrl(QLatin1String("about:notes"));
+	return {QLatin1String("about:notes")};
 }
 
 QIcon NotesContentsWidget::getIcon() const
