@@ -20,7 +20,7 @@
 #ifndef OTTER_NOTESCONTENTSWIDGET_H
 #define OTTER_NOTESCONTENTSWIDGET_H
 
-#include "../../../core/NotesManager.h"
+#include "../../../core/BookmarksModel.h"
 #include "../../../ui/ContentsWidget.h"
 
 #include <QtGui/QStandardItemModel>
