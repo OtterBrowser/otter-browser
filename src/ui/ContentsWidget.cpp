@@ -578,4 +578,9 @@ Window* ActiveWindowObserverContentsWidget::getActiveWindow() const
 	return m_activeWindow;
 }
 
+QUrl ActiveWindowObserverContentsWidget::getUrl() const
+{
+	return {};
+}
+
 }

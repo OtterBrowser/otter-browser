@@ -127,6 +127,8 @@ class ActiveWindowObserverContentsWidget : public ContentsWidget
 public:
 	explicit ActiveWindowObserverContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
 
+	QUrl getUrl() const override;
+
 protected:
 	void setActiveWindow(Window *window);
 	Window* getActiveWindow() const;
