@@ -152,11 +152,6 @@ QLatin1String TabHistoryContentsWidget::getType() const
 	return QLatin1String("tabHistory");
 }
 
-QUrl TabHistoryContentsWidget::getUrl() const
-{
-	return {};
-}
-
 QIcon TabHistoryContentsWidget::getIcon() const
 {
 	return ThemesManager::createIcon(QLatin1String("tab-history"), false);

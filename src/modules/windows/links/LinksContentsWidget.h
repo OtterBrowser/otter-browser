@@ -44,7 +44,6 @@ public:
 
 	QString getTitle() const override;
 	QLatin1String getType() const override;
-	QUrl getUrl() const override;
 	QIcon getIcon() const override;
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	bool eventFilter(QObject *object, QEvent *event) override;

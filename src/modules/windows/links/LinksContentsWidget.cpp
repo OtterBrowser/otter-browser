@@ -276,11 +276,6 @@ QLatin1String LinksContentsWidget::getType() const
 	return QLatin1String("links");
 }
 
-QUrl LinksContentsWidget::getUrl() const
-{
-	return {};
-}
-
 QIcon LinksContentsWidget::getIcon() const
 {
 	return ThemesManager::createIcon(QLatin1String("links"), false);
