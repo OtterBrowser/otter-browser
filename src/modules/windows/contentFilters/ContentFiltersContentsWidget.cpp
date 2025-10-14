@@ -214,7 +214,7 @@ QLatin1String ContentFiltersContentsWidget::getType() const
 
 QUrl ContentFiltersContentsWidget::getUrl() const
 {
-    return {QLatin1String("about:content-filters")};
+	return {QLatin1String("about:content-filters")};
 }
 
 QIcon ContentFiltersContentsWidget::getIcon() const
