@@ -318,7 +318,23 @@ void WorkspaceWidget::createMdi()
 		markAsRestored();
 	}
 
-	connect(m_mdi, &MdiWidget::customContextMenuRequested, this, &WorkspaceWidget::showContextMenu);
+	connect(m_mdi, &MdiWidget::customContextMenuRequested, this, [&](const QPoint &position)
+	{
+		ActionExecutor::Object executor(m_mainWindow, m_mainWindow);
+		QMenu menu(this);
+		QMenu *arrangeMenu(menu.addMenu(tr("Arrange")));
+		arrangeMenu->addAction(new Action(ActionsManager::RestoreTabAction, {}, executor, arrangeMenu));
+		arrangeMenu->addSeparator();
+		arrangeMenu->addAction(new Action(ActionsManager::RestoreAllAction, {}, executor, arrangeMenu));
+		arrangeMenu->addAction(new Action(ActionsManager::MaximizeAllAction, {}, executor, arrangeMenu));
+		arrangeMenu->addAction(new Action(ActionsManager::MinimizeAllAction, {}, executor, arrangeMenu));
+		arrangeMenu->addSeparator();
+		arrangeMenu->addAction(new Action(ActionsManager::CascadeAllAction, {}, executor, arrangeMenu));
+		arrangeMenu->addAction(new Action(ActionsManager::TileAllAction, {}, executor, arrangeMenu));
+
+		menu.addMenu(new Menu(Menu::ToolBarsMenu, &menu));
+		menu.exec(m_mdi->mapToGlobal(position));
+	});
 }
 
 void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
@@ -663,24 +679,6 @@ void WorkspaceWidget::notifyActionsStateChanged()
 	{
 		emit arbitraryActionsStateChanged({ActionsManager::MaximizeAllAction, ActionsManager::MinimizeAllAction, ActionsManager::RestoreAllAction, ActionsManager::CascadeAllAction, ActionsManager::TileAllAction});
 	}
-}
-
-void WorkspaceWidget::showContextMenu(const QPoint &position)
-{
-	ActionExecutor::Object executor(m_mainWindow, m_mainWindow);
-	QMenu menu(this);
-	QMenu *arrangeMenu(menu.addMenu(tr("Arrange")));
-	arrangeMenu->addAction(new Action(ActionsManager::RestoreTabAction, {}, executor, arrangeMenu));
-	arrangeMenu->addSeparator();
-	arrangeMenu->addAction(new Action(ActionsManager::RestoreAllAction, {}, executor, arrangeMenu));
-	arrangeMenu->addAction(new Action(ActionsManager::MaximizeAllAction, {}, executor, arrangeMenu));
-	arrangeMenu->addAction(new Action(ActionsManager::MinimizeAllAction, {}, executor, arrangeMenu));
-	arrangeMenu->addSeparator();
-	arrangeMenu->addAction(new Action(ActionsManager::CascadeAllAction, {}, executor, arrangeMenu));
-	arrangeMenu->addAction(new Action(ActionsManager::TileAllAction, {}, executor, arrangeMenu));
-
-	menu.addMenu(new Menu(Menu::ToolBarsMenu, &menu));
-	menu.exec(m_mdi->mapToGlobal(position));
 }
 
 void WorkspaceWidget::setActiveWindow(Window *window, bool force)

@@ -93,7 +93,6 @@ protected slots:
 	void handleActiveSubWindowChanged(QMdiSubWindow *subWindow);
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void notifyActionsStateChanged();
-	void showContextMenu(const QPoint &position);
 
 private:
 	MainWindow *m_mainWindow;
