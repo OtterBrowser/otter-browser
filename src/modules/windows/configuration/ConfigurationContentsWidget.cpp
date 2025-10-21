@@ -473,9 +473,7 @@ void ConfigurationContentsWidget::handleHostOptionChanged(int identifier)
 
 	for (int i = 0; i < optionAmount; ++i)
 	{
-		const QModelIndex valueIndex(m_model->index(i, 3, groupIndex));
-
-		if (valueIndex.data(IdentifierRole).toInt() == identifier)
+		if (m_model->index(i, 3, groupIndex).data(IdentifierRole).toInt() == identifier)
 		{
 			m_model->setData(m_model->index(i, 2, groupIndex), QString::number(SettingsManager::getOverridesCount(identifier)), Qt::DisplayRole);
 
