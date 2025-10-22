@@ -264,7 +264,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 			m_ui->configurationViewWidget->setCurrentIndex(index.sibling(index.row(), 3));
 		}
 	});
-	connect(m_ui->configurationViewWidget, &ItemViewWidget::modified, [&]()
+	connect(m_ui->configurationViewWidget, &ItemViewWidget::modified, this, [&]()
 	{
 		m_ui->resetAllButton->setEnabled(true);
 		m_ui->saveAllButton->setEnabled(true);
@@ -282,11 +282,11 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 		}
 	});
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->configurationViewWidget, &ItemViewWidget::setFilterString);
-	connect(m_ui->resetAllButton, &QPushButton::clicked, [&]()
+	connect(m_ui->resetAllButton, &QPushButton::clicked, this, [&]()
 	{
 		saveAll(true);
 	});
-	connect(m_ui->saveAllButton, &QPushButton::clicked, [&]()
+	connect(m_ui->saveAllButton, &QPushButton::clicked, this, [&]()
 	{
 		saveAll(false);
 	});
