@@ -104,7 +104,7 @@ void AddonsContentsWidget::addPage(AddonsPage *page)
 {
 	m_ui->categoriesTabWidget->addPage(page);
 
-	connect(page, &AddonsPage::needsActionsUpdate, [&]()
+	connect(page, &AddonsPage::needsActionsUpdate, this, [&]()
 	{
 		emit arbitraryActionsStateChanged({ActionsManager::DeleteAction});
 	});
