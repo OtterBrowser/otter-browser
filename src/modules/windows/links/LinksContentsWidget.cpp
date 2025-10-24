@@ -258,7 +258,7 @@ void LinksContentsWidget::showContextMenu(const QPoint &position)
 	lockPanelAction->setCheckable(true);
 	lockPanelAction->setChecked(m_isLocked);
 
-	connect(lockPanelAction, &QAction::toggled, [&](bool isChecked)
+	connect(lockPanelAction, &QAction::toggled, this, [&](bool isChecked)
 	{
 		m_isLocked = isChecked;
 	});
