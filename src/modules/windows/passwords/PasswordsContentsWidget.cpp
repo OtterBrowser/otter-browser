@@ -225,7 +225,7 @@ void PasswordsContentsWidget::populatePasswords()
 		emit loadingStateChanged(WebWidget::FinishedLoadingState);
 
 		connect(PasswordsManager::getInstance(), &PasswordsManager::passwordsModified, this, &PasswordsContentsWidget::populatePasswords);
-		connect(m_ui->passwordsViewWidget->selectionModel(), &QItemSelectionModel::selectionChanged, [&]()
+		connect(m_ui->passwordsViewWidget->selectionModel(), &QItemSelectionModel::selectionChanged, this, [&]()
 		{
 			emit arbitraryActionsStateChanged({ActionsManager::DeleteAction});
 		});
