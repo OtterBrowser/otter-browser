@@ -55,7 +55,7 @@ TabHistoryContentsWidget::TabHistoryContentsWidget(const QVariantMap &parameters
 	});
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->historyViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->historyViewWidget, &ItemViewWidget::customContextMenuRequested, this, &TabHistoryContentsWidget::showContextMenu);
-	connect(m_ui->historyViewWidget, &ItemViewWidget::clicked, [&](const QModelIndex &index)
+	connect(m_ui->historyViewWidget, &ItemViewWidget::clicked, this, [&](const QModelIndex &index)
 	{
 		Window *window(getActiveWindow());
 
