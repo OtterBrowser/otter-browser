@@ -20,7 +20,6 @@
 
 #include "TrayIcon.h"
 #include "Action.h"
-#include "MainWindow.h"
 #include "Menu.h"
 #include "../core/Application.h"
 
