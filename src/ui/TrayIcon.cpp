@@ -73,7 +73,6 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 	m_trayIcon->setContextMenu(menu);
 	m_trayIcon->setToolTip(tr("Otter Browser"));
 	m_trayIcon->show();
-	m_trayIcon->installEventFilter(this);
 
 	setParent(nullptr);
 
@@ -173,14 +172,14 @@ void TrayIcon::showNotification(Notification *notification)
 	showMessage(notification->getMessage());
 }
 
-bool TrayIcon::eventFilter(QObject *object, QEvent *event)
+bool TrayIcon::event(QEvent *event)
 {
-	if (object == m_trayIcon && event->type() == QEvent::LanguageChange)
+	if (event->type() == QEvent::LanguageChange)
 	{
 		m_trayIcon->setToolTip(tr("Otter Browser"));
 	}
 
-	return QObject::eventFilter(object, event);
+	return QObject::event(event);
 }
 
 }
