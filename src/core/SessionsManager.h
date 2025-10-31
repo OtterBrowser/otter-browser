@@ -89,6 +89,11 @@ public:
 			{
 				return (entries.isEmpty() || (entries.count() == 1 && Utils::isUrlEmpty(QUrl(entries.value(0).url))));
 			}
+
+			bool isValid() const
+			{
+				return (index >= 0);
+			}
 		};
 
 		struct State final
