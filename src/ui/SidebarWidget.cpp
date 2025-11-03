@@ -80,7 +80,7 @@ SidebarWidget::SidebarWidget(ToolBarWidget *parent) : QWidget(parent),
 
 	connect(parent, &ToolBarWidget::toolBarModified, this, &SidebarWidget::updateLayout);
 	connect(parent, &ToolBarWidget::toolBarModified, this, &SidebarWidget::updatePanels);
-	connect(m_resizerWidget, &ResizerWidget::finished, [&]()
+	connect(m_resizerWidget, &ResizerWidget::finished, this, [&]()
 	{
 		ToolBarsManager::ToolBarDefinition definition(m_parentToolBarWidget->getDefinition());
 		const int maximumSize(m_ui->containerWidget->maximumWidth());
