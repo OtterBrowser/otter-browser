@@ -87,11 +87,11 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersP
 					m_ui->lastUpdateTextLabel->setText(Utils::formatDateTime(profile->getLastUpdate()));
 				}
 			});
-			connect(m_ui->updateUrLineEdit, &QLineEdit::textChanged, [&]()
+			connect(m_ui->updateUrLineEdit, &QLineEdit::textChanged, this, [&]()
 			{
 				m_ui->updateButton->setEnabled(QUrl(m_ui->updateUrLineEdit->text()).isValid());
 			});
-			connect(m_ui->updateButton, &QPushButton::clicked, [&]()
+			connect(m_ui->updateButton, &QPushButton::clicked, this, [&]()
 			{
 				profile = ContentFiltersManager::getProfile(m_name);
 
@@ -135,7 +135,7 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(const ContentFiltersP
 	columnResizer->addWidgetsFromFormLayout(m_ui->settingsTopLayout, QFormLayout::LabelRole);
 	columnResizer->addWidgetsFromFormLayout(m_ui->settingsBottomLayout, QFormLayout::LabelRole);
 
-	connect(m_ui->sourceEditWidget, &SourceEditWidget::textChanged, [&]()
+	connect(m_ui->sourceEditWidget, &SourceEditWidget::textChanged, this, [&]()
 	{
 		m_ui->saveButton->setEnabled(true);
 	});
