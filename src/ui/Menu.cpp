@@ -115,7 +115,6 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 		case BookmarkSelectorMenu:
 			{
 				setTitle(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
-				installEventFilter(this);
 
 				const Menu *parentMenu(qobject_cast<Menu*>(parent));
 
