@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -54,19 +54,20 @@ SessionsManagerDialog::SessionsManagerDialog(QWidget *parent) : Dialog(parent),
 
 	for (int i = 0; i < sorted.count(); ++i)
 	{
+		const SessionInformation session(sorted.at(i));
 		int windows(0);
 
-		for (int j = 0; j < sorted.at(i).windows.count(); ++j)
+		for (int j = 0; j < session.windows.count(); ++j)
 		{
-			windows += sorted.at(i).windows.at(j).windows.count();
+			windows += session.windows.at(j).windows.count();
 		}
 
-		if (sorted.at(i).path == currentSession)
+		if (session.path == currentSession)
 		{
 			row = i;
 		}
 
-		QList<QStandardItem*> items({new QStandardItem(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : sorted.at(i).title), new QStandardItem(sorted.at(i).path), new QStandardItem(tr("%n window(s) (%1)", "", sorted.at(i).windows.count()).arg(tr("%n tab(s)", "", windows)))});
+		QList<QStandardItem*> items({new QStandardItem(session.title.isEmpty() ? tr("(Untitled)") : session.title), new QStandardItem(session.path), new QStandardItem(tr("%n window(s) (%1)", "", session.windows.count()).arg(tr("%n tab(s)", "", windows)))});
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
