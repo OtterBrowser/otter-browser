@@ -85,7 +85,7 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 void MarginWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	Menu menu(this);
-	QAction *showLineNumbersAction(menu.addAction(tr("Show Line Numbers"), [&](bool show)
+	QAction *showLineNumbersAction(menu.addAction(tr("Show Line Numbers"), this, [&](bool show)
 	{
 		SettingsManager::setOption(SettingsManager::SourceViewer_ShowLineNumbersOption, show);
 	}));
