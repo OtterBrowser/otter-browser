@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -398,7 +398,7 @@ void ToolBarDialog::editEntry()
 		formLayout->addRow(tr("Option:"), optionNameWidget);
 		formLayout->addRow(tr("Scope:"), scopeWidget);
 
-		connect(optionNameWidget, &OptionWidget::commitData, [&]()
+		connect(optionNameWidget, &OptionWidget::commitData, textWidget, [&]()
 		{
 			const bool needsReset(textWidget->isDefault());
 
