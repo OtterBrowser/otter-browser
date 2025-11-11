@@ -398,7 +398,7 @@ void ToolBarDialog::editEntry()
 		formLayout->addRow(tr("Option:"), optionNameWidget);
 		formLayout->addRow(tr("Scope:"), scopeWidget);
 
-		connect(optionNameWidget, &OptionWidget::commitData, textWidget, [&]()
+		connect(optionNameWidget, &OptionWidget::commitData, textWidget, [=]()
 		{
 			const bool needsReset(textWidget->isDefault());
 
