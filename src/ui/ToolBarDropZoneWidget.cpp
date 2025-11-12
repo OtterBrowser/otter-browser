@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -111,12 +111,14 @@ void ToolBarDropZoneWidget::dropEvent(QDropEvent *event)
 
 	for (int i = 0; i < toolBars.count(); ++i)
 	{
-		if (toolBars.at(i)->getIdentifier() == draggedIdentifier)
+		ToolBarWidget *toolBar(toolBars.at(i));
+
+		if (toolBar->getIdentifier() == draggedIdentifier)
 		{
-			m_mainWindow->insertToolBar(this, toolBars.at(i));
+			m_mainWindow->insertToolBar(this, toolBar);
 			m_mainWindow->insertToolBarBreak(this);
 
-			toolBars.at(i)->setArea(m_mainWindow->toolBarArea(this));
+			toolBar->setArea(m_mainWindow->toolBarArea(this));
 
 			break;
 		}
