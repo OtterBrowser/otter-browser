@@ -177,20 +177,22 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 
 	if (widget)
 	{
+		const QRect geometry(widget->geometry());
+
 		if (isHorizontal())
 		{
 			if (isLeftToRight())
 			{
-				position = (widget->geometry().left() - spacing);
+				position = (geometry.left() - spacing);
 			}
 			else
 			{
-				position = (widget->geometry().right() + spacing);
+				position = (geometry.right() + spacing);
 			}
 		}
 		else
 		{
-			position = (widget->geometry().top() - spacing);
+			position = (geometry.top() - spacing);
 		}
 	}
 	else if (m_dropIndex > 0)
@@ -532,15 +534,16 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 
 				if (widget)
 				{
-					const int margin((isHorizontal ? widget->geometry().width() : widget->geometry().height()) / 3);
+					const QRect geometry(widget->geometry());
+					const int margin((isHorizontal ? geometry.width() : geometry.height()) / 3);
 
 					if (isHorizontal)
 					{
-						canNest = (position.x() >= (widget->geometry().left() + margin) && position.x() <= (widget->geometry().right() - margin));
+						canNest = (position.x() >= (geometry.left() + margin) && position.x() <= (geometry.right() - margin));
 					}
 					else
 					{
-						canNest = (position.y() >= (widget->geometry().top() + margin) && position.y() <= (widget->geometry().bottom() - margin));
+						canNest = (position.y() >= (geometry.top() + margin) && position.y() <= (geometry.bottom() - margin));
 					}
 				}
 
@@ -557,18 +560,20 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 		{
 			if (widget && dropIndex >= 0)
 			{
+				const QPoint center(widget->geometry().center());
+
 				if (isHorizontal)
 				{
-					if (isLeftToRight() && position.x() >= widget->geometry().center().x())
+					if (isLeftToRight() && position.x() >= center.x())
 					{
 						++dropIndex;
 					}
-					else if (!isLeftToRight() && position.x() < widget->geometry().center().x())
+					else if (!isLeftToRight() && position.x() < center.x())
 					{
 						++dropIndex;
 					}
 				}
-				else if (position.y() >= widget->geometry().center().y())
+				else if (position.y() >= center.y())
 				{
 					++dropIndex;
 				}
