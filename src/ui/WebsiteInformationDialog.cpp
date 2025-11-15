@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -219,7 +219,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->popupsValueLabel->setText(tr("Ask"));
 	}
 
-	connect(m_ui->preferencesDetailsButton, &QPushButton::clicked, [&]()
+	connect(m_ui->preferencesDetailsButton, &QPushButton::clicked, this, [&]()
 	{
 		Application::triggerAction(ActionsManager::WebsitePreferencesAction, {}, this);
 	});
