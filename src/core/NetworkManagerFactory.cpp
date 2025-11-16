@@ -86,7 +86,7 @@ void ProxiesModel::populateProxies(const QStringList &proxies, QStandardItem *pa
 
 		if (proxy.isFolder)
 		{
-			item->setData(proxies.at(i), IdentifierRole);
+			item->setData(identifier, IdentifierRole);
 
 			type = FolderType;
 
