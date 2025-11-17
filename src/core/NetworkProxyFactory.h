@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -48,6 +48,7 @@ protected:
 private:
 	NetworkAutomaticProxy *m_automaticProxy;
 	ProxyDefinition m_definition;
+	QList<QNetworkProxy> m_noProxy;
 	QMap<int, QList<QNetworkProxy> > m_proxies;
 };
 

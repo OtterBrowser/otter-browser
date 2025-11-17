@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -26,8 +26,9 @@ namespace Otter
 
 NetworkProxyFactory::NetworkProxyFactory(QObject *parent) : QObject(parent),
 	m_automaticProxy(nullptr),
-	m_definition(ProxyDefinition())
-{
+	m_definition(ProxyDefinition()),
+	m_noProxy({{QNetworkProxy::NoProxy}})
+{    
 }
 
 NetworkProxyFactory::~NetworkProxyFactory()
@@ -40,7 +41,6 @@ void NetworkProxyFactory::setProxy(const QString &identifier)
 	m_definition = NetworkManagerFactory::getProxy(identifier);
 
 	m_proxies.clear();
-	m_proxies[-1] = {QNetworkProxy(QNetworkProxy::NoProxy)};
 
 	switch (m_definition.type)
 	{
@@ -107,12 +107,12 @@ QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &q
 
 						if (!address.isNull() && subnet.second != -1 && address.isInSubnet(subnet))
 						{
-							return m_proxies[-1];
+							return m_noProxy;
 						}
 					}
 					else if (host.contains(exception, Qt::CaseInsensitive))
 					{
-						return m_proxies[-1];
+						return m_noProxy;
 					}
 				}
 
@@ -138,7 +138,7 @@ QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &q
 					return m_proxies[ProxyDefinition::FtpProtocol];
 				}
 
-				return m_proxies[-1];
+				return m_noProxy;
 			}
 		case ProxyDefinition::AutomaticProxy:
 			if (m_automaticProxy && m_automaticProxy->isValid())
@@ -151,7 +151,7 @@ QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &q
 			break;
 	}
 
-	return m_proxies[-1];
+	return m_noProxy;
 }
 
 QNetworkProxy::ProxyType NetworkProxyFactory::getProxyType(ProxyDefinition::ProtocolType protocol)
