@@ -721,7 +721,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 
 	mutableRequest.setRawHeader(QByteArrayLiteral("Accept-Language"), (m_acceptLanguage.isEmpty() ? NetworkManagerFactory::getAcceptLanguage().toLatin1() : m_acceptLanguage.toLatin1()));
 	mutableRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
-	mutableRequest.setAttribute(QNetworkRequest::HTTP2AllowedAttribute, false);
+	mutableRequest.setAttribute(QNetworkRequest::Http2AllowedAttribute, false);
 
 	setPageInformation(WebWidget::LoadingMessageInformation, tr("Sending request to %1…").arg(request.url().host()));
 
