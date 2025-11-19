@@ -78,7 +78,7 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 		m_cookieJar = NetworkManagerFactory::getCookieJar();
 		m_cookieJar->setParent(QCoreApplication::instance());
 
-		QNetworkDiskCache *cache(NetworkManagerFactory::getCache());
+		NetworkCache *cache(NetworkManagerFactory::getCache());
 
 		setCache(cache);
 
