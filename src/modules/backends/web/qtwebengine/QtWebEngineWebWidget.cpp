@@ -809,18 +809,19 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				{
 					updateOptions(pageUrl);
 
+					QWebEngineCookieStore *cookieStore(m_page->profile()->cookieStore());
 					const QVector<QNetworkCookie> cookiesToDelete(dialog.getCookiesToDelete());
 
 					for (int i = 0; i < cookiesToDelete.count(); ++i)
 					{
-						m_page->profile()->cookieStore()->deleteCookie(cookiesToDelete.at(i));
+						cookieStore->deleteCookie(cookiesToDelete.at(i));
 					}
 
 					const QVector<QNetworkCookie> cookiesToInsert(dialog.getCookiesToInsert());
 
 					for (int i = 0; i < cookiesToInsert.count(); ++i)
 					{
-						m_page->profile()->cookieStore()->setCookie(cookiesToInsert.at(i));
+						cookieStore->setCookie(cookiesToInsert.at(i));
 					}
 				}
 			}
