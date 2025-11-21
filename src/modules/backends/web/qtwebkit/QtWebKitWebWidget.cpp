@@ -165,7 +165,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *
 	connect(m_page, &QtWebKitPage::downloadRequested, this, &QtWebKitWebWidget::handleDownloadRequested);
 	connect(m_page, &QtWebKitPage::unsupportedContent, this, &QtWebKitWebWidget::handleUnsupportedContent);
 	connect(m_page, &QtWebKitPage::linkHovered, this, &QtWebKitWebWidget::setStatusMessageOverride);
-	connect(m_page, &QtWebKitPage::microFocusChanged, [&]()
+	connect(m_page, &QtWebKitPage::microFocusChanged, this, [&]()
 	{
 		emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::EditingCategory});
 	});
@@ -191,7 +191,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *
 	{
 		emit contentStateChanged(getContentState());
 	});
-	connect(new QShortcut(QKeySequence(QKeySequence::SelectAll), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut), &QShortcut::activated, [&]()
+	connect(new QShortcut(QKeySequence(QKeySequence::SelectAll), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut), &QShortcut::activated, this, [&]()
 	{
 		triggerAction(ActionsManager::SelectAllAction);
 	});
