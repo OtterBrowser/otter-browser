@@ -208,7 +208,7 @@ TransferActionWidget::TransferActionWidget(Transfer *transfer, QWidget *parent) 
 	connect(transfer, &Transfer::finished, this, &TransferActionWidget::updateState);
 	connect(transfer, &Transfer::stopped, this, &TransferActionWidget::updateState);
 	connect(transfer, &Transfer::progressChanged, this, &TransferActionWidget::updateState);
-	connect(m_toolButton, &QToolButton::clicked, [&]()
+	connect(m_toolButton, &QToolButton::clicked, this, [&]()
 	{
 		switch (m_transfer->getState())
 		{
