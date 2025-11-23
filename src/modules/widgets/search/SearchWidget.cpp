@@ -744,16 +744,18 @@ void SearchWidget::setWindow(Window *window)
 
 	if (m_window && !m_window->isAboutToClose() && (!sender() || sender() != m_window))
 	{
+		WebWidget *webWidget(m_window->getWebWidget());
+
 		disconnect(this, &SearchWidget::requestedSearch, m_window.data(), &Window::requestedSearch);
 		disconnect(m_window.data(), &Window::loadingStateChanged, this, &SearchWidget::handleLoadingStateChanged);
 		disconnect(m_window.data(), &Window::optionChanged, this, &SearchWidget::handleWindowOptionChanged);
 		disconnect(m_window->getMainWindow(), &MainWindow::activeWindowChanged, this, &SearchWidget::hidePopup);
 
-		if (m_window->getWebWidget())
+		if (webWidget)
 		{
-			m_window->getWebWidget()->stopWatchingChanges(this, WebWidget::SearchEnginesWatcher);
+			webWidget->stopWatchingChanges(this, WebWidget::SearchEnginesWatcher);
 
-			connect(m_window->getWebWidget(), &WebWidget::watchedDataChanged, this, &SearchWidget::handleWatchedDataChanged);
+			connect(webWidget, &WebWidget::watchedDataChanged, this, &SearchWidget::handleWatchedDataChanged);
 		}
 	}
 
@@ -761,6 +763,8 @@ void SearchWidget::setWindow(Window *window)
 
 	if (window)
 	{
+		WebWidget *webWidget(window->getWebWidget());
+
 		if (mainWindow)
 		{
 			disconnect(this, &SearchWidget::requestedSearch, mainWindow, &MainWindow::search);
@@ -780,11 +784,11 @@ void SearchWidget::setWindow(Window *window)
 			}
 		});
 
-		if (window->getWebWidget())
+		if (webWidget)
 		{
-			window->getWebWidget()->startWatchingChanges(this, WebWidget::SearchEnginesWatcher);
+			webWidget->startWatchingChanges(this, WebWidget::SearchEnginesWatcher);
 
-			connect(window->getWebWidget(), &WebWidget::watchedDataChanged, this, &SearchWidget::handleWatchedDataChanged);
+			connect(webWidget, &WebWidget::watchedDataChanged, this, &SearchWidget::handleWatchedDataChanged);
 		}
 
 		const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
