@@ -104,7 +104,7 @@ void PopupsBarWidget::populateMenu()
 		m_actionGroup = new QActionGroup(menu);
 		m_actionGroup->setExclusive(true);
 
-		connect(m_actionGroup, &QActionGroup::triggered, [&](QAction *action)
+		connect(m_actionGroup, &QActionGroup::triggered, this, [&](QAction *action)
 		{
 			if (action)
 			{
