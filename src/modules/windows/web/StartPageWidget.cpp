@@ -1186,17 +1186,15 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 					{
 						const QUrl url(m_currentIndex.data(BookmarksModel::UrlRole).toUrl());
 
-						if (keyEvent->modifiers() != Qt::NoModifier)
-						{
-							m_urlOpenTime = QTime::currentTime();
+						m_urlOpenTime = QTime::currentTime();
 
-							Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints((m_window->isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen), Qt::LeftButton, keyEvent->modifiers()))}}, parentWidget());
+						if (keyEvent->modifiers() == Qt::NoModifier)
+						{
+							m_window->setUrl(url);
 						}
 						else
 						{
-							m_urlOpenTime = QTime::currentTime();
-
-							m_window->setUrl(url);
+							Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints((m_window->isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen), Qt::LeftButton, keyEvent->modifiers()))}}, parentWidget());
 						}
 					}
 
