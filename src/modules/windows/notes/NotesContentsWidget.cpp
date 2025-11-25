@@ -35,10 +35,13 @@ namespace Otter
 {
 
 NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
-	m_ui(new Ui::NotesContentsWidget)
+	m_ui(new Ui::NotesContentsWidget),
+	m_zoom(100)
 {
 	m_ui->setupUi(this);
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
+
+	m_defaultFont = m_ui->textEditWidget->font();
 
 	QMenu *addMenu(new QMenu(m_ui->addButton));
 	addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, &NotesContentsWidget::addFolder);
@@ -258,6 +261,20 @@ void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &param
 	}
 }
 
+void NotesContentsWidget::setZoom(int zoom)
+{
+	if (zoom != m_zoom)
+	{
+		m_zoom = zoom;
+
+		QFont font(m_defaultFont);
+		font.setPointSize(qRound(font.pointSize() * (static_cast<qreal>(zoom) / 100)));
+		m_ui->textEditWidget->setFont(font);
+
+		emit zoomChanged(zoom);
+	}
+}
+
 void NotesContentsWidget::updateActions()
 {
 	const QModelIndex index(m_ui->notesViewWidget->getCurrentIndex());
@@ -425,6 +442,16 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 
 	return ContentsWidget::eventFilter(object, event);
+}
+
+bool NotesContentsWidget::canZoom() const
+{
+	return true;
+}
+
+int NotesContentsWidget::getZoom() const
+{
+	return m_zoom;
 }
 
 }
