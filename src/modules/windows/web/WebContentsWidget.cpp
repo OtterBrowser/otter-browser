@@ -1285,7 +1285,7 @@ void WebContentsWidget::setZoom(int zoom)
 
 void WebContentsWidget::setUrl(const QUrl &url, bool isTypedIn)
 {
-	const QHash<int, QVariant> options(m_webWidget ? m_webWidget->getOptions() : QHash<int, QVariant>());
+	const QHash<int, QVariant> options( m_webWidget->getOptions());
 	const QVariantMap parameters({{QLatin1String("hints"), (isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen)}});
 
 	if (url.scheme() == QLatin1String("view-source") && m_webWidget->getUrl().scheme() != QLatin1String("view-source"))
