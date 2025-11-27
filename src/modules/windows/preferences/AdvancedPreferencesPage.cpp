@@ -1490,6 +1490,7 @@ void AdvancedPreferencesPage::save()
 	}
 
 	QStringList updateChannels;
+	updateChannels.reserve(m_ui->updateChannelsItemView->getRowCount());
 
 	for (int i = 0; i < m_ui->updateChannelsItemView->getRowCount(); ++i)
 	{
