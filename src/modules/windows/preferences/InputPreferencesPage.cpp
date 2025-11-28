@@ -20,7 +20,6 @@
 **************************************************************************/
 
 #include "InputPreferencesPage.h"
-#include "../../../core/GesturesManager.h"
 #include "../../../core/ItemModel.h"
 #include "../../../core/SessionsManager.h"
 #include "../../../core/ThemesManager.h"
