@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -135,7 +135,7 @@ void PrivacyPreferencesPage::load()
 		}
 	});
 	connect(m_ui->clearHistoryCheckBox, &QCheckBox::toggled, m_ui->clearHistoryButton, &QPushButton::setEnabled);
-	connect(m_ui->clearHistoryCheckBox, &QCheckBox::toggled, [&](bool isChecked)
+	connect(m_ui->clearHistoryCheckBox, &QCheckBox::toggled, this, [&](bool isChecked)
 	{
 		if (isChecked && m_clearHistorySettings.isEmpty())
 		{
@@ -158,7 +158,7 @@ void PrivacyPreferencesPage::load()
 		m_ui->clearHistoryCheckBox->setChecked(!m_clearHistorySettings.isEmpty());
 		m_ui->clearHistoryButton->setEnabled(!m_clearHistorySettings.isEmpty());
 	});
-	connect(m_ui->managePasswordsButton, &QPushButton::clicked, [&]()
+	connect(m_ui->managePasswordsButton, &QPushButton::clicked, this, [&]()
 	{
 		Application::triggerAction(ActionsManager::PasswordsAction, {}, this);
 	});
