@@ -149,7 +149,15 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->gesturesViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->gesturesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &MouseProfileDialog::updateGesturesActions);
 	connect(m_ui->addGestureButton, &QPushButton::clicked, this, &MouseProfileDialog::addGesture);
-	connect(m_ui->removeGestureButton, &QPushButton::clicked, this, &MouseProfileDialog::removeGesture);
+	connect(m_ui->removeGestureButton, &QPushButton::clicked, this, [&]()
+	{
+		QStandardItem *item(m_ui->gesturesViewWidget->getSourceModel()->itemFromIndex(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0)));
+
+		if (item && item->flags().testFlag(Qt::ItemNeverHasChildren))
+		{
+			item->parent()->removeRow(item->row());
+		}
+	});
 	connect(m_ui->stepsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &MouseProfileDialog::updateStepsActions);
 	connect(m_ui->stepsViewWidget, &ItemViewWidget::canMoveRowDownChanged, m_ui->moveDownStepsButton, &QToolButton::setEnabled);
 	connect(m_ui->stepsViewWidget, &ItemViewWidget::canMoveRowUpChanged, m_ui->moveUpStepsButton, &QToolButton::setEnabled);
@@ -204,16 +212,6 @@ void MouseProfileDialog::addGesture()
 	item->appendRow(items);
 
 	m_ui->gesturesViewWidget->setCurrentIndex(items[0]->index());
-}
-
-void MouseProfileDialog::removeGesture()
-{
-	QStandardItem *item(m_ui->gesturesViewWidget->getSourceModel()->itemFromIndex(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0)));
-
-	if (item && item->flags().testFlag(Qt::ItemNeverHasChildren))
-	{
-		item->parent()->removeRow(item->row());
-	}
 }
 
 void MouseProfileDialog::updateGesturesActions()
