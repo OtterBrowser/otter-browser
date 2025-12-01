@@ -39,7 +39,11 @@
      <item row="1" column="1">
       <layout class="QHBoxLayout" name="valueLayout">
        <item>
-        <widget class="Otter::LineEditWidget" name="valueLineEditWidget"/>
+        <widget class="Otter::LineEditWidget" name="valueLineEditWidget">
+         <property name="contextMenuPolicy">
+          <enum>Qt::CustomContextMenu</enum>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QToolButton" name="previewButton">
@@ -56,12 +60,6 @@
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
      </property>
     </spacer>
    </item>

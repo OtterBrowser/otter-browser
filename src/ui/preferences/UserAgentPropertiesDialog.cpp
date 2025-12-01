@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,30 @@ UserAgentPropertiesDialog::UserAgentPropertiesDialog(const UserAgentDefinition &
 	else
 	{
 		m_ui->valueLineEditWidget->installEventFilter(this);
+
+		connect(m_ui->valueLineEditWidget, &QLineEdit::customContextMenuRequested, this, [&](const QPoint &position)
+		{
+			QMenu *contextMenu(m_ui->valueLineEditWidget->createStandardContextMenu());
+			contextMenu->addSeparator();
+
+			QMenu *placeholdersMenu(contextMenu->addMenu(tr("Placeholders")));
+			placeholdersMenu->addAction(tr("Platform"))->setData(QLatin1String("platform"));
+			placeholdersMenu->addAction(tr("Engine Version"))->setData(QLatin1String("engineVersion"));
+			placeholdersMenu->addAction(tr("Application Version"))->setData(QLatin1String("applicationVersion"));
+
+			connect(placeholdersMenu, &QMenu::triggered, this, [&](QAction *action)
+			{
+				const QString placeholder(action->data().toString());
+
+				if (!placeholder.isEmpty())
+				{
+					m_ui->valueLineEditWidget->insert(QLatin1Char('{') + placeholder + QLatin1Char('}'));
+				}
+			});
+
+			contextMenu->exec(m_ui->valueLineEditWidget->mapToGlobal(position));
+			contextMenu->deleteLater();
+		});
 	}
 
 	setWindowTitle(userAgent.isValid() ? tr ("Edit User Agent") : tr("Add User Agent"));
@@ -79,42 +103,6 @@ UserAgentDefinition UserAgentPropertiesDialog::getUserAgent() const
 	userAgent.value = m_ui->valueLineEditWidget->text();
 
 	return userAgent;
-}
-
-bool UserAgentPropertiesDialog::eventFilter(QObject *object, QEvent *event)
-{
-	if (event->type() == QEvent::ContextMenu)
-	{
-		QLineEdit *lineEdit(qobject_cast<QLineEdit*>(object));
-
-		if (lineEdit)
-		{
-			QMenu *contextMenu(lineEdit->createStandardContextMenu());
-			contextMenu->addSeparator();
-
-			QMenu *placeholdersMenu(contextMenu->addMenu(tr("Placeholders")));
-			placeholdersMenu->addAction(tr("Platform"))->setData(QLatin1String("platform"));
-			placeholdersMenu->addAction(tr("Engine Version"))->setData(QLatin1String("engineVersion"));
-			placeholdersMenu->addAction(tr("Application Version"))->setData(QLatin1String("applicationVersion"));
-
-			connect(placeholdersMenu, &QMenu::triggered, this, [&](QAction *action)
-			{
-				const QString placeholder(action->data().toString());
-
-				if (!placeholder.isEmpty())
-				{
-					m_ui->valueLineEditWidget->insert(QLatin1Char('{') + placeholder + QLatin1Char('}'));
-				}
-			});
-
-			contextMenu->exec(static_cast<QContextMenuEvent*>(event)->globalPos());
-			contextMenu->deleteLater();
-
-			return true;
-		}
-	}
-
-	return QDialog::eventFilter(object, event);
 }
 
 }
