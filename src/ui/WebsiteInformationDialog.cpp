@@ -266,7 +266,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->sslErrorsViewWidget->setModel(sslErrorsModel);
 	}
 
-	connect(m_ui->certificateDetailsButton, &QPushButton::clicked, [&]()
+	connect(m_ui->certificateDetailsButton, &QPushButton::clicked, this, [&]()
 	{
 		CertificateDialog *dialog(new CertificateDialog(m_sslInformation.certificates));
 		dialog->setAttribute(Qt::WA_DeleteOnClose);
