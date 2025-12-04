@@ -656,7 +656,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 						else
 						{
 							QMenu menu;
-							menu.addAction(tr("Add to Bookmarks"), [&]()
+							menu.addAction(tr("Add to Bookmarks"), this, [&]()
 							{
 								if (m_window)
 								{
@@ -664,7 +664,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 									dialog.exec();
 								}
 							}, ActionsManager::getActionShortcut(ActionsManager::BookmarkPageAction))->setShortcutContext(Qt::WidgetShortcut);
-							menu.addAction(tr("Add to Start Page"), [&]()
+							menu.addAction(tr("Add to Start Page"), this, [&]()
 							{
 								if (m_window)
 								{
