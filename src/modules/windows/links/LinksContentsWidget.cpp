@@ -84,7 +84,7 @@ LinksContentsWidget::LinksContentsWidget(const QVariantMap &parameters, QWidget 
 
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->linksViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->linksViewWidget, &ItemViewWidget::customContextMenuRequested, this, &LinksContentsWidget::showContextMenu);
-	connect(m_ui->linksViewWidget, &ItemViewWidget::clicked, [&](const QModelIndex &index)
+	connect(m_ui->linksViewWidget, &ItemViewWidget::clicked, this, [&](const QModelIndex &index)
 	{
 		const QVariant data(index.data(Qt::StatusTipRole));
 
