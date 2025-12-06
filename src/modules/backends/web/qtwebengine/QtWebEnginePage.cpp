@@ -615,7 +615,7 @@ bool QtWebEnginePage::certificateError(const QWebEngineCertificateError &error)
 	const QString firstPartyUrl(m_widget->getUrl().toString());
 	const QString thirdPartyUrl(error.url().toString());
 
-	if (m_widget->getOption(SettingsManager::Security_IgnoreSslErrorsOption, m_widget->getUrl()).toStringList().contains(QString::fromLatin1(error.certificateChain().first().digest().toBase64())))
+	if (m_widget->getOption(SettingsManager::Security_IgnoreSslErrorsOption, m_widget->getUrl()).toStringList().contains(QString::fromLatin1(error.certificateChain().constFirst().digest().toBase64())))
 	{
 		Console::addMessage(QStringLiteral("[accepted] The page at %1 was allowed to display insecure content from %2").arg(firstPartyUrl, thirdPartyUrl), Console::SecurityCategory, Console::WarningLevel, thirdPartyUrl, -1, m_widget->getWindowIdentifier());
 
