@@ -35,10 +35,6 @@ Linux users can use the official AppImage version available on [SourceForge](htt
 
 Windows users can download binary releases on [SourceForge](https://sourceforge.net/projects/otter-browser/files/).
 
-### Under macOS
-
-DMG packages are available on [SourceForge](https://sourceforge.net/projects/otter-browser/files/).
-
 ## How to contribute
 
 Otter Browser is *your* browser. Because it is free software (GPL v3), you can contribute to make it better. New contributors are always welcome, whether you write code, create resources, report bugs, or suggest features.
