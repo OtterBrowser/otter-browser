@@ -15,8 +15,8 @@ CMake (3.1.0 or newer) is used for the build system. You need to perform these s
 
 Alternatively you can use either Qt Creator to compile sources or export native project files using CMake generators. You can also use CPack to create packages.
 
-To make a portable version of Otter, create a file named *arguments.txt* with this line:
+To make a portable version of Otter Browser, create a file named *arguments.txt* with this line:
 
 `--portable`
 
-Place this file in the directory containing the main Otter executable (the file with name starting with `otter-browser`).
+Place this file in the directory containing the main Otter Browser executable (the file with name starting with `otter-browser`).
