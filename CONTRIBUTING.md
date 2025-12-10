@@ -14,9 +14,9 @@ If you want to help with the development of Otter Browser, please observe the fo
   * describe the steps required to reproduce issue,
   * attach a [backtrace](http://en.wikipedia.org/wiki/Stack_trace) if you have any,
   * post details about your setup:
-    * application version (for example, 1.0.01 32 bit),
-    * system version (for example, Ubuntu 18.04 64 bit),
-    * Qt version (for example, Qt 5.6.0 MSVC 64 bit).
+    * application version (for example, 1.0.01 64 bit),
+    * system version (for example, Ubuntu 24.04 64 bit),
+    * Qt version (for example, Qt 5.15.0 MSVC 64 bit).
 
 ## Submitting patches
 
