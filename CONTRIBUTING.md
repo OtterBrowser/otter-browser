@@ -4,7 +4,7 @@ If you want to help with the development of Otter Browser, please observe the fo
 
 ## Reporting bugs and feature requests
 
-* Make sure that you have a [GitHub account](https://github.com/join).
+* Make sure that you have a [GitHub account](https://github.com/signup).
 * Check if the issue has already been reported (including closed tickets).
 * Check list of [known upstream issues](https://github.com/OtterBrowser/otter-browser/wiki/Upstream-Bugs).
 * If possible, try to reproduce the issue with current snapshot from relevant branch of the source code repository.
@@ -20,7 +20,7 @@ If you want to help with the development of Otter Browser, please observe the fo
 
 ## Submitting patches
 
-* Make sure that you have a [GitHub account](https://github.com/join).
+* Make sure that you have a [GitHub account](https://github.com/signup).
 * Ensure that nobody is currently working on the selected task (check if someone is assigned to the ticket or ask on *#otter-browser* at libera.chat).
 * Fork the repository on GitHub.
 * Create a branch just for that task.
