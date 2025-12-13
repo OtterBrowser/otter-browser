@@ -370,11 +370,6 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 	if (!hasSpecifiedWindow)
 	{
 		subWindow = qobject_cast<MdiWindow*>(m_mdi->currentSubWindow());
-
-		if (subWindow)
-		{
-			window = subWindow->getWindow();
-		}
 	}
 	else if (window)
 	{
