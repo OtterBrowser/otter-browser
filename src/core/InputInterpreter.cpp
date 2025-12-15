@@ -147,7 +147,7 @@ InputInterpreter::InterpreterResult InputInterpreter::interpret(const QString &t
 			QTimer timer;
 			timer.setSingleShot(true);
 
-            connect(&timer, &QTimer::timeout, QCoreApplication::instance(), [&]()
+			connect(&timer, &QTimer::timeout, QCoreApplication::instance(), [&]()
 			{
 				QHostInfo::abortHostLookup(lookupIdentifier);
 
