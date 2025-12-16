@@ -28,7 +28,7 @@ NetworkProxyFactory::NetworkProxyFactory(QObject *parent) : QObject(parent),
 	m_automaticProxy(nullptr),
 	m_definition(ProxyDefinition()),
 	m_noProxy({{QNetworkProxy::NoProxy}})
-{    
+{
 }
 
 NetworkProxyFactory::~NetworkProxyFactory()
