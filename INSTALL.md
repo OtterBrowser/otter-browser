@@ -5,7 +5,7 @@ To install Otter Browser from source you need to have the [Qt SDK](https://www.q
 
 In case of errors mentioning *QtConcurrent*, you may need to ad it to the list of required modules in *CMakeLists.txt*, by adding it to the line starting with `target_link_libraries(otter-browser Qt5::Core`, resulting in `target_link_libraries(otter-browser Qt5::Core Qt5::Concurrent`.
 
-CMake (3.1.0 or newer) is used for the build system. You need to perform these steps to get clean build (last step is optional):
+CMake (3.7.0 or newer) is used for the build system. You need to perform these steps to get clean build (last step is optional):
 
     mkdir build
     cd build
