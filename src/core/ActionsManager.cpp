@@ -118,9 +118,9 @@ QJsonArray KeyboardProfile::createShortcutsArray(const QVector<QKeySequence> &sh
 {
 	QJsonArray array;
 
-	for (int i = 0; i < shortcuts.count(); ++i)
+	for (const QKeySequence &shortcut: shortcuts)
 	{
-		array.append(shortcuts.at(i).toString());
+		array.append(shortcut.toString());
 	}
 
 	return array;
@@ -161,9 +161,8 @@ bool KeyboardProfile::save()
 	{
 		QJsonArray actionsArray;
 
-		for (int i = 0; i < contextsIterator.value().count(); ++i)
+		for (const KeyboardProfile::Action &action: contextsIterator.value())
 		{
-			const KeyboardProfile::Action &action(contextsIterator.value().at(i));
 			QJsonObject actionObject{{QLatin1String("action"), ActionsManager::getActionName(action.action)}, {QLatin1String("shortcuts"), createShortcutsArray(action.shortcuts)}};
 
 			if (!action.disabledShortcuts.isEmpty())
@@ -440,16 +439,15 @@ void ActionsManager::loadProfiles()
 	QVector<QKeySequence> allShortcuts;
 	allShortcuts.reserve(100);
 
-	for (int i = 0; i < profiles.count(); ++i)
+	for (const QString &profile: profiles)
 	{
-		const QHash<int, QVector<KeyboardProfile::Action> > definitions(KeyboardProfile(profiles.at(i)).getDefinitions());
+		const QHash<int, QVector<KeyboardProfile::Action> > definitions(KeyboardProfile(profile).getDefinitions());
 		QHash<int, QVector<KeyboardProfile::Action> >::const_iterator iterator;
 
 		for (iterator = definitions.constBegin(); iterator != definitions.constEnd(); ++iterator)
 		{
-			for (int j = 0; j < iterator.value().count(); ++j)
+			for (const KeyboardProfile::Action &definition: iterator.value())
 			{
-				const KeyboardProfile::Action definition(iterator.value().at(j));
 				QVector<QKeySequence> shortcuts;
 
 				if (definition.parameters.isEmpty() && m_shortcuts.contains(definition.action))
@@ -460,10 +458,8 @@ void ActionsManager::loadProfiles()
 				{
 					const QList<QPair<QVariantMap, QVector<QKeySequence> > > extraDefinitions(m_extraShortcuts.values(definition.action));
 
-					for (int k = 0; k < extraDefinitions.count(); ++k)
+					for (const QPair<QVariantMap, QVector<QKeySequence> > &extraDefinition: extraDefinitions)
 					{
-						const QPair<QVariantMap, QVector<QKeySequence> > extraDefinition(extraDefinitions.at(k));
-
 						if (extraDefinition.first == definition.parameters)
 						{
 							shortcuts = extraDefinition.second;
@@ -476,10 +472,8 @@ void ActionsManager::loadProfiles()
 				shortcuts.reserve(shortcuts.count() + definition.shortcuts.count());
 				allShortcuts.reserve(allShortcuts.count() + definition.shortcuts.count());
 
-				for (int k = 0; k < definition.shortcuts.count(); ++k)
+				for (const QKeySequence &shortcut: definition.shortcuts)
 				{
-					const QKeySequence shortcut(definition.shortcuts.at(k));
-
 					if (!allShortcuts.contains(shortcut))
 					{
 						shortcuts.append(shortcut);
@@ -546,10 +540,8 @@ QVector<QKeySequence> ActionsManager::getActionShortcuts(int identifier, const Q
 	{
 		const QList<QPair<QVariantMap, QVector<QKeySequence> > > definitions(m_extraShortcuts.values(identifier));
 
-		for (int i = 0; i < definitions.count(); ++i)
+		for (const QPair<QVariantMap, QVector<QKeySequence> > &definition: definitions)
 		{
-			const QPair<QVariantMap, QVector<QKeySequence> > definition(definitions.at(i));
-
 			if (definition.first == parameters)
 			{
 				return definition.second;
@@ -612,9 +604,9 @@ DiagnosticReport::Section ActionsManager::createReport()
 			QStringList fields({getActionName(i)});
 			fields.reserve(shortcuts.count());
 
-			for (int j = 0; j < shortcuts.count(); ++j)
+			for (const QKeySequence &shortcut: shortcuts)
 			{
-				fields.append(shortcuts.at(j).toString(QKeySequence::PortableText));
+				fields.append(shortcut.toString(QKeySequence::PortableText));
 			}
 
 			report.entries.append(fields);
@@ -635,9 +627,9 @@ DiagnosticReport::Section ActionsManager::createReport()
 				QStringList fields({QLatin1Char(' ') + QString::fromLatin1(QJsonDocument(QJsonObject::fromVariantMap(definitions.at(j).first)).toJson(QJsonDocument::Compact))});
 				fields.reserve(shortcuts.count() + 1);
 
-				for (int k = 0; k < shortcuts.count(); ++k)
+				for (const QKeySequence &shortcut: shortcuts)
 				{
-					fields.append(shortcuts.at(k).toString(QKeySequence::PortableText));
+					fields.append(shortcut.toString(QKeySequence::PortableText));
 				}
 
 				report.entries.append(fields);
