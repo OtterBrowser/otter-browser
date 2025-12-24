@@ -131,9 +131,9 @@ QVector<QKeySequence> KeyboardProfile::loadShortcuts(const QJsonArray &rawShortc
 	QVector<QKeySequence> shortcuts;
 	shortcuts.reserve(rawShortcuts.count());
 
-	for (int i = 0; i < rawShortcuts.count(); ++i)
+	for (const QJsonValue &rawShortcut: rawShortcuts)
 	{
-		const QKeySequence shortcut(rawShortcuts.at(i).toString());
+		const QKeySequence shortcut(rawShortcut.toString());
 
 		if (!shortcut.isEmpty() && (areSingleKeyShortcutsAllowed || ActionsManager::isShortcutAllowed(shortcut, ActionsManager::DisallowSingleKeyShortcutCheck, false)))
 		{
@@ -621,10 +621,10 @@ DiagnosticReport::Section ActionsManager::createReport()
 				report.entries.append({getActionName(i)});
 			}
 
-			for (int j = 0; j < definitions.count(); ++j)
+			for (const QPair<QVariantMap, QVector<QKeySequence> > &definition: definitions)
 			{
-				const QVector<QKeySequence> shortcuts(definitions.at(j).second);
-				QStringList fields({QLatin1Char(' ') + QString::fromLatin1(QJsonDocument(QJsonObject::fromVariantMap(definitions.at(j).first)).toJson(QJsonDocument::Compact))});
+				const QVector<QKeySequence> shortcuts(definition.second);
+				QStringList fields({QLatin1Char(' ') + QString::fromLatin1(QJsonDocument(QJsonObject::fromVariantMap(definition.first)).toJson(QJsonDocument::Compact))});
 				fields.reserve(shortcuts.count() + 1);
 
 				for (const QKeySequence &shortcut: shortcuts)
