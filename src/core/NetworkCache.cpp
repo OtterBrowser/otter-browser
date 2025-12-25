@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -63,19 +63,17 @@ void NetworkCache::clearCache(int period)
 	const QDir cacheMainDirectory(cacheDirectory());
 	const QStringList directories(cacheMainDirectory.entryList(QDir::AllDirs | QDir::NoDotAndDotDot));
 
-	for (int i = 0; i < directories.count(); ++i)
+	for (const QString &directory: directories)
 	{
-		const QDir cacheSubDirectory(cacheMainDirectory.absoluteFilePath(directories.at(i)));
+		const QDir cacheSubDirectory(cacheMainDirectory.absoluteFilePath(directory));
 		const QStringList subDirectories(cacheSubDirectory.entryList(QDir::AllDirs | QDir::NoDotAndDotDot));
 
-		for (int j = 0; j < subDirectories.count(); ++j)
+		for (const QString &subDirectory: subDirectories)
 		{
-			const QFileInfoList files(QDir(cacheSubDirectory.absoluteFilePath(subDirectories.at(j))).entryInfoList(QDir::Files));
+			const QFileInfoList files(QDir(cacheSubDirectory.absoluteFilePath(subDirectory)).entryInfoList(QDir::Files));
 
-			for (int k = 0; k < files.count(); ++k)
+			for (const QFileInfo &file: files)
 			{
-				const QFileInfo file(files.at(k));
-
 				if (file.lastModified().toUTC().secsTo(currentDateTime) < (period * 3600))
 				{
 					const QNetworkCacheMetaData metaData(fileMetaData(file.absoluteFilePath()));
@@ -124,19 +122,19 @@ QString NetworkCache::getPathForUrl(const QUrl &url)
 	const QDir cacheMainDirectory(cacheDirectory());
 	const QStringList directories(cacheMainDirectory.entryList(QDir::AllDirs | QDir::NoDotAndDotDot));
 
-	for (int i = 0; i < directories.count(); ++i)
+	for (const QString &directory: directories)
 	{
-		const QDir cacheSubDirectory(cacheMainDirectory.absoluteFilePath(directories.at(i)));
+		const QDir cacheSubDirectory(cacheMainDirectory.absoluteFilePath(directory));
 		const QStringList subDirectories(cacheSubDirectory.entryList(QDir::AllDirs | QDir::NoDotAndDotDot));
 
-		for (int j = 0; j < subDirectories.count(); ++j)
+		for (const QString &subDirectory: subDirectories)
 		{
-			const QDir cacheFilesDirectory(cacheSubDirectory.absoluteFilePath(subDirectories.at(j)));
+			const QDir cacheFilesDirectory(cacheSubDirectory.absoluteFilePath(subDirectory));
 			const QStringList files(cacheFilesDirectory.entryList(QDir::Files));
 
-			for (int k = 0; k < files.count(); ++k)
+			for (const QString &file: files)
 			{
-				const QString cacheFilePath(cacheFilesDirectory.absoluteFilePath(files.at(k)));
+				const QString cacheFilePath(cacheFilesDirectory.absoluteFilePath(file));
 				const QNetworkCacheMetaData metaData(fileMetaData(cacheFilePath));
 
 				if (metaData.isValid() && url == metaData.url())
@@ -156,21 +154,21 @@ QVector<QUrl> NetworkCache::getEntries() const
 	const QDir cacheMainDirectory(cacheDirectory());
 	const QStringList directories(cacheMainDirectory.entryList(QDir::AllDirs | QDir::NoDotAndDotDot));
 
-	for (int i = 0; i < directories.count(); ++i)
+	for (const QString &directory: directories)
 	{
-		const QDir cacheSubDirectory(cacheMainDirectory.absoluteFilePath(directories.at(i)));
+		const QDir cacheSubDirectory(cacheMainDirectory.absoluteFilePath(directory));
 		const QStringList subDirectories(cacheSubDirectory.entryList(QDir::AllDirs | QDir::NoDotAndDotDot));
 
-		for (int j = 0; j < subDirectories.count(); ++j)
+		for (const QString &subDirectory: subDirectories)
 		{
-			const QDir cacheFilesDirectory(cacheSubDirectory.absoluteFilePath(subDirectories.at(j)));
+			const QDir cacheFilesDirectory(cacheSubDirectory.absoluteFilePath(subDirectory));
 			const QStringList files(cacheFilesDirectory.entryList(QDir::Files));
 
 			entries.reserve(entries.count() + files.count());
 
-			for (int k = 0; k < files.count(); ++k)
+			for (const QString &file: files)
 			{
-				const QNetworkCacheMetaData metaData(fileMetaData(cacheFilesDirectory.absoluteFilePath(files.at(k))));
+				const QNetworkCacheMetaData metaData(fileMetaData(cacheFilesDirectory.absoluteFilePath(file)));
 
 				if (metaData.url().isValid())
 				{
