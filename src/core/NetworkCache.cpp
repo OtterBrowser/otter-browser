@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "NetworkCache.h"
-#include "SessionsManager.h"
 #include "SettingsManager.h"
 
 #include <QtCore/QDateTime>
