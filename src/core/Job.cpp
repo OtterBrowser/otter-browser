@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -183,10 +183,8 @@ QMap<QByteArray, QByteArray> DataFetchJob::getHeaders() const
 	QMap<QByteArray, QByteArray> headers;
 	const QList<QNetworkReply::RawHeaderPair> rawHeaders(m_reply->rawHeaderPairs());
 
-	for (int i = 0; i < rawHeaders.count(); ++i)
+	for (const QNetworkReply::RawHeaderPair &rawHeader: rawHeaders)
 	{
-		const QNetworkReply::RawHeaderPair rawHeader(rawHeaders.at(i));
-
 		headers[rawHeader.first] = rawHeader.second;
 	}
 
