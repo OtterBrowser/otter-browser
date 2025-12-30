@@ -1008,17 +1008,14 @@ void BookmarksModel::handleFeedModified(Feed *feed)
 	beginResetModel();
 	blockSignals(true);
 
-	for (int i = 0; i < bookmarks.count(); ++i)
+	for (Bookmark *bookmark: bookmarks)
 	{
-		Bookmark *bookmark(bookmarks.at(i));
 		bookmark->removeRows(0, bookmark->rowCount());
 
 		const QVector<Feed::Entry> entries(feed->getEntries());
 
-		for (int j = 0; j < entries.count(); ++j)
+		for (const Feed::Entry &entry: entries)
 		{
-			const Feed::Entry &entry(entries.at(j));
-
 			if (entry.url.isValid())
 			{
 				addBookmark(UrlBookmark, {{UrlRole, entry.url}, {TitleRole, entry.title}, {DescriptionRole, entry.summary}}, bookmark);
@@ -1029,9 +1026,9 @@ void BookmarksModel::handleFeedModified(Feed *feed)
 	blockSignals(false);
 	endResetModel();
 
-	for (int i = 0; i < bookmarks.count(); ++i)
+    for (Bookmark *bookmark: bookmarks)
 	{
-		emit bookmarkModified(bookmarks.at(i));
+		emit bookmarkModified(bookmark);
 	}
 
 	emit modelModified();
@@ -1176,14 +1173,13 @@ BookmarksModel::Bookmark* BookmarksModel::getBookmarkByPath(const QString &path,
 	Bookmark *bookmark(m_rootItem);
 	const QStringList directories(path.split(QLatin1Char('/'), Qt::SkipEmptyParts));
 
-	for (int i = 0; i < directories.count(); ++i)
+	for (const QString &directory: directories)
 	{
-		const QString directory(directories.at(i));
 		bool hasMatch(false);
 
-		for (int j = 0; j < bookmark->rowCount(); ++j)
+		for (int i = 0; i < bookmark->rowCount(); ++i)
 		{
-			Bookmark *childBookmark(bookmark->getChild(j));
+			Bookmark *childBookmark(bookmark->getChild(i));
 
 			if (childBookmark && childBookmark->getTitle() == directory)
 			{
@@ -1265,10 +1261,8 @@ QMimeData* BookmarksModel::mimeData(const QModelIndexList &indexes) const
 		mimeData->setProperty("x-url-title", index.data(TitleRole).toString());
 	}
 
-	for (int i = 0; i < indexes.count(); ++i)
+	for (const QModelIndex &index: indexes)
 	{
-		const QModelIndex index(indexes.at(i));
-
 		if (index.isValid() && static_cast<BookmarkType>(index.data(TypeRole).toInt()) == UrlBookmark)
 		{
 			texts.append(index.data(UrlRole).toString());
@@ -1523,10 +1517,8 @@ bool BookmarksModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 	{
 		const QVector<QUrl> urls(Utils::extractUrls(data));
 
-		for (int i = 0; i < urls.count(); ++i)
+		for (const QUrl &url: urls)
 		{
-			const QUrl url(urls.at(i));
-
 			addBookmark(UrlBookmark, {{UrlRole, url}, {TitleRole, (data->property("x-url-title").toString().isEmpty() ? url.toString() : data->property("x-url-title").toString())}}, getBookmark(parent), row);
 		}
 
