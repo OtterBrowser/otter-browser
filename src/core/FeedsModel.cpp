@@ -824,10 +824,8 @@ QMimeData* FeedsModel::mimeData(const QModelIndexList &indexes) const
 		mimeData->setProperty("x-item-index", indexes.at(0));
 	}
 
-	for (int i = 0; i < indexes.count(); ++i)
+	for (const QModelIndex &index: indexes)
 	{
-		const QModelIndex index(indexes.at(i));
-
 		if (index.isValid() && static_cast<EntryType>(index.data(TypeRole).toInt()) == FeedEntry)
 		{
 			texts.append(index.data(UrlRole).toString());
@@ -949,10 +947,8 @@ bool FeedsModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int 
 	{
 		const QVector<QUrl> urls(Utils::extractUrls(data));
 
-		for (int i = 0; i < urls.count(); ++i)
+		for (const QUrl &url: urls)
 		{
-			const QUrl url(urls.at(i));
-
 			addEntry(FeedEntry, {{UrlRole, url}, {TitleRole, (data->property("x-url-title").toString().isEmpty() ? url.toString() : data->property("x-url-title").toString())}}, getEntry(parent), row);
 		}
 
