@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -493,10 +493,8 @@ void FeedsContentsWidget::updateEntry()
 	const QStringList entryCategories(index.data(CategoriesRole).toStringList());
 	const QMap<QString, QString> feedCategories(m_feed ? m_feed->getCategories() : QMap<QString, QString>());
 
-	for (int i = 0; i < entryCategories.count(); ++i)
+	for (const QString &entryCategory: entryCategories)
 	{
-		const QString entryCategory(entryCategories.at(i));
-
 		if (entryCategory.isEmpty())
 		{
 			continue;
@@ -663,9 +661,9 @@ void FeedsContentsWidget::updateFeedModel()
 		{
 			bool hasFound(false);
 
-			for (int j = 0; j < m_categories.count(); ++j)
+			for (const QString &category: m_categories)
 			{
-				if (entry.categories.contains(m_categories.at(j)))
+				if (entry.categories.contains(category))
 				{
 					hasFound = true;
 
