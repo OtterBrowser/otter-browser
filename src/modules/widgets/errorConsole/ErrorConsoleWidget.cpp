@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -123,9 +123,9 @@ void ErrorConsoleWidget::showEvent(QShowEvent *event)
 
 		const QVector<Console::Message> messages(Console::getMessages());
 
-		for (int i = 0; i < messages.count(); ++i)
+		for (const Console::Message &message: messages)
 		{
-			addMessage(messages.at(i));
+			addMessage(message);
 		}
 
 		m_ui->consoleView->setModel(m_model);
@@ -217,11 +217,10 @@ void ErrorConsoleWidget::filterCategories()
 	if (menu)
 	{
 		MessagesScopes messageScopes(NoScope);
+		const QList<QAction*> actions(menu->actions());
 
-		for (int i = 0; i < menu->actions().count(); ++i)
+		for (const QAction *action: actions)
 		{
-			const QAction *action(menu->actions().at(i));
-
 			if (action && action->isChecked())
 			{
 				messageScopes |= static_cast<MessagesScope>(action->data().toInt());
