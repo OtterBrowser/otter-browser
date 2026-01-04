@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@
 #include <QtCore/QMimeDatabase>
 #include <QtWidgets/QFileIconProvider>
 #include <QtWidgets/QStyle>
+#include <QtXml/QDomNode>
 
 namespace Otter
 {
@@ -95,6 +96,29 @@ private:
 	QMap<ColorRole, ColorRoleInformation> m_colors;
 
 	static int m_colorRoleEnumerator;
+};
+
+class SvgIconParser final
+{
+public:
+	struct Rule final
+	{
+		QString type;
+		QColor color;
+	};
+
+	explicit SvgIconParser(const QString &sourceFileName, const QString &outputFileName, const QVector<Rule> &rules);
+
+	bool isSuccess() const;
+
+protected:
+	void applyRule(QDomElement element, const Rule &rule, const QString &property);
+	void parseNode(const QDomNode &node);
+
+private:
+	QVector<Rule> m_rules;
+	bool m_hasChanges;
+	bool m_isSuccess;
 };
 
 #ifdef Q_OS_WIN32

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@
 #include <QtCore/QJsonObject>
 #include <QtGui/QIcon>
 #include <QtWidgets/QWidget>
+#include <QtXml/QDomDocument>
 
 #ifdef Q_OS_WIN32
 #include <windows.h>
@@ -115,6 +116,99 @@ ColorScheme::ColorRoleInformation ColorScheme::getColor(ColorRole role) const
 	}
 
 	return m_colors.value(role);
+}
+
+SvgIconParser::SvgIconParser(const QString &sourceFileName, const QString &outputFileName, const QVector<Rule> &rules) :
+	m_rules(rules),
+	m_hasChanges(false),
+	m_isSuccess(true)
+{
+	QFile sourceFile(sourceFileName);
+
+	if (!sourceFile.open(QIODevice::ReadOnly))
+	{
+		m_isSuccess = false;
+
+		return;
+	}
+
+	QDomDocument document;
+	document.setContent(&sourceFile);
+
+	parseNode(document.documentElement());
+
+	if (m_hasChanges)
+	{
+		QFile outputFile(outputFileName);
+
+		if (!outputFile.open(QIODevice::WriteOnly) || outputFile.write(document.toByteArray(0)) < 0)
+		{
+			m_isSuccess = false;
+
+			return;
+		}
+	}
+	else if (!QFile::copy(sourceFileName, outputFileName))
+	{
+		m_isSuccess = false;
+	}
+}
+
+void SvgIconParser::applyRule(QDomElement element, const Rule &rule, const QString &property)
+{
+	const QString key(rule.type + QLatin1Char('-') + property);
+	const QStringList classes(element.attribute(QLatin1String("class")).split(QLatin1Char(' '), Qt::SkipEmptyParts));
+
+	if (classes.contains(key))
+	{
+		if (element.hasAttribute(property))
+		{
+			element.setAttribute(property, rule.color.name());
+		}
+		else
+		{
+			QString style(element.attribute(QLatin1String("style")));
+
+			if (!style.isEmpty() && !style.trimmed().endsWith(QLatin1Char(';')))
+			{
+				style.append(QLatin1Char(';'));
+			}
+
+			style.append(QStringLiteral("%1:%2;").arg(property, rule.color.name()));
+
+			element.setAttribute(QLatin1String("style"), style);
+		}
+
+		m_hasChanges = true;
+	}
+}
+
+void SvgIconParser::parseNode(const QDomNode &node)
+{
+	if (!node.isElement())
+	{
+		return;
+	}
+
+	QDomElement element(node.toElement());
+
+	for (const Rule &rule: std::as_const(m_rules))
+	{
+		applyRule(element, rule, QLatin1String("fill"));
+		applyRule(element, rule, QLatin1String("stroke"));
+	}
+
+	const QDomNodeList nodes(node.childNodes());
+
+	for (int i = 0; i < nodes.count(); ++i)
+	{
+		parseNode(nodes.at(i));
+	}
+}
+
+bool SvgIconParser::isSuccess() const
+{
+	return m_isSuccess;
 }
 
 ThemesManager* ThemesManager::m_instance(nullptr);
