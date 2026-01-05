@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -108,9 +108,8 @@ void JsonAddon::loadMetaData(const QString &path)
 	const JsonSettings settings(path);
 	const QStringList comments(settings.getComment().split(QLatin1Char('\n')));
 
-	for (int i = 0; i < comments.count(); ++i)
+	for (const QString &comment: comments)
 	{
-		const QString comment(comments.at(i));
 		const QString key(comment.section(QLatin1Char(':'), 0, 0).trimmed());
 		const QString value(comment.section(QLatin1Char(':'), 1).trimmed());
 
@@ -329,9 +328,8 @@ void AddonsManager::loadUserScripts()
 
 	const QList<QFileInfo> scriptFiles(QDir(SessionsManager::getWritableDataPath(QLatin1String("scripts"))).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
 
-	for (int i = 0; i < scriptFiles.count(); ++i)
+	for (const QFileInfo &scriptFile: scriptFiles)
 	{
-		const QFileInfo scriptFile(scriptFiles.at(i));
 		const QString path(QDir(scriptFile.absoluteFilePath()).filePath(scriptFile.fileName() + QLatin1String(".js")));
 
 		if (!QFile::exists(path))
