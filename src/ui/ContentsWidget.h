@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #define OTTER_CONTENTSWIDGET_H
 
 #include "WebWidget.h"
+#include "../core/ActionsManager.h"
 
 #include <QtCore/QPointer>
 
@@ -118,6 +119,22 @@ signals:
 	void zoomChanged(int zoom);
 	void canZoomChanged(bool isAllowed);
 	void isModifiedChanged(bool isModified);
+};
+
+class SpecialPageContentsWidget : public ContentsWidget
+{
+public:
+	explicit SpecialPageContentsWidget(const QString &type, const QVariantMap &parameters, Window *window, QWidget *parent);
+
+	QString getTitle() const override;
+	QString getDescription() const override;
+	QLatin1String getType() const override;
+	QUrl getUrl() const override;
+	QIcon getIcon() const override;
+
+private:
+	QString m_type;
+	AddonsManager::SpecialPageInformation m_pageInformation;
 };
 
 class ActiveWindowObserverContentsWidget : public ContentsWidget

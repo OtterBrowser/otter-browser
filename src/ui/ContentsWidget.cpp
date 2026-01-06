@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -507,6 +507,37 @@ bool ContentsWidget::isPrivate() const
 bool ContentsWidget::isSidebarPanel() const
 {
 	return (m_sidebar >= 0);
+}
+
+SpecialPageContentsWidget::SpecialPageContentsWidget(const QString &type, const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
+	m_type(type),
+	m_pageInformation(AddonsManager::getSpecialPage(type))
+{
+}
+
+QString SpecialPageContentsWidget::getTitle() const
+{
+	return m_pageInformation.getTitle();
+}
+
+QString SpecialPageContentsWidget::getDescription() const
+{
+	return m_pageInformation.getDescription();
+}
+
+QLatin1String SpecialPageContentsWidget::getType() const
+{
+	return QLatin1String(m_type.toLatin1());
+}
+
+QUrl SpecialPageContentsWidget::getUrl() const
+{
+	return m_pageInformation.url;
+}
+
+QIcon SpecialPageContentsWidget::getIcon() const
+{
+	return m_pageInformation.icon;
 }
 
 ActiveWindowObserverContentsWidget::ActiveWindowObserverContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
