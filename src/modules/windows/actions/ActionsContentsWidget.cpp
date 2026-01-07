@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2019 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2019 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,14 +19,13 @@
 
 #include "ActionsContentsWidget.h"
 #include "../../../core/ItemModel.h"
-#include "../../../core/ThemesManager.h"
 
 #include "ui_ActionsContentsWidget.h"
 
 namespace Otter
 {
 
-ActionsContentsWidget::ActionsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
+ActionsContentsWidget::ActionsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : SpecialPageContentsWidget(QLatin1String("actions"), parameters, window, parent),
 	m_model(new QStandardItemModel(this)),
 	m_ui(new Ui::ActionsContentsWidget)
 {
@@ -115,26 +114,6 @@ void ActionsContentsWidget::updateActions()
 		m_ui->shortcutsLabelWidget->setText({});
 		m_ui->gesturesLabelWidget->setText({});
 	}
-}
-
-QString ActionsContentsWidget::getTitle() const
-{
-	return tr("Actions");
-}
-
-QLatin1String ActionsContentsWidget::getType() const
-{
-	return QLatin1String("actions");
-}
-
-QUrl ActionsContentsWidget::getUrl() const
-{
-	return {QLatin1String("about:actions")};
-}
-
-QIcon ActionsContentsWidget::getIcon() const
-{
-	return ThemesManager::createIcon(QLatin1String("edit-cut"), false);
 }
 
 }
