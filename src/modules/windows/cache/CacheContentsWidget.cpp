@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@
 namespace Otter
 {
 
-CacheContentsWidget::CacheContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
+CacheContentsWidget::CacheContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : SpecialPageContentsWidget(QLatin1String("cache"), parameters, window, parent),
 	m_model(new QStandardItemModel(this)),
 	m_isLoading(true),
 	m_ui(new Ui::CacheContentsWidget)
@@ -538,26 +538,6 @@ QStandardItem* CacheContentsWidget::findDomainItem(const QString &domain)
 	}
 
 	return nullptr;
-}
-
-QString CacheContentsWidget::getTitle() const
-{
-	return tr("Cache");
-}
-
-QLatin1String CacheContentsWidget::getType() const
-{
-	return QLatin1String("cache");
-}
-
-QUrl CacheContentsWidget::getUrl() const
-{
-	return {QLatin1String("about:cache")};
-}
-
-QIcon CacheContentsWidget::getIcon() const
-{
-	return ThemesManager::createIcon(QLatin1String("cache"), false);
 }
 
 QUrl CacheContentsWidget::getEntry(const QModelIndex &index) const

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -157,7 +157,7 @@ QWidget* ConfigurationOptionDelegate::createEditor(QWidget *parent, const QStyle
 	return widget;
 }
 
-ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
+ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : SpecialPageContentsWidget(QLatin1String("config"), parameters, window, parent),
 	m_model(new QStandardItemModel(this)),
 	m_ui(new Ui::ConfigurationContentsWidget)
 {
@@ -546,26 +546,6 @@ void ConfigurationContentsWidget::updateActions()
 		m_ui->currentValueLabelWidget->clear();
 		m_ui->defaultValueLabelWidget->clear();
 	}
-}
-
-QString ConfigurationContentsWidget::getTitle() const
-{
-	return tr("Advanced Configuration");
-}
-
-QLatin1String ConfigurationContentsWidget::getType() const
-{
-	return QLatin1String("config");
-}
-
-QUrl ConfigurationContentsWidget::getUrl() const
-{
-	return {QLatin1String("about:config")};
-}
-
-QIcon ConfigurationContentsWidget::getIcon() const
-{
-	return ThemesManager::createIcon(QLatin1String("configuration"), false);
 }
 
 QModelIndex ConfigurationContentsWidget::findGroup(int identifier) const
