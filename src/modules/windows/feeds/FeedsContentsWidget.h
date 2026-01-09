@@ -51,7 +51,7 @@ public:
 	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
 };
 
-class FeedsContentsWidget final : public ContentsWidget
+class FeedsContentsWidget final : public SpecialPageContentsWidget
 {
 	Q_OBJECT
 
@@ -77,7 +77,6 @@ public:
 	void print(QPrinter *printer) override;
 	static Animation* getUpdateAnimation();
 	QString getTitle() const override;
-	QLatin1String getType() const override;
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;

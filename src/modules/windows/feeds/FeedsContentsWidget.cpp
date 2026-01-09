@@ -73,7 +73,7 @@ void FeedDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelInd
 
 Animation* FeedsContentsWidget::m_updateAnimation = nullptr;
 
-FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget *parent) : ContentsWidget(parameters, nullptr, parent),
+FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget *parent) : SpecialPageContentsWidget(QLatin1String("feeds"), parameters, nullptr, parent),
 	m_feed(nullptr),
 	m_feedModel(nullptr),
 	m_ui(new Ui::FeedsContentsWidget)
@@ -836,11 +836,6 @@ QString FeedsContentsWidget::getTitle() const
 	}
 
 	return tr("Feeds");
-}
-
-QLatin1String FeedsContentsWidget::getType() const
-{
-	return QLatin1String("feeds");
 }
 
 QUrl FeedsContentsWidget::getUrl() const

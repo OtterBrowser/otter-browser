@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@
 namespace Otter
 {
 
-HistoryContentsWidget::HistoryContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
+HistoryContentsWidget::HistoryContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : SpecialPageContentsWidget(QLatin1String("history"), parameters, window, parent),
 	m_model(new QStandardItemModel(this)),
 	m_isLoading(true),
 	m_ui(new Ui::HistoryContentsWidget)
@@ -414,26 +414,6 @@ QStandardItem* HistoryContentsWidget::findEntry(quint64 identifier)
 	}
 
 	return nullptr;
-}
-
-QString HistoryContentsWidget::getTitle() const
-{
-	return tr("History");
-}
-
-QLatin1String HistoryContentsWidget::getType() const
-{
-	return QLatin1String("history");
-}
-
-QUrl HistoryContentsWidget::getUrl() const
-{
-	return {QLatin1String("about:history")};
-}
-
-QIcon HistoryContentsWidget::getIcon() const
-{
-	return ThemesManager::createIcon(QLatin1String("view-history"), false);
 }
 
 WebWidget::LoadingState HistoryContentsWidget::getLoadingState() const

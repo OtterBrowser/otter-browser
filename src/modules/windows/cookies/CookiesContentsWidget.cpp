@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@
 #include "../../../core/CookieJar.h"
 #include "../../../core/HistoryManager.h"
 #include "../../../core/NetworkManagerFactory.h"
-#include "../../../core/ThemesManager.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/CookiePropertiesDialog.h"
 #include "../../../ui/MainWindow.h"
@@ -37,7 +36,7 @@
 namespace Otter
 {
 
-CookiesContentsWidget::CookiesContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
+CookiesContentsWidget::CookiesContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : SpecialPageContentsWidget(QLatin1String("cookies"), parameters, window, parent),
 	m_model(new QStandardItemModel(this)),
 	m_cookieJar(NetworkManagerFactory::getCookieJar()),
 	m_isLoading(true),
@@ -449,26 +448,6 @@ QStandardItem* CookiesContentsWidget::findDomainItem(const QString &domain)
 QString CookiesContentsWidget::getCookieDomain(const QNetworkCookie &cookie) const
 {
 	return QString(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
-}
-
-QString CookiesContentsWidget::getTitle() const
-{
-	return tr("Cookies");
-}
-
-QLatin1String CookiesContentsWidget::getType() const
-{
-	return QLatin1String("cookies");
-}
-
-QUrl CookiesContentsWidget::getUrl() const
-{
-	return {QLatin1String("about:cookies")};
-}
-
-QIcon CookiesContentsWidget::getIcon() const
-{
-	return ThemesManager::createIcon(QLatin1String("cookies"), false);
 }
 
 QNetworkCookie CookiesContentsWidget::getCookie(const QVariant &data) const
