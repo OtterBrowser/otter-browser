@@ -19,6 +19,7 @@
 
 #include "HistoryContentsWidget.h"
 #include "../../../core/Application.h"
+#include "../../../core/HistoryManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/Action.h"

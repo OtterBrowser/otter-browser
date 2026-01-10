@@ -20,7 +20,7 @@
 #ifndef OTTER_HISTORYCONTENTSWIDGET_H
 #define OTTER_HISTORYCONTENTSWIDGET_H
 
-#include "../../../core/HistoryManager.h"
+#include "../../../core/HistoryModel.h"
 #include "../../../ui/ContentsWidget.h"
 
 #include <QtGui/QStandardItemModel>
