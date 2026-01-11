@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@
 namespace Otter
 {
 
-NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
+NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : SpecialPageContentsWidget(QLatin1String("notes"), parameters, window, parent),
 	m_ui(new Ui::NotesContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -317,26 +317,6 @@ BookmarksModel::Bookmark* NotesContentsWidget::findFolder(const QModelIndex &ind
 	}
 
 	return (bookmark->isFolder() ? bookmark : bookmark->getParent());
-}
-
-QString NotesContentsWidget::getTitle() const
-{
-	return tr("Notes");
-}
-
-QLatin1String NotesContentsWidget::getType() const
-{
-	return QLatin1String("notes");
-}
-
-QUrl NotesContentsWidget::getUrl() const
-{
-	return {QLatin1String("about:notes")};
-}
-
-QIcon NotesContentsWidget::getIcon() const
-{
-	return ThemesManager::createIcon(QLatin1String("notes"), false);
 }
 
 QVariant NotesContentsWidget::getCurrentIndexData(int role) const

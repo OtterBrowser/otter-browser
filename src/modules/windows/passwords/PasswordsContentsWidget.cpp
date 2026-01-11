@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@
 #include "../../../core/Application.h"
 #include "../../../core/HistoryManager.h"
 #include "../../../core/PasswordsManager.h"
-#include "../../../core/ThemesManager.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/MainWindow.h"
 
@@ -85,7 +84,7 @@ QWidget* PasswordFieldDelegate::createEditor(QWidget *parent, const QStyleOption
 	return widget;
 }
 
-PasswordsContentsWidget::PasswordsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
+PasswordsContentsWidget::PasswordsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : SpecialPageContentsWidget(QLatin1String("passwords"), parameters, window, parent),
 	m_model(new QStandardItemModel(this)),
 	m_delegate(nullptr),
 	m_isLoading(true),
@@ -496,26 +495,6 @@ void PasswordsContentsWidget::updateActions()
 	}
 
 	m_ui->deleteButton->setEnabled(index.isValid() && index.parent() != m_model->invisibleRootItem()->index());
-}
-
-QString PasswordsContentsWidget::getTitle() const
-{
-	return tr("Passwords");
-}
-
-QLatin1String PasswordsContentsWidget::getType() const
-{
-	return QLatin1String("passwords");
-}
-
-QUrl PasswordsContentsWidget::getUrl() const
-{
-	return {QLatin1String("about:passwords")};
-}
-
-QIcon PasswordsContentsWidget::getIcon() const
-{
-	return ThemesManager::createIcon(QLatin1String("dialog-password"), false);
 }
 
 ActionsManager::ActionDefinition::State PasswordsContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
