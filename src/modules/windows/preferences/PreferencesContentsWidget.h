@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ namespace Ui
 
 class CategoryPage;
 
-class PreferencesContentsWidget final : public ContentsWidget
+class PreferencesContentsWidget final : public SpecialPageContentsWidget
 {
 	Q_OBJECT
 
@@ -54,9 +54,7 @@ public:
 	~PreferencesContentsWidget();
 
 	QString getTitle() const override;
-	QLatin1String getType() const override;
 	QUrl getUrl() const override;
-	QIcon getIcon() const override;
 
 public slots:
 	void setUrl(const QUrl &url, bool isTypedIn = true) override;

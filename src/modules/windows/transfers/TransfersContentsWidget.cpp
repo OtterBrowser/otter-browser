@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -80,7 +80,7 @@ QWidget* ProgressBarDelegate::createEditor(QWidget *parent, const QStyleOptionVi
 	return widget;
 }
 
-TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
+TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : SpecialPageContentsWidget(QLatin1String("transfers"), parameters, window, parent),
 	m_model(new QStandardItemModel(this)),
 	m_isLoading(false),
 	m_ui(new Ui::TransfersContentsWidget)
@@ -511,26 +511,6 @@ Transfer* TransfersContentsWidget::getTransfer(const QModelIndex &index) const
 	}
 
 	return nullptr;
-}
-
-QString TransfersContentsWidget::getTitle() const
-{
-	return tr("Downloads");
-}
-
-QLatin1String TransfersContentsWidget::getType() const
-{
-	return QLatin1String("transfers");
-}
-
-QUrl TransfersContentsWidget::getUrl() const
-{
-	return {QLatin1String("about:transfers")};
-}
-
-QIcon TransfersContentsWidget::getIcon() const
-{
-	return ThemesManager::createIcon(QLatin1String("transfers"), false);
 }
 
 ActionsManager::ActionDefinition::State TransfersContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const

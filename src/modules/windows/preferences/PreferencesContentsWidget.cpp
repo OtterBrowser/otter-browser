@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@
 #include "SearchPreferencesPage.h"
 #include "WebsitesPreferencesPage.h"
 #include "../../../core/Application.h"
-#include "../../../core/ThemesManager.h"
 
 #include "ui_PreferencesContentsWidget.h"
 
@@ -35,7 +34,7 @@
 namespace Otter
 {
 
-PreferencesContentsWidget::PreferencesContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
+PreferencesContentsWidget::PreferencesContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : SpecialPageContentsWidget(QLatin1String("preferences"), parameters, window, parent),
 	m_tabIndexEnumerator(metaObject()->indexOfEnumerator(QLatin1String("TabIndex").data())),
 	m_ui(new Ui::PreferencesContentsWidget)
 {
@@ -118,11 +117,6 @@ QString PreferencesContentsWidget::getTitle() const
 	return tr("Preferences");
 }
 
-QLatin1String PreferencesContentsWidget::getType() const
-{
-	return QLatin1String("preferences");
-}
-
 QUrl PreferencesContentsWidget::getUrl() const
 {
 	QUrl url(QLatin1String("about:preferences"));
@@ -133,11 +127,6 @@ QUrl PreferencesContentsWidget::getUrl() const
 	}
 
 	return url;
-}
-
-QIcon PreferencesContentsWidget::getIcon() const
-{
-	return ThemesManager::createIcon(QLatin1String("configuration"), false);
 }
 
 bool PreferencesContentsWidget::canClose()

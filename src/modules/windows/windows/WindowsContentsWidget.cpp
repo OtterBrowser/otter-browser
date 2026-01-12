@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -117,7 +117,7 @@ int EntryItemDelegate::calculateDecorationWidth(QStyleOptionViewItem *option, co
 	return m_decorationSize;
 }
 
-WindowsContentsWidget::WindowsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
+WindowsContentsWidget::WindowsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : SpecialPageContentsWidget(QLatin1String("windows"), parameters, window, parent),
 	m_ui(new Ui::WindowsContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -268,24 +268,5 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 	menu.exec(m_ui->windowsViewWidget->mapToGlobal(position));
 }
 
-QString WindowsContentsWidget::getTitle() const
-{
-	return tr("Windows and Tabs");
-}
-
-QLatin1String WindowsContentsWidget::getType() const
-{
-	return QLatin1String("windows");
-}
-
-QUrl WindowsContentsWidget::getUrl() const
-{
-	return {QLatin1String("about:windows")};
-}
-
-QIcon WindowsContentsWidget::getIcon() const
-{
-	return ThemesManager::createIcon(QLatin1String("tab"), false);
-}
 
 }
