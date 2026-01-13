@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@
 namespace Otter
 {
 
-LinksContentsWidget::LinksContentsWidget(const QVariantMap &parameters, QWidget *parent) : ActiveWindowObserverContentsWidget(parameters, nullptr, parent),
+LinksContentsWidget::LinksContentsWidget(const QVariantMap &parameters, QWidget *parent) : ActiveWindowObserverContentsWidget(QLatin1String("links"), parameters, nullptr, parent),
 	m_isLocked(false),
 	m_ui(new Ui::LinksContentsWidget)
 {
@@ -264,21 +264,6 @@ void LinksContentsWidget::showContextMenu(const QPoint &position)
 	});
 
 	menu.exec(m_ui->linksViewWidget->mapToGlobal(position));
-}
-
-QString LinksContentsWidget::getTitle() const
-{
-	return tr("Links");
-}
-
-QLatin1String LinksContentsWidget::getType() const
-{
-	return QLatin1String("links");
-}
-
-QIcon LinksContentsWidget::getIcon() const
-{
-	return ThemesManager::createIcon(QLatin1String("links"), false);
 }
 
 ActionsManager::ActionDefinition::State LinksContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const

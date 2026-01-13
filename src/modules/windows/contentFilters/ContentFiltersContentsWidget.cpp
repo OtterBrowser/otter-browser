@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,6 @@
 **************************************************************************/
 
 #include "ContentFiltersContentsWidget.h"
-#include "../../../core/ThemesManager.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/Window.h"
 
@@ -32,7 +31,7 @@
 namespace Otter
 {
 
-ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ActiveWindowObserverContentsWidget(parameters, window, parent),
+ContentFiltersContentsWidget::ContentFiltersContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ActiveWindowObserverContentsWidget(QLatin1String("contentFilters"), parameters, window, parent),
 	m_isSettingsPageInitialized(false),
 	m_ui(new Ui::ContentFiltersContentsWidget)
 {
@@ -202,24 +201,14 @@ void ContentFiltersContentsWidget::updateActions()
 	}
 }
 
-QString ContentFiltersContentsWidget::getTitle() const
-{
-	return tr("Content Filters");
-}
-
-QLatin1String ContentFiltersContentsWidget::getType() const
-{
-	return QLatin1String("contentFilters");
-}
-
 QUrl ContentFiltersContentsWidget::getUrl() const
 {
-	return {QLatin1String("about:content-filters")};
-}
+	if (isSidebarPanel())
+	{
+		return {};
+	}
 
-QIcon ContentFiltersContentsWidget::getIcon() const
-{
-	return ThemesManager::createIcon(QLatin1String("content-blocking"), false);
+	return {QLatin1String("about:content-filters")};
 }
 
 bool ContentFiltersContentsWidget::canClose()

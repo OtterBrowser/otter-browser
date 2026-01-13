@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "PageInformationContentsWidget.h"
-#include "../../../core/ThemesManager.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/Window.h"
@@ -30,7 +29,7 @@
 namespace Otter
 {
 
-PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &parameters, QWidget *parent) : ActiveWindowObserverContentsWidget(parameters, nullptr, parent),
+PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &parameters, QWidget *parent) : ActiveWindowObserverContentsWidget(QLatin1String("pageInformation"), parameters, nullptr, parent),
 	m_ui(new Ui::PageInformationContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -272,21 +271,6 @@ void PageInformationContentsWidget::showContextMenu(const QPoint &position)
 		menu.addAction(new Action(ActionsManager::CopyAction, {}, ActionExecutor::Object(this, this), &menu));
 		menu.exec(m_ui->informationViewWidget->mapToGlobal(position));
 	}
-}
-
-QString PageInformationContentsWidget::getTitle() const
-{
-	return tr("Page Information");
-}
-
-QLatin1String PageInformationContentsWidget::getType() const
-{
-	return QLatin1String("pageInformation");
-}
-
-QIcon PageInformationContentsWidget::getIcon() const
-{
-	return ThemesManager::createIcon(QLatin1String("view-information"), false);
 }
 
 ActionsManager::ActionDefinition::State PageInformationContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const

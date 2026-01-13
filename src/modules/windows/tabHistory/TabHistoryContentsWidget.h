@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -47,9 +47,6 @@ public:
 	explicit TabHistoryContentsWidget(const QVariantMap &parameters, QWidget *parent);
 	~TabHistoryContentsWidget();
 
-	QString getTitle() const override;
-	QLatin1String getType() const override;
-	QIcon getIcon() const override;
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:

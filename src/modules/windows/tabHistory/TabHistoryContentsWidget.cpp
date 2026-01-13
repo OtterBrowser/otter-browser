@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-TabHistoryContentsWidget::TabHistoryContentsWidget(const QVariantMap &parameters, QWidget *parent) : ActiveWindowObserverContentsWidget(parameters, nullptr, parent),
+TabHistoryContentsWidget::TabHistoryContentsWidget(const QVariantMap &parameters, QWidget *parent) : ActiveWindowObserverContentsWidget(QLatin1String("tabHistory"), parameters, nullptr, parent),
 	m_ui(new Ui::TabHistoryContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -140,21 +140,6 @@ void TabHistoryContentsWidget::showContextMenu(const QPoint &position)
 	menu.addAction(new Action(ActionsManager::ClearTabHistoryAction, {}, executor, &menu));
 	menu.addAction(new Action(ActionsManager::ClearTabHistoryAction, {{QLatin1String("clearGlobalHistory"), true}}, executor, &menu));
 	menu.exec(m_ui->historyViewWidget->mapToGlobal(position));
-}
-
-QString TabHistoryContentsWidget::getTitle() const
-{
-	return tr("Tab History");
-}
-
-QLatin1String TabHistoryContentsWidget::getType() const
-{
-	return QLatin1String("tabHistory");
-}
-
-QIcon TabHistoryContentsWidget::getIcon() const
-{
-	return ThemesManager::createIcon(QLatin1String("tab-history"), false);
 }
 
 bool TabHistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
