@@ -661,7 +661,7 @@ void FeedsContentsWidget::updateFeedModel()
 		{
 			bool hasFound(false);
 
-			for (const QString &category: m_categories)
+			for (const QString &category: std::as_const(m_categories))
 			{
 				if (entry.categories.contains(category))
 				{
