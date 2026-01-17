@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -147,9 +147,9 @@ QVector<HandlersManager::MimeTypeHandlerDefinition> HandlersManager::getMimeType
 	QVector<HandlersManager::MimeTypeHandlerDefinition> handlers;
 	handlers.reserve(mimeTypes.count());
 
-	for (int i = 0; i < mimeTypes.count(); ++i)
+	for (const QString &mimeType: mimeTypes)
 	{
-		handlers.append(getMimeTypeHandler(mimeDatabase.mimeTypeForName(mimeTypes.at(i))));
+		handlers.append(getMimeTypeHandler(mimeDatabase.mimeTypeForName(mimeType)));
 	}
 
 	return handlers;
