@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -99,10 +99,8 @@ bool Migrator::run()
 	QVector<Migration*> possibleMigrations;
 	QStringList processedMigrations(SettingsManager::getOption(SettingsManager::Browser_MigrationsOption).toStringList());
 
-	for (int i = 0; i < availableMigrations.count(); ++i)
+	for (Migration *availableMigration: availableMigrations)
 	{
-		Migration *availableMigration(availableMigrations.at(i));
-
 		if (!processedMigrations.contains(availableMigration->getName()))
 		{
 			if (Application::isFirstRun() || !availableMigration->needsMigration())
@@ -137,9 +135,8 @@ bool Migrator::run()
 
 	bool needsBackup(false);
 
-	for (int i = 0; i < possibleMigrations.count(); ++i)
+	for (Migration *possibleMigration: possibleMigrations)
 	{
-		Migration *possibleMigration(possibleMigrations.at(i));
 		QStandardItem *item(new QStandardItem(QCoreApplication::translate("migrations", possibleMigration->getTitle().toUtf8().constData())));
 		item->setFlags(Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsSelectable);
 
@@ -181,10 +178,8 @@ bool Migrator::run()
 	{
 		processedMigrations.reserve(possibleMigrations.count());
 
-		for (int i = 0; i < possibleMigrations.count(); ++i)
+		for (Migration *possibleMigration: possibleMigrations)
 		{
-			Migration *possibleMigration(possibleMigrations.at(i));
-
 			processedMigrations.append(possibleMigration->getName());
 
 			if (createBackupCheckBox->isChecked())
