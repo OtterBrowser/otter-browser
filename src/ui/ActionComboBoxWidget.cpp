@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -41,10 +41,8 @@ ActionComboBoxWidget::ActionComboBoxWidget(QWidget *parent) : ComboBoxWidget(par
 
 	const QVector<ActionsManager::ActionDefinition> definitions(ActionsManager::getActionDefinitions());
 
-	for (int i = 0; i < definitions.count(); ++i)
+	for (const ActionsManager::ActionDefinition &definition: definitions)
 	{
-		const ActionsManager::ActionDefinition definition(definitions.at(i));
-
 		if (!definition.flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag) && !definition.flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters))
 		{
 			addDefinition(definition);
