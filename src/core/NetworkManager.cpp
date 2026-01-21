@@ -56,7 +56,7 @@ NetworkManager::NetworkManager(bool isPrivate, QObject *parent) : QNetworkAccess
 
 		m_cookieJar->setParent(QCoreApplication::instance());
 
-		QNetworkDiskCache *cache(NetworkManagerFactory::getCache());
+		NetworkCache *cache(NetworkManagerFactory::getCache());
 
 		setCache(cache);
 
