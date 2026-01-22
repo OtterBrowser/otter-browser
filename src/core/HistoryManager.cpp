@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -167,9 +167,9 @@ void HistoryManager::removeEntries(const QVector<quint64> &identifiers)
 		getBrowsingHistoryModel();
 	}
 
-	for (int i = 0; i < identifiers.count(); ++i)
+	for (quint64 identifier: identifiers)
 	{
-		m_browsingHistoryModel->removeEntry(identifiers.at(i));
+		m_browsingHistoryModel->removeEntry(identifier);
 	}
 }
 
@@ -311,9 +311,9 @@ QIcon HistoryManager::getIcon(const QUrl &url)
 	{
 		const QStringList specialPages(AddonsManager::getSpecialPages());
 
-		for (int i = 0; i < specialPages.count(); ++i)
+		for (const QString &specialPage: specialPages)
 		{
-			const AddonsManager::SpecialPageInformation information(AddonsManager::getSpecialPage(specialPages.at(i)));
+			const AddonsManager::SpecialPageInformation information(AddonsManager::getSpecialPage(specialPage));
 
 			if (url == information.url)
 			{
