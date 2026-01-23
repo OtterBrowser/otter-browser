@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -328,10 +328,8 @@ void SearchWidget::mouseReleaseEvent(QMouseEvent *event)
 			const QVector<WebWidget::LinkUrl> searchEngines((m_window && m_window->getWebWidget()) ? m_window->getWebWidget()->getSearchEngines() : QVector<WebWidget::LinkUrl>());
 			ActionExecutor::Object executor(Application::getInstance(), Application::getInstance());
 
-			for (int i = 0; i < searchEngines.count(); ++i)
+			for (const WebWidget::LinkUrl &searchEngine: searchEngines)
 			{
-				const WebWidget::LinkUrl searchEngine(searchEngines.at(i));
-
 				if (!SearchEnginesManager::hasSearchEngine(searchEngine.url))
 				{
 					Action *action(new Action(ActionsManager::AddSearchAction, {{QLatin1String("url"), searchEngine.url}}, executor, this));
@@ -528,9 +526,9 @@ void SearchWidget::handleLoadingStateChanged()
 	const QVector<WebWidget::LinkUrl> searchEngines((m_window && m_window->getWebWidget()) ? m_window->getWebWidget()->getSearchEngines() : QVector<WebWidget::LinkUrl>());
 	bool hasAllSearchEngines(true);
 
-	for (int i = 0; i < searchEngines.count(); ++i)
+	for (const WebWidget::LinkUrl &searchEngine: searchEngines)
 	{
-		if (!SearchEnginesManager::hasSearchEngine(searchEngines.at(i).url))
+		if (!SearchEnginesManager::hasSearchEngine(searchEngine.url))
 		{
 			hasAllSearchEngines = false;
 
