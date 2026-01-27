@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -54,10 +54,8 @@ void NetworkProxyFactory::setProxy(const QString &identifier)
 					{
 						const QVector<ProxyDefinition::ProtocolType> protocols({ProxyDefinition::HttpProtocol, ProxyDefinition::HttpsProtocol, ProxyDefinition::FtpProtocol});
 
-						for (int i = 0; i < protocols.count(); ++i)
+						for (ProxyDefinition::ProtocolType protocol: protocols)
 						{
-							const ProxyDefinition::ProtocolType protocol(protocols.at(i));
-
 							m_proxies[protocol] = {QNetworkProxy(getProxyType(protocol), iterator.value().hostName, iterator.value().port)};
 						}
 					}
@@ -96,10 +94,8 @@ QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &q
 			{
 				const QString host(query.peerHostName());
 
-				for (int i = 0; i < m_definition.exceptions.count(); ++i)
+				for (const QString &exception: m_definition.exceptions)
 				{
-					const QString exception(m_definition.exceptions.at(i));
-
 					if (exception.contains(QLatin1Char('/')))
 					{
 						const QHostAddress address(host);
