@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -143,9 +143,9 @@ QStandardItemModel* SearchSuggester::getModel()
 	{
 		m_model = new QStandardItemModel(this);
 
-		for (int i = 0; i < m_suggestions.count(); ++i)
+		for (const SearchSuggestion &suggestion: std::as_const(m_suggestions))
 		{
-			m_model->appendRow(new QStandardItem(m_suggestions.at(i).completion));
+			m_model->appendRow(new QStandardItem(suggestion.completion));
 		}
 	}
 
