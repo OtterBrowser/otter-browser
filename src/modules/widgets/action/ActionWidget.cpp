@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -164,10 +164,10 @@ void ActionWidget::dropEvent(QDropEvent *event)
 
 	parameters[QLatin1String("hints")] = QVariant(hints);
 
-	for (int i = 0; i < urls.count(); ++i)
+	for (const QUrl &url: urls)
 	{
 		QVariantMap actionParameters(parameters);
-		actionParameters[QLatin1String("url")] = urls.at(i);
+		actionParameters[QLatin1String("url")] = url;
 
 		Application::triggerAction(ActionsManager::OpenUrlAction, actionParameters, this);
 	}
