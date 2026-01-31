@@ -486,10 +486,10 @@ void SearchWidget::handleOptionChanged(int identifier, const QVariant &value)
 
 				if (m_suggester && suggestionsMode == QLatin1String("disabled"))
 				{
+					disconnect(m_suggester, &SearchSuggester::suggestionsChanged, this, &SearchWidget::showSearchSuggestions);
+
 					m_suggester->deleteLater();
 					m_suggester = nullptr;
-
-					disconnect(m_suggester, &SearchSuggester::suggestionsChanged, this, &SearchWidget::showSearchSuggestions);
 				}
 				else if (!m_suggester && suggestionsMode != QLatin1String("disabled"))
 				{
