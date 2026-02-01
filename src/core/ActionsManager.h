@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -61,7 +61,7 @@ public:
 
 protected:
 	QJsonArray createShortcutsArray(const QVector<QKeySequence> &shortcuts) const;
-	QVector<QKeySequence> loadShortcuts(const QJsonArray &rawShortcuts, bool areSingleKeyShortcutsAllowed) const;
+	static QVector<QKeySequence> loadShortcuts(const QJsonArray &rawShortcuts, bool areSingleKeyShortcutsAllowed);
 
 private:
 	QString m_identifier;
