@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -56,9 +56,9 @@ namespace Utils
 
 void removeFiles(const QStringList &paths)
 {
-	for (int i = 0; i < paths.count(); ++i)
+	for (const QString &path: paths)
 	{
-		QFile::remove(paths.at(i));
+		QFile::remove(path);
 	}
 }
 
@@ -300,9 +300,8 @@ QString createErrorPage(const ErrorPageInformation &information)
 			actions.append(action);
 		}
 
-		for (int i = 0; i < actions.count(); ++i)
+		for (const ErrorPageInformation::PageAction &action: actions)
 		{
-			const ErrorPageInformation::PageAction action(actions.at(i));
 			QString actionHtml(actionTemplate);
 			actionHtml.replace(QLatin1String("{action}"), action.name);
 			actionHtml.replace(QLatin1String("{text}"), action.title);
@@ -362,9 +361,9 @@ QString createErrorPage(const ErrorPageInformation &information)
 		const QString hintTemplate(hintExpression.match(mainTemplate).captured(1));
 		QString hintsHtml;
 
-		for (int i = 0; i < hints.count(); ++i)
+		for (const QString &hint: hints)
 		{
-			hintsHtml.append(QString(hintTemplate).replace(QLatin1String("{hint}"), hints.at(i)));
+			hintsHtml.append(QString(hintTemplate).replace(QLatin1String("{hint}"), hint));
 		}
 
 		mainTemplate.replace(hintExpression, hintsHtml);
@@ -637,9 +636,9 @@ QStringList getCharacterEncodings()
 	QStringList encodings;
 	encodings.reserve(textCodecs.count());
 
-	for (int i = 0; i < textCodecs.count(); ++i)
+	for (int textCodec: textCodecs)
 	{
-		const QTextCodec *codec(QTextCodec::codecForMib(textCodecs.at(i)));
+		const QTextCodec *codec(QTextCodec::codecForMib(textCodec));
 
 		if (codec)
 		{
