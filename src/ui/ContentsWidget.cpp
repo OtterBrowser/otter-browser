@@ -540,7 +540,7 @@ QIcon SpecialPageContentsWidget::getIcon() const
 	return m_pageInformation.icon;
 }
 
-ActiveWindowObserverContentsWidget::ActiveWindowObserverContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
+ActiveWindowObserverContentsWidget::ActiveWindowObserverContentsWidget(const QString &type, const QVariantMap &parameters, Window *window, QWidget *parent) : SpecialPageContentsWidget(type, parameters, window, parent),
 	m_mainWindow(nullptr),
 	m_activeWindow(nullptr)
 {

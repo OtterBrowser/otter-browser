@@ -137,12 +137,12 @@ private:
 	AddonsManager::SpecialPageInformation m_pageInformation;
 };
 
-class ActiveWindowObserverContentsWidget : public ContentsWidget
+class ActiveWindowObserverContentsWidget : public SpecialPageContentsWidget
 {
 	Q_OBJECT
 
 public:
-	explicit ActiveWindowObserverContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
+	explicit ActiveWindowObserverContentsWidget(const QString &type, const QVariantMap &parameters, Window *window, QWidget *parent);
 
 	QUrl getUrl() const override;
 
