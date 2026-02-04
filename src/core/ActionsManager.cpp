@@ -114,7 +114,7 @@ QHash<int, QVector<KeyboardProfile::Action> > KeyboardProfile::getDefinitions() 
 	return m_definitions;
 }
 
-QJsonArray KeyboardProfile::createShortcutsArray(const QVector<QKeySequence> &shortcuts) const
+QJsonArray KeyboardProfile::createShortcutsArray(const QVector<QKeySequence> &shortcuts)
 {
 	QJsonArray array;
 
