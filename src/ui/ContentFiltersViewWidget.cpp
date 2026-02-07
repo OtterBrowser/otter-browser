@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -217,22 +217,18 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 		const ContentFiltersProfile *profile(contentBlockingProfiles.at(i));
 		QList<QStandardItem*> profileItems(createEntry(profile->getProfileSummary(), profiles, false));
 		const ContentFiltersProfile::ProfileCategory category(profile->getCategory());
+		const QHash<AdblockContentFiltersProfile::RuleType, quint32> information(getRulesInformation(profile->getProfileSummary(), profile->getPath()));
 
-		if (!profileItems.isEmpty())
+		profileItems[0]->setData(createLanguagesList(profile), LanguagesRole);
+		profileItems[3]->setText(QString::number(information.value(AdblockContentFiltersProfile::ActiveRule)));
+		profileItems[4]->setText(QString::number(information.value(AdblockContentFiltersProfile::AnyRule)));
+
+		if (!categoryEntries.contains(category))
 		{
-			const QHash<AdblockContentFiltersProfile::RuleType, quint32> information(getRulesInformation(profile->getProfileSummary(), profile->getPath()));
-
-			profileItems[0]->setData(createLanguagesList(profile), LanguagesRole);
-			profileItems[3]->setText(QString::number(information.value(AdblockContentFiltersProfile::ActiveRule)));
-			profileItems[4]->setText(QString::number(information.value(AdblockContentFiltersProfile::AnyRule)));
-
-			if (!categoryEntries.contains(category))
-			{
-				categoryEntries[category] = {};
-			}
-
-			categoryEntries[category].append(profileItems);
+			categoryEntries[category] = {};
 		}
+
+		categoryEntries[category].append(profileItems);
 	}
 
 	const QVector<QPair<ContentFiltersProfile::ProfileCategory, QString> > categories({{ContentFiltersProfile::AdvertisementsCategory, tr("Advertisements")}, {ContentFiltersProfile::AnnoyanceCategory, tr("Annoyance")}, {ContentFiltersProfile::PrivacyCategory, tr("Privacy")}, {ContentFiltersProfile::SocialCategory, tr("Social")}, {ContentFiltersProfile::RegionalCategory, tr("Regional")}, {ContentFiltersProfile::OtherCategory, tr("Other")}});
@@ -623,26 +619,22 @@ void ContentFiltersViewWidget::handleProfileAdded(const QString &name)
 		if (categoryIndex.data(CategoryRole).toInt() == profile->getCategory())
 		{
 			QList<QStandardItem*> profileItems(createEntry(profile->getProfileSummary(), {}, false));
+			QStandardItem *categoryItem(m_model->itemFromIndex(categoryIndex));
 
-			if (!profileItems.isEmpty())
+			if (categoryItem)
 			{
-				QStandardItem *categoryItem(m_model->itemFromIndex(categoryIndex));
+				const QHash<AdblockContentFiltersProfile::RuleType, quint32> information(getRulesInformation(profile->getProfileSummary(), profile->getPath()));
 
-				if (categoryItem)
+				profileItems[0]->setData(createLanguagesList(profile), LanguagesRole);
+				profileItems[3]->setText(QString::number(information.value(AdblockContentFiltersProfile::ActiveRule)));
+				profileItems[4]->setText(QString::number(information.value(AdblockContentFiltersProfile::AnyRule)));
+
+				categoryItem->appendRow(profileItems);
+
+				if (getRowCount(categoryItem->index()) == 1)
 				{
-					const QHash<AdblockContentFiltersProfile::RuleType, quint32> information(getRulesInformation(profile->getProfileSummary(), profile->getPath()));
-
-					profileItems[0]->setData(createLanguagesList(profile), LanguagesRole);
-					profileItems[3]->setText(QString::number(information.value(AdblockContentFiltersProfile::ActiveRule)));
-					profileItems[4]->setText(QString::number(information.value(AdblockContentFiltersProfile::AnyRule)));
-
-					categoryItem->appendRow(profileItems);
-
-					if (getRowCount(categoryItem->index()) == 1)
-					{
-						setRowHidden(i, m_model->invisibleRootItem()->index(), false);
-						expand(categoryItem->index());
-					}
+					setRowHidden(i, m_model->invisibleRootItem()->index(), false);
+					expand(categoryItem->index());
 				}
 			}
 
