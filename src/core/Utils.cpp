@@ -608,7 +608,7 @@ QLocale createLocale(const QString &name)
 		return {QLocale::Portuguese, QLocale::Portugal};
 	}
 
-	return {name};
+	return QLocale(name);
 }
 
 QPixmap loadPixmapFromDataUri(const QString &data)
