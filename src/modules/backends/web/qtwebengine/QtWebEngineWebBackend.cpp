@@ -144,7 +144,7 @@ void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadRequest *i
 void QtWebEngineWebBackend::handleOptionChanged(int identifier)
 {
 	QWebEngineProfile *profile(QWebEngineProfile::defaultProfile());
-	QWebEngineSettings *settings(QWebEngineSettings::defaultSettings());
+	QWebEngineSettings *settings(QWebEngineProfile::defaultProfile()->settings());
 
 	switch (identifier)
 	{
@@ -238,7 +238,7 @@ QWebEngineProfile* QtWebEngineWebBackend::getDefaultProfile()
 
 		ContentFiltersManager::initialize();
 
-		QWebEngineSettings *settings(QWebEngineSettings::defaultSettings());
+		QWebEngineSettings *settings(QWebEngineProfile::defaultProfile()->settings());
 
 		profile->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
 		profile->setHttpUserAgent(getUserAgent());
