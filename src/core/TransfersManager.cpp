@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -874,7 +874,7 @@ bool Transfer::setTarget(const QString &target, bool canOverwriteExisting)
 
 	if (!canOverwriteExisting && !m_options.testFlag(CanOverwriteOption) && QFile::exists(target))
 	{
-		const int result(QMessageBox::question(Application::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(target), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel));
+		const int result(QMessageBox::question(Application::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(target), (QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel)));
 
 		if (result == QMessageBox::No)
 		{
