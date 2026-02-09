@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7.0)
+cmake_minimum_required(VERSION 3.16)
 
 project(otter-browser)
 
@@ -68,14 +68,27 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include(FeatureSummary)
 include(GNUInstallDirs)
 
+option(ENABLE_QT5 "Build using Qt 5" OFF)
+
+if (ENABLE_QT5)
+	add_compile_definitions(USE_QT5)
+	set(QT_VERSION Qt5)
+else ()
+	set(QT_VERSION Qt6)
+	set(QT_MINIMUM_VERSION 6.2)
+	set(QT_NO_FIND_QMLSC ON)
+	find_package(Qt6 REQUIRED COMPONENTS Core5Compat)
+endif ()
+
+find_package(${QT_VERSION} ${QT_MINIMUM_VERSION} REQUIRED COMPONENTS Core Gui Multimedia Network PrintSupport Qml Svg Widgets Xml)
+
 option(ALLOW_WITHOUT_WEB_BACKENDS "Allow to build without any web backends (build testing only)" OFF)
-option(ENABLE_QTWEBENGINE "Enable QtWebEngine backend (requires QtWebEngine 5.15)" ON)
+option(ENABLE_QTWEBENGINE "Enable QtWebEngine backend (requires compatible version of Qt WebEngine)" ON)
 option(ENABLE_QTWEBKIT "Enable QtWebKit backend (requires QtWebKit 5.212)" ON)
 option(ENABLE_CRASH_REPORTS "Enable built-in crash reporting (official builds only)" OFF)
 option(ENABLE_DBUS "Enable D-Bus based integration for notifications (only freedesktop.org compatible platforms)" ON)
 option(ENABLE_SPELLCHECK "Enable Hunspell based spell checking" ON)
 
-find_package(Qt5 5.15.0 REQUIRED COMPONENTS Core Gui Multimedia Network PrintSupport Qml Svg Widgets Xml)
 find_package(Hunspell 1.5.0 QUIET)
 
 set_package_properties(Hunspell PROPERTIES URL "https://hunspell.github.io/" DESCRIPTION "Generic spell checking support" TYPE OPTIONAL)
@@ -290,11 +303,11 @@ set(OTTER_SOURCES
 	3rdparty/qrcodegen/qrcodegen.cpp
 )
 
-qt5_add_resources(OTTER_RESOURCES
+qt_add_resources(OTTER_RESOURCES
 	resources/resources.qrc
 )
 
-qt5_wrap_ui(OTTER_UI
+qt_wrap_ui(OTTER_UI
 	src/ui/AcceptCookieDialog.ui
 	src/ui/ActionParametersDialog.ui
 	src/ui/AuthenticationDialog.ui
@@ -368,10 +381,10 @@ qt5_wrap_ui(OTTER_UI
 	src/modules/windows/windows/WindowsContentsWidget.ui
 )
 
-foreach (_dir ${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
+foreach (_dir ${QT_VERSION}Widgets_PRIVATE_INCLUDE_DIRS})
 	if (EXISTS "${_dir}/private/qpixmapfilter_p.h")
 		add_definitions(-DOTTER_ENABLE_STARTPAGEBLUR)
-		include_directories(${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
+		include_directories(${QT_VERSION}Widgets_PRIVATE_INCLUDE_DIRS})
 
 		break ()
 	endif ()
@@ -448,7 +461,9 @@ endif ()
 if (WIN32)
 	add_definitions(-DUNICODE -D_UNICODE)
 
-	find_package(Qt5 5.15.0 QUIET COMPONENTS WinExtras)
+	if (ENABLE_QT5)
+		find_package(Qt5 5.15.0 QUIET COMPONENTS WinExtras)
+	endif ()
 
 	if (MSVC)
 		set(CMAKE_PREFIX_PATH $ENV{QTDIR})
@@ -470,7 +485,9 @@ if (WIN32)
 		src/modules/platforms/windows/WindowsPlatformStyle.cpp
 	)
 elseif (APPLE)
-	find_package(Qt5 5.15.0 QUIET COMPONENTS MacExtras)
+	if (ENABLE_QT5)
+		find_package(Qt5 5.15.0 QUIET COMPONENTS MacExtras)
+	endif ()
 
 	set(CMAKE_OSX_DEPLOYMENT_TARGET 10.13)
 	set(MACOSX_BUNDLE_BUNDLE_NAME "Otter Browser")
@@ -489,10 +506,9 @@ elseif (APPLE)
 
 	set_source_files_properties(resources/icons/otter-browser.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 elseif (UNIX)
-	find_package(Qt5 5.15.0 QUIET COMPONENTS DBus)
-
-	if (TARGET Qt5::DBus AND ENABLE_DBUS)
+	if (TARGET ${QT_VERSION}::DBus AND ENABLE_DBUS)
 		add_definitions(-DOTTER_ENABLE_DBUS)
+		find_package(${QT_VERSION} ${QT_MINIMUM_VERSION} REQUIRED COMPONENTS DBus)
 	endif ()
 
 	set(OTTER_SOURCES
@@ -570,17 +586,25 @@ if (TARGET Hunspell::Hunspell AND ENABLE_SPELLCHECK)
 endif ()
 
 if (WIN32)
-	target_link_libraries(otter-browser Qt5::WinExtras ole32 shell32 advapi32 user32)
+	target_link_libraries(otter-browser ole32 shell32 advapi32 user32)
+
+	if (ENABLE_QT5)
+		target_link_libraries(Qt5::WinExtras)
+	endif ()
 elseif (APPLE)
 	find_library(FRAMEWORK_Cocoa Cocoa)
 	find_library(FRAMEWORK_Foundation Foundation)
 
 	set_target_properties(otter-browser PROPERTIES OUTPUT_NAME "Otter Browser")
 
-	target_link_libraries(otter-browser Qt5::MacExtras ${FRAMEWORK_Cocoa} ${FRAMEWORK_Foundation})
+	target_link_libraries(otter-browser ${FRAMEWORK_Cocoa} ${FRAMEWORK_Foundation})
+
+	if (ENABLE_QT5)
+		target_link_libraries(otter-browser Qt5::MacExtras)
+	endif ()
 elseif (UNIX)
-	if (TARGET Qt5::DBus AND ENABLE_DBUS)
-		target_link_libraries(otter-browser Qt5::DBus)
+	if (TARGET ${QT_VERSION}::DBus AND ENABLE_DBUS)
+		target_link_libraries(otter-browser ${QT_VERSION}::DBus)
 	endif ()
 
 	if (ENABLE_CRASH_REPORTS)
@@ -588,7 +612,22 @@ elseif (UNIX)
 	endif ()
 endif ()
 
-target_link_libraries(otter-browser Qt5::Core Qt5::Gui Qt5::Multimedia Qt5::Network Qt5::PrintSupport Qt5::Qml Qt5::Svg Qt5::Widgets Qt5::Xml)
+target_link_libraries(
+	otter-browser
+	${QT_VERSION}::Core
+	${QT_VERSION}::Gui
+	${QT_VERSION}::Multimedia
+	${QT_VERSION}::Network
+	${QT_VERSION}::PrintSupport
+	${QT_VERSION}::Qml
+	${QT_VERSION}::Svg
+	${QT_VERSION}::Widgets
+	${QT_VERSION}::Xml
+)
+
+if (NOT ENABLE_QT5)
+	target_link_libraries(otter-browser Qt6::Core5Compat)
+endif ()
 
 set(XDG_APPS_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/applications CACHE FILEPATH "Install path for .desktop files")
 
