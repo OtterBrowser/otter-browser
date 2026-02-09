@@ -52,10 +52,17 @@
 #include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtWebEngineCore/QWebEngineCookieStore>
 #include <QtWebEngineCore/QWebEngineFindTextResult>
+#if QT_VERSION >= 0x060000
+#include <QtWebEngineCore/QWebEngineHistory>
+#include <QtWebEngineCore/QWebEngineProfile>
+#include <QtWebEngineCore/QWebEngineScript>
+#include <QtWebEngineCore/QWebEngineSettings>
+#else
 #include <QtWebEngineWidgets/QWebEngineHistory>
 #include <QtWebEngineWidgets/QWebEngineProfile>
 #include <QtWebEngineWidgets/QWebEngineScript>
 #include <QtWebEngineWidgets/QWebEngineSettings>
+#endif
 #include <QtWidgets/QAction>
 #include <QtWidgets/QVBoxLayout>
 

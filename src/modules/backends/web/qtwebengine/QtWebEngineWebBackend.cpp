@@ -35,7 +35,11 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 #include <QtCore/QRegularExpression>
+#if QT_VERSION >= 0x060000
+#include <QtWebEngineCore/QWebEngineSettings>
+#else
 #include <QtWebEngineWidgets/QWebEngineSettings>
+#endif
 
 namespace Otter
 {
