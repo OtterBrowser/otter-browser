@@ -596,7 +596,7 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType ty
 	return true;
 }
 
-bool QtWebEnginePage::certificateError(const QWebEngineCertificateError &error)
+bool QtWebEnginePage::handleCertificateError(QWebEngineCertificateError error)
 {
 	if (!m_widget || error.certificateChain().isEmpty())
 	{
