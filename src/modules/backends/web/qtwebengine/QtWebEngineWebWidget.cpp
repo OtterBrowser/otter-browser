@@ -46,6 +46,9 @@
 #include <QtCore/QMimeData>
 #include <QtCore/QTimer>
 #include <QtCore/QtMath>
+#if QT_VERSION >= 0x060000
+#include <QtGui/QAction>
+#endif
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QImageWriter>
@@ -64,7 +67,9 @@
 #include <QtWebEngineWidgets/QWebEngineScript>
 #include <QtWebEngineWidgets/QWebEngineSettings>
 #endif
+#if QT_VERSION < 0x060000
 #include <QtWidgets/QAction>
+#endif
 #include <QtWidgets/QVBoxLayout>
 
 namespace Otter
