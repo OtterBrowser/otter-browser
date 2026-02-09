@@ -54,6 +54,7 @@
 #include <QtWebEngineCore/QWebEngineFindTextResult>
 #if QT_VERSION >= 0x060000
 #include <QtWebEngineCore/QWebEngineHistory>
+#include <QtWebEngineCore/QWebEngineHttpRequest>
 #include <QtWebEngineCore/QWebEngineProfile>
 #include <QtWebEngineCore/QWebEngineScript>
 #include <QtWebEngineCore/QWebEngineSettings>
