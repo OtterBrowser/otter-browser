@@ -60,9 +60,9 @@ QtWebEngineWebBackend::QtWebEngineWebBackend(QObject *parent) : WebBackend(paren
 	qputenv("QTWEBENGINE_DICTIONARIES_PATH", SpellCheckManager::getDictionariesPath().toLatin1());
 }
 
-void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadItem *item)
+void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadRequest *item)
 {
-	if (item->savePageFormat() != QWebEngineDownloadItem::UnknownSaveFormat)
+	if (item->savePageFormat() != QWebEngineDownloadRequest::UnknownSaveFormat)
 	{
 		return;
 	}
