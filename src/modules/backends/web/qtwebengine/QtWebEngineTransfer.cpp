@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-QtWebEngineTransfer::QtWebEngineTransfer(QWebEngineDownloadItem *item, TransferOptions options, QObject *parent) : Transfer(options, parent),
+QtWebEngineTransfer::QtWebEngineTransfer(QWebEngineDownloadRequest *item, TransferOptions options, QObject *parent) : Transfer(options, parent),
 	m_item(item)
 {
 	m_item->accept();
@@ -34,15 +34,15 @@ QtWebEngineTransfer::QtWebEngineTransfer(QWebEngineDownloadItem *item, TransferO
 
 	markAsStarted();
 
-	connect(m_item, &QWebEngineDownloadItem::finished, this, &QtWebEngineTransfer::markAsFinished);
-	connect(m_item, &QWebEngineDownloadItem::downloadProgress, this, &QtWebEngineTransfer::handleDownloadProgress);
-	connect(m_item, &QWebEngineDownloadItem::stateChanged, this, [&](QWebEngineDownloadItem::DownloadState state)
+	connect(m_item, &QWebEngineDownloadRequest::finished, this, &QtWebEngineTransfer::markAsFinished);
+	connect(m_item, &QWebEngineDownloadRequest::downloadProgress, this, &QtWebEngineTransfer::handleDownloadProgress);
+	connect(m_item, &QWebEngineDownloadRequest::stateChanged, this, [&](QWebEngineDownloadRequest::DownloadState state)
 	{
 		switch (state)
 		{
-			case QWebEngineDownloadItem::DownloadCancelled:
-			case QWebEngineDownloadItem::DownloadCompleted:
-			case QWebEngineDownloadItem::DownloadInterrupted:
+			case QWebEngineDownloadRequest::DownloadCancelled:
+			case QWebEngineDownloadRequest::DownloadCompleted:
+			case QWebEngineDownloadRequest::DownloadInterrupted:
 				emit stopped();
 
 				break;
@@ -136,14 +136,14 @@ Transfer::TransferState QtWebEngineTransfer::getState() const
 
 	switch (m_item->state())
 	{
-		case QWebEngineDownloadItem::DownloadRequested:
-		case QWebEngineDownloadItem::DownloadInProgress:
+		case QWebEngineDownloadRequest::DownloadRequested:
+		case QWebEngineDownloadRequest::DownloadInProgress:
 			return RunningState;
-		case QWebEngineDownloadItem::DownloadCompleted:
+		case QWebEngineDownloadRequest::DownloadCompleted:
 			return FinishedState;
-		case QWebEngineDownloadItem::DownloadCancelled:
+		case QWebEngineDownloadRequest::DownloadCancelled:
 			return CancelledState;
-		case QWebEngineDownloadItem::DownloadInterrupted:
+		case QWebEngineDownloadRequest::DownloadInterrupted:
 			return ErrorState;
 	}
 

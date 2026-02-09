@@ -243,7 +243,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 				if (information.canSave)
 				{
-					m_page->save(information.path, QWebEngineDownloadItem::SingleHtmlSaveFormat);
+					m_page->save(information.path, QWebEngineDownloadRequest::SingleHtmlSaveFormat);
 				}
 			}
 			else
@@ -256,11 +256,11 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 					switch (format)
 					{
 						case CompletePageSaveFormat:
-							m_page->save(path, QWebEngineDownloadItem::CompleteHtmlSaveFormat);
+							m_page->save(path, QWebEngineDownloadRequest::CompleteHtmlSaveFormat);
 
 							break;
 						case MhtmlSaveFormat:
-							m_page->save(path, QWebEngineDownloadItem::MimeHtmlSaveFormat);
+							m_page->save(path, QWebEngineDownloadRequest::MimeHtmlSaveFormat);
 
 							break;
 						case PdfSaveFormat:
@@ -268,7 +268,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 							break;
 						default:
-							m_page->save(path, QWebEngineDownloadItem::SingleHtmlSaveFormat);
+							m_page->save(path, QWebEngineDownloadRequest::SingleHtmlSaveFormat);
 
 							break;
 					}
