@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -368,7 +368,7 @@ void ToolBarsManager::configureToolBar(int identifier)
 
 void ToolBarsManager::resetToolBar(int identifier)
 {
-	if (identifier >= 0 && identifier < OtherToolBar && QMessageBox::question(nullptr, tr("Reset Toolbar"), tr("Do you really want to reset this toolbar to default configuration?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+    if (identifier >= 0 && identifier < OtherToolBar && QMessageBox::question(nullptr, tr("Reset Toolbar"), tr("Do you really want to reset this toolbar to default configuration?"), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::Yes)
 	{
 		setToolBar(loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true).value(getToolBarName(identifier)));
 	}
@@ -376,7 +376,7 @@ void ToolBarsManager::resetToolBar(int identifier)
 
 void ToolBarsManager::removeToolBar(int identifier)
 {
-	if (identifier >= 0 && identifier < m_definitions.count() && identifier >= OtherToolBar && QMessageBox::question(nullptr, tr("Remove Toolbar"), tr("Do you really want to remove this toolbar?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+    if (identifier >= 0 && identifier < m_definitions.count() && identifier >= OtherToolBar && QMessageBox::question(nullptr, tr("Remove Toolbar"), tr("Do you really want to remove this toolbar?"), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::Yes)
 	{
 		m_definitions[identifier].markAsRemoved();
 
@@ -388,7 +388,7 @@ void ToolBarsManager::removeToolBar(int identifier)
 
 void ToolBarsManager::resetToolBars()
 {
-	if (QMessageBox::question(nullptr, tr("Reset Toolbars"), tr("Do you really want to reset all toolbars to default configuration?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
+    if (QMessageBox::question(nullptr, tr("Reset Toolbars"), tr("Do you really want to reset all toolbars to default configuration?"), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::No)
 	{
 		return;
 	}

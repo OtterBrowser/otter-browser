@@ -2,7 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2010 - 2014 David Rosca <nowrep@gmail.com>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -993,7 +993,7 @@ bool AdblockContentFiltersProfile::create(const QUrl &url, bool canOverwriteExis
 		return false;
 	}
 
-	if (QMessageBox::question(QApplication::activeWindow(), tr("Question"), tr("Do you want to add content blocking profile from this URL?\n\n%1").arg(url.toString()), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
+    if (QMessageBox::question(QApplication::activeWindow(), tr("Question"), tr("Do you want to add content blocking profile from this URL?\n\n%1").arg(url.toString()), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::No)
 	{
 		return false;
 	}
