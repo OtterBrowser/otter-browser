@@ -47,6 +47,6 @@ Have a look at the [open issues](https://github.com/OtterBrowser/otter-browser/i
 
 We use [Transifex](https://app.transifex.com/otter-browser/otter-browser/) to translate Otter Browser.
 
-To stay informed of Otter development, bug fixes and new features, you can join [the official forum](https://dndsanctuary.eu/index.php?board=9.0). We also have two IRC channels on Libera.Chat: [#otter-browser](hhttps://web.libera.chat/#otter-browser) (international) and [#otter-browser-pl](https://web.libera.chat/#otter-browser-pl) (polski / Polish).
+To stay informed of Otter development, bug fixes and new features, you can join [the official forum](https://dndsanctuary.eu/index.php?board=9.0). We also have two IRC channels on Libera.Chat: [#otter-browser](https://web.libera.chat/#otter-browser) (international) and [#otter-browser-pl](https://web.libera.chat/#otter-browser-pl) (polski / Polish).
 
 Read *CONTRIBUTING.md* and don’t hesitate!
