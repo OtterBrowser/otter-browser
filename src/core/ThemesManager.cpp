@@ -440,7 +440,11 @@ bool ThemesManager::eventFilter(QObject *object, QEvent *event)
 }
 
 #ifdef Q_OS_WIN32
+#if QT_VERSION < 0x060000
 bool ThemesManager::nativeEventFilter(const QByteArray &eventType, void *message, long *result)
+#else
+bool ThemesManager::nativeEventFilter(const QByteArray &eventType, void *message, qintptr *result)
+#endif
 {
 	Q_UNUSED(eventType)
 	Q_UNUSED(result)

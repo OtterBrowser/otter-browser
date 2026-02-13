@@ -153,7 +153,11 @@ protected:
 
 	bool eventFilter(QObject *object, QEvent *event) override;
 #ifdef Q_OS_WIN32
+#if QT_VERSION < 0x060000
 	bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
+#else
+	bool nativeEventFilter(const QByteArray &eventType, void *message, qintptr *result) override;
+#endif
 #endif
 
 protected slots:
