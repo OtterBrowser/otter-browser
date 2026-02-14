@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ void SaveSessionDialog::saveSession()
 {
 	const QString identifier(m_ui->identifierLineEditWidget->text());
 
-	if (identifier.isEmpty() || (SessionsManager::getCurrentSession() != identifier && SessionsManager::getSession(identifier).isValid() && QMessageBox::question(this, tr("Question"), tr("Session with specified identifier already exists.\nDo you want to overwrite it?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No))
+    if (identifier.isEmpty() || (SessionsManager::getCurrentSession() != identifier && SessionsManager::getSession(identifier).isValid() && QMessageBox::question(this, tr("Question"), tr("Session with specified identifier already exists.\nDo you want to overwrite it?"), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::No))
 	{
 		show();
 
