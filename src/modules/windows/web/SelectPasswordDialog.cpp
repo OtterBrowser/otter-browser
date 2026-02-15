@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -86,7 +86,7 @@ void SelectPasswordDialog::removePassword()
 {
 	const int currentSet(getCurrentSet());
 
-	if (currentSet < 0 || currentSet >= m_passwords.count() || QMessageBox::question(this, tr("Question"), tr("Do you really want to remove this credentials set?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
+    if (currentSet < 0 || currentSet >= m_passwords.count() || QMessageBox::question(this, tr("Question"), tr("Do you really want to remove this credentials set?"), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::No)
 	{
 		return;
 	}

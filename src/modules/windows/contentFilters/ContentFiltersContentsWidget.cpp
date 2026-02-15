@@ -112,7 +112,7 @@ void ContentFiltersContentsWidget::initializeSettingsPage()
 
 		if (m_ui->profilesViewWidget->areProfilesModified() && host != m_ui->profilesViewWidget->getHost())
 		{
-			const int result(QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel));
+			const int result(QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), (QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel), QMessageBox::Cancel));
 
 			if (result == QMessageBox::Cancel)
 			{
@@ -213,7 +213,7 @@ QUrl ContentFiltersContentsWidget::getUrl() const
 
 bool ContentFiltersContentsWidget::canClose()
 {
-	const int result(QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel));
+	const int result(QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), (QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel), QMessageBox::Cancel));
 
 	if (result == QMessageBox::Cancel)
 	{

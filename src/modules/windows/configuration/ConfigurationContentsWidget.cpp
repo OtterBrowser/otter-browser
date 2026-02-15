@@ -364,7 +364,7 @@ void ConfigurationContentsWidget::saveOption()
 
 void ConfigurationContentsWidget::saveAll(bool reset)
 {
-	if (reset && QMessageBox::question(this, tr("Question"), tr("Do you really want to restore default values of all options?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
+    if (reset && QMessageBox::question(this, tr("Question"), tr("Do you really want to restore default values of all options?"), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::No)
 	{
 		return;
 	}
@@ -567,7 +567,7 @@ QModelIndex ConfigurationContentsWidget::findGroup(int identifier) const
 
 bool ConfigurationContentsWidget::canClose()
 {
-	switch (QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel))
+    switch (QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), (QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel), QMessageBox::Cancel))
 	{
 		case QMessageBox::Cancel:
 			return false;
