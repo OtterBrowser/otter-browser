@@ -156,7 +156,7 @@ void ContentBlockingProfileDialog::closeEvent(QCloseEvent *event)
 {
 	if (m_ui->saveButton->isEnabled())
 	{
-		const int result(QMessageBox::question(this, tr("Question"), tr("The source has been modified.\nDo you want to save it?"), (QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel)));
+		const int result(QMessageBox::question(this, tr("Question"), tr("The source has been modified.\nDo you want to save it?"), (QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel), QMessageBox::Yes));
 
 		if (result == QMessageBox::Cancel)
 		{
