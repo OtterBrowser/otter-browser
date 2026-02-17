@@ -1057,7 +1057,7 @@ bool ToolBarWidget::isCollapsed() const
 
 bool ToolBarWidget::isHorizontal() const
 {
-	return !(m_area ==  Qt::LeftToolBarArea || m_area == Qt::RightToolBarArea);
+	return !(m_area == Qt::LeftToolBarArea || m_area == Qt::RightToolBarArea);
 }
 
 bool ToolBarWidget::isDragHandle(const QPoint &position) const
