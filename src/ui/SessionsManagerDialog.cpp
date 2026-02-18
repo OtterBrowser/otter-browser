@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "SessionsManagerDialog.h"
-#include "MainWindow.h"
 #include "../core/Application.h"
 #include "../core/SessionsManager.h"
 
