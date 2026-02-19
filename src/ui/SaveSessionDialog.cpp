@@ -68,7 +68,7 @@ void SaveSessionDialog::saveSession()
 {
 	const QString identifier(m_ui->identifierLineEditWidget->text());
 
-    if (identifier.isEmpty() || (SessionsManager::getCurrentSession() != identifier && SessionsManager::getSession(identifier).isValid() && QMessageBox::question(this, tr("Question"), tr("Session with specified identifier already exists.\nDo you want to overwrite it?"), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::No))
+	if (identifier.isEmpty() || (SessionsManager::getCurrentSession() != identifier && SessionsManager::getSession(identifier).isValid() && QMessageBox::question(this, tr("Question"), tr("Session with specified identifier already exists.\nDo you want to overwrite it?"), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::No))
 	{
 		show();
 

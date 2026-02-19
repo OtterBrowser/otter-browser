@@ -120,7 +120,7 @@ void SessionsManagerDialog::deleteSession()
 
 	const int row(m_ui->sessionsViewWidget->getCurrentRow());
 
-    if (QMessageBox::question(this, tr("Confirm"), tr("Are you sure that you want to delete session %1?").arg(m_ui->sessionsViewWidget->getIndex(row, 0).data(Qt::DisplayRole).toString()), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::Yes)
+	if (QMessageBox::question(this, tr("Confirm"), tr("Are you sure that you want to delete session %1?").arg(m_ui->sessionsViewWidget->getIndex(row, 0).data(Qt::DisplayRole).toString()), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::Yes)
 	{
 		if (SessionsManager::deleteSession(m_ui->sessionsViewWidget->getIndex(row, 1).data(Qt::DisplayRole).toString()))
 		{
