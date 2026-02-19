@@ -196,7 +196,12 @@ void HistoryContentsWidget::removeDomainEntries()
 		return;
 	}
 
-	const QString host(QUrl(domainItem->text()).host());
+	const QString domain(Utils::extractDomainName(QUrl(domainItem->text())));
+	if (domain.isEmpty())
+	{
+		return;
+	}
+
 	QVector<quint64> entries;
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
@@ -212,7 +217,7 @@ void HistoryContentsWidget::removeDomainEntries()
 		{
 			const QStandardItem *entryItem(groupItem->child(j, 0));
 
-			if (entryItem && host == QUrl(entryItem->text()).host())
+			if (entryItem && domain == Utils::extractDomainName(QUrl(entryItem->text())))
 			{
 				entries.append(entryItem->data(IdentifierRole).toULongLong());
 			}

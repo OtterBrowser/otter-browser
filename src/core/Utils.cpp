@@ -428,6 +428,30 @@ QString extractHost(const QUrl &url)
 	return (url.isLocalFile() ? QLatin1String("localhost") : url.host());
 }
 
+QString extractDomainName(const QUrl &url)
+{
+	if (!url.isValid())
+	{
+		return {};
+	}
+
+	const QString host = url.host();
+	if (host.isEmpty())
+	{
+		return {};
+	}
+
+	const QString tld = url.topLevelDomain();
+	if (tld.isEmpty())
+	{
+		return {};
+	}
+
+	const int domainStartIdx = host.lastIndexOf('.', (-1 * tld.size()) - 1) + 1;
+
+	return host.mid(domainStartIdx);
+}
+
 QString formatElapsedTime(int value)
 {
 	if (value < 0)
