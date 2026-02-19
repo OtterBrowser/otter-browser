@@ -270,13 +270,22 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			break;
 		case ActionsManager::ClearTabHistoryAction:
-			setUrl(QUrl(QLatin1String("about:blank")));
-
+			{
+			setUrl(QUrl(QLatin1String("about:start")));
 			m_page->history()->clear();
 
-			notifyNavigationActionsChanged();
+			QObject *context = new QObject(this);
+			connect(this, &QtWebEngineWebWidget::loadingStateChanged,
+					context, [this, context](WebWidget::LoadingState state){
+				if (state == FinishedLoadingState) {
+					m_page->history()->clear();
+					delete context;
+					emit loadingStateChanged(FinishedLoadingState);
+				}
+			});
 
 			break;
+			}
 		case ActionsManager::MuteTabMediaAction:
 			m_page->setAudioMuted(!m_page->isAudioMuted());
 
