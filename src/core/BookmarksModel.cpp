@@ -1026,7 +1026,7 @@ void BookmarksModel::handleFeedModified(Feed *feed)
 	blockSignals(false);
 	endResetModel();
 
-    for (Bookmark *bookmark: bookmarks)
+	for (Bookmark *bookmark: bookmarks)
 	{
 		emit bookmarkModified(bookmark);
 	}
