@@ -79,10 +79,8 @@ void ContentsWidget::showEvent(QShowEvent *event)
 	{
 		m_layer->resize(size());
 
-		for (int i = 0; i < m_dialogs.count(); ++i)
+		for (ContentsDialog *dialog: std::as_const(m_dialogs))
 		{
-			ContentsDialog *dialog(m_dialogs.at(i));
-
 			if (dialog)
 			{
 				dialog->raise();
@@ -101,10 +99,8 @@ void ContentsWidget::resizeEvent(QResizeEvent *event)
 	{
 		m_layer->resize(size());
 
-		for (int i = 0; i < m_dialogs.count(); ++i)
+		for (ContentsDialog *dialog: std::as_const(m_dialogs))
 		{
-			ContentsDialog *dialog(m_dialogs.at(i));
-
 			if (dialog)
 			{
 				dialog->updateSize();
@@ -237,10 +233,8 @@ void ContentsWidget::setupPrinter(QPrinter *printer)
 
 void ContentsWidget::handleAboutToClose()
 {
-	for (int i = 0; i < m_dialogs.count(); ++i)
+	for (ContentsDialog *dialog: std::as_const(m_dialogs))
 	{
-		ContentsDialog *dialog(m_dialogs.at(i));
-
 		if (dialog)
 		{
 			dialog->close();
