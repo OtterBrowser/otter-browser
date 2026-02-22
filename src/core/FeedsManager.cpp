@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -450,15 +450,13 @@ QVector<Feed::Entry> Feed::getEntries(const QStringList &categories) const
 	QVector<Entry> entries;
 	entries.reserve(entries.count() / 2);
 
-	for (int i = 0; i < m_entries.count(); ++i)
+	for (const Entry &entry: std::as_const(m_entries))
 	{
-		const Feed::Entry entry(m_entries.at(i));
-
 		if (!entry.categories.isEmpty())
 		{
-			for (int j = 0; j < categories.count(); ++j)
+			for (const QString &category: categories)
 			{
-				if (entry.categories.contains(categories.at(j)))
+				if (entry.categories.contains(category))
 				{
 					entries.append(entry);
 
@@ -482,9 +480,9 @@ int Feed::getUnreadEntriesAmount() const
 {
 	int amount(0);
 
-	for (int i = 0; i < m_entries.count(); ++i)
+	for (const Entry &entry: std::as_const(m_entries))
 	{
-		if (m_entries.at(i).lastReadTime.isNull())
+		if (entry.lastReadTime.isNull())
 		{
 			++amount;
 		}
@@ -653,10 +651,8 @@ void FeedsManager::save()
 
 	QJsonArray feedsArray;
 
-	for (int i = 0; i < m_feeds.count(); ++i)
+	for (const Feed *feed: std::as_const(m_feeds))
 	{
-		const Feed *feed(m_feeds.at(i));
-
 		if (!FeedsManager::getModel()->hasFeed(feed->getUrl()) && !BookmarksManager::getModel()->hasFeed(feed->getUrl()))
 		{
 			continue;
@@ -696,9 +692,8 @@ void FeedsManager::save()
 		const QVector<Feed::Entry> entries(feed->getEntries());
 		QJsonArray entriesArray;
 
-		for (int j = 0; j < entries.count(); ++j)
+		for (const Feed::Entry &entry: entries)
 		{
-			const Feed::Entry &entry(entries.at(j));
 			QJsonObject entryObject({{QLatin1String("identifier"), entry.identifier}, {QLatin1String("title"), entry.title}});
 
 			if (!entry.summary.isEmpty())
@@ -804,10 +799,8 @@ Feed* FeedsManager::getFeed(const QUrl &url)
 
 	const QUrl normalizedUrl(Utils::normalizeUrl(url));
 
-	for (int i = 0; i < m_feeds.count(); ++i)
+	for (Feed *feed: std::as_const(m_feeds))
 	{
-		Feed *feed(m_feeds.at(i));
-
 		if (feed->getUrl() == url || feed->getUrl() == normalizedUrl)
 		{
 			return feed;
