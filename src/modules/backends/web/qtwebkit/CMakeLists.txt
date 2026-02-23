@@ -36,6 +36,6 @@ if (TARGET Hunspell::Hunspell AND ENABLE_SPELLCHECK)
 	)
 endif ()
 
-qt5_add_resources(OTTER_RESOURCES
+qt_add_resources(OTTER_RESOURCES
 	src/modules/backends/web/qtwebkit/QtWebKitResources.qrc
 )
