@@ -544,7 +544,7 @@ ActiveWindowObserverContentsWidget::ActiveWindowObserverContentsWidget(const QSt
 
 		if (m_mainWindow)
 		{
-			setActiveWindow(m_mainWindow ? m_mainWindow->getActiveWindow() : nullptr);
+			setActiveWindow(m_mainWindow->getActiveWindow());
 
 			connect(m_mainWindow, &MainWindow::activeWindowChanged, this, &ActiveWindowObserverContentsWidget::handleCurrentWindowChanged);
 		}
