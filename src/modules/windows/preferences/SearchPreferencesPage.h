@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -79,10 +79,10 @@ public slots:
 protected:
 	struct SearchEngine final
 	{
-		explicit SearchEngine(const SearchEnginesManager::SearchEngineDefinition &definitionValue = {}, bool isModifiedValue = false)
+		explicit SearchEngine(const SearchEnginesManager::SearchEngineDefinition &definitionValue = {}, bool isModifiedValue = false) :
+			definition(definitionValue),
+			isModified(isModifiedValue)
 		{
-			definition = definitionValue;
-			isModified = isModifiedValue;
 		}
 
 		SearchEnginesManager::SearchEngineDefinition definition;
