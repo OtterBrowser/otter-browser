@@ -124,9 +124,9 @@ void LinksContentsWidget::triggerAction(int identifier, const QVariantMap &param
 				QStringList links;
 				links.reserve(indexes.count());
 
-				for (int i = 0; i < indexes.count(); ++i)
+				for (const QModelIndex &index: indexes)
 				{
-					links.append(indexes.at(i).data(Qt::StatusTipRole).toString());
+					links.append(index.data(Qt::StatusTipRole).toString());
 				}
 
 				QGuiApplication::clipboard()->setText(links.join(QLatin1Char('\n')));
@@ -137,10 +137,8 @@ void LinksContentsWidget::triggerAction(int identifier, const QVariantMap &param
 			{
 				const QList<QModelIndex> indexes(m_ui->linksViewWidget->selectionModel()->selectedIndexes());
 
-				for (int i = 0; i < indexes.count(); ++i)
+				for (const QModelIndex &index: indexes)
 				{
-					const QModelIndex index(indexes.at(i));
-
 					BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, index.data(Qt::StatusTipRole)}, {BookmarksModel::TitleRole, index.data(Qt::DisplayRole)}}, nullptr);
 				}
 			}
@@ -182,9 +180,9 @@ void LinksContentsWidget::openLink()
 		const QList<QModelIndex> indexes(m_ui->linksViewWidget->selectionModel()->selectedIndexes());
 		const QVariant hints(static_cast<SessionsManager::OpenHints>(action->data().toInt()));
 
-		for (int i = 0; i < indexes.count(); ++i)
+		for (const QModelIndex &index: indexes)
 		{
-			Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), indexes.at(i).data(Qt::StatusTipRole)}, {QLatin1String("hints"), hints}}, parentWidget());
+			Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), index.data(Qt::StatusTipRole)}, {QLatin1String("hints"), hints}}, parentWidget());
 		}
 	}
 }
@@ -221,10 +219,8 @@ void LinksContentsWidget::updateLinks()
 	{
 		m_ui->linksViewWidget->getSourceModel()->appendRow(new ItemModel::Item(ItemModel::SeparatorType));
 
-		for (int i = 0; i < links.count(); ++i)
+		for (const WebWidget::LinkUrl &link: links)
 		{
-			const WebWidget::LinkUrl link(links.at(i));
-
 			addLink(link.title, link.url);
 		}
 	}
