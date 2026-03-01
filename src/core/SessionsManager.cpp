@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -312,9 +312,9 @@ SessionInformation SessionsManager::getSession(const QString &path)
 				QVector<int> sizes;
 				sizes.reserve(rawSizes.count());
 
-				for (int k = 0; k < rawSizes.count(); ++k)
+				for (const QVariant &rawSize: rawSizes)
 				{
-					sizes.append(rawSizes.at(k).toInt());
+					sizes.append(rawSize.toInt());
 				}
 
 				sessionMainWindow.splitters[splitterObject.value(QLatin1String("identifier")).toString()] = sizes;
@@ -417,9 +417,8 @@ QStringList SessionsManager::getClosedWindows()
 	QStringList closedWindows;
 	closedWindows.reserve(m_closedWindows.count());
 
-	for (int i = 0; i < m_closedWindows.count(); ++i)
+	for (const Session::MainWindow &window: std::as_const(m_closedWindows))
 	{
-		const Session::MainWindow &window(m_closedWindows.at(i));
 		const QString title(window.windows.value(window.index, Session::Window()).getTitle());
 
 		closedWindows.append(title.isEmpty() ? tr("(Untitled)") : title);
@@ -613,10 +612,8 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 
 	session.windows.reserve(windows.count());
 
-	for (int i = 0; i < windows.count(); ++i)
+	for (MainWindow *window: std::as_const(windows))
 	{
-		MainWindow *window(windows.at(i));
-
 		if (!window->isPrivate())
 		{
 			session.windows.append(window->getSession());
@@ -668,15 +665,13 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 		sessionObject.insert(QLatin1String("isClean"), false);
 	}
 
-	for (int i = 0; i < session.windows.count(); ++i)
+	for (const Session::MainWindow &mainWindow: session.windows)
 	{
-		const Session::MainWindow sessionEntry(session.windows.at(i));
-		QJsonObject mainWindowObject({{QLatin1String("currentIndex"), (sessionEntry.index + 1)}, {QLatin1String("geometry"), QString::fromLatin1(sessionEntry.geometry.toBase64())}});
+		QJsonObject mainWindowObject({{QLatin1String("currentIndex"), (mainWindow.index + 1)}, {QLatin1String("geometry"), QString::fromLatin1(mainWindow.geometry.toBase64())}});
 		QJsonArray windowsArray;
 
-		for (int j = 0; j < sessionEntry.windows.count(); ++j)
+		for (const Session::Window &window: mainWindow.windows)
 		{
-			const Session::Window window(sessionEntry.windows.at(j));
 			QJsonObject windowObject({{QLatin1String("currentIndex"), (window.history.index + 1)}});
 
 			if (!window.identity.isEmpty())
@@ -741,9 +736,8 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 			const Session::Window::History windowHistory(window.history);
 			QJsonArray windowHistoryArray;
 
-			for (int k = 0; k < windowHistory.entries.count(); ++k)
+			for (const Session::Window::History::Entry &historyEntry: windowHistory.entries)
 			{
-				const Session::Window::History::Entry historyEntry(windowHistory.entries.at(k));
 				const QPoint position(historyEntry.position);
 				QJsonObject historyEntryObject({{QLatin1String("url"), historyEntry.url}, {QLatin1String("title"), historyEntry.title}, {QLatin1String("zoom"), historyEntry.zoom}});
 
@@ -762,13 +756,12 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 		mainWindowObject.insert(QLatin1String("windows"), windowsArray);
 
-		if (sessionEntry.hasToolBarsState)
+		if (mainWindow.hasToolBarsState)
 		{
 			QJsonArray toolBarsArray;
 
-			for (int j = 0; j < sessionEntry.toolBars.count(); ++j)
+			for (const Session::MainWindow::ToolBarState &toolBar: mainWindow.toolBars)
 			{
-				const Session::MainWindow::ToolBarState toolBar(sessionEntry.toolBars.at(j));
 				const QString identifier(ToolBarsManager::getToolBarName(toolBar.identifier));
 
 				if (identifier.isEmpty())
@@ -827,19 +820,19 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 			mainWindowObject.insert(QLatin1String("toolBars"), toolBarsArray);
 		}
 
-		if (!sessionEntry.splitters.isEmpty())
+		if (!mainWindow.splitters.isEmpty())
 		{
 			QJsonArray splittersArray;
 			QMap<QString, QVector<int> >::const_iterator iterator;
 
-			for (iterator = sessionEntry.splitters.begin(); iterator != sessionEntry.splitters.end(); ++iterator)
+			for (iterator = mainWindow.splitters.begin(); iterator != mainWindow.splitters.end(); ++iterator)
 			{
 				QJsonArray sizesArray;
 				const QVector<int> &sizes(iterator.value());
 
-				for (int j = 0; j < sizes.count(); ++j)
+				for (int size: sizes)
 				{
-					sizesArray.append(sizes.at(j));
+					sizesArray.append(size);
 				}
 
 				splittersArray.append(QJsonObject({{QLatin1String("identifier"), iterator.key()}, {QLatin1String("sizes"), sizesArray}}));
@@ -895,10 +888,8 @@ bool SessionsManager::hasUrl(const QUrl &url, bool activate)
 	const QVector<MainWindow*> windows(Application::getWindows());
 	QMultiMap<qint64, MainWindow*> map;
 
-	for (int i = 0; i < windows.count(); ++i)
+	for (MainWindow *window: windows)
 	{
-		MainWindow *window(windows.at(i));
-
 		if (window != activeWindow && window->getActiveWindow())
 		{
 			map.insert(window->getActiveWindow()->getLastActivity().toMSecsSinceEpoch(), window);
