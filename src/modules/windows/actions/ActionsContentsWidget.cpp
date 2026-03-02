@@ -71,10 +71,8 @@ void ActionsContentsWidget::populateActions()
 
 	const QVector<ActionsManager::ActionDefinition> definitions(ActionsManager::getActionDefinitions());
 
-	for (int i = 0; i < definitions.count(); ++i)
+	for (const ActionsManager::ActionDefinition &definition: definitions)
 	{
-		const ActionsManager::ActionDefinition definition(definitions.at(i));
-
 		if (definition.flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag) || definition.flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters))
 		{
 			continue;
