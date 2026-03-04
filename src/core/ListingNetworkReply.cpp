@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -47,23 +47,22 @@ QByteArray ListingNetworkReply::createListing(const QString &title, const QVecto
 	QString entriesHtml;
 	QString listingTemplate(stream.readAll());
 	const QString entryTemplate(entryExpression.match(listingTemplate).captured(1));
+	int index(0);
 
 	listingTemplate.replace(entryExpression, QLatin1String("{entries}"));
 
-	for (int i = 0; i < navigation.count(); ++i)
+	for (const NavigationEntry &entry: navigation)
 	{
-		const NavigationEntry entry(navigation.at(i));
+		navigationHtml.append(QStringLiteral("<a href=\"%1\">%2</a>").arg(entry.url.toString(), entry.name) + ((index < (navigation.count() - 1)) ? QLatin1String("&shy;") : QString()));
 
-		navigationHtml.append(QStringLiteral("<a href=\"%1\">%2</a>").arg(entry.url.toString(), entry.name) + ((i < (navigation.count() - 1)) ? QLatin1String("&shy;") : QString()));
+		++index;
 	}
 
 	QHash<QString, QIcon> icons;
 	const QFileIconProvider iconProvider;
 
-	for (int i = 0; i < entries.count(); ++i)
+	for (const ListingEntry &entry: entries)
 	{
-		const ListingEntry &entry(entries.at(i));
-
 		if (!icons.contains(entry.mimeType.name()))
 		{
 			QIcon icon;
