@@ -197,9 +197,9 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 
 					if (type == BookmarksModel::FolderBookmark && m_model->rowCount(index) == 0)
 					{
-						for (int i = 0; i < menu.actions().count(); ++i)
+						for (QAction *action: menu.actions())
 						{
-							menu.actions().at(i)->setEnabled(false);
+							action->setEnabled(false);
 						}
 					}
 				}
