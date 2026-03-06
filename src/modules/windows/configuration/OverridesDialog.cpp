@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2022 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -40,10 +40,10 @@ OverridesDialog::OverridesDialog(int identifier, QWidget *parent) : Dialog(paren
 
 	const QStringList overrideHosts(SettingsManager::getOverrideHosts(identifier));
 
-	for (int i = 0; i < overrideHosts.count(); ++i)
+	for (const QString &overrideHost: overrideHosts)
 	{
-		const QVariant value(SettingsManager::getOption(identifier, overrideHosts.at(i)));
-		QList<QStandardItem*> items({new QStandardItem(HistoryManager::getIcon(overrideHosts.at(i)), overrideHosts.at(i)), new QStandardItem()});
+		const QVariant value(SettingsManager::getOption(identifier, overrideHost));
+		QList<QStandardItem*> items({new QStandardItem(HistoryManager::getIcon(overrideHost), overrideHost), new QStandardItem()});
 		items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
 		items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
 		items[1]->setData(value, Qt::EditRole);
@@ -118,9 +118,9 @@ OverridesDialog::OverridesDialog(int identifier, QWidget *parent) : Dialog(paren
 	});
 	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, [&]()
 	{
-		for (int i = 0; i < m_hostsToRemove.count(); ++i)
+		for (const QString &hostToRemove: std::as_const(m_hostsToRemove))
 		{
-			SettingsManager::removeOverride(m_hostsToRemove.at(i), m_identifier);
+			SettingsManager::removeOverride(hostToRemove, m_identifier);
 		}
 
 		if (m_ui->overridesViewWidget->isModified())
