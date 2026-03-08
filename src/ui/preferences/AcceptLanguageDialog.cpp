@@ -42,9 +42,9 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 
 	const QStringList chosenLanguages(languages.split(QLatin1Char(','), Qt::SkipEmptyParts));
 
-	for (int i = 0; i < chosenLanguages.count(); ++i)
+	for (const QString &chosenLanguage: chosenLanguages)
 	{
-		addLanguage(chosenLanguages.at(i).section(QLatin1Char(';'), 0, 0));
+		addLanguage(chosenLanguage.section(QLatin1Char(';'), 0, 0));
 	}
 
 	updateLanguages();
@@ -149,10 +149,8 @@ void AcceptLanguageDialog::updateLanguages()
 	QVector<Locale> entries;
 	entries.reserve(locales.count() + 2);
 
-	for (int i = 0; i < locales.count(); ++i)
+	for (const QLocale &locale: locales)
 	{
-		const QLocale &locale(locales.at(i));
-
 		if (locale != QLocale::c())
 		{
 			if (locale.nativeCountryName().isEmpty() || locale.nativeLanguageName().isEmpty())
@@ -182,9 +180,9 @@ void AcceptLanguageDialog::updateLanguages()
 
 	m_ui->languagesComboBox->clear();
 
-	for (int i = 0; i < entries.count(); ++i)
+	for (const Locale &entry: entries)
 	{
-		m_ui->languagesComboBox->addItem(entries.at(i).title, entries.at(i).name);
+		m_ui->languagesComboBox->addItem(entry.title, entry.name);
 	}
 
 	m_ui->languagesComboBox->setCurrentIndex(index);
