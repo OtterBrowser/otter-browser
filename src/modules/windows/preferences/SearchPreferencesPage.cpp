@@ -409,10 +409,8 @@ void SearchPreferencesPage::updateReaddSearchEngineMenu()
 	menu->clear();
 	menu->setEnabled(!availableSearchEngines.isEmpty());
 
-	for (int i = 0; i < availableSearchEngines.count(); ++i)
+	for (const SearchEnginesManager::SearchEngineDefinition &searchEngine: availableSearchEngines)
 	{
-		const SearchEnginesManager::SearchEngineDefinition searchEngine(availableSearchEngines.at(i));
-
 		menu->addAction(searchEngine.icon, (searchEngine.title.isEmpty() ? tr("(Untitled)") : searchEngine.title))->setData(searchEngine.identifier);
 	}
 }
@@ -435,9 +433,9 @@ void SearchPreferencesPage::load()
 	const QString defaultSearchEngine(SettingsManager::getOption(SettingsManager::Search_DefaultSearchEngineOption).toString());
 	const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
 
-	for (int i = 0; i < searchEngines.count(); ++i)
+	for (const QString &identifier: searchEngines)
 	{
-		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(searchEngines.at(i)));
+		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(identifier));
 
 		if (searchEngine.isValid())
 		{
