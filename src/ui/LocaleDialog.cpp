@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2021 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -35,7 +35,7 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 	m_ui->setupUi(this);
 
 	const QList<QFileInfo> locales(QDir(Application::getLocalePath()).entryInfoList({QLatin1String("otter-browser_*.qm")}, QDir::Files, QDir::Name));
-	QVector<QPair<QString, QString> > entries;
+	QVector<Locale> entries;
 	entries.reserve(locales.count());
 
 	for (int i = 0; i < locales.count(); ++i)
@@ -56,14 +56,14 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 	QCollator collator;
 	collator.setCaseSensitivity(Qt::CaseInsensitive);
 
-	std::sort(entries.begin(), entries.end(), [&](const QPair<QString, QString> &first, const QPair<QString, QString> &second)
+	std::sort(entries.begin(), entries.end(), [&](const Locale &first, const Locale &second)
 	{
-		return (collator.compare(first.first, second.first) < 0);
+		return (collator.compare(first.title, second.title) < 0);
 	});
 
-	for (int i = 0; i < entries.count(); ++i)
+	for (const Locale &entry: entries)
 	{
-		m_ui->languageComboBox->addItem(entries.at(i).first, entries.at(i).second);
+		m_ui->languageComboBox->addItem(entry.title, entry.name);
 	}
 
 	const QString currentLocale(SettingsManager::getOption(SettingsManager::Browser_LocaleOption).toString());
