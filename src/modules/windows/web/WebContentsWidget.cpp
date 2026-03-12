@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -887,10 +887,8 @@ void WebContentsWidget::handleSavePasswordRequest(const PasswordsManager::Passwo
 
 	bool isValid(false);
 
-	for (int i = 0; i < password.fields.count(); ++i)
+	for (const PasswordsManager::PasswordInformation::Field &field: password.fields)
 	{
-		const PasswordsManager::PasswordInformation::Field field(password.fields.at(i));
-
 		if (field.type == PasswordsManager::PasswordField && !field.value.isEmpty())
 		{
 			isValid = true;
@@ -951,9 +949,9 @@ void WebContentsWidget::handlePermissionRequest(WebWidget::FeaturePermission fea
 		return;
 	}
 
-	for (int i = 0; i < m_permissionBarWidgets.count(); ++i)
+	for (PermissionBarWidget *permissionBarWidget: std::as_const(m_permissionBarWidgets))
 	{
-		if (m_permissionBarWidgets.at(i)->hasMatch(feature, url))
+		if (permissionBarWidget->hasMatch(feature, url))
 		{
 			return;
 		}
@@ -1353,9 +1351,8 @@ QString WebContentsWidget::parseQuery(const QString &query) const
 	QString mutableQuery(query);
 	const QStringList placeholders({QLatin1String("clipboard"), QLatin1String("frameUrl"), QLatin1String("imageUrl"), QLatin1String("linkUrl"), QLatin1String("mediaUrl"), QLatin1String("pageUrl"), QLatin1String("selection")});
 
-	for (int i = 0; i < placeholders.count(); ++i)
+	for (const QString &placeholder: placeholders)
 	{
-		const QString placeholder(placeholders.at(i));
 		const QString token(QLatin1Char('{') + placeholder + QLatin1Char('}'));
 
 		if (!mutableQuery.contains(token))
