@@ -640,9 +640,9 @@ void StartPageWidget::dropEvent(QDropEvent *event)
 	}
 	else
 	{
-		for (int i = 0; i < urls.count(); ++i)
+		for (const QUrl &url: urls)
 		{
-			Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}}, parentWidget());
+			Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, parentWidget());
 		}
 	}
 }
