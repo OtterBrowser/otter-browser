@@ -946,7 +946,7 @@ void StartPageWidget::handleOptionChanged(int identifier, const QVariant &value)
 				{
 					layout = qobject_cast<QGridLayout*>(m_contentsWidget->layout());
 
-					for (int i = (layout->count() - 1); i >=0; --i)
+					for (int i = (layout->count() - 1); i >= 0; --i)
 					{
 						QLayoutItem *item(layout->takeAt(i));
 
