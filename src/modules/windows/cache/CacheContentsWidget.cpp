@@ -119,9 +119,9 @@ void CacheContentsWidget::populateCache()
 	const NetworkCache *cache(NetworkManagerFactory::getCache());
 	const QVector<QUrl> entries(cache->getEntries());
 
-	for (int i = 0; i < entries.count(); ++i)
+	for (const QUrl &entry: entries)
 	{
-		handleEntryAdded(entries.at(i));
+		handleEntryAdded(entry);
 	}
 
 	m_model->sort(0);
@@ -245,10 +245,8 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &url)
 	const QList<QPair<QByteArray, QByteArray> > headers(metaData.rawHeaders());
 	QString type;
 
-	for (int i = 0; i < headers.count(); ++i)
+	for (const QPair<QByteArray, QByteArray> &header: headers)
 	{
-		const QPair<QByteArray, QByteArray> header(headers.at(i));
-
 		if (header.first == QByteArrayLiteral("Content-Type"))
 		{
 			type = QString::fromLatin1(header.second);
@@ -424,10 +422,8 @@ void CacheContentsWidget::updateActions()
 	{
 		const QList<QPair<QByteArray, QByteArray> > headers(metaData.rawHeaders());
 
-		for (int i = 0; i < headers.count(); ++i)
+		for (const QPair<QByteArray, QByteArray> &header: headers)
 		{
-			const QPair<QByteArray, QByteArray> header(headers.at(i));
-
 			if (header.first == QByteArrayLiteral("Content-Type"))
 			{
 				mimeType = mimeDatabase.mimeTypeForName(QString::fromLatin1(header.second));
