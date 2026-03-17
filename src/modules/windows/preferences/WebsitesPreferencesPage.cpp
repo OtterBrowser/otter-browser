@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2021 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2021 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -119,9 +119,9 @@ void WebsitesPreferencesPage::load()
 	QStandardItemModel *overridesModel(new QStandardItemModel(this));
 	const QStringList overrideHosts(SettingsManager::getOverrideHosts());
 
-	for (int i = 0; i < overrideHosts.count(); ++i)
+	for (const QString &overrideHost: overrideHosts)
 	{
-		QStandardItem *item(new QStandardItem(HistoryManager::getIcon(overrideHosts.at(i)), overrideHosts.at(i)));
+		QStandardItem *item(new QStandardItem(HistoryManager::getIcon(overrideHost), overrideHost));
 		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 		overridesModel->appendRow(item);
