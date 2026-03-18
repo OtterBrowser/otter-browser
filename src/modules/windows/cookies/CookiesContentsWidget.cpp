@@ -79,9 +79,9 @@ void CookiesContentsWidget::populateCookies()
 {
 	const QVector<QNetworkCookie> cookies(m_cookieJar->getCookies());
 
-	for (int i = 0; i < cookies.count(); ++i)
+	for (const QNetworkCookie &cookie: cookies)
 	{
-		handleCookieAdded(cookies.at(i));
+		handleCookieAdded(cookie);
 	}
 
 	m_model->sort(0);
@@ -122,10 +122,8 @@ void CookiesContentsWidget::removeCookies()
 	QVector<QNetworkCookie> cookies;
 	cookies.reserve(indexes.count());
 
-	for (int i = 0; i < indexes.count(); ++i)
+	for (const QModelIndex &index: indexes)
 	{
-		const QModelIndex index(indexes.at(i));
-
 		if (!index.isValid())
 		{
 			continue;
@@ -140,9 +138,9 @@ void CookiesContentsWidget::removeCookies()
 				continue;
 			}
 
-			for (int j = 0; j < domainItem->rowCount(); ++j)
+			for (int i = 0; i < domainItem->rowCount(); ++i)
 			{
-				cookies.append(getCookie(ItemModel::getItemData(domainItem->child(j, 0), CookieRole)));
+				cookies.append(getCookie(ItemModel::getItemData(domainItem->child(i, 0), CookieRole)));
 			}
 		}
 		else
@@ -156,9 +154,9 @@ void CookiesContentsWidget::removeCookies()
 		}
 	}
 
-	for (int i = 0; i < cookies.count(); ++i)
+	for (const QNetworkCookie &cookie: cookies)
 	{
-		m_cookieJar->forceDeleteCookie(cookies.at(i));
+		m_cookieJar->forceDeleteCookie(cookie);
 	}
 }
 
@@ -174,9 +172,8 @@ void CookiesContentsWidget::removeDomainCookies()
 	QVector<QNetworkCookie> cookies;
 	cookies.reserve(indexes.count());
 
-	for (int i = 0; i < indexes.count(); ++i)
+	for (const QModelIndex &index: indexes)
 	{
-		const QModelIndex index(indexes.at(i));
 		const QStandardItem *domainItem((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? findDomainItem(index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString()) : m_model->itemFromIndex(index.parent()));
 
 		if (!domainItem)
@@ -184,9 +181,9 @@ void CookiesContentsWidget::removeDomainCookies()
 			continue;
 		}
 
-		for (int j = 0; j < domainItem->rowCount(); ++j)
+		for (int i = 0; i < domainItem->rowCount(); ++i)
 		{
-			const QNetworkCookie cookie(getCookie(ItemModel::getItemData(domainItem->child(j, 0), CookieRole)));
+			const QNetworkCookie cookie(getCookie(ItemModel::getItemData(domainItem->child(i, 0), CookieRole)));
 
 			if (!cookies.contains(cookie))
 			{
@@ -212,9 +209,9 @@ void CookiesContentsWidget::removeDomainCookies()
 
 	if (messageBox.exec() == QMessageBox::Yes)
 	{
-		for (int i = 0; i < cookies.count(); ++i)
+		for (const QNetworkCookie &cookie: cookies)
 		{
-			m_cookieJar->forceDeleteCookie(cookies.at(i));
+			m_cookieJar->forceDeleteCookie(cookie);
 		}
 	}
 }
