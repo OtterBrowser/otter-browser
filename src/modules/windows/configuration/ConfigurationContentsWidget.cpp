@@ -81,10 +81,8 @@ void ConfigurationOptionDelegate::initStyleOption(QStyleOptionViewItem *option, 
 					option->features |= QStyleOptionViewItem::HasDecoration;
 				}
 
-				for (int i = 0; i < definition.choices.count(); ++i)
+				for (const SettingsManager::OptionDefinition::Choice &choice: definition.choices)
 				{
-					const SettingsManager::OptionDefinition::Choice choice(definition.choices.at(i));
-
 					if (choice.value == value)
 					{
 						option->icon = choice.icon;
@@ -174,9 +172,8 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	QModelIndex selectedIndex;
 	bool canResetAll(false);
 
-	for (int i = 0; i < options.count(); ++i)
+	for (const QString &name: options)
 	{
-		const QString name(options.at(i));
 		const int identifier(SettingsManager::getOptionIdentifier(name));
 		const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(identifier));
 
