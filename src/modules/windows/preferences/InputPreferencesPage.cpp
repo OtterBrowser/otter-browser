@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -263,9 +263,8 @@ void InputPreferencesPage::loadKeyboardDefinitions(const QString &identifier)
 	const KeyboardProfile profile(m_keyboardProfiles[identifier]);
 	const QVector<KeyboardProfile::Action> definitions(profile.getDefinitions().value(ActionsManager::GenericContext));
 
-	for (int i = 0; i < definitions.count(); ++i)
+	for (const KeyboardProfile::Action &shortcutsDefinition: definitions)
 	{
-		const KeyboardProfile::Action shortcutsDefinition(definitions.at(i));
 		const ActionsManager::ActionDefinition actionDefinition(ActionsManager::getActionDefinition(shortcutsDefinition.action));
 		const QString name(ActionsManager::getActionName(shortcutsDefinition.action));
 		const QString description(actionDefinition.getText(true));
@@ -283,9 +282,8 @@ void InputPreferencesPage::addKeyboardShortcuts(int identifier, const QString &n
 {
 	const QString parameters(createParamatersPreview(rawParameters, QLatin1String("\n")));
 
-	for (int i = 0; i < shortcuts.count(); ++i)
+	for (const QKeySequence &shortcut: shortcuts)
 	{
-		const QKeySequence shortcut(shortcuts.at(i));
 		QList<QStandardItem*> items({new QStandardItem(), new QStandardItem(text), new QStandardItem(parameters), new QStandardItem(shortcut.toString())});
 		items[0]->setData(NormalStatus, StatusRole);
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
@@ -508,9 +506,8 @@ void InputPreferencesPage::load()
 	QStandardItemModel *keyboardProfilesModel(new QStandardItemModel(this));
 	const QStringList keyboardProfiles(SettingsManager::getOption(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList());
 
-	for (int i = 0; i < keyboardProfiles.count(); ++i)
+	for (const QString &identifier: keyboardProfiles)
 	{
-		const QString identifier(keyboardProfiles.at(i));
 		const KeyboardProfile profile(identifier, KeyboardProfile::FullMode);
 
 		if (!profile.isValid())
