@@ -169,26 +169,24 @@ void PasswordsContentsWidget::populatePasswords()
 
 	const QStringList hosts(PasswordsManager::getHosts());
 
-	for (int i = 0; i < hosts.count(); ++i)
+	for (const QString &host: hosts)
 	{
-		const QString host(hosts.at(i));
 		const QUrl url(QStringLiteral("http://%1/").arg(host));
 		const QVector<PasswordsManager::PasswordInformation> passwords(PasswordsManager::getPasswords(url));
+		int setIndex(0);
 		QStandardItem *hostItem(new QStandardItem(HistoryManager::getIcon(url), host));
 		hostItem->setData(host, HostRole);
 		hostItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-		for (int j = 0; j < passwords.count(); ++j)
+		for (const PasswordsManager::PasswordInformation &password: passwords)
 		{
-			const PasswordsManager::PasswordInformation password(passwords.at(j));
-			QStandardItem *setItem(new QStandardItem(tr("Set #%1").arg(j + 1)));
+			QStandardItem *setItem(new QStandardItem(tr("Set #%1").arg(++setIndex)));
 			setItem->setData(password.url, UrlRole);
 			setItem->setData(((password.type == PasswordsManager::AuthPassword) ? QLatin1String("auth") : QLatin1String("form")), AuthTypeRole);
 			setItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-			for (int k = 0; k < password.fields.count(); ++k)
+			for (const PasswordsManager::PasswordInformation::Field &field: password.fields)
 			{
-				const PasswordsManager::PasswordInformation::Field field(password.fields.at(k));
 				QList<QStandardItem*> fieldItems({new QStandardItem(field.name), new QStandardItem(field.value)});
 				fieldItems[0]->setData(field.type, FieldTypeRole);
 				fieldItems[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
@@ -204,9 +202,9 @@ void PasswordsContentsWidget::populatePasswords()
 
 		m_model->appendRow(hostItem);
 
-		for (int j = 0; j < hostItem->rowCount(); ++j)
+		for (int i = 0; i < hostItem->rowCount(); ++i)
 		{
-			const QStandardItem *setItem(hostItem->child(j));
+			const QStandardItem *setItem(hostItem->child(i));
 
 			if (setItem)
 			{
@@ -283,10 +281,8 @@ void PasswordsContentsWidget::removePasswords()
 	QVector<PasswordsManager::PasswordInformation> passwords;
 	passwords.reserve(indexes.count());
 
-	for (int i = 0; i < indexes.count(); ++i)
+	for (const QModelIndex &index: indexes)
 	{
-		const QModelIndex index(indexes.at(i));
-
 		if (!index.isValid() || index.column() > 0)
 		{
 			continue;
@@ -299,9 +295,9 @@ void PasswordsContentsWidget::removePasswords()
 				continue;
 			}
 
-			for (int j = 0; j < m_model->rowCount(index); ++j)
+			for (int i = 0; i < m_model->rowCount(index); ++i)
 			{
-				passwords.append(getPassword(m_model->index(j, 0, index)));
+				passwords.append(getPassword(m_model->index(i, 0, index)));
 			}
 		}
 		else
@@ -330,9 +326,9 @@ void PasswordsContentsWidget::removePasswords()
 
 	if (messageBox.exec() == QMessageBox::Yes)
 	{
-		for (int i = 0; i < passwords.count(); ++i)
+		for (const PasswordsManager::PasswordInformation &password: passwords)
 		{
-			PasswordsManager::removePassword(passwords.at(i));
+			PasswordsManager::removePassword(password);
 		}
 	}
 }
@@ -349,9 +345,9 @@ void PasswordsContentsWidget::removeHostPasswords()
 	QStringList hosts;
 	int amount(0);
 
-	for (int i = 0; i < indexes.count(); ++i)
+	for (const QModelIndex &index: indexes)
 	{
-		QModelIndex hostIndex(indexes.at(i));
+		QModelIndex hostIndex(index);
 
 		while (hostIndex.parent().isValid() && hostIndex.parent() != m_model->invisibleRootItem()->index())
 		{
@@ -386,9 +382,9 @@ void PasswordsContentsWidget::removeHostPasswords()
 
 	if (messageBox.exec() == QMessageBox::Yes)
 	{
-		for (int i = 0; i < hosts.count(); ++i)
+		for (const QString &host: hosts)
 		{
-			PasswordsManager::clearPasswords(hosts.at(i));
+			PasswordsManager::clearPasswords(host);
 		}
 	}
 }
