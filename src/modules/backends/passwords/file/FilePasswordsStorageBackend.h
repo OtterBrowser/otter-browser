@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -35,16 +35,16 @@ public:
 
 	void clearPasswords(const QString &host) override;
 	void clearPasswords(int period = 0) override;
-	void addPassword(const PasswordsManager::PasswordInformation &password) override;
-	void removePassword(const PasswordsManager::PasswordInformation &password) override;
+	void addPassword(const PasswordsManager::Password &password) override;
+	void removePassword(const PasswordsManager::Password &password) override;
 	QString getName() const override;
 	QString getTitle() const override;
 	QString getDescription() const override;
 	QString getVersion() const override;
 	QUrl getHomePage() const override;
 	QStringList getHosts() override;
-	QVector<PasswordsManager::PasswordInformation> getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword) override;
-	PasswordsManager::PasswordMatch hasPassword(const PasswordsManager::PasswordInformation &password) override;
+	QVector<PasswordsManager::Password> getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword) override;
+	PasswordsManager::PasswordMatch hasPassword(const PasswordsManager::Password &password) override;
 	bool hasPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword) override;
 
 protected:
@@ -52,7 +52,7 @@ protected:
 	void save();
 
 private:
-	QHash<QString, QVector<PasswordsManager::PasswordInformation> > m_passwords;
+	QHash<QString, QVector<PasswordsManager::Password> > m_passwords;
 	bool m_isInitialized;
 };
 

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -35,16 +35,16 @@ public:
 
 	virtual void clearPasswords(const QString &host);
 	virtual void clearPasswords(int period = 0);
-	virtual void addPassword(const PasswordsManager::PasswordInformation &password);
-	virtual void removePassword(const PasswordsManager::PasswordInformation &password);
+	virtual void addPassword(const PasswordsManager::Password &password);
+	virtual void removePassword(const PasswordsManager::Password &password);
 	virtual QStringList getHosts();
-	virtual QVector<PasswordsManager::PasswordInformation> getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword);
+	virtual QVector<PasswordsManager::Password> getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword);
 	AddonType getType() const override;
-	virtual PasswordsManager::PasswordMatch hasPassword(const PasswordsManager::PasswordInformation &password);
+	virtual PasswordsManager::PasswordMatch hasPassword(const PasswordsManager::Password &password);
 	virtual bool hasPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword);
 
 protected:
-	static PasswordsManager::PasswordMatch comparePasswords(const PasswordsManager::PasswordInformation &first, const PasswordsManager::PasswordInformation &second);
+	static PasswordsManager::PasswordMatch comparePasswords(const PasswordsManager::Password &first, const PasswordsManager::Password &second);
 
 signals:
 	void passwordsModified();

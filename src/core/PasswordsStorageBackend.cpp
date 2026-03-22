@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -36,12 +36,12 @@ void PasswordsStorageBackend::clearPasswords(int period)
 	Q_UNUSED(period)
 }
 
-void PasswordsStorageBackend::addPassword(const PasswordsManager::PasswordInformation &password)
+void PasswordsStorageBackend::addPassword(const PasswordsManager::Password &password)
 {
 	Q_UNUSED(password)
 }
 
-void PasswordsStorageBackend::removePassword(const PasswordsManager::PasswordInformation &password)
+void PasswordsStorageBackend::removePassword(const PasswordsManager::Password &password)
 {
 	Q_UNUSED(password)
 }
@@ -51,7 +51,7 @@ QStringList PasswordsStorageBackend::getHosts()
 	return {};
 }
 
-QVector<PasswordsManager::PasswordInformation> PasswordsStorageBackend::getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types)
+QVector<PasswordsManager::Password> PasswordsStorageBackend::getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types)
 {
 	Q_UNUSED(url)
 	Q_UNUSED(types)
@@ -64,7 +64,7 @@ Addon::AddonType PasswordsStorageBackend::getType() const
 	return PasswordsStorageBackendType;
 }
 
-PasswordsManager::PasswordMatch PasswordsStorageBackend::comparePasswords(const PasswordsManager::PasswordInformation &first, const PasswordsManager::PasswordInformation &second)
+PasswordsManager::PasswordMatch PasswordsStorageBackend::comparePasswords(const PasswordsManager::Password &first, const PasswordsManager::Password &second)
 {
 	if (first.type != second.type || first.url != second.url || first.fields.count() != second.fields.count())
 	{
@@ -75,8 +75,8 @@ PasswordsManager::PasswordMatch PasswordsStorageBackend::comparePasswords(const 
 
 	for (int i = 0; i < first.fields.count(); ++i)
 	{
-		const PasswordsManager::PasswordInformation::Field firstField(first.fields.at(i));
-		const PasswordsManager::PasswordInformation::Field secondField(second.fields.at(i));
+		const PasswordsManager::Password::Field firstField(first.fields.at(i));
+		const PasswordsManager::Password::Field secondField(second.fields.at(i));
 
 		if (firstField.name != secondField.name || firstField.type != secondField.type)
 		{
@@ -97,7 +97,7 @@ PasswordsManager::PasswordMatch PasswordsStorageBackend::comparePasswords(const 
 	return match;
 }
 
-PasswordsManager::PasswordMatch PasswordsStorageBackend::hasPassword(const PasswordsManager::PasswordInformation &password)
+PasswordsManager::PasswordMatch PasswordsStorageBackend::hasPassword(const PasswordsManager::Password &password)
 {
 	Q_UNUSED(password)
 

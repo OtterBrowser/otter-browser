@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ public:
 
 	Q_DECLARE_FLAGS(PasswordTypes, PasswordType)
 
-	struct PasswordInformation final
+	struct Password final
 	{
 		struct Field final
 		{
@@ -81,15 +81,17 @@ public:
 		}
 	};
 
+	typedef Password PasswordInformation;
+
 	static void createInstance();
 	static void clearPasswords(const QString &host);
 	static void clearPasswords(int period = 0);
-	static void addPassword(const PasswordInformation &password);
-	static void removePassword(const PasswordInformation &password);
+	static void addPassword(const Password &password);
+	static void removePassword(const Password &password);
 	static PasswordsManager* getInstance();
 	static QStringList getHosts();
-	static QVector<PasswordInformation> getPasswords(const QUrl &url, PasswordTypes types = AnyPassword);
-	static PasswordMatch hasPassword(const PasswordInformation &password);
+	static QVector<Password> getPasswords(const QUrl &url, PasswordTypes types = AnyPassword);
+	static PasswordMatch hasPassword(const Password &password);
 	static bool hasPasswords(const QUrl &url, PasswordTypes types = AnyPassword);
 
 protected:
