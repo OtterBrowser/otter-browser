@@ -172,20 +172,20 @@ void PasswordsContentsWidget::populatePasswords()
 	for (const QString &host: hosts)
 	{
 		const QUrl url(QStringLiteral("http://%1/").arg(host));
-		const QVector<PasswordsManager::PasswordInformation> passwords(PasswordsManager::getPasswords(url));
+		const QVector<PasswordsManager::Password> passwords(PasswordsManager::getPasswords(url));
 		int setIndex(0);
 		QStandardItem *hostItem(new QStandardItem(HistoryManager::getIcon(url), host));
 		hostItem->setData(host, HostRole);
 		hostItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-		for (const PasswordsManager::PasswordInformation &password: passwords)
+		for (const PasswordsManager::Password &password: passwords)
 		{
 			QStandardItem *setItem(new QStandardItem(tr("Set #%1").arg(++setIndex)));
 			setItem->setData(password.url, UrlRole);
 			setItem->setData(((password.type == PasswordsManager::AuthPassword) ? QLatin1String("auth") : QLatin1String("form")), AuthTypeRole);
 			setItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-			for (const PasswordsManager::PasswordInformation::Field &field: password.fields)
+			for (const PasswordsManager::Password::Field &field: password.fields)
 			{
 				QList<QStandardItem*> fieldItems({new QStandardItem(field.name), new QStandardItem(field.value)});
 				fieldItems[0]->setData(field.type, FieldTypeRole);
@@ -278,7 +278,7 @@ void PasswordsContentsWidget::removePasswords()
 		return;
 	}
 
-	QVector<PasswordsManager::PasswordInformation> passwords;
+	QVector<PasswordsManager::Password> passwords;
 	passwords.reserve(indexes.count());
 
 	for (const QModelIndex &index: indexes)
@@ -326,7 +326,7 @@ void PasswordsContentsWidget::removePasswords()
 
 	if (messageBox.exec() == QMessageBox::Yes)
 	{
-		for (const PasswordsManager::PasswordInformation &password: passwords)
+		for (const PasswordsManager::Password &password: passwords)
 		{
 			PasswordsManager::removePassword(password);
 		}
@@ -514,16 +514,16 @@ ActionsManager::ActionDefinition::State PasswordsContentsWidget::getActionState(
 	return ContentsWidget::getActionState(identifier, parameters);
 }
 
-PasswordsManager::PasswordInformation PasswordsContentsWidget::getPassword(const QModelIndex &index) const
+PasswordsManager::Password PasswordsContentsWidget::getPassword(const QModelIndex &index) const
 {
-	PasswordsManager::PasswordInformation password;
+	PasswordsManager::Password password;
 	password.url = index.data(UrlRole).toString();
 	password.type = ((index.data(AuthTypeRole).toString() == QLatin1String("auth")) ? PasswordsManager::AuthPassword : PasswordsManager::FormPassword);
 
 	for (int i = 0; i < m_model->rowCount(index); ++i)
 	{
 		const QModelIndex nameIndex(m_model->index(i, 0, index));
-		PasswordsManager::PasswordInformation::Field field;
+		PasswordsManager::Password::Field field;
 		field.name = nameIndex.data(Qt::DisplayRole).toString();
 		field.value = ((nameIndex.data(FieldTypeRole).toInt() == PasswordsManager::PasswordField) ? QString() : m_model->index(i, 1, index).data(Qt::DisplayRole).toString());
 		field.type = static_cast<PasswordsManager::FieldType>(nameIndex.data(FieldTypeRole).toInt());

@@ -385,14 +385,14 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			break;
 		case ActionsManager::FillPasswordAction:
 			{
-				const QVector<PasswordsManager::PasswordInformation> passwords(PasswordsManager::getPasswords(getUrl(), PasswordsManager::FormPassword));
+				const QVector<PasswordsManager::Password> passwords(PasswordsManager::getPasswords(getUrl(), PasswordsManager::FormPassword));
 
 				if (passwords.isEmpty())
 				{
 					return;
 				}
 
-				PasswordsManager::PasswordInformation password;
+				PasswordsManager::Password password;
 
 				if (passwords.count() == 1)
 				{
@@ -878,7 +878,7 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 	}
 }
 
-void WebContentsWidget::handleSavePasswordRequest(const PasswordsManager::PasswordInformation &password, bool isUpdate)
+void WebContentsWidget::handleSavePasswordRequest(const PasswordsManager::Password &password, bool isUpdate)
 {
 	if (m_passwordBarWidget)
 	{
@@ -887,7 +887,7 @@ void WebContentsWidget::handleSavePasswordRequest(const PasswordsManager::Passwo
 
 	bool isValid(false);
 
-	for (const PasswordsManager::PasswordInformation::Field &field: password.fields)
+	for (const PasswordsManager::Password::Field &field: password.fields)
 	{
 		if (field.type == PasswordsManager::PasswordField && !field.value.isEmpty())
 		{

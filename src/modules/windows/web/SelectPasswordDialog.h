@@ -36,10 +36,10 @@ class SelectPasswordDialog final : public Dialog
 	Q_OBJECT
 
 public:
-	explicit SelectPasswordDialog(const QVector<PasswordsManager::PasswordInformation> &passwords, QWidget *parent = nullptr);
+	explicit SelectPasswordDialog(const QVector<PasswordsManager::Password> &passwords, QWidget *parent = nullptr);
 	~SelectPasswordDialog();
 
-	PasswordsManager::PasswordInformation getPassword() const;
+	PasswordsManager::Password getPassword() const;
 
 protected:
 	void changeEvent(QEvent *event) override;
@@ -50,7 +50,7 @@ protected slots:
 	void updateActions();
 
 private:
-	QVector<PasswordsManager::PasswordInformation> m_passwords;
+	QVector<PasswordsManager::Password> m_passwords;
 	Ui::SelectPasswordDialog *m_ui;
 };
 

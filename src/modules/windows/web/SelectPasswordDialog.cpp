@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-SelectPasswordDialog::SelectPasswordDialog(const QVector<PasswordsManager::PasswordInformation> &passwords, QWidget *parent) : Dialog(parent),
+SelectPasswordDialog::SelectPasswordDialog(const QVector<PasswordsManager::Password> &passwords, QWidget *parent) : Dialog(parent),
 	m_passwords(passwords),
 	m_ui(new Ui::SelectPasswordDialog)
 {
@@ -39,13 +39,13 @@ SelectPasswordDialog::SelectPasswordDialog(const QVector<PasswordsManager::Passw
 
 	for (int i = 0; i < passwords.count(); ++i)
 	{
-		const PasswordsManager::PasswordInformation password(passwords.at(i));
+		const PasswordsManager::Password password(passwords.at(i));
 		QStandardItem *setItem(new QStandardItem(tr("Set #%1").arg(i + 1)));
 		setItem->setData(i, Qt::UserRole);
 
 		for (int j = 0; j < password.fields.count(); ++j)
 		{
-			const PasswordsManager::PasswordInformation::Field field(password.fields.at(j));
+			const PasswordsManager::Password::Field field(password.fields.at(j));
 			QList<QStandardItem*> fieldItems({new QStandardItem(field.name), new QStandardItem((field.type == PasswordsManager::PasswordField) ? QLatin1String("*****") : field.value)});
 			fieldItems[0]->setFlags(fieldItems[0]->flags() | Qt::ItemNeverHasChildren);
 			fieldItems[1]->setFlags(fieldItems[1]->flags() | Qt::ItemNeverHasChildren);
@@ -120,7 +120,7 @@ void SelectPasswordDialog::updateActions()
 	m_ui->removeButton->setEnabled(currentSet >= 0 && currentSet < m_ui->passwordsViewWidget->getRowCount());
 }
 
-PasswordsManager::PasswordInformation SelectPasswordDialog::getPassword() const
+PasswordsManager::Password SelectPasswordDialog::getPassword() const
 {
 	return m_passwords.value(getCurrentSet());
 }

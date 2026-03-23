@@ -78,7 +78,7 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event) override;
-	PasswordsManager::PasswordInformation getPassword(const QModelIndex &index) const;
+	PasswordsManager::Password getPassword(const QModelIndex &index) const;
 
 protected slots:
 	void populatePasswords();
