@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2010 David Sansome <me@davidsansome.com>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -28,7 +28,10 @@
 #include "../../../../3rdparty/libmimeapps/DesktopEntry.h"
 #include "../../../../3rdparty/libmimeapps/Index.h"
 
+#include <QtCore/QDir>
+#include <QtCore/QProcess>
 #include <QtCore/QThreadPool>
+#include <QtCore/QTimer>
 #ifdef OTTER_ENABLE_DBUS
 #include <QtDBus/QtDBus>
 #include <QtDBus/QDBusReply>
