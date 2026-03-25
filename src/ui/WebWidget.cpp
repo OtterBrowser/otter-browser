@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2017 Piktas Zuikis <piktas.zuikis@inbox.lt>
@@ -267,7 +267,7 @@ void WebWidget::clearOptions()
 	emit arbitraryActionsStateChanged({ActionsManager::ResetQuickPreferencesAction});
 }
 
-void WebWidget::fillPassword(const PasswordsManager::PasswordInformation &password)
+void WebWidget::fillPassword(const PasswordsManager::Password &password)
 {
 	Q_UNUSED(password)
 }

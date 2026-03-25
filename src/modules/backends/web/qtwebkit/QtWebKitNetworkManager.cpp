@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -626,7 +626,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 			else if (action == QLatin1String("save-password"))
 			{
 				const QJsonArray fieldsArray(payloadObject.value(QLatin1String("fields")).toArray());
-				PasswordsManager::PasswordInformation password;
+				PasswordsManager::Password password;
 				password.url = QUrl(payloadObject.value(QLatin1String("url")).toString());
 				password.timeAdded = QDateTime::currentDateTimeUtc();
 				password.fields.reserve(fieldsArray.count());
@@ -635,7 +635,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 				for (int i = 0; i < fieldsArray.count(); ++i)
 				{
 					const QJsonObject fieldObject(fieldsArray.at(i).toObject());
-					PasswordsManager::PasswordInformation::Field field;
+					PasswordsManager::Password::Field field;
 					field.name = fieldObject.value(QLatin1String("name")).toString();
 					field.value = fieldObject.value(QLatin1String("value")).toString();
 					field.type = ((fieldObject.value(QLatin1String("type")).toString() == QLatin1String("password")) ? PasswordsManager::PasswordField : PasswordsManager::TextField);

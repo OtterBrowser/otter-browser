@@ -1670,7 +1670,7 @@ void QtWebKitWebWidget::notifyPermissionRequested(QWebFrame *frame, QWebPage::Fe
 	}
 }
 
-void QtWebKitWebWidget::notifySavePasswordRequested(const PasswordsManager::PasswordInformation &password, bool isUpdate)
+void QtWebKitWebWidget::notifySavePasswordRequested(const PasswordsManager::Password &password, bool isUpdate)
 {
 	emit requestedSavePassword(password, isUpdate);
 }
@@ -1754,7 +1754,7 @@ void QtWebKitWebWidget::clearOptions()
 	updateOptions(getUrl());
 }
 
-void QtWebKitWebWidget::fillPassword(const PasswordsManager::PasswordInformation &password)
+void QtWebKitWebWidget::fillPassword(const PasswordsManager::Password &password)
 {
 	QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/formFiller.js"));
 

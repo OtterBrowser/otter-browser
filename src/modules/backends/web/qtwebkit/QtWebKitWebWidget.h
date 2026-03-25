@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -100,7 +100,7 @@ public:
 public slots:
 	void clearOptions() override;
 	void findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
-	void fillPassword(const PasswordsManager::PasswordInformation &password) override;
+	void fillPassword(const PasswordsManager::Password &password) override;
 	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
 	void setActiveStyleSheet(const QString &styleSheet) override;
 	void setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies) override;
@@ -170,7 +170,7 @@ protected slots:
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();
 	void notifyPermissionRequested(QWebFrame *frame, QWebPage::Feature nativeFeature, bool cancel);
-	void notifySavePasswordRequested(const PasswordsManager::PasswordInformation &password, bool isUpdate);
+	void notifySavePasswordRequested(const PasswordsManager::Password &password, bool isUpdate);
 #ifdef OTTER_QTWEBKIT_PLUGINS_AVAILABLE
 	void updateAmountOfDeferredPlugins();
 #endif

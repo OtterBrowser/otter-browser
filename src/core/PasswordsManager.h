@@ -81,8 +81,6 @@ public:
 		}
 	};
 
-	typedef Password PasswordInformation;
-
 	static void createInstance();
 	static void clearPasswords(const QString &host);
 	static void clearPasswords(int period = 0);
