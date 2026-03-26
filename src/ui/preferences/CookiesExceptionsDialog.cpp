@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2023Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -31,10 +31,8 @@ CookiesExceptionsDialog::CookiesExceptionsDialog(const QStringList &acceptedHost
 
 	QStandardItemModel *acceptedHostsModel(new QStandardItemModel(this));
 
-	for (int i = 0; i < acceptedHosts.count(); ++i)
+	for (const QString &host: acceptedHosts)
 	{
-		const QString host(acceptedHosts.at(i));
-
 		if (!host.isEmpty())
 		{
 			acceptedHostsModel->appendRow(new QStandardItem(host));
@@ -45,10 +43,8 @@ CookiesExceptionsDialog::CookiesExceptionsDialog(const QStringList &acceptedHost
 
 	QStandardItemModel *rejectedHostsModel(new QStandardItemModel(this));
 
-	for (int i = 0; i < rejectedHosts.count(); ++i)
+	for (const QString &host: rejectedHosts)
 	{
-		const QString host(rejectedHosts.at(i));
-
 		if (!host.isEmpty())
 		{
 			rejectedHostsModel->appendRow(new QStandardItem(host));
