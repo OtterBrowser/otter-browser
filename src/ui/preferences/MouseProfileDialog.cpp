@@ -150,7 +150,8 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	connect(m_ui->addGestureButton, &QPushButton::clicked, this, &MouseProfileDialog::addGesture);
 	connect(m_ui->removeGestureButton, &QPushButton::clicked, this, [&]()
 	{
-		QStandardItem *item(m_ui->gesturesViewWidget->getSourceModel()->itemFromIndex(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0)));
+		const QModelIndex index(m_ui->gesturesViewWidget->currentIndex());
+		QStandardItem *item(m_ui->gesturesViewWidget->getSourceModel()->itemFromIndex(index.sibling(index.row(), 0)));
 
 		if (item && item->flags().testFlag(Qt::ItemNeverHasChildren))
 		{
