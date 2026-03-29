@@ -679,6 +679,30 @@ QStringList getOpenPaths(const QStringList &fileNames, QStringList filters, bool
 	return paths;
 }
 
+QStringList createSubdomainList(const QString &domain)
+{
+	QStringList parts(domain.split(QLatin1Char('.')));
+
+	if (parts.count() < 2)
+	{
+		return {domain};
+	}
+
+	const int amount(parts.count() - 1);
+	QStringList subdomain(parts.takeLast());
+	QStringList subdomains;
+	subdomains.reserve(amount);
+
+	for (int i = 0; i < amount; ++i)
+	{
+		subdomain.prepend(parts.takeLast());
+
+		subdomains.append(subdomain.join(QLatin1Char('.')));
+	}
+
+	return subdomains;
+}
+
 QVector<QUrl> extractUrls(const QMimeData *mimeData)
 {
 	if (mimeData->property("x-url-string").isNull())

@@ -488,7 +488,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 			break;
 	}
 
-	const QStringList requestSubdomainList(ContentFiltersManager::createSubdomainList(request.requestHost));
+	const QStringList requestSubdomainList(Utils::createSubdomainList(request.requestHost));
 
 	if (rule->needsDomainCheck && !requestSubdomainList.contains(currentRule.left(currentRule.indexOf(m_domainExpression))))
 	{

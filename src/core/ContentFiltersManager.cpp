@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -466,7 +466,7 @@ ContentFiltersManager::CosmeticFiltersResult ContentFiltersManager::getCosmeticF
 	}
 
 	CosmeticFiltersResult result;
-	const QStringList domains(createSubdomainList(requestUrl.host()));
+	const QStringList domains(Utils::createSubdomainList(requestUrl.host()));
 	const bool isDomainOnly(mode == DomainOnlyFilters);
 
 	for (int i = 0; i < profiles.count(); ++i)
@@ -483,24 +483,6 @@ ContentFiltersManager::CosmeticFiltersResult ContentFiltersManager::getCosmeticF
 	}
 
 	return result;
-}
-
-QStringList ContentFiltersManager::createSubdomainList(const QString &domain)
-{
-	QStringList subdomainList;
-	int dotPosition(domain.lastIndexOf(QLatin1Char('.')));
-	dotPosition = domain.lastIndexOf(QLatin1Char('.'), (dotPosition - 1));
-
-	while (dotPosition != -1)
-	{
-		subdomainList.append(domain.mid(dotPosition + 1));
-
-		dotPosition = domain.lastIndexOf(QLatin1Char('.'), (dotPosition - 1));
-	}
-
-	subdomainList.append(domain);
-
-	return subdomainList;
 }
 
 QStringList ContentFiltersManager::getProfileNames()
