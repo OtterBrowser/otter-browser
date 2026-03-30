@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -93,9 +93,9 @@ ProxyPropertiesDialog::ProxyPropertiesDialog(const ProxyDefinition &proxy, QWidg
 
 	QStandardItemModel *exceptionsModel(new QStandardItemModel(this));
 
-	for (int i = 0; i < proxy.exceptions.count(); ++i)
+	for (const QString &exception: proxy.exceptions)
 	{
-		exceptionsModel->appendRow(new QStandardItem(proxy.exceptions.at(i)));
+		exceptionsModel->appendRow(new QStandardItem(exception));
 	}
 
 	m_ui->exceptionsItemViewWidget->setModel(exceptionsModel);
