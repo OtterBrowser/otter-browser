@@ -589,7 +589,7 @@ if (WIN32)
 	target_link_libraries(otter-browser ole32 shell32 advapi32 user32)
 
 	if (ENABLE_QT5)
-		target_link_libraries(Qt5::WinExtras)
+		target_link_libraries(otter-browser Qt5::WinExtras)
 	endif ()
 elseif (APPLE)
 	find_library(FRAMEWORK_Cocoa Cocoa)
