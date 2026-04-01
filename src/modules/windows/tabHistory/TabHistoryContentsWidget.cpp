@@ -93,19 +93,19 @@ void TabHistoryContentsWidget::updateHistory()
 	}
 
 	const Session::Window::History history(window->getHistory());
+	int index(-1);
 
 	m_ui->historyViewWidget->getSourceModel()->clear();
 
-	for (int i = 0; i < history.entries.count(); ++i)
+	for (const Session::Window::History::Entry &entry: history.entries)
 	{
-		const Session::Window::History::Entry entry(history.entries.at(i));
 		QStandardItem *item(new QStandardItem(entry.getTitle()));
 		item->setData((entry.icon.isNull() ? ThemesManager::createIcon(QLatin1String("text-html")) : entry.icon), Qt::DecorationRole);
 		item->setData(entry.url, UrlRole);
 		item->setData(entry.time, TimeVisitedRole);
 		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
-		if (i == history.index)
+		if (++index == history.index)
 		{
 			QFont font(item->font());
 			font.setBold(true);
