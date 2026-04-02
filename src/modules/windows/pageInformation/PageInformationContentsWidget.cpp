@@ -39,10 +39,10 @@ PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &
 	QStandardItemModel *model(new QStandardItemModel(this));
 	model->setHorizontalHeaderLabels({tr("Name"), tr("Value")});
 
-	for (int i = 0; i < sections.count(); ++i)
+	for (SectionName section: sections)
 	{
 		QStandardItem *item(new QStandardItem());
-		item->setData(sections.at(i), Qt::UserRole);
+		item->setData(section, Qt::UserRole);
 
 		model->appendRow({item, new QStandardItem()});
 	}
