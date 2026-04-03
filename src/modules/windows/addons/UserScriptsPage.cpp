@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -72,10 +72,8 @@ void UserScriptsPage::addAddon()
 	QStringList failedPaths;
 	ReplaceMode replaceMode(UnknownMode);
 
-	for (int i = 0; i < sourcePaths.count(); ++i)
+	for (const QString &sourcePath: sourcePaths)
 	{
-		const QString sourcePath(sourcePaths.at(i));
-
 		if (sourcePath.isEmpty())
 		{
 			continue;
@@ -107,7 +105,7 @@ void UserScriptsPage::addAddon()
 				messageBox.addButton(QMessageBox::Yes);
 				messageBox.addButton(QMessageBox::No);
 
-				if (i < (sourcePaths.count() - 1))
+				if (sourcePath != sourcePaths.last())
 				{
 					messageBox.setCheckBox(new QCheckBox(tr("Apply to all")));
 				}
@@ -167,9 +165,9 @@ void UserScriptsPage::openAddons()
 {
 	const QVector<UserScript*> addons(getSelectedUserScripts());
 
-	for (int i = 0; i < addons.count(); ++i)
+	for (UserScript *addon: addons)
 	{
-		Utils::runApplication({}, addons.at(i)->getPath());
+		Utils::runApplication({}, addon->getPath());
 	}
 }
 
@@ -177,10 +175,8 @@ void UserScriptsPage::reloadAddons()
 {
 	const QVector<UserScript*> addons(getSelectedUserScripts());
 
-	for (int i = 0; i < addons.count(); ++i)
+	for (UserScript *addon: addons)
 	{
-		UserScript *addon(addons.at(i));
-
 		addon->reload();
 
 		updateAddonEntry(addon);
@@ -198,10 +194,8 @@ void UserScriptsPage::removeAddons()
 
 	bool hasAddonsToRemove(false);
 
-	for (int i = 0; i < addons.count(); ++i)
+	for (UserScript *addon: addons)
 	{
-		UserScript *addon(addons.at(i));
-
 		if (addon->canRemove())
 		{
 			m_addonsToRemove.append(addon->getName());
