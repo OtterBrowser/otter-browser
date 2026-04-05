@@ -236,9 +236,11 @@ QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const
 
 	if (indexes.count() == 1)
 	{
-		mimeData->setProperty("x-item-index", indexes.at(0));
+		const QModelIndex index(indexes.at(0));
 
-		itemFromIndex(indexes.at(0))->setData(true, IsDraggedRole);
+		mimeData->setProperty("x-item-index", index);
+
+		itemFromIndex(index)->setData(true, IsDraggedRole);
 	}
 
 	for (const QModelIndex &index: indexes)
