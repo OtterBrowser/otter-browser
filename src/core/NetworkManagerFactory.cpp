@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -71,9 +71,8 @@ ProxiesModel::ProxiesModel(const QString &selectedProxy, bool isEditor, QObject 
 
 void ProxiesModel::populateProxies(const QStringList &proxies, QStandardItem *parent, const QString &selectedProxy)
 {
-	for (int i = 0; i < proxies.count(); ++i)
+	for (const QString &identifier: proxies)
 	{
-		const QString identifier(proxies.at(i));
 		const ProxyDefinition proxy(identifier.isEmpty() ? ProxyDefinition() : NetworkManagerFactory::getProxy(identifier));
 		ItemType type(EntryType);
 		QStandardItem *item(new QStandardItem(proxy.isValid() ? proxy.getTitle() : QString()));
@@ -143,9 +142,8 @@ UserAgentsModel::UserAgentsModel(const QString &selectedUserAgent, bool isEditor
 
 void UserAgentsModel::populateUserAgents(const QStringList &userAgents, QStandardItem *parent, const QString &selectedUserAgent)
 {
-	for (int i = 0; i < userAgents.count(); ++i)
+	for (const QString &identifier: userAgents)
 	{
-		const QString identifier(userAgents.at(i));
 		const UserAgentDefinition userAgent(identifier.isEmpty() ? UserAgentDefinition() : NetworkManagerFactory::getUserAgent(identifier));
 		ItemType type(EntryType);
 		QList<QStandardItem*> items({new QStandardItem(userAgent.isValid() ? userAgent.getTitle() : QString())});
@@ -214,10 +212,8 @@ NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 	QSslConfiguration configuration(QSslConfiguration::defaultConfiguration());
 	const QStringList paths({QDir(Application::getApplicationDirectoryPath()).filePath(QLatin1String("certificates")), SessionsManager::getWritableDataPath(QLatin1String("certificates"))});
 
-	for (int i = 0; i < paths.count(); ++i)
+	for (const QString &path: paths)
 	{
-		const QString path(paths.at(i));
-
 		if (QFile::exists(path))
 		{
 			configuration.addCaCertificates(QDir(path).filePath(QLatin1String("*")), QSsl::Pem, QSslCertificate::PatternSyntax::Wildcard);
@@ -311,9 +307,9 @@ void NetworkManagerFactory::loadProxies()
 	const QJsonArray proxiesArray(QJsonDocument::fromJson(file.readAll()).array());
 	ProxyDefinition root;
 
-	for (int i = 0; i < proxiesArray.count(); ++i)
+	for (const QJsonValue &proxy: proxiesArray)
 	{
-		readProxy(proxiesArray.at(i), &root);
+		readProxy(proxy, &root);
 	}
 
 	file.close();
@@ -339,9 +335,9 @@ void NetworkManagerFactory::loadUserAgents()
 	const QJsonArray userAgentsArray(QJsonDocument::fromJson(file.readAll()).array());
 	UserAgentDefinition root;
 
-	for (int i = 0; i < userAgentsArray.count(); ++i)
+	for (const QJsonValue &userAgent: userAgentsArray)
 	{
-		readUserAgent(userAgentsArray.at(i), &root);
+		readUserAgent(userAgent, &root);
 	}
 
 	file.close();
@@ -378,9 +374,9 @@ void NetworkManagerFactory::readProxy(const QJsonValue &value, ProxyDefinition *
 
 			const QJsonArray childrenArray(proxyObject.value(QLatin1String("children")).toArray());
 
-			for (int i = 0; i < childrenArray.count(); ++i)
+			for (const QJsonValue &value: childrenArray)
 			{
-				readProxy(childrenArray.at(i), &proxy);
+				readProxy(value, &proxy);
 			}
 		}
 		else
@@ -482,9 +478,9 @@ void NetworkManagerFactory::readUserAgent(const QJsonValue &value, UserAgentDefi
 
 			const QJsonArray childrenArray(userAgentObject.value(QLatin1String("children")).toArray());
 
-			for (int i = 0; i < childrenArray.count(); ++i)
+			for (const QJsonValue &value: childrenArray)
 			{
-				readUserAgent(childrenArray.at(i), &userAgent);
+				readUserAgent(value, &userAgent);
 			}
 		}
 		else
