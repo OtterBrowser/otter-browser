@@ -105,9 +105,9 @@ TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, 
 
 	const QVector<Transfer*> transfers(TransfersManager::getTransfers());
 
-	for (int i = 0; i < transfers.count(); ++i)
+	for (Transfer *transfer: transfers)
 	{
-		handleTransferAdded(transfers.at(i));
+		handleTransferAdded(transfer);
 	}
 
 	if (isSidebarPanel())
@@ -398,9 +398,9 @@ void TransfersContentsWidget::showContextMenu(const QPoint &position)
 	const QVector<Transfer*> transfers(TransfersManager::getTransfers());
 	int finishedTransfers(0);
 
-	for (int i = 0; i < transfers.count(); ++i)
+	for (Transfer *transfer: transfers)
 	{
-		if (transfers.at(i)->getState() == Transfer::FinishedState)
+		if (transfer->getState() == Transfer::FinishedState)
 		{
 			++finishedTransfers;
 		}
