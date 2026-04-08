@@ -34,18 +34,19 @@ SelectPasswordDialog::SelectPasswordDialog(const QVector<PasswordsManager::Passw
 {
 	m_ui->setupUi(this);
 
+	int index(0);
 	QStandardItemModel *model(new QStandardItemModel(this));
 	model->setHorizontalHeaderLabels({tr("Name"), tr("Value")});
 
-	for (int i = 0; i < passwords.count(); ++i)
+	for (const PasswordsManager::Password &password: passwords)
 	{
-		const PasswordsManager::Password password(passwords.at(i));
-		QStandardItem *setItem(new QStandardItem(tr("Set #%1").arg(i + 1)));
-		setItem->setData(i, Qt::UserRole);
+		QStandardItem *setItem(new QStandardItem(tr("Set #%1").arg(index + 1)));
+		setItem->setData(index, Qt::UserRole);
 
-		for (int j = 0; j < password.fields.count(); ++j)
+		++index;
+
+		for (const PasswordsManager::Password::Field &field: password.fields)
 		{
-			const PasswordsManager::Password::Field field(password.fields.at(j));
 			QList<QStandardItem*> fieldItems({new QStandardItem(field.name), new QStandardItem((field.type == PasswordsManager::PasswordField) ? QLatin1String("*****") : field.value)});
 			fieldItems[0]->setFlags(fieldItems[0]->flags() | Qt::ItemNeverHasChildren);
 			fieldItems[1]->setFlags(fieldItems[1]->flags() | Qt::ItemNeverHasChildren);
