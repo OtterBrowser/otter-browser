@@ -227,9 +227,8 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 		line = line.left(line.length() - 1);
 	}
 
-	for (int i = 0; i < options.count(); ++i)
+	for (const QString &option: options)
 	{
-		const QString option(options.at(i));
 		const bool isOptionException(option.startsWith(QLatin1Char('~')));
 		const QString optionName(isOptionException ? option.mid(1) : option);
 
@@ -255,10 +254,8 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 		{
 			const QStringList parsedDomains(option.mid(option.indexOf(QLatin1Char('=')) + 1).split(QLatin1Char('|'), Qt::SkipEmptyParts));
 
-			for (int j = 0; j < parsedDomains.count(); ++j)
+			for (const QString &parsedDomain: parsedDomains)
 			{
-				const QString parsedDomain(parsedDomains.at(j));
-
 				if (parsedDomain.startsWith(QLatin1Char('~')))
 				{
 					definition->allowedDomains.append(parsedDomain.mid(1));
@@ -319,9 +316,9 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 
 void AdblockContentFiltersProfile::deleteNode(Node *node) const
 {
-	for (int i = 0; i < node->children.count(); ++i)
+	for (Node *childNode: node->children)
 	{
-		deleteNode(node->children.at(i));
+		deleteNode(childNode);
 	}
 
 	for (int i = 0; i < node->rules.count(); ++i)
@@ -337,9 +334,9 @@ QMultiHash<QString, QString> AdblockContentFiltersProfile::parseStyleSheetRule(c
 	QMultiHash<QString, QString> list;
 	const QStringList domains(line.at(0).split(QLatin1Char(',')));
 
-	for (int i = 0; i < domains.count(); ++i)
+	for (const QString &domain: domains)
 	{
-		list.insert(domains.at(i), line.at(1));
+		list.insert(domain, line.at(1));
 	}
 
 	return list;
@@ -432,9 +429,9 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 		return currentResult;
 	}
 
-	for (int i = 0; i < node->children.count(); ++i)
+	for (Node *childNode: node->children)
 	{
-		if (node->children.at(i)->value != QLatin1Char('^'))
+		if (childNode->value != QLatin1Char('^'))
 		{
 			continue;
 		}
@@ -726,10 +723,8 @@ ContentFiltersManager::CosmeticFiltersResult AdblockContentFiltersProfile::getCo
 		result.rules = m_cosmeticFiltersRules;
 	}
 
-	for (int i = 0; i < domains.count(); ++i)
+	for (const QString &domain: domains)
 	{
-		const QString domain(domains.at(i));
-
 		result.rules.append(m_cosmeticFiltersDomainRules.values(domain));
 		result.exceptions.append(m_cosmeticFiltersDomainExceptions.values(domain));
 	}
@@ -769,10 +764,8 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::evaluateNodeRul
 {
 	ContentFiltersManager::CheckResult result;
 
-	for (int i = 0; i < node->rules.count(); ++i)
+	for (Node::Rule *rule: node->rules)
 	{
-		Node::Rule *rule(node->rules.at(i));
-
 		if (!rule)
 		{
 			continue;
@@ -1129,9 +1122,9 @@ bool AdblockContentFiltersProfile::remove()
 
 bool AdblockContentFiltersProfile::domainContains(const QString &host, const QStringList &domains) const
 {
-	for (int i = 0; i < domains.count(); ++i)
+	for (const QString &domain: domains)
 	{
-		if (host.contains(domains.at(i)))
+		if (host.contains(domain))
 		{
 			return true;
 		}
