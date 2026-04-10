@@ -40,6 +40,19 @@ namespace Otter
 QHash<QString, AdblockContentFiltersProfile::RuleOption> AdblockContentFiltersProfile::m_options({{QLatin1String("third-party"), ThirdPartyOption}, {QLatin1String("stylesheet"), StyleSheetOption}, {QLatin1String("image"), ImageOption}, {QLatin1String("script"), ScriptOption}, {QLatin1String("object"), ObjectOption}, {QLatin1String("object-subrequest"), ObjectSubRequestOption}, {QLatin1String("object_subrequest"), ObjectSubRequestOption}, {QLatin1String("subdocument"), SubDocumentOption}, {QLatin1String("xmlhttprequest"), XmlHttpRequestOption}, {QLatin1String("websocket"), WebSocketOption}, {QLatin1String("popup"), PopupOption}, {QLatin1String("elemhide"), ElementHideOption}, {QLatin1String("generichide"), GenericHideOption}});
 QHash<NetworkManager::ResourceType, AdblockContentFiltersProfile::RuleOption> AdblockContentFiltersProfile::m_resourceTypes({{NetworkManager::ImageType, ImageOption}, {NetworkManager::ScriptType, ScriptOption}, {NetworkManager::StyleSheetType, StyleSheetOption}, {NetworkManager::ObjectType, ObjectOption}, {NetworkManager::XmlHttpRequestType, XmlHttpRequestOption}, {NetworkManager::SubFrameType, SubDocumentOption},{NetworkManager::PopupType, PopupOption}, {NetworkManager::ObjectSubrequestType, ObjectSubRequestOption}, {NetworkManager::WebSocketType, WebSocketOption}});
 
+AdblockContentFiltersProfile::Node::~Node()
+{
+	for (Node *node: children)
+	{
+		delete node;
+	}
+
+	for (Node::Rule *rule: rules)
+	{
+		delete rule;
+	}
+}
+
 AdblockContentFiltersProfile::AdblockContentFiltersProfile(const ContentFiltersProfile::ProfileSummary &summary, const QStringList &languages, ContentFiltersProfile::ProfileFlags flags, QObject *parent) : ContentFiltersProfile(parent),
 	m_root(nullptr),
 	m_dataFetchJob(nullptr),
@@ -82,7 +95,7 @@ void AdblockContentFiltersProfile::clear()
 	{
 		QThreadPool::globalInstance()->start([&]()
 		{
-			deleteNode(m_root);
+			delete m_root;
 		});
 	}
 
@@ -312,21 +325,6 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 	}
 
 	node->rules.append(definition);
-}
-
-void AdblockContentFiltersProfile::deleteNode(Node *node) const
-{
-	for (Node *childNode: node->children)
-	{
-		deleteNode(childNode);
-	}
-
-	for (int i = 0; i < node->rules.count(); ++i)
-	{
-		delete node->rules.at(i);
-	}
-
-	delete node;
 }
 
 QMultiHash<QString, QString> AdblockContentFiltersProfile::parseStyleSheetRule(const QStringList &line)
