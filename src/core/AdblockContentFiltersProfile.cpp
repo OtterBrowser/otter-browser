@@ -331,10 +331,11 @@ QMultiHash<QString, QString> AdblockContentFiltersProfile::parseStyleSheetRule(c
 {
 	QMultiHash<QString, QString> list;
 	const QStringList domains(line.at(0).split(QLatin1Char(',')));
+	const QString value(line.at(1));
 
 	for (const QString &domain: domains)
 	{
-		list.insert(domain, line.at(1));
+		list.insert(domain, value);
 	}
 
 	return list;
