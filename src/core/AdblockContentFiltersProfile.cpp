@@ -362,17 +362,15 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkUrlSubstri
 			return currentResult;
 		}
 
-		for (int j = 0; j < node->children.count(); ++j)
+		for (const Node *nextNode: node->children)
 		{
-			const Node *nextNode(node->children.at(j));
-
 			if (nextNode->value == QLatin1Char('*'))
 			{
 				const QString wildcardSubString(substring.mid(i));
 
-				for (int k = 0; k < wildcardSubString.length(); ++k)
+				for (int j = 0; j < wildcardSubString.length(); ++j)
 				{
-					currentResult = checkUrlSubstring(nextNode, wildcardSubString.right(wildcardSubString.length() - k), (currentRule + wildcardSubString.left(k)), request);
+					currentResult = checkUrlSubstring(nextNode, wildcardSubString.right(wildcardSubString.length() - j), (currentRule + wildcardSubString.left(j)), request);
 
 					if (currentResult.isBlocked)
 					{
