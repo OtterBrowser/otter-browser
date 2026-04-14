@@ -46,9 +46,9 @@ HistoryContentsWidget::HistoryContentsWidget(const QVariantMap &parameters, Wind
 	const QStringList groups({tr("Today"), tr("Yesterday"), tr("Earlier This Week"), tr("Previous Week"), tr("Earlier This Month"), tr("Earlier This Year"), tr("Older")});
 	const QIcon icon(ThemesManager::createIcon(QLatin1String("inode-directory")));
 
-	for (int i = 0; i < groups.count(); ++i)
+	for (const QString &group: groups)
 	{
-		m_model->appendRow(new QStandardItem(icon, groups.at(i)));
+		m_model->appendRow(new QStandardItem(icon, group));
 	}
 
 	m_model->setHorizontalHeaderLabels({tr("Address"), tr("Title"), tr("Date")});
