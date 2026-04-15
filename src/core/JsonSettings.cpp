@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -240,9 +240,9 @@ bool JsonSettings::save(const QString &path, bool isAtomic)
 		QTextStream stream(file);
 		const QStringList comment(m_comment.split(QLatin1Char('\n')));
 
-		for (int i = 0; i < comment.count(); ++i)
+		for (const QString &line: comment)
 		{
-			stream << QLatin1String("// ") << comment.at(i) << QLatin1Char('\n');
+			stream << QLatin1String("// ") << line << QLatin1Char('\n');
 		}
 
 		stream << QLatin1Char('\n');
