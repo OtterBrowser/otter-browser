@@ -287,15 +287,12 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 
 	Node *node(m_root);
 
-	for (int i = 0; i < line.length(); ++i)
+	for (const QChar value: std::as_const(line))
 	{
-		const QChar value(line.at(i));
 		bool hasChildren(false);
 
-		for (int j = 0; j < node->children.count(); ++j)
+		for (Node *nextNode: node->children)
 		{
-			Node *nextNode(node->children.at(j));
-
 			if (nextNode->value == value)
 			{
 				node = nextNode;
