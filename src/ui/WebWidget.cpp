@@ -257,10 +257,8 @@ void WebWidget::clearOptions()
 
 	m_options.clear();
 
-	for (int i = 0; i < identifiers.count(); ++i)
+	for (const int identifier: identifiers)
 	{
-		const int identifier(identifiers.at(i));
-
 		emit optionChanged(identifier, SettingsManager::getOption(identifier, host));
 	}
 
@@ -363,10 +361,8 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 	}
 	else
 	{
-		for (int i = 0; i < layout.count(); ++i)
+		for (const ToolTipEntry entry: layout)
 		{
-			const ToolTipEntry entry(layout.at(i));
-
 			if (entries.contains(entry))
 			{
 				switch (entry)
@@ -755,15 +751,15 @@ void WebWidget::setOptions(const QHash<int, QVariant> &options, const QStringLis
 
 	const QString host(Utils::extractHost(getUrl()));
 
-	for (int i = 0; i < identifiers.count(); ++i)
+	for (const int identifier: std::as_const(identifiers))
 	{
-		if (m_options.contains(identifiers.at(i)))
+		if (m_options.contains(identifier))
 		{
-			emit optionChanged(identifiers.at(i), m_options[identifiers.at(i)]);
+			emit optionChanged(identifier, m_options[identifier]);
 		}
 		else
 		{
-			emit optionChanged(identifiers.at(i), SettingsManager::getOption(identifiers.at(i), host));
+			emit optionChanged(identifier, SettingsManager::getOption(identifier, host));
 		}
 	}
 
@@ -860,9 +856,9 @@ QString WebWidget::getSavePath(const QVector<SaveFormat> &allowedFormats, SaveFo
 	QStringList filters;
 	filters.reserve(allowedFormats.count());
 
-	for (int i = 0; i < allowedFormats.count(); ++i)
+	for (const SaveFormat format: allowedFormats)
 	{
-		filters.append(formats.value(allowedFormats.at(i)));
+		filters.append(formats.value(format));
 	}
 
 	const SaveInformation result(Utils::getSavePath(suggestSaveFileName(SingleFileSaveFormat), {}, filters));
@@ -947,19 +943,15 @@ QString WebWidget::getFastForwardScript(bool isSelectingTheBestLink)
 
 		const QStringList categories({QLatin1String("Href"), QLatin1String("Class"), QLatin1String("Id"), QLatin1String("Text")});
 
-		for (int i = 0; i < categories.count(); ++i)
+		for (const QString &category: categories)
 		{
-			const QString category(categories.at(i));
-
 			settings.beginGroup(category);
 
 			const QStringList keys(settings.getKeys());
 			QJsonArray tokensArray;
 
-			for (int j = 0; j < keys.count(); ++j)
+			for (const QString &key: keys)
 			{
-				const QString key(keys.at(j));
-
 				tokensArray.append(QJsonObject({{QLatin1String("value"), key.toUpper()}, {QLatin1String("score"), settings.getValue(key).toInt()}}));
 			}
 
