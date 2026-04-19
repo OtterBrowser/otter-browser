@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -300,10 +300,8 @@ MouseProfile::Gesture::Step MouseProfile::Gesture::Step::fromString(const QStrin
 		}
 	}
 
-	for (int i = 1; i < parts.count(); ++i)
+	for (const QString &part: parts)
 	{
-		const QString part(parts.at(i));
-
 		if (part == QLatin1String("shift"))
 		{
 			step.modifiers |= Qt::ShiftModifier;
@@ -452,14 +450,13 @@ bool MouseProfile::save()
 		const QVector<MouseProfile::Gesture> gestures(contextsIterator.value());
 		QJsonArray gesturesArray;
 
-		for (int i = 0; i < gestures.count(); ++i)
+		for (const MouseProfile::Gesture &gesture: gestures)
 		{
-			const MouseProfile::Gesture &gesture(gestures.at(i));
 			QJsonArray stepsArray;
 
-			for (int j = 0; j < gesture.steps.count(); ++j)
+			for (const Gesture::Step &step: gesture.steps)
 			{
-				stepsArray.append(gesture.steps.at(j).toString());
+				stepsArray.append(step.toString());
 			}
 
 			QJsonObject gestureObject{{QLatin1String("action"), ((gesture.action == NATIVE_GESTURE) ? QLatin1String("NoAction") : ActionsManager::getActionName(gesture.action))}, {QLatin1String("steps"), stepsArray}};
@@ -578,18 +575,17 @@ void GesturesManager::loadProfiles()
 		{
 			const QVector<MouseProfile::Gesture> &gestures(iterator.value());
 
-			for (int j = 0; j < gestures.count(); ++j)
+			for (const MouseProfile::Gesture &gesture: gestures)
 			{
-				const MouseProfile::Gesture gesture(gestures.at(j));
 				bool isAllowed(true);
 
 				if (!areMouseGesturesEnabled)
 				{
 					const QVector<MouseProfile::Gesture::Step> steps(gesture.steps);
 
-					for (int k = 0; k < steps.count(); ++k)
+					for (const MouseProfile::Gesture::Step &step: steps)
 					{
-						if (steps.at(k).type == QEvent::MouseMove)
+						if (step.type == QEvent::MouseMove)
 						{
 							isAllowed = false;
 
@@ -740,9 +736,8 @@ MouseProfile::Gesture GesturesManager::matchGesture()
 
 		const QVector<MouseProfile::Gesture> gestures(m_gestures[m_contexts.at(i)]);
 
-		for (int j = 0; j < gestures.count(); ++j)
+		for (const MouseProfile::Gesture &gesture: gestures)
 		{
-			const MouseProfile::Gesture gesture(gestures.at(j));
 			const int difference(calculateGesturesDifference(gesture.steps));
 
 			if (difference == 0)
@@ -853,9 +848,9 @@ bool GesturesManager::startGesture(QObject *object, QEvent *event, const QVector
 
 	bool hasContext(false);
 
-	for (int i = 0; i < contexts.count(); ++i)
+	for (GesturesContext context: contexts)
 	{
-		if (m_gestures.contains(contexts.at(i)))
+		if (m_gestures.contains(context))
 		{
 			hasContext = true;
 
@@ -927,9 +922,9 @@ bool GesturesManager::triggerAction(const MouseProfile::Gesture &gesture)
 
 	if (gesture.action == NATIVE_GESTURE)
 	{
-		for (int i = 0; i < m_events.count(); ++i)
+		for (QInputEvent *event: std::as_const(m_events))
 		{
-			QCoreApplication::sendEvent(m_trackedObject, m_events.at(i));
+			QCoreApplication::sendEvent(m_trackedObject, event);
 		}
 
 		cancelGesture();
