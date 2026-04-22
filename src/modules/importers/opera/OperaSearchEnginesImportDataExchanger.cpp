@@ -21,7 +21,6 @@
 #include "OperaSearchEnginesImportDataExchanger.h"
 #include "../../../core/IniSettings.h"
 #include "../../../core/SearchEnginesManager.h"
-#include "../../../core/SessionsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
 
