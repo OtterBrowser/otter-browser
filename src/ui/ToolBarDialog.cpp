@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -105,9 +105,8 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 				ItemModel *panelsModel(new ItemModel(this));
 				const QStringList specialPages(AddonsManager::getSpecialPages(AddonsManager::SpecialPageInformation::SidebarPanelType));
 
-				for (int i = 0; i < specialPages.count(); ++i)
+				for (const QString &specialPage: specialPages)
 				{
-					const QString specialPage(specialPages.at(i));
 					ItemModel::Item *item(new ItemModel::Item(SidebarWidget::getPanelTitle(specialPage)));
 					item->setCheckable(true);
 					item->setCheckState(definition.panels.contains(specialPage) ? Qt::Checked : Qt::Unchecked);
@@ -116,10 +115,8 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 					panelsModel->insertRow(item);
 				}
 
-				for (int i = 0; i < definition.panels.count(); ++i)
+				for (const QString &panel: definition.panels)
 				{
-					const QString panel(definition.panels.at(i));
-
 					if (!specialPages.contains(panel))
 					{
 						ItemModel::Item *item(new ItemModel::Item(SidebarWidget::getPanelTitle(panel)));
@@ -158,29 +155,25 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 
 	const QStringList widgets({QLatin1String("CustomMenu"), QLatin1String("ClosedWindowsMenu"), QLatin1String("AddressWidget"), QLatin1String("ConfigurationOptionWidget"), QLatin1String("ContentBlockingInformationWidget"), QLatin1String("MenuButtonWidget"), QLatin1String("PanelChooserWidget"), QLatin1String("PrivateWindowIndicatorWidget"), QLatin1String("SearchWidget"), QLatin1String("SizeGripWidget"), QLatin1String("StatusMessageWidget"), QLatin1String("TransfersWidget"), QLatin1String("ZoomWidget")});
 
-	for (int i = 0; i < widgets.count(); ++i)
+	for (const QString &widget: widgets)
 	{
-		const QString widget(widgets.at(i));
-
 		availableEntriesModel->appendRow(createEntry(widget));
 
 		if (widget == QLatin1String("SearchWidget"))
 		{
 			const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
 
-			for (int j = 0; j < searchEngines.count(); ++j)
+			for (const QString &searchEngine: searchEngines)
 			{
-				availableEntriesModel->appendRow(createEntry(widget, {{QLatin1String("searchEngine"), searchEngines.at(j)}}));
+				availableEntriesModel->appendRow(createEntry(widget, {{QLatin1String("searchEngine"), searchEngine}}));
 			}
 		}
 	}
 
 	const QVector<ActionsManager::ActionDefinition> actions(ActionsManager::getActionDefinitions());
 
-	for (int i = 0; i < actions.count(); ++i)
+	for (const ActionsManager::ActionDefinition &action: actions)
 	{
-		const ActionsManager::ActionDefinition action(actions.at(i));
-
 		if (action.flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag) || action.flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters))
 		{
 			continue;
@@ -205,9 +198,9 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 	m_ui->currentEntriesItemView->setViewMode(ItemViewWidget::TreeView);
 	m_ui->currentEntriesItemView->setRootIsDecorated(false);
 
-	for (int i = 0; i < m_definition.entries.count(); ++i)
+	for (const ToolBarsManager::ToolBarDefinition::Entry &entry: std::as_const(m_definition.entries))
 	{
-		addEntry(m_definition.entries.at(i));
+		addEntry(entry);
 	}
 
 	m_definition.entries.clear();
@@ -275,9 +268,9 @@ void ToolBarDialog::addEntry(const ToolBarsManager::ToolBarDefinition::Entry &en
 
 	if (entry.action == QLatin1String("CustomMenu"))
 	{
-		for (int i = 0; i < entry.entries.count(); ++i)
+		for (const ToolBarsManager::ToolBarDefinition::Entry &childEntry: entry.entries)
 		{
-			addEntry(entry.entries.at(i), item);
+			addEntry(childEntry, item);
 		}
 
 		m_ui->currentEntriesItemView->expand(item->index());
