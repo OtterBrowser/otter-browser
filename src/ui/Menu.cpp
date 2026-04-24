@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -187,10 +187,8 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 				const ActionExecutor::Object executor(Application::getInstance(), Application::getInstance());
 				const QStringList exchangers({QLatin1String("OperaBookmarksImport"), QLatin1String("HtmlBookmarksImport"), {}, QLatin1String("OpmlFeedsImport"), {}, QLatin1String("OperaNotesImport"), {}, QLatin1String("OperaSearchEnginesImport"), {}, QLatin1String("OperaSessionImport"), {}, QLatin1String("HtmlBookmarksExport"), QLatin1String("XbelBookmarksExport")});
 
-				for (int i = 0; i < exchangers.count(); ++i)
+				for (const QString &exchanger: exchangers)
 				{
-					const QString exchanger(exchangers.at(i));
-
 					if (exchanger.isEmpty())
 					{
 						addSeparator();
@@ -414,9 +412,8 @@ void Menu::load(const QJsonObject &definition, const QStringList &includeSection
 
 	const QJsonArray actions(definition.value(QLatin1String("actions")).toArray());
 
-	for (int i = 0; i < actions.count(); ++i)
+	for (const QJsonValue &action: actions)
 	{
-		const QJsonValue action(actions.at(i));
 		const QJsonObject object(action.toObject());
 
 		if (!action.isObject() || object.value(QLatin1String("type")) != QLatin1String("include"))
@@ -427,9 +424,9 @@ void Menu::load(const QJsonObject &definition, const QStringList &includeSection
 		{
 			const QJsonArray subActions(object.value(QLatin1String("actions")).toArray());
 
-			for (int j = 0; j < subActions.count(); ++j)
+			for (const QJsonValue &subAction: subActions)
 			{
-				appendAction(subActions.at(j), includeSections, executor);
+				appendAction(subAction, includeSections, executor);
 			}
 		}
 	}
@@ -579,9 +576,9 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &section
 		{
 			const QJsonArray actions(object.value(QLatin1String("actions")).toArray());
 
-			for (int i = 0; i < actions.count(); ++i)
+			for (const QJsonValue &action: actions)
 			{
-				appendAction(actions.at(i), sections, executor);
+				appendAction(action, sections, executor);
 			}
 		}
 		else if (type == QLatin1String("menu"))
@@ -788,10 +785,8 @@ void Menu::populateOptionMenu()
 
 	if (m_actionGroup)
 	{
-		for (int i = 0; i < actions().count(); ++i)
+		for (QAction *action: actions())
 		{
-			QAction *action(actions().at(i));
-
 			if (action && action->data().toString() == value)
 			{
 				action->setChecked(true);
@@ -813,9 +808,8 @@ void Menu::populateOptionMenu()
 	m_actionGroup = new QActionGroup(this);
 	m_actionGroup->setExclusive(true);
 
-	for (int i = 0; i < choices.count(); ++i)
+	for (const SettingsManager::OptionDefinition::Choice &choice: choices)
 	{
-		const SettingsManager::OptionDefinition::Choice choice(choices.at(i));
 		QString text;
 
 		if (choice.value == QLatin1String("ask"))
@@ -917,9 +911,8 @@ void Menu::populateCharacterEncodingMenu()
 
 		const QStringList encodings(Utils::getCharacterEncodings());
 
-		for (int i = 0; i < encodings.count(); ++i)
+		for (const QString &encoding: encodings)
 		{
-			const QString encoding(encodings.at(i));
 			QAction *textCodecAction(addAction(Utils::elideText(encoding, fontMetrics(), this)));
 			textCodecAction->setData(encoding.toLower());
 			textCodecAction->setCheckable(true);
@@ -1058,9 +1051,9 @@ void Menu::populateDictionariesMenu()
 
 	const QVector<SpellCheckManager::DictionaryInformation> dictionaries(webWidget ? webWidget->getDictionaries() : SpellCheckManager::getDictionaries());
 
-	for (int i = 0; i < dictionaries.count(); ++i)
+	for (const SpellCheckManager::DictionaryInformation &dictionary: dictionaries)
 	{
-		addAction(new MenuAction(ActionsManager::CheckSpellingAction, {{QLatin1String("dictionary"), dictionaries.at(i).language}}, m_executor, this));
+		addAction(new MenuAction(ActionsManager::CheckSpellingAction, {{QLatin1String("dictionary"), dictionary.language}}, m_executor, this));
 	}
 }
 
@@ -1196,10 +1189,10 @@ void Menu::populateOpenInApplicationMenu()
 	}
 	else
 	{
-		for (int i = 0; i < applications.count(); ++i)
-		{
-			const ApplicationInformation application(applications.at(i));
+		bool hasSeparator(false);
 
+		for (const ApplicationInformation &application: applications)
+		{
 			parameters[QLatin1String("application")] = application.command;
 
 			const bool hasValidName(!application.name.isEmpty());
@@ -1209,9 +1202,11 @@ void Menu::populateOpenInApplicationMenu()
 
 			addAction(new MenuAction(ActionsManager::OpenUrlAction, parameters, executor, this));
 
-			if (i == 0)
+			if (!hasSeparator)
 			{
 				addSeparator();
+
+				hasSeparator = true;
 			}
 		}
 	}
@@ -1360,10 +1355,8 @@ void Menu::populateSpellCheckSuggestionsMenu()
 	const QString misspelledWord(context.webWidget->getMisspelledWord());
 	const QStringList suggestions(context.webWidget->getSpellCheckerSuggestions());
 
-	for (int i = 0; i < suggestions.count(); ++i)
+	for (const QString &suggestion: suggestions)
 	{
-		const QString suggestion(suggestions.at(i));
-
 		addAction(suggestion, context.webWidget, [=]()
 		{
 			context.webWidget->replaceMisspelledWord(suggestion);
@@ -1430,9 +1423,8 @@ void Menu::populateStyleSheetsMenu()
 	actionGroup->setExclusive(true);
 	actionGroup->addAction(defaultAction);
 
-	for (int i = 0; i < styleSheets.count(); ++i)
+	for (const QString &styleSheet: styleSheets)
 	{
-		const QString styleSheet(styleSheets.at(i));
 		QAction *action(addAction(styleSheet));
 		action->setCheckable(true);
 		action->setChecked(styleSheet == activeStyleSheet);
@@ -1450,9 +1442,9 @@ void Menu::populateToolBarsMenu()
 	const ActionExecutor::Object executor(getExecutor());
 	const QVector<ToolBarsManager::ToolBarDefinition> definitions(ToolBarsManager::getToolBarDefinitions());
 
-	for (int i = 0; i < definitions.count(); ++i)
+	for (const ToolBarsManager::ToolBarDefinition &definition: definitions)
 	{
-		addAction(new MenuAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::getToolBarName(definitions.at(i).identifier)}}, executor, this));
+		addAction(new MenuAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::getToolBarName(definition.identifier)}}, executor, this));
 	}
 
 	addSeparator();
@@ -1506,10 +1498,8 @@ void Menu::populateUserAgentMenu()
 	m_actionGroup = new QActionGroup(this);
 	m_actionGroup->setExclusive(true);
 
-	for (int i = 0; i < userAgents.count(); ++i)
+	for (const QString &userAgent: userAgents)
 	{
-		const QString userAgent(userAgents.at(i));
-
 		if (userAgent.isEmpty())
 		{
 			addSeparator();
@@ -1741,9 +1731,9 @@ bool Menu::hasIncludeMatch(const QJsonObject &definition, const QString &key, co
 	const QJsonValue value(definition.value(key));
 	const QStringList values((value.type() == QJsonValue::Array) ? value.toVariant().toStringList() : QStringList(value.toString()));
 
-	for (int i = 0; i < values.count(); ++i)
+	for (const QString &value: values)
 	{
-		if (sections.contains(values.at(i)))
+		if (sections.contains(value))
 		{
 			return true;
 		}
