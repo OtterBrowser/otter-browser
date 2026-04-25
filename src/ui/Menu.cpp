@@ -960,18 +960,19 @@ void Menu::populateClosedWindowsMenu()
 	if (!windows.isEmpty())
 	{
 		ActionExecutor::Object executor(Application::getInstance(), Application::getInstance());
+		int index(-1);
 
-		for (int i = 0; i < windows.count(); ++i)
+		for (const QString &window: windows)
 		{
 			QVariantMap parameters;
 
-			if (i > 0)
+			if (++index > 0)
 			{
-				parameters[QLatin1String("index")] = i;
+				parameters[QLatin1String("index")] = index;
 			}
 
 			Action *reopenWindowAction(new MenuAction(ActionsManager::ReopenWindowAction, parameters, executor, this));
-			reopenWindowAction->setTextOverride(tr("Window - %1").arg(windows.at(i)), false);
+			reopenWindowAction->setTextOverride(tr("Window - %1").arg(window), false);
 
 			addAction(reopenWindowAction);
 		}
