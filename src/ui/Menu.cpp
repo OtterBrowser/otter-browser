@@ -991,17 +991,17 @@ void Menu::populateClosedWindowsMenu()
 		if (!tabs.isEmpty())
 		{
 			ActionExecutor::Object executor(mainWindow, mainWindow);
+			int index(-1);
 
-			for (int i = 0; i < tabs.count(); ++i)
+			for (const Session::ClosedWindow &tab: tabs)
 			{
 				QVariantMap parameters;
 
-				if (i > 0)
+				if (++index > 0)
 				{
-					parameters = {{QLatin1String("index"), i}};
+					parameters = {{QLatin1String("index"), index}};
 				}
 
-				const Session::ClosedWindow tab(tabs.at(i));
 				Action *reopenTabAction(new MenuAction(ActionsManager::ReopenTabAction, parameters, executor, this));
 				reopenTabAction->setTextOverride(tab.window.getTitle(), false);
 
