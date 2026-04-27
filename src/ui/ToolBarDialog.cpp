@@ -353,11 +353,11 @@ void ToolBarDialog::editEntry()
 		QVector<SettingsManager::OptionDefinition::Choice> searchEngineChoices{{tr("All"), {}, {}}, {}};
 		searchEngineChoices.reserve(searchEngines.count() + 2);
 
-		for (int i = 0; i < searchEngines.count(); ++i)
+		for (const QString &searchEngine: searchEngines)
 		{
-			const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(searchEngines.at(i)));
+			const SearchEnginesManager::SearchEngineDefinition definition(SearchEnginesManager::getSearchEngine(searchEngine));
 
-			searchEngineChoices.append({(searchEngine.title.isEmpty() ? tr("Unknown") : searchEngine.title), searchEngines.at(i), searchEngine.icon});
+			searchEngineChoices.append({(definition.title.isEmpty() ? tr("Unknown") : definition.title), searchEngine, definition.icon});
 		}
 
 		OptionWidget *searchEngineWidget(new OptionWidget(options.value(QLatin1String("searchEngine")), SettingsManager::EnumerationType, &dialog));
