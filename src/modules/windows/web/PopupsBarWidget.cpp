@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -83,9 +83,9 @@ void PopupsBarWidget::openUrl(QAction *action)
 
 	if (action->data().isNull())
 	{
-		for (int i = 0; i < m_popupUrls.count(); ++i)
+		for (const QUrl &url: std::as_const(m_popupUrls))
 		{
-			mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), m_popupUrls.at(i)}, {QLatin1String("hints"), QVariant(hints)}});
+			mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}});
 		}
 	}
 	else
@@ -116,9 +116,8 @@ void PopupsBarWidget::populateMenu()
 	const QString popupsPolicy(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, Utils::extractHost(m_parentUrl)).toString());
 	const QVector<QPair<QString, QString> > policies({{QLatin1String("openAll"), tr("Open All Pop-Ups from This Website")}, {QLatin1String("openAllInBackground"), tr("Open Pop-Ups from This Website in Background")}, {QLatin1String("blockAll"), tr("Block All Pop-Ups from This Website")}, {QLatin1String("ask"), tr("Always Ask What to Do for This Website")}});
 
-	for (int i = 0; i < policies.count(); ++i)
+	for (const QPair<QString, QString> &policy: policies)
 	{
-		const QPair<QString, QString> policy(policies.at(i));
 		QAction *action(menu->addAction(policy.second));
 		action->setCheckable(true);
 		action->setChecked(popupsPolicy == policy.first);
@@ -133,11 +132,10 @@ void PopupsBarWidget::populateMenu()
 	popupsMenu->addAction(tr("Open All"));
 	popupsMenu->addSeparator();
 
-	for (int i = 0; i < m_popupUrls.count(); ++i)
+	for (const QUrl &url: std::as_const(m_popupUrls))
 	{
-		const QString url(m_popupUrls.at(i).url());
-		QAction *action(popupsMenu->addAction(Utils::elideText(url, popupsMenu->fontMetrics(), nullptr, 300)));
-		action->setData(url);
+		QAction *action(popupsMenu->addAction(Utils::elideText(url.url(), popupsMenu->fontMetrics(), nullptr, 300)));
+		action->setData(url.url());
 	}
 
 	connect(popupsMenu, &QMenu::triggered, this, &PopupsBarWidget::openUrl);
