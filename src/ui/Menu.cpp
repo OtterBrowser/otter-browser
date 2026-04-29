@@ -1323,14 +1323,13 @@ void Menu::populateSessionsMenu()
 	const QList<SessionInformation> sorted(information.values());
 	const QString currentSession(SessionsManager::getCurrentSession());
 
-	for (int i = 0; i < sorted.count(); ++i)
+	for (const SessionInformation &session: sorted)
 	{
-		const SessionInformation session(sorted.at(i));
 		int windows(0);
 
-		for (int j = 0; j < session.windows.count(); ++j)
+		for (const Session::MainWindow &mainWindow: session.windows)
 		{
-			windows += session.windows.at(j).windows.count();
+			windows += mainWindow.windows.count();
 		}
 
 		QAction *action(addAction(tr("%1 (%n tab(s))", "", windows).arg(session.title.isEmpty() ? tr("(Untitled)") : QString(session.title).replace(QLatin1Char('&'), QLatin1String("&&")))));
