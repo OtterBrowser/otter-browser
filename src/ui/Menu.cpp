@@ -1050,9 +1050,9 @@ void Menu::populateDictionariesMenu()
 		}
 	}
 
-	const QVector<SpellCheckManager::DictionaryInformation> dictionaries(webWidget ? webWidget->getDictionaries() : SpellCheckManager::getDictionaries());
+	const QVector<SpellCheckManager::Dictionary> dictionaries(webWidget ? webWidget->getDictionaries() : SpellCheckManager::getDictionaries());
 
-	for (const SpellCheckManager::DictionaryInformation &dictionary: dictionaries)
+	for (const SpellCheckManager::Dictionary &dictionary: dictionaries)
 	{
 		addAction(new MenuAction(ActionsManager::CheckSpellingAction, {{QLatin1String("dictionary"), dictionary.language}}, m_executor, this));
 	}

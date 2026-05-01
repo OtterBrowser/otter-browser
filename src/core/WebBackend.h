@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -97,7 +97,7 @@ public:
 	virtual QString getEngineVersion() const = 0;
 	virtual QString getSslVersion() const = 0;
 	virtual QString getUserAgent(const QString &pattern = {}) const = 0;
-	virtual QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const;
+	virtual QVector<SpellCheckManager::Dictionary> getDictionaries() const;
 	AddonType getType() const override;
 	virtual CapabilityScopes getCapabilityScopes(BackendCapability capability) const;
 	bool hasCapability(BackendCapability capability) const;

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2022 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2022 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -69,7 +69,7 @@ void DictionariesPage::updateAddonEntry(Addon *addon)
 
 void DictionariesPage::delayedLoad()
 {
-	const QVector<SpellCheckManager::DictionaryInformation> dictionaries(SpellCheckManager::getDictionaries());
+	const QVector<SpellCheckManager::Dictionary> dictionaries(SpellCheckManager::getDictionaries());
 
 	for (int i = 0; i < dictionaries.count(); ++i)
 	{
@@ -108,7 +108,7 @@ void DictionariesPage::addAddon()
 
 	if (hasAff && !language.isEmpty())
 	{
-		SpellCheckManager::DictionaryInformation dictionary;
+		SpellCheckManager::Dictionary dictionary;
 		dictionary.language = language;
 		dictionary.paths = sourcePaths;
 
@@ -146,7 +146,7 @@ void DictionariesPage::removeAddons()
 
 	for (int i = 0; i < dictionaries.count(); ++i)
 	{
-		const SpellCheckManager::DictionaryInformation dictionary(SpellCheckManager::getDictionary(dictionaries.at(i)));
+		const SpellCheckManager::Dictionary dictionary(SpellCheckManager::getDictionary(dictionaries.at(i)));
 
 		if (dictionary.isLocalDictionary)
 		{
@@ -176,7 +176,7 @@ void DictionariesPage::updateDetails()
 
 	if (selectedDictionaries.count() == 1)
 	{
-		SpellCheckManager::DictionaryInformation dictionary(SpellCheckManager::getDictionary(selectedDictionaries.first()));
+		SpellCheckManager::Dictionary dictionary(SpellCheckManager::getDictionary(selectedDictionaries.first()));
 
 		if (dictionary.isValid())
 		{
@@ -202,7 +202,7 @@ void DictionariesPage::save()
 
 	for (int i = 0; i < m_dictionariesToAdd.count(); ++i)
 	{
-		const SpellCheckManager::DictionaryInformation dictionary(m_dictionariesToAdd.at(i));
+		const SpellCheckManager::Dictionary dictionary(m_dictionariesToAdd.at(i));
 
 		for (int j = 0; j < dictionary.paths.count(); ++j)
 		{

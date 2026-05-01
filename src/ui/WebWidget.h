@@ -242,7 +242,7 @@ public:
 	virtual Session::Window::History getHistory() const = 0;
 	virtual QStringList getSpellCheckerSuggestions() const;
 	virtual QStringList getStyleSheets() const;
-	virtual QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const;
+	virtual QVector<SpellCheckManager::Dictionary> getDictionaries() const;
 	virtual QVector<LinkUrl> getFeeds() const;
 	virtual QVector<LinkUrl> getLinks() const;
 	virtual QVector<LinkUrl> getSearchEngines() const;

@@ -1439,7 +1439,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 				if (parameters.contains(QLatin1String("dictionary")))
 				{
 					const QString language(parameters[QLatin1String("dictionary")].toString());
-					const SpellCheckManager::DictionaryInformation dictionary(SpellCheckManager::getDictionary(language));
+					const SpellCheckManager::Dictionary dictionary(SpellCheckManager::getDictionary(language));
 					QStringList activeDictionaries;
 
 					if (getOption(SettingsManager::Browser_SpellCheckDictionaryOption).isNull())
@@ -1568,7 +1568,7 @@ QStringList WebWidget::getStyleSheets() const
 	return {};
 }
 
-QVector<SpellCheckManager::DictionaryInformation> WebWidget::getDictionaries() const
+QVector<SpellCheckManager::Dictionary> WebWidget::getDictionaries() const
 {
 	return SpellCheckManager::getDictionaries();
 }

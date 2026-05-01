@@ -33,7 +33,7 @@ namespace Otter
 
 SpellCheckManager* SpellCheckManager::m_instance(nullptr);
 QString SpellCheckManager::m_defaultDictionary;
-QVector<SpellCheckManager::DictionaryInformation> SpellCheckManager::m_dictionaries;
+QVector<SpellCheckManager::Dictionary> SpellCheckManager::m_dictionaries;
 QSet<QString> SpellCheckManager::m_ignoredWords;
 
 SpellCheckManager::SpellCheckManager(QObject *parent) : QObject(parent)
@@ -102,7 +102,7 @@ void SpellCheckManager::loadDictionaries()
 			continue;
 		}
 
-		DictionaryInformation information;
+		Dictionary information;
 		information.language = dictionary.langCode;
 		information.title = dictionary.name;
 		information.paths = dictionary.paths;
@@ -175,7 +175,7 @@ void SpellCheckManager::updateDefaultDictionary()
 	QStringList dictionaries;
 	dictionaries.reserve(m_dictionaries.count());
 
-	for (const DictionaryInformation &dictionary: std::as_const(m_dictionaries))
+	for (const Dictionary &dictionary: std::as_const(m_dictionaries))
 	{
 		dictionaries.append(dictionary.language);
 	}
@@ -246,9 +246,9 @@ QString SpellCheckManager::getDictionariesPath()
 	return dictionariesPath;
 }
 
-SpellCheckManager::DictionaryInformation SpellCheckManager::getDictionary(const QString &language)
+SpellCheckManager::Dictionary SpellCheckManager::getDictionary(const QString &language)
 {
-	for (const DictionaryInformation &dictionary: std::as_const(m_dictionaries))
+	for (const Dictionary &dictionary: std::as_const(m_dictionaries))
 	{
 		if (dictionary.language == language)
 		{
@@ -259,7 +259,7 @@ SpellCheckManager::DictionaryInformation SpellCheckManager::getDictionary(const 
 	return {};
 }
 
-QVector<SpellCheckManager::DictionaryInformation> SpellCheckManager::getDictionaries()
+QVector<SpellCheckManager::Dictionary> SpellCheckManager::getDictionaries()
 {
 	return m_dictionaries;
 }
@@ -306,7 +306,7 @@ bool SpellCheckManager::event(QEvent *event)
 	return QObject::event(event);
 }
 
-Dictionary::Dictionary(const SpellCheckManager::DictionaryInformation &information, QObject *parent) : QObject(parent),
+Dictionary::Dictionary(const SpellCheckManager::Dictionary &information, QObject *parent) : QObject(parent),
 	m_information(information)
 {
 }
