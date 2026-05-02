@@ -88,10 +88,8 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 		QJsonArray definitionsArray;
 		const QMap<ToolBarVisibility, QString> visibilityModes({{AlwaysVisibleToolBar, QLatin1String("visible")}, {OnHoverVisibleToolBar, QLatin1String("hover")}, {AutoVisibilityToolBar, QLatin1String("auto")}, {AlwaysHiddenToolBar, QLatin1String("hidden")}});
 
-		for (int i = 0; i < m_definitions.count(); ++i)
+		for (const ToolBarDefinition &definition: std::as_const(m_definitions))
 		{
-			const ToolBarDefinition definition(m_definitions.at(i));
-
 			if (definition.isDefault || definition.wasRemoved)
 			{
 				continue;
@@ -202,9 +200,9 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 			{
 				QJsonArray actionsArray;
 
-				for (int j = 0; j < definition.entries.count(); ++j)
+				for (const ToolBarDefinition::Entry &entry: definition.entries)
 				{
-					actionsArray.append(encodeEntry(definition.entries.at(j)));
+					actionsArray.append(encodeEntry(entry));
 				}
 
 				definitionObject.insert(QLatin1String("actions"), actionsArray);
@@ -283,9 +281,9 @@ void ToolBarsManager::ensureInitialized()
 	const QVector<ToolBarDefinition::Entry> menuBarEntries(m_definitions[MenuBar].entries);
 	bool hasMenuBar(false);
 
-	for (int i = 0; i < menuBarEntries.count(); ++i)
+	for (const ToolBarDefinition::Entry &entry: menuBarEntries)
 	{
-		if (menuBarEntries.at(i).action == QLatin1String("MenuBarWidget"))
+		if (entry.action == QLatin1String("MenuBarWidget"))
 		{
 			hasMenuBar = true;
 
@@ -304,9 +302,9 @@ void ToolBarsManager::ensureInitialized()
 	const QVector<ToolBarDefinition::Entry> tabBarEntries(m_definitions[TabBar].entries);
 	bool hasTabBar(false);
 
-	for (int i = 0; i < tabBarEntries.count(); ++i)
+	for (const ToolBarDefinition::Entry &entry: tabBarEntries)
 	{
-		if (tabBarEntries.at(i).action == QLatin1String("TabBarWidget"))
+		if (entry.action == QLatin1String("TabBarWidget"))
 		{
 			hasTabBar = true;
 
@@ -397,9 +395,9 @@ void ToolBarsManager::resetToolBars()
 
 	const QList<int> customToolBars(m_identifiers.keys());
 
-	for (int i = 0; i < customToolBars.count(); ++i)
+	for (int identifier: customToolBars)
 	{
-		emit m_instance->toolBarRemoved(customToolBars.at(i));
+		emit m_instance->toolBarRemoved(identifier);
 	}
 
 	const QHash<QString, ToolBarDefinition> definitions(loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true));
@@ -512,9 +510,9 @@ QJsonValue ToolBarsManager::encodeEntry(const ToolBarDefinition::Entry &definiti
 	{
 		QJsonArray actionsArray;
 
-		for (int i = 0; i < definition.entries.count(); ++i)
+		for (const ToolBarDefinition::Entry &entry: definition.entries)
 		{
-			actionsArray.append(encodeEntry(definition.entries.at(i)));
+			actionsArray.append(encodeEntry(entry));
 		}
 
 		actionObject.insert(QLatin1String("actions"), actionsArray);
@@ -556,9 +554,9 @@ ToolBarsManager::ToolBarDefinition::Entry ToolBarsManager::decodeEntry(const QJs
 
 		definition.entries.reserve(actionsArray.count());
 
-		for (int i = 0; i < actionsArray.count(); ++i)
+		for (const QJsonValue &actionValue: actionsArray)
 		{
-			definition.entries.append(decodeEntry(actionsArray.at(i)));
+			definition.entries.append(decodeEntry(actionValue));
 		}
 	}
 
@@ -663,9 +661,9 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 
 		definition.entries.reserve(actionsArray.count());
 
-		for (int j = 0; j < actionsArray.count(); ++j)
+		for (const QJsonValue &actionValue: actionsArray)
 		{
-			definition.entries.append(decodeEntry(actionsArray.at(j)));
+			definition.entries.append(decodeEntry(actionValue));
 		}
 
 		definitions[identifier] = definition;
@@ -681,10 +679,8 @@ QVector<ToolBarsManager::ToolBarDefinition> ToolBarsManager::getToolBarDefinitio
 	QVector<ToolBarsManager::ToolBarDefinition> definitions;
 	definitions.reserve(m_definitions.count());
 
-	for (int i = 0; i < m_definitions.count(); ++i)
+	for (const ToolBarDefinition &definition: std::as_const(m_definitions))
 	{
-		const ToolBarDefinition definition(m_definitions.at(i));
-
 		if (!definition.wasRemoved && (areas == Qt::AllToolBarAreas || areas.testFlag(definition.location)))
 		{
 			definitions.append(definition);
