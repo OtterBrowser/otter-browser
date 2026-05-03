@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -80,9 +80,8 @@ void SearchEnginesManager::loadSearchEngines()
 
 	const QStringList searchEnginesOrder(m_searchEnginesOrder);
 
-	for (int i = 0; i < searchEnginesOrder.count(); ++i)
+	for (const QString &identifier: searchEnginesOrder)
 	{
-		const QString identifier(searchEnginesOrder.at(i));
 		QFile file(SessionsManager::getReadableDataPath(QLatin1String("searchEngines/") + identifier + QLatin1String(".xml")));
 
 		if (!file.open(QIODevice::ReadOnly))
@@ -125,9 +124,9 @@ void SearchEnginesManager::updateSearchEnginesModel()
 
 	const QStringList searchEngines(getSearchEngines());
 
-	for (int i = 0; i < searchEngines.count(); ++i)
+	for (const QString &identifier: searchEngines)
 	{
-		const SearchEngineDefinition searchEngine(getSearchEngine(searchEngines.at(i)));
+		const SearchEngineDefinition searchEngine(getSearchEngine(identifier));
 
 		if (searchEngine.isValid())
 		{
@@ -160,9 +159,8 @@ void SearchEnginesManager::updateSearchEnginesOptions()
 	QVector<SettingsManager::OptionDefinition::Choice> searchEngineChoices;
 	searchEngineChoices.reserve(searchEngines.count());
 
-	for (int i = 0; i < searchEngines.count(); ++i)
+	for (const QString &identifier: searchEngines)
 	{
-		const QString identifier(searchEngines.at(i));
 		const SearchEngineDefinition searchEngine(getSearchEngine(identifier));
 
 		searchEngineChoices.append({(searchEngine.title.isEmpty() ? tr("Unknown") : searchEngine.title), identifier, searchEngine.icon});
@@ -204,10 +202,10 @@ SearchEnginesManager::SearchQuery SearchEnginesManager::setupQuery(const QString
 	const bool isUrlEncoded(searchUrl.enctype == QLatin1String("application/x-www-form-urlencoded"));
 	const bool isFormData(searchUrl.enctype == QLatin1String("multipart/form-data"));
 
-	for (int i = 0; i < parameters.count(); ++i)
+	for (const QPair<QString, QString> &parameter: parameters)
 	{
-		const QString key(parameters.at(i).first);
-		const QString value(Utils::substitutePlaceholders(parameters.at(i).second, values));
+		const QString key(parameter.first);
+		const QString value(Utils::substitutePlaceholders(parameter.second, values));
 
 		if (searchQuery.method == QNetworkAccessManager::GetOperation)
 		{
@@ -223,10 +221,8 @@ SearchEnginesManager::SearchQuery SearchEnginesManager::setupQuery(const QString
 			const QByteArray plainValue(value.toUtf8());
 			const QVector<QChar> hex({QLatin1Char('0'), QLatin1Char('1'), QLatin1Char('2'), QLatin1Char('3'), QLatin1Char('4'), QLatin1Char('5'), QLatin1Char('6'), QLatin1Char('7'), QLatin1Char('8'), QLatin1Char('9'), QLatin1Char('A'), QLatin1Char('B'), QLatin1Char('C'), QLatin1Char('D'), QLatin1Char('E'), QLatin1Char('F')});
 
-			for (int j = 0; j < plainValue.length(); ++j)
+			for (const char character: plainValue)
 			{
-				const char character(plainValue.at(j));
-
 				if (character >= 32 && character <= 126 && character != 61)
 				{
 					encodedValue.append(character);
@@ -592,10 +588,8 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 
 		const QList<QPair<QString, QString> > parameters(searchEngine.resultsUrl.parameters.queryItems());
 
-		for (int i = 0; i < parameters.count(); ++i)
+		for (const QPair<QString, QString> &parameter: parameters)
 		{
-			const QPair<QString, QString> parameter(parameters.at(i));
-
 			writer.writeStartElement(QLatin1String("Param"));
 			writer.writeAttribute(QLatin1String("name"), parameter.first);
 			writer.writeAttribute(QLatin1String("value"), parameter.second);
@@ -616,10 +610,8 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 
 		const QList<QPair<QString, QString> > parameters(searchEngine.suggestionsUrl.parameters.queryItems());
 
-		for (int i = 0; i < parameters.count(); ++i)
+		for (const QPair<QString, QString> &parameter: parameters)
 		{
-			const QPair<QString, QString> parameter(parameters.at(i));
-
 			writer.writeStartElement(QLatin1String("Param"));
 			writer.writeAttribute(QLatin1String("name"), parameter.first);
 			writer.writeAttribute(QLatin1String("value"), parameter.second);
