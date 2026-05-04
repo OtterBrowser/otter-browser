@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -108,9 +108,8 @@ void AddressCompletionModel::updateModel()
 			completions.append(CompletionEntry({}, tr("Bookmarks"), {}, {}, {}, CompletionEntry::HeaderType));
 		}
 
-		for (int i = 0; i < bookmarks.count(); ++i)
+		for (const BookmarksModel::BookmarkMatch &bookmark: bookmarks)
 		{
-			const BookmarksModel::BookmarkMatch bookmark(bookmarks.at(i));
 			CompletionEntry completionEntry(bookmark.bookmark->getUrl(), bookmark.bookmark->getTitle(), bookmark.match, bookmark.bookmark->getIcon(), {}, CompletionEntry::BookmarkType);
 			completionEntry.keyword = bookmark.bookmark->getKeyword();
 
@@ -130,10 +129,8 @@ void AddressCompletionModel::updateModel()
 		const QStringList entries(QDir(Utils::normalizePath(directory)).entryList(QDir::AllEntries | QDir::NoDotAndDotDot));
 		bool headerWasAdded(!m_showCompletionCategories);
 
-		for (int i = 0; i < entries.count(); ++i)
+		for (const QString &entry: entries)
 		{
-			const QString entry(entries.at(i));
-
 			if (entry.startsWith(prefix, Qt::CaseInsensitive))
 			{
 				const QString path(directory + entry);
@@ -159,9 +156,8 @@ void AddressCompletionModel::updateModel()
 			completions.append(CompletionEntry({}, tr("History"), {}, {}, {}, CompletionEntry::HeaderType));
 		}
 
-		for (int i = 0; i < entries.count(); ++i)
+		for (const HistoryModel::HistoryEntryMatch &match: entries)
 		{
-			const HistoryModel::HistoryEntryMatch match(entries.at(i));
 			HistoryModel::Entry *entry(match.entry);
 
 			completions.append(CompletionEntry(entry->getUrl(), entry->getTitle(), match.match, entry->getIcon(), entry->getTimeVisited(), (match.isTypedIn ? CompletionEntry::TypedHistoryType : CompletionEntry::HistoryType)));
@@ -177,9 +173,8 @@ void AddressCompletionModel::updateModel()
 			completions.append(CompletionEntry({}, tr("Typed history"), {}, {}, {}, CompletionEntry::HeaderType));
 		}
 
-		for (int i = 0; i < entries.count(); ++i)
+		for (const HistoryModel::HistoryEntryMatch &match: entries)
 		{
-			const HistoryModel::HistoryEntryMatch match(entries.at(i));
 			HistoryModel::Entry *entry(match.entry);
 
 			completions.append(CompletionEntry(entry->getUrl(), entry->getTitle(), match.match, entry->getIcon(), entry->getTimeVisited(), CompletionEntry::TypedHistoryType, entry->getIdentifier()));
