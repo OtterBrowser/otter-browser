@@ -231,9 +231,9 @@ bool IniSettings::save(const QString &path, bool isAtomic)
 	{
 		const QStringList comment(m_comment.split(QLatin1Char('\n')));
 
-		for (int i = 0; i < comment.count(); ++i)
+		for (const QString &line: comment)
 		{
-			stream << QLatin1String("; ") << comment.at(i) << QLatin1Char('\n');
+			stream << QLatin1String("; ") << line << QLatin1Char('\n');
 		}
 
 		canAddNewLine = true;
