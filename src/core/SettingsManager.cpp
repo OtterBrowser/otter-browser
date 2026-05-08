@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -247,9 +247,9 @@ void SettingsManager::createInstance(const QString &path)
 
 	const QStringList hosts(getOverrideHosts());
 
-	for (int i = 0; i < hosts.count(); ++i)
+	for (const QString &host: hosts)
 	{
-		if (hosts.at(i).startsWith(QLatin1Char('*')))
+		if (host.startsWith(QLatin1Char('*')))
 		{
 			m_hasWildcardedOverrides = true;
 
@@ -284,17 +284,15 @@ void SettingsManager::removeOverride(const QString &host, int identifier)
 	QVector<int> options;
 	options.reserve(groups.count());
 
-	for (int i = 0; i < groups.count(); ++i)
+	for (const QString &group: groups)
 	{
-		const QString group(groups.at(i));
-
 		settings.beginGroup(group);
 
 		const QStringList rawOptions(settings.childKeys());
 
-		for (int j = 0; j < rawOptions.count(); ++j)
+		for (const QString &rawOption: rawOptions)
 		{
-			const int option(getOptionIdentifier(group + QLatin1Char('/') + rawOptions.at(j)));
+			const int option(getOptionIdentifier(group + QLatin1Char('/') + rawOption));
 
 			if (option >= 0)
 			{
@@ -309,9 +307,9 @@ void SettingsManager::removeOverride(const QString &host, int identifier)
 	settings.remove(host);
 	settings.sync();
 
-	for (int i = 0; i < options.count(); ++i)
+	for (int option: options)
 	{
-		emit m_instance->hostOptionChanged(identifier, getOption(options.at(i)), host);
+		emit m_instance->hostOptionChanged(identifier, getOption(option), host);
 	}
 }
 
@@ -415,10 +413,8 @@ QString SettingsManager::createDisplayValue(int identifier, const QVariant &valu
 			{
 				const QString key(value.toString());
 
-				for (int i = 0; i < definition.choices.count(); ++i)
+				for (const OptionDefinition::Choice &choice: definition.choices)
 				{
-					const OptionDefinition::Choice choice(definition.choices.at(i));
-
 					if (choice.value == key)
 					{
 						return choice.getTitle();
@@ -531,10 +527,8 @@ QStringList SettingsManager::getOverrideHosts(int identifier)
 	QStringList hosts;
 	const QString optionName(getOptionName(identifier));
 
-	for (int i = 0; i < overridesGroups.count(); ++i)
+	for (const QString &group: overridesGroups)
 	{
-		const QString group(overridesGroups.at(i));
-
 		if (overrides.contains(group + QLatin1Char('/') + optionName))
 		{
 			hosts.append(group);
@@ -585,16 +579,14 @@ DiagnosticReport::Section SettingsManager::createReport()
 	QSettings overrides(m_overridePath, QSettings::IniFormat);
 	const QStringList overridesGroups(overrides.childGroups());
 
-	for (int i = 0; i < overridesGroups.count(); ++i)
+	for (const QString &group: overridesGroups)
 	{
-		overrides.beginGroup(overridesGroups.at(i));
+		overrides.beginGroup(group);
 
 		const QStringList keys(overrides.allKeys());
 
-		for (int j = 0; j < keys.count(); ++j)
+		for (const QString &key: keys)
 		{
-			const QString key(keys.at(j));
-
 			if (overridenValues.contains(key))
 			{
 				++overridenValues[key];
@@ -614,9 +606,8 @@ DiagnosticReport::Section SettingsManager::createReport()
 	report.fieldWidths = {50, 20, 20, 0};
 	report.entries.reserve(options.count());
 
-	for (int i = 0; i < options.count(); ++i)
+	for (const QString &option: options)
 	{
-		const QString option(options.at(i));
 		const OptionDefinition definition(getOptionDefinition(getOptionIdentifier(option)));
 		QString value;
 
@@ -700,9 +691,9 @@ int SettingsManager::getOverridesCount(int identifier)
 	const QString optionName(getOptionName(identifier));
 	int amount(0);
 
-	for (int i = 0; i < overridesGroups.count(); ++i)
+	for (const QString &group: overridesGroups)
 	{
-		if (overrides.contains(overridesGroups.at(i) + QLatin1Char('/') + optionName))
+		if (overrides.contains(group + QLatin1Char('/') + optionName))
 		{
 			++amount;
 		}
