@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -146,9 +146,8 @@ void ContentBlockingInformationWidget::populateElementsMenu()
 
 	const QVector<NetworkManager::ResourceInformation> requests(m_window->getWebWidget()->getBlockedRequests().mid(m_requestsAmount - 50));
 
-	for (int i = 0; i < requests.count(); ++i)
+	for (const NetworkManager::ResourceInformation &request: requests)
 	{
-		const NetworkManager::ResourceInformation request(requests.at(i));
 		QString type;
 
 		switch (request.resourceType)
@@ -222,9 +221,9 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 	const QVector<NetworkManager::ResourceInformation> requests(m_window->getWebWidget()->getBlockedRequests());
 	QHash<QString, int> amounts;
 
-	for (int i = 0; i < requests.count(); ++i)
+	for (const NetworkManager::ResourceInformation &request: requests)
 	{
-		const QString profile(requests.at(i).metaData.value(NetworkManager::ContentBlockingProfileMetaData).toString());
+		const QString profile(request.metaData.value(NetworkManager::ContentBlockingProfileMetaData).toString());
 
 		if (amounts.contains(profile))
 		{
@@ -239,10 +238,8 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 	const QVector<ContentFiltersProfile*> profiles(ContentFiltersManager::getContentBlockingProfiles());
 	const QStringList enabledProfiles(m_window->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
 
-	for (int i = 0; i < profiles.count(); ++i)
+	for (ContentFiltersProfile *profile: profiles)
 	{
-		ContentFiltersProfile* profile(profiles.at(i));
-
 		if (profile)
 		{
 			const int amount(amounts.value(profile->getName()));
