@@ -146,6 +146,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="tabsInTitleBarCheckBox">
+     <property name="text">
+      <string>Show tabs in title bar (requires restart)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QCheckBox" name="openNextToActiveheckBox">
      <property name="text">
       <string>Open new tab next to active</string>

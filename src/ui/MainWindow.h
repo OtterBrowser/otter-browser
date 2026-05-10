@@ -52,6 +52,7 @@ class TabBarWidget;
 class TabSwitcherWidget;
 class ToolBarWidget;
 class Window;
+class WindowControlsWidget;
 class WorkspaceWidget;
 
 class MainWindow final : public QMainWindow, public ActionExecutor, public GesturesController
@@ -70,6 +71,7 @@ public:
 	static MainWindow* findMainWindow(QObject *parent);
 	AddressWidget* findAddressField() const;
 	SearchWidget* findSearchField() const;
+	ToolBarWidget* findAddressToolBar() const;
 	Window* getActiveWindow() const;
 	Window* getWindowByIndex(int index) const;
 	Window* getWindowByIdentifier(quint64 identifier) const;
@@ -111,13 +113,43 @@ protected:
 	void keyPressEvent(QKeyEvent *event) override;
 	void keyReleaseEvent(QKeyEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
+	void mousePressEvent(QMouseEvent *event) override;
+	void mouseMoveEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
+	void mouseDoubleClickEvent(QMouseEvent *event) override;
 	void beginToolBarDragging(bool isSidebar = false);
 	void endToolBarDragging();
 	QWidget* findVisibleWidget(const QVector<QPointer<QWidget> > &widgets) const;
 	TabBarWidget* getTabBar() const;
 	QVector<quint64> createOrderedWindowList(bool includeMinimized) const;
+	Qt::Edges calculateResizeEdges(const QPoint &position) const;
+	bool isCustomDecorationEnabled() const;
 	bool event(QEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
+	ToolBarWidget *getTabBarToolBar() const;
+	bool isInDraggableTitleBarArea(QWidget *sourceWidget, const QPoint &globalPosition) const;
+	bool shouldAllowNativeToolbarHandling(QWidget *sourceWidget, const QPoint &globalPosition) const;
+	bool isInsideTabBar(QWidget *sourceWidget) const;
+	bool isInEmptyTabBarArea(QWidget *sourceWidget, const QPoint &globalPosition) const;
+	bool isInsideActualTabOrTabControl(QWidget *sourceWidget, const QPoint &globalPosition) const;
+	bool isInEmptyTabToolBarMoveArea(QWidget *sourceWidget, const QPoint &globalPosition) const;
+	bool isTabBarToolBarInTitleBarArea() const;
+	bool isTabBarToolBarInWindowMoveArea() const;
+	bool isInTabBarToolBarDockHandleArea(const QPoint &globalPosition) const;
+	bool isInToolbarDragHandleArea(const QPoint &globalPosition) const;
+	void updateCustomDecorationToolbarState();
+	void resetCustomDecorationToolbarSizeOverrides();
+	void hideWindowControls();
+	void ensureWindowControlsInTopToolbar(ToolBarWidget *tabBarToolBar);
+	void ensureWindowControlsInToolBar(ToolBarWidget *targetToolBar);
+	void removeWindowControlsFromToolbar(ToolBarWidget *tabBarToolBar);
+	void scheduleToolbarStateUpdateRetry();
+	void scheduleTabBarToolBarNormalization();
+	void normalizeTabBarToolBarGeometry();
+	void setupTabBarToolBarNormalization();
+	void updateWindowControlsPlacement();
+	void debugCustomDecorationHitTest(QWidget *sourceWidget, const QPoint &globalPosition, const char *reason) const;
+	bool handleCustomDecorationMousePress(QWidget *sourceWidget, QMouseEvent *event);
 
 protected slots:
 	void removeStoredUrl(const QString &url);
@@ -128,6 +160,7 @@ protected slots:
 	void handleTransferStarted();
 	void setActiveWindow(Window *window);
 	void setStatusMessage(const QString &message);
+	void setupCustomDecorations();
 	void updateWindowTitle();
 	void updateShortcuts();
 
@@ -139,7 +172,12 @@ private:
 	TabBarWidget *m_tabBar;
 	MenuBarWidget *m_menuBar;
 	StatusBarWidget *m_statusBar;
+	WindowControlsWidget *m_windowControls;
+	QAction *m_windowControlsAction;
+	QPointer<ToolBarWidget> m_windowControlsToolBar;
 	QPointer<Window> m_activeWindow;
+	Qt::Edges m_resizeEdges;
+	bool m_wasMaximized;
 	QString m_windowTitle;
 	ActionExecutor::Object m_editorExecutor;
 	QVector<Shortcut*> m_shortcuts;
@@ -152,6 +190,7 @@ private:
 	QMap<int, Session::MainWindow::ToolBarState> m_toolBarStates;
 	Qt::WindowStates m_previousState;
 	Qt::WindowStates m_previousRaisedState;
+	bool m_customDecorationApplicationEventFilterInstalled;
 	quint64 m_identifier;
 	int m_mouseTrackerTimer;
 	int m_tabSwitchingOrderIndex;
