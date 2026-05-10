@@ -43,6 +43,9 @@
 #include <QtGui/QDesktopServices>
 #include <QtGui/QDrag>
 #include <QtGui/QScreen>
+#if QT_VERSION >= 0x060000
+#include <QtNetwork/private/qtldurl_p.h>
+#endif
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
@@ -551,7 +554,21 @@ QString normalizePath(const QString &path)
 
 QString getTopLevelDomain(const QUrl &url)
 {
+#if QT_VERSION >= 0x060000
+	QStringList subdomains(createSubdomainList(url.host()));
+
+	std::reverse(subdomains.begin(), subdomains.end());
+
+	for (const QString &subdomain: subdomains)
+	{
+		if (qIsEffectiveTLD(subdomain))
+		{
+			return subdomain;
+		}
+	}
+#else
 	return url.topLevelDomain();
+#endif
 }
 
 QString getStandardLocation(QStandardPaths::StandardLocation type)
