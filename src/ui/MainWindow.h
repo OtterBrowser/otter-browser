@@ -148,7 +148,6 @@ protected:
 	void normalizeTabBarToolBarGeometry();
 	void setupTabBarToolBarNormalization();
 	void updateWindowControlsPlacement();
-	void debugCustomDecorationHitTest(QWidget *sourceWidget, const QPoint &globalPosition, const char *reason) const;
 	bool handleCustomDecorationMousePress(QWidget *sourceWidget, QMouseEvent *event);
 
 protected slots:

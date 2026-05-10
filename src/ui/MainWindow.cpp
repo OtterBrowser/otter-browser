@@ -3636,12 +3636,6 @@ void MainWindow::updateCustomDecorationToolbarState()
 	updateGeometry();
 }
 
-void MainWindow::debugCustomDecorationHitTest(QWidget *sourceWidget, const QPoint &globalPosition, const char *reason) const
-{
-	Q_UNUSED(sourceWidget)
-	Q_UNUSED(globalPosition)
-	Q_UNUSED(reason)
-}
 
 bool MainWindow::isInEmptyTabToolBarMoveArea(QWidget *sourceWidget, const QPoint &globalPosition) const
 {
@@ -3711,28 +3705,28 @@ bool MainWindow::handleCustomDecorationMousePress(QWidget *sourceWidget, QMouseE
 	{
 		return false;
 	}
-	
+
 	const QPoint localPosition = mapFromGlobal(event->globalPos());
-	
+
 	// Priority 2: Handle resize edges (but not if in dock handle area)
 	const Qt::Edges edges = calculateResizeEdges(localPosition);
 	if (edges != Qt::Edges() && !isMaximized() && !isFullScreen() && windowHandle())
 	{
 		return windowHandle()->startSystemResize(edges);
 	}
-	
+
 	// Priority 3: Preserve actual tab interactions
 	if (isInsideActualTabOrTabControl(sourceWidget, event->globalPos()))
 	{
 		return false;
 	}
-	
+
 	// Priority 4: Allow custom window move from safe empty toolbar areas
 	if (isInEmptyTabToolBarMoveArea(sourceWidget, event->globalPos()) && windowHandle())
 	{
 		return windowHandle()->startSystemMove();
 	}
-	
+
 	return false;
 }
 
