@@ -2915,6 +2915,28 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 		// Only handle widgets that belong to this MainWindow
 		if (widget && widget->window() == this)
 		{
+			// Check if this widget belongs to a ToolBarWidget
+			ToolBarWidget *sourceToolBar = qobject_cast<ToolBarWidget*>(widget);
+			if (!sourceToolBar)
+			{
+				QWidget *parent = widget->parentWidget();
+				while (parent)
+				{
+					sourceToolBar = qobject_cast<ToolBarWidget*>(parent);
+					if (sourceToolBar)
+					{
+						break;
+					}
+					parent = parent->parentWidget();
+				}
+			}
+
+			// If this belongs to a ToolBarWidget that is NOT the TabBar, let Qt handle it natively
+			if (sourceToolBar && sourceToolBar->getIdentifier() != ToolBarsManager::TabBar)
+			{
+				return false;
+			}
+
 			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 			
 			if (handleCustomDecorationMousePress(widget, mouseEvent))
@@ -3697,6 +3719,28 @@ bool MainWindow::handleCustomDecorationMousePress(QWidget *sourceWidget, QMouseE
 
 	// Absolute first check: Global position dock handle area - no custom handling for any source
 	if (isInTabBarToolBarDockHandleArea(globalPosition))
+	{
+		return false;
+	}
+
+	// Check if this widget belongs to a ToolBarWidget that is NOT the TabBar - let Qt handle it
+	ToolBarWidget *sourceToolBar = qobject_cast<ToolBarWidget*>(sourceWidget);
+	if (!sourceToolBar)
+	{
+		QWidget *parent = sourceWidget ? sourceWidget->parentWidget() : nullptr;
+		while (parent)
+		{
+			sourceToolBar = qobject_cast<ToolBarWidget*>(parent);
+			if (sourceToolBar)
+			{
+				break;
+			}
+			parent = parent->parentWidget();
+		}
+	}
+
+	// If this belongs to a ToolBarWidget that is NOT the TabBar, don't custom-handle it
+	if (sourceToolBar && sourceToolBar->getIdentifier() != ToolBarsManager::TabBar)
 	{
 		return false;
 	}
