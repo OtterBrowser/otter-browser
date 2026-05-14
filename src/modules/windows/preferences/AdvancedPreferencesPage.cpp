@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -96,13 +96,13 @@ void AdvancedPreferencesPage::changeEvent(QEvent *event)
 				m_ui->enableFullScreenComboBox->setItemText(1, tr("Always"));
 				m_ui->enableFullScreenComboBox->setItemText(2, tr("Never"));
 
-				for (int i = 0; i < navigationTitles.count(); ++i)
-				{
-					const QString title(navigationTitles.at(i));
+				int index(-1);
 
+				for (const QString &title: navigationTitles)
+				{
 					if (!title.isEmpty())
 					{
-						m_ui->advancedViewWidget->setData(m_ui->advancedViewWidget->getIndex(i), title, Qt::DisplayRole);
+						m_ui->advancedViewWidget->setData(m_ui->advancedViewWidget->getIndex(++index), title, Qt::DisplayRole);
 					}
 				}
 
@@ -924,9 +924,9 @@ void AdvancedPreferencesPage::updateReaddMouseProfileMenu()
 	QVector<MouseProfile> availableMouseProfiles;
 	const QList<QFileInfo> allMouseProfiles(QDir(SessionsManager::getReadableDataPath(QLatin1String("mouse"))).entryInfoList({QLatin1String("*.json")}, QDir::Files) + QDir(SessionsManager::getReadableDataPath(QLatin1String("mouse"), true)).entryInfoList({QLatin1String("*.json")}, QDir::Files));
 
-	for (int i = 0; i < allMouseProfiles.count(); ++i)
+	for (const QFileInfo &information: allMouseProfiles)
 	{
-		const QString identifier(allMouseProfiles.at(i).baseName());
+		const QString identifier(information.baseName());
 
 		if (!m_mouseProfiles.contains(identifier) && !availableIdentifiers.contains(identifier))
 		{
@@ -950,10 +950,8 @@ void AdvancedPreferencesPage::updateReaddMouseProfileMenu()
 	readdMenu->clear();
 	readdMenu->setEnabled(!availableMouseProfiles.isEmpty());
 
-	for (int i = 0; i < availableMouseProfiles.count(); ++i)
+	for (const MouseProfile &profile: availableMouseProfiles)
 	{
-		const MouseProfile profile(availableMouseProfiles.at(i));
-
 		readdMenu->addAction(profile.getTitle())->setData(profile.getName());
 	}
 }
@@ -978,9 +976,8 @@ void AdvancedPreferencesPage::load()
 	const QStringList navigationTitles({tr("Browsing"), tr("Notifications"), tr("Appearance"), {}, tr("Downloads"), tr("Programs"), {}, tr("History"), tr("Network"), tr("Scripting"), tr("Security"), tr("Updates"), {}, tr("Mouse")});
 	int navigationIndex(0);
 
-	for (int i = 0; i < navigationTitles.count(); ++i)
+	for (const QString &title: navigationTitles)
 	{
-		const QString title(navigationTitles.at(i));
 		QStandardItem *item(new QStandardItem(title));
 		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
@@ -993,16 +990,13 @@ void AdvancedPreferencesPage::load()
 		{
 			item->setData(navigationIndex, Qt::UserRole);
 
-			if (i == 7)
-			{
-				item->setEnabled(false);
-			}
-
 			++navigationIndex;
 		}
 
 		navigationModel->appendRow(item);
 	}
+
+	navigationModel->item(7, 0)->setEnabled(false);
 
 	m_ui->advancedViewWidget->setModel(navigationModel);
 	m_ui->advancedViewWidget->selectionModel()->select(navigationModel->index(0, 0), QItemSelectionModel::Select);
@@ -1035,9 +1029,8 @@ void AdvancedPreferencesPage::load()
 
 	const QVector<NotificationsManager::EventDefinition> events(NotificationsManager::getEventDefinitions());
 
-	for (int i = 0; i < events.count(); ++i)
+	for (const NotificationsManager::EventDefinition &event: events)
 	{
-		const NotificationsManager::EventDefinition event(events.at(i));
 		QList<QStandardItem*> items({new QStandardItem(event.getTitle()), new QStandardItem(event.getDescription())});
 		items[0]->setData(event.identifier, IdentifierRole);
 		items[0]->setData(event.playSound, SoundPathRole);
@@ -1056,9 +1049,9 @@ void AdvancedPreferencesPage::load()
 
 	m_ui->appearranceWidgetStyleComboBox->addItem(tr("System Style"));
 
-	for (int i = 0; i < widgetStyles.count(); ++i)
+	for (const QString &style: widgetStyles)
 	{
-		m_ui->appearranceWidgetStyleComboBox->addItem(widgetStyles.at(i));
+		m_ui->appearranceWidgetStyleComboBox->addItem(style);
 	}
 
 	m_ui->appearranceWidgetStyleComboBox->setCurrentIndex(qMax(0, m_ui->appearranceWidgetStyleComboBox->findData(SettingsManager::getOption(SettingsManager::Interface_WidgetStyleOption).toString(), Qt::DisplayRole)));
@@ -1071,9 +1064,8 @@ void AdvancedPreferencesPage::load()
 
 	const QVector<HandlersManager::MimeTypeHandlerDefinition> handlers(HandlersManager::getMimeTypeHandlers());
 
-	for (int i = 0; i < handlers.count(); ++i)
+	for (const HandlersManager::MimeTypeHandlerDefinition &handler: handlers)
 	{
-		const HandlersManager::MimeTypeHandlerDefinition handler(handlers.at(i));
 		QStandardItem *item(new QStandardItem(handler.mimeType.isValid() ? handler.mimeType.name() : QLatin1String("*")));
 		item->setData(handler.transferMode, TransferModeRole);
 		item->setData(handler.downloadsPath, DownloadsPathRole);
@@ -1157,9 +1149,9 @@ void AdvancedPreferencesPage::load()
 		const bool useDefaultCiphers(SettingsManager::getOption(SettingsManager::Security_CiphersOption).toString() == QLatin1String("default"));
 		const QStringList selectedCiphers(useDefaultCiphers ? QStringList() : SettingsManager::getOption(SettingsManager::Security_CiphersOption).toStringList());
 
-		for (int i = 0; i < selectedCiphers.count(); ++i)
+		for (const QString &identifier: selectedCiphers)
 		{
-			const QSslCipher cipher(selectedCiphers.at(i));
+			const QSslCipher cipher(identifier);
 
 			if (!cipher.isNull())
 			{
@@ -1173,11 +1165,11 @@ void AdvancedPreferencesPage::load()
 		const QList<QSslCipher> defaultCiphers(NetworkManagerFactory::getDefaultCiphers());
 		const QList<QSslCipher> supportedCiphers(QSslConfiguration::supportedCiphers());
 
-		for (int i = 0; i < supportedCiphers.count(); ++i)
+		for (const QSslCipher &cipher: supportedCiphers)
 		{
-			const QString cipherName(supportedCiphers.at(i).name());
+			const QString cipherName(cipher.name());
 
-			if (useDefaultCiphers && defaultCiphers.contains(supportedCiphers.at(i)))
+			if (useDefaultCiphers && defaultCiphers.contains(cipher))
 			{
 				QStandardItem *item(new QStandardItem(cipherName));
 				item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
@@ -1207,9 +1199,8 @@ void AdvancedPreferencesPage::load()
 	const QStringList activeUpdateChannels(SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList());
 	const QVector<QPair<QString, QString> > updateChannels({{QLatin1String("release"), tr("Stable version")}, {QLatin1String("beta"), tr("Beta version")}, {QLatin1String("weekly"), tr("Weekly development version")}});
 
-	for (int i = 0; i < updateChannels.count(); ++i)
+	for (const QPair<QString, QString> &updateChannel: updateChannels)
 	{
-		const QPair<QString, QString> updateChannel(updateChannels.at(i));
 		QStandardItem *item(new QStandardItem(updateChannel.second));
 		item->setCheckable(true);
 		item->setCheckState(activeUpdateChannels.contains(updateChannel.first) ? Qt::Checked : Qt::Unchecked);
@@ -1232,16 +1223,16 @@ void AdvancedPreferencesPage::load()
 	QStandardItemModel *mouseProfilesModel(new QStandardItemModel(this));
 	const QStringList mouseProfiles(SettingsManager::getOption(SettingsManager::Browser_MouseProfilesOrderOption).toStringList());
 
-	for (int i = 0; i < mouseProfiles.count(); ++i)
+	for (const QString &identifier: mouseProfiles)
 	{
-		const MouseProfile profile(mouseProfiles.at(i), MouseProfile::FullMode);
+		const MouseProfile profile(identifier, MouseProfile::FullMode);
 
 		if (!profile.isValid())
 		{
 			continue;
 		}
 
-		m_mouseProfiles[mouseProfiles.at(i)] = profile;
+		m_mouseProfiles[identifier] = profile;
 
 		QStandardItem *item(new QStandardItem(profile.getTitle()));
 		item->setToolTip(profile.getDescription());

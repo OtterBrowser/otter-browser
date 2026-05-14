@@ -417,9 +417,9 @@ bool ThemesManager::eventFilter(QObject *object, QEvent *event)
 			const QList<QStyle*> children(QApplication::style()->findChildren<QStyle*>());
 			bool hasMatch(false);
 
-			for (int i = 0; i < children.count(); ++i)
+			for (QStyle *style: children)
 			{
-				if (children.at(i)->inherits("Otter::Style"))
+				if (style->inherits("Otter::Style"))
 				{
 					hasMatch = true;
 
