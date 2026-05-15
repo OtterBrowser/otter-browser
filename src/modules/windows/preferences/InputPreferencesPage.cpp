@@ -808,9 +808,8 @@ QHash<int, QVector<KeyboardProfile::Action> > InputPreferencesPage::getKeyboardD
 	{
 		const QVector<ShortcutsDefinition> actionVariants(iterator.value());
 
-		for (int j = 0; j < actionVariants.count(); ++j)
+		for (const ShortcutsDefinition &actionVariant: actionVariants)
 		{
-			const ShortcutsDefinition actionVariant(actionVariants.at(j));
 			KeyboardProfile::Action definition;
 			definition.parameters = actionVariant.parameters;
 			definition.shortcuts = actionVariant.shortcuts;
