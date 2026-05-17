@@ -392,9 +392,9 @@ MouseProfile::MouseProfile(const QString &identifier, LoadMode mode) : JsonAddon
 			QVector<MouseProfile::Gesture::Step> steps;
 			steps.reserve(stepsArray.count());
 
-			for (int k = 0; k < stepsArray.count(); ++k)
+			for (const QJsonValue &stepValue: stepsArray)
 			{
-				steps.append(Gesture::Step::fromString(stepsArray.at(k).toString()));
+				steps.append(Gesture::Step::fromString(stepValue.toString()));
 			}
 
 			MouseProfile::Gesture definition;
@@ -612,21 +612,21 @@ void GesturesManager::recognizeMoveStep(const QInputEvent *event)
 
 	QHash<int, MouseGestures::ActionList> possibleMoves;
 
-	for (int i = 0; i < m_contexts.count(); ++i)
+	for (GesturesContext context: std::as_const(m_contexts))
 	{
-		const QVector<MouseProfile::Gesture> gestures(m_gestures[m_contexts.at(i)]);
+		const QVector<MouseProfile::Gesture> gestures(m_gestures[context]);
 
-		for (int j = 0; j < gestures.count(); ++j)
+		for (int i = 0; i < gestures.count(); ++i)
 		{
-			const QVector<MouseProfile::Gesture::Step> steps(gestures.at(j).steps);
+			const QVector<MouseProfile::Gesture::Step> steps(gestures.at(i).steps);
 
 			if (steps.count() > m_steps.count() && steps[m_steps.count()].type == QEvent::MouseMove && steps.mid(0, m_steps.count()) == m_steps)
 			{
 				MouseGestures::ActionList moves;
 
-				for (int k = m_steps.count(); (k < steps.count() && steps.at(k).type == QEvent::MouseMove); ++k)
+				for (int j = m_steps.count(); (j < steps.count() && steps.at(j).type == QEvent::MouseMove); ++j)
 				{
-					moves.push_back(steps.at(k).direction);
+					moves.push_back(steps.at(j).direction);
 				}
 
 				if (!moves.empty())
@@ -709,13 +709,13 @@ MouseProfile::Gesture GesturesManager::matchGesture()
 
 	int lowestDifference(std::numeric_limits<int>::max());
 
-	for (int i = 0; i < m_contexts.count(); ++i)
+	for (GesturesContext context: std::as_const(m_contexts))
 	{
-		const QVector<QVector<MouseProfile::Gesture::Step> > nativeGestures(m_nativeGestures[m_contexts.at(i)]);
+		const QVector<QVector<MouseProfile::Gesture::Step> > nativeGestures(m_nativeGestures[context]);
 
-		for (int j = 0; j < nativeGestures.count(); ++j)
+		for (const QVector<MouseProfile::Gesture::Step> &steps: nativeGestures)
 		{
-			const int difference(calculateGesturesDifference(nativeGestures.at(j)));
+			const int difference(calculateGesturesDifference(steps));
 
 			if (difference == 0)
 			{
@@ -734,7 +734,7 @@ MouseProfile::Gesture GesturesManager::matchGesture()
 			}
 		}
 
-		const QVector<MouseProfile::Gesture> gestures(m_gestures[m_contexts.at(i)]);
+		const QVector<MouseProfile::Gesture> gestures(m_gestures[context]);
 
 		for (const MouseProfile::Gesture &gesture: gestures)
 		{
