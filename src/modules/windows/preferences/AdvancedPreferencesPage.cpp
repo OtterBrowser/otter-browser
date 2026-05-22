@@ -997,6 +997,7 @@ void AdvancedPreferencesPage::load()
 	}
 
 	navigationModel->item(7, 0)->setEnabled(false);
+	navigationModel->item(11, 0)->setEnabled(false);
 
 	m_ui->advancedViewWidget->setModel(navigationModel);
 	m_ui->advancedViewWidget->selectionModel()->select(navigationModel->index(0, 0), QItemSelectionModel::Select);
