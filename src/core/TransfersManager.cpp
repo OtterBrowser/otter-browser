@@ -122,9 +122,9 @@ void Transfer::timerEvent(QTimerEvent *event)
 		{
 			qint64 speedSum(0);
 
-			for (int i = 0; i < m_speeds.count(); ++i)
+			for (quint64 speed: std::as_const(m_speeds))
 			{
-				speedSum += m_speeds.at(i);
+				speedSum += speed;
 			}
 
 			speedSum /= m_speeds.count();
@@ -1012,9 +1012,9 @@ void TransfersManager::updateRunningTransfersState()
 {
 	bool hasRunningTransfers(false);
 
-	for (int i = 0; i < m_transfers.count(); ++i)
+	for (Transfer *transfer: std::as_const(m_transfers))
 	{
-		if (m_transfers.at(i)->getState() == Transfer::RunningState)
+		if (transfer->getState() == Transfer::RunningState)
 		{
 			hasRunningTransfers = true;
 
@@ -1138,10 +1138,8 @@ void TransfersManager::save()
 	const int limit(SettingsManager::getOption(SettingsManager::History_DownloadsLimitPeriodOption).toInt());
 	int entry(1);
 
-	for (int i = 0; i < m_transfers.count(); ++i)
+	for (Transfer *transfer: std::as_const(m_transfers))
 	{
-		Transfer *transfer(m_transfers.at(i));
-
 		if (m_privateTransfers.contains(transfer) || (transfer->getState() == Transfer::FinishedState && transfer->getTimeFinished().isValid() && transfer->getTimeFinished().daysTo(QDateTime::currentDateTimeUtc()) > limit))
 		{
 			continue;
@@ -1247,9 +1245,9 @@ QVector<Transfer*> TransfersManager::getTransfers()
 
 		m_transfers.reserve(entries.count());
 
-		for (int i = 0; i < entries.count(); ++i)
+		for (const QString &entry: entries)
 		{
-			history.beginGroup(entries.at(i));
+			history.beginGroup(entry);
 
 			if (!history.value(QLatin1String("source")).toString().isEmpty() && !history.value(QLatin1String("target")).toString().isEmpty())
 			{
@@ -1276,10 +1274,8 @@ TransfersManager::ActiveTransfersInformation TransfersManager::getActiveTransfer
 		return information;
 	}
 
-	for (int i = 0; i < m_transfers.count(); ++i)
+	for (Transfer *transfer: std::as_const(m_transfers))
 	{
-		const Transfer *transfer(m_transfers.at(i));
-
 		if (transfer->getState() != Transfer::RunningState)
 		{
 			continue;
@@ -1305,9 +1301,9 @@ int TransfersManager::getRunningTransfersCount()
 {
 	int runningTransfers(0);
 
-	for (int i = 0; i < m_transfers.count(); ++i)
+	for (Transfer *transfer: std::as_const(m_transfers))
 	{
-		if (m_transfers.at(i)->getState() == Transfer::RunningState)
+		if (transfer->getState() == Transfer::RunningState)
 		{
 			++runningTransfers;
 		}
@@ -1352,10 +1348,8 @@ bool TransfersManager::isDownloading(const QString &source, const QString &targe
 		return false;
 	}
 
-	for (int i = 0; i < m_transfers.count(); ++i)
+	for (Transfer *transfer: std::as_const(m_transfers))
 	{
-		Transfer *transfer(m_transfers.at(i));
-
 		if (transfer->getState() != Transfer::RunningState)
 		{
 			continue;
