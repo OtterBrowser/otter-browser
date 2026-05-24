@@ -25,7 +25,6 @@
 #include "NotificationsManager.h"
 #include "SessionsManager.h"
 #include "Utils.h"
-#include "../ui/MainWindow.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QMimeDatabase>
@@ -874,7 +873,7 @@ bool Transfer::setTarget(const QString &target, bool canOverwriteExisting)
 
 	if (!canOverwriteExisting && !m_options.testFlag(CanOverwriteOption) && QFile::exists(target))
 	{
-		const int result(QMessageBox::question(Application::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(target), (QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel), QMessageBox::No));
+		const int result(QMessageBox::question(nullptr, tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(target), (QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel), QMessageBox::No));
 
 		if (result == QMessageBox::No)
 		{
