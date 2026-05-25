@@ -67,9 +67,9 @@ void ContentFiltersManager::initialize()
 	QStringList profiles;
 	profiles.reserve(existingProfiles.count());
 
-	for (int i = 0; i < existingProfiles.count(); ++i)
+	for (const QFileInfo &information: existingProfiles)
 	{
-		const QString name(existingProfiles.at(i).completeBaseName());
+		const QString name(information.completeBaseName());
 
 		if (!profiles.contains(name))
 		{
