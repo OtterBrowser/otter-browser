@@ -358,9 +358,9 @@ MouseProfile::MouseProfile(const QString &identifier, LoadMode mode) : JsonAddon
 	const JsonSettings settings(path);
 	const QJsonArray contextsArray(settings.array());
 
-	for (int i = 0; i < contextsArray.count(); ++i)
+	for (const QJsonValue &contextValue: contextsArray)
 	{
-		const QJsonObject contextObject(contextsArray.at(i).toObject());
+		const QJsonObject contextObject(contextValue.toObject());
 		const GesturesManager::GesturesContext context(static_cast<GesturesManager::GesturesContext>(GesturesManager::getContextIdentifier(contextObject.value(QLatin1String("context")).toString())));
 
 		if (context == GesturesManager::UnknownContext)
@@ -370,9 +370,9 @@ MouseProfile::MouseProfile(const QString &identifier, LoadMode mode) : JsonAddon
 
 		const QJsonArray gesturesArray(contextObject.value(QLatin1String("gestures")).toArray());
 
-		for (int j = 0; j < gesturesArray.count(); ++j)
+		for (const QJsonValue &actionValue: gesturesArray)
 		{
-			const QJsonObject actionObject(gesturesArray.at(j).toObject());
+			const QJsonObject actionObject(actionValue.toObject());
 			const QJsonArray stepsArray(actionObject.value(QLatin1String("steps")).toArray());
 
 			if (stepsArray.isEmpty())
