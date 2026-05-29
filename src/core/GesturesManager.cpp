@@ -565,9 +565,9 @@ void GesturesManager::loadProfiles()
 	const QStringList gestureProfiles(SettingsManager::getOption(SettingsManager::Browser_MouseProfilesOrderOption).toStringList());
 	const bool areMouseGesturesEnabled(SettingsManager::getOption(SettingsManager::Browser_EnableMouseGesturesOption).toBool());
 
-	for (int i = 0; i < gestureProfiles.count(); ++i)
+	for (const QString &identifier: gestureProfiles)
 	{
-		const MouseProfile profile(gestureProfiles.at(i));
+		const MouseProfile profile(identifier);
 		const QHash<int, QVector<MouseProfile::Gesture> > contexts(profile.getDefinitions());
 		QHash<int, QVector<MouseProfile::Gesture> >::const_iterator iterator;
 
