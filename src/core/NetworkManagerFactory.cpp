@@ -547,9 +547,9 @@ void NetworkManagerFactory::handleOptionChanged(int identifier, const QVariant &
 					QList<QSslCipher> ciphers;
 					ciphers.reserve(selectedCiphers.count());
 
-					for (int i = 0; i < selectedCiphers.count(); ++i)
+					for (const QString &name: selectedCiphers)
 					{
-						const QSslCipher cipher(selectedCiphers.at(i));
+						const QSslCipher cipher(name);
 
 						if (!cipher.isNull())
 						{
