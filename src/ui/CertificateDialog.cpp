@@ -176,9 +176,11 @@ void CertificateDialog::updateCertificate()
 	extensionsItem->setFlags(Qt::ItemIsEnabled);
 	extensionsItem->setEnabled(certificate.extensions().count() > 0);
 
-	for (int i = 0; i < certificate.extensions().count(); ++i)
+	int index(-1);
+
+	for (const QSslCertificateExtension &extension: certificate.extensions())
 	{
-		const QString name(certificate.extensions().at(i).name());
+		const QString name(extension.name());
 		QString title(name);
 
 		if (title == QLatin1String("authorityKeyIdentifier"))
@@ -250,7 +252,7 @@ void CertificateDialog::updateCertificate()
 			title = tr("Subject Information Access");
 		}
 
-		createField(ExtensionField, extensionsItem, {{Qt::DisplayRole, title}, {ExtensionIndexRole, i}, {ExtensionNameRole, name}});
+		createField(ExtensionField, extensionsItem, {{Qt::DisplayRole, title}, {ExtensionIndexRole, ++index}, {ExtensionNameRole, name}});
 	}
 
 	QStandardItem *digestItem(createField(DigestField));

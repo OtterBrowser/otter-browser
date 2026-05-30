@@ -404,9 +404,9 @@ void NetworkManagerFactory::readProxy(const QJsonValue &value, ProxyDefinition *
 			{
 				const QJsonArray serversArray(proxyObject.value(QLatin1String("servers")).toArray());
 
-				for (int i = 0; i < serversArray.count(); ++i)
+				for (const QJsonValue &serverValue: serversArray)
 				{
-					const QJsonObject serverObject(serversArray.at(i).toObject());
+					const QJsonObject serverObject(serverValue.toObject());
 					const QString protocol(serverObject.value(QLatin1String("protocol")).toString());
 					ProxyDefinition::ProxyServer server;
 					server.hostName = serverObject.value(QLatin1String("hostName")).toString();

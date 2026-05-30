@@ -91,9 +91,9 @@ void DictionariesPage::addAddon()
 	QString language;
 	bool hasAff(false);
 
-	for (int i = 0; i < sourcePaths.count(); ++i)
+	for (const QString &path: sourcePaths)
 	{
-		const QFileInfo fileInformation(sourcePaths.at(i));
+		const QFileInfo fileInformation(path);
 		const QString suffix(fileInformation.suffix().toLower());
 
 		if (suffix == QLatin1String("aff"))
@@ -120,13 +120,13 @@ void DictionariesPage::openAddons()
 {
 	const QStringList selectedDictionaries(getSelectedDictionaries());
 
-	for (int i = 0; i < selectedDictionaries.count(); ++i)
+	for (const QString &identifier: selectedDictionaries)
 	{
-		const QStringList paths(SpellCheckManager::getDictionary(selectedDictionaries.at(i)).paths);
+		const QStringList paths(SpellCheckManager::getDictionary(identifier).paths);
 
-		for (int j = 0; j < paths.count(); ++j)
+		for (const QString &path: paths)
 		{
-			Utils::runApplication({}, paths.at(j));
+			Utils::runApplication({}, path);
 		}
 	}
 }
@@ -144,9 +144,9 @@ void DictionariesPage::removeAddons()
 
 	m_filesToRemove.reserve(m_filesToRemove.count() + (dictionaries.count() * 2));
 
-	for (int i = 0; i < dictionaries.count(); ++i)
+	for (const QString &identifier: dictionaries)
 	{
-		const SpellCheckManager::Dictionary dictionary(SpellCheckManager::getDictionary(dictionaries.at(i)));
+		const SpellCheckManager::Dictionary dictionary(SpellCheckManager::getDictionary(identifier));
 
 		if (dictionary.isLocalDictionary)
 		{
@@ -200,14 +200,10 @@ void DictionariesPage::save()
 
 	Utils::ensureDirectoryExists(dictionariesPath);
 
-	for (int i = 0; i < m_dictionariesToAdd.count(); ++i)
+	for (const SpellCheckManager::Dictionary &dictionary: std::as_const(m_dictionariesToAdd))
 	{
-		const SpellCheckManager::Dictionary dictionary(m_dictionariesToAdd.at(i));
-
-		for (int j = 0; j < dictionary.paths.count(); ++j)
+		for (const QString &path: dictionary.paths)
 		{
-			const QString path(dictionary.paths.at(j));
-
 			QFile::copy(path, dictionariesDirectory.filePath(dictionary.language + QFileInfo(path).suffix()));
 		}
 	}

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2020 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -19,9 +19,6 @@
 **************************************************************************/
 
 #include "PlatformIntegration.h"
-#include "Application.h"
-#include "Console.h"
-#include "Updater.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QMimeData>
@@ -98,7 +95,7 @@ void PlatformIntegration::showNotification(Notification *notification)
 
 bool PlatformIntegration::installUpdate() const
 {
-	const QString updaterPath(QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + getUpdaterBinary()));
+	/*const QString updaterPath(QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + getUpdaterBinary()));
 	const QString scriptPath(Updater::getScriptPath());
 
 	if (Updater::isReadyToInstall(scriptPath) && QFileInfo(updaterPath).isExecutable())
@@ -117,7 +114,7 @@ bool PlatformIntegration::installUpdate() const
 
 	QMessageBox::critical(nullptr, tr("Error"), tr("Failed to install update."), QMessageBox::Close);
 
-	Updater::clearUpdate();
+	Updater::clearUpdate();*/
 
 	return false;
 }

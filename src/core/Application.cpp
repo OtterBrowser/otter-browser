@@ -41,7 +41,6 @@
 #include "ThemesManager.h"
 #include "TransfersManager.h"
 #include "Utils.h"
-#include "Updater.h"
 #include "WebBackend.h"
 #ifdef Q_OS_WIN
 #include "../modules/platforms/windows/WindowsPlatformIntegration.h"
@@ -59,7 +58,6 @@
 #include "../ui/SessionsManagerDialog.h"
 #include "../ui/Style.h"
 #include "../ui/TrayIcon.h"
-#include "../ui/UpdateCheckerDialog.h"
 #include "../ui/Window.h"
 
 #include <QtCore/QCryptographicHash>
@@ -213,7 +211,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	}
 
 	profilePath = QDir::toNativeSeparators(QFileInfo(profilePath).absoluteFilePath());
-
+///TODO warn if configured backend is not available and ask what to do
 	if (m_commandLineParser.isSet(QLatin1String("cache")))
 	{
 		cachePath = m_commandLineParser.value(QLatin1String("cache"));
@@ -468,7 +466,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	m_platformIntegration = new FreeDesktopOrgPlatformIntegration(this);
 #endif
 
-	if (Updater::isReadyToInstall())
+	/*if (Updater::isReadyToInstall())
 	{
 		m_isUpdating = Updater::installUpdate();
 
@@ -486,7 +484,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		connect(new UpdateChecker(this), &UpdateChecker::finished, this, &Application::handleUpdateCheckResult);
 
 		scheduleUpdateCheck(updateCheckInterval);
-	}
+	}*/
 
 	Style *style(ThemesManager::createStyle(SettingsManager::getOption(SettingsManager::Interface_WidgetStyleOption).toString()));
 	QString styleSheet(style->getStyleSheet());
@@ -768,11 +766,11 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 			return;
 		case ActionsManager::CheckForUpdatesAction:
-			{
+			/*{
 				UpdateCheckerDialog *dialog(new UpdateCheckerDialog(m_activeWindow));
 				dialog->setAttribute(Qt::WA_DeleteOnClose, true);
 				dialog->show();
-			}
+			}*/
 
 			return;
 		case ActionsManager::DiagnosticReportAction:
@@ -919,7 +917,7 @@ void Application::removeWindow(MainWindow *mainWindow)
 	}
 }
 
-void Application::scheduleUpdateCheck(quint64 interval)
+/*void Application::scheduleUpdateCheck(quint64 interval)
 {
 	if (m_updateCheckTimer)
 	{
@@ -942,7 +940,7 @@ void Application::scheduleUpdateCheck(quint64 interval)
 			scheduleUpdateCheck(interval);
 		}
 	});
-}
+}*/
 
 void Application::handleOptionChanged(int identifier, const QVariant &value)
 {
@@ -1190,7 +1188,7 @@ void Application::handlePositionalArguments(QCommandLineParser *parser, bool for
 	}
 }
 
-void Application::handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInformation> &availableUpdates, int latestVersionIndex)
+/*void Application::handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInformation> &availableUpdates, int latestVersionIndex)
 {
 	if (availableUpdates.isEmpty())
 	{
@@ -1218,7 +1216,7 @@ void Application::handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInf
 		UpdateCheckerDialog *dialog(new UpdateCheckerDialog(nullptr, availableUpdates));
 		dialog->show();
 	});
-}
+}*/
 
 void Application::showNotification(Notification *notification)
 {

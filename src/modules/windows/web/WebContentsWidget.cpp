@@ -930,17 +930,15 @@ void WebContentsWidget::handlePermissionRequest(WebWidget::FeaturePermission fea
 
 	if (isCancellation)
 	{
-		for (int i = 0; i < m_permissionBarWidgets.count(); ++i)
+		for (PermissionBarWidget *widget: std::as_const(m_permissionBarWidgets))
 		{
-			PermissionBarWidget *widget(m_permissionBarWidgets.at(i));
-
 			if (widget->hasMatch(feature, url))
 			{
 				m_layout->removeWidget(widget);
 
 				widget->deleteLater();
 
-				m_permissionBarWidgets.removeAt(i);
+				m_permissionBarWidgets.removeAll(widget);
 
 				break;
 			}
@@ -949,9 +947,9 @@ void WebContentsWidget::handlePermissionRequest(WebWidget::FeaturePermission fea
 		return;
 	}
 
-	for (PermissionBarWidget *permissionBarWidget: std::as_const(m_permissionBarWidgets))
+	for (PermissionBarWidget *widget: std::as_const(m_permissionBarWidgets))
 	{
-		if (permissionBarWidget->hasMatch(feature, url))
+		if (widget->hasMatch(feature, url))
 		{
 			return;
 		}

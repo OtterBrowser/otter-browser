@@ -95,7 +95,7 @@ public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
 
 protected:
-	void scheduleUpdateCheck(quint64 interval);
+//	void scheduleUpdateCheck(quint64 interval);
 	static void setLocale(const QString &locale);
 
 protected slots:
@@ -103,7 +103,7 @@ protected slots:
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleAboutToQuit();
 	void handleNewConnection();
-	void handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInformation> &availableUpdates, int latestVersionIndex);
+//	void handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInformation> &availableUpdates, int latestVersionIndex);
 
 private:
 	Q_DISABLE_COPY(Application)

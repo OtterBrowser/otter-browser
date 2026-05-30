@@ -143,8 +143,6 @@ set(OTTER_SOURCES
 	src/core/ThemesManager.cpp
 	src/core/ToolBarsManager.cpp
 	src/core/TransfersManager.cpp
-	src/core/UpdateChecker.cpp
-	src/core/Updater.cpp
 	src/core/UserScript.cpp
 	src/core/Utils.cpp
 	src/core/WebBackend.cpp
@@ -223,7 +221,6 @@ set(OTTER_SOURCES
 	src/ui/ToolButtonWidget.cpp
 	src/ui/TransferDialog.cpp
 	src/ui/TrayIcon.cpp
-	src/ui/UpdateCheckerDialog.cpp
 	src/ui/WebsiteInformationDialog.cpp
 	src/ui/WebsitePreferencesDialog.cpp
 	src/ui/WebWidget.cpp
@@ -338,7 +335,6 @@ qt_wrap_ui(OTTER_UI
 	src/ui/StartupDialog.ui
 	src/ui/ToolBarDialog.ui
 	src/ui/TransferDialog.ui
-	src/ui/UpdateCheckerDialog.ui
 	src/ui/WebsiteInformationDialog.ui
 	src/ui/WebsitePreferencesDialog.ui
 	src/ui/preferences/AcceptLanguageDialog.ui

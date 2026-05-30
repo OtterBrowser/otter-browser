@@ -57,15 +57,15 @@ KeyboardProfile::KeyboardProfile(const QString &identifier, LoadMode mode) : Jso
 	const QJsonArray contextsArray(JsonSettings(path).array());
 	const bool areSingleKeyShortcutsAllowed((mode == FullMode) ? true : SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool());
 
-	for (int i = 0; i < contextsArray.count(); ++i)
+	for (const QJsonValue &contextValue: contextsArray)
 	{
-		const QJsonArray actionsArray(contextsArray.at(i).toObject().value(QLatin1String("actions")).toArray());
+		const QJsonArray actionsArray(contextValue.toObject().value(QLatin1String("actions")).toArray());
 		QVector<Action> definitions;
 		definitions.reserve(actionsArray.count());
 
-		for (int j = 0; j < actionsArray.count(); ++j)
+		for (const QJsonValue &actionValue: actionsArray)
 		{
-			const QJsonObject actionObject(actionsArray.at(j).toObject());
+			const QJsonObject actionObject(actionValue.toObject());
 			const int action(ActionsManager::getActionIdentifier(actionObject.value(QLatin1String("action")).toString()));
 
 			if (action < 0)
