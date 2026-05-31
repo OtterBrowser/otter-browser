@@ -400,15 +400,15 @@ QVector<QNetworkProxy> NetworkAutomaticProxy::getProxy(const QString &url, const
 	const QStringList proxies(configuration.split(QLatin1Char(';')));
 	QVector<QNetworkProxy> proxiesForQuery;
 
-	for (int i = 0; i < proxies.count(); ++i)
+	for (const QString &proxy: proxies)
 	{
-		const QStringList proxy(proxies.at(i).split(QLatin1Char(':')));
-		QString proxyHost(proxy.at(0));
-		const int proxyCount(proxy.count());
+		const QStringList definition(proxy.split(QLatin1Char(':')));
+		QString proxyHost(definition.at(0));
+		const int proxyCount(definition.count());
 
 		if (proxyCount == 2)
 		{
-			const ushort proxyPort(proxy.at(1).toUShort());
+			const ushort proxyPort(definition.at(1).toUShort());
 
 			if (proxyHost.indexOf(QLatin1String("PROXY"), Qt::CaseInsensitive) == 0)
 			{
@@ -432,7 +432,7 @@ QVector<QNetworkProxy> NetworkAutomaticProxy::getProxy(const QString &url, const
 			continue;
 		}
 
-		Console::addMessage(QCoreApplication::translate("main", "Failed to parse entry of proxy auto-config (PAC): %1").arg(proxies.at(i)), Console::NetworkCategory, Console::ErrorLevel);
+		Console::addMessage(QCoreApplication::translate("main", "Failed to parse entry of proxy auto-config (PAC): %1").arg(proxy), Console::NetworkCategory, Console::ErrorLevel);
 
 		return m_proxies[QLatin1String("ERROR")];
 	}
