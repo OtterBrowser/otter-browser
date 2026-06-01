@@ -553,9 +553,9 @@ void FeedsManager::ensureInitialized()
 
 		file.close();
 
-		for (int i = 0; i < feedsArray.count(); ++i)
+		for (const QJsonValue &feedValue: feedsArray)
 		{
-			const QJsonObject feedObject(feedsArray.at(i).toObject());
+			const QJsonObject feedObject(feedValue.toObject());
 			Feed *feed(createFeed(QUrl(feedObject.value(QLatin1String("url")).toString()), feedObject.value(QLatin1String("title")).toString(), Utils::loadPixmapFromDataUri(feedObject.value(QLatin1String("icon")).toString()), feedObject.value(QLatin1String("updateInterval")).toInt()));
 			feed->setDescription(feedObject.value(QLatin1String("description")).toString());
 			feed->setLastUpdateTime(QDateTime::fromString(feedObject.value(QLatin1String("lastUpdateTime")).toString(), Qt::ISODate));
@@ -580,9 +580,9 @@ void FeedsManager::ensureInitialized()
 			QVector<Feed::Entry> entries;
 			entries.reserve(entriesArray.count());
 
-			for (int j = 0; j < entriesArray.count(); ++j)
+			for (const QJsonValue &entryValue: entriesArray)
 			{
-				const QJsonObject entryObject(entriesArray.at(j).toObject());
+				const QJsonObject entryObject(entryValue.toObject());
 				Feed::Entry entry;
 				entry.identifier = entryObject.value(QLatin1String("identifier")).toString();
 				entry.title = entryObject.value(QLatin1String("title")).toString();
