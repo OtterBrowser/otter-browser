@@ -593,9 +593,9 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 
 	file.close();
 
-	for (int i = 0; i < toolBarsArray.count(); ++i)
+	for (const QJsonValue &toolBarValue: toolBarsArray)
 	{
-		const QJsonObject toolBarObject(toolBarsArray.at(i).toObject());
+		const QJsonObject toolBarObject(toolBarValue.toObject());
 		const QJsonArray actionsArray(toolBarObject.value(QLatin1String("actions")).toArray());
 		const QString identifier(toolBarObject.value(QLatin1String("identifier")).toString());
 		const QString location(toolBarObject.value(QLatin1String("location")).toString());
