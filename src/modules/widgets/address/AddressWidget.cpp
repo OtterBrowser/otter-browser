@@ -713,7 +713,11 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 	}
 	else if (event->button() == Qt::MiddleButton && text().isEmpty() && !QGuiApplication::clipboard()->text().isEmpty() && SettingsManager::getOption(SettingsManager::AddressField_PasteAndGoOnMiddleClickOption).toBool())
 	{
-		handleUserInput(QGuiApplication::clipboard()->text().trimmed(), SessionsManager::CurrentTabOpen);
+		auto clipboard = QGuiApplication::clipboard();
+		auto mode = QClipboard::Clipboard;
+		if (clipboard->supportsSelection())
+			mode = QClipboard::Selection;
+		handleUserInput(clipboard->text(mode).trimmed(), SessionsManager::CurrentTabOpen);
 
 		event->accept();
 	}
