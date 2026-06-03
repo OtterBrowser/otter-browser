@@ -1604,9 +1604,9 @@ ActionsManager::ActionDefinition::State Application::getActionState(int identifi
 			{
 				const quint64 windowIdentifier(parameters.value(QLatin1String("window")).toULongLong());
 
-				for (int i = 0; i < m_windows.count(); ++i)
+				for (MainWindow *mainWindow: std::as_const(m_windows))
 				{
-					if (m_windows.at(i)->getIdentifier() == windowIdentifier)
+					if (mainWindow->getIdentifier() == windowIdentifier)
 					{
 						state.isEnabled = true;
 
@@ -1729,9 +1729,9 @@ bool Application::canClose()
 
 	int tabsAmount(0);
 
-	for (int i = 0; i < m_windows.count(); ++i)
+	for (MainWindow *mainWindow: std::as_const(m_windows))
 	{
-		tabsAmount += m_windows.at(i)->getWindowCount();
+		tabsAmount += mainWindow->getWindowCount();
 	}
 
 	if (warnQuitMode == QLatin1String("alwaysWarn") || (tabsAmount > 1 && warnQuitMode == QLatin1String("warnOpenTabs")))
