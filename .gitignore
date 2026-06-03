@@ -1,5 +1,9 @@
 *~
 build
+build1
+build2
+build3
+build_qt*
 GeneratedFiles
 release
 Win32
