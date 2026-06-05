@@ -1452,25 +1452,22 @@ QString Application::createReport(ReportOptions options)
 	stream.setFieldAlignment(QTextStream::AlignLeft);
 	stream << QLatin1String("Otter Browser diagnostic report created on ") << QDateTime::currentDateTimeUtc().toString(Qt::ISODate) << QLatin1String("\n\n");
 
-	for (int i = 0; i < report.sections.count(); ++i)
+	for (const DiagnosticReport::Section &section: std::as_const(report.sections))
 	{
-		const DiagnosticReport::Section section(report.sections.at(i));
-
 		stream << section.title << QLatin1String(":\n");
 
-		for (int j = 0; j < section.entries.count(); ++j)
+		for (const QStringList &fields: section.entries)
 		{
-			const QStringList fields(section.entries.at(j));
 			int size(0);
 
 			stream << QLatin1Char('\t');
 
-			for (int k = 0; k < fields.count(); ++k)
+			for (int i = 0; i < fields.count(); ++i)
 			{
-				size = section.fieldWidths.value(k, size);
+				size = section.fieldWidths.value(i, size);
 
 				stream.setFieldWidth(size);
-				stream << fields.at(k);
+				stream << fields.at(i);
 			}
 
 			stream.setFieldWidth(0);
