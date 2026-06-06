@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -524,9 +524,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 Application::~Application()
 {
-	for (int i = 0; i < m_windows.count(); ++i)
+	for (MainWindow *mainWindow: std::as_const(m_windows))
 	{
-		m_windows.at(i)->deleteLater();
+		mainWindow->deleteLater();
 	}
 }
 
@@ -668,10 +668,8 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 			}
 			else
 			{
-				for (int i = 0; i < m_windows.count(); ++i)
+				for (MainWindow *window: std::as_const(m_windows))
 				{
-					MainWindow *window(m_windows.at(i));
-
 					if (window->isPrivate())
 					{
 						window->close();
@@ -724,10 +722,8 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 			{
 				const quint64 windowIdentifier(parameters.value(QLatin1String("window")).toULongLong());
 
-				for (int i = 0; i < m_windows.count(); ++i)
+				for (MainWindow *window: std::as_const(m_windows))
 				{
-					MainWindow *window(m_windows.at(i));
-
 					if (window->getIdentifier() == windowIdentifier)
 					{
 						window->raise();
@@ -836,10 +832,8 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 	{
 		const quint64 windowIdentifier(parameters.value(QLatin1String("window")).toULongLong());
 
-		for (int i = 0; i < m_windows.count(); ++i)
+		for (MainWindow *currentMainWindow: std::as_const(m_windows))
 		{
-			MainWindow *currentMainWindow(m_windows.at(i));
-
 			if (currentMainWindow->getIdentifier() == windowIdentifier)
 			{
 				mainWindow = currentMainWindow;
@@ -1240,10 +1234,8 @@ void Application::setHidden(bool isHidden)
 
 	m_isHidden = isHidden;
 
-	for (int i = 0; i < m_windows.count(); ++i)
+	for (MainWindow *mainWindow: std::as_const(m_windows))
 	{
-		MainWindow *mainWindow(m_windows.at(i));
-
 		if (m_isHidden)
 		{
 			mainWindow->storeWindowState();
