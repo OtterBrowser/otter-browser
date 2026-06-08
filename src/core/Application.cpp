@@ -26,7 +26,6 @@
 #include "GesturesManager.h"
 #include "HandlersManager.h"
 #include "HistoryManager.h"
-#include "LongTermTimer.h"
 #include "Migrator.h"
 #include "NetworkManagerFactory.h"
 #include "NotesManager.h"
