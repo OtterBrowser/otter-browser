@@ -1115,10 +1115,8 @@ void Application::handlePositionalArguments(QCommandLineParser *parser, bool for
 		}
 		else
 		{
-			for (int i = 0; i < urls.count(); ++i)
+			for (const QUrl &url: urls)
 			{
-				const QUrl url(urls.at(i));
-
 				mainWindow = createWindow(parameters);
 
 				if (!url.isEmpty())
@@ -1140,9 +1138,9 @@ void Application::handlePositionalArguments(QCommandLineParser *parser, bool for
 			}
 			else
 			{
-				for (int i = 0; i < urls.count(); ++i)
+				for (const QUrl &url: urls)
 				{
-					mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("needsInterpretation"), true}, {QLatin1String("hints"), QVariant(openHints)}});
+					mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("needsInterpretation"), true}, {QLatin1String("hints"), QVariant(openHints)}});
 				}
 			}
 		}
@@ -1156,9 +1154,9 @@ void Application::handlePositionalArguments(QCommandLineParser *parser, bool for
 				}
 				else
 				{
-					for (int i = 0; i < urls.count(); ++i)
+					for (const QUrl &url: urls)
 					{
-						mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("needsInterpretation"), true}, {QLatin1String("hints"), QVariant(openHints)}});
+						mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("needsInterpretation"), true}, {QLatin1String("hints"), QVariant(openHints)}});
 					}
 				}
 			});
