@@ -298,9 +298,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		AllowSetForegroundWindow(ASFW_ANY);
 #endif
 
-		for (int i = 0; i < arguments.count(); ++i)
+		for (const QString &argument: std::as_const(arguments))
 		{
-			encodedArguments.append(QString::fromLatin1(arguments.at(i).toUtf8().toBase64()));
+			encodedArguments.append(QString::fromLatin1(argument.toUtf8().toBase64()));
 		}
 
 		QTextStream stream(&socket);
@@ -542,9 +542,8 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 			{
 				const QVariantList actions(parameters.value(QLatin1String("actions")).toList());
 
-				for (int i = 0; i < actions.count(); ++i)
+				for (const QVariant &action: actions)
 				{
-					const QVariant action(actions.at(i));
 					QVariant actionIdentifier;
 					QVariantMap actionParameters;
 
@@ -1036,9 +1035,9 @@ void Application::handleNewConnection()
 	QStringList decodedArguments;
 	decodedArguments.reserve(encodedArguments.count());
 
-	for (int i = 0; i < encodedArguments.count(); ++i)
+	for (const QString &argument: encodedArguments)
 	{
-		decodedArguments.append(QString::fromLatin1(QByteArray::fromBase64(encodedArguments.at(i).toUtf8())));
+		decodedArguments.append(QString::fromLatin1(QByteArray::fromBase64(argument.toUtf8())));
 	}
 
 	m_commandLineParser.parse(decodedArguments);
@@ -1063,9 +1062,9 @@ void Application::handleNewConnection()
 		{
 			const QVariantMap parameters({{QLatin1String("hints"), (isPrivate ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen)}});
 
-			for (int i = 0; i < sessionData.windows.count(); ++i)
+			for (const Session::MainWindow &mainWindowSession: sessionData.windows)
 			{
-				createWindow(parameters, sessionData.windows.at(i));
+				createWindow(parameters, mainWindowSession);
 			}
 		}
 	}
