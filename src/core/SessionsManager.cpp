@@ -238,17 +238,17 @@ SessionInformation SessionsManager::getSession(const QString &path)
 	session.index = (settingsObject.value(QLatin1String("currentIndex")).toInt(1) - 1);
 	session.isClean = settingsObject.value(QLatin1String("isClean")).toBool(true);
 
-	for (int i = 0; i < mainWindowsArray.count(); ++i)
+	for (const QJsonValue &mainWindowValue: mainWindowsArray)
 	{
-		const QJsonObject mainWindowObject(mainWindowsArray.at(i).toObject());
+		const QJsonObject mainWindowObject(mainWindowValue.toObject());
 		const QJsonArray windowsArray(mainWindowObject.value(QLatin1String("windows")).toArray());
 		Session::MainWindow sessionMainWindow;
 		sessionMainWindow.geometry = QByteArray::fromBase64(mainWindowObject.value(QLatin1String("geometry")).toString().toLatin1());
 		sessionMainWindow.index = (mainWindowObject.value(QLatin1String("currentIndex")).toInt(1) - 1);
 
-		for (int j = 0; j < windowsArray.count(); ++j)
+		for (const QJsonValue &windowValue: windowsArray)
 		{
-			const QJsonObject windowObject(windowsArray.at(j).toObject());
+			const QJsonObject windowObject(windowValue.toObject());
 			const QJsonArray windowHistoryArray(windowObject.value(QLatin1String("history")).toArray());
 			const QString state(windowObject.value(QLatin1String("state")).toString());
 			Session::Window sessionWindow;
@@ -275,9 +275,9 @@ SessionInformation SessionsManager::getSession(const QString &path)
 				}
 			}
 
-			for (int k = 0; k < windowHistoryArray.count(); ++k)
+			for (const QJsonValue &historyEntryValue: windowHistoryArray)
 			{
-				const QJsonObject historyEntryObject(windowHistoryArray.at(k).toObject());
+				const QJsonObject historyEntryObject(historyEntryValue.toObject());
 				const QStringList position(historyEntryObject.value(QLatin1String("position")).toString().split(QLatin1Char(',')));
 				Session::Window::History::Entry historyEntry;
 				historyEntry.url = historyEntryObject.value(QLatin1String("url")).toString();
@@ -305,9 +305,9 @@ SessionInformation SessionsManager::getSession(const QString &path)
 		{
 			const QJsonArray splittersArray(mainWindowObject.value(QLatin1String("splitters")).toArray());
 
-			for (int j = 0; j < splittersArray.count(); ++j)
+			for (const QJsonValue &splitterValue: splittersArray)
 			{
-				const QJsonObject splitterObject(splittersArray.at(j).toObject());
+				const QJsonObject splitterObject(splitterValue.toObject());
 				const QVariantList rawSizes(splitterObject.value(QLatin1String("sizes")).toVariant().toList());
 				QVector<int> sizes;
 				sizes.reserve(rawSizes.count());
@@ -330,9 +330,9 @@ SessionInformation SessionsManager::getSession(const QString &path)
 			sessionMainWindow.hasToolBarsState = true;
 			sessionMainWindow.toolBars.reserve(toolBarsArray.count());
 
-			for (int j = 0; j < toolBarsArray.count(); ++j)
+			for (const QJsonValue &toolBarValue: toolBarsArray)
 			{
-				const QJsonObject toolBarObject(toolBarsArray.at(j).toObject());
+				const QJsonObject toolBarObject(toolBarValue.toObject());
 				const QString toolBarIdentifier(toolBarObject.value(QLatin1String("identifier")).toString());
 				Session::MainWindow::ToolBarState toolBarState;
 				toolBarState.identifier = ToolBarsManager::getToolBarIdentifier(toolBarIdentifier);
