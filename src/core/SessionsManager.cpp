@@ -476,7 +476,7 @@ SessionsManager::OpenHints SessionsManager::calculateOpenHints(OpenHints hints, 
 		return ((useNewTab ? NewTabOpen : NewWindowOpen) | BackgroundOpen | EndOpen);
 	}
 
-	if (modifiers.testFlag(Qt::ControlModifier) || button == Qt::MiddleButton)
+	if (button == Qt::MiddleButton || modifiers.testFlag(Qt::ControlModifier))
 	{
 		return ((useNewTab ? NewTabOpen : NewWindowOpen) | BackgroundOpen);
 	}
