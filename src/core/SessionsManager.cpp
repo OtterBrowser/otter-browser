@@ -419,9 +419,7 @@ QStringList SessionsManager::getClosedWindows()
 
 	for (const Session::MainWindow &window: std::as_const(m_closedWindows))
 	{
-		const QString title(window.windows.value(window.index, Session::Window()).getTitle());
-
-		closedWindows.append(title.isEmpty() ? tr("(Untitled)") : title);
+		closedWindows.append(window.windows.value(window.index, Session::Window()).getTitle());
 	}
 
 	return closedWindows;
