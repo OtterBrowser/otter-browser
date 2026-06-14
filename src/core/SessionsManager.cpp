@@ -433,13 +433,13 @@ QStringList SessionsManager::getSessions()
 
 	bool containsCurrentSession(false);
 
-	for (int i = 0; i < entries.count(); ++i)
+	for (const QFileInfo &entry: entries)
 	{
-		const QString entry(entries.at(i).completeBaseName());
+		const QString path(entry.completeBaseName());
 
-		sessions.append(entry);
+		sessions.append(path);
 
-		if (entry == m_sessionPath)
+		if (path == m_sessionPath)
 		{
 			containsCurrentSession = true;
 		}
