@@ -467,26 +467,26 @@ QVector<Session::Identity> SessionsManager::getIdentities()
 
 SessionsManager::OpenHints SessionsManager::calculateOpenHints(OpenHints hints, Qt::MouseButton button, Qt::KeyboardModifiers modifiers)
 {
-	const bool useNewTab(!hints.testFlag(NewWindowOpen) && SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool());
+	const OpenHint openTypeHint((!hints.testFlag(NewWindowOpen) && SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool()) ? NewTabOpen : NewWindowOpen);
 
 	if (button == Qt::MiddleButton && modifiers.testFlag(Qt::AltModifier))
 	{
-		return ((useNewTab ? NewTabOpen : NewWindowOpen) | BackgroundOpen | EndOpen);
+		return (openTypeHint | BackgroundOpen | EndOpen);
 	}
 
 	if (button == Qt::MiddleButton || modifiers.testFlag(Qt::ControlModifier))
 	{
-		return ((useNewTab ? NewTabOpen : NewWindowOpen) | BackgroundOpen);
+		return (openTypeHint | BackgroundOpen);
 	}
 
 	if (modifiers.testFlag(Qt::ShiftModifier))
 	{
-		return (useNewTab ? NewTabOpen : NewWindowOpen);
+		return openTypeHint;
 	}
 
 	if (hints.testFlag(NewTabOpen) && !hints.testFlag(NewWindowOpen))
 	{
-		return (useNewTab ? NewTabOpen : NewWindowOpen);
+		return openTypeHint;
 	}
 
 	if (SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool())
