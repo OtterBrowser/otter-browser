@@ -479,12 +479,7 @@ SessionsManager::OpenHints SessionsManager::calculateOpenHints(OpenHints hints, 
 		return (openTypeHint | BackgroundOpen);
 	}
 
-	if (modifiers.testFlag(Qt::ShiftModifier))
-	{
-		return openTypeHint;
-	}
-
-	if (hints.testFlag(NewTabOpen) && !hints.testFlag(NewWindowOpen))
+	if (modifiers.testFlag(Qt::ShiftModifier) || (hints.testFlag(NewTabOpen) && !hints.testFlag(NewWindowOpen)))
 	{
 		return openTypeHint;
 	}
