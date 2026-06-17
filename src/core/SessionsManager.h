@@ -268,7 +268,7 @@ public:
 	static OpenHints calculateOpenHints(const QVariantMap &parameters, bool ignoreModifiers = false);
 	static bool restoreClosedWindow(int index = 0);
 	static bool restoreSession(const SessionInformation &session, MainWindow *mainWindow = nullptr, bool isPrivate = false);
-	static bool saveSession(const QString &path = {}, const QString &title = {}, MainWindow *mainWindow = nullptr, bool isClean = true);
+    static bool saveSession(const QString &path = {}, const QString &title = {}, MainWindow *mainWindow = nullptr, bool isClean = true, bool includePrivate = false);
 	static bool saveSession(const SessionInformation &session);
 	static bool deleteSession(const QString &path = {});
 	static bool isPrivate();

@@ -580,7 +580,7 @@ bool SessionsManager::restoreSession(const SessionInformation &session, MainWind
 	return true;
 }
 
-bool SessionsManager::saveSession(const QString &path, const QString &title, MainWindow *mainWindow, bool isClean)
+bool SessionsManager::saveSession(const QString &path, const QString &title, MainWindow *mainWindow, bool isClean, bool includePrivate)
 {
 	if (m_isPrivate && path.isEmpty())
 	{
@@ -607,7 +607,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 
 	for (MainWindow *window: std::as_const(windows))
 	{
-		if (!window->isPrivate())
+		if (includePrivate || !window->isPrivate())
 		{
 			session.windows.append(window->getSession());
 		}
