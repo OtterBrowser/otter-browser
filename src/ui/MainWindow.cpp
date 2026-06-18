@@ -1035,9 +1035,12 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 
 							m_menuBar->show();
 						}
-						else if (!isChecked && (m_menuBar && m_menuBar->isVisible()))
+						else if (!isChecked && m_menuBar)
 						{
-							m_menuBar->hide();
+							m_menuBar->deleteLater();
+							m_menuBar = nullptr;
+
+							setMenuBar(nullptr);
 						}
 
 						break;
