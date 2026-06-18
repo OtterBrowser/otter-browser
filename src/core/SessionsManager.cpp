@@ -609,7 +609,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 	{
 		if (includePrivate || !window->isPrivate())
 		{
-			session.windows.append(window->getSession());
+			session.windows.append(window->getSession(includePrivate));
 		}
 	}
 

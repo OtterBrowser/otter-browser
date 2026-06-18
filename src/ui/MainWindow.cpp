@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -2509,7 +2509,7 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 	return state;
 }
 
-Session::MainWindow MainWindow::getSession() const
+Session::MainWindow MainWindow::getSession(bool includePrivate) const
 {
 	const QVector<Qt::ToolBarArea> areas({Qt::LeftToolBarArea, Qt::RightToolBarArea, Qt::TopToolBarArea, Qt::BottomToolBarArea});
 	Session::MainWindow session;
@@ -2551,7 +2551,7 @@ Session::MainWindow MainWindow::getSession() const
 	{
 		const Window *window(getWindowByIndex(i));
 
-		if (window && !window->isPrivate())
+		if (window && (includePrivate || !window->isPrivate()))
 		{
 			session.windows.append(window->getSession());
 		}

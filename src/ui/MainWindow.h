@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -77,7 +77,7 @@ public:
 	QString getTitle() const;
 	QUrl getUrl() const;
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
-	Session::MainWindow getSession() const;
+	Session::MainWindow getSession(bool includePrivate = false) const;
 	Session::MainWindow::ToolBarState getToolBarState(int identifier) const;
 	QVector<ToolBarWidget*> getToolBars(Qt::ToolBarArea area) const;
 	QVector<Session::ClosedWindow> getClosedWindows() const;
