@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -59,9 +59,9 @@ void QtWebKitFrame::runUserScripts(const QUrl &url) const
 {
 	const QVector<UserScript*> scripts(UserScript::getUserScriptsForUrl(url, UserScript::AnyTime, (m_frame->parentFrame() != nullptr)));
 
-	for (int i = 0; i < scripts.count(); ++i)
+	for (UserScript *script: scripts)
 	{
-		m_frame->documentElement().evaluateJavaScript(scripts.at(i)->getSource());
+		m_frame->documentElement().evaluateJavaScript(script->getSource());
 	}
 }
 
@@ -144,10 +144,8 @@ void QtWebKitFrame::handleLoadFinished()
 			QWebElement element(elements.at(i));
 			const QUrl url(element.attribute(QLatin1String("src")));
 
-			for (int j = 0; j < blockedRequests.count(); ++j)
+			for (const QString &blockedRequest: blockedRequests)
 			{
-				const QString blockedRequest(blockedRequests.at(j));
-
 				if (url.matches(QUrl(blockedRequest), QUrl::None) || blockedRequest.endsWith(url.url()))
 				{
 					element.setStyleProperty(QLatin1String("display"), QLatin1String("none !important"));
@@ -877,9 +875,9 @@ bool QtWebKitPage::extension(Extension extension, const ExtensionOption *option,
 
 			const QVector<WebWidget::SslInformation::SslError> sslErrors(m_widget->getSslInformation().errors);
 
-			for (int i = 0; i < sslErrors.count(); ++i)
+			for (const WebWidget::SslInformation::SslError &sslError: sslErrors)
 			{
-				information.description.append(sslErrors.at(i).error.errorString());
+				information.description.append(sslError.error.errorString());
 			}
 		}
 		else if (errorOption->domain == QtNetwork && errorOption->error == QNetworkReply::QNetworkReply::ProtocolUnknownError)
@@ -888,10 +886,8 @@ bool QtWebKitPage::extension(Extension extension, const ExtensionOption *option,
 			const QVector<NetworkManager::ResourceInformation> blockedRequests(m_networkManager->getBlockedRequests());
 			bool isBlockedContent(false);
 
-			for (int i = 0; i < blockedRequests.count(); ++i)
+			for (const NetworkManager::ResourceInformation &blockedRequest: blockedRequests)
 			{
-				const NetworkManager::ResourceInformation blockedRequest(blockedRequests.at(i));
-
 				if (blockedRequest.resourceType == NetworkManager::MainFrameType && Utils::normalizeUrl(blockedRequest.url) == normalizedUrl)
 				{
 					isBlockedContent = true;
