@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -166,9 +166,8 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 						url = url.adjusted(QUrl::RemoveFilename);
 					}
 
-					for (int i = 0; i < rawEntries.count(); ++i)
+					for (const QUrlInfo &rawEntry: rawEntries)
 					{
-						const QUrlInfo rawEntry(rawEntries.at(i));
 						ListingEntry entry;
 						entry.name = rawEntry.name();
 						entry.url = normalizedUrl.url() + QLatin1Char('/') + rawEntry.name();
