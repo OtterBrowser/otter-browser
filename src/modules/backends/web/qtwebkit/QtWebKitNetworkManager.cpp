@@ -155,10 +155,8 @@ void QtWebKitNetworkManager::resetStatistics()
 
 	updateLoadingSpeed();
 
-	for (int i = 0; i < keys.count(); ++i)
+	for (const WebWidget::PageInformation key: keys)
 	{
-		const WebWidget::PageInformation key(keys.at(i));
-
 		emit pageInformationChanged(key, m_pageInformation.value(key));
 	}
 
@@ -273,10 +271,8 @@ void QtWebKitNetworkManager::handleRequestFinished(QNetworkReply *reply)
 
 		const QList<QNetworkReply::RawHeaderPair> rawHeaders(m_baseReply->rawHeaderPairs());
 
-		for (int i = 0; i < rawHeaders.count(); ++i)
+		for (const QNetworkReply::RawHeaderPair &rawHeader: rawHeaders)
 		{
-			const QNetworkReply::RawHeaderPair rawHeader(rawHeaders.at(i));
-
 			m_headers[rawHeader.first] = rawHeader.second;
 		}
 
@@ -371,10 +367,8 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 	const QStringList exceptions(m_widget->getOption(SettingsManager::Security_IgnoreSslErrorsOption, m_widget->getUrl()).toStringList());
 	QList<QSslError> errorsToIgnore;
 
-	for (int i = 0; i < errors.count(); ++i)
+	for (const QSslError &error: errors)
 	{
-		const QSslError error(errors.at(i));
-
 		if (error.error() == QSslError::NoError)
 		{
 			continue;
@@ -632,9 +626,9 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 				password.fields.reserve(fieldsArray.count());
 				password.type = PasswordsManager::FormPassword;
 
-				for (int i = 0; i < fieldsArray.count(); ++i)
+				for (const QJsonValue &fieldValue: fieldsArray)
 				{
-					const QJsonObject fieldObject(fieldsArray.at(i).toObject());
+					const QJsonObject fieldObject(fieldValue.toObject());
 					PasswordsManager::Password::Field field;
 					field.name = fieldObject.value(QLatin1String("name")).toString();
 					field.value = fieldObject.value(QLatin1String("value")).toString();
