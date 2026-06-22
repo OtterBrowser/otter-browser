@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -213,7 +213,7 @@ void ContentPreferencesPage::load()
 	fontsModel->setHorizontalHeaderLabels({tr("Style"), tr("Font"), tr("Preview")});
 	fontsModel->setHeaderData(2, Qt::Horizontal, 300, HeaderViewWidget::WidthRole);
 
-	const QVector<QLatin1String> fonts({QLatin1String("StandardFont"), QLatin1String("FixedFont"), QLatin1String("SerifFont"), QLatin1String("SansSerifFont"), QLatin1String("CursiveFont"), QLatin1String("FantasyFont")});
+	const QStringList fonts({QLatin1String("StandardFont"), QLatin1String("FixedFont"), QLatin1String("SerifFont"), QLatin1String("SansSerifFont"), QLatin1String("CursiveFont"), QLatin1String("FantasyFont")});
 	const QStringList fontCategories({tr("Standard font"), tr("Fixed-width font"), tr("Serif font"), tr("Sans-serif font"), tr("Cursive font"), tr("Fantasy font")});
 
 	for (int i = 0; i < fonts.count(); ++i)
@@ -237,7 +237,7 @@ void ContentPreferencesPage::load()
 	colorsModel->setHorizontalHeaderLabels({tr("Type"), tr("Preview")});
 	colorsModel->setHeaderData(0, Qt::Horizontal, 300, HeaderViewWidget::WidthRole);
 
-	const QVector<QLatin1String> colors({QLatin1String("BackgroundColor"), QLatin1String("TextColor"), QLatin1String("LinkColor"), QLatin1String("VisitedLinkColor")});
+	const QStringList colors({QLatin1String("BackgroundColor"), QLatin1String("TextColor"), QLatin1String("LinkColor"), QLatin1String("VisitedLinkColor")});
 	const QStringList colorTypes({tr("Background Color"), tr("Text Color"), tr("Link Color"), tr("Visited Link Color")});
 
 	for (int i = 0; i < colors.count(); ++i)
