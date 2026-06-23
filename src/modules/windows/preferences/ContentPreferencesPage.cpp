@@ -213,14 +213,20 @@ void ContentPreferencesPage::load()
 	fontsModel->setHorizontalHeaderLabels({tr("Style"), tr("Font"), tr("Preview")});
 	fontsModel->setHeaderData(2, Qt::Horizontal, 300, HeaderViewWidget::WidthRole);
 
-	const QStringList fonts({QLatin1String("StandardFont"), QLatin1String("FixedFont"), QLatin1String("SerifFont"), QLatin1String("SansSerifFont"), QLatin1String("CursiveFont"), QLatin1String("FantasyFont")});
-	const QStringList fontCategories({tr("Standard font"), tr("Fixed-width font"), tr("Serif font"), tr("Sans-serif font"), tr("Cursive font"), tr("Fantasy font")});
+	const QVector<TypeDescription> fonts({
+		{QLatin1String("StandardFont"), tr("Standard font")},
+		{QLatin1String("FixedFont"), tr("Fixed-width font")},
+		{QLatin1String("SerifFont"), tr("Serif font")},
+		{QLatin1String("SansSerifFont"), tr("Sans-serif font")},
+		{QLatin1String("CursiveFont"), tr("Cursive font")},
+		{QLatin1String("FantasyFont"), tr("Fantasy font")}
+	});
 
-	for (int i = 0; i < fonts.count(); ++i)
+	for (const TypeDescription &font: fonts)
 	{
-		const QString optionName(QLatin1String("Content/") + fonts.at(i));
+		const QString optionName(QLatin1String("Content/") + font.type);
 		const QString family(SettingsManager::getOption(SettingsManager::getOptionIdentifier(optionName)).toString());
-		QList<QStandardItem*> items({new QStandardItem(fontCategories.at(i)), new QStandardItem(family), new QStandardItem(tr("The quick brown fox jumps over the lazy dog"))});
+		QList<QStandardItem*> items({new QStandardItem(font.title), new QStandardItem(family), new QStandardItem(tr("The quick brown fox jumps over the lazy dog"))});
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 		items[1]->setData(optionName, Qt::UserRole);
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
@@ -237,13 +243,17 @@ void ContentPreferencesPage::load()
 	colorsModel->setHorizontalHeaderLabels({tr("Type"), tr("Preview")});
 	colorsModel->setHeaderData(0, Qt::Horizontal, 300, HeaderViewWidget::WidthRole);
 
-	const QStringList colors({QLatin1String("BackgroundColor"), QLatin1String("TextColor"), QLatin1String("LinkColor"), QLatin1String("VisitedLinkColor")});
-	const QStringList colorTypes({tr("Background Color"), tr("Text Color"), tr("Link Color"), tr("Visited Link Color")});
+	const QVector<TypeDescription> colors({
+		{QLatin1String("BackgroundColor"), tr("Background Color")},
+		{QLatin1String("TextColor"), tr("Text Color")},
+		{QLatin1String("LinkColor"), tr("Link Color")},
+		{QLatin1String("VisitedLinkColor"), tr("Visited Link Color")}
+	});
 
-	for (int i = 0; i < colors.count(); ++i)
+	for (const TypeDescription &color: colors)
 	{
-		const QString optionName(QLatin1String("Content/") + colors.at(i));
-		QList<QStandardItem*> items({new QStandardItem(colorTypes.at(i)), new QStandardItem(SettingsManager::getOption(SettingsManager::getOptionIdentifier(optionName)).toString())});
+		const QString optionName(QLatin1String("Content/") + color.type);
+		QList<QStandardItem*> items({new QStandardItem(color.title), new QStandardItem(SettingsManager::getOption(SettingsManager::getOptionIdentifier(optionName)).toString())});
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 		items[1]->setData(optionName, Qt::UserRole);
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);

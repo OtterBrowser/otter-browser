@@ -71,6 +71,12 @@ public slots:
 	void save() override;
 
 protected:
+	struct TypeDescription final
+	{
+		QString type;
+		QString title;
+	};
+
 	void changeEvent(QEvent *event) override;
 	void updateStyle();
 
