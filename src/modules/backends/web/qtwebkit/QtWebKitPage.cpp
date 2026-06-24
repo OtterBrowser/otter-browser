@@ -70,10 +70,8 @@ void QtWebKitFrame::applyContentBlockingRules(const QStringList &rules, bool isH
 	const QString value(isHiding ? QLatin1String("none !important") : QString());
 	const QWebElementCollection elements(m_frame->documentElement().findAll(rules.join(QLatin1Char(','))));
 
-	for (int i = 0; i < elements.count(); ++i)
+	for (QWebElement element: elements)
 	{
-		QWebElement element(elements.at(i));
-
 		if (!element.isNull())
 		{
 			element.setStyleProperty(QLatin1String("display"), value);
@@ -139,9 +137,8 @@ void QtWebKitFrame::handleLoadFinished()
 	{
 		const QWebElementCollection elements(m_frame->documentElement().findAll(QLatin1String("[src]")));
 
-		for (int i = 0; i < elements.count(); ++i)
+		for (QWebElement element: elements)
 		{
-			QWebElement element(elements.at(i));
 			const QUrl url(element.attribute(QLatin1String("src")));
 
 			for (const QString &blockedRequest: blockedRequests)
