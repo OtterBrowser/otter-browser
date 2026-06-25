@@ -520,9 +520,8 @@ SessionsManager::OpenHints SessionsManager::calculateOpenHints(const QVariantMap
 	const QStringList rawHints(parameters[QLatin1String("hints")].toStringList());
 	OpenHints hints(DefaultOpen);
 
-	for (int i = 0; i < rawHints.count(); ++i)
+	for (QString hint: rawHints)
 	{
-		QString hint(rawHints.at(i));
 		hint[0] = hint[0].toUpper();
 
 		hints |= static_cast<OpenHint>(mapper.mapToValue(hint));
