@@ -15,3 +15,6 @@ debug
 *.user
 .kde4
 *.kde4
+.*.swp
+.*.swo
+.gdb_history
