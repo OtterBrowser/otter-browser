@@ -53,11 +53,11 @@ Feed::Feed(const QString &title, const QUrl &url, const QIcon &icon, int updateI
 
 void Feed::markEntryAsRead(const QString &identifier)
 {
-	for (int i = 0; i < m_entries.count(); ++i)
+	for (Entry &entry: m_entries)
 	{
-		if (m_entries.at(i).identifier == identifier)
+		if (entry.identifier == identifier)
 		{
-			m_entries[i].lastReadTime = QDateTime::currentDateTimeUtc();
+			entry.lastReadTime = QDateTime::currentDateTimeUtc();
 
 			emit feedModified(this);
 
@@ -70,11 +70,11 @@ void Feed::markAllEntriesAsRead()
 {
 	const QDateTime currentDateTime(QDateTime::currentDateTimeUtc());
 
-	for (int i = 0; i < m_entries.count(); ++i)
+	for (Entry &entry: m_entries)
 	{
-		if (!m_entries.at(i).lastReadTime.isValid())
+		if (!entry.lastReadTime.isValid())
 		{
-			m_entries[i].lastReadTime = currentDateTime;
+			entry.lastReadTime = currentDateTime;
 		}
 	}
 
