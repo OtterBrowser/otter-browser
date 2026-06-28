@@ -71,9 +71,9 @@ void FilePasswordsStorageBackend::ensureInitialized()
 		QVector<PasswordsManager::Password> hostPasswords;
 		hostPasswords.reserve(passwordsArray.count());
 
-		for (int i = 0; i < passwordsArray.count(); ++i)
+		for (const QJsonValue &passwordValue: passwordsArray)
 		{
-			const QJsonObject passwordObject(passwordsArray.at(i).toObject());
+			const QJsonObject passwordObject(passwordValue.toObject());
 			const QJsonArray fieldsArray(passwordObject.value(QLatin1String("fields")).toArray());
 			PasswordsManager::Password password;
 			password.url = QUrl(passwordObject.value(QLatin1String("url")).toString());
@@ -84,9 +84,9 @@ void FilePasswordsStorageBackend::ensureInitialized()
 			password.type = ((passwordObject.value(QLatin1String("type")).toString() == QLatin1String("auth")) ? PasswordsManager::AuthPassword : PasswordsManager::FormPassword);
 			password.fields.reserve(fieldsArray.count());
 
-			for (int j = 0; j < fieldsArray.count(); ++j)
+			for (const QJsonValue &fieldValue: fieldsArray)
 			{
-				const QJsonObject fieldObject(fieldsArray.at(j).toObject());
+				const QJsonObject fieldObject(fieldValue.toObject());
 				PasswordsManager::Password::Field field;
 				field.name = fieldObject.value(fieldObject.contains(QLatin1String("name")) ? QLatin1String("name") : QLatin1String("key")).toString();
 				field.value = fieldObject.value(QLatin1String("value")).toString();
@@ -128,15 +128,12 @@ void FilePasswordsStorageBackend::save()
 		QJsonArray passwordsArray;
 		const QVector<PasswordsManager::Password> passwords(hostsIterator.value());
 
-		for (int i = 0; i < passwords.count(); ++i)
+		for (const PasswordsManager::Password &password: passwords)
 		{
-			const PasswordsManager::Password password(passwords.at(i));
 			QJsonArray fieldsArray;
 
-			for (int j = 0; j < password.fields.count(); ++j)
+			for (const PasswordsManager::Password::Field &field: password.fields)
 			{
-				const PasswordsManager::Password::Field field(password.fields.at(j));
-
 				fieldsArray.append(QJsonObject({{QLatin1String("name"), field.name}, {QLatin1String("value"), field.value}, {QLatin1String("type"), ((field.type == PasswordsManager::PasswordField) ? QLatin1String("password") : QLatin1String("text"))}}));
 			}
 
@@ -399,9 +396,9 @@ PasswordsManager::PasswordMatch FilePasswordsStorageBackend::hasPassword(const P
 
 	const QVector<PasswordsManager::Password> passwords(m_passwords[host]);
 
-	for (int i = 0; i < passwords.count(); ++i)
+	for (const PasswordsManager::Password &password: passwords)
 	{
-		const PasswordsManager::PasswordMatch match(comparePasswords(password, passwords.at(i)));
+		const PasswordsManager::PasswordMatch match(comparePasswords(password, password));
 
 		if (match != PasswordsManager::NoMatch)
 		{
@@ -428,9 +425,9 @@ bool FilePasswordsStorageBackend::hasPasswords(const QUrl &url, PasswordsManager
 	{
 		const QVector<PasswordsManager::Password> passwords(m_passwords[host]);
 
-		for (int i = 0; i < passwords.count(); ++i)
+		for (const PasswordsManager::Password &password: passwords)
 		{
-			if (types.testFlag(passwords.at(i).type))
+			if (types.testFlag(password.type))
 			{
 				return true;
 			}
