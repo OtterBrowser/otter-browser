@@ -186,9 +186,9 @@ void AddressCompletionModel::updateModel()
 		const QStringList specialPages(AddonsManager::getSpecialPages());
 		bool headerWasAdded(!m_showCompletionCategories);
 
-		for (int i = 0; i < specialPages.count(); ++i)
+		for (const QString &specialPage: specialPages)
 		{
-			const AddonsManager::SpecialPageInformation information(AddonsManager::getSpecialPage(specialPages.at(i)));
+			const AddonsManager::SpecialPageInformation information(AddonsManager::getSpecialPage(specialPage));
 
 			if (information.url.toString().startsWith(m_filter))
 			{
