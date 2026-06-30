@@ -70,9 +70,9 @@ ColorScheme::ColorScheme(const QString &name, QObject *parent) : QObject(parent)
 	const EnumeratorMapper enumeratorMapper(staticMetaObject.enumerator(m_colorRoleEnumerator), QLatin1String("Role"));
 	const QJsonArray colorsArray(QJsonDocument::fromJson(file.readAll()).array());
 
-	for (int i = 0; i < colorsArray.count(); ++i)
+	for (const QJsonValue &colorsValue: colorsArray)
 	{
-		const QJsonObject colorRoleObject(colorsArray.at(i).toObject());
+		const QJsonObject colorRoleObject(colorsValue.toObject());
 		ColorRoleInformation colorRoleInformation;
 		colorRoleInformation.active = QColor(colorRoleObject.value(QLatin1String("active")).toString());
 		colorRoleInformation.disabled = QColor(colorRoleObject.value(QLatin1String("disabled")).toString());
