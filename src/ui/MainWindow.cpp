@@ -35,6 +35,7 @@
 #include "ToolBarWidget.h"
 #include "WidgetFactory.h"
 #include "Window.h"
+#include "WindowControlsWidget.h"
 #include "WorkspaceWidget.h"
 #include "../core/ActionsManager.h"
 #include "../core/Application.h"
@@ -55,6 +56,8 @@
 
 #include <QtCore/QTimer>
 #include <QtGui/QCloseEvent>
+#include <QtGui/QWindow>
+#include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QMessageBox>
 
@@ -69,7 +72,11 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 	m_tabBar(new TabBarWidget(this)),
 	m_menuBar(nullptr),
 	m_statusBar(nullptr),
+	m_windowControls(nullptr),
+	m_windowControlsAction(nullptr),
 	m_activeWindow(nullptr),
+	m_resizeEdges(Qt::Edges()),
+	m_wasMaximized(false),
 	m_identifier(++m_identifierCounter),
 	m_mouseTrackerTimer(0),
 	m_tabSwitchingOrderIndex(-1),
@@ -77,9 +84,17 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 	m_isDraggingToolBar(false),
 	m_isPrivate((SessionsManager::isPrivate() || SettingsManager::getOption(SettingsManager::Browser_PrivateModeOption).toBool() || SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen))),
 	m_isSessionRestored(false),
+	m_customDecorationApplicationEventFilterInstalled(false),
 	m_ui(new Ui::MainWindow)
 {
 	m_ui->setupUi(this);
+
+	if (isCustomDecorationEnabled())
+	{
+		setWindowFlag(Qt::FramelessWindowHint, true);
+		setMouseTracking(true);
+		setAttribute(Qt::WA_Hover, true);
+	}
 
 	installGesturesFilter(this, this);
 	setUnifiedTitleAndToolBarOnMac(true);
@@ -206,6 +221,12 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarRemoved, this, &MainWindow::handleToolBarRemoved);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, &MainWindow::handleTransferStarted);
 	connect(m_workspace, &WorkspaceWidget::arbitraryActionsStateChanged, this, &MainWindow::arbitraryActionsStateChanged);
+	
+	// Update window controls placement when active window changes
+	connect(this, &MainWindow::activeWindowChanged, this, [this]()
+	{
+		updateWindowControlsPlacement();
+	}, Qt::UniqueConnection);
 
 	if (session.geometry.isEmpty())
 	{
@@ -242,10 +263,29 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 	{
 		updateShortcuts();
 	});
+
+	// Setup toolbar normalization after toolbars are created (always needed)
+	QTimer::singleShot(200, this, [=]()
+	{
+		setupTabBarToolBarNormalization();
+
+		// Setup custom decorations only if enabled
+		if (isCustomDecorationEnabled())
+		{
+			setupCustomDecorations();
+		}
+	});
 }
 
 MainWindow::~MainWindow()
 {
+	// Remove application-level event filter if it was installed
+	if (m_customDecorationApplicationEventFilterInstalled)
+	{
+		qApp->removeEventFilter(this);
+		m_customDecorationApplicationEventFilterInstalled = false;
+	}
+	
 	delete m_ui;
 }
 
@@ -452,6 +492,12 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 	if (event->button() == Qt::RightButton && m_tabSwitcher && m_tabSwitcher->getReason() == TabSwitcherWidget::WheelReason)
 	{
 		m_tabSwitcher->accept();
+	}
+
+	if (isCustomDecorationEnabled())
+	{
+		m_resizeEdges = Qt::Edges();
+		unsetCursor();
 	}
 
 	QMainWindow::mouseReleaseEvent(event);
@@ -1864,6 +1910,15 @@ void MainWindow::handleToolBarAdded(int identifier)
 
 	m_toolBars[identifier] = newToolBar;
 
+	// If this is the TabBar toolbar, set up normalization
+	if (identifier == ToolBarsManager::TabBar)
+	{
+		QTimer::singleShot(50, this, [=]()
+		{
+			setupTabBarToolBarNormalization();
+		});
+	}
+
 	SessionsManager::markSessionAsModified();
 
 	emit arbitraryActionsStateChanged({ActionsManager::ShowToolBarAction});
@@ -2166,6 +2221,39 @@ SearchWidget* MainWindow::findSearchField() const
 			if (widget)
 			{
 				return widget;
+			}
+		}
+	}
+
+	return nullptr;
+}
+
+ToolBarWidget* MainWindow::findAddressToolBar() const
+{
+	const Window *activeWindow(m_workspace->getActiveWindow());
+	ToolBarWidget *addressToolBar(activeWindow ? activeWindow->getAddressBar() : nullptr);
+
+	if (addressToolBar && !addressToolBar->isCollapsed() && addressToolBar->isVisible())
+	{
+		AddressWidget *widget(qobject_cast<AddressWidget*>(findVisibleWidget(addressToolBar->getAddressFields())));
+
+		if (widget)
+		{
+			return addressToolBar;
+		}
+	}
+
+	QMap<int, ToolBarWidget*>::const_iterator iterator;
+
+	for (iterator = m_toolBars.constBegin(); iterator != m_toolBars.constEnd(); ++iterator)
+	{
+		if (!iterator.value()->isCollapsed() && iterator.value()->isVisible())
+		{
+			AddressWidget *widget(qobject_cast<AddressWidget*>(findVisibleWidget(iterator.value()->getAddressFields())));
+
+			if (widget)
+			{
+				return iterator.value();
 			}
 		}
 	}
@@ -2820,6 +2908,92 @@ bool MainWindow::event(QEvent *event)
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
+	// Handle mouse events for custom decorations when they occur on child widgets
+	if (isCustomDecorationEnabled() && event->type() == QEvent::MouseButtonPress)
+	{
+		QWidget *widget = qobject_cast<QWidget*>(object);
+		// Only handle widgets that belong to this MainWindow
+		if (widget && widget->window() == this)
+		{
+			// Check if this widget belongs to a ToolBarWidget
+			ToolBarWidget *sourceToolBar = qobject_cast<ToolBarWidget*>(widget);
+			if (!sourceToolBar)
+			{
+				QWidget *parent = widget->parentWidget();
+				while (parent)
+				{
+					sourceToolBar = qobject_cast<ToolBarWidget*>(parent);
+					if (sourceToolBar)
+					{
+						break;
+					}
+					parent = parent->parentWidget();
+				}
+			}
+
+			// If this belongs to a ToolBarWidget that is NOT the TabBar, let Qt handle it natively
+			if (sourceToolBar && sourceToolBar->getIdentifier() != ToolBarsManager::TabBar)
+			{
+				return false;
+			}
+
+			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+			
+			if (handleCustomDecorationMousePress(widget, mouseEvent))
+			{
+				return true;
+			}
+		}
+	}
+
+	// Handle cursor updates for mouse move events
+	if (isCustomDecorationEnabled() && event->type() == QEvent::MouseMove)
+	{
+		QWidget *widget = qobject_cast<QWidget*>(object);
+		// Only handle widgets that belong to this MainWindow
+		if (widget && widget->window() == this)
+		{
+			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+			const QPoint localPos = mapFromGlobal(mouseEvent->globalPos());
+			const Qt::Edges edges = calculateResizeEdges(localPos);
+
+			// Update cursor based on hover position
+			QCursor cursor;
+			if (edges & Qt::LeftEdge && edges & Qt::TopEdge)
+			{
+				cursor = Qt::SizeFDiagCursor;
+			}
+			else if (edges & Qt::RightEdge && edges & Qt::TopEdge)
+			{
+				cursor = Qt::SizeBDiagCursor;
+			}
+			else if (edges & Qt::LeftEdge && edges & Qt::BottomEdge)
+			{
+				cursor = Qt::SizeBDiagCursor;
+			}
+			else if (edges & Qt::RightEdge && edges & Qt::BottomEdge)
+			{
+				cursor = Qt::SizeFDiagCursor;
+			}
+			else if (edges & Qt::LeftEdge || edges & Qt::RightEdge)
+			{
+				cursor = Qt::SizeHorCursor;
+			}
+			else if (edges & Qt::TopEdge || edges & Qt::BottomEdge)
+			{
+				cursor = Qt::SizeVerCursor;
+			}
+			else
+			{
+				cursor = Qt::ArrowCursor;
+			}
+
+			// Set cursor on both the widget and MainWindow
+			widget->setCursor(cursor);
+			setCursor(cursor);
+		}
+	}
+	
 	if (event->type() == QEvent::Leave && isFullScreen())
 	{
 		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(object));
@@ -2853,6 +3027,873 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 	}
 
 	return QMainWindow::eventFilter(object, event);
+}
+
+void MainWindow::setupCustomDecorations()
+{
+	if (!isCustomDecorationEnabled())
+	{
+		// Remove application event filter if it was installed
+		if (m_customDecorationApplicationEventFilterInstalled)
+		{
+			qApp->removeEventFilter(this);
+			m_customDecorationApplicationEventFilterInstalled = false;
+		}
+		
+		// Hide window controls widget if it exists
+		if (m_windowControls)
+		{
+			m_windowControls->hide();
+			m_windowControls->setMaximumSize(0, 0);
+		}
+		return;
+	}
+
+	// Find the tab bar toolbar using helper method
+	ToolBarWidget *tabBarToolBar = getTabBarToolBar();
+	if (!tabBarToolBar)
+	{
+		return;
+	}
+
+	// Update toolbar state based on current position
+	updateCustomDecorationToolbarState();
+	
+	// Connect to toolbar orientation changes
+	connect(tabBarToolBar, &QToolBar::orientationChanged, 
+		this, &MainWindow::updateCustomDecorationToolbarState, Qt::UniqueConnection);
+	
+	// Install application-level event filter for comprehensive event handling
+	if (!m_customDecorationApplicationEventFilterInstalled)
+	{
+		qApp->installEventFilter(this);
+		m_customDecorationApplicationEventFilterInstalled = true;
+	}
+}
+
+bool MainWindow::isCustomDecorationEnabled() const
+{
+	return SettingsManager::getOption(SettingsManager::Interface_TabsInTitleBarOption).toBool();
+}
+
+ToolBarWidget* MainWindow::getTabBarToolBar() const
+{
+	const QVector<Qt::ToolBarArea> areas = {
+		Qt::TopToolBarArea,
+		Qt::LeftToolBarArea,
+		Qt::RightToolBarArea,
+		Qt::BottomToolBarArea
+	};
+
+	for (const Qt::ToolBarArea area : areas)
+	{
+		const QVector<ToolBarWidget*> toolBars(getToolBars(area));
+
+		for (ToolBarWidget *toolBar : toolBars)
+		{
+			if (toolBar && toolBar->getIdentifier() == ToolBarsManager::TabBar)
+			{
+				return toolBar;
+			}
+		}
+	}
+
+	return nullptr;
+}
+
+bool MainWindow::isInDraggableTitleBarArea(QWidget *sourceWidget, const QPoint &globalPosition) const
+{
+	if (!isCustomDecorationEnabled())
+	{
+		return false;
+	}
+
+	ToolBarWidget *tabBarToolBar = getTabBarToolBar();
+	if (!tabBarToolBar)
+	{
+		return false;
+	}
+
+	// Only consider widgets within the tab bar toolbar hierarchy
+	if (!sourceWidget || !tabBarToolBar->isAncestorOf(sourceWidget))
+	{
+		return false;
+	}
+
+	// Convert global position to toolbar coordinates
+	QPoint toolbarPos = tabBarToolBar->mapFromGlobal(globalPosition);
+	QWidget *childAt = tabBarToolBar->childAt(toolbarPos);
+
+	// Reject clicks on window controls
+	if (m_windowControls && childAt && (childAt == m_windowControls || m_windowControls->isAncestorOf(childAt)))
+	{
+		return false;
+	}
+
+	// Reject clicks on actual tabs or tab controls - let tabbar handle them
+	if (isInsideActualTabOrTabControl(sourceWidget, globalPosition))
+	{
+		return false;
+	}
+
+	// Allow empty tabbar space for window dragging
+	if (isInEmptyTabBarArea(sourceWidget, globalPosition))
+	{
+		return true;
+	}
+
+	// Reject any other child widget (buttons, etc.)
+	if (childAt)
+	{
+		return false;
+	}
+
+	// Allow empty toolbar space for window dragging
+	return true;
+}
+
+bool MainWindow::shouldAllowNativeToolbarHandling(QWidget *sourceWidget, const QPoint &globalPosition) const
+{
+	if (!isCustomDecorationEnabled())
+	{
+		return true;
+	}
+
+	// Only allow native toolbar handling for the actual toolbar drag handle area
+	if (isInToolbarDragHandleArea(globalPosition))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool MainWindow::isInsideTabBar(QWidget *sourceWidget) const
+{
+	return m_tabBar && sourceWidget &&
+		(sourceWidget == m_tabBar || m_tabBar->isAncestorOf(sourceWidget));
+}
+
+bool MainWindow::isInEmptyTabBarArea(QWidget *sourceWidget, const QPoint &globalPosition) const
+{
+	if (!m_tabBar || !sourceWidget)
+	{
+		return false;
+	}
+
+	if (sourceWidget != m_tabBar && !m_tabBar->isAncestorOf(sourceWidget))
+	{
+		return false;
+	}
+
+	const QPoint tabBarPosition = m_tabBar->mapFromGlobal(globalPosition);
+
+	// If outside tabbar rect, return false
+	if (!m_tabBar->rect().contains(tabBarPosition))
+	{
+		return false;
+	}
+
+	// If over a child widget, do not treat it as empty area
+	QWidget *child = m_tabBar->childAt(tabBarPosition);
+	if (child)
+	{
+		return false;
+	}
+
+	// Use QTabBar's tabAt method to check if over a tab
+	if (m_tabBar->tabAt(tabBarPosition) >= 0)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool MainWindow::isInsideActualTabOrTabControl(QWidget *sourceWidget, const QPoint &globalPosition) const
+{
+	if (!m_tabBar || !sourceWidget)
+	{
+		return false;
+	}
+
+	if (sourceWidget != m_tabBar && !m_tabBar->isAncestorOf(sourceWidget))
+	{
+		return false;
+	}
+
+	const QPoint tabBarPosition = m_tabBar->mapFromGlobal(globalPosition);
+
+	// If outside tabbar rect, return false
+	if (!m_tabBar->rect().contains(tabBarPosition))
+	{
+		return false;
+	}
+
+	// If over a child widget (like close button), it's a tab control
+	QWidget *child = m_tabBar->childAt(tabBarPosition);
+	if (child)
+	{
+		return true;
+	}
+
+	// If over a tab, it's an actual tab
+	if (m_tabBar->tabAt(tabBarPosition) >= 0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool MainWindow::isInTabBarToolBarDockHandleArea(const QPoint &globalPosition) const
+{
+	QToolBar *toolBar = getTabBarToolBar();
+	if (!toolBar || !m_tabBar)
+		return false;
+
+	const QPoint toolbarPosition = toolBar->mapFromGlobal(globalPosition);
+
+	if (!toolBar->rect().contains(toolbarPosition))
+		return false;
+
+	const Qt::ToolBarArea area = toolBarArea(toolBar);
+	const QRect tabBarGeometry = m_tabBar->geometry();
+
+	bool result = false;
+
+	switch (area)
+	{
+		case Qt::TopToolBarArea:
+		case Qt::BottomToolBarArea:
+			// The draggable Qt toolbar handle is before the tabbar.
+			result = (toolbarPosition.x() >= 0 && toolbarPosition.x() < tabBarGeometry.left());
+			break;
+
+		case Qt::LeftToolBarArea:
+		case Qt::RightToolBarArea:
+			// The draggable Qt toolbar handle is above the tabbar.
+			result = (toolbarPosition.y() >= 0 && toolbarPosition.y() < tabBarGeometry.top());
+			break;
+
+		default:
+			result = false;
+			break;
+	}
+
+	return result;
+}
+
+bool MainWindow::isInToolbarDragHandleArea(const QPoint &globalPosition) const
+{
+	ToolBarWidget *tabBarToolBar = getTabBarToolBar();
+	if (!tabBarToolBar || !m_tabBar || !isTabBarToolBarInWindowMoveArea())
+	{
+		return false;
+	}
+
+	const QPoint toolbarPosition = tabBarToolBar->mapFromGlobal(globalPosition);
+	if (!tabBarToolBar->rect().contains(toolbarPosition))
+	{
+		return false;
+	}
+
+	const Qt::ToolBarArea area = toolBarArea(tabBarToolBar);
+
+	if (area == Qt::TopToolBarArea || area == Qt::BottomToolBarArea)
+	{
+		return (toolbarPosition.x() >= 0 && toolbarPosition.x() < m_tabBar->geometry().left());
+	}
+
+	if (area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea)
+	{
+		return (toolbarPosition.y() >= 0 && toolbarPosition.y() < m_tabBar->geometry().top());
+	}
+
+	return false;
+}
+
+bool MainWindow::isTabBarToolBarInTitleBarArea() const
+{
+	ToolBarWidget *tabBarToolBar = getTabBarToolBar();
+	if (!tabBarToolBar)
+	{
+		return false;
+	}
+
+	const Qt::ToolBarArea area = toolBarArea(tabBarToolBar);
+	return (area == Qt::TopToolBarArea);
+}
+
+bool MainWindow::isTabBarToolBarInWindowMoveArea() const
+{
+	ToolBarWidget *tabBarToolBar = getTabBarToolBar();
+	if (!tabBarToolBar)
+	{
+		return false;
+	}
+
+	const Qt::ToolBarArea area = toolBarArea(tabBarToolBar);
+	return (area == Qt::TopToolBarArea ||
+			area == Qt::LeftToolBarArea ||
+			area == Qt::RightToolBarArea ||
+			area == Qt::BottomToolBarArea);
+}
+
+void MainWindow::resetCustomDecorationToolbarSizeOverrides()
+{
+	ToolBarWidget *tabBarToolBar = getTabBarToolBar();
+	if (tabBarToolBar)
+	{
+		// Reset any custom size constraints this patch introduced
+		tabBarToolBar->setMinimumSize(QSize(0, 0));
+		tabBarToolBar->setMaximumSize(QSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX));
+	}
+
+	if (m_tabBar)
+	{
+		// Reset any custom size constraints this patch introduced
+		m_tabBar->setMinimumSize(QSize(0, 0));
+		m_tabBar->setMaximumSize(QSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX));
+	}
+}
+
+void MainWindow::hideWindowControls()
+{
+	if (m_windowControls)
+	{
+		m_windowControls->setVisible(false);
+	}
+}
+
+void MainWindow::ensureWindowControlsInTopToolbar(ToolBarWidget *tabBarToolBar)
+{
+	ensureWindowControlsInToolBar(tabBarToolBar);
+}
+
+void MainWindow::ensureWindowControlsInToolBar(ToolBarWidget *targetToolBar)
+{
+	if (!targetToolBar)
+	{
+		return;
+	}
+
+	// Create window controls if missing
+	if (!m_windowControls)
+	{
+		m_windowControls = new WindowControlsWidget(this);
+	}
+
+	// Remove from previous toolbar if needed
+	if (m_windowControlsAction && m_windowControlsToolBar && m_windowControlsToolBar != targetToolBar)
+	{
+		m_windowControlsToolBar->removeAction(m_windowControlsAction);
+		m_windowControlsAction = nullptr;
+		m_windowControlsToolBar = nullptr;
+	}
+
+	// If action exists but toolbar is null, search all toolbars and remove it
+	if (m_windowControlsAction && !m_windowControlsToolBar)
+	{
+		const QList<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly));
+		for (ToolBarWidget *toolBar : toolBars)
+		{
+			if (toolBar->actions().contains(m_windowControlsAction))
+			{
+				toolBar->removeAction(m_windowControlsAction);
+				break;
+			}
+		}
+		m_windowControlsAction = nullptr;
+	}
+
+	// Add to new toolbar if not already there
+	if (!m_windowControlsAction)
+	{
+		m_windowControlsAction = targetToolBar->addWidget(m_windowControls);
+		m_windowControlsToolBar = targetToolBar;
+	}
+
+	// Set fixed size and show
+	const int normalHeight = qBound(28, m_tabBar ? m_tabBar->fontMetrics().height() + 16 : 34, 40);
+	m_windowControls->setFixedSize(96, normalHeight);
+	m_windowControls->setVisible(true);
+
+	if (m_windowControlsAction)
+	{
+		m_windowControlsAction->setVisible(true);
+	}
+
+	targetToolBar->updateGeometry();
+	m_windowControls->raise();
+}
+
+void MainWindow::removeWindowControlsFromToolbar(ToolBarWidget *toolBar)
+{
+	Q_UNUSED(toolBar)
+	
+	// Remove action from toolbar if we have both action and toolbar
+	if (m_windowControlsAction && m_windowControlsToolBar)
+	{
+		m_windowControlsToolBar->removeAction(m_windowControlsAction);
+	}
+	// If action exists but toolbar is null, search all toolbars and remove it
+	else if (m_windowControlsAction)
+	{
+		const QList<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly));
+		for (ToolBarWidget *currentToolBar : toolBars)
+		{
+			if (currentToolBar->actions().contains(m_windowControlsAction))
+			{
+				currentToolBar->removeAction(m_windowControlsAction);
+				break;
+			}
+		}
+	}
+	
+	m_windowControlsAction = nullptr;
+	m_windowControlsToolBar = nullptr;
+	
+	// Hide widget
+	if (m_windowControls)
+	{
+		m_windowControls->setVisible(false);
+	}
+}
+
+void MainWindow::scheduleToolbarStateUpdateRetry()
+{
+	QTimer::singleShot(50, this, &MainWindow::updateCustomDecorationToolbarState);
+}
+
+void MainWindow::setupTabBarToolBarNormalization()
+{
+	ToolBarWidget *tabBarToolBar = getTabBarToolBar();
+	if (!tabBarToolBar)
+	{
+		return;
+	}
+
+	// Connect toolbar signals for normalization (use UniqueConnection to avoid duplicates)
+	connect(tabBarToolBar, &QToolBar::orientationChanged,
+	        this, &MainWindow::scheduleTabBarToolBarNormalization,
+	        Qt::UniqueConnection);
+
+	connect(tabBarToolBar, &QToolBar::topLevelChanged,
+	        this, &MainWindow::scheduleTabBarToolBarNormalization,
+	        Qt::UniqueConnection);
+
+	// Schedule normalization immediately
+	scheduleTabBarToolBarNormalization();
+}
+
+void MainWindow::scheduleTabBarToolBarNormalization()
+{
+	QTimer::singleShot(0, this, &MainWindow::normalizeTabBarToolBarGeometry);
+	QTimer::singleShot(50, this, &MainWindow::normalizeTabBarToolBarGeometry);
+	QTimer::singleShot(150, this, &MainWindow::normalizeTabBarToolBarGeometry);
+}
+
+void MainWindow::normalizeTabBarToolBarGeometry()
+{
+	QToolBar *toolBar = getTabBarToolBar();
+
+	if (!toolBar)
+	{
+		return;
+	}
+
+	const Qt::ToolBarArea area = toolBarArea(toolBar);
+	const bool horizontal = (area == Qt::TopToolBarArea || area == Qt::BottomToolBarArea);
+	const int normalHeight = 34;
+	const int normalWidth = 250;
+
+	if (horizontal)
+	{
+		toolBar->setOrientation(Qt::Horizontal);
+
+		toolBar->setMinimumHeight(normalHeight);
+		toolBar->setMaximumHeight(normalHeight);
+
+		toolBar->setMinimumWidth(0);
+		toolBar->setMaximumWidth(QWIDGETSIZE_MAX);
+
+		toolBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+
+		if (m_tabBar)
+		{
+			m_tabBar->setMinimumHeight(normalHeight);
+			m_tabBar->setMaximumHeight(normalHeight);
+			m_tabBar->setMinimumWidth(0);
+			m_tabBar->setMaximumWidth(QWIDGETSIZE_MAX);
+			m_tabBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+		}
+	}
+	else if (area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea)
+	{
+		toolBar->setOrientation(Qt::Vertical);
+
+		toolBar->setMinimumWidth(normalWidth);
+		toolBar->setMaximumWidth(normalWidth);
+
+		toolBar->setMinimumHeight(0);
+		toolBar->setMaximumHeight(QWIDGETSIZE_MAX);
+
+		toolBar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+
+		if (m_tabBar)
+		{
+			m_tabBar->setMinimumWidth(normalWidth);
+			m_tabBar->setMaximumWidth(normalWidth);
+			m_tabBar->setMinimumHeight(0);
+			m_tabBar->setMaximumHeight(QWIDGETSIZE_MAX);
+			m_tabBar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+		}
+	}
+
+	toolBar->updateGeometry();
+
+	if (m_tabBar)
+		m_tabBar->updateGeometry();
+
+	updateGeometry();
+
+	// Update window controls placement only if custom decoration is enabled
+	if (isCustomDecorationEnabled())
+	{
+		updateWindowControlsPlacement();
+	}
+}
+
+void MainWindow::updateWindowControlsPlacement()
+{
+	if (!isCustomDecorationEnabled())
+	{
+		removeWindowControlsFromToolbar(nullptr);
+		return;
+	}
+
+	// Create window controls if they don't exist yet
+	if (!m_windowControls)
+	{
+		m_windowControls = new WindowControlsWidget(this);
+	}
+
+	QToolBar *tabBarToolBar = getTabBarToolBar();
+	const Qt::ToolBarArea tabBarArea = tabBarToolBar ? toolBarArea(tabBarToolBar) : Qt::NoToolBarArea;
+	
+	ToolBarWidget *targetToolBar = nullptr;
+	
+	if (tabBarArea == Qt::TopToolBarArea)
+	{
+		// TabBar on top: use TabBar toolbar
+		targetToolBar = qobject_cast<ToolBarWidget*>(tabBarToolBar);
+	}
+	else
+	{
+		// TabBar on side/bottom: use AddressBar toolbar as fallback
+		targetToolBar = findAddressToolBar();
+	}
+	
+	if (targetToolBar)
+	{
+		ensureWindowControlsInToolBar(targetToolBar);
+	}
+	else
+	{
+		removeWindowControlsFromToolbar(nullptr);
+		// Schedule a retry in case addressbar is not ready yet
+		QTimer::singleShot(100, this, &MainWindow::updateWindowControlsPlacement);
+	}
+}
+
+void MainWindow::updateCustomDecorationToolbarState()
+{
+	if (!isCustomDecorationEnabled())
+	{
+		hideWindowControls();
+		return;
+	}
+
+	ToolBarWidget *tabBarToolBar = getTabBarToolBar();
+	if (!tabBarToolBar)
+	{
+		scheduleToolbarStateUpdateRetry();
+		return;
+	}
+
+	// Connect toolbar signals for normalization and window controls placement (use UniqueConnection to avoid duplicates)
+	connect(tabBarToolBar, &QToolBar::orientationChanged,
+	        this, &MainWindow::scheduleTabBarToolBarNormalization,
+	        Qt::UniqueConnection);
+
+	connect(tabBarToolBar, &QToolBar::topLevelChanged,
+	        this, &MainWindow::scheduleTabBarToolBarNormalization,
+	        Qt::UniqueConnection);
+
+	// Also connect to update window controls placement when toolbar area changes
+	connect(tabBarToolBar, &QToolBar::orientationChanged,
+	        this, &MainWindow::updateWindowControlsPlacement,
+	        Qt::UniqueConnection);
+
+	connect(tabBarToolBar, &QToolBar::topLevelChanged,
+	        this, &MainWindow::updateWindowControlsPlacement,
+	        Qt::UniqueConnection);
+
+	// Reset any custom size constraints this patch introduced
+	resetCustomDecorationToolbarSizeOverrides();
+
+	// Update window controls placement based on toolbar area
+	updateWindowControlsPlacement();
+
+	// Schedule normalization after layout changes
+	scheduleTabBarToolBarNormalization();
+
+	// Let Qt handle all geometry updates naturally
+	tabBarToolBar->updateGeometry();
+	if (m_tabBar)
+	{
+		m_tabBar->updateGeometry();
+	}
+	updateGeometry();
+}
+
+
+bool MainWindow::isInEmptyTabToolBarMoveArea(QWidget *sourceWidget, const QPoint &globalPosition) const
+{
+	Q_UNUSED(sourceWidget)
+
+	ToolBarWidget *tabBarToolBar = getTabBarToolBar();
+	if (!tabBarToolBar || !isTabBarToolBarInWindowMoveArea())
+	{
+		return false;
+	}
+
+	const QPoint toolbarPosition = tabBarToolBar->mapFromGlobal(globalPosition);
+	if (!tabBarToolBar->rect().contains(toolbarPosition))
+	{
+		return false;
+	}
+
+	if (m_windowControls)
+	{
+		const QPoint controlsPosition = m_windowControls->mapFromGlobal(globalPosition);
+
+		if (m_windowControls->rect().contains(controlsPosition))
+		{
+			return false;
+		}
+	}
+
+	if (isInTabBarToolBarDockHandleArea(globalPosition))
+	{
+		return false;
+	}
+
+	if (m_tabBar)
+	{
+		const QPoint tabBarPosition = m_tabBar->mapFromGlobal(globalPosition);
+
+		if (m_tabBar->rect().contains(tabBarPosition))
+		{
+			if (m_tabBar->childAt(tabBarPosition))
+			{
+				return false;
+			}
+
+			if (m_tabBar->tabAt(tabBarPosition) >= 0)
+			{
+				return false;
+			}
+
+			return true;
+		}
+	}
+
+	return true;
+}
+
+bool MainWindow::handleCustomDecorationMousePress(QWidget *sourceWidget, QMouseEvent *event)
+{
+	const QPoint globalPosition = event->globalPos();
+
+	// Absolute first check: Global position dock handle area - no custom handling for any source
+	if (isInTabBarToolBarDockHandleArea(globalPosition))
+	{
+		return false;
+	}
+
+	// Check if this widget belongs to a ToolBarWidget that is NOT the TabBar - let Qt handle it
+	ToolBarWidget *sourceToolBar = qobject_cast<ToolBarWidget*>(sourceWidget);
+	if (!sourceToolBar)
+	{
+		QWidget *parent = sourceWidget ? sourceWidget->parentWidget() : nullptr;
+		while (parent)
+		{
+			sourceToolBar = qobject_cast<ToolBarWidget*>(parent);
+			if (sourceToolBar)
+			{
+				break;
+			}
+			parent = parent->parentWidget();
+		}
+	}
+
+	// If this belongs to a ToolBarWidget that is NOT the TabBar, don't custom-handle it
+	if (sourceToolBar && sourceToolBar->getIdentifier() != ToolBarsManager::TabBar)
+	{
+		return false;
+	}
+
+	if (!isCustomDecorationEnabled() || !event || event->button() != Qt::LeftButton)
+	{
+		return false;
+	}
+
+	const QPoint localPosition = mapFromGlobal(event->globalPos());
+
+	// Priority 2: Handle resize edges (but not if in dock handle area)
+	const Qt::Edges edges = calculateResizeEdges(localPosition);
+	if (edges != Qt::Edges() && !isMaximized() && !isFullScreen() && windowHandle())
+	{
+		return windowHandle()->startSystemResize(edges);
+	}
+
+	// Priority 3: Preserve actual tab interactions
+	if (isInsideActualTabOrTabControl(sourceWidget, event->globalPos()))
+	{
+		return false;
+	}
+
+	// Priority 4: Allow custom window move from safe empty toolbar areas
+	if (isInEmptyTabToolBarMoveArea(sourceWidget, event->globalPos()) && windowHandle())
+	{
+		return windowHandle()->startSystemMove();
+	}
+
+	return false;
+}
+
+Qt::Edges MainWindow::calculateResizeEdges(const QPoint &position) const
+{
+	if (!isCustomDecorationEnabled() || isMaximized() || isFullScreen())
+	{
+		return Qt::Edges();
+	}
+
+	static constexpr int ResizeBorderWidth = 8;
+	const QRect windowRect = rect();
+	Qt::Edges edges;
+
+	if (position.x() >= 0 && position.x() <= ResizeBorderWidth)
+	{
+		edges |= Qt::LeftEdge;
+	}
+	else if (position.x() <= windowRect.width() && position.x() >= windowRect.width() - ResizeBorderWidth)
+	{
+		edges |= Qt::RightEdge;
+	}
+
+	if (position.y() >= 0 && position.y() <= ResizeBorderWidth)
+	{
+		edges |= Qt::TopEdge;
+	}
+	else if (position.y() <= windowRect.height() && position.y() >= windowRect.height() - ResizeBorderWidth)
+	{
+		edges |= Qt::BottomEdge;
+	}
+
+
+	return edges;
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+	QMainWindow::resizeEvent(event);
+	
+	// Update window controls placement when main window resizes
+	updateWindowControlsPlacement();
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+	// First try to handle custom decoration mouse press
+	if (handleCustomDecorationMousePress(this, event))
+	{
+		return;
+	}
+
+	QMainWindow::mousePressEvent(event);
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *event)
+{
+	if (!isCustomDecorationEnabled())
+	{
+		QMainWindow::mouseMoveEvent(event);
+		return;
+	}
+
+	const Qt::Edges edges(calculateResizeEdges(event->pos()));
+
+	// Update cursor based on hover position, but don't do manual resizing
+	if (edges & Qt::LeftEdge && edges & Qt::TopEdge)
+	{
+		setCursor(Qt::SizeFDiagCursor);
+	}
+	else if (edges & Qt::RightEdge && edges & Qt::TopEdge)
+	{
+		setCursor(Qt::SizeBDiagCursor);
+	}
+	else if (edges & Qt::LeftEdge && edges & Qt::BottomEdge)
+	{
+		setCursor(Qt::SizeBDiagCursor);
+	}
+	else if (edges & Qt::RightEdge && edges & Qt::BottomEdge)
+	{
+		setCursor(Qt::SizeFDiagCursor);
+	}
+	else if (edges & Qt::LeftEdge || edges & Qt::RightEdge)
+	{
+		setCursor(Qt::SizeHorCursor);
+	}
+	else if (edges & Qt::TopEdge || edges & Qt::BottomEdge)
+	{
+		setCursor(Qt::SizeVerCursor);
+	}
+	else
+	{
+		setCursor(Qt::ArrowCursor);
+	}
+
+	QMainWindow::mouseMoveEvent(event);
+}
+
+
+void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
+{
+	if (!isCustomDecorationEnabled())
+	{
+		QMainWindow::mouseDoubleClickEvent(event);
+		return;
+	}
+
+	// Double-click on empty area of tab bar should maximize/restore
+	const Qt::Edges edges(calculateResizeEdges(event->pos()));
+
+	if (edges == Qt::Edges() && event->button() == Qt::LeftButton)
+	{
+		if (isMaximized())
+		{
+			showNormal();
+		}
+		else
+		{
+			showMaximized();
+		}
+	}
+
+	QMainWindow::mouseDoubleClickEvent(event);
 }
 
 Shortcut::Shortcut(int identifier, const QKeySequence &sequence, const QVariantMap &parameters, MainWindow *parent) : QShortcut(sequence, parent),
