@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -111,10 +111,8 @@ void TransfersWidget::populateMenu()
 {
 	const QVector<Transfer*> transfers(TransfersManager::getTransfers());
 
-	for (int i = 0; i < transfers.count(); ++i)
+	for (Transfer *transfer: transfers)
 	{
-		Transfer *transfer(transfers.at(i));
-
 		if (!transfer->isArchived() || transfer->getState() == Transfer::RunningState)
 		{
 			QWidgetAction *widgetAction(new QWidgetAction(menu()));
