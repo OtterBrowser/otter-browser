@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -358,9 +358,9 @@ QVector<UserScript*> UserScript::getUserScriptsForUrl(const QUrl &url, UserScrip
 	const QStringList scriptNames(AddonsManager::getAddons(Addon::UserScriptType));
 	QVector<UserScript*> scripts;
 
-	for (int i = 0; i < scriptNames.count(); ++i)
+	for (const QString &scriptName: scriptNames)
 	{
-		UserScript *script(AddonsManager::getUserScript(scriptNames.at(i)));
+		UserScript *script(AddonsManager::getUserScript(scriptName));
 
 		if (script->isEnabled() && (injectionTime == AnyTime || script->getInjectionTime() == injectionTime) && (!isSubFrame || script->shouldRunOnSubFrames()) && script->isEnabledForUrl(url))
 		{
@@ -415,10 +415,8 @@ bool UserScript::canRemove() const
 
 bool UserScript::checkUrl(const QUrl &url, const QStringList &rules) const
 {
-	for (int i = 0; i < rules.count(); ++i)
+	for (QString rule: rules)
 	{
-		QString rule(rules.at(i));
-
 		if (rule.startsWith(QLatin1Char('/')) && rule.endsWith(QLatin1Char('/')))
 		{
 			return QRegularExpression(rule.mid(1, rule.length() - 2)).match(url.url()).hasMatch();
