@@ -212,9 +212,8 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 	const QVector<ContentFiltersProfile*> contentBlockingProfiles(ContentFiltersManager::getContentBlockingProfiles());
 	const QStringList profiles(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
 
-	for (int i = 0; i < contentBlockingProfiles.count(); ++i)
+	for (const ContentFiltersProfile *profile: contentBlockingProfiles)
 	{
-		const ContentFiltersProfile *profile(contentBlockingProfiles.at(i));
 		QList<QStandardItem*> profileItems(createEntry(profile->getProfileSummary(), profiles, false));
 		const ContentFiltersProfile::ProfileCategory category(profile->getCategory());
 		const QHash<AdblockContentFiltersProfile::RuleType, quint32> information(getRulesInformation(profile->getProfileSummary(), profile->getPath()));
@@ -249,9 +248,9 @@ ContentFiltersViewWidget::ContentFiltersViewWidget(QWidget *parent) : ItemViewWi
 		{
 			const QList<QList<QStandardItem*> > profileItems(categoryEntries[category]);
 
-			for (int j = 0; j < profileItems.count(); ++j)
+			for (const QList<QStandardItem*> &profileItem: profileItems)
 			{
-				categoryItems[0]->appendRow(profileItems.at(j));
+				categoryItems[0]->appendRow(profileItem);
 			}
 		}
 		else
