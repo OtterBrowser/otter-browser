@@ -137,18 +137,19 @@ bool QtWebKitCookieJar::canModifyCookie(const QNetworkCookie &cookie) const
 
 	if (m_thirdPartyCookiesPolicy != CookieJar::AcceptAllCookies || !m_thirdPartyRejectedHosts.isEmpty())
 	{
+		const QString domain(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
 		QUrl url;
 		url.setScheme(QLatin1String("http"));
-		url.setHost(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
+		url.setHost(domain);
 
 		if (!Utils::isDomainTheSame(m_widget->getUrl(), url))
 		{
-			if (m_thirdPartyRejectedHosts.contains(cookie.domain()))
+			if (m_thirdPartyRejectedHosts.contains(domain))
 			{
 				return false;
 			}
 
-			if (m_thirdPartyAcceptedHosts.contains(cookie.domain()))
+			if (m_thirdPartyAcceptedHosts.contains(domain))
 			{
 				return true;
 			}
