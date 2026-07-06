@@ -182,23 +182,25 @@ bool QtWebKitCookieJar::setCookiesFromUrl(const QList<QNetworkCookie> &cookies, 
 	{
 		cookie.normalize(url);
 
-		if (validateCookie(cookie, url) && canModifyCookie(cookie))
+		if (!validateCookie(cookie, url) || !canModifyCookie(cookie))
 		{
-			if (m_keepMode == CookieJar::AskIfKeepMode)
-			{
-				showDialog(cookie, (m_cookieJar->hasCookie(cookie) ? CookieJar::UpdateCookie : CookieJar::InsertCookie));
-			}
-			else
-			{
-				if (m_keepMode == CookieJar::KeepUntilExitMode)
-				{
-					cookie.setExpirationDate({});
-				}
+			continue;
+		}
 
-				m_cookieJar->forceInsertCookie(cookie);
-
-				isSuccess = true;
+		if (m_keepMode == CookieJar::AskIfKeepMode)
+		{
+			showDialog(cookie, (m_cookieJar->hasCookie(cookie) ? CookieJar::UpdateCookie : CookieJar::InsertCookie));
+		}
+		else
+		{
+			if (m_keepMode == CookieJar::KeepUntilExitMode)
+			{
+				cookie.setExpirationDate({});
 			}
+
+			m_cookieJar->forceInsertCookie(cookie);
+
+			isSuccess = true;
 		}
 	}
 
