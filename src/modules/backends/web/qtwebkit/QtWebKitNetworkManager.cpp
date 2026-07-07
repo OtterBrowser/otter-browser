@@ -256,15 +256,15 @@ void QtWebKitNetworkManager::handleRequestFinished(QNetworkReply *reply)
 
 	if (reply == m_baseReply)
 	{
-		if (reply->sslConfiguration().isNull())
+		const QSslConfiguration sslConfiguration(reply->sslConfiguration());
+
+		if (sslConfiguration.isNull())
 		{
 			m_sslInformation.certificates = {};
 			m_sslInformation.cipher = {};
 		}
 		else
 		{
-			const QSslConfiguration sslConfiguration(reply->sslConfiguration());
-
 			m_sslInformation.certificates = sslConfiguration.peerCertificateChain().toVector();
 			m_sslInformation.cipher = sslConfiguration.sessionCipher();
 		}
