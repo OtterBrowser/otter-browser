@@ -165,31 +165,33 @@ void QtWebKitNetworkManager::resetStatistics()
 
 void QtWebKitNetworkManager::registerTransfer(QNetworkReply *reply)
 {
-	if (reply && !reply->isFinished())
+	if (!reply || reply->isFinished())
 	{
-		m_transfers.append(reply);
-
-		setParent(nullptr);
-
-		connect(reply, &QNetworkReply::finished, reply, [=]()
-		{
-			m_transfers.removeAll(reply);
-
-			reply->deleteLater();
-
-			if (m_transfers.isEmpty())
-			{
-				if (m_widget)
-				{
-					setParent(m_widget);
-				}
-				else
-				{
-					deleteLater();
-				}
-			}
-		});
+		return;
 	}
+
+	m_transfers.append(reply);
+
+	setParent(nullptr);
+
+	connect(reply, &QNetworkReply::finished, reply, [=]()
+	{
+		m_transfers.removeAll(reply);
+
+		reply->deleteLater();
+
+		if (m_transfers.isEmpty())
+		{
+			if (m_widget)
+			{
+				setParent(m_widget);
+			}
+			else
+			{
+				deleteLater();
+			}
+		}
+	});
 }
 
 void QtWebKitNetworkManager::handleDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
