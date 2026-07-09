@@ -224,13 +224,14 @@ void QtWebKitNetworkManager::handleDownloadProgress(qint64 bytesReceived, qint64
 		setPageInformation(WebWidget::LoadingMessageInformation, tr("Receiving data from %1…").arg(Utils::extractHost(reply->url())));
 	}
 
-	const qint64 difference(bytesReceived - m_replies[reply].bytesReceived);
+	ReplyInformation &information(m_replies[reply]);
+	const qint64 difference(bytesReceived - information.bytesReceived);
 
-	m_replies[reply].bytesReceived = bytesReceived;
+	information.bytesReceived = bytesReceived;
 
-	if (!m_replies[reply].hasTotalBytes && bytesTotal > 0)
+	if (!information.hasTotalBytes && bytesTotal > 0)
 	{
-		m_replies[reply].hasTotalBytes = true;
+		information.hasTotalBytes = true;
 
 		m_pageInformation[WebWidget::TotalBytesTotalInformation] = (m_pageInformation[WebWidget::TotalBytesTotalInformation].toLongLong() + bytesTotal);
 	}
