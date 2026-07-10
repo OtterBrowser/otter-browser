@@ -573,7 +573,9 @@ QtWebKitNetworkManager* QtWebKitNetworkManager::clone() const
 
 QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)
 {
-	if (m_widget && request.url() == m_formRequestUrl)
+	const QUrl url(request.url());
+
+	if (m_widget && url == m_formRequestUrl)
 	{
 		m_formRequestUrl = QUrl();
 
@@ -582,7 +584,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 		return QNetworkAccessManager::createRequest(GetOperation, QNetworkRequest());
 	}
 
-	if (m_widget && request.url().path() == QLatin1String("/otter-message") && request.hasRawHeader(QByteArrayLiteral("X-Otter-Token")) && request.hasRawHeader(QByteArrayLiteral("X-Otter-Data")))
+	if (m_widget && url.path() == QLatin1String("/otter-message") && request.hasRawHeader(QByteArrayLiteral("X-Otter-Token")) && request.hasRawHeader(QByteArrayLiteral("X-Otter-Data")))
 	{
 		if (QString::fromLatin1(request.rawHeader(QByteArrayLiteral("X-Otter-Token"))) == m_widget->getMessageToken())
 		{
@@ -652,34 +654,34 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 		return QNetworkAccessManager::createRequest(GetOperation, QNetworkRequest(QUrl()));
 	}
 
-	if (m_widget && (m_contentBlockingExceptions.isEmpty() || !m_contentBlockingExceptions.contains(request.url())))
+	if (m_widget && (m_contentBlockingExceptions.isEmpty() || !m_contentBlockingExceptions.contains(url)))
 	{
-		const QUrl baseUrl(m_widget->isNavigating() ? request.url() : m_widget->getUrl());
+		const QUrl baseUrl(m_widget->isNavigating() ? url : m_widget->getUrl());
 		const bool needsContentBlockingCheck(!m_contentBlockingProfiles.isEmpty() && (m_unblockedHosts.isEmpty() || !m_unblockedHosts.contains(Utils::extractHost(baseUrl))));
 		const NetworkManager::ResourceType resourceType((needsContentBlockingCheck || !m_areImagesEnabled) ? NetworkManager::getResourceType(request, m_mainRequestUrl) : NetworkManager::OtherType);
 
-		if (!m_areImagesEnabled && request.url() != m_mainRequestUrl && resourceType == NetworkManager::ImageType)
+		if (!m_areImagesEnabled && url != m_mainRequestUrl && resourceType == NetworkManager::ImageType)
 		{
 			return QNetworkAccessManager::createRequest(GetOperation, QNetworkRequest(QUrl()));
 		}
 
 		if (needsContentBlockingCheck)
 		{
-			const ContentFiltersManager::CheckResult result(ContentFiltersManager::checkUrl(m_contentBlockingProfiles, baseUrl, request.url(), resourceType));
+			const ContentFiltersManager::CheckResult result(ContentFiltersManager::checkUrl(m_contentBlockingProfiles, baseUrl, url, resourceType));
 
 			if (result.isBlocked)
 			{
 				const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(result.profile));
 
-				Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg((profile ? profile->getTitle() : QCoreApplication::translate("main", "(Unknown)")), result.rule), Console::NetworkCategory, Console::LogLevel, request.url().toString(), -1, m_widget->getWindowIdentifier());
+				Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg((profile ? profile->getTitle() : QCoreApplication::translate("main", "(Unknown)")), result.rule), Console::NetworkCategory, Console::LogLevel, url.toString(), -1, m_widget->getWindowIdentifier());
 
 				if (resourceType != NetworkManager::ScriptType && resourceType != NetworkManager::StyleSheetType)
 				{
-					m_blockedElements.append(request.url().url());
+					m_blockedElements.append(url.url());
 				}
 
 				NetworkManager::ResourceInformation resource;
-				resource.url = request.url();
+				resource.url = url;
 				resource.resourceType = resourceType;
 				resource.metaData[NetworkManager::ContentBlockingProfileMetaData] = result.profile;
 				resource.metaData[NetworkManager::ContentBlockingRuleMetaData] = result.rule;
@@ -720,11 +722,11 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 	mutableRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
 	mutableRequest.setAttribute(QNetworkRequest::Http2AllowedAttribute, false);
 
-	setPageInformation(WebWidget::LoadingMessageInformation, tr("Sending request to %1…").arg(request.url().host()));
+	setPageInformation(WebWidget::LoadingMessageInformation, tr("Sending request to %1…").arg(url.host()));
 
 	QNetworkReply *reply(nullptr);
 
-	if (operation == GetOperation && request.url().isLocalFile() && QFileInfo(request.url().toLocalFile()).isDir())
+	if (operation == GetOperation && url.isLocalFile() && QFileInfo(url.toLocalFile()).isDir())
 	{
 		LocalListingNetworkReply *localListingReply(new LocalListingNetworkReply(request, this));
 
@@ -742,7 +744,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 			}
 		}
 	}
-	else if (operation == GetOperation && request.url().scheme() == QLatin1String("ftp"))
+	else if (operation == GetOperation && url.scheme() == QLatin1String("ftp"))
 	{
 		QtWebKitFtpListingNetworkReply *ftpListingReply(new QtWebKitFtpListingNetworkReply(request, this));
 
@@ -765,7 +767,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 		reply = QNetworkAccessManager::createRequest(operation, mutableRequest, outgoingData);
 	}
 
-	if (!m_baseReply && request.url() == m_mainRequestUrl)
+	if (!m_baseReply && url == m_mainRequestUrl)
 	{
 		m_baseReply = reply;
 	}
