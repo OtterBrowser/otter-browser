@@ -592,7 +592,13 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType ty
 	}
 
 	QWebEngineScript script2;
-	script2.setSourceCode("Array.prototype.at = function (index) {if (index < 0) index += this.length; return this[index];};");
+	script2.setSourceCode(
+		"	Array.prototype.at = function (index) {\n"
+		"		if (index < 0)\n"
+		"			index += this.length\n"
+		"		return this[index]\n"
+		"	}\n"
+	);
 	script2.setRunsOnSubFrames(true);
 	script2.setInjectionPoint(QWebEngineScript::DocumentCreation);
 	script2.setWorldId(QWebEngineScript::MainWorld);
