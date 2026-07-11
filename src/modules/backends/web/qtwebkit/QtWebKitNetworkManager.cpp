@@ -594,20 +594,19 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 			if (action == QLatin1String("add-ssl-error-exception"))
 			{
 				const QString digest(payloadObject.value(QLatin1String("digest")).toString());
-				const QUrl url(m_widget->getUrl());
-				QStringList exceptions(getOption(SettingsManager::Security_IgnoreSslErrorsOption, url).toStringList());
+				const QUrl baseUrl(m_widget->getUrl());
+				QStringList exceptions(getOption(SettingsManager::Security_IgnoreSslErrorsOption, baseUrl).toStringList());
 
 				if (!digest.isEmpty() && !exceptions.contains(digest))
 				{
 					exceptions.append(digest);
 
-					SettingsManager::setOption(SettingsManager::Security_IgnoreSslErrorsOption, exceptions, Utils::extractHost(url));
+					SettingsManager::setOption(SettingsManager::Security_IgnoreSslErrorsOption, exceptions, Utils::extractHost(baseUrl));
 				}
 			}
 			else if (action == QLatin1String("add-content-blocking-exception"))
 			{
-				const QUrl url(m_widget->getUrl());
-				const QString host(Utils::extractHost(url));
+				const QString host(Utils::extractHost(m_widget->getUrl()));
 				QStringList ignoredHosts;
 
 				if (m_widget->hasOption(SettingsManager::ContentBlocking_IgnoreHostsOption))
