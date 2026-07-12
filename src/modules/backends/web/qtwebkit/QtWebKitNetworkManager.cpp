@@ -581,7 +581,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 
 		m_widget->openFormRequest(request, operation, outgoingData);
 
-		return QNetworkAccessManager::createRequest(GetOperation, QNetworkRequest());
+		return QNetworkAccessManager::createRequest(GetOperation, {});
 	}
 
 	if (m_widget && url.path() == QLatin1String("/otter-message") && request.hasRawHeader(QByteArrayLiteral("X-Otter-Token")) && request.hasRawHeader(QByteArrayLiteral("X-Otter-Data")))
@@ -650,7 +650,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 			}
 		}
 
-		return QNetworkAccessManager::createRequest(GetOperation, QNetworkRequest(QUrl()));
+		return QNetworkAccessManager::createRequest(GetOperation, {});
 	}
 
 	if (m_widget && (m_contentBlockingExceptions.isEmpty() || !m_contentBlockingExceptions.contains(url)))
@@ -661,7 +661,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 
 		if (!m_areImagesEnabled && url != m_mainRequestUrl && resourceType == NetworkManager::ImageType)
 		{
-			return QNetworkAccessManager::createRequest(GetOperation, QNetworkRequest(QUrl()));
+			return QNetworkAccessManager::createRequest(GetOperation, {});
 		}
 
 		if (needsContentBlockingCheck)
@@ -689,7 +689,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 
 				emit requestBlocked(resource);
 
-				return QNetworkAccessManager::createRequest(GetOperation, QNetworkRequest());
+				return QNetworkAccessManager::createRequest(GetOperation, {});
 			}
 		}
 	}
