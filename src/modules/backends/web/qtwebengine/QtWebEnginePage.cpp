@@ -594,17 +594,20 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType ty
 
 	QWebEngineScript script2;
 	script2.setSourceCode(
+		"if(!Array.prototype.hasOwnProperty(\"at\")) {\n"
 		"	Object.defineProperty(Array.prototype, \"at\", \n"
 		"		{\n"
 		"			value:      function () {return 0},\n" // "this" not avail.
 		"			enumerable: false,\n"  // -> do not appear in for(i in arr)
 		"			writable:   true,\n" // -> allow overwrite in next statement
-		"		})\n"
+		"		}\n"
+		"	)\n"
 		"	Array.prototype.at = function (index) {\n"  // overwrite
 		"		if (index < 0)\n"
 		"			index += this.length\n"
 		"		return this[index]\n" // "this" available here
 		"	}\n"
+		"}\n"
 	);
 	script2.setRunsOnSubFrames(true);
 	script2.setInjectionPoint(QWebEngineScript::DocumentCreation);
