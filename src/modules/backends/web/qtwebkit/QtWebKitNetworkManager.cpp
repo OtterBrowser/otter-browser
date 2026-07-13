@@ -25,7 +25,6 @@
 #include "QtWebKitPage.h"
 #include "../../../../core/AddonsManager.h"
 #include "../../../../core/Console.h"
-#include "../../../../core/CookieJar.h"
 #include "../../../../core/ContentFiltersManager.h"
 #include "../../../../core/LocalListingNetworkReply.h"
 #include "../../../../core/NetworkCache.h"
@@ -475,39 +474,9 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 	m_canSendReferrer = getOption(SettingsManager::Network_EnableReferrerOption, url).toBool();
 	m_isWorkingOffline = getOption(SettingsManager::Network_WorkOfflineOption, url).toBool();
 
-	const QString generalCookiesPolicyValue(getOption(SettingsManager::Network_CookiesPolicyOption, url).toString());
-	CookieJar::CookiesPolicy generalCookiesPolicy(CookieJar::AcceptAllCookies);
-
-	if (generalCookiesPolicyValue == QLatin1String("ignore"))
-	{
-		generalCookiesPolicy = CookieJar::IgnoreCookies;
-	}
-	else if (generalCookiesPolicyValue == QLatin1String("readOnly"))
-	{
-		generalCookiesPolicy = CookieJar::ReadOnlyCookies;
-	}
-	else if (generalCookiesPolicyValue == QLatin1String("acceptExisting"))
-	{
-		generalCookiesPolicy = CookieJar::AcceptExistingCookies;
-	}
-
-	const QString thirdPartyCookiesPolicyValue(getOption(SettingsManager::Network_ThirdPartyCookiesPolicyOption, url).toString());
-	CookieJar::CookiesPolicy thirdPartyCookiesPolicy(CookieJar::AcceptAllCookies);
-
-	if (thirdPartyCookiesPolicyValue == QLatin1String("ignore"))
-	{
-		thirdPartyCookiesPolicy = CookieJar::IgnoreCookies;
-	}
-	else if (thirdPartyCookiesPolicyValue == QLatin1String("readOnly"))
-	{
-		thirdPartyCookiesPolicy = CookieJar::ReadOnlyCookies;
-	}
-	else if (thirdPartyCookiesPolicyValue == QLatin1String("acceptExisting"))
-	{
-		thirdPartyCookiesPolicy = CookieJar::AcceptExistingCookies;
-	}
-
 	const QString keepCookiesModeValue(getOption(SettingsManager::Network_CookiesKeepModeOption, url).toString());
+	const CookieJar::CookiesPolicy generalCookiesPolicy(mapCookiesPolicy(getOption(SettingsManager::Network_CookiesPolicyOption, url).toString()));
+	const CookieJar::CookiesPolicy thirdPartyCookiesPolicy(mapCookiesPolicy(getOption(SettingsManager::Network_ThirdPartyCookiesPolicyOption, url).toString()));
 	CookieJar::KeepMode keepCookiesMode(CookieJar::KeepUntilExpiresMode);
 
 	if (keepCookiesModeValue == QLatin1String("keepUntilExit"))
@@ -852,6 +821,26 @@ QMap<QByteArray, QByteArray> QtWebKitNetworkManager::getHeaders() const
 WebWidget::ContentStates QtWebKitNetworkManager::getContentState() const
 {
 	return m_contentState;
+}
+
+CookieJar::CookiesPolicy QtWebKitNetworkManager::mapCookiesPolicy(const QString &policy) const
+{
+	if (policy == QLatin1String("ignore"))
+	{
+		return CookieJar::IgnoreCookies;
+	}
+
+	if (policy == QLatin1String("readOnly"))
+	{
+		return CookieJar::ReadOnlyCookies;
+	}
+
+	if (policy == QLatin1String("acceptExisting"))
+	{
+		return CookieJar::AcceptExistingCookies;
+	}
+
+	return CookieJar::AcceptAllCookies;
 }
 
 }
