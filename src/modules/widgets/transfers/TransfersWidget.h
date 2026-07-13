@@ -1,5 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
+* Copyright (C) 2026 Jonas Bechtel
 * Copyright (C) 2018 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -38,6 +39,7 @@ class TransfersWidget final : public ToolButtonWidget
 
 public:
 	explicit TransfersWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent = nullptr);
+	~TransfersWidget();
 
 	QString getToolTip() const override;
 	QIcon getIcon() const override;
