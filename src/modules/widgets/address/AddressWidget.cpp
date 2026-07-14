@@ -1,5 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
+* Copyright (C) 2026 Jonas Bechtel
 * Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
@@ -713,7 +714,11 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 	}
 	else if (event->button() == Qt::MiddleButton && text().isEmpty() && !QGuiApplication::clipboard()->text().isEmpty() && SettingsManager::getOption(SettingsManager::AddressField_PasteAndGoOnMiddleClickOption).toBool())
 	{
-		handleUserInput(QGuiApplication::clipboard()->text().trimmed(), SessionsManager::CurrentTabOpen);
+		auto clipboard = QGuiApplication::clipboard();
+		auto mode = QClipboard::Clipboard;
+		if (clipboard->supportsSelection())
+			mode = QClipboard::Selection;
+		handleUserInput(clipboard->text(mode).trimmed(), SessionsManager::CurrentTabOpen);
 
 		event->accept();
 	}
