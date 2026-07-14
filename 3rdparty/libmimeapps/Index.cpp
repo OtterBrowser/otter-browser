@@ -33,6 +33,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "ConfigReader.h"
 
+#include <algorithm>
+
 namespace LibMimeApps
 {
 
@@ -203,21 +205,27 @@ void Index::processDesktopFile(const std::string &baseDirectory, const std::stri
 
 void Index::addApplication(DesktopEntry *entry)
 {
-	removeApplication(entry->identifier());
+	std::string const& entryId = entry->identifier();
 
-	knownApplications_[entry->identifier()] = entry;
+	removeApplication(entryId);
 
-	for (std::vector<std::string>::size_type i = 0; i < entry->types().size(); ++i)
-	{
-		addToType(entry->types().at(i), entry);
+	knownApplications_[entryId] = entry;
+
+	// There is no need to call addToType here, since we just removed the entry ID
+	// from the cache, so the only missing information is the mapping from the types
+	// in the applicationsCache_
+	for (auto& type : entry->types()) {
+		applicationsCache_[type].push_front(entry);
 	}
 }
 
 void Index::addToType(const std::string &type, DesktopEntry *entry)
 {
+	std::string const& entryId = entry->identifier();
+
 	if (applicationsCache_.find(type) != applicationsCache_.end())
 	{
-		removeFromType(type, entry->identifier());
+		removeFromType(type, entryId);
 	}
 
 	applicationsCache_[type].push_front(entry);
@@ -226,14 +234,19 @@ void Index::addToType(const std::string &type, DesktopEntry *entry)
 
 void Index::removeApplication(const std::string &entryId)
 {
-	for (std::map<std::string, std::list<DesktopEntry*> >::iterator type = applicationsCache_.begin(); type != applicationsCache_.end(); ++type)
+	auto found = knownApplications_.find(entryId);
+	if (found == knownApplications_.end())
+		return;
+	for (auto& type : found->second->types_)
 	{
-		removeFromType(type->first, entryId);
+		removeFromTypeCache(type, entryId);
 	}
+	knownApplications_.erase(found);
 }
 
-void Index::removeFromType(const std::string &type, const std::string &entryId)
+void Index::removeFromTypeCache(const std::string &type, const std::string &entryId)
 {
+
 	if (applicationsCache_.find(type) != applicationsCache_.end())
 	{
 		for (std::list<DesktopEntry*>::iterator it = applicationsCache_.at(type).begin(); it != applicationsCache_.at(type).end();)
@@ -249,36 +262,16 @@ void Index::removeFromType(const std::string &type, const std::string &entryId)
 		}
 	}
 
+}
+
+void Index::removeFromType(const std::string &type, const std::string &entryId)
+{
+	removeFromTypeCache(type, entryId);
+
 	if (knownApplications_.find(entryId) != knownApplications_.end())
 	{
 		std::vector<std::string> &types = knownApplications_.at(entryId)->types_;
-
-		for (std::vector<std::string>::iterator it = types.begin(); it != types.end();)
-		{
-			if (*it == type)
-			{
-				if (it == types.begin())
-				{
-					types.erase(it);
-
-					it = types.begin();
-				}
-				else
-				{
-					std::vector<std::string>::iterator temp = it;
-					--temp;
-
-					types.erase(it);
-
-					it = ++temp;
-				}
-
-			}
-			else
-			{
-				++it;
-			}
-		}
+		(void)std::remove(types.begin(), types.end(), type);
 	}
 }
 
