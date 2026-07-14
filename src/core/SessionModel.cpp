@@ -180,6 +180,14 @@ WindowSessionItem::WindowSessionItem(Window *window) : SessionItem(),
 	m_window(window)
 {
 	setFlags(flags() | Qt::ItemNeverHasChildren);
+
+	QObject::connect(window, &Window::titleChanged, [this](){
+		emitDataChanged();
+	});
+
+	QObject::connect(window, &Window::iconChanged, [this]() {
+		emitDataChanged();
+	});
 }
 
 Window* WindowSessionItem::getActiveWindow() const
