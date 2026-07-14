@@ -23,6 +23,7 @@
 #define OTTER_QTWEBKITNETWORKMANAGER_H
 
 #include "QtWebKitWebWidget.h"
+#include "../../../../core/CookieJar.h"
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 
@@ -71,6 +72,7 @@ protected:
 	QNetworkReply* createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData) override;
 	QString getUserAgent() const;
 	QVariant getOption(int identifier, const QUrl &url) const;
+	CookieJar::CookiesPolicy mapCookiesPolicy(const QString &policy) const;
 
 protected slots:
 	void handleDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
