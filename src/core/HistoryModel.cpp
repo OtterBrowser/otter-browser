@@ -100,9 +100,9 @@ HistoryModel::HistoryModel(const QString &path, HistoryType type, QObject *paren
 
 	file.close();
 
-	for (int i = 0; i < historyArray.count(); ++i)
+	for (const QJsonValue &entryValue: historyArray)
 	{
-		const QJsonObject entryObject(historyArray.at(i).toObject());
+		const QJsonObject entryObject(entryValue.toObject());
 		QDateTime dateTime(QDateTime::fromString(entryObject.value(QLatin1String("time")).toString(), Qt::ISODate));
 		dateTime.setTimeZone(QTimeZone::utc());
 
