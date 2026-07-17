@@ -160,9 +160,11 @@ void HistoryModel::clearOldestEntries(int period)
 
 	for (int i = (rowCount() - 1); i >= 0; --i)
 	{
-		if (index(i, 0).data(TimeVisitedRole).toDateTime().daysTo(currentDateTime) > period)
+		const QModelIndex index(this->index(i, 0));
+
+		if (index.data(TimeVisitedRole).toDateTime().daysTo(currentDateTime) > period)
 		{
-			removeEntry(index(i, 0).data(IdentifierRole).toULongLong());
+			removeEntry(index.data(IdentifierRole).toULongLong());
 		}
 	}
 }
