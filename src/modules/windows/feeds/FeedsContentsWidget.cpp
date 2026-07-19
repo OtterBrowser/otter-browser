@@ -652,10 +652,11 @@ void FeedsContentsWidget::updateFeedModel()
 	m_ui->categoriesButton->setEnabled(!categories.isEmpty());
 
 	const QVector<Feed::Entry> entries(m_feed->getEntries(m_categories));
+	int index(-1);
 
-	for (int i = 0; i < entries.count(); ++i)
+	for (const Feed::Entry &entry: entries)
 	{
-		const Feed::Entry &entry(entries.at(i));
+		++index;
 
 		if (!m_categories.isEmpty())
 		{
@@ -696,7 +697,7 @@ void FeedsContentsWidget::updateFeedModel()
 
 		if (!identifier.isEmpty() && entry.identifier == identifier)
 		{
-			m_ui->entriesViewWidget->setCurrentIndex(m_ui->entriesViewWidget->getIndex(i));
+			m_ui->entriesViewWidget->setCurrentIndex(m_ui->entriesViewWidget->getIndex(index));
 		}
 	}
 
