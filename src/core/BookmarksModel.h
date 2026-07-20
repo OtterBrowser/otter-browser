@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -59,6 +59,7 @@ public:
 		TimeModifiedRole,
 		TimeVisitedRole,
 		VisitsRole,
+		IsHiddenRole,
 		IsTrashedRole,
 		UserRole
 	};
@@ -96,6 +97,7 @@ public:
 		static bool isFolder(BookmarkType type);
 		bool isFolder() const;
 		bool isAncestorOf(Bookmark *child) const;
+		bool isHidden() const;
 		bool operator<(const QStandardItem &other) const override;
 
 	protected:
