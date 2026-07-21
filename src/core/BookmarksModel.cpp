@@ -588,6 +588,11 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, Bookmark *parent)
 	{
 		bookmark = addBookmark(FolderBookmark, {{IdentifierRole, reader->attributes().value(QLatin1String("id")).toULongLong()}, {TimeAddedRole, readDateTime(reader, QLatin1String("added"))}, {TimeModifiedRole, readDateTime(reader, QLatin1String("modified"))}}, parent);
 
+		if (reader->attributes().hasAttribute(QLatin1String("hidden")))
+		{
+			bookmark->setData(true, IsHiddenRole);
+		}
+
 		while (reader->readNext())
 		{
 			if (reader->isStartElement())
@@ -838,6 +843,11 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark)
 		case FolderBookmark:
 			writer->writeStartElement(QLatin1String("folder"));
 			writer->writeAttribute(QLatin1String("id"), QString::number(bookmark->getRawData(IdentifierRole).toULongLong()));
+
+			if (bookmark->getRawData(IsHiddenRole).toBool())
+			{
+				writer->writeAttribute(QLatin1String("hidden"), QLatin1String("true"));
+			}
 
 			if (bookmark->getRawData(TimeAddedRole).toDateTime().isValid())
 			{
