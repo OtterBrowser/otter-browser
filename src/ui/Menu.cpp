@@ -678,7 +678,7 @@ void Menu::populateBookmarksMenu()
 	{
 		const BookmarksModel::Bookmark *bookmark(folderBookmark->getChild(i));
 
-		if (!bookmark)
+		if (!bookmark || bookmark->isHidden())
 		{
 			continue;
 		}
