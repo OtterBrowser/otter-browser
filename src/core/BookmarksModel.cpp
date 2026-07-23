@@ -230,6 +230,20 @@ QVariant BookmarksModel::Bookmark::data(int role) const
 		return QLatin1String("separator");
 	}
 
+	if (role == VisitsRole)
+	{
+		switch (getType())
+		{
+			case FeedBookmark:
+			case UrlBookmark:
+				return QStandardItem::data(VisitsRole).toInt();
+			default:
+				break;
+		}
+
+		return QStandardItem::data(VisitsRole);
+	}
+
 	if (role == IsTrashedRole)
 	{
 		QModelIndex parent(index().parent());
