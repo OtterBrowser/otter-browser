@@ -575,6 +575,7 @@ void BookmarksModel::removeBookmark(Bookmark *bookmark)
 
 	removeBookmarkUrl(bookmark);
 
+	const QString keyword(bookmark->data(KeywordRole).toString());
 	const quint64 identifier(bookmark->data(IdentifierRole).toULongLong());
 
 	if (identifier > 0 && m_identifiers.contains(identifier))
@@ -582,9 +583,9 @@ void BookmarksModel::removeBookmark(Bookmark *bookmark)
 		m_identifiers.remove(identifier);
 	}
 
-	if (!bookmark->data(KeywordRole).toString().isEmpty() && m_keywords.contains(bookmark->data(KeywordRole).toString()))
+	if (!keyword.isEmpty() && m_keywords.contains(keyword))
 	{
-		m_keywords.remove(bookmark->data(KeywordRole).toString());
+		m_keywords.remove(keyword);
 	}
 
 	emit bookmarkRemoved(bookmark, bookmark->getParent());
