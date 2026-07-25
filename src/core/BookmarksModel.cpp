@@ -33,6 +33,8 @@
 #include <QtCore/QTimeZone>
 #include <QtWidgets/QMessageBox>
 
+#define XBEL_OWNER "http://otter-browser.org/otter-xbel-bookmark"
+
 namespace Otter
 {
 
@@ -630,7 +632,7 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, Bookmark *parent)
 					{
 						if (reader->isStartElement())
 						{
-							if (reader->name() == QLatin1String("metadata") && reader->attributes().value(QLatin1String("owner")).toString().startsWith(QLatin1String("http://otter-browser.org/")))
+							if (reader->name() == QLatin1String("metadata") && reader->attributes().value(QLatin1String("owner")).toString().startsWith(XBEL_OWNER))
 							{
 								while (reader->readNext())
 								{
@@ -708,7 +710,7 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, Bookmark *parent)
 					{
 						if (reader->isStartElement())
 						{
-							if (reader->name() == QLatin1String("metadata") && reader->attributes().value(QLatin1String("owner")).toString().startsWith(QLatin1String("http://otter-browser.org/")))
+							if (reader->name() == QLatin1String("metadata") && reader->attributes().value(QLatin1String("owner")).toString().startsWith(XBEL_OWNER))
 							{
 								while (reader->readNext())
 								{
@@ -786,7 +788,6 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark)
 		return;
 	}
 
-	const QString elementOwner(QLatin1String("http://otter-browser.org/otter-xbel-bookmark"));
 	const BookmarkType type(bookmark->getType());
 	const bool isBookmarks(m_mode == BookmarksMode);
 
@@ -836,7 +837,7 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark)
 			{
 				writer->writeStartElement(QLatin1String("info"));
 				writer->writeStartElement(QLatin1String("metadata"));
-				writer->writeAttribute(QLatin1String("owner"), elementOwner);
+				writer->writeAttribute(QLatin1String("owner"), XBEL_OWNER);
 
 				if (!bookmark->getRawData(KeywordRole).toString().isEmpty())
 				{
@@ -885,7 +886,7 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark)
 			{
 				writer->writeStartElement(QLatin1String("info"));
 				writer->writeStartElement(QLatin1String("metadata"));
-				writer->writeAttribute(QLatin1String("owner"), elementOwner);
+				writer->writeAttribute(QLatin1String("owner"), XBEL_OWNER);
 				writer->writeTextElement(QLatin1String("keyword"), bookmark->getRawData(KeywordRole).toString());
 				writer->writeEndElement();
 				writer->writeEndElement();
