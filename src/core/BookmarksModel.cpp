@@ -1148,11 +1148,6 @@ BookmarksModel::Bookmark* BookmarksModel::addBookmark(BookmarkType type, const Q
 
 	parent->insertRow(((index < 0) ? parent->rowCount() : index), bookmark);
 
-	if (type == FeedBookmark || type == UrlBookmark || type == SeparatorBookmark)
-	{
-		bookmark->setDropEnabled(false);
-	}
-
 	if (type == FeedBookmark || type == FolderBookmark || type == UrlBookmark)
 	{
 		quint64 identifier(metaData.value(IdentifierRole).toULongLong());
@@ -1175,8 +1170,13 @@ BookmarksModel::Bookmark* BookmarksModel::addBookmark(BookmarkType type, const Q
 			bookmark->setItemData(currentDateTime, TimeAddedRole);
 			bookmark->setItemData(currentDateTime, TimeModifiedRole);
 		}
+	}
 
-		if (type == FeedBookmark || type == UrlBookmark)
+	if (type == FeedBookmark || type == UrlBookmark || type == SeparatorBookmark)
+	{
+		bookmark->setDropEnabled(false);
+
+		if (type != SeparatorBookmark)
 		{
 			const QUrl url(metaData.value(UrlRole).toUrl());
 
@@ -1185,16 +1185,15 @@ BookmarksModel::Bookmark* BookmarksModel::addBookmark(BookmarkType type, const Q
 				handleUrlChanged(bookmark, Utils::normalizeUrl(url));
 			}
 
-			if (type == UrlBookmark)
+			if (type == FeedBookmark)
+			{
+				setupFeed(bookmark);
+			}
+			else
 			{
 				bookmark->setFlags(bookmark->flags() | Qt::ItemNeverHasChildren);
 			}
 		}
-	}
-
-	if (type == FeedBookmark)
-	{
-		setupFeed(bookmark);
 	}
 
 	bookmark->setItemData(type, TypeRole);
