@@ -269,9 +269,13 @@ void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &p
 
 			break;
 		case ActionsManager::CopyLinkToClipboardAction:
-			if (static_cast<BookmarksModel::BookmarkType>(m_ui->bookmarksViewWidget->currentIndex().data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
 			{
-				QGuiApplication::clipboard()->setText(m_ui->bookmarksViewWidget->currentIndex().data(BookmarksModel::UrlRole).toString());
+				const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(m_ui->bookmarksViewWidget->currentIndex().data(BookmarksModel::TypeRole).toInt()));
+
+				if (type == BookmarksModel::FeedBookmark || type == BookmarksModel::UrlBookmark)
+				{
+					QGuiApplication::clipboard()->setText(m_ui->bookmarksViewWidget->currentIndex().data(BookmarksModel::UrlRole).toString());
+				}
 			}
 
 			break;
@@ -346,9 +350,13 @@ ActionsManager::ActionDefinition::State BookmarksContentsWidget::getActionState(
 	switch (identifier)
 	{
 		case ActionsManager::CopyLinkToClipboardAction:
-			state.isEnabled = (static_cast<BookmarksModel::BookmarkType>(m_ui->bookmarksViewWidget->currentIndex().data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark);
+			{
+				const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(m_ui->bookmarksViewWidget->currentIndex().data(BookmarksModel::TypeRole).toInt()));
 
-			return state;
+				state.isEnabled = (type == BookmarksModel::FeedBookmark || type == BookmarksModel::UrlBookmark);
+
+				return state;
+			}
 		case ActionsManager::DeleteAction:
 			state.text = QCoreApplication::translate("actions", "Remove Bookmark");
 			state.isEnabled = m_ui->deleteButton->isEnabled();
