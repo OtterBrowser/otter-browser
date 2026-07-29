@@ -208,7 +208,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 
 				if (type == BookmarksModel::FolderBookmark)
 				{
-					parameters[QLatin1String("folder")] = index.data(BookmarksModel::IdentifierRole);
+					parameters[QLatin1String("folder")] = identifier;
 				}
 
 				menu.addSeparator();
