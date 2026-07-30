@@ -59,7 +59,7 @@ protected:
 	};
 
 	void changeEvent(QEvent *event) override;
-	BookmarksModel::Bookmark* getBookmark(const QModelIndex &index) const;
+	BookmarksModel::Bookmark* getBookmark(const QModelIndex &index = {}) const;
 	BookmarkLocation getBookmarkCreationLocation();
 
 protected slots:

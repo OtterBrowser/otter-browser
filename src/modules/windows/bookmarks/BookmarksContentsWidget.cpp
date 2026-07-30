@@ -115,12 +115,12 @@ void BookmarksContentsWidget::addSeparator()
 
 void BookmarksContentsWidget::removeBookmark()
 {
-	BookmarksManager::getModel()->trashBookmark(getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
+	BookmarksManager::getModel()->trashBookmark(getBookmark());
 }
 
 void BookmarksContentsWidget::openBookmark()
 {
-	const BookmarksModel::Bookmark *bookmark(getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
+	const BookmarksModel::Bookmark *bookmark(getBookmark());
 
 	if (bookmark)
 	{
@@ -130,7 +130,7 @@ void BookmarksContentsWidget::openBookmark()
 
 void BookmarksContentsWidget::bookmarkProperties()
 {
-	BookmarksModel::Bookmark *bookmark(getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
+	BookmarksModel::Bookmark *bookmark(getBookmark());
 
 	if (bookmark)
 	{
@@ -238,7 +238,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 					{
 						menu.addAction(tr("Restore Bookmark"), &menu, [&]()
 						{
-							BookmarksManager::getModel()->restoreBookmark(getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
+							BookmarksManager::getModel()->restoreBookmark(getBookmark());
 						});
 					}
 					else
@@ -318,7 +318,7 @@ void BookmarksContentsWidget::print(QPrinter *printer)
 
 BookmarksModel::Bookmark* BookmarksContentsWidget::getBookmark(const QModelIndex &index) const
 {
-	const QModelIndex mappedIndex(m_model->mapToSource(index));
+	const QModelIndex mappedIndex(m_model->mapToSource(index.isValid() ? index : m_ui->bookmarksViewWidget->currentIndex()));
 
 	return BookmarksManager::getModel()->getBookmark(mappedIndex.sibling(mappedIndex.row(), 0));
 }
