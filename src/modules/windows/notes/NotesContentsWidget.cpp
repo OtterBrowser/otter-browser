@@ -96,7 +96,7 @@ void NotesContentsWidget::print(QPrinter *printer)
 
 void NotesContentsWidget::addNote()
 {
-	m_ui->notesViewWidget->setCurrentIndex(NotesManager::addNote(BookmarksModel::UrlBookmark, {}, findFolder(m_ui->notesViewWidget->currentIndex()))->index());
+	m_ui->notesViewWidget->setCurrentIndex(NotesManager::addNote(BookmarksModel::UrlBookmark, {}, findFolder())->index());
 	m_ui->textEditWidget->setFocus();
 }
 
@@ -106,13 +106,13 @@ void NotesContentsWidget::addFolder()
 
 	if (!title.isEmpty())
 	{
-		m_ui->notesViewWidget->setCurrentIndex(NotesManager::addNote(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, title}}, findFolder(m_ui->notesViewWidget->currentIndex()))->index());
+		m_ui->notesViewWidget->setCurrentIndex(NotesManager::addNote(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, title}}, findFolder())->index());
 	}
 }
 
 void NotesContentsWidget::addSeparator()
 {
-	m_ui->notesViewWidget->setCurrentIndex(NotesManager::addNote(BookmarksModel::SeparatorBookmark, {}, findFolder(m_ui->notesViewWidget->currentIndex()))->index());
+	m_ui->notesViewWidget->setCurrentIndex(NotesManager::addNote(BookmarksModel::SeparatorBookmark, {}, findFolder())->index());
 }
 
 void NotesContentsWidget::removeNote()
@@ -234,7 +234,7 @@ void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &param
 		case ActionsManager::PasteAction:
 			if (!QGuiApplication::clipboard()->text().isEmpty())
 			{
-				NotesManager::addNote(BookmarksModel::UrlBookmark, {{BookmarksModel::DescriptionRole, QGuiApplication::clipboard()->text()}}, findFolder(m_ui->notesViewWidget->currentIndex()));
+				NotesManager::addNote(BookmarksModel::UrlBookmark, {{BookmarksModel::DescriptionRole, QGuiApplication::clipboard()->text()}}, findFolder());
 			}
 
 			break;
@@ -309,7 +309,7 @@ void NotesContentsWidget::updateText()
 BookmarksModel::Bookmark* NotesContentsWidget::findFolder(const QModelIndex &index)
 {
 	BookmarksModel *model(NotesManager::getModel());
-	BookmarksModel::Bookmark *bookmark(model->getBookmark(index));
+	BookmarksModel::Bookmark *bookmark(model->getBookmark(index.isValid() ? index : m_ui->notesViewWidget->currentIndex()));
 
 	if (!bookmark || bookmark == model->getRootItem() || bookmark == model->getTrashItem())
 	{
