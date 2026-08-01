@@ -56,9 +56,9 @@ SessionsManagerDialog::SessionsManagerDialog(QWidget *parent) : Dialog(parent),
 		const SessionInformation session(sorted.at(i));
 		int windows(0);
 
-		for (int j = 0; j < session.windows.count(); ++j)
+		for (const Session::MainWindow &mainWindow: session.windows)
 		{
-			windows += session.windows.at(j).windows.count();
+			windows += mainWindow.windows.count();
 		}
 
 		if (session.path == currentSession)
