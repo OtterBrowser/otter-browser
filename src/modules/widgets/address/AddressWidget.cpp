@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2024 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -988,9 +988,8 @@ void AddressWidget::updateEntries(const QVector<EntryIdentifier> &identifiers)
 	bool needsUpdate(false);
 	bool needsRepaint(false);
 
-	for (int i = 0; i < identifiers.count(); ++i)
+	for (const EntryIdentifier identifier: identifiers)
 	{
-		const EntryIdentifier identifier(identifiers.at(i));
 		const bool isUpdating(m_entries.contains(identifier));
 
 		if (!m_layout.contains(identifier))
@@ -1174,14 +1173,14 @@ void AddressWidget::updateGeometries()
 		availableWidth -= 16;
 	}
 
-	for (int i = 0; i < m_layout.count(); ++i)
+	for (const EntryIdentifier identifier: std::as_const(m_layout))
 	{
-		if (m_layout.at(i) == AddressEntry)
+		if (identifier == AddressEntry)
 		{
 			isLeading = !isLeading;
 		}
 
-		switch (m_layout.at(i))
+		switch (identifier)
 		{
 			case AddressEntry:
 			case HistoryDropdownEntry:
@@ -1198,7 +1197,7 @@ void AddressWidget::updateGeometries()
 				break;
 		}
 
-		const EntryDefinition definition(m_entries.value(m_layout.at(i)));
+		const EntryDefinition definition(m_entries.value(identifier));
 
 		if (isLeading)
 		{
