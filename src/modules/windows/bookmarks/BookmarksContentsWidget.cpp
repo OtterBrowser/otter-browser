@@ -270,11 +270,12 @@ void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &p
 			break;
 		case ActionsManager::CopyLinkToClipboardAction:
 			{
-				const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(m_ui->bookmarksViewWidget->currentIndex().data(BookmarksModel::TypeRole).toInt()));
+				const QModelIndex index(m_ui->bookmarksViewWidget->currentIndex());
+				const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
 
 				if (type == BookmarksModel::FeedBookmark || type == BookmarksModel::UrlBookmark)
 				{
-					QGuiApplication::clipboard()->setText(m_ui->bookmarksViewWidget->currentIndex().data(BookmarksModel::UrlRole).toString());
+					QGuiApplication::clipboard()->setText(index.data(BookmarksModel::UrlRole).toString());
 				}
 			}
 
