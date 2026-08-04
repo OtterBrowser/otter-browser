@@ -186,9 +186,8 @@ void AddressDelegate::drawCompletionText(QPainter *painter, const QFont &font, c
 	const QFontMetrics highlightFontMetrics(highlightFont);
 	const int xLength(highlightFontMetrics.horizontalAdvance(QLatin1Char('X')));
 
-	for (int i = 0; i < segments.count(); ++i)
+	for (const TextSegment &segment: segments)
 	{
-		const TextSegment segment(segments.at(i));
 		const QFontMetrics segmentFontMetrics(segment.isHighlighted ? highlightFontMetrics : fontMetrics);
 		const int maximumLength(availableRectangle.width() - xLength);
 		const int length(segmentFontMetrics.horizontalAdvance(segment.text));
@@ -225,22 +224,23 @@ QVector<AddressDelegate::TextSegment> AddressDelegate::highlightSegments(const Q
 
 	QVector<TextSegment> highlightedSegments;
 
-	for (int i = 0; i < segments.count(); ++i)
+	for (const TextSegment &segment: segments)
 	{
-		const TextSegment segment(segments.at(i));
 		const QStringList subSegments(segment.text.split(highlight, Qt::KeepEmptyParts, Qt::CaseInsensitive));
 		int highlightAmount(0);
 
-		for (int j = 0; j < subSegments.count(); ++j)
+		for (int i = 0; i < subSegments.count(); ++i)
 		{
-			if (subSegments.at(j).isEmpty())
+			const QString subSegment(subSegments.at(i));
+
+			if (subSegment.isEmpty())
 			{
-				if (j > 0)
+				if (i > 0)
 				{
 					++highlightAmount;
 				}
 
-				if (j >= (subSegments.count() - 1) || !subSegments.at(j + 1).isEmpty())
+				if (i >= (subSegments.count() - 1) || !subSegments.at(i + 1).isEmpty())
 				{
 					highlightedSegments.append(TextSegment(highlight.repeated(highlightAmount), segment.color, true));
 
@@ -249,12 +249,12 @@ QVector<AddressDelegate::TextSegment> AddressDelegate::highlightSegments(const Q
 					continue;
 				}
 			}
-			else if (j > 0)
+			else if (i > 0)
 			{
 				highlightedSegments.append(TextSegment(highlight.repeated(highlightAmount + 1), segment.color, true));
 			}
 
-			highlightedSegments.append(TextSegment(subSegments.at(j), segment.color));
+			highlightedSegments.append(TextSegment(subSegment, segment.color));
 		}
 	}
 
@@ -618,9 +618,9 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 					{
 						QMenu menu;
 
-						for (int i = 0; i < feeds.count(); ++i)
+						for (const WebWidget::LinkUrl &feed: feeds)
 						{
-							menu.addAction(feeds.at(i).title.isEmpty() ? tr("(Untitled)") : feeds.at(i).title)->setData(FeedsManager::createFeedReaderUrl(feeds.at(i).url));
+							menu.addAction(feed.title.isEmpty() ? tr("(Untitled)") : feed.title)->setData(FeedsManager::createFeedReaderUrl(feed.url));
 						}
 
 						connect(&menu, &QMenu::triggered, this, [&](QAction *action)
@@ -648,9 +648,9 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 						{
 							const QVector<BookmarksModel::Bookmark*> bookmarks(BookmarksManager::getModel()->findUrls(url));
 
-							for (int i = 0; i < bookmarks.count(); ++i)
+							for (BookmarksModel::Bookmark *bookmark: bookmarks)
 							{
-								BookmarksManager::getModel()->trashBookmark(bookmarks.at(i));
+								BookmarksManager::getModel()->trashBookmark(bookmark);
 							}
 						}
 						else
@@ -887,9 +887,9 @@ void AddressWidget::handleOptionChanged(int identifier, const QVariant &value)
 				QVector<EntryIdentifier> layout;
 				layout.reserve(rawLayout.count());
 
-				for (int i = 0; i < rawLayout.count(); ++i)
+				for (const QString &rawIdentifier: rawLayout)
 				{
-					const EntryIdentifier entryIdentifier(static_cast<EntryIdentifier>(enumeratorMapper.mapToValue(rawLayout.at(i).toLatin1())));
+					const EntryIdentifier entryIdentifier(static_cast<EntryIdentifier>(enumeratorMapper.mapToValue(rawIdentifier.toLatin1())));
 
 					if (entryIdentifier > UnknownEntry && !layout.contains(entryIdentifier))
 					{
