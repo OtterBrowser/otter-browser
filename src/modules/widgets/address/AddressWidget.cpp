@@ -319,7 +319,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(p
 
 	connect(this, &AddressWidget::requestedPopupEntryRemoval, [&](const QModelIndex &index)
 	{
-		if (index.isValid() && index.data(AddressCompletionModel::IsRemovableRole).toBool() && index.data(AddressCompletionModel::TypeRole).toInt() == AddressCompletionModel::CompletionEntry::TypedHistoryType)
+		if (index.isValid() && index.data(AddressCompletionModel::IsRemovableRole).toBool() && static_cast<AddressCompletionModel::CompletionEntry::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::CompletionEntry::TypedHistoryType)
 		{
 			HistoryManager::getTypedHistoryModel()->removeEntry(index.data(AddressCompletionModel::HistoryIdentifierRole).toULongLong());
 
