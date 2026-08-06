@@ -151,6 +151,7 @@ void CertificateDialog::updateCertificate()
 	const QSslCertificate certificate(m_certificates.value(m_ui->chainItemView->currentIndex().data(CertificateIndexRole).toInt()));
 	const QVariant field(m_ui->detailsItemView->currentIndex().data(CertificateFieldRole));
 	const QVariant extension(m_ui->detailsItemView->currentIndex().data(ExtensionNameRole));
+	const QList<QSslCertificateExtension> extensions(certificate.extensions());
 
 	m_ui->detailsItemView->getSourceModel()->clear();
 
@@ -174,11 +175,11 @@ void CertificateDialog::updateCertificate()
 
 	QStandardItem *extensionsItem(createField(ExtensionsField));
 	extensionsItem->setFlags(Qt::ItemIsEnabled);
-	extensionsItem->setEnabled(certificate.extensions().count() > 0);
+	extensionsItem->setEnabled(extensions.count() > 0);
 
 	int index(-1);
 
-	for (const QSslCertificateExtension &extension: certificate.extensions())
+	for (const QSslCertificateExtension &extension: extensions)
 	{
 		const QString name(extension.name());
 		QString title(name);
