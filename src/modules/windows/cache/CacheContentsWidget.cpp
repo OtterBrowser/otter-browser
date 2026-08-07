@@ -319,8 +319,10 @@ void CacheContentsWidget::handleEntryRemoved(const QUrl &url)
 
 			if (domainSizeItem && size > 0)
 			{
-				domainSizeItem->setData((domainSizeItem->data(SizeRole).toLongLong() - size), SizeRole);
-				domainSizeItem->setText(Utils::formatUnit(domainSizeItem->data(SizeRole).toLongLong()));
+				qint64 newSize(domainSizeItem->data(SizeRole).toLongLong() - size);
+
+				domainSizeItem->setData(newSize, SizeRole);
+				domainSizeItem->setText(Utils::formatUnit(newSize));
 			}
 
 			domainItem->setText(QStringLiteral("%1 (%2)").arg(url.host(), QString::number(domainItem->rowCount())));
