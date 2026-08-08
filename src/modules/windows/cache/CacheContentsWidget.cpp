@@ -319,7 +319,7 @@ void CacheContentsWidget::handleEntryRemoved(const QUrl &url)
 
 			if (domainSizeItem && size > 0)
 			{
-				qint64 newSize(domainSizeItem->data(SizeRole).toLongLong() - size);
+				const qint64 newSize(domainSizeItem->data(SizeRole).toLongLong() - size);
 
 				domainSizeItem->setData(newSize, SizeRole);
 				domainSizeItem->setText(Utils::formatUnit(newSize));
