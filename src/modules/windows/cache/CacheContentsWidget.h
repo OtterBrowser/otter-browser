@@ -58,6 +58,7 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event) override;
+	void setSize(QStandardItem *item, qint64 size);
 	QStandardItem* findDomainItem(const QString &domain);
 	QUrl getEntry(const QModelIndex &index) const;
 

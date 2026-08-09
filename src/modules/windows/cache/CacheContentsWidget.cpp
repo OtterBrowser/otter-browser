@@ -271,8 +271,7 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &url)
 
 		if (sizeItem)
 		{
-			sizeItem->setData((sizeItem->data(SizeRole).toLongLong() + device->size()), SizeRole);
-			sizeItem->setText(Utils::formatUnit(sizeItem->data(SizeRole).toLongLong()));
+			setSize(sizeItem, ((sizeItem->data(SizeRole).toLongLong() + device->size())));
 		}
 
 		device->deleteLater();
@@ -319,10 +318,7 @@ void CacheContentsWidget::handleEntryRemoved(const QUrl &url)
 
 			if (domainSizeItem && size > 0)
 			{
-				const qint64 newSize(domainSizeItem->data(SizeRole).toLongLong() - size);
-
-				domainSizeItem->setData(newSize, SizeRole);
-				domainSizeItem->setText(Utils::formatUnit(newSize));
+				setSize(domainSizeItem, (domainSizeItem->data(SizeRole).toLongLong() - size));
 			}
 
 			domainItem->setText(QStringLiteral("%1 (%2)").arg(url.host(), QString::number(domainItem->rowCount())));
@@ -377,6 +373,12 @@ void CacheContentsWidget::showContextMenu(const QPoint &position)
 
 	menu.addAction(new Action(ActionsManager::ClearHistoryAction, {}, ActionExecutor::Object(mainWindow, mainWindow), &menu));
 	menu.exec(m_ui->cacheViewWidget->mapToGlobal(position));
+}
+
+void CacheContentsWidget::setSize(QStandardItem *item, qint64 size)
+{
+	item->setData(size, SizeRole);
+	item->setText(Utils::formatUnit(size));
 }
 
 void CacheContentsWidget::updateActions()
@@ -505,15 +507,13 @@ void CacheContentsWidget::updateActions()
 
 		if (sizeItem && sizeItem->text().isEmpty())
 		{
-			sizeItem->setText(Utils::formatUnit(device->size()));
-			sizeItem->setData(device->size(), SizeRole);
+			setSize(sizeItem, device->size());
 
 			QStandardItem *domainSizeItem(sizeItem->parent() ? m_model->item(sizeItem->parent()->row(), 2) : nullptr);
 
 			if (domainSizeItem)
 			{
-				domainSizeItem->setData((domainSizeItem->data(SizeRole).toLongLong() + device->size()), SizeRole);
-				domainSizeItem->setText(Utils::formatUnit(domainSizeItem->data(SizeRole).toLongLong()));
+				setSize(domainSizeItem, (domainSizeItem->data(SizeRole).toLongLong() + device->size()));
 			}
 		}
 
