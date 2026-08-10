@@ -271,7 +271,7 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &url)
 
 		if (sizeItem)
 		{
-			setSize(sizeItem, ((sizeItem->data(SizeRole).toLongLong() + device->size())));
+			setSize(sizeItem, (sizeItem->data(SizeRole).toLongLong() + device->size()));
 		}
 
 		device->deleteLater();
