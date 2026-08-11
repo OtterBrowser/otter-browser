@@ -255,7 +255,8 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &url)
 		}
 	}
 
-	const QMimeType mimeType((device && type.isEmpty()) ? QMimeDatabase().mimeTypeForData(device) : QMimeDatabase().mimeTypeForName(type));
+	const QMimeDatabase mimeDatabase;
+	const QMimeType mimeType((device && type.isEmpty()) ? mimeDatabase.mimeTypeForData(device) : mimeDatabase.mimeTypeForName(type));
 	QList<QStandardItem*> entryItems({new QStandardItem(url.path()), new QStandardItem(mimeType.name()), new QStandardItem(device ? Utils::formatUnit(device->size()) : QString()), new QStandardItem(Utils::formatDateTime(metaData.lastModified())), new QStandardItem(Utils::formatDateTime(metaData.expirationDate()))});
 	entryItems[0]->setData(url, UrlRole);
 	entryItems[0]->setFlags(entryItems[0]->flags() | Qt::ItemNeverHasChildren);
