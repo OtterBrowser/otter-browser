@@ -212,7 +212,7 @@ void CacheContentsWidget::openEntry()
 
 void CacheContentsWidget::handleEntryAdded(const QUrl &url)
 {
-	const QString domain(url.host());
+	const QString domain(Utils::extractHost(url));
 	QStandardItem *domainItem(findDomainItem(domain));
 
 	if (domainItem)
@@ -322,7 +322,7 @@ void CacheContentsWidget::handleEntryRemoved(const QUrl &url)
 				setSize(domainSizeItem, (domainSizeItem->data(SizeRole).toLongLong() - size));
 			}
 
-			domainItem->setText(QStringLiteral("%1 (%2)").arg(url.host(), QString::number(domainItem->rowCount())));
+			domainItem->setText(QStringLiteral("%1 (%2)").arg(Utils::extractHost(url), QString::number(domainItem->rowCount())));
 		}
 
 		break;
@@ -386,7 +386,7 @@ void CacheContentsWidget::updateActions()
 {
 	const QModelIndex index(m_ui->cacheViewWidget->getCurrentIndex());
 	const QUrl url(getEntry(index));
-	const QString domain((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString() : url.host());
+	const QString domain((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString() : Utils::extractHost(url));
 
 	m_ui->locationLabelWidget->setText({});
 	m_ui->locationLabelWidget->setUrl({});
