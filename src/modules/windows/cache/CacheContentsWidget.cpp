@@ -451,7 +451,7 @@ void CacheContentsWidget::updateActions()
 		QImage image;
 		image.load(device, "");
 
-		if (image.size().width() > size || image.height() > size)
+		if (image.width() > size || image.height() > size)
 		{
 			image = image.scaled(size, size, Qt::KeepAspectRatio);
 		}
