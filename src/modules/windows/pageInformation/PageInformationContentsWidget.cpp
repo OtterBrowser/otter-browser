@@ -164,14 +164,13 @@ void PageInformationContentsWidget::updateSections()
 
 				if (sectionItem)
 				{
-					const bool canGetPageInformation(window && window->getWebWidget() && window->getLoadingState() == WebWidget::FinishedLoadingState);
-
 					addEntry(sectionItem, tr("Title"), (window ? window->getTitle() : QString()));
 
 					if (window && window->getUrl().scheme() != QLatin1String("about"))
 					{
 						WebWidget *webWidget(window->getWebWidget());
 						const int amountOfBlockedRequests(webWidget->getPageInformation(WebWidget::RequestsBlockedInformation).toInt());
+						const bool canGetPageInformation(webWidget && window->getLoadingState() == WebWidget::FinishedLoadingState);
 
 						addEntry(sectionItem, tr("MIME type"), (canGetPageInformation ? webWidget->getPageInformation(WebWidget::DocumentMimeTypeInformation).toString() : QString()));
 						addEntry(sectionItem, tr("Document size"), (canGetPageInformation ? Utils::formatUnit(webWidget->getPageInformation(WebWidget::DocumentBytesTotalInformation).toLongLong(), false, 1, true) : QString()));
