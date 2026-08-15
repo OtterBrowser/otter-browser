@@ -1222,12 +1222,13 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 	else if (object == m_listView->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
 		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+		const QModelIndex index(m_listView->indexAt(mouseEvent->pos()));
 
 		m_isIgnoringEnter = false;
 
-		if (m_listView->indexAt(mouseEvent->pos()) == m_currentIndex)
+		if (index == m_currentIndex)
 		{
-			m_currentIndex = m_listView->indexAt(mouseEvent->pos());
+			m_currentIndex = index;
 
 			if (mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton)
 			{
