@@ -306,7 +306,7 @@ void NotesContentsWidget::updateText()
 	connect(m_ui->notesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &NotesContentsWidget::updateActions);
 }
 
-BookmarksModel::Bookmark* NotesContentsWidget::findFolder(const QModelIndex &index)
+BookmarksModel::Bookmark* NotesContentsWidget::findFolder(const QModelIndex &index) const
 {
 	BookmarksModel *model(NotesManager::getModel());
 	BookmarksModel::Bookmark *bookmark(model->getBookmark(index.isValid() ? index : m_ui->notesViewWidget->currentIndex()));
