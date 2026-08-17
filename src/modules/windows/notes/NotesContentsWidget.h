@@ -53,6 +53,7 @@ public slots:
 protected:
 	void changeEvent(QEvent *event) override;
 	BookmarksModel::Bookmark* findFolder(const QModelIndex &index = {}) const;
+	BookmarksModel::Bookmark* getBookmark(const QModelIndex &index = {}) const;
 	QVariant getCurrentIndexData(int role) const;
 
 protected slots:
