@@ -74,6 +74,7 @@ protected:
 	void addToType(const std::string &type, DesktopEntry *entry);
 	void removeApplication(const std::string &entryId);
 	void removeFromType(const std::string &type, const std::string &entryId);
+	void removeFromTypeCache(const std::string &type, const std::string &entryId);
 	void removeUnused();
 	static std::list<std::string> resolveVariable(const std::string &name);
 	static std::vector<lookupDirectory> initDirectoryPatterns();
