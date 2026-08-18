@@ -80,12 +80,6 @@ void WebsitesPreferencesPage::addWebsite()
 	}
 }
 
-void WebsitesPreferencesPage::editWebsite()
-{
-	WebsitePreferencesDialog dialog(m_ui->websitesItemView->getCurrentIndex().data(Qt::DisplayRole).toString(), {}, this);
-	dialog.exec();
-}
-
 void WebsitesPreferencesPage::removeWebsite()
 {
 	const QString host(m_ui->websitesItemView->getCurrentIndex().data(Qt::DisplayRole).toString());
@@ -133,7 +127,11 @@ void WebsitesPreferencesPage::load()
 	connect(m_ui->websitesFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->websitesItemView, &ItemViewWidget::setFilterString);
 	connect(m_ui->websitesItemView, &ItemViewWidget::needsActionsUpdate, this, &WebsitesPreferencesPage::updateWebsiteActions);
 	connect(m_ui->websitesAddButton, &QPushButton::clicked, this, &WebsitesPreferencesPage::addWebsite);
-	connect(m_ui->websitesEditButton, &QPushButton::clicked, this, &WebsitesPreferencesPage::editWebsite);
+	connect(m_ui->websitesEditButton, &QPushButton::clicked, this, [&]()
+	{
+		WebsitePreferencesDialog dialog(m_ui->websitesItemView->getCurrentIndex().data(Qt::DisplayRole).toString(), {}, this);
+		dialog.exec();
+	});
 	connect(m_ui->websitesRemoveButton, &QPushButton::clicked, this, &WebsitesPreferencesPage::removeWebsite);
 
 	markAsLoaded();

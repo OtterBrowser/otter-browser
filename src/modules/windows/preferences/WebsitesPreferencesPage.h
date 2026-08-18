@@ -46,7 +46,6 @@ protected:
 
 protected slots:
 	void addWebsite();
-	void editWebsite();
 	void removeWebsite();
 	void updateWebsiteActions();
 
