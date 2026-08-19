@@ -2460,9 +2460,9 @@ QStringList QtWebKitWebWidget::getStyleSheets() const
 	QStringList titles;
 	titles.reserve(elements.count());
 
-	for (int i = 0; i < elements.count(); ++i)
+	for (const QWebElement &element: elements)
 	{
-		const QString title(elements.at(i).attribute(QLatin1String("title")));
+		const QString title(element.attribute(QLatin1String("title")));
 
 		if (!title.isEmpty() && !titles.contains(title))
 		{
@@ -2487,9 +2487,9 @@ QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getLinks(const QString &query) co
 	QVector<LinkUrl> links;
 	links.reserve(elements.count());
 
-	for (int i = 0; i < elements.count(); ++i)
+	for (const QWebElement &element: elements)
 	{
-		const QUrl url(resolveUrl(m_page->mainFrame(), QUrl(elements.at(i).attribute(QLatin1String("href")))));
+		const QUrl url(resolveUrl(m_page->mainFrame(), QUrl(element.attribute(QLatin1String("href")))));
 
 		if (urls.contains(url))
 		{
@@ -2499,18 +2499,18 @@ QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getLinks(const QString &query) co
 		urls.insert(url);
 
 		LinkUrl link;
-		link.title = elements.at(i).attribute(QLatin1String("title"));
-		link.mimeType = elements.at(i).attribute(QLatin1String("type"));
+		link.title = element.attribute(QLatin1String("title"));
+		link.mimeType = element.attribute(QLatin1String("type"));
 		link.url = url;
 
 		if (link.title.isEmpty())
 		{
-			link.title = elements.at(i).toPlainText().simplified();
+			link.title = element.toPlainText().simplified();
 		}
 
 		if (link.title.isEmpty())
 		{
-			const QWebElement imageElement(elements.at(i).findFirst(QLatin1String("img[alt]:not([alt=''])")));
+			const QWebElement imageElement(element.findFirst(QLatin1String("img[alt]:not([alt=''])")));
 
 			if (!imageElement.isNull())
 			{
