@@ -773,9 +773,9 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				QMimeData *mimeData(new QMimeData());
 				const QStringList mimeTypes(Application::clipboard()->mimeData()->formats());
 
-				for (int i = 0; i < mimeTypes.count(); ++i)
+				for (const QString &mimeType: mimeTypes)
 				{
-					mimeData->setData(mimeTypes.at(i), Application::clipboard()->mimeData()->data(mimeTypes.at(i)));
+					mimeData->setData(mimeType, Application::clipboard()->mimeData()->data(mimeType));
 				}
 
 				Application::clipboard()->setText(parameters[QLatin1String("text")].toString());
@@ -895,55 +895,55 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					searchTermsElement = parentElement.findFirst(QLatin1String("input:not([disabled])[name][type='search']"));
 				}
 
-				for (int i = 0; i < inputElements.count(); ++i)
+				for (QWebElement &inputElement: inputElements)
 				{
-					const QString name(inputElements.at(i).attribute(QLatin1String("name")));
+					const QString name(inputElement.attribute(QLatin1String("name")));
 
-					if (inputElements.at(i).tagName().toLower() != QLatin1String("select"))
+					if (inputElement.tagName().toLower() != QLatin1String("select"))
 					{
-						const QString type(inputElements.at(i).attribute(QLatin1String("type")));
+						const QString type(inputElement.attribute(QLatin1String("type")));
 						const bool isSubmit(type == QLatin1String("image") || type == QLatin1String("submit"));
 
-						if ((isSubmit && inputElements.at(i) != element) || ((type == QLatin1String("checkbox") || type == QLatin1String("radio")) && !inputElements[i].evaluateJavaScript(QLatin1String("this.checked")).toBool()))
+						if ((isSubmit && inputElement != element) || ((type == QLatin1String("checkbox") || type == QLatin1String("radio")) && !inputElement.evaluateJavaScript(QLatin1String("this.checked")).toBool()))
 						{
 							continue;
 						}
 
-						if (isSubmit && inputElements.at(i) == element)
+						if (isSubmit && inputElement == element)
 						{
-							if (inputElements.at(i).hasAttribute(QLatin1String("formaction")))
+							if (inputElement.hasAttribute(QLatin1String("formaction")))
 							{
-								searchEngine.resultsUrl.url = resolveUrl(parentElement.webFrame(), inputElements.at(i).attribute(QLatin1String("formaction"))).toString();
+								searchEngine.resultsUrl.url = resolveUrl(parentElement.webFrame(), inputElement.attribute(QLatin1String("formaction"))).toString();
 							}
 
-							if (inputElements.at(i).hasAttribute(QLatin1String("formenctype")))
+							if (inputElement.hasAttribute(QLatin1String("formenctype")))
 							{
-								searchEngine.resultsUrl.enctype = inputElements.at(i).attribute(QLatin1String("formenctype"));
+								searchEngine.resultsUrl.enctype = inputElement.attribute(QLatin1String("formenctype"));
 							}
 
-							if (inputElements.at(i).hasAttribute(QLatin1String("formmethod")))
+							if (inputElement.hasAttribute(QLatin1String("formmethod")))
 							{
-								searchEngine.resultsUrl.method = inputElements.at(i).attribute(QLatin1String("formmethod"));
+								searchEngine.resultsUrl.method = inputElement.attribute(QLatin1String("formmethod"));
 							}
 						}
 
 						if (!isSubmit && searchTermsElement.isNull() && type != QLatin1String("hidden"))
 						{
-							searchTermsElement = inputElements.at(i);
+							searchTermsElement = inputElement;
 						}
 
 						if (!name.isEmpty())
 						{
-							searchEngine.resultsUrl.parameters.addQueryItem(name, ((inputElements.at(i) == searchTermsElement) ? QLatin1String("{searchTerms}") : inputElements[i].evaluateJavaScript((inputElements.at(i).tagName().toLower() == QLatin1String("button")) ? QLatin1String("this.innerHTML") : QLatin1String("this.value")).toString()));
+							searchEngine.resultsUrl.parameters.addQueryItem(name, ((inputElement == searchTermsElement) ? QLatin1String("{searchTerms}") : inputElement.evaluateJavaScript((inputElement.tagName().toLower() == QLatin1String("button")) ? QLatin1String("this.innerHTML") : QLatin1String("this.value")).toString()));
 						}
 					}
 					else if (!name.isEmpty())
 					{
-						const QWebElementCollection optionElements(inputElements.at(i).findAll(QLatin1String("option:checked")));
+						QList<QWebElement> optionElements(inputElement.findAll(QLatin1String("option:checked")).toList());
 
-						for (int j = 0; j < optionElements.count(); ++j)
+						for (QWebElement &optionElement: optionElements)
 						{
-							searchEngine.resultsUrl.parameters.addQueryItem(name, optionElements.at(j).evaluateJavaScript(QLatin1String("this.value")).toString());
+							searchEngine.resultsUrl.parameters.addQueryItem(name, optionElement.evaluateJavaScript(QLatin1String("this.value")).toString());
 						}
 					}
 				}
