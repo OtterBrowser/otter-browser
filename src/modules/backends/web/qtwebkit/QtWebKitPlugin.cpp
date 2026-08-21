@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -32,17 +32,18 @@ QtWebKitPlugin::QtWebKitPlugin() = default;
 
 QObject* QtWebKitPlugin::createExtension(Extension extension) const
 {
-	if (extension == Notifications)
+	switch (extension)
 	{
-		return new QtWebKitNotificationPresenter();
-	}
+		case Notifications:
+			return new QtWebKitNotificationPresenter();
 
 #ifdef OTTER_ENABLE_SPELLCHECK
-	if (extension == SpellChecker)
-	{
-		return new QtWebKitSpellChecker();
-	}
+		case SpellChecker:
+				return new QtWebKitSpellChecker();
 #endif
+		default:
+			break;
+	}
 
 	return nullptr;
 }
