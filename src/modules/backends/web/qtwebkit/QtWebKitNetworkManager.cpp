@@ -696,39 +696,11 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 
 	if (operation == GetOperation && url.isLocalFile() && QFileInfo(url.toLocalFile()).isDir())
 	{
-		LocalListingNetworkReply *localListingReply(new LocalListingNetworkReply(request, this));
-
-		reply = localListingReply;
-
-		if (m_widget)
-		{
-			if (reply->error() == QNetworkReply::NoError)
-			{
-				connect(localListingReply, &LocalListingNetworkReply::listingError, m_widget->getPage(), &QtWebKitPage::markAsDisplayingErrorPage);
-			}
-			else
-			{
-				m_widget->getPage()->markAsDisplayingErrorPage();
-			}
-		}
+		reply = setupListingReply(new LocalListingNetworkReply(request, this));
 	}
 	else if (operation == GetOperation && url.scheme() == QLatin1String("ftp"))
 	{
-		QtWebKitFtpListingNetworkReply *ftpListingReply(new QtWebKitFtpListingNetworkReply(request, this));
-
-		reply = ftpListingReply;
-
-		if (m_widget)
-		{
-			if (reply->error() == QNetworkReply::NoError)
-			{
-				connect(ftpListingReply, &QtWebKitFtpListingNetworkReply::listingError, m_widget->getPage(), &QtWebKitPage::markAsDisplayingErrorPage);
-			}
-			else
-			{
-				m_widget->getPage()->markAsDisplayingErrorPage();
-			}
-		}
+		reply = setupListingReply(new QtWebKitFtpListingNetworkReply(request, this));
 	}
 	else
 	{
@@ -768,6 +740,23 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(Operation operation, const 
 	if (m_loadingSpeedTimer == 0)
 	{
 		m_loadingSpeedTimer = startTimer(500);
+	}
+
+	return reply;
+}
+
+QNetworkReply* QtWebKitNetworkManager::setupListingReply(ListingNetworkReply *reply)
+{
+	if (m_widget)
+	{
+		if (reply->error() == QNetworkReply::NoError)
+		{
+			connect(reply, &ListingNetworkReply::listingError, m_widget->getPage(), &QtWebKitPage::markAsDisplayingErrorPage);
+		}
+		else
+		{
+			m_widget->getPage()->markAsDisplayingErrorPage();
+		}
 	}
 
 	return reply;

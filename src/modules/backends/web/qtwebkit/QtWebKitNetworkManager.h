@@ -32,6 +32,7 @@
 namespace Otter
 {
 
+class ListingNetworkReply;
 class NetworkProxyFactory;
 class QtWebKitCookieJar;
 class WebBackend;
@@ -70,6 +71,7 @@ protected:
 	void setWidget(QtWebKitWebWidget *widget);
 	QtWebKitNetworkManager* clone() const;
 	QNetworkReply* createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData) override;
+	QNetworkReply* setupListingReply(ListingNetworkReply *reply);
 	QString getUserAgent() const;
 	QVariant getOption(int identifier, const QUrl &url) const;
 	CookieJar::CookiesPolicy mapCookiesPolicy(const QString &policy) const;
