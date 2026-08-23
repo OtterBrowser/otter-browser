@@ -36,7 +36,6 @@ QObject* QtWebKitPlugin::createExtension(Extension extension) const
 	{
 		case Notifications:
 			return new QtWebKitNotificationPresenter();
-
 #ifdef OTTER_ENABLE_SPELLCHECK
 		case SpellChecker:
 				return new QtWebKitSpellChecker();
