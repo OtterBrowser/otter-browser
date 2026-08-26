@@ -20,6 +20,7 @@
 **************************************************************************/
 
 #include "MainWindow.h"
+#include "BookmarkPropertiesDialog.h"
 #include "ClearHistoryDialog.h"
 #include "ContentsWidget.h"
 #include "Menu.h"
@@ -938,6 +939,19 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 						break;
 					default:
 						break;
+				}
+			}
+
+			return;
+		case ActionsManager::BookmarkPropertiesAction:
+			if (parameters.contains(QLatin1String("bookmark")))
+			{
+				BookmarksModel::Bookmark *bookmark(BookmarksManager::getBookmark(parameters[QLatin1String("bookmark")].toULongLong()));
+
+				if (bookmark)
+				{
+					BookmarkPropertiesDialog dialog(bookmark, this);
+					dialog.exec();
 				}
 			}
 
