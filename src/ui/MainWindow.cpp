@@ -2414,6 +2414,13 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 			}
 
 			break;
+		case ActionsManager::BookmarkPropertiesAction:
+			if (parameters.contains(QLatin1String("bookmark")))
+			{
+				state.isEnabled = true;
+			}
+
+			break;
 		case ActionsManager::OpenFeedAction:
 			{
 				FeedsModel::Entry *entry(nullptr);
