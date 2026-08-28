@@ -68,7 +68,18 @@ BookmarksContentsWidget::BookmarksContentsWidget(const QVariantMap &parameters, 
 	}
 
 	connect(BookmarksManager::getModel(), &BookmarksModel::modelReset, this, &BookmarksContentsWidget::updateActions);
-	connect(m_ui->propertiesButton, &QPushButton::clicked, this, &BookmarksContentsWidget::bookmarkProperties);
+	connect(m_ui->propertiesButton, &QPushButton::clicked, this, [&]()
+	{
+		MainWindow *mainWindow(MainWindow::findMainWindow(this));
+		BookmarksModel::Bookmark *bookmark(getBookmark());
+
+		if (bookmark && mainWindow)
+		{
+			mainWindow->triggerAction(ActionsManager::BookmarkPropertiesAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}});
+
+			updateActions();
+		}
+	});
 	connect(m_ui->deleteButton, &QPushButton::clicked, this, &BookmarksContentsWidget::removeBookmark);
 	connect(m_ui->addButton, &QPushButton::clicked, this, &BookmarksContentsWidget::addBookmark);
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->bookmarksViewWidget, &ItemViewWidget::setFilterString);
@@ -125,19 +136,6 @@ void BookmarksContentsWidget::openBookmark()
 	if (bookmark)
 	{
 		Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}}, parentWidget());
-	}
-}
-
-void BookmarksContentsWidget::bookmarkProperties()
-{
-	BookmarksModel::Bookmark *bookmark(getBookmark());
-
-	if (bookmark)
-	{
-		BookmarkPropertiesDialog dialog(bookmark, this);
-		dialog.exec();
-
-		updateActions();
 	}
 }
 
@@ -248,8 +246,11 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 
 					if (type != BookmarksModel::SeparatorBookmark)
 					{
+						Action *propertiesAction(new Action(ActionsManager::BookmarkPropertiesAction, {{QLatin1String("bookmark"), identifier}}, executor, &menu));
+						propertiesAction->setTextOverride(QCoreApplication::translate("actions", "Properties…"));
+
 						menu.addSeparator();
-						menu.addAction(tr("Properties…"), this, &BookmarksContentsWidget::bookmarkProperties);
+						menu.addAction(propertiesAction);
 					}
 				}
 			}

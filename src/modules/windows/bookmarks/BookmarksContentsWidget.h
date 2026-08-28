@@ -68,7 +68,6 @@ protected slots:
 	void addSeparator();
 	void removeBookmark();
 	void openBookmark();
-	void bookmarkProperties();
 	void showContextMenu(const QPoint &position);
 	void updateActions();
 
