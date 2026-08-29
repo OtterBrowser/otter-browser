@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -37,6 +37,7 @@ public:
 	static BookmarksManager* getInstance();
 	static BookmarksModel* getModel();
 	static BookmarksModel::Bookmark* addBookmark(BookmarksModel::BookmarkType type, const QMap<int, QVariant> &metaData = {}, BookmarksModel::Bookmark *parent = nullptr, int index = -1);
+	static BookmarksModel::Bookmark* getBookmark(const QVariantMap &parameters);
 	static BookmarksModel::Bookmark* getBookmark(const QString &text);
 	static BookmarksModel::Bookmark* getBookmark(const QUrl &url);
 	static BookmarksModel::Bookmark* getBookmark(quint64 identifier);

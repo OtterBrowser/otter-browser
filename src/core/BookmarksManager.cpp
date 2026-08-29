@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -149,6 +149,36 @@ BookmarksModel::Bookmark* BookmarksManager::addBookmark(BookmarksModel::Bookmark
 	ensureInitialized();
 
 	return m_model->addBookmark(type, metaData, parent, index);
+}
+
+BookmarksModel::Bookmark *BookmarksManager::getBookmark(const QVariantMap &parameters)
+{
+	ensureInitialized();
+
+	if (parameters.contains(QLatin1String("bookmark")))
+	{
+		const QVariant bookmarkData(parameters[QLatin1String("bookmark")]);
+
+		if (bookmarkData.type() == QVariant::String)
+		{
+			return getBookmark(bookmarkData.toString());
+		}
+
+		return getBookmark(bookmarkData.toULongLong());
+	}
+
+	if (parameters.contains(QLatin1String("startPageTile")))
+	{
+		const QString bookmarkPath(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString());
+		const BookmarksModel::Bookmark *startPageBookmark(m_model->getBookmarkByPath(bookmarkPath));
+
+		if (startPageBookmark)
+		{
+			return startPageBookmark->getChild(parameters.value(QLatin1String("startPageTile")).toInt() - 1);
+		}
+	}
+
+	return nullptr;
 }
 
 BookmarksModel::Bookmark* BookmarksManager::getBookmark(const QString &text)
