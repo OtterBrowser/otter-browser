@@ -100,6 +100,7 @@ void GeneralPreferencesPage::load()
 	m_ui->tabsInsteadOfWindowsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool());
 	m_ui->delayTabsLoadingCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Sessions_DeferTabsLoadingOption).toBool());
 	m_ui->reuseCurrentTabCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool());
+	m_ui->tabsInTitleBarCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Interface_TabsInTitleBarOption).toBool());
 	m_ui->openNextToActiveheckBox->setChecked(SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool());
 	m_ui->setDefaultButton->setEnabled(canSetAsDefaultBrowser);
 
@@ -170,6 +171,7 @@ void GeneralPreferencesPage::save()
 	SettingsManager::setOption(SettingsManager::Browser_OpenLinksInNewTabOption, m_ui->tabsInsteadOfWindowsCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::Sessions_DeferTabsLoadingOption, m_ui->delayTabsLoadingCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::Browser_ReuseCurrentTabOption, m_ui->reuseCurrentTabCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Interface_TabsInTitleBarOption, m_ui->tabsInTitleBarCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::TabBar_OpenNextToActiveOption, m_ui->openNextToActiveheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::Network_AcceptLanguageOption, m_acceptLanguage);
 }
