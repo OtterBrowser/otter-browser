@@ -151,7 +151,7 @@ BookmarksModel::Bookmark* BookmarksManager::addBookmark(BookmarksModel::Bookmark
 	return m_model->addBookmark(type, metaData, parent, index);
 }
 
-BookmarksModel::Bookmark *BookmarksManager::getBookmark(const QVariantMap &parameters)
+BookmarksModel::Bookmark* BookmarksManager::getBookmark(const QVariantMap &parameters)
 {
 	ensureInitialized();
 
