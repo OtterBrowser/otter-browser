@@ -29,9 +29,9 @@
 #include "../../../core/ThemesManager.h"
 #include "../../../modules/widgets/search/SearchWidget.h"
 #include "../../../ui/Animation.h"
-#include "../../../ui/BookmarkPropertiesDialog.h"
 #include "../../../ui/ContentsDialog.h"
 #include "../../../ui/ContentsWidget.h"
+#include "../../../ui/MainWindow.h"
 #include "../../../ui/Menu.h"
 #include "../../../ui/OpenAddressDialog.h"
 #include "../../../ui/Window.h"
@@ -835,12 +835,12 @@ void StartPageWidget::openTile()
 
 void StartPageWidget::editTile()
 {
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 	BookmarksModel::Bookmark *bookmark(StartPageModel::getBookmark(m_currentIndex));
 
-	if (bookmark)
+	if (bookmark && mainWindow)
 	{
-		BookmarkPropertiesDialog dialog(bookmark, this);
-		dialog.exec();
+		mainWindow->triggerAction(ActionsManager::BookmarkPropertiesAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}});
 
 		m_model->reloadModel();
 	}
