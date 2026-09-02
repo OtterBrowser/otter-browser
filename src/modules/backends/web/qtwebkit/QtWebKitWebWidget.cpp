@@ -1819,11 +1819,12 @@ void QtWebKitWebWidget::setHistory(const Session::Window::History &history)
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
+		const Session::Window::History::Entry &historyEntry(history.entries.at(i));
 		QVariantMap entry;
 		entry[QLatin1String("pageScaleFactor")] = 0;
-		entry[QLatin1String("title")] = history.entries.at(i).title;
-		entry[QLatin1String("urlString")] = QString::fromLatin1(QUrl::fromUserInput(history.entries.at(i).url).toEncoded());
-		entry[QLatin1String("scrollPosition")] = QVariantMap({{QLatin1String("x"), history.entries.at(i).position.x()}, {QLatin1String("y"), history.entries.at(i).position.y()}});
+		entry[QLatin1String("title")] = historyEntry.title;
+		entry[QLatin1String("urlString")] = QString::fromLatin1(QUrl::fromUserInput(historyEntry.url).toEncoded());
+		entry[QLatin1String("scrollPosition")] = QVariantMap({{QLatin1String("x"), historyEntry.position.x()}, {QLatin1String("y"), historyEntry.position.y()}});
 
 		entries.append(entry);
 	}
@@ -1832,7 +1833,9 @@ void QtWebKitWebWidget::setHistory(const Session::Window::History &history)
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
-		m_page->history()->itemAt(i).setUserData(QVariantList({-1, history.entries.at(i).zoom, history.entries.at(i).position, history.entries.at(i).time}));
+		const Session::Window::History::Entry &historyEntry(history.entries.at(i));
+
+		m_page->history()->itemAt(i).setUserData(QVariantList({-1, historyEntry.zoom, historyEntry.position, historyEntry.time}));
 	}
 
 	m_page->history()->goToItem(m_page->history()->itemAt(index));
