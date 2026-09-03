@@ -663,7 +663,7 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 
 	const bool isAnchorNavigation(frame && (type == NavigationTypeLinkClicked || type == NavigationTypeOther) && frame->url().matches(request.url(), QUrl::RemoveFragment));
 
-	if (mainFrame() == frame)
+	if (frame && mainFrame() == frame)
 	{
 		if (m_widget && !isAnchorNavigation)
 		{
