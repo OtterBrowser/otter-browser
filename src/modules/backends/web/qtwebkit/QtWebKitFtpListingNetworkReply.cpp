@@ -58,9 +58,9 @@ QtWebKitFtpListingNetworkReply::QtWebKitFtpListingNetworkReply(const QNetworkReq
 	m_ftp->connectToHost(request.url().host());
 }
 
-void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
+void QtWebKitFtpListingNetworkReply::processCommand(int command, bool hasError)
 {
-	if (isError)
+	if (hasError)
 	{
 		open(ReadOnly | Unbuffered);
 

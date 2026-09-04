@@ -46,7 +46,7 @@ protected:
 	void sendHeaders(bool isHtml = true);
 
 protected slots:
-	void processCommand(int command, bool isError);
+	void processCommand(int command, bool hasError);
 
 private:
 	QFtp *m_ftp;
