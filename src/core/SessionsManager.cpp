@@ -888,7 +888,7 @@ bool SessionsManager::hasUrl(const QUrl &url, bool activate)
 		}
 	}
 
-	const QVector<MainWindow*> sortedWindows(map.values().toVector());
+	const QList<MainWindow*> sortedWindows(map.values());
 
 	for (int i = (sortedWindows.count() - 1); i >= 0; --i)
 	{
