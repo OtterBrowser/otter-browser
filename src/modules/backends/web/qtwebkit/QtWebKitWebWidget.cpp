@@ -1125,14 +1125,14 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					const QVector<QNetworkCookie> cookiesToDelete(dialog.getCookiesToDelete());
 					const QVector<QNetworkCookie> cookiesToInsert(dialog.getCookiesToInsert());
 
-					for (int i = 0; i < cookiesToDelete.count(); ++i)
+					for (const QNetworkCookie &cookie: cookiesToDelete)
 					{
-						cookieJar->forceDeleteCookie(cookiesToDelete.at(i));
+						cookieJar->forceDeleteCookie(cookie);
 					}
 
-					for (int i = 0; i < cookiesToInsert.count(); ++i)
+					for (const QNetworkCookie &cookie: cookiesToInsert)
 					{
-						cookieJar->forceInsertCookie(cookiesToInsert.at(i));
+						cookieJar->forceInsertCookie(cookie);
 					}
 				}
 			}
