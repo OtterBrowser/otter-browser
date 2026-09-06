@@ -226,6 +226,7 @@ set(OTTER_SOURCES
 	src/ui/WebWidget.cpp
 	src/ui/WidgetFactory.cpp
 	src/ui/Window.cpp
+	src/ui/WindowControlsWidget.cpp
 	src/ui/WorkspaceWidget.cpp
 	src/ui/preferences/AcceptLanguageDialog.cpp
 	src/ui/preferences/CookiesExceptionsDialog.cpp
