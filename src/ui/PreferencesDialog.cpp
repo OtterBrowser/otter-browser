@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2022 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -213,37 +213,37 @@ void PreferencesDialog::showTab(int tab)
 	QWidget *widget(m_ui->tabWidget->widget(tab));
 	const QList<QAbstractButton*> buttons(widget->findChildren<QAbstractButton*>());
 
-	for (int i = 0; i < buttons.count(); ++i)
+	for (QAbstractButton *button: buttons)
 	{
-		connect(buttons.at(i), &QAbstractButton::toggled, this, &PreferencesDialog::markAsModified);
+		connect(button, &QAbstractButton::toggled, this, &PreferencesDialog::markAsModified);
 	}
 
 	const QList<QComboBox*> comboBoxes(widget->findChildren<QComboBox*>());
 
-	for (int i = 0; i < comboBoxes.count(); ++i)
+	for (QComboBox *comboBox: comboBoxes)
 	{
-		connect(comboBoxes.at(i), static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &PreferencesDialog::markAsModified);
+		connect(comboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &PreferencesDialog::markAsModified);
 	}
 
 	const QList<QLineEdit*> lineEdits(widget->findChildren<QLineEdit*>());
 
-	for (int i = 0; i < lineEdits.count(); ++i)
+	for (QLineEdit *lineEdit: lineEdits)
 	{
-		connect(lineEdits.at(i), &QLineEdit::textChanged, this, &PreferencesDialog::markAsModified);
+		connect(lineEdit, &QLineEdit::textChanged, this, &PreferencesDialog::markAsModified);
 	}
 
 	const QList<QSpinBox*> spinBoxes(widget->findChildren<QSpinBox*>());
 
-	for (int i = 0; i < spinBoxes.count(); ++i)
+	for (QSpinBox *spinBox: spinBoxes)
 	{
-		connect(spinBoxes.at(i), static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &PreferencesDialog::markAsModified);
+		connect(spinBox, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &PreferencesDialog::markAsModified);
 	}
 
 	const QList<ItemViewWidget*> viewWidgets(widget->findChildren<ItemViewWidget*>());
 
-	for (int i = 0; i < viewWidgets.count(); ++i)
+	for (ItemViewWidget *viewWidget: viewWidgets)
 	{
-		connect(viewWidgets.at(i), &ItemViewWidget::modified, this, &PreferencesDialog::markAsModified);
+		connect(viewWidget, &ItemViewWidget::modified, this, &PreferencesDialog::markAsModified);
 	}
 }
 
