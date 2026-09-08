@@ -308,6 +308,7 @@ MouseProfile MouseProfileDialog::getProfile() const
 			MouseProfile::Gesture gesture;
 			gesture.action = action;
 			gesture.parameters = actionIndex.data(ParametersRole).toMap();
+			gesture.steps.reserve(steps.count());
 
 			for (const QString &step: steps)
 			{
