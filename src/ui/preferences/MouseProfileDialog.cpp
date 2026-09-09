@@ -165,10 +165,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	{
 		m_ui->stepsViewWidget->insertRow();
 	});
-	connect(m_ui->removeStepButton, &QPushButton::clicked, this, [&]()
-	{
-		m_ui->stepsViewWidget->removeRow();
-	});
+	connect(m_ui->removeStepButton, &QPushButton::clicked, m_ui->stepsViewWidget, &ItemViewWidget::removeRow);
 	connect(m_ui->moveDownStepsButton, &QToolButton::clicked, m_ui->stepsViewWidget, &ItemViewWidget::moveDownRow);
 	connect(m_ui->moveUpStepsButton, &QToolButton::clicked, m_ui->stepsViewWidget, &ItemViewWidget::moveUpRow);
 }
