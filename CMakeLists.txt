@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.16)
 
 project(otter-browser)
 
+option(ENABLE_QT5 "Build using Qt 5" OFF)
+
 set(MAJOR_VERSION "1")
 set(MINOR_VERSION "0")
 set(PATCH_VERSION "81")
@@ -30,7 +32,11 @@ if (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	set(CPACK_PACKAGE_NAME "otter-browser")
 	set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}_${MAJOR_VERSION}.${MINOR_VERSION}.${CPACK_PACKAGE_VERSION_PATCH}")
 	set(CPACK_SOURCE_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}_${MAJOR_VERSION}.${MINOR_VERSION}.${CPACK_PACKAGE_VERSION_PATCH}")
-	set(CPACK_DEBIAN_PACKAGE_DEPENDS "libhunspell-1.5-0 (>= 1.5.1), libqt5multimedia5 (>=5.15.0), libqt5qml5 (>=5.15.0), libqt5svg5 (>=5.15.0), libqt5webkit5 (>=5.212.0~alpha2)")
+	if (ENABLE_QT5)
+		set(CPACK_DEBIAN_PACKAGE_DEPENDS "libhunspell-1.5-0 (>= 1.5.1), libqt5multimedia5 (>=5.15.0), libqt5qml5 (>=5.15.0), libqt5svg5 (>=5.15.0), libqt5webkit5 (>=5.212.0~alpha2) | libqt5webengine5")
+	else ()
+		set(CPACK_DEBIAN_PACKAGE_DEPENDS "libhunspell-1.5-0 (>= 1.5.1), libqt6multimedia6, libqt6svg6, libqt6webenginecore6")
+	endif ()
 	set(CPACK_DEBIAN_PACKAGE_RECOMMENDS "gstreamer1.0-plugins-base, gstreamer1.0-plugins-good")
 	set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
 	set(CPACK_DEBIAN_PACKAGE_SECTION "web")
@@ -67,8 +73,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(FeatureSummary)
 include(GNUInstallDirs)
-
-option(ENABLE_QT5 "Build using Qt 5" OFF)
 
 if (ENABLE_QT5)
 	add_compile_definitions(USE_QT5)
