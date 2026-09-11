@@ -289,7 +289,7 @@ void AdvancedPreferencesPage::updateDownloadsOptions()
 	}
 
 	disconnect(m_ui->mimeTypesItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateDownloadsActions);
-	disconnect(m_ui->mimeTypesButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this, &AdvancedPreferencesPage::updateDownloadsOptions);
+	disconnect(m_ui->mimeTypesButtonGroup, qOverload<QAbstractButton*, bool>(&QButtonGroup::buttonToggled), this, &AdvancedPreferencesPage::updateDownloadsOptions);
 
 	HandlersManager::MimeTypeHandlerDefinition::TransferMode mode(HandlersManager::MimeTypeHandlerDefinition::IgnoreTransfer);
 
@@ -311,7 +311,7 @@ void AdvancedPreferencesPage::updateDownloadsOptions()
 	m_ui->mimeTypesItemView->setData(index, ((mode == HandlersManager::MimeTypeHandlerDefinition::OpenTransfer) ? m_ui->mimeTypesApplicationComboBoxWidget->getCommand() : QString()), OpenCommandRole);
 
 	connect(m_ui->mimeTypesItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateDownloadsActions);
-	connect(m_ui->mimeTypesButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this, &AdvancedPreferencesPage::updateDownloadsOptions);
+	connect(m_ui->mimeTypesButtonGroup, qOverload<QAbstractButton*, bool>(&QButtonGroup::buttonToggled), this, &AdvancedPreferencesPage::updateDownloadsOptions);
 }
 
 void AdvancedPreferencesPage::updateDownloadsMode()
@@ -1274,8 +1274,8 @@ void AdvancedPreferencesPage::load()
 	connect(m_ui->mimeTypesItemView, &ItemViewWidget::needsActionsUpdate, this, &AdvancedPreferencesPage::updateDownloadsActions);
 	connect(m_ui->mimeTypesAddMimeTypeButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::addDownloadsMimeType);
 	connect(m_ui->mimeTypesRemoveMimeTypeButton, &QPushButton::clicked, this, &AdvancedPreferencesPage::removeDownloadsMimeType);
-	connect(m_ui->mimeTypesButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this, &AdvancedPreferencesPage::updateDownloadsOptions);
-	connect(m_ui->mimeTypesButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this, &AdvancedPreferencesPage::updateDownloadsMode);
+	connect(m_ui->mimeTypesButtonGroup, qOverload<QAbstractButton*, bool>(&QButtonGroup::buttonToggled), this, &AdvancedPreferencesPage::updateDownloadsOptions);
+	connect(m_ui->mimeTypesButtonGroup, qOverload<QAbstractButton*, bool>(&QButtonGroup::buttonToggled), this, &AdvancedPreferencesPage::updateDownloadsMode);
 	connect(m_ui->mimeTypesSaveDirectlyCheckBox, &QCheckBox::toggled, this, &AdvancedPreferencesPage::updateDownloadsOptions);
 	connect(m_ui->mimeTypesFilePathWidget, &Otter::FilePathWidget::pathChanged, this, &AdvancedPreferencesPage::updateDownloadsOptions);
 	connect(m_ui->mimeTypesApplicationComboBoxWidget, &Otter::ApplicationComboBoxWidget::currentCommandChanged, this, &AdvancedPreferencesPage::updateDownloadsOptions);
