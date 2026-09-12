@@ -59,11 +59,11 @@ StartupDialog::StartupDialog(const QString &sessionName, QWidget *parent) : Dial
 
 	setSession(index);
 
-	connect(m_ui->buttonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*)>(&QButtonGroup::buttonClicked), this, [&]()
+	connect(m_ui->buttonGroup, qOverload<QAbstractButton*>(&QButtonGroup::buttonClicked), this, [&]()
 	{
 		m_ui->continueSessionWidget->setEnabled(m_ui->continueSessionButton->isChecked());
 	});
-	connect(m_ui->sessionComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &StartupDialog::setSession);
+	connect(m_ui->sessionComboBox, qOverload<int>(&QComboBox::currentIndexChanged), this, &StartupDialog::setSession);
 }
 
 StartupDialog::~StartupDialog()
