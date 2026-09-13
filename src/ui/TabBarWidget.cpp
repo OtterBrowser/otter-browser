@@ -80,7 +80,7 @@ TabHandleWidget::TabHandleWidget(Window *window, TabBarWidget *parent) : QWidget
 		}
 	});
 	connect(window, &Window::titleChanged, this, &TabHandleWidget::updateTitle);
-	connect(window, &Window::iconChanged, this, static_cast<void(TabHandleWidget::*)()>(&TabHandleWidget::update));
+	connect(window, &Window::iconChanged, this, qOverload<>(&TabHandleWidget::update));
 	connect(window, &Window::loadingStateChanged, this, &TabHandleWidget::handleLoadingStateChanged);
 	connect(parent, &TabBarWidget::currentChanged, this, &TabHandleWidget::updateGeometries);
 	connect(parent, &TabBarWidget::tabsAmountChanged, this, &TabHandleWidget::updateGeometries);
@@ -319,7 +319,7 @@ void TabHandleWidget::handleLoadingStateChanged(WebWidget::LoadingState state)
 			m_spinnerAnimation->start();
 		}
 
-		connect(m_spinnerAnimation, &Animation::frameChanged, this, static_cast<void(TabHandleWidget::*)()>(&TabHandleWidget::update));
+		connect(m_spinnerAnimation, &Animation::frameChanged, this, qOverload<>(&TabHandleWidget::update));
 	}
 	else if (m_spinnerAnimation)
 	{
