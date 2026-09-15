@@ -35,7 +35,7 @@ ApplicationComboBoxWidget::ApplicationComboBoxWidget(QWidget *parent) : QComboBo
 	insertSeparator(1);
 	addItem(tr("Other…"));
 
-	connect(this, static_cast<void(ApplicationComboBoxWidget::*)(int)>(&ApplicationComboBoxWidget::currentIndexChanged), this, &ApplicationComboBoxWidget::handleIndexChanged);
+	connect(this, qOverload<int>(&ApplicationComboBoxWidget::currentIndexChanged), this, &ApplicationComboBoxWidget::handleIndexChanged);
 }
 
 void ApplicationComboBoxWidget::changeEvent(QEvent *event)
@@ -53,7 +53,7 @@ void ApplicationComboBoxWidget::handleIndexChanged(int index)
 {
 	if (index == (count() - 1))
 	{
-		disconnect(this, static_cast<void(ApplicationComboBoxWidget::*)(int)>(&ApplicationComboBoxWidget::currentIndexChanged), this, &ApplicationComboBoxWidget::handleIndexChanged);
+		disconnect(this, qOverload<int>(&ApplicationComboBoxWidget::currentIndexChanged), this, &ApplicationComboBoxWidget::handleIndexChanged);
 
 		setCurrentIndex(m_previousIndex);
 
@@ -74,7 +74,7 @@ void ApplicationComboBoxWidget::handleIndexChanged(int index)
 			emit currentCommandChanged();
 		}
 
-		connect(this, static_cast<void(ApplicationComboBoxWidget::*)(int)>(&ApplicationComboBoxWidget::currentIndexChanged), this, &ApplicationComboBoxWidget::handleIndexChanged);
+		connect(this, qOverload<int>(&ApplicationComboBoxWidget::currentIndexChanged), this, &ApplicationComboBoxWidget::handleIndexChanged);
 	}
 	else
 	{
@@ -115,7 +115,7 @@ void ApplicationComboBoxWidget::setCurrentCommand(const QString &command)
 
 void ApplicationComboBoxWidget::setMimeType(const QMimeType &mimeType)
 {
-	disconnect(this, static_cast<void(ApplicationComboBoxWidget::*)(int)>(&ApplicationComboBoxWidget::currentIndexChanged), this, &ApplicationComboBoxWidget::handleIndexChanged);
+	disconnect(this, qOverload<int>(&ApplicationComboBoxWidget::currentIndexChanged), this, &ApplicationComboBoxWidget::handleIndexChanged);
 
 	clear();
 
@@ -148,7 +148,7 @@ void ApplicationComboBoxWidget::setMimeType(const QMimeType &mimeType)
 
 	addItem(tr("Other…"));
 
-	connect(this, static_cast<void(ApplicationComboBoxWidget::*)(int)>(&ApplicationComboBoxWidget::currentIndexChanged), this, &ApplicationComboBoxWidget::handleIndexChanged);
+	connect(this, qOverload<int>(&ApplicationComboBoxWidget::currentIndexChanged), this, &ApplicationComboBoxWidget::handleIndexChanged);
 }
 
 void ApplicationComboBoxWidget::setAlwaysShowDefaultApplication(bool show)
