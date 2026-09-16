@@ -222,7 +222,7 @@ void PreferencesDialog::showTab(int tab)
 
 	for (QComboBox *comboBox: comboBoxes)
 	{
-		connect(comboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &PreferencesDialog::markAsModified);
+		connect(comboBox, qOverload<int>(&QComboBox::currentIndexChanged), this, &PreferencesDialog::markAsModified);
 	}
 
 	const QList<QLineEdit*> lineEdits(widget->findChildren<QLineEdit*>());
@@ -236,7 +236,7 @@ void PreferencesDialog::showTab(int tab)
 
 	for (QSpinBox *spinBox: spinBoxes)
 	{
-		connect(spinBox, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &PreferencesDialog::markAsModified);
+		connect(spinBox, qOverload<int>(&QSpinBox::valueChanged), this, &PreferencesDialog::markAsModified);
 	}
 
 	const QList<ItemViewWidget*> viewWidgets(widget->findChildren<ItemViewWidget*>());
