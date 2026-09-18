@@ -1,5 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
+* Copyright (C) 2026 Jonas Bechtel
 * Copyright (C) 2018 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -43,9 +44,7 @@ namespace Otter
 TransfersWidget::TransfersWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
 	m_icon(ThemesManager::createIcon(QLatin1String("transfers")))
 {
-	QMenu *menu(new QMenu(this));
-
-	setMenu(menu);
+	setMenu(new QMenu(this));
 	setPopupMode(QToolButton::InstantPopup);
 	setToolTip(tr("Downloads"));
 	updateState();
@@ -53,21 +52,21 @@ TransfersWidget::TransfersWidget(const ToolBarsManager::ToolBarDefinition::Entry
 	connect(TransfersManager::getInstance(), &TransfersManager::transferChanged, this, &TransfersWidget::updateState);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, [&](Transfer *transfer)
 	{
-		if ((!transfer->isArchived() || transfer->getState() == Transfer::RunningState) && menu->isVisible())
+		if ((!transfer->isArchived() || transfer->getState() == Transfer::RunningState) && menu()->isVisible())
 		{
-			QAction *firstAction(menu->actions().value(0));
-			QWidgetAction *widgetAction(new QWidgetAction(menu));
-			widgetAction->setDefaultWidget(new TransferActionWidget(transfer, menu));
+			QAction *firstAction(menu()->actions().value(0));
+			QWidgetAction *widgetAction(new QWidgetAction(menu()));
+			widgetAction->setDefaultWidget(new TransferActionWidget(transfer, menu()));
 
-			menu->insertAction(firstAction, widgetAction);
-			menu->insertSeparator(firstAction);
+			menu()->insertAction(firstAction, widgetAction);
+			menu()->insertSeparator(firstAction);
 		}
 
 		updateState();
 	});
 	connect(TransfersManager::getInstance(), &TransfersManager::transferFinished, this, [&](const Transfer *transfer)
 	{
-		const QList<QAction*> actions(menu->actions());
+		const QList<QAction*> actions(menu()->actions());
 
 		for (int i = 0; i < actions.count(); ++i)
 		{
@@ -82,8 +81,8 @@ TransfersWidget::TransfersWidget(const ToolBarsManager::ToolBarDefinition::Entry
 
 			if (transferActionWidget && transferActionWidget->getTransfer() == transfer)
 			{
-				menu->removeAction(actions.at(i));
-				menu->removeAction(actions.value(i + 1));
+				menu()->removeAction(actions.at(i));
+				menu()->removeAction(actions.value(i + 1));
 
 				break;
 			}
@@ -93,8 +92,15 @@ TransfersWidget::TransfersWidget(const ToolBarsManager::ToolBarDefinition::Entry
 	});
 	connect(TransfersManager::getInstance(), &TransfersManager::transferRemoved, this, &TransfersWidget::updateState);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferStopped, this, &TransfersWidget::updateState);
-	connect(menu, &QMenu::aboutToShow, this, &TransfersWidget::populateMenu);
-	connect(menu, &QMenu::aboutToHide, menu, &QMenu::clear);
+	connect(menu(), &QMenu::aboutToShow, this, &TransfersWidget::populateMenu);
+	connect(menu(), &QMenu::aboutToHide, menu(), &QMenu::clear);
+}
+
+TransfersWidget::~TransfersWidget()
+{
+	QMenu* del_menu = menu();
+	setMenu(nullptr);
+	delete del_menu;
 }
 
 void TransfersWidget::changeEvent(QEvent *event)
