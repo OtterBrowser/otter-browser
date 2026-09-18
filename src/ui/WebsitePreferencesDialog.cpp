@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -64,9 +64,9 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QString &host, const QV
 
 	const QStringList encodings(Utils::getCharacterEncodings());
 
-	for (int i = 0; i < encodings.count(); ++i)
+	for (const QString &encoding: encodings)
 	{
-		m_ui->encodingComboBox->addItem(encodings.at(i));
+		m_ui->encodingComboBox->addItem(encoding);
 	}
 
 	m_ui->popupsPolicyComboBox->addItem(tr("Ask"), QLatin1String("ask"));
@@ -113,9 +113,9 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QString &host, const QV
 
 	m_ui->cookiesViewWidget->setModel(cookiesModel);
 
-	for (int i = 0; i < cookies.count(); ++i)
+	for (const QNetworkCookie &cookie: cookies)
 	{
-		addCookie(cookies.at(i));
+		addCookie(cookie);
 	}
 
 	m_ui->userAgentComboBox->setModel(new UserAgentsModel(QString(), false, this));
@@ -147,10 +147,8 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QString &host, const QV
 
 	const QList<QCheckBox*> checkBoxes(findChildren<QCheckBox*>());
 
-	for (int i = 0; i < checkBoxes.count(); ++i)
+	for (QCheckBox *checkBox: checkBoxes)
 	{
-		QCheckBox *checkBox(checkBoxes.at(i));
-
 		if (checkBox->text().isEmpty())
 		{
 			connect(checkBox, &QCheckBox::toggled, this, &WebsitePreferencesDialog::updateValues);
@@ -163,9 +161,9 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QString &host, const QV
 
 	const QList<QComboBox*> comboBoxes(findChildren<QComboBox*>());
 
-	for (int i = 0; i < comboBoxes.count(); ++i)
+	for (QComboBox *comboBox: comboBoxes)
 	{
-		connect(comboBoxes.at(i), static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &WebsitePreferencesDialog::handleValueChanged);
+		connect(comboBox, qOverload<int>(&QComboBox::currentIndexChanged), this, &WebsitePreferencesDialog::handleValueChanged);
 	}
 
 	connect(m_ui->userStyleSheetFilePathWidget, &FilePathWidget::pathChanged, this, &WebsitePreferencesDialog::handleValueChanged);
