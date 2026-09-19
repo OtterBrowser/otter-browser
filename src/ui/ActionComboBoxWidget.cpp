@@ -176,7 +176,7 @@ bool ActionComboBoxWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (event->type() == QEvent::Show)
 			{
-				QTimer::singleShot(0, m_filterLineEditWidget, static_cast<void(LineEditWidget::*)()>(&LineEditWidget::setFocus));
+				QTimer::singleShot(0, m_filterLineEditWidget, qOverload<>(&LineEditWidget::setFocus));
 			}
 			else
 			{
