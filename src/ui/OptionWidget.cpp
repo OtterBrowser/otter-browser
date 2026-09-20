@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2023 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -106,7 +106,7 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 			m_spinBox->setValue(value.toInt());
 			m_spinBox->selectAll();
 
-			connect(m_spinBox, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &OptionWidget::markAsModified);
+			connect(m_spinBox, qOverload<int>(&QSpinBox::valueChanged), this, &OptionWidget::markAsModified);
 
 			break;
 		case SettingsManager::PathType:
