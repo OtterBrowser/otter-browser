@@ -96,7 +96,7 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 
 		SettingsManager::setOption(SettingsManager::Browser_LocaleOption, locale);
 	});
-	connect(m_ui->languageComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [&](int index)
+	connect(m_ui->languageComboBox, qOverload<int>(&QComboBox::currentIndexChanged), this, [&](int index)
 	{
 		m_ui->customFilePathWidget->setEnabled(index == 1);
 	});
