@@ -808,7 +808,7 @@ QFtpPI::QFtpPI(QObject *parent) :
     connect(&commandSocket, &QTcpSocket::connected, this, &QFtpPI::connected);
     connect(&commandSocket, &QTcpSocket::disconnected, this, &QFtpPI::connectionClosed);
     connect(&commandSocket, &QTcpSocket::readyRead, this, &QFtpPI::readyRead);
-    connect(&commandSocket, &QTcpSocket::errorOccurred, this, static_cast<void(QFtpPI::*)(QAbstractSocket::SocketError)>(&QFtpPI::error));
+    connect(&commandSocket, &QTcpSocket::errorOccurred, this, qOverload<QAbstractSocket::SocketError>(&QFtpPI::error));
     connect(&dtp, &QFtpDTP::connectState, this, &QFtpPI::dtpConnectState);
 }
 
@@ -1413,7 +1413,7 @@ QFtp::QFtp(QObject *parent)
     connect(&d->pi, &QFtpPI::connectState, this, &QFtp::_q_piConnectState);
     connect(&d->pi, &QFtpPI::finished, this, &QFtp::_q_piFinished);
     connect(&d->pi, &QFtpPI::serverReplyCode, this, &QFtp::_q_piServerReplyCode);
-    connect(&d->pi, static_cast<void(QFtpPI::*)(int, const QString&)>(&QFtpPI::error), this, &QFtp::_q_piError);
+    connect(&d->pi, qOverload<int, const QString&>(&QFtpPI::error), this, &QFtp::_q_piError);
     connect(&d->pi, &QFtpPI::rawFtpReply, this, &QFtp::_q_piFtpReply);
     connect(&d->pi.dtp, &QFtpDTP::readyRead, this, &QFtp::readyRead);
     connect(&d->pi.dtp, &QFtpDTP::dataTransferProgress, this, &QFtp::dataTransferProgress);
