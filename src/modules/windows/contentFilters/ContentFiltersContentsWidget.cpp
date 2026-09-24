@@ -106,7 +106,7 @@ void ContentFiltersContentsWidget::initializeSettingsPage()
 
 	m_ui->addlButton->setMenu(menu);
 
-	connect(m_ui->hostComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [&](int index)
+	connect(m_ui->hostComboBox, qOverload<int>(&QComboBox::currentIndexChanged), this, [&](int index)
 	{
 		const QString host((index == 0) ? QString() : m_ui->hostComboBox->itemText(index));
 
