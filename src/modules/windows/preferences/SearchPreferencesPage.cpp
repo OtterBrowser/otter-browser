@@ -207,7 +207,7 @@ void SearchPreferencesPage::updateSearchEngine()
 		m_updateAnimation = ThemesManager::createAnimation();
 		m_updateAnimation->start();
 
-		connect(m_updateAnimation, &Animation::frameChanged, m_ui->searchViewWidget->viewport(), static_cast<void(QWidget::*)()>(&QWidget::update));
+		connect(m_updateAnimation, &Animation::frameChanged, m_ui->searchViewWidget->viewport(), qOverload<>(&QWidget::update));
 	}
 
 	m_ui->searchViewWidget->setData(index, true, IsUpdatingRole);
@@ -388,28 +388,28 @@ void SearchPreferencesPage::updateReaddSearchEngineMenu()
 	QVector<SearchEnginesManager::SearchEngineDefinition> availableSearchEngines;
 	const QList<QFileInfo> allSearchEngines(QDir(SessionsManager::getReadableDataPath(QLatin1String("searchEngines"))).entryInfoList(QDir::Files) + QDir(SessionsManager::getReadableDataPath(QLatin1String("searchEngines"), true)).entryInfoList(QDir::Files));
 
-	for (int i = 0; i < allSearchEngines.count(); ++i)
-	{
-		const QString identifier(allSearchEngines.at(i).baseName());
+    for (int i = 0; i < allSearchEngines.count(); ++i)
+    {
+        const QString identifier(allSearchEngines.at(i).baseName());
 
-		if (!m_searchEngines.contains(identifier) && !availableIdentifiers.contains(identifier))
-		{
-			const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(identifier));
+        if (!m_searchEngines.contains(identifier) && !availableIdentifiers.contains(identifier))
+        {
+            const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(identifier));
 
-			if (searchEngine.isValid())
-			{
-				availableIdentifiers.append(identifier);
+            if (searchEngine.isValid())
+            {
+                availableIdentifiers.append(identifier);
 
-				availableSearchEngines.append(searchEngine);
-			}
-		}
-	}
+                availableSearchEngines.append(searchEngine);
+            }
+        }
+    }
 
-	QMenu *menu(m_ui->addSearchButton->menu()->actions().at(2)->menu());
-	menu->clear();
-	menu->setEnabled(!availableSearchEngines.isEmpty());
+    QMenu *menu(m_ui->addSearchButton->menu()->actions().at(2)->menu());
+    menu->clear();
+    menu->setEnabled(!availableSearchEngines.isEmpty());
 
-	for (const SearchEnginesManager::SearchEngineDefinition &searchEngine: availableSearchEngines)
+    for (const SearchEnginesManager::SearchEngineDefinition &searchEngine: availableSearchEngines)
 	{
 		menu->addAction(searchEngine.icon, (searchEngine.title.isEmpty() ? tr("(Untitled)") : searchEngine.title))->setData(searchEngine.identifier);
 	}
