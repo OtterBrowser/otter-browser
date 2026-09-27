@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -250,10 +250,8 @@ void ContentsDialog::keyPressEvent(QKeyEvent *event)
 				{
 					const QList<QPushButton*> buttons(findChildren<QPushButton*>());
 
-					for (int i = 0; i < buttons.count(); ++i)
+					for (QPushButton *button: buttons)
 					{
-						QPushButton *button(buttons.at(i));
-
 						if (button->isDefault())
 						{
 							button->click();
