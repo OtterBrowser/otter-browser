@@ -108,6 +108,8 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 				openBookmarkInNewBackgroundWindowAction->setIconOverride(QIcon());
 
 				addAction(openBookmarkInNewBackgroundWindowAction);
+				addSeparator();
+				addAction(new MenuAction(ActionsManager::BookmarkPropertiesAction, {{QLatin1String("bookmark"), identifier}}, m_executor, this));
 			});
 
 			break;
