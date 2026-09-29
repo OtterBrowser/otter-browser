@@ -367,16 +367,33 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 
 void Menu::contextMenuEvent(QContextMenuEvent *event)
 {
-	const MenuAction *action(qobject_cast<MenuAction*>(actionAt(event->pos())));
+	MenuAction *menuAction(qobject_cast<MenuAction*>(actionAt(event->pos())));
 
-	if (!action || !action->isEnabled() || !action->hasContextMenu())
+	if (!menuAction)
+	{
+		const QList<QAction*> actions(this->actions());
+		QPoint position(event->pos());
+		position.setX(10);
+
+		for (QAction *action: actions)
+		{
+			if (actionGeometry(action).contains(position))
+			{
+				menuAction = qobject_cast<MenuAction*>(action);
+
+				break;
+			}
+		}
+	}
+
+	if (!menuAction || !menuAction->isEnabled() || !menuAction->hasContextMenu())
 	{
 		QMenu::contextMenuEvent(event);
 
 		return;
 	}
 
-	QMenu *menu(action->createContextMenu(this));
+	QMenu *menu(menuAction->createContextMenu(this));
 
 	connect(menu, &QMenu::triggered, this, &Menu::hideMenu);
 
