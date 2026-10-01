@@ -124,6 +124,15 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 
 				addSeparator();
 				addAction(new MenuAction(ActionsManager::BookmarkPropertiesAction, {{QLatin1String("bookmark"), identifier}}, m_executor, this));
+
+				Action *removeBookmarkAction(new MenuAction(QT_TRANSLATE_NOOP("actions", "Remove Bookmark"), true, this));
+
+				addAction(removeBookmarkAction);
+
+				connect(removeBookmarkAction, &MenuAction::triggered, this, [=]()
+				{
+					BookmarksManager::getModel()->trashBookmark(BookmarksManager::getBookmark(identifier));
+				});
 			});
 
 			break;
