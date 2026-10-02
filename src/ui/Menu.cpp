@@ -827,7 +827,9 @@ void Menu::populateOptionMenu()
 
 	if (m_actionGroup)
 	{
-		for (QAction *action: actions())
+		const QList<QAction*> actions(this->actions());
+
+		for (QAction *action: actions)
 		{
 			if (action && action->data().toString() == value)
 			{
