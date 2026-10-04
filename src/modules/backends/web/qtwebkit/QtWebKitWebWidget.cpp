@@ -1765,9 +1765,9 @@ void QtWebKitWebWidget::fillPassword(const PasswordsManager::Password &password)
 
 	QJsonArray fieldsArray;
 
-	for (int i = 0; i < password.fields.count(); ++i)
+	for (const PasswordsManager::Password::Field &field: password.fields)
 	{
-		fieldsArray.append(QJsonObject({{QLatin1String("name"), password.fields.at(i).name}, {QLatin1String("value"), password.fields.at(i).value}, {QLatin1String("type"), ((password.fields.at(i).type == PasswordsManager::PasswordField) ? QLatin1String("password") : QLatin1String("text"))}}));
+		fieldsArray.append(QJsonObject({{QLatin1String("name"), field.name}, {QLatin1String("value"), field.value}, {QLatin1String("type"), ((field.type == PasswordsManager::PasswordField) ? QLatin1String("password") : QLatin1String("text"))}}));
 	}
 
 	const QString script(QString::fromLatin1(file.readAll()).arg(QString::fromLatin1(QJsonDocument(fieldsArray).toJson(QJsonDocument::Indented))));
@@ -1817,9 +1817,8 @@ void QtWebKitWebWidget::setHistory(const Session::Window::History &history)
 	QVariantList entries;
 	entries.reserve(history.entries.count());
 
-	for (int i = 0; i < history.entries.count(); ++i)
+	for (const Session::Window::History::Entry &historyEntry: history.entries)
 	{
-		const Session::Window::History::Entry &historyEntry(history.entries.at(i));
 		QVariantMap entry;
 		entry[QLatin1String("pageScaleFactor")] = 0;
 		entry[QLatin1String("title")] = historyEntry.title;
