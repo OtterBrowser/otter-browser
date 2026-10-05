@@ -1242,9 +1242,9 @@ void QtWebKitWebWidget::muteAudio(QWebFrame *frame, bool isMuted)
 
 	const QList<QWebFrame*> frames(frame->childFrames());
 
-	for (int i = 0; i < frames.count(); ++i)
+	for (QWebFrame *frame: frames)
 	{
-		muteAudio(frames.at(i), isMuted);
+		muteAudio(frame, isMuted);
 	}
 }
 
