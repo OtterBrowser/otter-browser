@@ -1269,23 +1269,23 @@ void Menu::populateProxiesMenu()
 	}
 
 	const MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-	const QString proxy(mainWindow ? mainWindow->getOption(SettingsManager::Network_ProxyOption).toString() : QString());
+	const QString currentProxy(mainWindow ? mainWindow->getOption(SettingsManager::Network_ProxyOption).toString() : QString());
 	const QStringList proxies((!menuAction() || menuAction()->data().toString().isEmpty()) ? NetworkManagerFactory::getProxies() : NetworkManagerFactory::getProxy(menuAction()->data().toString()).children);
 
 	m_actionGroup = new QActionGroup(this);
 	m_actionGroup->setExclusive(true);
 
-	for (int i = 0; i < proxies.count(); ++i)
+	for (const QString &proxy: proxies)
 	{
-		if (proxies.at(i).isEmpty())
+		if (proxy.isEmpty())
 		{
 			addSeparator();
 		}
 		else
 		{
-			const ProxyDefinition definition(NetworkManagerFactory::getProxy(proxies.at(i)));
+			const ProxyDefinition definition(NetworkManagerFactory::getProxy(proxy));
 			Action *action(new MenuAction(definition.getTitle(), false, this));
-			action->setData(proxies.at(i));
+			action->setData(proxy);
 
 			if (definition.isFolder)
 			{
@@ -1303,7 +1303,7 @@ void Menu::populateProxiesMenu()
 			else
 			{
 				action->setCheckable(true);
-				action->setChecked(proxy == proxies.at(i));
+				action->setChecked(currentProxy == proxy);
 			}
 
 			m_actionGroup->addAction(action);
