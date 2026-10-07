@@ -1270,7 +1270,8 @@ void Menu::populateProxiesMenu()
 
 	const MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 	const QString currentProxy(mainWindow ? mainWindow->getOption(SettingsManager::Network_ProxyOption).toString() : QString());
-	const QStringList proxies((!menuAction() || menuAction()->data().toString().isEmpty()) ? NetworkManagerFactory::getProxies() : NetworkManagerFactory::getProxy(menuAction()->data().toString()).children);
+	const QString proxyIdentifier(menuAction() ? menuAction()->data().toString() : QString());
+	const QStringList proxies(proxyIdentifier.isEmpty() ? NetworkManagerFactory::getProxies() : NetworkManagerFactory::getProxy(proxyIdentifier).children);
 
 	m_actionGroup = new QActionGroup(this);
 	m_actionGroup->setExclusive(true);
