@@ -1321,9 +1321,9 @@ void Menu::populateSearchEnginesMenu()
 	const QStringList searchEngines((m_role == ValidateMenu) ? SettingsManager::getOption(SettingsManager::Browser_ValidatorsOrderOption).toStringList() : SearchEnginesManager::getSearchEngines());
 	const ActionExecutor::Object executor(getExecutor());
 
-	for (int i = 0; i < searchEngines.count(); ++i)
+	for (const QString &identifier: searchEngines)
 	{
-		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(searchEngines.at(i)));
+		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(identifier));
 
 		if (searchEngine.isValid())
 		{
