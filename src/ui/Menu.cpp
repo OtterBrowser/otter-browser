@@ -1276,17 +1276,17 @@ void Menu::populateProxiesMenu()
 	m_actionGroup = new QActionGroup(this);
 	m_actionGroup->setExclusive(true);
 
-	for (const QString &proxy: proxies)
+	for (const QString &identifier: proxies)
 	{
-		if (proxy.isEmpty())
+		if (identifier.isEmpty())
 		{
 			addSeparator();
 		}
 		else
 		{
-			const ProxyDefinition definition(NetworkManagerFactory::getProxy(proxy));
+			const ProxyDefinition definition(NetworkManagerFactory::getProxy(identifier));
 			Action *action(new MenuAction(definition.getTitle(), false, this));
-			action->setData(proxy);
+			action->setData(identifier);
 
 			if (definition.isFolder)
 			{
@@ -1304,7 +1304,7 @@ void Menu::populateProxiesMenu()
 			else
 			{
 				action->setCheckable(true);
-				action->setChecked(currentProxy == proxy);
+				action->setChecked(currentProxy == identifier);
 			}
 
 			m_actionGroup->addAction(action);
