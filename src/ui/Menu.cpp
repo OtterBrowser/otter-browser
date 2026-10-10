@@ -1358,9 +1358,9 @@ void Menu::populateSessionsMenu()
 	const QStringList sessions(SessionsManager::getSessions());
 	QMultiHash<QString, SessionInformation> information;
 
-	for (int i = 0; i < sessions.count(); ++i)
+	for (const QString &identifier: sessions)
 	{
-		const SessionInformation session(SessionsManager::getSession(sessions.at(i)));
+		const SessionInformation session(SessionsManager::getSession(identifier));
 
 		information.insert((session.title.isEmpty() ? tr("(Untitled)") : session.title), session);
 	}
