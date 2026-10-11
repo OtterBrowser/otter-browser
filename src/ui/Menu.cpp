@@ -1535,10 +1535,11 @@ void Menu::populateUserAgentMenu()
 		clear();
 	}
 
-	const bool isRoot(!menuAction() || menuAction()->data().toString().isEmpty());
+	const QString userAgentIdentifier(menuAction() ? menuAction()->data().toString() : QString());
+	const bool isRoot(userAgentIdentifier.isEmpty());
 	const MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 	const QString currentUserAgent(mainWindow ? mainWindow->getOption(SettingsManager::Network_UserAgentOption).toString() : QString());
-	const QStringList userAgents(isRoot ? NetworkManagerFactory::getUserAgents() : NetworkManagerFactory::getUserAgent(menuAction()->data().toString()).children);
+	const QStringList userAgents(isRoot ? NetworkManagerFactory::getUserAgents() : NetworkManagerFactory::getUserAgent(userAgentIdentifier).children);
 
 	m_actionGroup = new QActionGroup(this);
 	m_actionGroup->setExclusive(true);
