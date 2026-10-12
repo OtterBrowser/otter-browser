@@ -1323,14 +1323,14 @@ void Menu::populateSearchEnginesMenu()
 
 	for (const QString &identifier: searchEngines)
 	{
-		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(identifier));
+		const SearchEnginesManager::SearchEngineDefinition definition(SearchEnginesManager::getSearchEngine(identifier));
 
-		if (searchEngine.isValid())
+		if (definition.isValid())
 		{
-			Action *action(new MenuAction(ActionsManager::SearchAction, {{QLatin1String("searchEngine"), searchEngine.identifier}, {QLatin1String("queryPlaceholder"), ((m_role == ValidateMenu) ? QLatin1String("{pageUrl}") : QLatin1String("{selection}"))}}, executor, this));
-			action->setTextOverride(searchEngine.title, false);
-			action->setIconOverride(searchEngine.icon);
-			action->setToolTip(searchEngine.description);
+			Action *action(new MenuAction(ActionsManager::SearchAction, {{QLatin1String("searchEngine"), definition.identifier}, {QLatin1String("queryPlaceholder"), ((m_role == ValidateMenu) ? QLatin1String("{pageUrl}") : QLatin1String("{selection}"))}}, executor, this));
+			action->setTextOverride(definition.title, false);
+			action->setIconOverride(definition.icon);
+			action->setToolTip(definition.description);
 
 			addAction(action);
 		}
@@ -1544,18 +1544,18 @@ void Menu::populateUserAgentMenu()
 	m_actionGroup = new QActionGroup(this);
 	m_actionGroup->setExclusive(true);
 
-	for (const QString &userAgent: userAgents)
+	for (const QString &identifier: userAgents)
 	{
-		if (userAgent.isEmpty())
+		if (identifier.isEmpty())
 		{
 			addSeparator();
 
 			continue;
 		}
 
-		const UserAgentDefinition definition(NetworkManagerFactory::getUserAgent(userAgent));
+		const UserAgentDefinition definition(NetworkManagerFactory::getUserAgent(identifier));
 		QAction *action(addAction(Utils::elideText(definition.getTitle(), fontMetrics(), this)));
-		action->setData(userAgent);
+		action->setData(identifier);
 
 		if (definition.isFolder)
 		{
@@ -1573,7 +1573,7 @@ void Menu::populateUserAgentMenu()
 		else
 		{
 			action->setCheckable(true);
-			action->setChecked(userAgent == currentUserAgent);
+			action->setChecked(identifier == currentUserAgent);
 		}
 
 		m_actionGroup->addAction(action);
