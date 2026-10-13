@@ -1318,7 +1318,8 @@ void Menu::populateSearchEnginesMenu()
 {
 	clear();
 
-	const QStringList searchEngines((m_role == ValidateMenu) ? SettingsManager::getOption(SettingsManager::Browser_ValidatorsOrderOption).toStringList() : SearchEnginesManager::getSearchEngines());
+	const bool isValidating(m_role == ValidateMenu);
+	const QStringList searchEngines(isValidating ? SettingsManager::getOption(SettingsManager::Browser_ValidatorsOrderOption).toStringList() : SearchEnginesManager::getSearchEngines());
 	const ActionExecutor::Object executor(getExecutor());
 
 	for (const QString &identifier: searchEngines)
@@ -1327,7 +1328,7 @@ void Menu::populateSearchEnginesMenu()
 
 		if (definition.isValid())
 		{
-			Action *action(new MenuAction(ActionsManager::SearchAction, {{QLatin1String("searchEngine"), definition.identifier}, {QLatin1String("queryPlaceholder"), ((m_role == ValidateMenu) ? QLatin1String("{pageUrl}") : QLatin1String("{selection}"))}}, executor, this));
+			Action *action(new MenuAction(ActionsManager::SearchAction, {{QLatin1String("searchEngine"), definition.identifier}, {QLatin1String("queryPlaceholder"), (isValidating ? QLatin1String("{pageUrl}") : QLatin1String("{selection}"))}}, executor, this));
 			action->setTextOverride(definition.title, false);
 			action->setIconOverride(definition.icon);
 			action->setToolTip(definition.description);
