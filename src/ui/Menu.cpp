@@ -1446,7 +1446,12 @@ void Menu::populateSpellCheckSuggestionsMenu()
 
 void Menu::populateStyleSheetsMenu()
 {
-	clear();
+	if (m_actionGroup)
+	{
+		m_actionGroup->deleteLater();
+
+		clear();
+	}
 
 	const MenuContext context(getMenuContext());
 	Action *defaultAction(new MenuAction(QT_TRANSLATE_NOOP("actions", "Default Style"), true, this));
@@ -1465,9 +1470,10 @@ void Menu::populateStyleSheetsMenu()
 
 	const QString activeStyleSheet(context.webWidget->getActiveStyleSheet());
 	const QStringList styleSheets(context.webWidget->getStyleSheets());
-	QActionGroup *actionGroup(new QActionGroup(this));
-	actionGroup->setExclusive(true);
-	actionGroup->addAction(defaultAction);
+
+	m_actionGroup = new QActionGroup(this);
+	m_actionGroup->setExclusive(true);
+	m_actionGroup->addAction(defaultAction);
 
 	for (const QString &styleSheet: styleSheets)
 	{
@@ -1475,7 +1481,7 @@ void Menu::populateStyleSheetsMenu()
 		action->setCheckable(true);
 		action->setChecked(styleSheet == activeStyleSheet);
 
-		actionGroup->addAction(action);
+		m_actionGroup->addAction(action);
 	}
 
 	defaultAction->setChecked(activeStyleSheet.isEmpty() || !styleSheets.contains(activeStyleSheet));
