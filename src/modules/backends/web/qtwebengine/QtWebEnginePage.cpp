@@ -1,5 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
+* Copyright (C) 2026 Jonas Bechtel (temporary for polyfill)
 * Copyright (C) 2015 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -590,6 +591,28 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType ty
 
 		scripts().insert(script);
 	}
+
+	QWebEngineScript script2;
+	script2.setSourceCode(
+		"if(!Array.prototype.hasOwnProperty(\"at\")) {\n"
+		"	Object.defineProperty(Array.prototype, \"at\", \n"
+		"		{\n"
+		"			value:      function () {return 0},\n" // "this" not avail.
+		"			enumerable: false,\n"  // -> do not appear in for(i in arr)
+		"			writable:   true,\n" // -> allow overwrite in next statement
+		"		}\n"
+		"	)\n"
+		"	Array.prototype.at = function (index) {\n"  // overwrite
+		"		if (index < 0)\n"
+		"			index += this.length\n"
+		"		return this[index]\n" // "this" available here
+		"	}\n"
+		"}\n"
+	);
+	script2.setRunsOnSubFrames(true);
+	script2.setInjectionPoint(QWebEngineScript::DocumentCreation);
+	script2.setWorldId(QWebEngineScript::MainWorld);
+	scripts().insert(script2);
 
 	emit aboutToNavigate(url, type);
 
