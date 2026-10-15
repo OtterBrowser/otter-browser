@@ -145,7 +145,20 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 
 				if (!parentMenu || parentMenu->getRole() != m_role)
 				{
-					connect(BookmarksManager::getModel(), &BookmarksModel::modelModified, this, &Menu::clearBookmarksMenu);
+					connect(BookmarksManager::getModel(), &BookmarksModel::modelModified, this, [&]()
+					{
+						const int offset((m_menuOptions.value(QLatin1String("bookmark")).toULongLong() == 0) ? 3 : 0);
+
+						for (int i = (actions().count() - 1); i >= offset; --i)
+						{
+							QAction *action(actions().at(i));
+							action->deleteLater();
+
+							removeAction(action);
+						}
+
+						connect(this, &Menu::aboutToShow, this, &Menu::populateBookmarksMenu);
+					});
 				}
 
 				if (role == BookmarksMenu)
@@ -234,7 +247,19 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 
 				if (!parentMenu || parentMenu->getRole() != m_role)
 				{
-					connect(NotesManager::getModel(), &BookmarksModel::modelModified, this, &Menu::clearNotesMenu);
+					connect(NotesManager::getModel(), &BookmarksModel::modelModified, this, [&]()
+					{
+						clear();
+
+						if (menuAction())
+						{
+							const BookmarksModel::Bookmark *bookmark(NotesManager::getModel()->getBookmark(m_menuOptions.value(QLatin1String("bookmark")).toULongLong()));
+
+							menuAction()->setEnabled(bookmark && bookmark->hasChildren());
+						}
+
+						connect(this, &Menu::aboutToShow, this, &Menu::populateNotesMenu);
+					});
 				}
 
 				connect(this, &Menu::aboutToShow, this, &Menu::populateNotesMenu);
@@ -1639,35 +1664,6 @@ void Menu::populateWindowsMenu()
 			addAction(new MenuAction(ActionsManager::ActivateTabAction, paramaters, executor, this));
 		}
 	}
-}
-
-void Menu::clearBookmarksMenu()
-{
-	const int offset((m_menuOptions.value(QLatin1String("bookmark")).toULongLong() == 0) ? 3 : 0);
-
-	for (int i = (actions().count() - 1); i >= offset; --i)
-	{
-		QAction *action(actions().at(i));
-		action->deleteLater();
-
-		removeAction(action);
-	}
-
-	connect(this, &Menu::aboutToShow, this, &Menu::populateBookmarksMenu);
-}
-
-void Menu::clearNotesMenu()
-{
-	clear();
-
-	if (menuAction())
-	{
-		const BookmarksModel::Bookmark *bookmark(NotesManager::getModel()->getBookmark(m_menuOptions.value(QLatin1String("bookmark")).toULongLong()));
-
-		menuAction()->setEnabled(bookmark && bookmark->hasChildren());
-	}
-
-	connect(this, &Menu::aboutToShow, this, &Menu::populateNotesMenu);
 }
 
 void Menu::selectOption(QAction *action)

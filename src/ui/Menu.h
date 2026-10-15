@@ -118,8 +118,6 @@ protected slots:
 	void populateToolBarsMenu();
 	void populateUserAgentMenu();
 	void populateWindowsMenu();
-	void clearBookmarksMenu();
-	void clearNotesMenu();
 	void selectOption(QAction *action);
 	void updateClosedWindowsMenu();
 
