@@ -140,6 +140,7 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 		case BookmarkSelectorMenu:
 			{
 				setTitle(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
+				setMenuOptions({{QLatin1String("bookmark"), 0}});
 
 				const Menu *parentMenu(qobject_cast<Menu*>(parent));
 
@@ -403,7 +404,7 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 		}
 	}
 
-	const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(action->getParameters().value(QLatin1String("bookmark")).toULongLong()));
+	const BookmarksModel::Bookmark *bookmark(BookmarksManager::getBookmark(action->getParameters()));
 
 	if (bookmark)
 	{
@@ -721,7 +722,7 @@ void Menu::hideMenu()
 
 void Menu::populateBookmarksMenu()
 {
-	const BookmarksModel::Bookmark *folderBookmark(BookmarksManager::getModel()->getBookmark(m_menuOptions.value(QLatin1String("bookmark")).toULongLong()));
+	const BookmarksModel::Bookmark *folderBookmark(BookmarksManager::getBookmark(m_menuOptions));
 
 	if (!isEmpty() && !(folderBookmark->getType() == BookmarksModel::RootBookmark && actions().count() == 3))
 	{
@@ -796,7 +797,7 @@ void Menu::populateBookmarkSelectorMenu()
 		return;
 	}
 
-	const BookmarksModel::Bookmark *folderBookmark(BookmarksManager::getModel()->getBookmark(m_menuOptions.value(QLatin1String("bookmark")).toULongLong()));
+	const BookmarksModel::Bookmark *folderBookmark(BookmarksManager::getBookmark(m_menuOptions));
 	Action *addFolderAction(new MenuAction(QT_TRANSLATE_NOOP("actions", "This Folder"), true, this));
 	addFolderAction->setIconOverride(QLatin1String("document-open-folder"));
 	addFolderAction->setData(folderBookmark->getIdentifier());
