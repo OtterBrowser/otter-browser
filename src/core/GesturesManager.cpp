@@ -525,10 +525,23 @@ void GesturesManager::createInstance()
 {
 	if (!m_instance)
 	{
-		m_nativeGestures[GesturesManager::GenericContext] = {{{QEvent::MouseButtonDblClick, Qt::LeftButton}}, {{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseButtonRelease, Qt::LeftButton}}, {{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseMove, MouseGestures::UnknownMouseAction}}};
-		m_nativeGestures[GesturesManager::LinkContext] = {{{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseButtonRelease, Qt::LeftButton}}, {{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseMove, MouseGestures::UnknownMouseAction}}};
-		m_nativeGestures[GesturesManager::ContentEditableContext] = {{{QEvent::MouseButtonPress, Qt::MiddleButton}}};
-		m_nativeGestures[GesturesManager::TabHandleContext] = {{{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseMove, MouseGestures::UnknownMouseAction}}};
+		m_nativeGestures = {
+			{GenericContext, {
+				{{QEvent::MouseButtonDblClick, Qt::LeftButton}},
+				{{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseButtonRelease, Qt::LeftButton}},
+				{{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseMove, MouseGestures::UnknownMouseAction}}
+			}},
+			{LinkContext, {
+				{{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseButtonRelease, Qt::LeftButton}},
+				{{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseMove, MouseGestures::UnknownMouseAction}}
+			}},
+			{ContentEditableContext, {
+				{{QEvent::MouseButtonPress, Qt::MiddleButton}}
+			}},
+			{TabHandleContext, {
+				{{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseMove, MouseGestures::UnknownMouseAction}}
+			}}
+		};
 
 		m_instance = new GesturesManager(QCoreApplication::instance());
 		m_gesturesContextEnumerator = staticMetaObject.indexOfEnumerator(QLatin1String("GesturesContext").data());
