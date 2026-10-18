@@ -629,17 +629,17 @@ void GesturesManager::recognizeMoveStep(const QInputEvent *event)
 	{
 		const QVector<MouseProfile::Gesture> gestures(m_gestures[context]);
 
-		for (int i = 0; i < gestures.count(); ++i)
+		for (const MouseProfile::Gesture &gesture: gestures)
 		{
-			const QVector<MouseProfile::Gesture::Step> steps(gestures.at(i).steps);
+			const QVector<MouseProfile::Gesture::Step> steps(gesture.steps);
 
 			if (steps.count() > m_steps.count() && steps[m_steps.count()].type == QEvent::MouseMove && steps.mid(0, m_steps.count()) == m_steps)
 			{
 				MouseGestures::ActionList moves;
 
-				for (int j = m_steps.count(); (j < steps.count() && steps.at(j).type == QEvent::MouseMove); ++j)
+				for (int i = m_steps.count(); (i < steps.count() && steps.at(i).type == QEvent::MouseMove); ++i)
 				{
-					moves.push_back(steps.at(j).direction);
+					moves.push_back(steps.at(i).direction);
 				}
 
 				if (!moves.empty())
