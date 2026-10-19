@@ -242,9 +242,9 @@ QStringList DictionariesPage::getSelectedDictionaries() const
 	QStringList selectedDictionaries;
 	selectedDictionaries.reserve(indexes.count());
 
-	for (int i = 0; i < indexes.count(); ++i)
+	for (const QModelIndex &index: indexes)
 	{
-		const QString identifier(indexes.at(i).data(IdentifierRole).toString());
+		const QString identifier(index.data(IdentifierRole).toString());
 
 		if (!identifier.isEmpty())
 		{
