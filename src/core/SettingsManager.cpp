@@ -154,6 +154,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Interface_ShowScrollBarsOption, BooleanType, true);
 	registerOption(Interface_StyleSheetOption, PathType, QString());
 	registerOption(Interface_TabCrashingActionOption, EnumerationType, QLatin1String("ask"), {QLatin1String("ask"), QLatin1String("close"), QLatin1String("reload")});
+	registerOption(Interface_TabsInTitleBarOption, BooleanType, false, {}, (OptionDefinition::IsEnabledFlag | OptionDefinition::IsVisibleFlag | OptionDefinition::RequiresRestartFlag));
 	registerOption(Interface_ToolTipLayoutOption, ListType, QStringList({QLatin1String("title"), QLatin1String("link")}), QStringList({QLatin1String("link"), QLatin1String("lastVisited"), QLatin1String("title")}));
 	registerOption(Interface_UseFancyDateTimeFormatOption, BooleanType, true);
 	registerOption(Interface_UseNativeNotificationsOption, BooleanType, true);
