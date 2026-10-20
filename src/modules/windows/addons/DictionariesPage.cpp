@@ -176,7 +176,7 @@ void DictionariesPage::updateDetails()
 
 	if (selectedDictionaries.count() == 1)
 	{
-		SpellCheckManager::Dictionary dictionary(SpellCheckManager::getDictionary(selectedDictionaries.first()));
+		const SpellCheckManager::Dictionary dictionary(SpellCheckManager::getDictionary(selectedDictionaries.first()));
 
 		if (dictionary.isValid())
 		{
