@@ -49,9 +49,9 @@ void UserScriptsPage::delayedLoad()
 {
 	const QStringList userScripts(AddonsManager::getAddons(Addon::UserScriptType));
 
-	for (int i = 0; i < userScripts.count(); ++i)
+	for (const QString &name: userScripts)
 	{
-		UserScript *script(AddonsManager::getUserScript(userScripts.at(i)));
+		UserScript *script(AddonsManager::getUserScript(name));
 
 		if (script)
 		{
@@ -309,9 +309,9 @@ QVector<UserScript*> UserScriptsPage::getSelectedUserScripts() const
 	QVector<UserScript*> userScripts;
 	userScripts.reserve(indexes.count());
 
-	for (int i = 0; i < indexes.count(); ++i)
+	for (const QModelIndex &index: indexes)
 	{
-		const QString identifier(indexes.at(i).data(IdentifierRole).toString());
+		const QString identifier(index.data(IdentifierRole).toString());
 
 		if (!identifier.isEmpty())
 		{
