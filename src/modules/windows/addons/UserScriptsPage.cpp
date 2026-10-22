@@ -229,7 +229,7 @@ void UserScriptsPage::updateDetails()
 
 			titleEntry.value = script->getTitle();
 			homePageEntry.value = homePage.toDisplayString();
-			homePageEntry.isUrl = !homePage.isEmpty();
+			homePageEntry.isUrl = !homePage.isValid();
 		}
 	}
 
