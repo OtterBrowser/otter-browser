@@ -192,7 +192,7 @@ void UserScriptsPage::removeAddons()
 		return;
 	}
 
-	bool hasAddonsToRemove(false);
+	bool hasScriptsToRemove(false);
 
 	for (UserScript *script: scripts)
 	{
@@ -200,11 +200,11 @@ void UserScriptsPage::removeAddons()
 		{
 			m_addonsToRemove.append(script->getName());
 
-			hasAddonsToRemove = true;
+			hasScriptsToRemove = true;
 		}
 	}
 
-	if (hasAddonsToRemove)
+	if (hasScriptsToRemove)
 	{
 		emit settingsModified();
 	}
@@ -212,16 +212,16 @@ void UserScriptsPage::removeAddons()
 
 void UserScriptsPage::updateDetails()
 {
-	const QVector<UserScript*> selectedUserScripts(getSelectedUserScripts());
+	const QVector<UserScript*> sripts(getSelectedUserScripts());
 	DetailsEntry titleEntry;
 	titleEntry.label = tr("Title:");
 
 	DetailsEntry homePageEntry;
 	homePageEntry.label = tr("Homepage:");
 
-	if (selectedUserScripts.count() == 1)
+	if (sripts.count() == 1)
 	{
-		UserScript *script(selectedUserScripts.first());
+		UserScript *script(sripts.first());
 
 		if (script)
 		{
