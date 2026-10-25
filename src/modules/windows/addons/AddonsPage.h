@@ -68,6 +68,12 @@ protected:
 		QString label;
 		QString value;
 		bool isUrl = false;
+
+		DetailsEntry(const QString &labelValue, const QString &valueValue = {}, bool isUrlValue = false) : label(labelValue),
+			value(valueValue),
+			isUrl(isUrlValue)
+		{
+		}
 	};
 
 	void timerEvent(QTimerEvent *event) override;

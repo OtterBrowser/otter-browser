@@ -165,14 +165,9 @@ void DictionariesPage::removeAddons()
 void DictionariesPage::updateDetails()
 {
 	const QStringList selectedDictionaries(getSelectedDictionaries());
-	DetailsEntry titleEntry;
-	titleEntry.label = tr("Title:");
-
-	DetailsEntry codeEntry;
-	codeEntry.label = tr("Language Code:");
-
-	DetailsEntry locationEntry;
-	locationEntry.label = tr("Location:");
+	DetailsEntry titleEntry(tr("Title:"));
+	DetailsEntry codeEntry(tr("Language Code:"));
+	DetailsEntry locationEntry(tr("Location:"));
 
 	if (selectedDictionaries.count() == 1)
 	{

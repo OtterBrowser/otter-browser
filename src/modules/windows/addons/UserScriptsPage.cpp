@@ -213,11 +213,8 @@ void UserScriptsPage::removeAddons()
 void UserScriptsPage::updateDetails()
 {
 	const QVector<UserScript*> sripts(getSelectedUserScripts());
-	DetailsEntry titleEntry;
-	titleEntry.label = tr("Title:");
-
-	DetailsEntry homePageEntry;
-	homePageEntry.label = tr("Homepage:");
+	DetailsEntry titleEntry(tr("Title:"));
+	DetailsEntry homePageEntry(tr("Homepage:"));
 
 	if (sripts.count() == 1)
 	{
