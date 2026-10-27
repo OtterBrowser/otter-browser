@@ -284,17 +284,17 @@ public:
 		{
 			choices.reserve(choicesValue.count());
 
-			for (int i = 0; i < choicesValue.count(); ++i)
+			for (const QString &choice: choicesValue)
 			{
-				choices.append({{}, choicesValue.at(i), {}});
+				choices.append({{}, choice, {}});
 			}
 		}
 
 		bool hasIcons() const
 		{
-			for (int i = 0; i < choices.count(); ++i)
+			for (const Choice &choice: choices)
 			{
-				if (!choices.at(i).icon.isNull())
+				if (!choice.icon.isNull())
 				{
 					return true;
 				}
