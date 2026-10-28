@@ -252,10 +252,7 @@ QStringList DictionariesPage::getSelectedDictionaries() const
 
 QVector<AddonsPage::ModelColumn> DictionariesPage::getModelColumns() const
 {
-	ModelColumn titleColumn;
-	titleColumn.label = tr("Title");
-
-	return {titleColumn};
+    return {{tr("Title")}};
 }
 
 bool DictionariesPage::canOpenAddons() const

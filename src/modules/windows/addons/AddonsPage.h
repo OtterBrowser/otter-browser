@@ -61,6 +61,11 @@ protected:
 	{
 		QString label;
 		int width = 0;
+
+		ModelColumn(const QString &labelValue, int widthValue = 0) : label(labelValue),
+			width(widthValue)
+		{
+		}
 	};
 
 	struct DetailsEntry final
