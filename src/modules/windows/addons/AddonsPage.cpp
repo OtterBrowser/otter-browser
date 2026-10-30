@@ -208,11 +208,9 @@ void AddonsPage::load()
 
 	for (const ModelColumn &column: columns)
 	{
-		const int width(column.width);
-
-		if (width > 0)
+		if (column.width > 0)
 		{
-			getModel()->setHeaderData(++index, Qt::Horizontal, width, HeaderViewWidget::WidthRole);
+			getModel()->setHeaderData(++index, Qt::Horizontal, column.width, HeaderViewWidget::WidthRole);
 		}
 	}
 
