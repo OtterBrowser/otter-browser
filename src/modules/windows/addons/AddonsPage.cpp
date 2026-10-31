@@ -367,7 +367,7 @@ QModelIndexList AddonsPage::getSelectedIndexes() const
 
 QVector<AddonsPage::ModelColumn> AddonsPage::getModelColumns() const
 {
-    return {{tr("Title"), 250}, {tr("Version")}};
+	return {{tr("Title"), 250}, {tr("Version")}};
 }
 
 WebWidget::LoadingState AddonsPage::getLoadingState() const
