@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 - 2025 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2026 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -490,15 +490,16 @@ void FeedsModel::removeEntry(Entry *entry)
 
 void FeedsModel::readEntry(QXmlStreamReader *reader, Entry *parent)
 {
-	const QString title(reader->attributes().value(reader->attributes().hasAttribute(QLatin1String("title")) ? QLatin1String("title") : QLatin1String("text")).toString());
+	const QXmlStreamAttributes attributes(reader->attributes());
+	const QString title(attributes.value(attributes.hasAttribute(QLatin1String("title")) ? QLatin1String("title") : QLatin1String("text")).toString());
 
-	if (reader->attributes().hasAttribute(QLatin1String("xmlUrl")))
+	if (attributes.hasAttribute(QLatin1String("xmlUrl")))
 	{
-		const QUrl url(Utils::normalizeUrl(QUrl(reader->attributes().value(QLatin1String("xmlUrl")).toString())));
+		const QUrl url(Utils::normalizeUrl(QUrl(attributes.value(QLatin1String("xmlUrl")).toString())));
 
 		if (url.isValid())
 		{
-			Entry *entry(new Entry(FeedsManager::createFeed(url, title, Utils::loadPixmapFromDataUri(reader->attributes().value(QLatin1String("icon")).toString()), reader->attributes().value(QLatin1String("updateInterval")).toInt())));
+			Entry *entry(new Entry(FeedsManager::createFeed(url, title, Utils::loadPixmapFromDataUri(attributes.value(QLatin1String("icon")).toString()), attributes.value(QLatin1String("updateInterval")).toInt())));
 			entry->setData(FeedEntry, TypeRole);
 			entry->setFlags(entry->flags() | Qt::ItemNeverHasChildren);
 
