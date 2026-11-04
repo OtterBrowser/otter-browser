@@ -599,13 +599,14 @@ void BookmarksModel::removeBookmark(Bookmark *bookmark)
 
 void BookmarksModel::readBookmark(QXmlStreamReader *reader, Bookmark *parent)
 {
+	const QXmlStreamAttributes attributes(reader->attributes());
 	Bookmark *bookmark(nullptr);
 
 	if (reader->name() == QLatin1String("folder"))
 	{
-		bookmark = addBookmark(FolderBookmark, {{IdentifierRole, reader->attributes().value(QLatin1String("id")).toULongLong()}, {TimeAddedRole, readDateTime(reader, QLatin1String("added"))}, {TimeModifiedRole, readDateTime(reader, QLatin1String("modified"))}}, parent);
+		bookmark = addBookmark(FolderBookmark, {{IdentifierRole, attributes.value(QLatin1String("id")).toULongLong()}, {TimeAddedRole, readDateTime(reader, QLatin1String("added"))}, {TimeModifiedRole, readDateTime(reader, QLatin1String("modified"))}}, parent);
 
-		if (reader->attributes().hasAttribute(QLatin1String("hidden")))
+		if (attributes.hasAttribute(QLatin1String("hidden")))
 		{
 			bookmark->setData(true, IsHiddenRole);
 		}
@@ -632,7 +633,7 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, Bookmark *parent)
 					{
 						if (reader->isStartElement())
 						{
-							if (reader->name() == QLatin1String("metadata") && reader->attributes().value(QLatin1String("owner")).toString().startsWith(XBEL_OWNER))
+							if (reader->name() == QLatin1String("metadata") && attributes.value(QLatin1String("owner")).toString().startsWith(XBEL_OWNER))
 							{
 								while (reader->readNext())
 								{
@@ -688,9 +689,9 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, Bookmark *parent)
 	}
 	else if (reader->name() == QLatin1String("bookmark"))
 	{
-		const bool isFeed(reader->attributes().hasAttribute(QLatin1String("feed")));
+		const bool isFeed(attributes.hasAttribute(QLatin1String("feed")));
 
-		bookmark = addBookmark((isFeed ? FeedBookmark : UrlBookmark), {{IdentifierRole, reader->attributes().value(QLatin1String("id")).toULongLong()}, {UrlRole, reader->attributes().value(QLatin1String("href")).toString()}, {TimeAddedRole, readDateTime(reader, QLatin1String("added"))}, {TimeModifiedRole, readDateTime(reader, QLatin1String("modified"))}, {TimeVisitedRole, readDateTime(reader, QLatin1String("visited"))}}, parent);
+		bookmark = addBookmark((isFeed ? FeedBookmark : UrlBookmark), {{IdentifierRole, attributes.value(QLatin1String("id")).toULongLong()}, {UrlRole, attributes.value(QLatin1String("href")).toString()}, {TimeAddedRole, readDateTime(reader, QLatin1String("added"))}, {TimeModifiedRole, readDateTime(reader, QLatin1String("modified"))}, {TimeVisitedRole, readDateTime(reader, QLatin1String("visited"))}}, parent);
 
 		while (reader->readNext())
 		{
@@ -710,7 +711,7 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, Bookmark *parent)
 					{
 						if (reader->isStartElement())
 						{
-							if (reader->name() == QLatin1String("metadata") && reader->attributes().value(QLatin1String("owner")).toString().startsWith(XBEL_OWNER))
+							if (reader->name() == QLatin1String("metadata") && attributes.value(QLatin1String("owner")).toString().startsWith(XBEL_OWNER))
 							{
 								while (reader->readNext())
 								{
