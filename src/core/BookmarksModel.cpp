@@ -1355,7 +1355,7 @@ QVector<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QStri
 {
 	QVector<Bookmark*> matchedBookmarks;
 	QVector<BookmarkMatch> allMatches;
-	QVector<BookmarkMatch> currentMatches;
+	QList<BookmarkMatch> currentMatches;
 	QMultiMap<QDateTime, BookmarkMatch> matchesMap;
 	QHash<QString, Bookmark*>::const_iterator keywordsIterator;
 
@@ -1375,7 +1375,7 @@ QVector<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QStri
 		matchedBookmarks.append(match.bookmark);
 	}
 
-	currentMatches = matchesMap.values().toVector();
+	currentMatches = matchesMap.values();
 
 	matchesMap.clear();
 
@@ -1409,7 +1409,7 @@ QVector<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QStri
 		}
 	}
 
-	currentMatches = matchesMap.values().toVector();
+	currentMatches = matchesMap.values();
 
 	matchesMap.clear();
 
