@@ -498,7 +498,7 @@ void BookmarksModel::endImport()
 
 void BookmarksModel::trashBookmark(Bookmark *bookmark)
 {
-	if (!bookmark)
+	if (!bookmark || !m_trashItem)
 	{
 		return;
 	}
@@ -536,7 +536,7 @@ void BookmarksModel::trashBookmark(Bookmark *bookmark)
 
 void BookmarksModel::restoreBookmark(Bookmark *bookmark)
 {
-	if (!bookmark)
+	if (!bookmark || !m_rootItem || !m_trashItem)
 	{
 		return;
 	}
