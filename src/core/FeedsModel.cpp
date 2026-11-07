@@ -395,7 +395,7 @@ void FeedsModel::endImport()
 
 void FeedsModel::trashEntry(Entry *entry)
 {
-	if (!entry)
+	if (!entry || !m_trashEntry)
 	{
 		return;
 	}
@@ -433,7 +433,7 @@ void FeedsModel::trashEntry(Entry *entry)
 
 void FeedsModel::restoreEntry(Entry *entry)
 {
-	if (!entry)
+	if (!entry || !m_rootEntry || !m_trashEntry)
 	{
 		return;
 	}
