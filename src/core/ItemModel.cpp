@@ -59,6 +59,11 @@ void ItemModel::Item::setup(ItemModel::ItemType type)
 	}
 }
 
+bool ItemModel::Item::isFolder() const
+{
+	return (data(TypeRole) == FolderType);
+}
+
 bool ItemModel::Item::isAncestorOf(QStandardItem *child) const
 {
 	if (child == nullptr || child == this)
