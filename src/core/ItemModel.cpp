@@ -195,7 +195,7 @@ QVariant ItemModel::data(const QModelIndex &index, int role) const
 
 QVariant ItemModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-	if (role == Qt::DecorationRole && !headerData(section, orientation, Qt::CheckStateRole).isNull())
+	if (role == Qt::DecorationRole && !QStandardItemModel::headerData(section, orientation, Qt::CheckStateRole).isNull())
 	{
 		QPixmap pixmap(16, 16);
 		pixmap.fill(Qt::transparent);
