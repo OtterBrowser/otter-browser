@@ -336,4 +336,8 @@ bool ItemModel::setData(const QModelIndex &index, const QVariant &value, int rol
 	return QStandardItemModel::setData(index, value, role);
 }
 
+TrashableItemModel::TrashableItemModel(QObject *parent) : ItemModel(parent)
+{
+}
+
 }

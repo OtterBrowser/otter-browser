@@ -84,6 +84,14 @@ private:
 	bool m_isIgnoringCheckStateReset;
 };
 
+class TrashableItemModel : public ItemModel
+{
+	Q_OBJECT
+
+public:
+	explicit TrashableItemModel(QObject *parent = nullptr);
+};
+
 }
 
 #endif
