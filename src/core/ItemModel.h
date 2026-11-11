@@ -90,6 +90,13 @@ class TrashableItemModel : public ItemModel
 
 public:
 	explicit TrashableItemModel(QObject *parent = nullptr);
+
+	Item* getRootItem() const;
+	Item* getTrashItem() const;
+
+private:
+	Item *m_rootItem;
+	Item *m_trashItem;
 };
 
 }

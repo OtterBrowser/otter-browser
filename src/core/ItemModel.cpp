@@ -336,8 +336,22 @@ bool ItemModel::setData(const QModelIndex &index, const QVariant &value, int rol
 	return QStandardItemModel::setData(index, value, role);
 }
 
-TrashableItemModel::TrashableItemModel(QObject *parent) : ItemModel(parent)
+TrashableItemModel::TrashableItemModel(QObject *parent) : ItemModel(parent),
+	m_rootItem(new Item(FolderType)),
+	m_trashItem(new Item(FolderType))
 {
+	appendRow(m_rootItem);
+	appendRow(m_trashItem);
+}
+
+ItemModel::Item* TrashableItemModel::getRootItem() const
+{
+	return m_rootItem;
+}
+
+ItemModel::Item* TrashableItemModel::getTrashItem() const
+{
+	return m_trashItem;
 }
 
 }
