@@ -337,8 +337,8 @@ bool ItemModel::setData(const QModelIndex &index, const QVariant &value, int rol
 }
 
 TrashableItemModel::TrashableItemModel(QObject *parent) : ItemModel(parent),
-	m_rootItem(new Item(FolderType)),
-	m_trashItem(new Item(FolderType))
+	m_rootItem(new Item(RootType)),
+	m_trashItem(new Item(TrashType))
 {
 	appendRow(m_rootItem);
 	appendRow(m_trashItem);

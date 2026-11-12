@@ -33,6 +33,8 @@ public:
 	enum ItemType
 	{
 		UnknownType = 0,
+		RootType,
+		TrashType,
 		FolderType,
 		EntryType,
 		SeparatorType
