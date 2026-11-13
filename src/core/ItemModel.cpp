@@ -45,6 +45,15 @@ void ItemModel::Item::setup(ItemModel::ItemType type)
 
 	switch (type)
 	{
+		case RootType:
+			setDragEnabled(false);
+
+			break;
+		case TrashType:
+			setDragEnabled(false);
+			setEnabled(false);
+
+			break;
 		case EntryType:
 			setFlags(flags() | Qt::ItemNeverHasChildren);
 
@@ -61,7 +70,17 @@ void ItemModel::Item::setup(ItemModel::ItemType type)
 
 bool ItemModel::Item::isFolder() const
 {
-	return (data(TypeRole) == FolderType);
+	switch (static_cast<ItemModel::ItemType>(data(TypeRole).toInt()))
+	{
+		case RootType:
+		case TrashType:
+		case FolderType:
+			return true;
+		default:
+			return false;
+	}
+
+	return false;
 }
 
 bool ItemModel::Item::isAncestorOf(QStandardItem *child) const
