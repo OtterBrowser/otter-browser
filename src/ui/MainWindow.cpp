@@ -1918,14 +1918,10 @@ void MainWindow::updateShortcuts()
 
 	m_shortcuts.reserve(definitions.count() * 2);
 
-	for (int i = 0; i < definitions.count(); ++i)
+	for (const KeyboardProfile::Action &definition: definitions)
 	{
-		const KeyboardProfile::Action &definition(definitions.at(i));
-
-		for (int j = 0; j < definition.shortcuts.count(); ++j)
+		for (const QKeySequence &shortcut: definition.shortcuts)
 		{
-			const QKeySequence shortcut(definition.shortcuts.at(j));
-
 			if (ActionsManager::isShortcutAllowed(shortcut))
 			{
 				m_shortcuts.append(new Shortcut(definition.action, shortcut, definition.parameters, this));
