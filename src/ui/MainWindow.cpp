@@ -1608,9 +1608,8 @@ void MainWindow::beginToolBarDragging(bool isSidebar)
 
 	const QList<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly));
 
-	for (int i = 0; i < toolBars.count(); ++i)
+	for (ToolBarWidget *toolBar: toolBars)
 	{
-		ToolBarWidget *toolBar(toolBars.at(i));
 		const Qt::ToolBarArea area(toolBarArea(toolBar));
 
 		if (toolBar->isVisible() && (!isSidebar || area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea))
