@@ -43,8 +43,10 @@ public:
 	enum ItemRole
 	{
 		TitleRole = Qt::DisplayRole,
+		UrlRole = Qt::StatusTipRole,
 		DescriptionRole = Qt::ToolTipRole,
 		TypeRole = Qt::UserRole,
+		IdentifierRole,
 		UserRole
 	};
 
