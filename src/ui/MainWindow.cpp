@@ -1637,10 +1637,8 @@ void MainWindow::endToolBarDragging()
 {
 	const QList<ToolBarDropZoneWidget*> dropZones(findChildren<ToolBarDropZoneWidget*>());
 
-	for (int i = 0; i < dropZones.count(); ++i)
+	for (ToolBarDropZoneWidget *dropZone: dropZones)
 	{
-		ToolBarDropZoneWidget *dropZone(dropZones.at(i));
-
 		removeToolBarBreak(dropZone);
 		removeToolBar(dropZone);
 
