@@ -1820,9 +1820,9 @@ void MainWindow::handleToolBarAdded(int identifier)
 	}
 	else
 	{
-		for (int i = 0; i < toolBars.count(); ++i)
+		for (ToolBarWidget *toolBar: std::as_const(toolBars))
 		{
-			removeToolBar(toolBars.at(i));
+			removeToolBar(toolBar);
 		}
 
 		toolBars.append(newToolBar);
