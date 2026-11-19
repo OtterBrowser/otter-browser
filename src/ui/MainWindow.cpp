@@ -1833,14 +1833,17 @@ void MainWindow::handleToolBarAdded(int identifier)
 		});
 
 		const ToolBarsManager::ToolBarsMode mode(windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
+		bool needsBreak(false);
 
-		for (int i = 0; i < toolBars.count(); ++i)
+		for (ToolBarWidget *toolBar: std::as_const(toolBars))
 		{
-			ToolBarWidget *toolBar(toolBars.at(i));
-
-			if (i > 0)
+			if (needsBreak)
 			{
 				addToolBarBreak(definition.location);
+			}
+			else
+			{
+				needsBreak = true;
 			}
 
 			addToolBar(definition.location, toolBar);
