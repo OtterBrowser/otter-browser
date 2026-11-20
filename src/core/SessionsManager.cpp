@@ -563,16 +563,19 @@ bool SessionsManager::restoreSession(const SessionInformation &session, MainWind
 	}
 
 	const QVariantMap parameters({{QLatin1String("hints"), (isPrivate ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen)}});
+	bool isFirst(true);
 
-	for (int i = 0; i < session.windows.count(); ++i)
+	for (const Session::MainWindow &sessionMainWindow: session.windows)
 	{
-		if (mainWindow && i == 0)
+		if (mainWindow && isFirst)
 		{
-			mainWindow->restoreSession(session.windows.value(0));
+			mainWindow->restoreSession(sessionMainWindow);
+
+			isFirst = false;
 		}
 		else
 		{
-			Application::createWindow(parameters, session.windows.at(i));
+			Application::createWindow(parameters, sessionMainWindow);
 		}
 	}
 
