@@ -2080,10 +2080,8 @@ MainWindow* MainWindow::findMainWindow(QObject *parent)
 
 QWidget* MainWindow::findVisibleWidget(const QVector<QPointer<QWidget> > &widgets) const
 {
-	for (int i = 0; i < widgets.count(); ++i)
+	for (QWidget *widget: widgets)
 	{
-		QWidget *widget(widgets.at(i));
-
 		if (widget && widget->isVisible())
 		{
 			return widget;
@@ -2765,10 +2763,8 @@ bool MainWindow::event(QEvent *event)
 
 					const QList<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly));
 
-					for (int i = 0; i < toolBars.count(); ++i)
+					for (ToolBarWidget *toolBar: toolBars)
 					{
-						ToolBarWidget *toolBar(toolBars.at(i));
-
 						if (toolBar->shouldBeVisible(mode))
 						{
 							toolBar->removeEventFilter(this);
