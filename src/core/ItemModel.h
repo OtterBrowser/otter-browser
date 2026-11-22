@@ -64,6 +64,22 @@ public:
 		void setup(ItemModel::ItemType type);
 	};
 
+	class ItemMapper : public QObject
+	{
+	public:
+		explicit ItemMapper(ItemModel *parent);
+
+		Item* getItem(quint64 identifier) const;
+
+	protected:
+		void itemAdded(Item *item);
+		void itemTrashed(Item *item);
+		void itemRestored(Item *item);
+		void itemRemoved(Item *item);
+
+		friend class ItemModel;
+	};
+
 	explicit ItemModel(QObject *parent = nullptr);
 
 	void insertRow(QStandardItem *item = nullptr, QStandardItem *parent = nullptr, int row = -1, ItemType type = EntryType);

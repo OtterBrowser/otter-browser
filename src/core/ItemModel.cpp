@@ -105,6 +105,35 @@ bool ItemModel::Item::isAncestorOf(QStandardItem *child) const
 	return false;
 }
 
+ItemModel::ItemMapper::ItemMapper(ItemModel *parent) : QObject(parent)
+{
+}
+
+void ItemModel::ItemMapper::itemAdded(Item *item)
+{
+	Q_UNUSED(item)
+}
+
+void ItemModel::ItemMapper::itemTrashed(Item *item)
+{
+	Q_UNUSED(item)
+}
+
+void ItemModel::ItemMapper::itemRestored(Item *item)
+{
+	Q_UNUSED(item)
+}
+
+void ItemModel::ItemMapper::itemRemoved(Item *item)
+{
+	Q_UNUSED(item)
+}
+
+ItemModel::Item* ItemModel::ItemMapper::getItem(quint64 identifier) const
+{
+	return nullptr;
+}
+
 ItemModel::ItemModel(QObject *parent) : QStandardItemModel(parent),
 	m_isExclusive(false),
 	m_isIgnoringCheckStateReset(true)
