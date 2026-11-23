@@ -646,7 +646,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 					{
 						if (BookmarksManager::hasBookmark(url))
 						{
-							const QVector<BookmarksModel::Bookmark*> bookmarks(BookmarksManager::getModel()->findUrls(url));
+							const QVector<BookmarksModel::Bookmark*> bookmarks(BookmarksManager::getModel()->getBookmarks(url));
 
 							for (BookmarksModel::Bookmark *bookmark: bookmarks)
 							{
