@@ -1421,46 +1421,6 @@ QVector<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QStri
 	return allMatches;
 }
 
-QVector<BookmarksModel::Bookmark*> BookmarksModel::findUrls(const QUrl &url, Bookmark *branch) const
-{
-	if (!branch)
-	{
-		branch = m_rootItem;
-	}
-
-	const QUrl normalizedUrl(Utils::normalizeUrl(url));
-	QVector<Bookmark*> bookmarks;
-
-	for (int i = 0; i < branch->rowCount(); ++i)
-	{
-		Bookmark *bookmark(branch->getChild(i));
-
-		if (!bookmark)
-		{
-			continue;
-		}
-
-		switch (bookmark->getType())
-		{
-			case FolderBookmark:
-				bookmarks.append(findUrls(url, bookmark));
-
-				break;
-			case UrlBookmark:
-				if (normalizedUrl == Utils::normalizeUrl(bookmark->getUrl()))
-				{
-					bookmarks.append(bookmark);
-				}
-
-				break;
-			default:
-				break;
-		}
-	}
-
-	return bookmarks;
-}
-
 QVector<BookmarksModel::Bookmark*> BookmarksModel::getBookmarks(const QUrl &url) const
 {
 	const QUrl normalizedUrl(Utils::normalizeUrl(url));
