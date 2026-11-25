@@ -2811,16 +2811,16 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
 	if (event->type() == QEvent::Leave && isFullScreen())
 	{
-		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(object));
+		ToolBarWidget *initiatingToolBar(qobject_cast<ToolBarWidget*>(object));
 
-		if (toolBar)
+		if (initiatingToolBar)
 		{
-			const QVector<ToolBarWidget*> toolBars(getToolBars(toolBar->getArea()));
+			const QVector<ToolBarWidget*> toolBars(getToolBars(initiatingToolBar->getArea()));
 			bool isUnderMouse(false);
 
-			for (int i = 0; i < toolBars.count(); ++i)
+			for (ToolBarWidget *toolBar: toolBars)
 			{
-				if (toolBars.at(i)->underMouse())
+				if (toolBar->underMouse())
 				{
 					isUnderMouse = true;
 
@@ -2830,11 +2830,11 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
 			if (!isUnderMouse)
 			{
-				for (int i = 0; i < toolBars.count(); ++i)
+				for (ToolBarWidget *toolBar: toolBars)
 				{
-					if (toolBars.at(i)->getDefinition().fullScreenVisibility == ToolBarsManager::OnHoverVisibleToolBar)
+					if (toolBar->getDefinition().fullScreenVisibility == ToolBarsManager::OnHoverVisibleToolBar)
 					{
-						toolBars.at(i)->hide();
+						toolBar->hide();
 					}
 				}
 			}
