@@ -116,10 +116,8 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 	}
 	else if (!session.toolBars.isEmpty())
 	{
-		for (int i = 0; i < session.toolBars.count(); ++i)
+		for (const Session::MainWindow::ToolBarState &state: session.toolBars)
 		{
-			const Session::MainWindow::ToolBarState state(session.toolBars.at(i));
-
 			if (!toolBarStates.contains(state.location))
 			{
 				toolBarStates[state.location] = {};
@@ -133,9 +131,9 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 	{
 		const QVector<Session::MainWindow::ToolBarState> states(toolBarStates[Qt::NoToolBarArea]);
 
-		for (int i = 0; i < states.count(); ++i)
+		for (const Session::MainWindow::ToolBarState &state: states)
 		{
-			m_toolBarStates[states.at(i).identifier] = states.at(i);
+			m_toolBarStates[state.identifier] = state;
 		}
 	}
 
@@ -150,10 +148,8 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 			return (first.row > second.row);
 		});
 
-		for (int j = 0; j < states.count(); ++j)
+		for (const Session::MainWindow::ToolBarState &state: states)
 		{
-			const Session::MainWindow::ToolBarState state(states.at(j));
-
 			if (state.identifier < 0)
 			{
 				continue;
@@ -172,7 +168,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 
 			addToolBar(area, toolBar);
 
-			m_toolBars[states.at(j).identifier] = toolBar;
+			m_toolBars[state.identifier] = toolBar;
 		}
 	}
 
