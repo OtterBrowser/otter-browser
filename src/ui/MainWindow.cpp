@@ -104,9 +104,9 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 			QVector<Session::MainWindow::ToolBarState> states;
 			states.reserve(definitions.length());
 
-			for (int j = 0; j < definitions.count(); ++j)
+			for (const ToolBarsManager::ToolBarDefinition &definition: definitions)
 			{
-				const int identifier(definitions.at(j).identifier);
+				const int identifier(definition.identifier);
 
 				states.append(Session::MainWindow::ToolBarState(identifier, ToolBarsManager::getToolBarDefinition(identifier)));
 			}
@@ -275,10 +275,8 @@ void MainWindow::timerEvent(QTimerEvent *event)
 		{
 			const QVector<ToolBarWidget*> toolBars(getToolBars(areas.at(i)));
 
-			for (int j = 0; j < toolBars.count(); ++j)
+			for (ToolBarWidget *toolBar: toolBars)
 			{
-				ToolBarWidget *toolBar(toolBars.at(j));
-
 				if (toolBar->getDefinition().fullScreenVisibility == ToolBarsManager::OnHoverVisibleToolBar)
 				{
 					toolBar->show();
